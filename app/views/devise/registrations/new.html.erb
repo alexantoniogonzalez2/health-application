@@ -1,0 +1,31 @@
+<h2>Sign up</h2>
+
+<%= form_tag(user_registration_path,:method => 'post') %>
+<%= devise_error_messages! %>
+<table>
+
+
+
+<tr>
+<td>Email : </td>
+<td><%=email_field_tag "user[email]",@user.email %></td>
+</tr>
+
+<tr>
+<td>Password : </td>
+<td><%=password_field_tag "user[password]",@user.password %></td>
+</tr>
+
+<tr>
+<td>Retype password : </td>
+<td><%=password_field_tag "user[password_confirmation]",@user.password_confirmation %></td>
+</tr>
+
+
+
+<tr>
+<td><%= submit_tag nil, :class => "form_submit"%></td>
+</tr>
+</table>
+<br />
+<%= render :partial => "devise/shared/links" %>
