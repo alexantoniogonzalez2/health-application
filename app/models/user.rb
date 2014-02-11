@@ -3,4 +3,10 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_one :persona, :class_name => 'PerPersonas'
+  
+  #attr_accessible :email, :password, :password_confirmation; :persona         
+  
+         
 end

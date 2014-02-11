@@ -1,8 +1,33 @@
 AplicacionMedica::Application.routes.draw do
+
   devise_for :users,:controllers => { :registrations =>'registration'}
+
+  get 'about',   to: 'home#about',  as: 'about' 
   get 'dashboard' => 'home#dashboard'
 
   root :to =>'home#index'
+
+  #Modulo atencion salud
+  resources :atenciones_salud
+
+  post '/agregar_examen', to: 'persona_examen#agregarExamen', :as => :agregarExamen
+
+  #Modulo agendamiento
+  # get '/agendamiento/agendaCompleta/:prestador_id/:profesional_id', to: 'agendamiento#showAgenda', :as => :agenda_show_all
+  post '/agendamiento/agregarHora', to: 'agendamiento#new'
+  get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda
+  get '/agendamiento/pedirHora/:especialidad_id/:prestador_id/:profesional_id', to: 'agendamiento#pedirHora'
+  put '/agendamiento/pedirHora', to: 'agendamiento#pedirHora', :as => :pedirHora #Esta es solo para ponerle un nombre a la anterior pero sin parámtros
+
+  # get '/agendamiento/agregarHora/:prestador_id', to: 'agendamiento#agregarHoraS1', :as => :agregar_hora_s1
+  # get '/agendamiento/agregarHora/:prestador_id/:profesional_id', to: 'agendamiento#agregarHoraS2', :as => :agregar_hora_s2
+
+
+  post '/aux/formNuevaHora', to: 'agendamiento#agregarNuevaHora', :as => :agregarHora
+  post '/aux/mostrarEventos', to: 'agendamiento#mostrarEventos', :as => :showEventos
+  post '/aux/detalleEvento', to: 'agendamiento#detalleEvento', :as => :detalleEvento
+  post '/aux/pedirHoraEvento', to: 'agendamiento#pedirHoraEvento', :as => :pedirHoraEvento
+  post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

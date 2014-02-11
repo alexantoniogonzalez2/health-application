@@ -1,22 +1,27 @@
 <div class="center hero-unit">
-  <h1>Welcome to the Sample App</h1>
+  <h1>Bienvenido a MedRacer</h1>
 
   <h2>
-    This is the home page for the
-    <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
-    sample application.
+   Esta es la página de inicio de la aplicación.
   </h2>
 
   <% if user_signed_in? %>
 
-		<h3>you have succesfully signed in</h3>
-		<%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>
+		<h3>Ha ingresado correctament a la aplicación.</h3>
+
+		<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
+		<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>
+		<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
+
+
+
+		<%= link_to "Salir", destroy_user_session_path, :method => :delete %>
 
 		<% else %>
 
-		<h1> welcom to rails community</h1>
-		<%= link_to "Sign In", new_user_session_path, :method => :get ,class: "btn btn-large btn-primary" %>
-		<%= link_to "Sign up", new_user_registration_path, :method => :get , class: "btn btn-large btn-primary"%>
+		<h1> Ingrese a MedRacer</h1>
+		<%= link_to "Entrar", new_user_session_path, :method => :get ,class: "btn btn-large btn-primary" %>
+		<%= link_to "Crear cuenta", new_user_registration_path, :method => :get , class: "btn btn-large btn-primary"%>
 
 	<% end %>
 

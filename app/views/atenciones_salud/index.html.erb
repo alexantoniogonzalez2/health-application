@@ -1,0 +1,34 @@
+<%= javascript_include_tag :defaults %>
+<%= csrf_meta_tag %>
+
+
+<h1>Atenciones de salud:</h1>
+ 
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Motivo consulta</th>
+    <th>Indicaciones generales</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+ 
+  <% @atenciones_salud.each do |atencion_salud| %>
+    <tr>
+      <td><%= atencion_salud.id %></td>
+      <td><%= atencion_salud.motivo_consulta %></td>
+      <td><%= atencion_salud.indicaciones_generales %></td>
+      <td><%= link_to 'Show', atenciones_salud_path(atencion_salud) %></td>
+   		<td><%= link_to 'Edit', edit_atenciones_salud_path(atencion_salud) %></td>
+      <td><%= button_to "Delete", {:controller => :atenciones_salud,
+      :action => 'destroy', :id => atencion_salud.id }, :method => :delete %></td>
+    
+
+    </tr>
+  <% end %>
+</table>
+
+
+

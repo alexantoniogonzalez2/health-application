@@ -1,0 +1,64 @@
+<%= form_for :atencion_salud, url: {action: "create"} do |f| %>
+
+
+ <% if @atencion_salud.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@atencion_salud.errors.count, "error") %> prohibited
+      this post from being saved:</h2>
+    <ul>
+    <% @atencion_salud.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+<div id="ficha_atencion_medica">
+
+<div id="fam_header">
+Atención de salud
+</div>
+
+<div id="fam_datos_paciente">	
+<%= f.label :nombre %>
+<%#= f.text_field :nombre %>
+<%= f.label :apellido  %>
+<%#= f.text_field :apellido %>
+<%= f.label :rut %>
+<%#= f.text_field :rut %>
+<%= f.label :Sexo  %>
+<%#= f.text_field :Sexo %>
+
+ 
+</div>
+
+<div id="fam_datos_atencion">
+	<%= f.label :Motivo  %>
+	<%= f.text_area :motivo_consulta , :size => "55x4" %><br/>
+	<%= link_to 'Examen Físico', agendaShowFormBusqueda_path %><br/>
+	<%= link_to 'Métricas', agendaShowFormBusqueda_path %><br/>
+</div>
+
+<div id="fam_datos_cierre_der">
+	<%= f.label :Diagnóstico %>
+	<%#= f.select :Diagnostico , [['Enfermedad 1','enf_1'],['Enfermedad 2','enf_2'],['Enfermedad 3','enf_3']] %>
+	<%= f.label :Indicaciones  %>
+	<%= f.text_area :indicaciones_generales , :size => "80x4" %>
+</div>
+
+<div id="fam_datos_cierre_izq">
+	<fieldset id="fieldset">
+	<%= link_to 'Solicitar examen', agendaShowFormBusqueda_path %><br/>
+	<%= link_to 'Prescribir medicamentos', agendaShowFormBusqueda_path %><br/>
+	<%= link_to 'Emitir certificado', agendaShowFormBusqueda_path %><br/>
+	<%= link_to 'Generar interconsulta', agendaShowFormBusqueda_path %><br/>
+	</fieldset>
+<%= f.submit :CerrarAtención, :id => "submit" %>
+
+</div>
+
+</div>
+
+<% end %>
+
+

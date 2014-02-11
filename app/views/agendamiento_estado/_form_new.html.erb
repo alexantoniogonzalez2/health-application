@@ -1,0 +1,24 @@
+<% if @id %>
+	<%= form_for @est_ag, url: {action: "update", id: @id } do |a|  %>
+
+		<%= a.label :name, "Nombre de" %><br />
+		<%= a.text_field :name %>
+
+		<div class="actions">
+			<%= a.submit "Editar" %>
+		</div>
+
+	<% end %>
+<% else %>
+	<%= form_for @est_ag, url: {action: "create"} do |a|  %>
+
+		<%= a.label :name, "Nombre de" %><br />
+		<%= a.text_field :name %>
+
+		<div class="actions">
+			<%= a.submit "Crear" %>
+		</div>
+
+	<% end %>
+
+<% end %>

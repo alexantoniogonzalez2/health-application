@@ -1,0 +1,10 @@
+<tr>
+	<td><%= @fecha.prestador.nombre %></td>
+	<td><%= @fecha.administrativo.showName("%n%p") %></td>
+	<td>Dr. <%= @fecha.profesional.showName("%n%p") %></td>
+	<td><%= @fecha.fecha_comienzo.strftime("%m/%d %H:%M") %> - <%= @fecha.fecha_final.strftime("%m/%d %H:%M") %></td>
+	<td><%= @fecha.estado_agendamiento.nombre %></td>
+	<td><%if @fecha.persona %><%= @fecha.persona.showName("%n%p") %><% end %></td>
+	<td><%if @fecha.fecha_comienzo_real%><%= @fecha.fecha_comienzo_real.strftime("%m/%d %H:%M") %><% end %></td>
+	<td><%if @fecha.fecha_final_real%><%= @fecha.fecha_final_real.strftime("%m/%d %H:%M") %><% end %></td>
+</tr>

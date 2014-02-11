@@ -1,0 +1,28 @@
+
+
+<% content_for :title do %>Estados Agendamiento<% end %>
+
+<% content_for :content do %>
+<h1>Mostrando los estados de agendamiento creados </h1>
+  <%if @AgendamientoEstados.count > 0 %>
+    <table>
+      <tr>
+        <th> Id </th>
+        <th> Nombre </th>
+        <th> Borrar </th>
+      </tr>
+
+      <% @AgendamientoEstados.each do |ae| %>
+        <tr>
+          <td><%=link_to ae.id, ag_est_U_path(ae.id)%></td>
+          <td><%= ae.name %></td>
+          <td><%= link_to "X", ag_est_D_path(ae.id), { method: :delete, data: { confirm: 'Are you sure?'} } %> </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <h2>Lista vacía</h2>
+  <% end %>
+
+  <%= link_to "Crear nuevo", :ag_est_C %>
+<% end %>
