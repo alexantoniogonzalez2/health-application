@@ -66,7 +66,7 @@ class AgendamientoController < ApplicationController
 		else
 			#if params[:prestador_id] != "-1" and params[:especialidad_id] != "-1"
 				events=[]
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where(" (('-1' <> ? AND pre_prestador_profesionales.especialidad_id= ?) OR ? = '-1') AND (('-1' <> ? AND pre_prestador_profesionales.prestador_id= ?) OR ? = '-1') AND (('-1' <> ? AND pre_prestador_profesionales.profesional_id= ?) OR ? = '-1') ",session[:especialidad_id],session[:especialidad_id],session[:especialidad_id],session[:prestador_id],session[:prestador_id],session[:prestador_id],session[:profesional_id],session[:profesional_id],session[:profesional_id])
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id = ? AND pre_prestador_profesionales.profesional_id = ?  ",1,1,4)
 				#Filtrar por fechas si no quiere mostrarse todo (Puede ser algo como un año hacia adelante y un año hacia atrás)
 
 				@Fechas.each do |f|
@@ -123,7 +123,7 @@ class AgendamientoController < ApplicationController
 		if @current_user
 			@Persona=@current_user.persona
 			@Agendamiento=AgAgendamientos.where("id= ?",session[:agendamiento_id_selected]).first
-			@EstadoAgendamiento=AgEstadoAgendamiento.where("nombre = ?","Hora Reservada").first
+			@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora Reservada").first
 			@Agendamiento.transaction do
 				if @Agendamiento.estado_agendamiento.nombre=='Disponible'
 					respuesta="1"
@@ -171,7 +171,6 @@ class AgendamientoController < ApplicationController
 
 		#grupo_permisos(session[:prestador_id])
     #	permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:Agregar Hora").first.parametro
-    permisoParaAgregar=false
     especialidad_prestador_profesional=nil
     #	if permiso[0]=="1"
     #		current_user
@@ -188,14 +187,15 @@ class AgendamientoController < ApplicationController
     #		end
     #	end
 
+    especialidad_prestador_profesional = PrePrestadorProfesionales.find(1)
+
 		permisoParaAgregar=true
-		especialidad_prestador_profesional = true
 
     events=[]
 		#permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:Disponible").first.parametro
 
-  	if permisoParaAgregar and especialidad_prestador_profesional
-			@EstadoAgendamiento= AgEstadoAgendamiento.where("nombre = ?","Disponible").first
+  	if permisoParaAgregar 
+			@EstadoAgendamiento= AgAgendamientoEstados.where("nombre = ?","Disponible").first
 
   		if params[:tipo]=='diario'
 			fecha_comienzo=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
@@ -211,8 +211,8 @@ class AgendamientoController < ApplicationController
   				@Agendamiento=AgAgendamientos.new
   				@Agendamiento.fecha_comienzo=tmp_i
   				@Agendamiento.fecha_final=tmp_f
-  				@Agendamiento.estado_agendamiento=@EstadoAgendamiento
-  				@Agendamiento.especialidad_prestador_profesional=1
+  				@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+  				@Agendamiento.especialidad_prestador_profesional=especialidad_prestador_profesional
 
   				# @Agendamiento.administrativo=@Administrativo
   				# @Agendamiento.prestador=@Prestador
@@ -268,7 +268,7 @@ class AgendamientoController < ApplicationController
 						@Agendamiento=AgAgendamientos.new
 						@Agendamiento.fecha_comienzo=tmp_i
 						@Agendamiento.fecha_final=tmp_f
-						@Agendamiento.estado_agendamiento=@EstadoAgendamiento
+						@Agendamiento.agendamiento_estado=@EstadoAgendamiento
 						@Agendamiento.especialidad_prestador_profesional=1
 						# @Agendamiento.profesional=@Profesional
 						# @Agendamiento.administrativo=@Administrativo

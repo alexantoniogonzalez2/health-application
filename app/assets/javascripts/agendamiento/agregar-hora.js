@@ -140,7 +140,7 @@ $(function(){
 			r+='</div>';
 			$.modal(r);
 			r='';
-			r+='<img src="/assets/images/loading.gif" height="20" width="20">';
+			r+='<img src="../../images/loading.gif" height="20" width="20">';
 			r+='<div style="display:inline">  Cargando...</div>';
 			$('#simplemodal-show').html(r);
 			
@@ -383,7 +383,7 @@ $(function(){
 		$('#calendar').fullCalendar('addEventSource', add_events);
 
 
-		$('#comportamientoForm .status').html('<img src="/assets/images/loading.gif" height="40" width="40">');
+		$('#comportamientoForm .status').html('<img src="../../images/loading.gif" height="40" width="40">');
 		$.ajax({
 			type: 'POST',
 			url: agregarHoraURL,
@@ -525,14 +525,14 @@ $(function(){
 			$('#calendar').fullCalendar('addEventSource', add_events);
 
 
-			$('#diaForm .status').html('<img src="/assets/images/loading.gif" height="40" width="40">');
+			$('#diaForm .status').html('<img src="../../images/loading.gif" height="40" width="40">');
 			$.ajax({
 				type: 'POST',
 				url: agregarHoraURL,
 				data: {
 					administrativo_id: administrativo_id,
 					date_i:d_i_s,
-					date_f:d_f_s,
+					date_f:d_f_s,					
 					step: step,
 					tipo: 'diario'
 				},

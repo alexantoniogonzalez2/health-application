@@ -54,52 +54,44 @@ class AgAgendamientos < ActiveRecord::Base
     description= ''
     show=false
     if agendamiento_estado.nombre == 'Disponible'
-      if permiso[0]=='1'
         color = '#DED335'
         description<< "<u><b>Hora disponible</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
-      end
+      
     elsif agendamiento_estado.nombre == 'No Disponible'
-      if permiso[0]=='1'
         color='#D86C64'
         description<< "<u><b>Hora cancelada</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: <s>#{range('estimado')}</s>"
         show=true
-      end
     elsif agendamiento_estado.nombre == 'Hora Reservada'
-      if permiso[0]=='1'
         description<< "<u><b>Hora reservada</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
-      end
+      
     elsif agendamiento_estado.nombre == 'Cliente En Espera'
-      if permiso[0]=='1'
-        if permiso.split(':')[1]=='Paciente'
+        #if permiso.split(':')[1]=='Paciente'
           description<< "<u><b>Hora reservada</b></u>"
-        else
+        #else
           color='#21CAA8'
           description<< "<u><b>Paciente en espera a ser atendido</b></u>"
-        end
+        #end
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
-      end
     elsif agendamiento_estado.nombre == 'Cliente Atendido'
-      if permiso[0]=='1'
-        if permiso.split(':')[1]=='Paciente'
+        #if permiso.split(':')[1]=='Paciente'
           description<< "<u><b>Hora reservada</b></u>"
-        else
+        #else
           color='#28DC52'
           description<< "<u><b>Paciente atendido</b></u>"
-        end
+        #end
       description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
       description<<"</br>Hora: #{range('estimado')}"
         show=true
-      end
     end
 
 
@@ -113,7 +105,7 @@ class AgAgendamientos < ActiveRecord::Base
         'color'       => color,
         'textColor'   => '#FFFFFF',
         'description' => description,
-        'detail'      => permiso[1]
+        
       }
     else
       {}

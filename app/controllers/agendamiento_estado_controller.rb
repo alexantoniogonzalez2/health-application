@@ -1,6 +1,6 @@
 class AgendamientoEstadoController < ApplicationController
 	def show_all
-		@AgendamientoEstados=AgEstadoAgendamiento.where("deleted = ?",false)
+		@AgendamientoEstados=AgAgendamientoEstados.where("deleted = ?",false)
 
 		respond_to do |format|
 	      format.html { render "ag_estado_agendamiento/show_all"}
@@ -9,15 +9,15 @@ class AgendamientoEstadoController < ApplicationController
 
 	def new
       respond_to do |format|
-      	@est_ag = AgEstadoAgendamiento.new
+      	@est_ag = AgAgendamientoEstados.new
         format.html {render "ag_estado_agendamiento/new" }
       end
 	end
 
 	def create
-		@est_ag = AgEstadoAgendamiento.where("nombre = ?",params[:ag_estado_agendamiento][:nombre]).first
+		@est_ag = AAgAgendamientoEstados.where("nombre = ?",params[:ag_estado_agendamiento][:nombre]).first
 		if not @est_ag
-			@est_ag=AgEstadoAgendamiento.create(params[:ag_estado_agendamiento])
+			@est_ag=AgAgendamientoEstados.create(params[:ag_estado_agendamiento])
 			@est_ag.save
 		else
 			@est_ag.deleted=false
@@ -29,7 +29,7 @@ class AgendamientoEstadoController < ApplicationController
 	end
 
 	def edit
-		@est_ag = AgEstadoAgendamiento.find(params[:id])
+		@est_ag = AgAgendamientoEstados.find(params[:id])
 
 		respond_to do |format|
 			@id=params[:id]
@@ -39,7 +39,7 @@ class AgendamientoEstadoController < ApplicationController
 	end
 
 	def update
-		@est_ag = AgEstadoAgendamiento.find(params[:id])
+		@est_ag = AgAgendamientoEstados.find(params[:id])
 		@est_ag.update_attributes(params[:ag_estado_agendamiento])
 		respond_to do |format|
 			format.html { redirect_to :ag_est_R }
@@ -48,7 +48,7 @@ class AgendamientoEstadoController < ApplicationController
 
 
 	def delete
-		@est_ag = AgEstadoAgendamiento.find(params[:id])
+		@est_ag = AgAgendamientoEstados.find(params[:id])
 		@est_ag.deleted = true
 		@est_ag.save
 		respond_to do |format|
