@@ -1,0 +1,9 @@
+
+<h1>Profesionales para: <%= @Prestador.nombre %></h1>
+<ul>
+	<% @Profesionales.each do |profesional| %>
+		<% tmp=profesional.showName("%n%p%m")+" | "+profesional.rut.to_s()+"-"+profesional.digitoVerificador().to_s() %>
+		<li> <%= link_to tmp, agregar_hora_s2_path(prestador_id: params[:prestador_id], profesional_id: profesional.id) %></li>
+	<% end %>
+</ul>
+

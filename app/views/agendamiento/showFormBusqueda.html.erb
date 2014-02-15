@@ -1,0 +1,86 @@
+<script>
+  var busquedaHoraFormActualizar="<%= agendaShowFormBusquedaRefresh_path %>"
+  var pedirHoraPath="<%= pedirHora_path %>"
+  var mostrarEventos='<%= showEventos_path %>'
+  var administrativo_id=5
+ </script> 
+
+<form class="form-horizontal" id="formBuscarHora">
+  <fieldset>
+
+    <legend>Buscador de horas médicas</legend>
+
+    <!-- Button Drop Down -->
+    <div class="control-group">
+      <label class="control-label" for="buttondropdown">Especialidad</label>
+      <div class="controls">
+        <div class="input-append">
+          <input id="especialidad" name="especialidad" data-id="-1" class="input-xlarge" placeholder="Ej. Dermatología" type="text">
+          <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <% @especialidades.each do |e| %>
+                <li><a data-id="<%= e.id%>"><%= e.nombre %></a></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Button Drop Down -->
+    <div class="control-group">
+      <label class="control-label" for="buttondropdown">Centro Médico</label>
+      <div class="controls">
+        <div class="input-append">
+          <input id="prestador" name="prestador" data-id="-1" class="input-xlarge" placeholder="Ej. Hospital Dr. Cosme Argerich" type="text">
+          <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <% @prestadores.each do |p| %>
+                <li><a data-id="<%= p.id%>"><%= p.nombre %></a></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button Drop Down -->
+    <div class="control-group">
+      <label class="control-label" for="buttondropdown">Nombre del Médico</label>
+      <div class="controls">
+        <div class="input-append">
+          <input id="especialista" data-id="-1" name="especialista" class="input-xlarge" placeholder="Ej. Christian Barnard" type="text">
+          <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <% @profesionales.each do |p| %>
+                <li><a data-id="<%= p.id%>"><%= p.showName('%n%p%m')%></a></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label" for="singlebutton"></label>
+      <div class="controls">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary">Siguiente</button>
+      </div>
+    </div>
+
+
+  </fieldset>
+</form>
+
+

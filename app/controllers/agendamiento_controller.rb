@@ -55,9 +55,11 @@ class AgendamientoController < ApplicationController
 		if params[:evento_id]
 			@Agendamiento=AgAgendamientos.where("id = ?",params[:evento_id]).first
 			events=[]
-			grupo_permisos(@Agendamiento.especialidad_prestador_profesional.prestador.id)
-   			permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:#{@Agendamiento.estado_agendamiento.nombre}").first.parametro
-			events << @Agendamiento.event(permiso)
+			#grupo_permisos(@Agendamiento.especialidad_prestador_profesional.prestador.id)
+   		#permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:#{@Agendamiento.estado_agendamiento.nombre}").first.parametro
+			#events << @Agendamiento.event(permiso)
+
+			events << @Agendamiento.event(1)
 			respond_to do |f|
 				f.json {render json:events}
 			end
@@ -68,9 +70,9 @@ class AgendamientoController < ApplicationController
 				#Filtrar por fechas si no quiere mostrarse todo (Puede ser algo como un año hacia adelante y un año hacia atrás)
 
 				@Fechas.each do |f|
-					grupo_permisos(f.especialidad_prestador_profesional.prestador.id)
-   					permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:#{f.estado_agendamiento.nombre}").first.parametro
-					events << f.event(permiso)				
+					#grupo_permisos(f.especialidad_prestador_profesional.prestador.id)
+   				#permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:#{f.estado_agendamiento.nombre}").first.parametro
+					events << f.event(1)				
 				end
 
 				respond_to do |f|
@@ -106,22 +108,11 @@ class AgendamientoController < ApplicationController
 			@breadcrumbs_title= "Usted no ha seleccionado ningún filtro"
 		end
 
-		grupo_permisos(session[:prestador_id])
-    	permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:Agregar Hora").first.parametro
-    	@permisoParaAgregar=false
-    	if permiso[0]=="1"
-    		current_user
-    		if permiso.split(":")[1]=="Especialista"
-    			@permisoParaAgregar="#{@current_user.persona.id}" == session[:profesional_id]
-    		elsif permiso.split(":")[1]=="Otro"
-    			@current_user.persona.prestador_administrativos.where("prestador_id = ?",session[:prestador_id]).each do |p| #Esto restringe solo a administrativos
-    				if p.prestador.prestador_profesionales.where("profesional_id = ? AND especialidad_id = ?",session[:profesional_id],session[:especialidad_id]).count > 0
-    					@permisoParaAgregar=true
-    					break
-    				end
-    			end
-    		end
-    	end
+
+		#Acá se debe filtrar quien tiene permisos para agregar
+		@permisoParaAgregar=true 
+
+
 
 	end
 
@@ -175,135 +166,141 @@ class AgendamientoController < ApplicationController
 	end
 
 	def agregarNuevaHora 	
-	#Usamos session para evitar que haya intromisión en el código como cambiar las variables a través de consola de chrome o parecidos
-	#Las variables de la session se actualizan al cargar agendamiento/pedirHora/x/y/z
+		#Usamos session para evitar que haya intromisión en el código como cambiar las variables a través de consola de chrome o parecidos
+		#Las variables de la session se actualizan al cargar agendamiento/pedirHora/x/y/z
 
-		grupo_permisos(session[:prestador_id])
-    	permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:Agregar Hora").first.parametro
-    	permisoParaAgregar=false
-    	especialidad_prestador_profesional=nil
-    	if permiso[0]=="1"
-    		current_user
-    		if permiso.split(":")[1]=="Especialista"
-    			permisoParaAgregar="#{@current_user.persona.id}" == session[:profesional_id]
-    		elsif permiso.split(":")[1]=="Otro"
-    			@current_user.persona.prestador_administrativos.where("prestador_id = ?",session[:prestador_id]).each do |p|
-    				p.prestador.prestador_profesionales.where("profesional_id = ? AND especialidad_id = ?",session[:profesional_id],session[:especialidad_id]).each do |pp|
-    					especialidad_prestador_profesional=pp
-    					permisoParaAgregar=true
-    					break
-    				end
-    			end
-    		end
-    	end
+		#grupo_permisos(session[:prestador_id])
+    #	permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:Agregar Hora").first.parametro
+    permisoParaAgregar=false
+    especialidad_prestador_profesional=nil
+    #	if permiso[0]=="1"
+    #		current_user
+    #		if permiso.split(":")[1]=="Especialista"
+    #			permisoParaAgregar="#{@current_user.persona.id}" == session[:profesional_id]
+    #		elsif permiso.split(":")[1]=="Otro"
+    #			@current_user.persona.prestador_administrativos.where("prestador_id = ?",session[:prestador_id]).each do |p|
+    #				p.prestador.prestador_profesionales.where("profesional_id = ? AND especialidad_id = ?",session[:profesional_id],session[:especialidad_id]).each do |pp|
+    #					especialidad_prestador_profesional=pp
+    #					permisoParaAgregar=true
+    #					break
+    #				end
+    #			end
+    #		end
+    #	end
 
+		permisoParaAgregar=true
+		especialidad_prestador_profesional = true
 
-    	events=[]
-		permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:Disponible").first.parametro
+    events=[]
+		#permiso=@GrupoPermisos.joins(:rol).where("sis_roles.nombre= ? ","Agendamiento:Disponible").first.parametro
 
-    	if permisoParaAgregar and especialidad_prestador_profesional
+  	if permisoParaAgregar and especialidad_prestador_profesional
 			@EstadoAgendamiento= AgEstadoAgendamiento.where("nombre = ?","Disponible").first
 
-    		if params[:tipo]=='diario'
-				fecha_comienzo=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
-				fecha_termino=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
+  		if params[:tipo]=='diario'
+			fecha_comienzo=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
+			fecha_termino=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
+			step=params[:step]
+  			while fecha_comienzo < fecha_termino do
+  				tmp_i=fecha_comienzo
+  				tmp_f=fecha_comienzo+step.to_i.minutes
+
+  				#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
+  				#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
+
+  				@Agendamiento=AgAgendamientos.new
+  				@Agendamiento.fecha_comienzo=tmp_i
+  				@Agendamiento.fecha_final=tmp_f
+  				@Agendamiento.estado_agendamiento=@EstadoAgendamiento
+  				@Agendamiento.especialidad_prestador_profesional=1
+
+  				# @Agendamiento.administrativo=@Administrativo
+  				# @Agendamiento.prestador=@Prestador
+  				@Agendamiento.save
+
+				events << @Agendamiento.event(1)
+
+  				fecha_comienzo=tmp_f
+  			end
+  		elsif params[:tipo]=='comportamiento'
+				fecha_inicio=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
+				fecha_final=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
 				step=params[:step]
-    			while fecha_comienzo < fecha_termino do
-    				tmp_i=fecha_comienzo
-    				tmp_f=fecha_comienzo+step.to_i.minutes
+				daysOfWeek=JSON.parse(params[:days])
+				hora_inicio=params[:hora_i]
+				hora_termino=params[:hora_t]
 
-    				#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
-    				#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
-
-    				@Agendamiento=AgAgendamientos.new
-    				@Agendamiento.fecha_comienzo=tmp_i
-    				@Agendamiento.fecha_final=tmp_f
-    				@Agendamiento.estado_agendamiento=@EstadoAgendamiento
-    				@Agendamiento.especialidad_prestador_profesional=especialidad_prestador_profesional
-    				# @Agendamiento.profesional=@Profesional
-    				# @Agendamiento.administrativo=@Administrativo
-    				# @Agendamiento.prestador=@Prestador
-    				@Agendamiento.save
-
-					events << @Agendamiento.event(permiso)
-
-    				fecha_comienzo=tmp_f
-    			end
-    		elsif params[:tipo]=='comportamiento'
-					fecha_inicio=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
-					fecha_final=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
-					step=params[:step]
-					daysOfWeek=JSON.parse(params[:days])
-					hora_inicio=params[:hora_i]
-					hora_termino=params[:hora_t]
-
-					days=[]
-					d_i=fecha_inicio
-					d_f=fecha_final
-					while d_i < d_f do
-						tmp_i = d_i
-						tmp_f = d_i+1.days
-						if daysOfWeek[tmp_i.strftime("%w").to_i]
-							days << tmp_i
-						end
-
-						d_i=tmp_f
+				days=[]
+				d_i=fecha_inicio
+				d_f=fecha_final
+				while d_i < d_f do
+					tmp_i = d_i
+					tmp_f = d_i+1.days
+					if daysOfWeek[tmp_i.strftime("%w").to_i]
+						days << tmp_i
 					end
 
-					days.each do |d|
-
-						tmp=d.strftime("%Y-%m-%d")+" "+hora_inicio
-						d_i=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
-						tmp=d.strftime("%Y-%m-%d")+" "+hora_termino
-						d_f=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
-						if d_f<=d_i
-							d_f=d_f+1.days
-						end
-
-
-						fecha_comienzo=d_i
-						fecha_termino=d_f
-
-						while fecha_comienzo < fecha_termino do
-
-							tmp_i=fecha_comienzo
-							tmp_f=fecha_comienzo+step.to_i.minutes
-
-							#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
-							#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
-
-							@Agendamiento=AgAgendamientos.new
-							@Agendamiento.fecha_comienzo=tmp_i
-							@Agendamiento.fecha_final=tmp_f
-							@Agendamiento.estado_agendamiento=@EstadoAgendamiento
-							@Agendamiento.especialidad_prestador_profesional=especialidad_prestador_profesional
-							# @Agendamiento.profesional=@Profesional
-							# @Agendamiento.administrativo=@Administrativo
-							# @Agendamiento.prestador=@Prestador
-							@Agendamiento.save
-							
-							events << @Agendamiento.event(permiso)
-
-							fecha_comienzo=tmp_f
-						end
+					d_i=tmp_f
 				end
-			else
-				events << { 
-					'id'				=> 'err',
-					'title' 			=> 'No se pudo...',
-					'start' 			=> fecha_inicio.strftime("%Y-%m-%d %H:%M")+":00.0",
-					'end'				=> fecha_final.strftime("%Y-%m-%d %H:%M")+":00.0",
-					'allDay'			=> false,
-					'color'				=> 'red',
-					'textColor'			=> '#FFFFFF'
-				}
-			end
-    	end
 
+				days.each do |d|
+
+					tmp=d.strftime("%Y-%m-%d")+" "+hora_inicio
+					d_i=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
+					tmp=d.strftime("%Y-%m-%d")+" "+hora_termino
+					d_f=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
+					if d_f<=d_i
+						d_f=d_f+1.days
+					end
+
+
+					fecha_comienzo=d_i
+					fecha_termino=d_f
+
+					while fecha_comienzo < fecha_termino do
+
+						tmp_i=fecha_comienzo
+						tmp_f=fecha_comienzo+step.to_i.minutes
+
+						#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
+						#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
+
+						@Agendamiento=AgAgendamientos.new
+						@Agendamiento.fecha_comienzo=tmp_i
+						@Agendamiento.fecha_final=tmp_f
+						@Agendamiento.estado_agendamiento=@EstadoAgendamiento
+						@Agendamiento.especialidad_prestador_profesional=1
+						# @Agendamiento.profesional=@Profesional
+						# @Agendamiento.administrativo=@Administrativo
+						# @Agendamiento.prestador=@Prestador
+						@Agendamiento.save
+						
+						events << @Agendamiento.event(1)
+
+						fecha_comienzo=tmp_f
+					end #while
+				end #days.each
+				else
+					events << { 
+						'id'				=> 'err',
+						'title' 			=> 'No se pudo...',
+						'start' 			=> fecha_inicio.strftime("%Y-%m-%d %H:%M")+":00.0",
+						'end'				=> fecha_final.strftime("%Y-%m-%d %H:%M")+":00.0",
+						'allDay'			=> false,
+						'color'				=> 'red',
+						'textColor'			=> '#FFFFFF'
+					}
+				end
+    end #endif
+
+
+    
 
 
 		respond_to do |format|
 			format.json { render json: events}
 		end
+	
 	end #Fin agregarNuevaHora
+
 end

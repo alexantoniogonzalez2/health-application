@@ -49,3 +49,9 @@ gem 'devise'
 
 #Bootstrap
 gem 'bootstrap-sass'
+
+#Validacion
+gem "jquery-validation-rails"
+
+#autocomplete
+#gem 'rails3-jquery-autocomplete'
