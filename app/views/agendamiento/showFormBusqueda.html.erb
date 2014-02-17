@@ -1,9 +1,5 @@
-<script>
-  var busquedaHoraFormActualizar="<%= agendaShowFormBusquedaRefresh_path %>"
-  var pedirHoraPath="<%= pedirHora_path %>"
-  var mostrarEventos='<%= showEventos_path %>'
-  var administrativo_id=5
- </script> 
+<%= javascript_include_tag "agendamiento/agendamiento-autocomplete-suggestions" %>
+<%= javascript_include_tag "agendamiento/agendamiento-inicial" %>
 
 <form class="form-horizontal" id="formBuscarHora">
   <fieldset>
@@ -82,5 +78,4 @@
 
   </fieldset>
 </form>
-
 
