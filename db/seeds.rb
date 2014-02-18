@@ -6,15 +6,70 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+#Users 
+
+puts 'User 1'
+U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+
+
+puts 'User 2'
+U2=User.new
+U2.email = "paciente2@gmail.com"
+U2.password = "alex1234"
+U2.password_confirmation = "alex1234"
+U2.save!
+
+U3=User.new
+U3.email = "paciente3@gmail.com"
+U3.password = "alex1234"
+U3.password_confirmation = "alex1234"
+U3.save!
+
+U4=User.new
+U4.email = "doctor1@gmail.com"
+U4.password = "alex1234"
+U4.password_confirmation = "alex1234"
+U4.save!
+
+U5=User.new
+U5.email = "doctor2@gmail.com"
+U5.password = "alex1234"
+U5.password_confirmation = "alex1234"
+U5.save!
+
+U6=User.new
+U6.email = "doctor3@gmail.com"
+U6.password = "alex1234"
+U6.password_confirmation = "alex1234"
+U6.save!
+
+U7=User.new
+U7.email = "doctor4@gmail.com"
+U7.password = "alex1234"
+U7.password_confirmation = "alex1234"
+U7.save!
+
+U8=User.new
+U8.email = "secre1@gmail.com"
+U8.password = "alex1234"
+U8.password_confirmation = "alex1234"
+U8.save!
+
+U9=User.new
+U9.email = "secre2@gmail.com"
+U9.password = "alex1234"
+U9.password_confirmation = "alex1234"
+U9.save!
 
 #Pacientes
 puts 'Paciente 1'
 P1=PerPersonas.new
 P1.rut=10000000
 P1.nombre="Juan"
-P1.apellido_paterno="Subercaseux"
+P1.apellido_paterno="Gutierrez"
 P1.apellido_materno="Gutierrez"
 P1.genero="Masculino"
+P1.user = U1
 P1.save
 
 puts 'Paciente 2'
@@ -22,17 +77,19 @@ P2=PerPersonas.new
 P2.rut=20000000
 P2.nombre="Jose"
 P2.apellido_paterno="Hurtado"
-P2.apellido_materno="Perez"
+P2.apellido_materno="Hurtado"
 P2.genero="Masculino"
+P2.user = U2
 P2.save
 
 puts 'Paciente 3'
 P3=PerPersonas.new
 P3.rut=30000000
-P3.nombre="Amaranta"
+P3.nombre="Paula"
 P3.apellido_paterno="Saldivar"
-P3.apellido_materno="Matthei"
+P3.apellido_materno="Saldivar"
 P3.genero="Femenino"
+P3.user = U3
 P3.save
 
 #Profesional (doctor)
@@ -41,8 +98,9 @@ D1=PerPersonas.new
 D1.rut=40000000
 D1.nombre="Fabricio"
 D1.apellido_paterno="Rio"
-D1.apellido_materno="Fontecilla"
+D1.apellido_materno="Rio"
 D1.genero="Masculino"
+D1.user = U4
 D1.save
 
 puts 'Doctor2'
@@ -50,36 +108,30 @@ D2=PerPersonas.new
 D2.rut=4000004
 D2.nombre="Marcela"
 D2.apellido_paterno="Cardemil"
-D2.apellido_materno="Fontecilla"
+D2.apellido_materno="Cardemil"
 D2.genero="Femenino"
+D2.user = U5
 D2.save
 
 puts 'Doctor3'
 D3=PerPersonas.new
 D3.rut=40000040
 D3.nombre="Esteban"
-D3.apellido_paterno="Quito"
-D3.apellido_materno="Roto"
+D3.apellido_paterno="Lopez"
+D3.apellido_materno="Lopez"
 D3.genero="Masculino"
+D3.user = U6
 D3.save
 
 puts 'Doctor4'
 D4=PerPersonas.new
 D4.rut=40000400
-D4.nombre="Armando"
-D4.apellido_paterno="Casas"
-D4.apellido_materno="Del Rio"
+D4.nombre="Alex"
+D4.apellido_paterno="Lagos"
+D4.apellido_materno="Lagos"
 D4.genero="Masculino"
+D4.user = U7
 D4.save
-
-puts 'Doctor5'
-D5=PerPersonas.new
-D5.rut=40004000
-D5.nombre="Susana"
-D5.apellido_paterno="Horias"
-D5.apellido_materno="Parada"
-D5.genero="Femenino"
-D5.save
 
 #Administrativo
 puts 'Secretaria'
@@ -87,40 +139,41 @@ A=PerPersonas.new
 A.rut=50000000
 A.nombre="Maricela"
 A.apellido_paterno="Santibañez"
-A.apellido_materno="Buenavida"
+A.apellido_materno="Santibañez"
 A.genero="Femenino"
+A.user = U8
 A.save
+
+#Administrativo
+puts 'Secretaria'
+B=PerPersonas.new
+B.rut=60000000
+B.nombre="Fernanda"
+B.apellido_paterno="González"
+B.apellido_materno="González"
+B.genero="Femenino"
+B.user = U9
+B.save
+
 
 #Prestador (Clinica)
 puts 'Prestador 1'
 C1=PrePrestadores.new
-C1.nombre= "CONSALUD Puente Alto"
+C1.nombre= "Centro Médico 1"
 C1.rut=109000000
 C1.save
 
 puts 'Prestador 2'
 C2=PrePrestadores.new
-C2.nombre= "Clínica Bicentenario"
+C2.nombre= "Centro Médico 2"
 C2.rut=109000001
 C2.save
-
-puts 'Prestador 3'
-C3=PrePrestadores.new
-C3.nombre= "Hospital Sótero del Río"
-C3.rut=109000002
-C3.save
-
-puts 'Prestador 4'
-C4=PrePrestadores.new
-C4.nombre= "Megasalud Salvador"
-C4.rut=109000003
-C4.save
 
 
 #Rol Administrativo
 puts 'Rol Administrativo'
 R=PreRolAdministrativos.new
-R.nombre="Secretaria"
+R.nombre="Administradora de agenda"
 R.save
 
 puts 'Relación Prestador - Administrativo'
@@ -141,28 +194,18 @@ I.save
 
 puts 'Especialidad 1'
 E1=ProEspecialidades.new
-E1.nombre="Ginecología"
+E1.nombre="Medicina General"
 E1.save
 
 puts 'Especialidad 2'
 E2=ProEspecialidades.new
-E2.nombre="Neurología"
+E2.nombre="Pediatría"
 E2.save
 
 puts 'Especialidad 3'
 E3=ProEspecialidades.new
-E3.nombre="Oftalmología"
+E3.nombre="Cardiología"
 E3.save
-
-puts 'Especialidad 4'
-E4=ProEspecialidades.new
-E4.nombre="Pediatría"
-E4.save
-
-puts 'Especialidad 5'
-E5=ProEspecialidades.new
-E5.nombre="Cardiología"
-E5.save
 
 #Profesionales
 
@@ -183,22 +226,15 @@ P.save
 
 P=ProProfesionales.new
 P.validado = true
-P.profesional=D1
-P.especialidad=E3
-P.institucion=I
-P.save
-
-P=ProProfesionales.new
-P.validado = true
 P.profesional=D2
-P.especialidad=E4
+P.especialidad=E2
 P.institucion=I
 P.save
 
 P=ProProfesionales.new
 P.validado = true
 P.profesional=D3
-P.especialidad=E1
+P.especialidad=E3
 P.institucion=I
 P.save
 
@@ -209,21 +245,9 @@ P.especialidad=E3
 P.institucion=I
 P.save
 
-P=ProProfesionales.new
-P.validado = true
-P.profesional=D5
-P.especialidad=E5
-P.institucion=I
-P.save
 
-P=ProProfesionales.new
-P.validado = true
-P.profesional=D5
-P.especialidad=E1
-P.institucion=I
-P.save
 
-#Prestador-profesional
+# Centro 1
 puts 'Relación Prestador-Profesional'
 PP1=PrePrestadorProfesionales.new
 PP1.prestador=C1
@@ -240,84 +264,27 @@ PP2.save
 PP3=PrePrestadorProfesionales.new
 PP3.prestador=C1
 PP3.profesional=D2
-PP3.especialidad=E4
+PP3.especialidad=E2
 PP3.save
 
 PP4=PrePrestadorProfesionales.new
 PP4.prestador=C1
-PP4.profesional=D3
-PP4.especialidad=E1
+PP4.profesional=D4
+PP4.especialidad=E3
 PP4.save
-
-PP5=PrePrestadorProfesionales.new
-PP5.prestador=C1
-PP5.profesional=D4
-PP5.especialidad=E3
-PP5.save
-
-
-
 
 # Centro 2
 PP6=PrePrestadorProfesionales.new
 PP6.prestador=C2
-PP6.profesional=D1
-PP6.especialidad=E1
+PP6.profesional=D2
+PP6.especialidad=E2
 PP6.save
 
 PP6=PrePrestadorProfesionales.new
 PP6.prestador=C2
-PP6.profesional=D5
-PP6.especialidad=E5
+PP6.profesional=D3
+PP6.especialidad=E3
 PP6.save
-
-PP7=PrePrestadorProfesionales.new
-PP7.prestador=C2
-PP7.profesional=D3
-PP7.especialidad=E1
-PP7.save
-
-
-#Centro 3
-
-PP8=PrePrestadorProfesionales.new
-PP8.prestador=C3
-PP8.profesional=D5
-PP8.especialidad=E1
-PP8.save
-
-PP9=PrePrestadorProfesionales.new
-PP9.prestador=C3
-PP9.profesional=D5
-PP9.especialidad=E5
-PP9.save
-
-PP10=PrePrestadorProfesionales.new
-PP10.prestador=C3
-PP10.profesional=D4
-PP10.especialidad=E3
-PP10.save
-
-#Centro 4
-
-PP11=PrePrestadorProfesionales.new
-PP11.prestador=C4
-PP11.profesional=D2
-PP11.especialidad=E4
-PP11.save
-
-PP12=PrePrestadorProfesionales.new
-PP12.prestador=C4
-PP12.profesional=D3
-PP12.especialidad=E1
-PP12.save
-
-PP13=PrePrestadorProfesionales.new
-PP13.prestador=C4
-PP13.profesional=D4
-PP13.especialidad=E3
-PP13.save
-
 
 
 
@@ -329,25 +296,25 @@ S1.save
 
 puts 'Estado Agendamiento 2'
 S2=AgAgendamientoEstados.new
-S2.nombre="No Disponible" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
+S2.nombre="No disponible" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
 S2.save
 
 puts 'Estado Agendamiento 3'
 S3=AgAgendamientoEstados.new
-S3.nombre="Hora Reservada" #Cuando un paciente toma una hora
+S3.nombre="Hora reservada" #Cuando un paciente toma una hora
 S3.save
 
 puts 'Estado Agendamiento 4'
 S4=AgAgendamientoEstados.new
-S4.nombre="Cliente En Espera" #El paciente ya hizo el pago de bono y está en espera a que lo atiendan
+S4.nombre="Paciente en espera" #El paciente ya hizo el pago de bono y está en espera a que lo atiendan
 S4.save
 
 puts 'Estado Agendamiento 5'
 S5=AgAgendamientoEstados.new
-S5.nombre="Cliente Atendido" #La atención se realizó por completo
+S5.nombre="Paciente atendido" #La atención se realizó por completo
 S5.save
 
-puts 'Agendamiento 1'
+=begin puts 'Agendamiento 1'
 A1=AgAgendamientos.new
 A1.fecha_comienzo=DateTime.new(2014,1,17,17,0) #año,mes,dia,hora,minuto
 A1.fecha_final=DateTime.new(2014,1,17,17,30)
@@ -407,6 +374,7 @@ A5.persona=P3
 A5.fecha_comienzo_real=DateTime.now
 A5.fecha_final_real=DateTime.now + 23.minutes + 15.seconds
 A5.save
+=end
 
 #Examen
 Ex1=MedExamenes.new

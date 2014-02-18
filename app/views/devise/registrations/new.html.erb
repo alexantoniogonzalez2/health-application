@@ -21,7 +21,15 @@
 <td><%=password_field_tag "user[password_confirmation]",@user.password_confirmation %></td>
 </tr>
 
+<tr>
+<td>Nombre : </td>
+<td><%=text_field_tag "persona[nombre]" ,@persona.nombre %></td>
+</tr>
 
+<tr>
+<td>Apellido : </td>
+<td><%=text_field_tag "persona[apellido_paterno]" ,@persona.apellido_paterno %></td>
+</tr>
 
 <tr>
 <td><%= submit_tag nil, :class => "form_submit"%></td>

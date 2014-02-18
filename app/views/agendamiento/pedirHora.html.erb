@@ -11,7 +11,7 @@
 </script>
 
 
-
+<div id='action'> <button class="btn btn-inverse">Agregar horas <<</button></div>
 	<div id='breadcrumbs'>
 		<b><%= @breadcrumbs_title %></b>:
 		<% (0...@breadcrumbs.count).each do |i| %>
@@ -21,10 +21,10 @@
 			<% end %>
 		<% end %>
 	</div>
-	<div id='calendar'></div>
+	<div id='calendar'>
 	<% #Aquí agregar por "permiso", i.e. no todos pueden agregar horas %>
 	<% if params[:especialidad_id]!='-1' and params[:prestador_id]!='-1' and params[:profesional_id]!='-1' and @permisoParaAgregar %>
-		<div id='action'> <button class="btn btn-inverse">Agregar horas <<</button></div>
+		
 		<div id='form-container' style='display:none'>
 			<div id='tabs'>
 				<ul>
@@ -174,5 +174,8 @@
 				</div>
 			</div>
 		</div>
-	<% else %>
+
+		</div>
+
+		
 	<% end %>

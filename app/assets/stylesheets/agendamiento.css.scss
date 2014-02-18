@@ -27,4 +27,19 @@
 	font-weight: normal;
 	color: #3399FF;
 }
+#calendar { 
+	position: relative;
+	width: auto;
+}
+#form-container { 
+	position: absolute;
+  top: 80px;
+  right: 0;
+  z-index: 10;
+  display:none
+}
 
+#action {
+	float: right;
+
+}

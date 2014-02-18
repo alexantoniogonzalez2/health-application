@@ -9,12 +9,12 @@
 		var pedirHora='<%= pedirHoraEvento_path %>'
 	</script>
 
-
-	<div id='calendar' style='width:auto'></div>
-	<div id='action'> <a>Agregar Horas</a></div>
+<div id='action'> <a>Agregar Horas</a></div>
+	<div id='calendar' ></div>
+	
 	<% #Aquí agregar por "permiso", i.e. no todos pueden agregar horas %>
 	<% if true %>
-		<div id='form-container' style='display:none'>
+		<div id='form-container' >
 			<h1>Agregar Hora</h1>
 			<div id='tabs'>
 				<ul>
