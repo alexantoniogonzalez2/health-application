@@ -1,4 +1,5 @@
 class AgendamientoController < ApplicationController
+	include ApplicationHelper
 		# def showAgenda
 	# 	respond_to do |format|
 	# 		flash[:error] = []
@@ -25,9 +26,16 @@ class AgendamientoController < ApplicationController
 
 
 	def showFormBusqueda
-		@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
-		@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
-		@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')
+
+		if tieneRol('Administrador de agenda') 
+			@profesionales = PerPersonas.where("id IN (SELECT profesional_id FROM pre_prestador_profesionales WHERE prestador_id = ? )",getIdPrestador)
+   		@especialidades= ProEspecialidades.where("id IN (SELECT especialidad_id FROM pre_prestador_profesionales WHERE prestador_id= ? )",getIdPrestador)
+    	
+    else
+			@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
+			@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
+			@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')
+		end	
 	end
 
 	def showFormBusquedaActualizar

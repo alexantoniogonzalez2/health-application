@@ -3,8 +3,12 @@
 
 <form class="form-horizontal" id="formBuscarHora">
   <fieldset>
-
-    <legend>Buscador de horas médicas</legend>
+   
+    <% if tieneRol('Administrador de agenda') %>
+      <legend>Buscador de profesionales</legend>
+    <% else %>    
+      <legend>Buscador de horas médicas</legend>
+    <% end %>
 
     <!-- Button Drop Down -->
     <div class="control-group">
@@ -25,27 +29,34 @@
         </div>
       </div>
     </div>
-    
 
-    <!-- Button Drop Down -->
-    <div class="control-group">
-      <label class="control-label" for="buttondropdown">Centro Médico</label>
-      <div class="controls">
-        <div class="input-append">
-          <input id="prestador" name="prestador" data-id="-1" class="input-xlarge" placeholder="Ej. Hospital Dr. Cosme Argerich" type="text">
-          <div class="btn-group">
-            <button class="btn dropdown-toggle" data-toggle="dropdown">
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <% @prestadores.each do |p| %>
-                <li><a data-id="<%= p.id%>"><%= p.nombre %></a></li>
-              <% end %>
-            </ul>
+    
+    <% if tieneRol('Administrador de agenda') %>
+      <input id="prestador" name="prestador" data-id=<%= getIdPrestador %> class="input-xlarge" type="text" style="display: none" >
+   
+    <% else %> 
+      <div class="control-group">
+        <label class="control-label" for="buttondropdown">Centro Médico</label>
+        <div class="controls">
+          <div class="input-append">
+            <input id="prestador" name="prestador" data-id="-1" class="input-xlarge" placeholder="Ej. Hospital Dr. Cosme Argerich" type="text">
+            <div class="btn-group">
+              <button class="btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <% @prestadores.each do |p| %>
+                  <li><a data-id="<%= p.id%>"><%= p.nombre %></a></li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+    <% end %>
+    
+
 
     <!-- Button Drop Down -->
     <div class="control-group">

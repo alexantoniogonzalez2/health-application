@@ -173,8 +173,12 @@ C2.save
 #Rol Administrativo
 puts 'Rol Administrativo'
 R=PreRolAdministrativos.new
-R.nombre="Administradora de agenda"
+R.nombre="Administrador de agenda"
 R.save
+
+R2=PreRolAdministrativos.new
+R2.nombre="Administrador de pagos"
+R2.save
 
 puts 'Relación Prestador - Administrativo'
 PA=PrePrestadorAdministrativos.new
@@ -182,6 +186,12 @@ PA.prestador=C1
 PA.administrativo=A
 PA.rol_administrativo=R
 PA.save
+
+PA2=PrePrestadorAdministrativos.new
+PA2.prestador=C2
+PA2.administrativo=B
+PA2.rol_administrativo=R
+PA2.save
 
 #Institucion
 
