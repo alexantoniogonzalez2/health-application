@@ -5,8 +5,9 @@
   <% if user_signed_in? %>
   	<h3>Ha ingresado correctamente a la aplicación.</h3>
 
-  	<% if tieneRol('Administrador de agenda') %>
+  	<% if tieneRol('Genera agendamientos') %>
 			<%= link_to 'Agregar horas', agendaShowFormBusqueda_path %><br/>
+			<%= link_to "Salir", destroy_user_session_path, :method => :delete %>
 		<% else %>		
 			<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
 			<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>

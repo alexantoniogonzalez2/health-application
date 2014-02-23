@@ -1,6 +1,8 @@
 var lastT=0;
 var lastDate=null;
-var administrativo_id=5;
+var especialidad_id = -1;
+var profesional_id = -1;
+var prestador_id = -1;
 
 
 
@@ -140,7 +142,6 @@ $(function(){
 			r+='</div>';
 			$.modal(r);
 			r='';
-			r+='<img src="../../images/loading.gif" height="20" width="20">';
 			r+='<div style="display:inline">  Cargando...</div>';
 			$('#simplemodal-show').html(r);
 			
@@ -149,13 +150,17 @@ $(function(){
 				type: 'POST',
 				url: detalleEvento,
 				data: {
-					administrativo_id: administrativo_id,
+					//administrativo_id: ,
 					agendamiento_id: calEvent.id
 				},
 				success: function(response) {
 					 $('#simplemodal-show').html(response);
 					 $.modal.setPosition();
 					 // Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click
+					 	 $('#simplemodal-show .simplemodal-close').click(function(){
+		 				$.modal.close();
+
+		 			});
 					 $('#simplemodal-show .pedir-hora').click(function(){
 		 				$('#simplemodal-show .pedir-hora').attr("disabled","disabled")
 					 	// $('#calendar').fullCalendar('gotoDate',calEvent.start);
@@ -165,7 +170,6 @@ $(function(){
 					 		type: 'POST',
 					 		url: pedirHora,
 					 		data: {
-					 			administrativo_id: administrativo_id,
 					 			agendamiento_id: calEvent.id,
 					 			paciente_id: 1
 					 		},
@@ -182,9 +186,12 @@ $(function(){
 					 			// Re-cargamos el evento modificado
 					 			$.ajax({
 					 				type: 'POST',
-					 				url: mostrarEventos,
+					 				url: '/aux/mostrarEventos',
 					 				data: {
-					 					evento_id: id
+					 					evento_id: id,
+					 					especialidad_id: especialidad_id,
+										profesional_id: profesional_id,
+										prestador_id: prestador_id,
 					 				},
 					 				success: function(response) {
 					 					$('#calendar').fullCalendar('addEventSource',response);
@@ -383,12 +390,14 @@ $(function(){
 		$('#calendar').fullCalendar('addEventSource', add_events);
 
 
-		$('#comportamientoForm .status').html('<img src="../../images/loading.gif" height="40" width="40">');
+		$('#comportamientoForm .status').html(link_loading);
 		$.ajax({
 			type: 'POST',
 			url: agregarHoraURL,
 			data: {
-				administrativo_id: administrativo_id,
+				especialidad_id: especialidad_id,
+				profesional_id: profesional_id,
+				prestador_id: prestador_id,
 				date_i:d_inicio,
 				date_f:d_final,
 				hora_i:$(form).find('input[name="hi"]').val(),
@@ -525,12 +534,14 @@ $(function(){
 			$('#calendar').fullCalendar('addEventSource', add_events);
 
 
-			$('#diaForm .status').html('<img src="../../images/loading.gif" height="40" width="40">');
+			$('#diaForm .status').html(link_loading);
 			$.ajax({
 				type: 'POST',
 				url: agregarHoraURL,
 				data: {
-					administrativo_id: administrativo_id,
+					especialidad_id: especialidad_id,
+					profesional_id: profesional_id,
+					prestador_id: prestador_id,
 					date_i:d_i_s,
 					date_f:d_f_s,					
 					step: step,
@@ -557,7 +568,9 @@ $(function(){
 		type: 'POST',
 		url: '/aux/mostrarEventos',
 		data: {
-			administrativo_id: administrativo_id
+			especialidad_id: especialidad_id,
+			profesional_id: profesional_id,
+			prestador_id: prestador_id,
 		},
 		success: function(response) {
 			 $('#calendar').fullCalendar('addEventSource',response);

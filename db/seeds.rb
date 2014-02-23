@@ -8,58 +8,16 @@
 
 #Users 
 
-puts 'User 1'
+puts 'Users'
 U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-
-
-puts 'User 2'
-U2=User.new
-U2.email = "paciente2@gmail.com"
-U2.password = "alex1234"
-U2.password_confirmation = "alex1234"
-U2.save!
-
-U3=User.new
-U3.email = "paciente3@gmail.com"
-U3.password = "alex1234"
-U3.password_confirmation = "alex1234"
-U3.save!
-
-U4=User.new
-U4.email = "doctor1@gmail.com"
-U4.password = "alex1234"
-U4.password_confirmation = "alex1234"
-U4.save!
-
-U5=User.new
-U5.email = "doctor2@gmail.com"
-U5.password = "alex1234"
-U5.password_confirmation = "alex1234"
-U5.save!
-
-U6=User.new
-U6.email = "doctor3@gmail.com"
-U6.password = "alex1234"
-U6.password_confirmation = "alex1234"
-U6.save!
-
-U7=User.new
-U7.email = "doctor4@gmail.com"
-U7.password = "alex1234"
-U7.password_confirmation = "alex1234"
-U7.save!
-
-U8=User.new
-U8.email = "secre1@gmail.com"
-U8.password = "alex1234"
-U8.password_confirmation = "alex1234"
-U8.save!
-
-U9=User.new
-U9.email = "secre2@gmail.com"
-U9.password = "alex1234"
-U9.password_confirmation = "alex1234"
-U9.save!
+U2= User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U3= User.create! :email => 'paciente3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U4= User.create! :email => 'doctor1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U5= User.create! :email => 'doctor2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U6= User.create! :email => 'doctor3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U7= User.create! :email => 'doctor4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U8= User.create! :email => 'secre1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U9= User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
 
 #Pacientes
 puts 'Paciente 1'
@@ -155,7 +113,6 @@ B.genero="Femenino"
 B.user = U9
 B.save
 
-
 #Prestador (Clinica)
 puts 'Prestador 1'
 C1=PrePrestadores.new
@@ -169,28 +126,48 @@ C2.nombre= "Centro Médico 2"
 C2.rut=109000001
 C2.save
 
-
 #Rol Administrativo
 puts 'Rol Administrativo'
-R=PreRolAdministrativos.new
-R.nombre="Administrador de agenda"
-R.save
+R1=PreRolAdministrativos.new
+R1.nombre="Genera agendamientos"
+R1.save
 
 R2=PreRolAdministrativos.new
-R2.nombre="Administrador de pagos"
+R2.nombre="Confirma agendamientos"
 R2.save
+
+R3=PreRolAdministrativos.new
+R3.nombre="Recibe pacientes"
+R3.save
+
+R4=PreRolAdministrativos.new
+R4.nombre="Genera estadisticas"
+R4.save
 
 puts 'Relación Prestador - Administrativo'
 PA=PrePrestadorAdministrativos.new
 PA.prestador=C1
 PA.administrativo=A
-PA.rol_administrativo=R
+PA.rol_administrativo=R1
 PA.save
+
+PA=PrePrestadorAdministrativos.new
+PA.prestador=C1
+PA.administrativo=A
+PA.rol_administrativo=R2
+PA.save
+
+PA=PrePrestadorAdministrativos.new
+PA.prestador=C1
+PA.administrativo=A
+PA.rol_administrativo=R3
+PA.save
+
 
 PA2=PrePrestadorAdministrativos.new
 PA2.prestador=C2
 PA2.administrativo=B
-PA2.rol_administrativo=R
+PA2.rol_administrativo=R1
 PA2.save
 
 #Institucion
@@ -255,8 +232,6 @@ P.especialidad=E3
 P.institucion=I
 P.save
 
-
-
 # Centro 1
 puts 'Relación Prestador-Profesional'
 PP1=PrePrestadorProfesionales.new
@@ -301,12 +276,12 @@ PP6.save
 #Estado agendamiento
 puts 'Estado Agendamiento 1'
 S1=AgAgendamientoEstados.new
-S1.nombre="Disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
+S1.nombre="Hora disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
 S1.save
 
 puts 'Estado Agendamiento 2'
 S2=AgAgendamientoEstados.new
-S2.nombre="No disponible" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
+S2.nombre="Hora no disponible" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
 S2.save
 
 puts 'Estado Agendamiento 3'
@@ -314,77 +289,94 @@ S3=AgAgendamientoEstados.new
 S3.nombre="Hora reservada" #Cuando un paciente toma una hora
 S3.save
 
-puts 'Estado Agendamiento 4'
 S4=AgAgendamientoEstados.new
-S4.nombre="Paciente en espera" #El paciente ya hizo el pago de bono y está en espera a que lo atiendan
+S4.nombre="Hora confirmada" #La atención se realizó por completo
 S4.save
+
+puts 'Estado Agendamiento 4'
+S5=AgAgendamientoEstados.new
+S5.nombre="Paciente en espera" #El paciente ya hizo el pago de bono y está en espera a que lo atiendan
+S5.save
 
 puts 'Estado Agendamiento 5'
 S5=AgAgendamientoEstados.new
 S5.nombre="Paciente atendido" #La atención se realizó por completo
 S5.save
 
-=begin puts 'Agendamiento 1'
-A1=AgAgendamientos.new
-A1.fecha_comienzo=DateTime.new(2014,1,17,17,0) #año,mes,dia,hora,minuto
-A1.fecha_final=DateTime.new(2014,1,17,17,30)
-A1.especialidad_prestador_profesional=PP1
-#A1.profesional=D1
-A1.administrativo=A
-A1.agendamiento_estado=S1
-#A1.prestador=C1
-A1.save
+puts 'Agendamientos'
+U1= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,0),
+														:fecha_final => DateTime.new(2014,3,24,10,30),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4
 
+U2= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,30),
+														:fecha_final => DateTime.new(2014,3,24,11,00),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4
 
-puts 'Agendamiento 2'
-A2=AgAgendamientos.new
-A2.fecha_comienzo=DateTime.new(2014,1,17,17,30)
-A2.fecha_final=DateTime.new(2014,1,17,18,0)
-A2.especialidad_prestador_profesional=PP2
-#A2.profesional=D1
-A2.administrativo=A
-A2.agendamiento_estado=S2
-#A2.prestador=C1
-A2.save
+U3= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,11,00),
+														:fecha_final => DateTime.new(2014,3,24,11,30),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4	
 
-puts 'Agendamiento 3'
-A3=AgAgendamientos.new
-A3.fecha_comienzo=DateTime.new(2014,1,17,18,0)
-A3.fecha_final=DateTime.new(2014,1,17,18,30)
-A3.especialidad_prestador_profesional=PP3
-#A3.profesional=D1
-A3.administrativo=A
-A3.agendamiento_estado=S3
-#A3.prestador=C1
-A3.persona=P1
-A3.save
+U4= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,30),
+														:fecha_final => DateTime.new(2014,3,24,11,00),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4	
 
-puts 'Agendamiento 4'
-A4=AgAgendamientos.new
-A4.fecha_comienzo=DateTime.new(2014,1,12,12,0)
-A4.fecha_final=DateTime.new(2014,1,12,12,30)
-A4.especialidad_prestador_profesional=PP4
-#A4.profesional=D1
-A4.administrativo=A
-A4.agendamiento_estado=S4
-#A4.prestador=C1
-A4.persona=P2
-A4.save
+U5= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,0),
+														:fecha_final => DateTime.new(2014,3,25,10,30),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4
 
-puts 'Agendamiento 5'
-A5=AgAgendamientos.new
-A5.fecha_comienzo=DateTime.new(2014,1,12,11,0)
-A5.fecha_final=DateTime.new(2014,1,12,11,30)
-A5.especialidad_prestador_profesional=PP5
-#A5.profesional=D1
-A5.administrativo=A
-A5.agendamiento_estado=S5
-#A5.prestador=C1
-A5.persona=P3
-A5.fecha_comienzo_real=DateTime.now
-A5.fecha_final_real=DateTime.now + 23.minutes + 15.seconds
-A5.save
-=end
+U6= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
+														:fecha_final => DateTime.new(2014,3,25,11,00),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4
+
+U7= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,00),
+														:fecha_final => DateTime.new(2014,3,25,11,30),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4	
+
+U8= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
+														:fecha_final => DateTime.new(2014,3,25,11,00),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP4
+
+U9= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,0),
+														:fecha_final => DateTime.new(2014,3,25,10,30),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP1
+
+U10= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
+														:fecha_final => DateTime.new(2014,3,25,11,00),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP1
+
+U11= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,00),
+														:fecha_final => DateTime.new(2014,3,25,11,30),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP1	
+
+U12= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
+														:fecha_final => DateTime.new(2014,3,25,11,00),
+														:admin_genera => A,
+														:agendamiento_estado => S1,
+														:especialidad_prestador_profesional => PP1																																																						
+
+puts 'Examenes'
 
 #Examen
 Ex1=MedExamenes.new
