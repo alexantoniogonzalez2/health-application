@@ -27,6 +27,9 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/mostrarEventos', to: 'agendamiento#mostrarEventos', :as => :showEventos
   post '/aux/detalleEvento', to: 'agendamiento#detalleEvento', :as => :detalleEvento
   post '/aux/pedirHoraEvento', to: 'agendamiento#pedirHoraEvento', :as => :pedirHoraEvento
+  post '/aux/cancelarHora', to: 'agendamiento#cancelarHora', :as => :cancelarHora
+  post '/aux/confirmarHora', to: 'agendamiento#confirmarHora', :as => :confirmarHora
+  post '/aux/marcarLlegada', to: 'agendamiento#marcarLlegada', :as => :marcarLlegada
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
 
   # The priority is based upon order of creation: first created -> highest priority.

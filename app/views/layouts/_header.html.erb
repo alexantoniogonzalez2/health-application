@@ -1,12 +1,17 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <%= link_to "MedRacer", '#', id: "logo" %>
+      <%= link_to "MedRacer", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-          <li><%= link_to "Home",    '#' %></li>
-          <li><%= link_to "Ayudar",    '#' %></li>
-          <li><%= link_to "Ingresar", '#' %></li>
+          <li><%= link_to "Home",    root_path %></li>
+          <li><%= link_to "Ayuda",    '#' %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %></li>
+            <li><%= link_to current_user.persona.showName('%n%p') ,'#'%> </li> 
+          <% else %> 
+            <li><%= link_to "Ingresar", '#' %></li>          
+          <% end %>
         </ul>
       </nav>
     </div>

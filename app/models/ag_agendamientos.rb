@@ -1,4 +1,5 @@
 class AgAgendamientos < ActiveRecord::Base
+
 	belongs_to :especialidad_prestador_profesional, :class_name => 'PrePrestadorProfesionales'
 	belongs_to :persona, :class_name => 'PerPersonas'
 	belongs_to :admin_genera, :class_name => 'PerPersonas'
@@ -68,31 +69,29 @@ class AgAgendamientos < ActiveRecord::Base
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: <s>#{range('estimado')}</s>"
         show=true
-    elsif agendamiento_estado.nombre == 'Hora reservada' or agendamiento_estado.nombre == 'Hora confirmada' 
+    elsif agendamiento_estado.nombre == 'Hora reservada'
         description<< "<u><b>Hora reservada</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
-        show=true
-      
+        show=true  
+    elsif agendamiento_estado.nombre == 'Hora confirmada' 
+        description<< "<u><b>Hora confirmada</b></u>"
+        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        description<<"</br>Hora: #{range('estimado')}"
+        show=true         
     elsif agendamiento_estado.nombre == 'Paciente en espera'
-        #if permiso.split(':')[1]=='Paciente'
-          description<< "<u><b>Hora reservada</b></u>"
-        #else
-          color='#21CAA8'
-          description<< "<u><b>Paciente en espera</b></u>"
-        #end
+        description<< "<u><b>Hora reservada</b></u>"
+        color='#21CAA8'
+        description<< "<u><b>Paciente en espera</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
     elsif agendamiento_estado.nombre == 'Paciente atendido'
-        #if permiso.split(':')[1]=='Paciente'
-          description<< "<u><b>Hora reservada</b></u>"
-        #else
-          color='#28DC52'
-          description<< "<u><b>Paciente atendido</b></u>"
-        #end
-      description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-      description<<"</br>Hora: #{range('estimado')}"
+        description<< "<u><b>Hora reservada</b></u>"
+        color='#28DC52'
+        description<< "<u><b>Paciente atendido</b></u>"
+        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        description<<"</br>Hora: #{range('estimado')}"
         show=true
     end
 
@@ -125,48 +124,73 @@ class AgAgendamientos < ActiveRecord::Base
 
 
 
-  def detalleHTML
+  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_paciente) #los parámetros corresponden a permisos
 
     show=false
     detalle = ''
-    detalle_comun = ''
-    detalle_especifico = ''
+    tomar_hora =''
+    reabrir =''
+    paciente = ''
+    llegada_paciente =''
+    confirmar =''
+    cancelar =''
+    hora_llegada =''
+    hora_inicio_atencion =''
+    hora_termino_atencio =''
     estado = agendamiento_estado.nombre
 
-    detalle_comun<<"<h3>"<<estado<<"</h3>
-                    <table>
-                    <tr><td><h5>Recinto de salud</h5></td><td>: #{especialidad_prestador_profesional.prestador.nombre}</td></tr>
-                    <tr><td><h5>Especialidad</h5></td><td>: #{especialidad_prestador_profesional.especialidad.nombre}</td></tr>
-                    <tr><td><h5>Especialista</h5></td><td>: #{especialidad_prestador_profesional.profesional.showName('%d%n%p%m')}</td></tr>
-                    <tr><td><h5>Fecha y hora de inicio</h5></td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
-                    <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
+    detalle<<"<h3>"<<estado<<"</h3><table>
+              <tr><td><h5>Recinto de salud</h5></td><td>: #{especialidad_prestador_profesional.prestador.nombre}</td></tr>
+              <tr><td><h5>Especialidad</h5></td><td>: #{especialidad_prestador_profesional.especialidad.nombre}</td></tr>
+              <tr><td><h5>Especialista</h5></td><td>: #{especialidad_prestador_profesional.profesional.showName('%d%n%p%m')}</td></tr>
+              <tr><td><h5>Fecha y hora de inicio</h5></td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
+              <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
+    #los elementos se configuran si se cumplen los permisos                
+    tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
+    reabrir = "<button class='btn btn-primary'>Re-Abrir</button>Tomar hora</button>"
+    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
+      if estado != 'Hora disponible' and estado != 'Hora no disponible'     
+      paciente<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr>"
+      end
+    end 
+    if perm_admin_recibe 
+      llegada_paciente<<"<button class='btn btn-primary marcar-llegada'>Marcar llegada del paciente</button>"  
+    end                  
+    if perm_admin_confirma or perm_paciente
+      confirmar<<"<button class='btn btn-primary confirmar-hora'>Confirmar hora</button>"  
+    end 
+    if perm_admin_confirma or perm_paciente  
+      cancelar<<"<button class='btn btn-primary cancelar-hora'>Cancelar hora</button>" 
+    end
+    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente
+      if estado == 'Paciente en espera' or estado == 'Paciente atendido'            
+        hora_llegada = "<tr><td><h5>Fecha y hora de llegada paciente</h5></td><td>:  #{dateTimeFormat(fecha_llegada_paciente,'extendido')}</td></tr>"
+      end         
+    end
+    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
+      if estado == 'Paciente atendido'         
+        hora_inicio_atencion = "<tr><td><h5>Fecha y hora de inicio atención</h5></td><td>: #{dateTimeFormat(fecha_comienzo_real,'extendido')}</td></tr>"
+        hora_termino_atencio = "<tr><td><h5>Fecha y hora de término atención</h5></td><td>: #{dateTimeFormat(fecha_final_real,'extendido')}</td></tr>" 
+      end  
+    end      
+      
     case estado
       when 'Hora disponible'
-        detalle_especifico<<"</table><button class='btn btn-primary pedir-hora'>Tomar hora</button>"
+        detalle<<'</table>'<<tomar_hora
       when 'Hora no disponible'        
-        detalle_especifico<<"</table><button class='btn btn-primary'>Re-Abrir</button>Tomar hora</button>"
+        detalle<<'</table>'<<reabrir
       when 'Hora reservada' 
-
-        detalle_especifico<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr></table>
-                             <button class='btn btn-primary'>Marcar llegada del paciente</button>
-                             <button class='btn btn-primary'>Confirmar hora</button>
-                             <button class='btn btn-primary'>Cancelar hora</button>" 
+        detalle<<paciente<<'</table>'<<llegada_paciente<<confirmar<<cancelar
       when 'Hora confirmada' 
-        detalle_especifico<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr></table>
-                             <button class='btn btn-primary'>Marcar llegada del paciente</button>
-                             <button class='btn btn-primary'>Cancelar hora</button>" 
+        detalle<<paciente<<'</table>'<<llegada_paciente<<cancelar                             
       when 'Paciente en espera'  
-        detalle_especifico<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr>
-                             <tr><td><h5>Fecha y hora de llegada paciente</h5></td><td>:</td></tr></table>"
+        detalle<<paciente<<hora_llegada<<'</table>'
       when 'Paciente atendido'  
-        detalle_especifico<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr>
-                             <tr><td><h5>Fecha y hora de llegada paciente</h5></td><td>:</td></tr>
-                             <tr><td><h5>Fecha y hora de inicio atención</h5></td><td>: #{dateTimeFormat(fecha_comienzo_real,'extendido')}</td></tr>
-                             <tr><td><h5>Fecha y hora de término atención</h5></td><td>: #{dateTimeFormat(fecha_final_real,'extendido')}</td></tr></table>"    
+        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table>'                           
     end                
 
-    detalle<<detalle_comun<<detalle_especifico<<"<button class='btn btn-primary simplemodal-close'>Cerrar</button>"     
+    detalle<<"<button class='btn btn-primary simplemodal-close'>Cerrar ventana</button>"     
     
     detalle
   

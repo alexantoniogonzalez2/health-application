@@ -83,6 +83,8 @@ class PerPersonas < ActiveRecord::Base
     end
   end
 
+  
+
   private
   def app_params
     params.require(:persona).permit(:apellido_materno,

@@ -93,7 +93,6 @@ class AgendamientoController < ApplicationController
 			@permisoParaAgregar=true 
 		end	
 
-
 	end
 
 	def pedirHoraEvento
@@ -117,12 +116,70 @@ class AgendamientoController < ApplicationController
 		render :text=> respuesta
 	end
 
-	def detalleEvento
-		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
-		tmp = '';
-		tmp<<@Agendamiento.detalleHTML
+	def cancelarHora
+
+		#Posible problema por transacciones
+		respuesta="0"
+		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
+		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
+		@Agendamiento.transaction do
+			respuesta="1"
+			@Agendamiento.persona=nil
+			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.save			
+		end
 		
-		if tmp.length >0
+		render :text=> respuesta
+	end
+
+	def confirmarHora
+		#Posible problema por transacciones
+		respuesta="0"
+		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
+		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora confirmada").first
+		@Agendamiento.transaction do
+			respuesta="1"
+			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.admin_confirma=PerPersonas.find(current_user.id) 
+			@Agendamiento.save			
+		end
+		
+		render :text=> respuesta
+	end
+
+	def marcarLlegada
+		#Posible problema por transacciones
+		respuesta="0"
+		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
+		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Paciente en espera").first
+		@Agendamiento.transaction do
+			respuesta="1"
+			@Agendamiento.fecha_llegada_paciente = DateTime.current #,'%Y-%m-%d %H:%M:%S.%L')
+			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.admin_recibe=PerPersonas.find(current_user.id) 
+			@Agendamiento.save			
+		end
+		
+		render :text=> respuesta
+	end	
+
+	def detalleEvento
+		
+		tmp = '';
+		perm_paciente = false
+		perm_admin_genera = tieneRol('Genera agendamientos')
+		perm_admin_confirma = tieneRol('Confirma agendamientos')
+		perm_admin_recibe = tieneRol('Recibe pacientes')	
+		
+		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
+
+		if (@Agendamiento.persona)
+			perm_paciente = (current_user.id == @Agendamiento.persona.id)? true : false 	
+		end 
+			
+		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_paciente)
+		
+		if tmp.length >0 
 			render :text=> tmp
 		else
 			flash[:tipo]="Agendamiento#detalleEvento"
@@ -160,7 +217,7 @@ class AgendamientoController < ApplicationController
 				@Agendamiento.fecha_final=tmp_f
 				@Agendamiento.agendamiento_estado=@EstadoAgendamiento
 				@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
-				@Agendamiento.administrativo=PerPersonas.find(current_user.id) 
+				@Agendamiento.admin_genera=PerPersonas.find(current_user.id) 
 				@Agendamiento.save
 
 				events << @Agendamiento.event
@@ -215,7 +272,7 @@ class AgendamientoController < ApplicationController
 					@Agendamiento.fecha_final=tmp_f
 					@Agendamiento.agendamiento_estado=@EstadoAgendamiento
 					@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
-					@Agendamiento.administrativo=PerPersonas.find(current_user.id) 
+					@Agendamiento.admin_genera=PerPersonas.find(current_user.id) 
 					@Agendamiento.save
 					
 					events << @Agendamiento.event
