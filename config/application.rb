@@ -20,5 +20,10 @@ module AplicacionMedica
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
+    
+  config.time_zone = 'Santiago' 
+  config.active_record.default_timezone = :local
+  config.active_record.time_zone_aware_attributes = false 
   end
 end
