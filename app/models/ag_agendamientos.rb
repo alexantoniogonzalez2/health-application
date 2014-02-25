@@ -177,20 +177,20 @@ class AgAgendamientos < ActiveRecord::Base
       
     case estado
       when 'Hora disponible'
-        detalle<<'</table>'<<tomar_hora
+        detalle<<'</table><p>'<<tomar_hora
       when 'Hora no disponible'        
-        detalle<<'</table>'<<reabrir
+        detalle<<'</table><p>'<<reabrir
       when 'Hora reservada' 
-        detalle<<paciente<<'</table>'<<llegada_paciente<<confirmar<<cancelar
+        detalle<<paciente<<'</table><p>'<<llegada_paciente<<confirmar<<cancelar
       when 'Hora confirmada' 
-        detalle<<paciente<<'</table>'<<llegada_paciente<<cancelar                             
+        detalle<<paciente<<'</table><p>'<<llegada_paciente<<cancelar                             
       when 'Paciente en espera'  
-        detalle<<paciente<<hora_llegada<<'</table>'
+        detalle<<paciente<<hora_llegada<<'</table><p>'
       when 'Paciente atendido'  
-        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table>'                           
+        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table><p>'                           
     end                
 
-    detalle<<"<button class='btn btn-primary simplemodal-close'>Cerrar ventana</button>"     
+    detalle<<"<button class='btn btn-danger simplemodal-close'>Cerrar ventana</button></p>"     
     
     detalle
   

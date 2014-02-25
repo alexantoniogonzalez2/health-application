@@ -14,17 +14,32 @@ module ApplicationHelper
 
 	end
 
-	def getIdPrestador
+	def getIdPrestador(perfil)
 
-		@prestador_administrativo = PrePrestadorAdministrativos.find_by administrativo_id: current_user.id
+		case perfil
+		when 'administrativo'
+			@prestador = PrePrestadorAdministrativos.find_by administrativo_id: current_user.id
+		when 'profesional'	
+			@prestador = PrePrestadorProfesionales.find_by profesional_id: current_user.id
+		end 
+
+		
 	
-		return @prestador_administrativo.prestador_id
+		return @prestador.prestador_id
 
 	end
 
+	def esProfesionalSalud
+	
+		@prestador_profesional = PrePrestadorProfesionales.find_by profesional_id: current_user.id
+	
+		if @prestador_profesional
+			return true
+		else
+			return false
+		end
 
-
-
+	end
 
 
 end

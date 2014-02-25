@@ -206,13 +206,6 @@ P.save
 
 P=ProProfesionales.new
 P.validado = true
-P.profesional=D1
-P.especialidad=E2
-P.institucion=I
-P.save
-
-P=ProProfesionales.new
-P.validado = true
 P.profesional=D2
 P.especialidad=E2
 P.institucion=I
@@ -239,12 +232,6 @@ PP1.prestador=C1
 PP1.profesional=D1
 PP1.especialidad=E1
 PP1.save
-
-PP2=PrePrestadorProfesionales.new
-PP2.prestador=C1
-PP2.profesional=D1
-PP2.especialidad=E2
-PP2.save
 
 PP3=PrePrestadorProfesionales.new
 PP3.prestador=C1

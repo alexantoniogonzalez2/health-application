@@ -3,16 +3,23 @@
   <h2>Esta es la página de inicio de la aplicación.</h2>
 
   <% if user_signed_in? %>
-  	<h3>Ha ingresado correctamente a la aplicación.</h3>
+  	<h2>Ha ingresado correctamente a la aplicación.</h2>
 
   	<% if tieneRol('Genera agendamientos') %>
 			<%= link_to 'Agregar horas', agendaShowFormBusqueda_path %><br/>
-			<%= link_to "Salir", destroy_user_session_path, :method => :delete %>
+		<% elsif esProfesionalSalud %>
+				<div class="row clearfix">
+					<div class="col-md-8 column">
+						<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
+					</div>
+					<div class="col-md-4 column">
+						<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
+						<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>
+						<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
+					</div>						
+				</div>			
 		<% else %>		
-			<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
-			<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>
-			<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
-			<%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %>
+			<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>			
 		<% end %>
 
 	<% else %>

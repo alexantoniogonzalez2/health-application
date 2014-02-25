@@ -48,7 +48,7 @@ gem 'mysql2'
 gem 'devise'
 
 #Bootstrap
-gem 'bootstrap-sass'
+gem 'bootstrap-sass','~> 3.1.1'
 
 #Validacion
 gem "jquery-validation-rails"

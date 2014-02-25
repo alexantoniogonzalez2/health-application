@@ -11,7 +11,7 @@
     <% end %>
 
     <% if tieneRol('Genera agendamientos') %>
-      <input id="prestador" name="prestador" data-id=<%= getIdPrestador %> class="input-xlarge" type="text" style="display: none" >
+      <input id="prestador" name="prestador" data-id=<%= getIdPrestador('administrativo') %> class="input-xlarge" type="text" style="display: none" >
    
     <% else %> 
       <div class="control-group">
