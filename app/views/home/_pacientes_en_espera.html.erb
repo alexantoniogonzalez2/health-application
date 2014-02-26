@@ -1,0 +1,18 @@
+<% agendamientos = getPacientesEnEspera %>
+
+<table class="table">
+	<thead>
+		<tr><th>Paciente</th><th>Hora atención</th><th>Estado</th><th>Acción</th></tr>
+	</thead>
+	<tbody>
+<% for agendamiento in agendamientos %>
+  <tr>
+    <td><%= agendamiento.persona.showName('%n%p%m') %></td>
+    <td><%= agendamiento.fecha_comienzo %></td>  
+    <td><p><button class='btn btn-xs btn-success'>Atender paciente</button><button class='btn btn-xs btn-danger'>Cancelar atención</button></p></td>    
+  </tr>
+<% end %>
+
+	</tbody>
+</table>
+

@@ -41,5 +41,9 @@ module ApplicationHelper
 
 	end
 
+	def getPacientesEnEspera
+		 @agendamientos= AgAgendamientos.all
+		 return @agendamientos
+	end
 
 end

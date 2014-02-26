@@ -196,6 +196,7 @@ class AgAgendamientos < ActiveRecord::Base
   
   end
 
+
   private
   def app_params
     params.require(:list).permit( :admin_genera,

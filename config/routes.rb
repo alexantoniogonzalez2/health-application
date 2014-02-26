@@ -9,6 +9,7 @@ AplicacionMedica::Application.routes.draw do
 
   #Modulo atencion salud
   resources :atenciones_salud
+  post '/pacientes_en_espera', to: 'atenciones_salud#pacientesEnEspera', :as => :pacientesEnEspera
 
   post '/agregar_examen', to: 'persona_examen#agregarExamen', :as => :agregarExamen
 

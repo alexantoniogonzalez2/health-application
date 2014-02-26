@@ -47,22 +47,23 @@ class AtencionesSaludController < ApplicationController
 	  end
 	end
 
-	 private
-    def app_params
-      params.require(:atencion_salud).permit(:agendamiento,
-                    :certificados,
-                    :examen_fisico,
-                    :id,
-                    :indicaciones_generales,
-                    :interconsultas,
-                    :motivo_consulta,
-                    :persona,
-                    :persona_diagnosticos_atencion_salud,
-                    :persona_examenes,
-                    :persona_medicamentos,
-                    :persona_metricas,
-                    :tipo_ficha)
-    end
+	private
+	  def app_params
+	    params.require(:atencion_salud).permit(:agendamiento,
+	                  :certificados,
+	                  :examen_fisico,
+	                  :id,
+	                  :indicaciones_generales,
+	                  :interconsultas,
+	                  :motivo_consulta,
+	                  :persona,
+	                  :persona_diagnosticos_atencion_salud,
+	                  :persona_examenes,
+	                  :persona_medicamentos,
+	                  :persona_metricas,
+	                  :tipo_ficha)
+	  end	 
+
 
 
 end
