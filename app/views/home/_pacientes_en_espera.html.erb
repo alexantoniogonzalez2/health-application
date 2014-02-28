@@ -9,7 +9,8 @@
   <tr>
     <td><%= agendamiento.persona.showName('%n%p%m') %></td>
     <td><%= agendamiento.fecha_comienzo %></td>  
-    <td><p><button class='btn btn-xs btn-success'>Atender paciente</button><button class='btn btn-xs btn-danger'>Cancelar atención</button></p></td>    
+    <td><p><%= button_to "Atender", {:controller => :atenciones_salud,
+      :action => 'crearAtencion', :id => agendamiento.id }, :method => :post,class: "btn btn-xsbtn-success" %><button class='btn btn-xs btn-success'>Editar</button><button class='btn btn-xs btn-danger'>Cancelar</button></p></td>    
   </tr>
 <% end %>
 

@@ -42,7 +42,8 @@ module ApplicationHelper
 	end
 
 	def getPacientesEnEspera
-		 @agendamientos= AgAgendamientos.all
+		 #@agendamientos= AgAgendamientos.find_by agendamiento_estado_id: 5, especialidad_prestador_profesional_id: 1
+		 @agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id=> 5, especialidad_prestador_profesional_id: 1})
 		 return @agendamientos
 	end
 

@@ -47,6 +47,17 @@ class AtencionesSaludController < ApplicationController
 	  end
 	end
 
+	def crearAtencion		
+		#@atencion_salud = FiAtencionesSalud.new(:motivo_consulta => params[:atencion_salud][:motivo_consulta],
+		#																				:indicaciones_generales => params[:atencion_salud][:indicaciones_generales], )
+
+		@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => params[:id],:persona_id => 1, :tipo_ficha_id => 1)				
+	  @atencion_salud.save(:validate => false)
+
+  	redirect_to :action => "edit", :id => @atencion_salud.id
+	
+	end
+
 	private
 	  def app_params
 	    params.require(:atencion_salud).permit(:agendamiento,

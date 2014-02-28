@@ -9,10 +9,8 @@ AplicacionMedica::Application.routes.draw do
 
   #Modulo atencion salud
   resources :atenciones_salud
-  post '/pacientes_en_espera', to: 'atenciones_salud#pacientesEnEspera', :as => :pacientesEnEspera
-
   post '/agregar_examen', to: 'persona_examen#agregarExamen', :as => :agregarExamen
-
+  post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
   #Modulo agendamiento
   # get '/agendamiento/agendaCompleta/:prestador_id/:profesional_id', to: 'agendamiento#showAgenda', :as => :agenda_show_all
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
