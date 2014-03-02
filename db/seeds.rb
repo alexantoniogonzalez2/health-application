@@ -261,17 +261,15 @@ PP6.save
 
 
 #Estado agendamiento
-puts 'Estado Agendamiento 1'
+puts 'Estados Agendamientos'
 S1=AgAgendamientoEstados.new
 S1.nombre="Hora disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
 S1.save
 
-puts 'Estado Agendamiento 2'
 S2=AgAgendamientoEstados.new
 S2.nombre="Hora no disponible" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
 S2.save
 
-puts 'Estado Agendamiento 3'
 S3=AgAgendamientoEstados.new
 S3.nombre="Hora reservada" #Cuando un paciente toma una hora
 S3.save
@@ -280,15 +278,17 @@ S4=AgAgendamientoEstados.new
 S4.nombre="Hora confirmada" #La atención se realizó por completo
 S4.save
 
-puts 'Estado Agendamiento 4'
 S5=AgAgendamientoEstados.new
 S5.nombre="Paciente en espera" #El paciente ya hizo el pago de bono y está en espera a que lo atiendan
 S5.save
 
-puts 'Estado Agendamiento 5'
-S5=AgAgendamientoEstados.new
-S5.nombre="Paciente atendido" #La atención se realizó por completo
-S5.save
+S6=AgAgendamientoEstados.new
+S6.nombre="Paciente siendo atendido" #El paciente está siendo atendido 
+S6.save
+
+S7=AgAgendamientoEstados.new
+S7.nombre="Paciente atendido" #La atención se realizó por completo
+S7.save
 
 puts 'Agendamientos'
 U1= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,0),
@@ -364,7 +364,6 @@ U12= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,30),
 														:especialidad_prestador_profesional => PP1																																																						
 
 puts 'Examenes'
-
 #Examen
 Ex1=MedExamenes.new
 Ex1.nombre="Examen1"
@@ -402,35 +401,22 @@ Ex5.codigo_isapre="codigo5"
 Ex5.save
 
 #Diagnostico
-Di1=MedDiagnosticos.new
-Di1.nombre="Diagnostico1"
-Di1.descripcion="Desc diag 1"
-Di1.codigo_cie10="codigo_cie_1"
-Di1.save
+D1 = MedDiagnosticos.create! :nombre => 'Colera debido a vibrio cholerae o1, biotipo cholerae', :descripcion => 'descripcion', :codigo_cie10 => 'A000'
+D2 = MedDiagnosticos.create! :nombre => 'Colera debido a vibrio cholerae o1, biotipo el tor', :descripcion => 'descripcion', :codigo_cie10 => 'A001'
+D3 = MedDiagnosticos.create! :nombre => 'Colera no especificado', :descripcion => 'descripcion', :codigo_cie10 => 'A009'
+D4 = MedDiagnosticos.create! :nombre => 'Fiebres tifoidea y paratifoidea', :descripcion => 'descripcion', :codigo_cie10 => 'A01'
+D5 = MedDiagnosticos.create! :nombre => 'Fiebre tifoidea', :descripcion => 'descripcion', :codigo_cie10 => 'A010'
+D6 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea a', :descripcion => 'descripcion', :codigo_cie10 => 'A011'
+D7 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea b', :descripcion => 'descripcion', :codigo_cie10 => 'A012'
+D8 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea c', :descripcion => 'descripcion', :codigo_cie10 => 'A013'
+D9 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea, no especificada', :descripcion => 'descripcion', :codigo_cie10 => 'A014'
+D10 = MedDiagnosticos.create! :nombre => 'Otras infecciones debidas a Salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A02'
+D11 = MedDiagnosticos.create! :nombre => 'Enteritis debida a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A020'
+D12 = MedDiagnosticos.create! :nombre => 'Septicemia debida a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A021'
+D13 = MedDiagnosticos.create! :nombre => 'Infecciones localizadas debida a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A022'
+D14 = MedDiagnosticos.create! :nombre => 'Otras infecciones especificadas como debidas a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A028'
 
-Di2=MedDiagnosticos.new
-Di2.nombre="Diagnostico2"
-Di2.descripcion="Desc diag 2"
-Di2.codigo_cie10="codigo_cie_2"
-Di2.save
 
-Di3=MedDiagnosticos.new
-Di3.nombre="Diagnostico3"
-Di3.descripcion="Desc diag 3"
-Di3.codigo_cie10="codigo_cie_3"
-Di3.save
-
-Di4=MedDiagnosticos.new
-Di4.nombre="Diagnostico4"
-Di4.descripcion="Desc diag 4"
-Di4.codigo_cie10="codigo_cie_4"
-Di4.save
-
-Di5=MedDiagnosticos.new
-Di5.nombre="Diagnostico5"
-Di5.descripcion="Desc diag 5"
-Di5.codigo_cie10="codigo_cie_5"
-Di5.save
 
 #Medicamentos
 Di1=MedMedicamentos.new

@@ -59,6 +59,14 @@ class PerPersonas < ActiveRecord::Base
     end
   end
 
+  def showSexo
+    return genero 
+  end 
+
+  def showRut
+    return rut
+  end 
+
   def digitoVerificador #Calculo digito verificador
     t=rut
     v=1

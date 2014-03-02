@@ -14,6 +14,7 @@ $(window).load ->
 		    atencion_salud_id: 1
 		  success: (response) ->
 		    $(examen).after "</br>" + $(examen).val() 
+	    
 
 			  
 	

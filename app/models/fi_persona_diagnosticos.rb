@@ -5,7 +5,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
 	belongs_to :diagnostico_estado, :class_name => 'MedDiagnosticoEstados'
 	belongs_to :gesta, :class_name => 'FiGestas'
 	has_many :persona_medicamentos, :class_name => 'FiPersonaMedicamentos', :foreign_key => 'persona_diagnostico_id' 
-	has_many :persona_diagnosticos_atencion_medica, :class_name => 'FiPersonaDiagnosticosAtencionesMedica', :foreign_key => 'persona_diagnostico_id' 
+	has_many :persona_diagnosticos_atencion_salud, :class_name => 'FiPersonaDiagnosticosAtencionesSalud', :foreign_key => 'persona_diagnostico_id' 
  
   private
   def app_params
@@ -16,7 +16,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
                    :gesta,
                    :id,
                    :persona,
-                   :persona_diagnosticos_atencion_medica,
+                   :persona_diagnosticos_atencion_salud,
                    :persona_medicamentos)
   end        
 

@@ -21,9 +21,7 @@ module ApplicationHelper
 			@prestador = PrePrestadorAdministrativos.find_by administrativo_id: current_user.id
 		when 'profesional'	
 			@prestador = PrePrestadorProfesionales.find_by profesional_id: current_user.id
-		end 
-
-		
+		end 		
 	
 		return @prestador.prestador_id
 
@@ -42,9 +40,27 @@ module ApplicationHelper
 	end
 
 	def getPacientesEnEspera
-		 #@agendamientos= AgAgendamientos.find_by agendamiento_estado_id: 5, especialidad_prestador_profesional_id: 1
-		 @agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id=> 5, especialidad_prestador_profesional_id: 1})
-		 return @agendamientos
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id => [5,6], especialidad_prestador_profesional_id: @especialidad_prestador_profesional })
+		
+		return @agendamientos
+	end
+
+	def existeAtencion(agendamiento_id)
+		atencion = FiAtencionesSalud.find_by agendamiento_id: agendamiento_id
+
+		if (atencion) 		
+			return true
+		else 
+			return false
+		end		
+	end
+
+	def getIdAtencion(agendamiento_id)
+		atencion = FiAtencionesSalud.find_by agendamiento_id: agendamiento_id
+
+		return atencion.id
+		
 	end
 
 end

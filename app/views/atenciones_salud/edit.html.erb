@@ -1,12 +1,10 @@
+	<script>
+		var persona_id=<%=@agendamiento.persona.id  %>
+		var atencion_salud_id=<%= @atencion_salud.id %>
+		
+	</script>
 
-
-
-  	<script>
-			// var especialidad_id =<%= params[:especialidad_id] %>
-			// var prestador_id=<%= params[:prestador_id] %>
-
-		</script>
-<%= form_for :atencion_salud, url: {action: "update"}, method: :put do |f| %>
+<%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"}, method: :put do |f| %>
  <% if @atencion_salud.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@atencion_salud.errors.count, "error") %> prohibited
@@ -19,40 +17,81 @@
   </div>
   <% end %>
 
-<div id="ficha_atencion_medica">
-
-<div id="fam_header">
-Atención de salud
+<div class="panel panel-success">
+<div class="panel-heading">
+  <h3 class="panel-title">Atención de Salud</h3>
 </div>
+<div class="panel-body">	
 
-<div id="fam_datos_paciente">	
-<%= f.label :nombre %>
-<%#= f.text_field :nombre %>
-<%= f.label :apellido  %>
-<%#= f.text_field :apellido %>
-<%= f.label :rut %>
-<%#= f.text_field :rut %>
-<%= f.label :Sexo  %>
-<%#= f.text_field :Sexo %>
+<div class="row">
 
+<div class="col-md-6 div-form-atencion">	
+<%= f.label 'Paciente:' %>
+<%= @agendamiento.persona.showName('%n%p%m')  %><br/>
+<%= f.label 'Rut:' %>
+<%= @agendamiento.persona.showRut %><br/>
+<%= f.label 'Sexo:' %>
+<%= @agendamiento.persona.showSexo %><br/>
+<%= f.label 'Otros datos' %><br/>
+<%= f.label 'Antecedentes' %><br/>
+
+	<div class="list-group">
+		<a href="#" class="list-group-item">
+	    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. </p>
+	  </a>
+	  <a href="#" class="list-group-item">
+	    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. </p>
+	  </a>
+
+	</div>
  
 </div>
 
-<div id="fam_datos_atencion">
+<div class="div-form-atencion">
 	<%= f.label :Motivo  %>
-	<%= f.text_area :motivo_consulta , :size => "55x4" %><br/>
+	<%= f.text_area :motivo_consulta , :size => "50x6"  %><br/>
 	<%= link_to 'Examen Físico', agendaShowFormBusqueda_path %><br/>
+	<%= link_to 'Métricas', agendaShowFormBusqueda_path %><br/>	
 	<%= link_to 'Métricas', agendaShowFormBusqueda_path %><br/>
+
 </div>
 
-<div id="fam_datos_cierre_der">
-	<%= f.label :Diagnóstico %>
-	<%#= f.select :Diagnostico , [['Enfermedad 1','enf_1'],['Enfermedad 2','enf_2'],['Enfermedad 3','enf_3']] %>
+</div>
+<div class="row">
+
+<div class="col-md-6 div-form-atencion">
+
+  <div class="form-group">
+  <label class="col-md-3 control-label" for="buttondropdown">Diagnóstico</label>
+    <div class="input-group" >
+      <input id="diagnostico" name="diagnostico" data-id="-1" class="form-control" placeholder="Agregar diagnóstico" type="text">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">          
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+          <% @diagnosticos.each do |d| %>
+                <li><a data-id="<%= d.id%>"><%= d.nombre %></a></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+  <div class="list-group div-form-diag"  name="diagnostico-div" id="diagnostico-div">	
+    <% @persona_diagnostico.each do |p_d| %>
+      <a href="#" class="list-group-item">
+        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %></p>
+      </a>
+    <% end %>
+	</div>
+
+</div>
+
 	<%= f.label :Indicaciones  %>
-	<%= f.text_area :indicaciones_generales , :size => "80x4" %>
+	<%= f.text_area :indicaciones_generales , :size => "50x4" %>
 </div>
 
-<div id="fam_datos_cierre_izq">
+<div class="col-md-6 div-form-atencion">
 	<fieldset id="fieldset">
 
 	<%= link_to 'Solicitar examen', agendaShowFormBusqueda_path %><br/>
@@ -63,9 +102,11 @@ Atención de salud
 	<%= link_to 'Generar interconsulta', agendaShowFormBusqueda_path %><br/>
 	</fieldset>
 <%= f.submit :CerrarAtención, :id => "submit" %>
+</div>
 
-</div>
-</div>
+</div> <!--Cierre div row -->
+</div> <!--Cierre div panel-body -->
+</div> <!--Cierre div panel -->
 
 <% end %>
 

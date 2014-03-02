@@ -33,7 +33,11 @@ class AtencionesSaludController < ApplicationController
 	end
 
 	def edit
+
 	  @atencion_salud = FiAtencionesSalud.find(params[:id])
+	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona_diagnostico = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
+	  @diagnosticos = MedDiagnosticos.all
 	  @examenes = MedExamenes.all
 	end
 
@@ -47,14 +51,23 @@ class AtencionesSaludController < ApplicationController
 	  end
 	end
 
-	def crearAtencion		
-		#@atencion_salud = FiAtencionesSalud.new(:motivo_consulta => params[:atencion_salud][:motivo_consulta],
-		#																				:indicaciones_generales => params[:atencion_salud][:indicaciones_generales], )
+	def crearAtencion	
 
-		@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => params[:id],:persona_id => 1, :tipo_ficha_id => 1)				
+		@agendamiento =  AgAgendamientos.find(params[:id])
+		@persona = @agendamiento.persona
+
+		@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => params[:id],:persona_id => @persona.id, :tipo_ficha_id => 1)				
 	  @atencion_salud.save(:validate => false)
 
   	redirect_to :action => "edit", :id => @atencion_salud.id
+	
+	end
+
+
+	def editarAtencion		
+		
+
+  	redirect_to :action => "edit", :id =>params[:id]
 	
 	end
 

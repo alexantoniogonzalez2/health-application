@@ -2,57 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#ficha_atencion_medica {
-	float:left;
-	width: 800px;
-	height: 490px;
-	
-}
-
-#fam_header {
-	color: white;
-	background-color: #5b979a;	
-	width:780px;
-	height: 40px;
-	display:table-cell;
-	vertical-align:middle;
-	padding-left: 20px;
-}
-
-#fam_datos_paciente {
-	padding-left: 5px;
-	padding-top: 5px;
-	background-color: #a1e3e6;
-	height: 255px;
-	width: 395px;
-	float: left;	
-}
-
-#fam_datos_atencion {
-	padding-left: 5px;
-	padding-top: 5px;
-	background-color:#a1e3e6;
-	height: 255px;
-	width: 395px;
-	float: left;		
-}
-
-#fam_datos_cierre_izq {
-	padding-left: 5px;
-	padding-top: 5px;
-	background-color: #a1e3e6;
-	width: 395px;
-	height: 185px;
-	float: left;		
-}
-#fam_datos_cierre_der {
-	padding-left: 5px;
-	padding-top: 5px;
-	background-color: #a1e3e6;
-	width: 395px;
-	height: 185px;
-	float: left;		
-}
 
 #post_Motivo, #post_Indicaciones {
 	float: left;

@@ -6,6 +6,11 @@ $lightGray: #999;
 
 /* universal */
 
+.container {
+
+  width: 1000px;
+}
+
 html {
   overflow-y: scroll;
 }
@@ -22,12 +27,6 @@ textarea {
   resize: vertical;
 }
 
-.center {
-  text-align: center;
-  h1 {
-    margin-bottom: 10px;
-  }
-}
 
 /* typography */
 
@@ -98,4 +97,27 @@ footer {
       margin-left: 10px;
     }
   }
+}
+
+/* formulario de atención de salud */
+
+.panel-body{
+  padding: 0px;
+}
+
+.div-form-atencion {
+  padding:10px 30px;
+}
+
+.div-form-diag {
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+.list-group {
+   margin-bottom: 0px;
 }
