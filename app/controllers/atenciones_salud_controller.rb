@@ -63,7 +63,6 @@ class AtencionesSaludController < ApplicationController
 	
 	end
 
-
 	def editarAtencion		
 		
 

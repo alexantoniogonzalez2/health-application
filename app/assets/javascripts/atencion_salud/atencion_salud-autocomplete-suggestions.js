@@ -1,4 +1,4 @@
-
+$('#diagnostico').focus(function() {
 
 $(function(){
 $.fn.listClick=function(options){
@@ -81,7 +81,7 @@ $.fn.autoCompleteFull=function(options){
           success: function(response) {
 
             if (response.success)
-              $('#diagnostico-div').append('<a href="#" class="list-group-item"><p class="list-group-item-text">'+diag+'</p></a>');
+              $('#diagnostico-div').append('<a href="#" class="list-group-item" id="pd'+response.per_diag+'"><p class="list-group-item-text">'+diag+'<button type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico('+response.per_diag+')"  >Eliminar</button><button type="button" class="btn btn-xs btn-primary">Editar</button></p></a>');
           },
           error: function(xhr, status, error){
             alert("No se pudieron cargar las horas de atención");
@@ -101,5 +101,7 @@ $.fn.autoCompleteFull.defaults={
   attrFindId: "data-id",
   identificadores: ["diagnostico"]
 }
+
+});
 
 });

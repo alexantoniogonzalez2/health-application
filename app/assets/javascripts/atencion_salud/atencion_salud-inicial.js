@@ -1,3 +1,4 @@
+$('#diagnostico').focus(function() {
 
 validationErrorPlacement=function(error, element){
     show=true;
@@ -49,3 +50,27 @@ validationErrorPlacement=function(error, element){
 
   })
 
+function eliminarDiagnostico(pers_diag)
+{
+  //var element = document.getElementById('pd'+pers_diag);
+ 
+  //element.parentNode.removeChild(element);
+  $.ajax({
+    type: 'POST',
+    url: '/eliminar_diagnostico',
+    data: {
+      persona_diagnostico_id: pers_diag,
+        
+    },
+    success: function(response) {
+
+       $( "#pd"+pers_diag).remove();
+    },
+    error: function(xhr, status, error){
+
+    }
+  });
+
+}
+
+});

@@ -37,7 +37,7 @@
 
 	<div class="list-group">
 		<a href="#" class="list-group-item">
-	    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. </p>
+	    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.</p>
 	  </a>
 	  <a href="#" class="list-group-item">
 	    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. </p>
@@ -77,10 +77,10 @@
       </div>
     </div>
 
-  <div class="list-group div-form-diag"  name="diagnostico-div" id="diagnostico-div">	
+  <div class="list-group div-form-diag" name="diagnostico-div" id="diagnostico-div">	
     <% @persona_diagnostico.each do |p_d| %>
-      <a href="#" class="list-group-item">
-        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %></p>
+      <a href="#" class="list-group-item" id="pd<%= p_d.id%>" >
+        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %><button type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)"  >Eliminar</button><button type="button" class="btn btn-xs btn-primary">Editar</button></p>
       </a>
     <% end %>
 	</div>

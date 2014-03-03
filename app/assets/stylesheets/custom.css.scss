@@ -121,3 +121,13 @@ footer {
 .list-group {
    margin-bottom: 0px;
 }
+
+.list-group {
+  p button {
+    float: right;
+  }
+  a.list-group-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
