@@ -1,4 +1,4 @@
-$('#diagnostico').focus(function() {
+
 
 $(function(){
 $.fn.listClick=function(options){
@@ -104,4 +104,3 @@ $.fn.autoCompleteFull.defaults={
 
 });
 
-});

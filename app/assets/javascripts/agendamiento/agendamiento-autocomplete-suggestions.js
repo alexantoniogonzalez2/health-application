@@ -41,10 +41,11 @@ $.fn.refreshAutoCompleteSuggestion=function(opt,url,settings){
 $.fn.autoCompleteFull=function(options){
   
   var settings = $.extend( {}, $.fn.autoCompleteFull.defaults, options );
-
   $(this).next().find('ul li a').listClick();
   tmp=$(this).autoCompleteSuggestion(settings.attrFindId);
-  $(this).autocomplete({
+  $(this).autocomplete(
+  {
+      source:['test1','test2','test3','test4','ietsanders'],
     lookup:tmp.concat(settings.def),
     onSelect: function(r){
       $(this).attr(settings.attrFindId,r.data)

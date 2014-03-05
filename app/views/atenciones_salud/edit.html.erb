@@ -1,4 +1,6 @@
-	<script>
+<%= javascript_include_tag "atencion_salud/atencion_salud-autocomplete-suggestions" %>
+<%= javascript_include_tag "atencion_salud/atencion_salud-inicial" %>
+  <script>
 		var persona_id=<%=@agendamiento.persona.id  %>
 		var atencion_salud_id=<%= @atencion_salud.id %>
 		
@@ -61,6 +63,30 @@
 
 <div class="col-md-6 div-form-atencion">
 
+         <a id="modal-194595" href="#modal-container-194595" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+      
+      <div class="modal fade" id="modal-container-194595" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title" id="myModalLabel">
+                Modal title
+              </h4>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+
   <div class="form-group">
   <label class="col-md-3 control-label" for="buttondropdown">Diagnóstico</label>
     <div class="input-group" >
@@ -80,7 +106,35 @@
   <div class="list-group div-form-diag" name="diagnostico-div" id="diagnostico-div">	
     <% @persona_diagnostico.each do |p_d| %>
       <a href="#" class="list-group-item" id="pd<%= p_d.id%>" >
-        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %><button type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)"  >Eliminar</button><button type="button" class="btn btn-xs btn-primary">Editar</button></p>
+        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %><button type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button><button type="button" class="btn btn-xs btn-primary" id="modal-194595" href="#modal-container-194595" role="button" class="btn" data-toggle="modal">Editar</button> </p>
+
+      <div class="modal fade" id="modal-container-194595" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title" id="myModalLabel">
+                Modal title
+              </h4>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+
+
+
+
+
+
       </a>
     <% end %>
 	</div>

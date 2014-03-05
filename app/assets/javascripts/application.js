@@ -16,4 +16,8 @@
 //= require bootstrap
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require jquery.ui.autocomplete
+//= require jquery.ui.datepicker
+//= require fullcalendar
+//= require jquery.ui.tabs
 //= require_tree .

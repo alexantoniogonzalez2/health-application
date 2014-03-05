@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails','~> 4.0.3' 
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -51,7 +51,10 @@ gem 'devise'
 gem 'bootstrap-sass','~> 3.1.1'
 
 #Validacion
+gem "jquery-ui-rails",'~> 4.2.0'
 gem "jquery-validation-rails"
-
-#autocomplete
-#gem 'rails3-jquery-autocomplete'
+gem "jquery-modal-rails"
+gem 'rails3-jquery-autocomplete'
+gem "fullcalendar-rails"
+gem "datejs-rails"
+gem "jquery-qtip2-rails"

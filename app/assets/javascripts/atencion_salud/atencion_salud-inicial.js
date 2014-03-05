@@ -1,4 +1,4 @@
-$('#diagnostico').focus(function() {
+
 
 validationErrorPlacement=function(error, element){
     show=true;
@@ -6,13 +6,13 @@ validationErrorPlacement=function(error, element){
     $.each($('.toast-container .toast-item p'),function(indx,value){
       if($(value).text()==message) show=false;
     });;
-    if(show)
+    /*if(show)
     $().toastmessage('showToast', {
            text     : message,
            stayTime : 4000,
            position : 'top-left',
            type     : 'error'
-        });
+        });*/
   }
 
 
@@ -73,4 +73,3 @@ function eliminarDiagnostico(pers_diag)
 
 }
 
-});
