@@ -19,5 +19,8 @@
 //= require jquery.ui.autocomplete
 //= require jquery.ui.datepicker
 //= require fullcalendar
+//= require select2
+//= require select2_locale_"es"
 //= require jquery.ui.tabs
+//= require jquery.qtip.js
 //= require_tree .

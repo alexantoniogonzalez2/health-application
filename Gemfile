@@ -58,3 +58,4 @@ gem 'rails3-jquery-autocomplete'
 gem "fullcalendar-rails"
 gem "datejs-rails"
 gem "jquery-qtip2-rails"
+gem "select2-rails"

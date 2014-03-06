@@ -140,7 +140,7 @@ $(function(){
 			r='';
 			r+='<div id="simplemodal-show">';
 			r+='</div>';
-			$.modal(r);
+			//$.modal(r);
 			r='';
 			r+='<div style="display:inline">  Cargando...</div>';
 			$('#simplemodal-show').html(r);
@@ -155,7 +155,7 @@ $(function(){
 				},
 				success: function(response) {
 					 $('#simplemodal-show').html(response);
-					 $.modal.setPosition();
+					 //$.modal.setPosition();
 					 // Si existe el botón "simplemodal-close", le pondrá la siguiente acción al hacer click
 					 $('#simplemodal-show .simplemodal-close').click(function(){
 		 				$.modal.close();
