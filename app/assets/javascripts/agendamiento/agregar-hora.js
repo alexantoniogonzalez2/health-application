@@ -137,13 +137,13 @@ $(function(){
 			})
 		},
 		eventClick: function(calEvent, jsEvent, view){
-			r='';
-			r+='<div id="simplemodal-show">';
+			/*r='';
+			r+='<div class="modal fade" id="simplemodal-show">';
 			r+='</div>';
 			//$.modal(r);
 			r='';
 			r+='<div style="display:inline">  Cargando...</div>';
-			$('#simplemodal-show').html(r);
+			$('#simplemodal-show').html(r);*/
 			
 			// Mostramos el detalle del evento
 			$.ajax({
@@ -154,11 +154,13 @@ $(function(){
 					agendamiento_id: calEvent.id
 				},
 				success: function(response) {
-					 $('#simplemodal-show').html(response);
-					 //$.modal.setPosition();
+					// $('#simplemodal-show').html(response+'<div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'+response+'</div> </div></div>');
+					$('#simplemodal-show').html('<div class="modal" >'+response+'</div>');
+					// $.modal.setPosition();
 					 // Si existe el botón "simplemodal-close", le pondrá la siguiente acción al hacer click
 					 $('#simplemodal-show .simplemodal-close').click(function(){
-		 				$.modal.close();
+
+		 				$('#simplemodal-show').close();
 		 				});
 
 					 // Si existe el botón "cancelar-hora", le pondrá la siguiente acción al hacer click
@@ -309,8 +311,7 @@ $(function(){
 					 // Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click
 					 $('#simplemodal-show .pedir-hora').click(function(){
 		 				$('#simplemodal-show .pedir-hora').attr("disabled","disabled")
-					 	// $('#calendar').fullCalendar('gotoDate',calEvent.start);
-					 	// $('#calendar').fullCalendar('changeView','agendaDay');
+					 	
 
 					 	$.ajax({
 					 		type: 'POST',
@@ -340,7 +341,6 @@ $(function(){
 					 				},
 					 				success: function(response) {
 					 					$('#calendar').fullCalendar('addEventSource',response);
-					 					// reRenderCalendar();
 					 				},
 					 				error: function(xhr, status, error){
 					 					alert("No se pudieron cargar las horas de atención");
@@ -555,7 +555,6 @@ $(function(){
 			    $('#comportamientoForm .status').html('Completado!');
 			    $('#calendar').fullCalendar('removeEvents','tmp');
 			    $('#calendar').fullCalendar('addEventSource',response);
-			    // reRenderCalendar();
 
         	},
         	error: function(xhr, status, error){
