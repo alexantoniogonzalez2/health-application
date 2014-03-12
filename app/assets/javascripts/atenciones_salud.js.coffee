@@ -2,18 +2,22 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(window).load ->
-	$('#persona_examen_examen_id').change ->
-		examen = this;
-		$.ajax
+$(document).ready ->
+  $("#diag").select2
+		ajax:
 		  type: "POST"
-		  url: '/agregar_examen'
+		  url: "/agregar_diagnostico"
 		  data:
-		    persona_id: 2
-		    examen_id: $(this).val()
+		    persona_id: 1
+		    diagnostico_id: $("#diag").select2("val")
 		    atencion_salud_id: 1
 		  success: (response) ->
-		    $(examen).after "</br>" + $(examen).val() 
+		    $("#diagnostico-div").append "hola"
+		    return
+		  error: (xhr, status, error) ->
+		    alert "No se pudieron cargar las horas de atención"
+		    return
+		  
 
 
 

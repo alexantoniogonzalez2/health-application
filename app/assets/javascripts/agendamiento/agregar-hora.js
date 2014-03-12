@@ -137,227 +137,149 @@ $(function(){
 			})
 		},
 		eventClick: function(calEvent, jsEvent, view){
-			/*r='';
-			r+='<div class="modal fade" id="simplemodal-show">';
-			r+='</div>';
-			//$.modal(r);
-			r='';
-			r+='<div style="display:inline">  Cargando...</div>';
-			$('#simplemodal-show').html(r);*/
-			
+					
 			// Mostramos el detalle del evento
 			$.ajax({
 				type: 'POST',
 				url: detalleEvento,
-				data: {
-					//administrativo_id: ,
-					agendamiento_id: calEvent.id
-				},
+				data: {	agendamiento_id: calEvent.id },
 				success: function(response) {
-					// $('#simplemodal-show').html(response+'<div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'+response+'</div> </div></div>');
-					$('#simplemodal-show').html('<div class="modal" >'+response+'</div>');
-					// $.modal.setPosition();
-					 // Si existe el botón "simplemodal-close", le pondrá la siguiente acción al hacer click
-					 $('#simplemodal-show .simplemodal-close').click(function(){
 
-		 				$('#simplemodal-show').close();
-		 				});
+				$('#modal-content').html(response);
+      	$('#modal-container').modal('show')	
 
-					 // Si existe el botón "cancelar-hora", le pondrá la siguiente acción al hacer click
-					 $('#simplemodal-show .cancelar-hora').click(function(){
+				// Si existe el botón "cancelar-hora", le pondrá la siguiente acción al hacer click
+				$('#modal-content .modal-footer .cancelar-hora').click(function(){
 
-					 		$.ajax({
-						 		type: 'POST',
-						 		url: '/aux/cancelarHora',
-						 		data: {
-					 				agendamiento_id: calEvent.id,
-					 			},
-						 		success: function(response) {
-						 			id=calEvent.id
-						 			$('#calendar').fullCalendar('removeEvents',id)
-						 			if (response=="1"){
-						 				$.modal.close();
-						 			}
-						 			else{
-						 				alert("No se puede cancelar la hora")
-						 			}
+					$.ajax({
+						type: 'POST',
+						url: '/aux/cancelarHora',
+						data: {	agendamiento_id: calEvent.id},
+						success: function(response) {
 
-						 			// Re-cargamos el evento modificado
-						 			$.ajax({
-						 				type: 'POST',
-						 				url: '/aux/mostrarEventos',
-						 				data: {
-						 					evento_id: id,
-						 					especialidad_id: especialidad_id,
-											profesional_id: profesional_id,
-											prestador_id: prestador_id,
-						 				},
-						 				success: function(response) {
-						 					$('#calendar').fullCalendar('addEventSource',response);
-						 					// reRenderCalendar();
-						 				},
-						 				error: function(xhr, status, error){
-						 					alert("No se pudieron cargar las horas de atención");
-						 				}
-						 			});
+							id=calEvent.id
+							$('#calendar').fullCalendar('removeEvents',id)
 
+							if ( response=="1"){ $('#modal-container').modal('hide') }
+							else{	alert("No se puede cancelar la hora")	}
 
-					 		},
-					 		error: function(xhr, status, error){
-					 			alert("No se pudieron cargar las horas de atención");
-					 		}
-					 	});
-		 				
-		 				});
-
-
+							// Re-cargamos el evento modificado
+							$.ajax({
+								type: 'POST',
+								url: '/aux/mostrarEventos',
+								data: {
+									evento_id: id,
+									especialidad_id: especialidad_id,
+									profesional_id: profesional_id,
+									prestador_id: prestador_id,
+								},
+								success: function(response) {	$('#calendar').fullCalendar('addEventSource',response);	},
+								error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
+							});
+						},
+						error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
+					});	 				
+	 			});
 					
-					 // Si existe el botón "confirmar-hora", le pondrá la siguiente acción al hacer click
-					 $('#simplemodal-show .confirmar-hora').click(function(){
+				// Si existe el botón "confirmar-hora", le pondrá la siguiente acción al hacer click
+				$('#modal-content .modal-footer .confirmar-hora').click(function(){
 
-					 		$.ajax({
-						 		type: 'POST',
-						 		url: '/aux/confirmarHora',
-						 		data: {
-					 				agendamiento_id: calEvent.id,
-					 			},
-						 		success: function(response) {
-						 			id=calEvent.id
-						 			$('#calendar').fullCalendar('removeEvents',id)
-						 			if (response=="1"){
-						 				$.modal.close();
-						 			}
-						 			else{
-						 				alert("No se puede confirmar la hora")
-						 			}
+					$.ajax({
+				 		type: 'POST',
+				 		url: '/aux/confirmarHora',
+				 		data: {	agendamiento_id: calEvent.id	},
+						success: function(response) {
 
-						 			// Re-cargamos el evento modificado
-						 			$.ajax({
-						 				type: 'POST',
-						 				url: '/aux/mostrarEventos',
-						 				data: {
-						 					evento_id: id,
-						 					especialidad_id: especialidad_id,
-											profesional_id: profesional_id,
-											prestador_id: prestador_id,
-						 				},
-						 				success: function(response) {
-						 					$('#calendar').fullCalendar('addEventSource',response);
-						 					// reRenderCalendar();
-						 				},
-						 				error: function(xhr, status, error){
-						 					alert("No se pudieron cargar las horas de atención");
-						 				}
-						 			});
+							id=calEvent.id
+							$('#calendar').fullCalendar('removeEvents',id)
+							if (response=="1"){	$('#modal-container').modal('hide') }
+							else{	alert("No se puede confirmar la hora") }
+
+							// Re-cargamos el evento modificado
+							$.ajax({
+								type: 'POST',
+								url: '/aux/mostrarEventos',
+								data: {
+									evento_id: id,
+									especialidad_id: especialidad_id,
+									profesional_id: profesional_id,
+									prestador_id: prestador_id,
+								},
+								success: function(response) {	$('#calendar').fullCalendar('addEventSource',response);	},
+								error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención");}
+							});
+						},
+						error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención");}
+					});					
+				});
 
 
-					 		},
-					 		error: function(xhr, status, error){
-					 			alert("No se pudieron cargar las horas de atención");
-					 		}
-					 	});
-		 				
-		 				});
+				// Si existe el botón "marcar-llegada", le pondrá la siguiente acción al hacer click
+				$('#modal-content .modal-footer .marcar-llegada').click(function(){
+
+					$.ajax({
+						type: 'POST',
+						url: '/aux/marcarLlegada',
+						data: {	agendamiento_id: calEvent.id	},
+						success: function(response) {
+							id=calEvent.id
+							$('#calendar').fullCalendar('removeEvents',id)
+							if (response=="1"){ $('#modal-container').modal('hide') }
+							else{	alert("No se puede confirmar la hora")			}
+
+							// Re-cargamos el evento modificado
+							$.ajax({
+								type: 'POST',
+								url: '/aux/mostrarEventos',
+								data: {
+									evento_id: id,
+									especialidad_id: especialidad_id,
+									profesional_id: profesional_id,
+									prestador_id: prestador_id,
+								},
+								success: function(response) {	$('#calendar').fullCalendar('addEventSource',response);	},
+								error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
+							});
+						},
+						error: function(xhr, status, error){alert("No se pudieron cargar las horas de atención");	}
+					});
+				});
 
 
-					 // Si existe el botón "marcar-llegada", le pondrá la siguiente acción al hacer click
-					 $('#simplemodal-show .marcar-llegada').click(function(){
+				// Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click
+				$('#modal-content .modal-footer .pedir-hora').click(function(){
+					
+					$.ajax({
+						type: 'POST',
+						url: '/aux/pedirHoraEvento',
+						data: {	agendamiento_id: calEvent.id	},
+						success: function(response) {
 
-					 		$.ajax({
-						 		type: 'POST',
-						 		url: '/aux/marcarLlegada',
-						 		data: {
-					 				agendamiento_id: calEvent.id,
-					 			},
-						 		success: function(response) {
-						 			id=calEvent.id
-						 			$('#calendar').fullCalendar('removeEvents',id)
-						 			if (response=="1"){
-						 				$.modal.close();
-						 			}
-						 			else{
-						 				alert("No se puede confirmar la hora")
-						 			}
+							id=calEvent.id
+							$('#calendar').fullCalendar('removeEvents',id)
+							if (response=="1"){	$('#modal-container').modal('hide')	}
+							else{	alert("La hora ya fue tomada")}
 
-						 			// Re-cargamos el evento modificado
-						 			$.ajax({
-						 				type: 'POST',
-						 				url: '/aux/mostrarEventos',
-						 				data: {
-						 					evento_id: id,
-						 					especialidad_id: especialidad_id,
-											profesional_id: profesional_id,
-											prestador_id: prestador_id,
-						 				},
-						 				success: function(response) {
-						 					$('#calendar').fullCalendar('addEventSource',response);
-						 					// reRenderCalendar();
-						 				},
-						 				error: function(xhr, status, error){
-						 					alert("No se pudieron cargar las horas de atención");
-						 				}
-						 			});
+							// Re-cargamos el evento modificado
+							$.ajax({
+								type: 'POST',
+								url: '/aux/mostrarEventos',
+								data: {
+									evento_id: id,
+									especialidad_id: especialidad_id,
+									profesional_id: profesional_id,
+									prestador_id: prestador_id,
+								},
+								success: function(response) {	$('#calendar').fullCalendar('addEventSource',response);	},
+								error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
+							});
+						},
+						error: function(xhr, status, error){alert("No se pudieron cargar las horas de atención");	}
+					});
+				});
 
-
-					 		},
-					 		error: function(xhr, status, error){
-					 			alert("No se pudieron cargar las horas de atención");
-					 		}
-					 	});
-		 				
-		 				});
-
-
-					 // Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click
-					 $('#simplemodal-show .pedir-hora').click(function(){
-		 				$('#simplemodal-show .pedir-hora').attr("disabled","disabled")
-					 	
-
-					 	$.ajax({
-					 		type: 'POST',
-					 		url: '/aux/pedirHoraEvento',
-					 		data: {
-					 			agendamiento_id: calEvent.id,
-					 		},
-					 		success: function(response) {
-					 			id=calEvent.id
-					 			$('#calendar').fullCalendar('removeEvents',id)
-					 			if (response=="1"){
-					 				$.modal.close();
-					 			}
-					 			else{
-					 				alert("La hora ya fue tomada")
-					 			}
-
-					 			// Re-cargamos el evento modificado
-					 			$.ajax({
-					 				type: 'POST',
-					 				url: '/aux/mostrarEventos',
-					 				data: {
-					 					evento_id: id,
-					 					especialidad_id: especialidad_id,
-										profesional_id: profesional_id,
-										prestador_id: prestador_id,
-					 				},
-					 				success: function(response) {
-					 					$('#calendar').fullCalendar('addEventSource',response);
-					 				},
-					 				error: function(xhr, status, error){
-					 					alert("No se pudieron cargar las horas de atención");
-					 				}
-					 			});
-
-
-					 		},
-					 		error: function(xhr, status, error){
-					 			alert("No se pudieron cargar las horas de atención");
-					 		}
-					 	});
-				 	  });
 				},
-				error: function(xhr, status, error){
-					alert("No se pudieron cargar las horas de atención");
-				}
+				error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
 			});
 		}
 	});

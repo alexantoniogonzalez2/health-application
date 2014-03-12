@@ -26,6 +26,13 @@
 	<div id="simplemodal-show">
 	</div>
 
+  <div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" id="modal-content">        
+      </div>          
+    </div>        
+  </div> 
+
 	<div id='calendar'>
 	<% if params[:especialidad_id]!='-1' and params[:prestador_id]!='-1' and params[:profesional_id]!='-1' and @permisoParaAgregar %>
 		
@@ -46,7 +53,6 @@
 							    <input name="di" type="text" placeholder="Ej. 25/03/2013" class="input-medium">
 							  </div>
 							</div>
-
 
 							<div class="control-group">
 							  <label class="control-label" for="horai">Hora de inicio:</label>
@@ -92,7 +98,6 @@
 					<div class='well'>
 						<form id='comportamientoForm' class="form-horizontal">
 						<fieldset>
-
 
 						<div class="control-group">
 						  <label class="control-label" for="">Día de inicio:</label>

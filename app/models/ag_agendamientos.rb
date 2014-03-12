@@ -128,6 +128,7 @@ class AgAgendamientos < ActiveRecord::Base
 
     show=false
     detalle = ''
+    detalle2 = ''
     tomar_hora =''
     reabrir =''
     paciente = ''
@@ -139,7 +140,11 @@ class AgAgendamientos < ActiveRecord::Base
     hora_termino_atencio =''
     estado = agendamiento_estado.nombre
 
-    detalle<<"<h3>"<<estado<<"</h3><table>
+    detalle<<'<div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' 
+
+    detalle<<"<h4 class='modal-title' id='myModalLabel'>"<<estado<<"</h4> </div>
+              <div class='modal-body'><table>
               <tr><td><h5>Recinto de salud</h5></td><td>: #{especialidad_prestador_profesional.prestador.nombre}</td></tr>
               <tr><td><h5>Especialidad</h5></td><td>: #{especialidad_prestador_profesional.especialidad.nombre}</td></tr>
               <tr><td><h5>Especialista</h5></td><td>: #{especialidad_prestador_profesional.profesional.showName('%d%n%p%m')}</td></tr>
@@ -177,20 +182,20 @@ class AgAgendamientos < ActiveRecord::Base
       
     case estado
       when 'Hora disponible'
-        detalle<<'</table><p>'<<tomar_hora
+        detalle<<'</table></div><div class="modal-footer">'<<tomar_hora
       when 'Hora no disponible'        
-        detalle<<'</table><p>'<<reabrir
+        detalle<<'</table></div><div class="modal-footer">'<<reabrir
       when 'Hora reservada' 
-        detalle<<paciente<<'</table><p>'<<llegada_paciente<<confirmar<<cancelar
+        detalle<<paciente<<'</table></div><div class="modal-footer">'<<llegada_paciente<<confirmar<<cancelar
       when 'Hora confirmada' 
-        detalle<<paciente<<'</table><p>'<<llegada_paciente<<cancelar                             
+        detalle<<paciente<<'</table></div><div class="modal-footer">'<<llegada_paciente<<cancelar                             
       when 'Paciente en espera'  
-        detalle<<paciente<<hora_llegada<<'</table><p>'
+        detalle<<paciente<<hora_llegada<<'</table></div><div class="modal-footer">'
       when 'Paciente atendido'  
-        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table><p>'                           
+        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table></div><div class="modal-footer">'                           
     end                
 
-    detalle<<"<button class='btn btn-danger simplemodal-close'>Cerrar ventana</button></p>"     
+    detalle<<'<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button></div>'           
     
     detalle
   
