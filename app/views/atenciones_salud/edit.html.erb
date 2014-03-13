@@ -1,5 +1,4 @@
-<%= javascript_include_tag "atencion_salud/atencion_salud-autocomplete-suggestions" %>
-<%= javascript_include_tag "atencion_salud/atencion_salud-inicial" %>
+
   <script>
 		var persona_id=<%=@agendamiento.persona.id  %>
 		var atencion_salud_id=<%= @atencion_salud.id %>
@@ -64,7 +63,7 @@
 <div class="col-md-6 div-form-atencion">
 
   Diagnóstico:
-  <select id="diag" name="diag" data-placeholder="Seleccione un diagnóstico"  >
+  <select class="diagnostico_select" id="diagnostico_select" data-placeholder="Seleccione un diagnóstico"  >
       <option></option>
     <% @diagnosticos.each do |d| %>
       <option value="<%= d.id%>"><%= d.nombre %></option>

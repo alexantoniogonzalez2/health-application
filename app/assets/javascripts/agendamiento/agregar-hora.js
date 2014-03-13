@@ -369,7 +369,7 @@ $(function(){
 		'checkboxes[]': 'Debe elegir al menos 1 día'
 
 	},
-	errorPlacement: validationErrorPlacement,
+	errorPlacement: '',
 	submitHandler: function(form){
 
 		console.log("Ok");
@@ -552,7 +552,7 @@ $(function(){
 			}
 
 		},
-		errorPlacement: validationErrorPlacement,
+		errorPlacement: '',
 
 		submitHandler: function(form){
 

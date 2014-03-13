@@ -1,54 +1,36 @@
+( function($) {
+$(document).ready(function(){
 
+  $(".diagnostico_select").select2({
+        
+  });
 
-validationErrorPlacement=function(error, element){
-    show=true;
-    message='Error: '+$(error).text();
-    $.each($('.toast-container .toast-item p'),function(indx,value){
-      if($(value).text()==message) show=false;
-    });;
-    /*if(show)
-    $().toastmessage('showToast', {
-           text     : message,
-           stayTime : 4000,
-           position : 'top-left',
-           type     : 'error'
-        });*/
-  }
+    $(".diagnostico_select").on("change", function(e) { 
 
-
-	$(function(){
-
-   $.validator.addMethod("hasElection", function(value, element){
-
-      return $(element).attr('data-id') != '-1'
-   });
-
-    $('#diagnostico').autoCompleteFull({
-      
-    });
-
-/*
-    $('#formBuscarHora').validate({
-      rules: {
-        especialidad: {
-          hasElection: true
+      $.ajax({
+        type: 'POST',
+        url: '/agregar_diagnostico',
+        data: {
+        persona_id: persona_id,
+        diagnostico_id: $(".diagnostico_select").select2("val"),
+        atencion_salud_id: atencion_salud_id,
         },
-        prestador:{
-          hasElection: true
-        }
-      },
-      messages: {
-        especialidad: "No se ha seleccionado una especialidad",
-        prestador: "No se ha seleccionado un centro médico"
-      },
-      errorPlacement: validationErrorPlacement,
-      submitHandler: function(form){
-        window.location='/agendamiento/pedirHora'+"/"+$('#especialidad').attr('data-id')+"/"+$('#prestador').attr('data-id')+"/"+$('#especialista').attr('data-id');
+        success: function(response) {
 
-      }
-    })*/
+        if (response.success)
+          $('#diagnostico-div').append('<a href="#" class="list-group-item" id="pd'+response.per_diag+'"><p class="list-group-item-text">'+$(".diagnostico_select").select2('data').text+'<button type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico('+response.per_diag+')"  >Eliminar</button><button type="button" class="btn btn-xs btn-primary">Editar</button></p></a>');
+        },
+        error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
+      });
 
   })
+
+
+
+
+});
+
+} ) ( jQuery );
 
 function eliminarDiagnostico(pers_diag)
 {
@@ -65,6 +47,9 @@ function eliminarDiagnostico(pers_diag)
     success: function(response) {
 
        $( "#pd"+pers_diag).remove();
+
+
+
     },
     error: function(xhr, status, error){
 
@@ -72,4 +57,3 @@ function eliminarDiagnostico(pers_diag)
   });
 
 }
-
