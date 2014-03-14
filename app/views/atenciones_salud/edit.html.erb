@@ -1,4 +1,3 @@
-
   <script>
 		var persona_id=<%=@agendamiento.persona.id  %>
 		var atencion_salud_id=<%= @atencion_salud.id %>
@@ -63,66 +62,54 @@
 <div class="col-md-6 div-form-atencion">
 
   Diagnóstico:
+  <select class="chosen-select" data-placeholder="Seleccione un diagnóstico" >
+      <option></option>
+    <% @diagnosticos.each do |d| %>
+      <option value="<%= d.id%>"><%= d.nombre %></option>
+    <% end %>
+  </select> <br/>  
+
+<!--
+  Diagnóstico:
   <select class="diagnostico_select" id="diagnostico_select" data-placeholder="Seleccione un diagnóstico"  >
       <option></option>
     <% @diagnosticos.each do |d| %>
       <option value="<%= d.id%>"><%= d.nombre %></option>
     <% end %>
-  </select> <br/>    
-
-  <!--<div class="form-group">
-  <label class="col-md-3 control-label" for="buttondropdown">Diagnóstico</label>
-    <div class="input-group" >
-      <input id="diagnostico" name="diagnostico" data-id="-1" class="form-control" placeholder="Agregar diagnóstico" type="text">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">          
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-          <% @diagnosticos.each do |d| %>
-                <li><a data-id="<%= d.id%>"><%= d.nombre %></a></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>-->
+  </select> <br/> --> 
 
   <div class="list-group div-form-diag" name="diagnostico-div" id="diagnostico-div">	
     <% @persona_diagnostico.each do |p_d| %>
-      <a href="#" class="list-group-item" id="pd<%= p_d.id%>" >
-        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %><button type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button><button type="button" class="btn btn-xs btn-primary" id="modal-194595" href="#modal-container-194595" role="button" class="btn" data-toggle="modal">Editar</button> </p>
-
-      <div class="modal fade" id="modal-container-194595" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h4 class="modal-title" id="myModalLabel">
-                Modal title
-              </h4>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-          
-        </div>
-        
-      </div>
-
-
-
-
-
-
-
-      </a>
+      <a href="#modal-container-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
+        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %></p></a><button id="bc<%= p_d.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button>
     <% end %>
 	</div>
-
-</div>
+  <% @persona_diagnostico.each do |p_d| %>        
+    <div class="modal fade" id="modal-container-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel"><%= p_d.diagnostico.nombre %></h4>
+          </div>
+          <div class="modal-body">            
+            <p>Fecha inicio: <input class="fechas" type="text" placeholder="Ej.: 25/03/2013" value="<%= p_d.getFechaInicio %>"></p>
+            <p>Fecha término: <input class="fechas" type="text" placeholder="Ej.: 25/03/2013" value="<%= p_d.getFechaTermino %>"></p>
+            <p>Estado de diagnóstico actual:<%= p_d.diagnostico_estado.id %>
+              <select id="selectbasic" name="selectbasic" class="form-control"  >
+                <% @estados_diagnostico.each do |e_d| %>  
+                  <option value="<%= e_d.id %>"><%= e_d.nombre %></option>
+                <% end %>
+              </select>
+            </p>  
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>            
+      </div>        
+    </div>
+  <% end %>      
 
 	<%= f.label :Indicaciones  %>
 	<%= f.text_area :indicaciones_generales , :size => "50x4" %>
@@ -147,4 +134,4 @@
 
 <% end %>
 
-
+<%= javascript_include_tag "atencion_salud/atencion_salud-inicial" %>

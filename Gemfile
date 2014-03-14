@@ -53,9 +53,9 @@ gem 'bootstrap-sass','~> 3.1.1'
 #Validacion
 gem "jquery-ui-rails",'~> 4.2.0'
 gem "jquery-validation-rails"
-gem "jquery-modal-rails"
 gem 'rails3-jquery-autocomplete'
 gem "fullcalendar-rails"
 gem "datejs-rails"
 gem "jquery-qtip2-rails"
 gem "select2-rails"
+gem 'chosen-rails'

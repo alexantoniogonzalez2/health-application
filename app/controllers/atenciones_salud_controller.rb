@@ -39,6 +39,7 @@ class AtencionesSaludController < ApplicationController
 	  @persona_diagnostico = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
 	  @diagnosticos = MedDiagnosticos.all
 	  @examenes = MedExamenes.all
+	  @estados_diagnostico = MedDiagnosticoEstados.all
 	end
 
 	def update

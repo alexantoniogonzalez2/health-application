@@ -21,6 +21,7 @@
 //= require fullcalendar
 //= require select2
 //= require select2_locale_"es"
+//= require chosen-jquery
 //= require jquery.ui.tabs
 //= require jquery.qtip.js
 //= require_tree .
