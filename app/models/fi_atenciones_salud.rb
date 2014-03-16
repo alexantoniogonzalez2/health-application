@@ -14,6 +14,21 @@ class FiAtencionesSalud < ActiveRecord::Base
 
   validates :motivo_consulta, presence: true, length: { minimum: 5 }
 
- 
+ 	private
+  def app_params
+    params.require(:list).permit(:persona,
+  								:ficha_tipo,
+  								:agendamiento,
+  								:persona_examenes,
+  								:persona_medicamentos,
+  								:persona_diagnosticos_atencion_salud,
+  								:certificados,
+  								:interconsultas,
+  								:persona_metricas,
+  								:motivo_consulta,
+  								:indicaciones_generales,
+
+  								)
+  end
 
 end

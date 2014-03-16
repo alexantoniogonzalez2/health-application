@@ -46,6 +46,20 @@ module ApplicationHelper
 		return @agendamientos
 	end
 
+	def getProximosPacientes
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id => [1], especialidad_prestador_profesional_id: @especialidad_prestador_profesional })
+		
+		return @agendamientos
+	end
+
+	def getPacientesAtendidos
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id => [7], especialidad_prestador_profesional_id: @especialidad_prestador_profesional })
+		
+		return @agendamientos
+	end
+
 	def existeAtencion(agendamiento_id)
 		atencion = FiAtencionesSalud.find_by agendamiento_id: agendamiento_id
 

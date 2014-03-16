@@ -2,20 +2,53 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-#post_Motivo, #post_Indicaciones {
-	float: left;
-	width: auto;
-	height: auto;
-	margin-right: 10px;
-}
-
-#fieldset {
-	float: left;
-}
+/* formulario de atención de salud */
 
 #submit {
-	position: absolute;
-	right: 50px;
-	bottom: 20px;
+	float: right;
 }
+
+.panel-body{
+  padding: 10px;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+
+.list-group {
+  margin-bottom: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  p button {
+    float: right;
+    cursor: crosshair;
+  }
+  a.list-group-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+  }
+}
+
+label {
+  margin: 0px;
+}
+
+p {
+  margin: 0px;
+  //font-size: 1.1em;
+  //line-height: 1.7em;
+}
+
+textarea.form-control {
+  resize: vertical;
+  font-size: 14px;
+  line-height:100%;
+ }
+
+ button {
+  float:right;
+  padding-right:5px;
+ }

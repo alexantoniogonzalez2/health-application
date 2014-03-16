@@ -1,5 +1,6 @@
 @import "bootstrap";
 
+
 /* colors */
 
 $lightGray: #999;
@@ -23,11 +24,6 @@ section {
   overflow: auto;
 }
 
-textarea {
-  resize: vertical;
-}
-
-
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -50,10 +46,7 @@ h2 {
   color: $lightGray;;
 }
 
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}
+
 
 /* header */
 
@@ -99,35 +92,11 @@ footer {
   }
 }
 
-/* formulario de atención de salud */
-
 .panel-body{
-  padding: 0px;
+  padding : 0px;
+
 }
 
-.div-form-atencion {
-  padding:10px 30px;
-}
-
-.div-form-diag {
-  padding-top: 10px;
-  padding-left: 20px;
-}
-
-.table {
+.table{
   margin-bottom: 0px;
-}
-
-.list-group {
-   margin-bottom: 0px;
-}
-
-.list-group {
-  p button {
-    float: right;
-  }
-  a.list-group-item {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
 }

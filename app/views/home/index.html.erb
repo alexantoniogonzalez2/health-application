@@ -4,6 +4,9 @@
 
   <% if user_signed_in? %>
   	<h2>Ha ingresado correctamente a la aplicación.</h2>
+  	<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
+		<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>
+		<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
 
   	<% if tieneRol('Genera agendamientos') %>
 			<%= link_to 'Agregar horas', agendaShowFormBusqueda_path %><br/>
@@ -13,9 +16,8 @@
 						<%= render "pacientes_en_espera" %>
 					</div>
 					<div class="col-md-4 column">
-						<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
-						<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>
-						<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
+						<%= render "proximos_pacientes" %>
+						<%= render "pacientes_atendidos" %>
 					</div>						
 				</div>			
 		<% else %>		

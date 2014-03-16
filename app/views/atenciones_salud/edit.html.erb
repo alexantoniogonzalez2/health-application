@@ -47,12 +47,12 @@
  
 </div>
 
-<div class="div-form-atencion">
-	<%= f.label :Motivo  %>
-	<%= f.text_area :motivo_consulta , :size => "50x6"  %><br/>
+<div class="col-md-6 div-form-atencion">
+	<%= f.label :"Motivo de consulta:" %>
+	<%= f.text_area :motivo_consulta , :class => "form-control", :size => "50x4" %><br>
 	<%= link_to 'Examen Físico', agendaShowFormBusqueda_path %><br/>
 	<%= link_to 'Métricas', agendaShowFormBusqueda_path %><br/>	
-	<%= link_to 'Métricas', agendaShowFormBusqueda_path %><br/>
+	
 
 </div>
 
@@ -61,30 +61,24 @@
 
 <div class="col-md-6 div-form-atencion">
 
-  Diagnóstico:
-  <select class="chosen-select" data-placeholder="Seleccione un diagnóstico" >
-      <option></option>
-    <% @diagnosticos.each do |d| %>
-      <option value="<%= d.id%>"><%= d.nombre %></option>
-    <% end %>
-  </select> <br/>  
 
-<!--
-  Diagnóstico:
-  <select class="diagnostico_select" id="diagnostico_select" data-placeholder="Seleccione un diagnóstico"  >
+  <%= f.label :"Diagnóstico:" %>
+  <select id="select_diagnostico" class="chosen-select" data-placeholder="Seleccione un diagnóstico" >
       <option></option>
     <% @diagnosticos.each do |d| %>
       <option value="<%= d.id%>"><%= d.nombre %></option>
     <% end %>
-  </select> <br/> --> 
+    <option></option>
+  </select>
 
   <div class="list-group div-form-diag" name="diagnostico-div" id="diagnostico-div">	
     <% @persona_diagnostico.each do |p_d| %>
       <a href="#modal-container-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
-        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %></p></a><button id="bc<%= p_d.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button>
+        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %><button id="bc<%= p_d.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button></p></a>
     <% end %>
 	</div>
-  <% @persona_diagnostico.each do |p_d| %>        
+  <div id="diag_modal-div" >
+  <% @persona_diagnostico.each do |p_d| %> 
     <div class="modal fade" id="modal-container-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -92,40 +86,54 @@
              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="myModalLabel"><%= p_d.diagnostico.nombre %></h4>
           </div>
-          <div class="modal-body">            
-            <p>Fecha inicio: <input class="fechas" type="text" placeholder="Ej.: 25/03/2013" value="<%= p_d.getFechaInicio %>"></p>
-            <p>Fecha término: <input class="fechas" type="text" placeholder="Ej.: 25/03/2013" value="<%= p_d.getFechaTermino %>"></p>
-            <p>Estado de diagnóstico actual:<%= p_d.diagnostico_estado.id %>
-              <select id="selectbasic" name="selectbasic" class="form-control"  >
+          <div class="modal-body">
+            <p>Fecha inicio: <input name="f_i_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaInicio %>"></p>
+            <p>Fecha término: <input name="f_t_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaTermino %>"></p>
+            <p>Estado de diagnóstico actual:
+              <select id="e_d_<%= p_d.id%>" name="selectbasic" class="form-control" >
                 <% @estados_diagnostico.each do |e_d| %>  
-                  <option value="<%= e_d.id %>"><%= e_d.nombre %></option>
+                  <option value="<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> selected="selected" <% end %>  ><%= e_d.nombre %></option>
                 <% end %>
               </select>
             </p>  
           </div>
           <div class="modal-footer">
-             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button" class="btn btn-primary">Guardar</button>
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"  onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
           </div>
         </div>            
       </div>        
     </div>
   <% end %>      
-
-	<%= f.label :Indicaciones  %>
-	<%= f.text_area :indicaciones_generales , :size => "50x4" %>
+</div>
+	<%= f.label :"Indicaciones:"  %>
+	<%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
 </div>
 
 <div class="col-md-6 div-form-atencion">
-	<fieldset id="fieldset">
 
-	<%= link_to 'Solicitar examen', agendaShowFormBusqueda_path %><br/>
-	<%= collection_select(:persona_examen, :examen_id, MedExamenes.all, :id, :nombre) %><br/>
+	<%= f.label :"Exámenes:" %>
+  <select id="select_examen" class="chosen-select" data-placeholder="Seleccione un examen" >
+      <option></option>
+    <% @examenes.each do |e| %>
+      <option value="<%= e.id%>"><%= e.nombre %></option>
+    <% end %>
+    <option></option>
+  </select>
+
+  <div class="list-group div-form-diag" name="examen-div" id="examen-div">  
+    <% @persona_examen.each do |p_e| %>
+      <a href="#" data-toggle="modal" class="list-group-item" id="pe<%= p_e.id%>" >
+        <p class="list-group-item-text"><%= p_e.examen.nombre %><button id="bce<%= p_e.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarExamen(<%= p_e.id%>)">Eliminar</button></p></a>
+    <% end %>
+  </div>
+
 		
 	<%= link_to 'Prescribir medicamentos', agendaShowFormBusqueda_path %><br/>
 	<%= link_to 'Emitir certificado', agendaShowFormBusqueda_path %><br/>
 	<%= link_to 'Generar interconsulta', agendaShowFormBusqueda_path %><br/>
-	</fieldset>
-<%= f.submit :CerrarAtención, :id => "submit" %>
+ <%= f.submit :"Cerrar Atención", :id => "submit" , :class=>"btn btn-success" %> 
+  <button class="btn btn-info" >Guardar</button>
+
 </div>
 
 </div> <!--Cierre div row -->

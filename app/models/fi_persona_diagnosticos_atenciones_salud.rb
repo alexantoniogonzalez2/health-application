@@ -1,10 +1,10 @@
 class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
 
-   self.table_name = "fi_persona_diagnosticos_atenciones_salud"
+  self.table_name = "fi_persona_diagnosticos_atenciones_salud"
   
 	belongs_to :persona_diagnostico, :class_name => 'FiPersonaDiagnosticos'
 	belongs_to :atencion_salud, :class_name => 'FiAtencionesSalud'
-	belongs_to :diagnostico_estado, :class_name => 'MedDiagnosticoEstados'
+	belongs_to :estado_diagnostico, :class_name => 'MedDiagnosticoEstados'
 
  
   private

@@ -40,16 +40,22 @@ class AtencionesSaludController < ApplicationController
 	  @diagnosticos = MedDiagnosticos.all
 	  @examenes = MedExamenes.all
 	  @estados_diagnostico = MedDiagnosticoEstados.all
+	  @persona_examen = FiPersonaExamenes.where('atencion_salud_id = ? ', params[:id])
+
 	end
 
 	def update
 	  @atencion_salud = FiAtencionesSalud.find(params[:id])
-	 
-	  if @atencion_salud.update_attributes(params[:atencion_salud])
-	    redirect_to :action => "show", :id => @atencion_salud.id
-	  else
-	    render 'edit'
-	  end
+	  
+	  @atencion_salud.update_attributes(params[:atencion_salud].permit(:indicaciones_generales,:motivo_consulta))
+
+	 	@agendamiento =  AgAgendamientos.find(@atencion_salud.agendamiento_id)	
+		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
+		@agendamiento.agendamiento_estado = @estadoAgendamiento
+		@agendamiento.save
+
+	  redirect_to root_path
+	  
 	end
 
 	def crearAtencion	
@@ -60,7 +66,11 @@ class AtencionesSaludController < ApplicationController
 		@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => params[:id],:persona_id => @persona.id, :tipo_ficha_id => 1)				
 	  @atencion_salud.save(:validate => false)
 
-  	redirect_to :action => "edit", :id => @atencion_salud.id
+		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
+		@agendamiento.agendamiento_estado = @estadoAgendamiento
+		@agendamiento.save
+
+	 	redirect_to :action => "edit", :id => @atencion_salud.id
 	
 	end
 

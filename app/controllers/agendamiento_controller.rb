@@ -170,7 +170,7 @@ class AgendamientoController < ApplicationController
 		perm_admin_confirma = tieneRol('Confirma agendamientos')
 		perm_admin_recibe = tieneRol('Recibe pacientes')	
 		
-		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
+		@Agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
 
 		if (@Agendamiento.persona)
 			perm_paciente = (current_user.id == @Agendamiento.persona.id)? true : false 	
@@ -290,11 +290,6 @@ class AgendamientoController < ApplicationController
 					'textColor'			=> '#FFFFFF'
 				}
 			end
-    
-
-
-    
-
 
 		respond_to do |format|
 			format.json { render json: events}

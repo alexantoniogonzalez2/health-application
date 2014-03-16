@@ -1,0 +1,31 @@
+<% agendamientos = getPacientesAtendidos%>
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title">Pacientes atendidos</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr><th>Paciente</th><th>Hora de atención</th><th>Acción</th></tr>
+      </thead>
+      <tbody>
+      <% for agendamiento in agendamientos %>
+        <tr>
+          <td><%= agendamiento.persona.showName('%n%p%m') %></td>
+          <td><%= agendamiento.fecha_comienzo %></td>          
+          <td><%= button_to "Reabrir", {:controller => :atenciones_salud,
+          :action => 'editarAtencion', :id => getIdAtencion(agendamiento.id) }, :method => :post,class: "btn btn-xs btn-primary" %></td> 
+          
+
+        </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+   
+  </div>
+  <div class="panel-footer">
+    Panel footer
+  </div>
+</div>
+

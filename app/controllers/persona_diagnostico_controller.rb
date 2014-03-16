@@ -22,7 +22,9 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona_diagnostico_atencion.estado_diagnostico_id = 1
 			@persona_diagnostico_atencion.save
 
-			render :json => { :success => true, :per_diag => @persona_diagnostico.id}	
+			@estados_diagnostico = MedDiagnosticoEstados.all
+
+			render :json => { :success => true, :per_diag => @persona_diagnostico.id, :fe_ini => DateTime.current.strftime('%Y-%m-%d'), :estados => @estados_diagnostico }	
 		
 		end  	
 	end
@@ -30,6 +32,17 @@ class PersonaDiagnosticoController < ApplicationController
 	def eliminarDiagnostico		
 		@persona_diagnostico = FiPersonaDiagnosticos.find(params[:persona_diagnostico_id])
   	@persona_diagnostico.destroy 
+
+  	render :json => { :success => true }	
+	end
+
+	def guardarDiagnostico		
+		@persona_diagnostico = FiPersonaDiagnosticos.find(params[:persona_diagnostico_id])
+		@estado = MedDiagnosticoEstados.find(params[:estado_diagnostico])
+  	@persona_diagnostico.update( estado_diagnostico: @estado, fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino] )
+
+  	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("persona_diagnostico_id = ?",params[:persona_diagnostico_id]).first	
+		@persona_diagnostico_atencion.update( estado_diagnostico: @estado )
 
   	render :json => { :success => true }	
 	end
