@@ -1,0 +1,5 @@
+es:
+  time:
+    formats:
+      short: "round %H'ish"
+      long: ""

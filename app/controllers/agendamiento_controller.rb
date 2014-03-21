@@ -2,6 +2,12 @@ class AgendamientoController < ApplicationController
 	
 	include ApplicationHelper
 
+	def buscadorHora
+
+		
+	end
+
+
 	def showFormBusqueda
 
 		if tieneRol('Genera agendamientos') 

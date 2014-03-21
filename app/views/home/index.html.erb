@@ -1,12 +1,13 @@
 
-  <h1>Bienvenido a MedRacer</h1>
-  <h2>Esta es la página de inicio de la aplicación.</h2>
+  <h1>Bienvenido a <%= AplicacionMedica::Application.config.site_name %></h1>
 
   <% if user_signed_in? %>
   	<h2>Ha ingresado correctamente a la aplicación.</h2>
-  	<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
+  	<%= link_to 'Buscador de horas', agendamientoBuscadorHora_path %><br/>
+
 		<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>
 		<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
+		<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
 
   	<% if tieneRol('Genera agendamientos') %>
 			<%= link_to 'Agregar horas', agendaShowFormBusqueda_path %><br/>
