@@ -1,8 +1,8 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-
-$(document).ready ->
+###
+ $(document).ready ->
   $("#e1").select2 allowClear: true
   $("#e2").select2 allowClear: true
   $("#e3").select2 allowClear: true
@@ -27,3 +27,4 @@ $(document).ready ->
       return
 
   return
+###

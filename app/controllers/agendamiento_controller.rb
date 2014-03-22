@@ -3,8 +3,32 @@ class AgendamientoController < ApplicationController
 	include ApplicationHelper
 
 	def buscadorHora
+		@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
+		@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
+		@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')		
+	end
 
-		
+	def cargarTodos
+		@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
+		@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
+		@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')
+
+		render "buscadorHora.html.erb"
+	end
+
+	def filtrarProfesionales
+		resp="<option></option>"
+
+		if params[:especialidad] == ""
+			PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno').each do |p|
+			resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";	
+			end 
+		else			
+			PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales where especialidad_id= ? )",params[:especialidad]).order('nombre,apellido_paterno,apellido_materno').each do |p|
+			resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";
+			end 
+		end	
+		render :text =>resp	
 	end
 
 

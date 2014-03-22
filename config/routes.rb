@@ -24,6 +24,8 @@ AplicacionMedica::Application.routes.draw do
   get '/agendamiento/pedirHora/:especialidad_id/:prestador_id/:profesional_id', to: 'agendamiento#pedirHora'
   put '/agendamiento/pedirHora', to: 'agendamiento#pedirHora', :as => :pedirHora #Esta es solo para ponerle un nombre a la anterior pero sin parámtros
   get '/agendamiento/buscadorHora', to: 'agendamiento#buscadorHora', :as => :agendamientoBuscadorHora
+  post '/cargarTodos', to: 'agendamiento#cargarTodos', :as => :agendamientoCargarTodos
+  post '/filtrar_profesionales', to: 'agendamiento#filtrarProfesionales', :as => :filtrarProfesionales
   # get '/agendamiento/agregarHora/:prestador_id', to: 'agendamiento#agregarHoraS1', :as => :agregar_hora_s1
   # get '/agendamiento/agregarHora/:prestador_id/:profesional_id', to: 'agendamiento#agregarHoraS2', :as => :agregar_hora_s2
 

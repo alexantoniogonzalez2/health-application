@@ -1,12 +1,4 @@
-$(document).ready(function(){
-  
-  $('.chosen-select').chosen({
-    allow_single_deselect: false,
-    no_results_text: 'No hubo coincidencias.',
-    width: '300px'
-  });
-     
-});
+
 
 $("#select_diagnostico").on("change", function(e) { 
 
