@@ -31,11 +31,13 @@ $('#buscadorHora').fullCalendar({
 		week: 'MMM d{ - MMM d}',
 		day: 'd MMMM yyyy'
 	},
-	slotMinutes: 15,
-	firstHour: 9,
+	slotMinutes: 30,
+	firstHour: 8,
+	maxTime: 20,
+	minTime: 8,
 	columnFormat: {
 		day: 'dddd',
-		week:'ddd d/M'
+		week:'dddd d/M'
 	},
 	selectable: true,
 	buttonText: {
@@ -46,13 +48,12 @@ $('#buscadorHora').fullCalendar({
 	},
 	axisFormat: 'H:mm',
 	allDaySlot:false,
-	firstDay: 1,
+	firstDay: 5,
 	editable: false,
-	defaultView: 'month',
+	defaultView: 'agendaWeek',
      // will hide Saturdays and Sundays
   dayClick: function() {
  		alert('a day has been clicked!');
- 		//$('#buscadorHora').fullCalendar('next');
  		var myCalendar = $('#buscadorHora'); 
 		myCalendar.fullCalendar();
 		var myEvent = {
@@ -92,8 +93,8 @@ $("#select_especialidad").on("change", function(e) {
 function actualizarCentro(){
 
 	var centros_seleccionados = new Array();
-	var div = document.getElementById("checkbox_centros")
-  var cent_sel = div.getElementsByTagName("input");	
+	var fieldset = document.getElementById("checkbox_centros")
+  var cent_sel = fieldset.getElementsByTagName("input");	
 
 	for (var i=1;i<cent_sel.length;i++){ 
 
@@ -101,7 +102,7 @@ function actualizarCentro(){
 			centros_seleccionados.push(cent_sel[i].value); 	
 
 	}
-
+	alert(centros_seleccionados);
 }
 
 function actualizarTodosLosCentros(){

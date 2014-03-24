@@ -6,6 +6,7 @@
 	width: 800px;
 	margin: 0 auto;
 }
+/*
 .autocomplete-suggestions {
 	border: 1px solid #999;
 	background: #FFF;
@@ -26,7 +27,8 @@
 .autocomplete-suggestions strong {
 	font-weight: normal;
 	color: #3399FF;
-}
+}*/
+
 #calendar { 
 	position: relative;
 	width: auto;
@@ -42,4 +44,23 @@
 #action {
 	float: right;
 
+}
+
+.div-form-buscar-hora {
+	padding-top: 15px;	
+
+}
+
+.div_checkbox_centros {
+	padding-left : 20px;
+}
+
+.row-buscar-hora{
+	width: 500px;
+
+}
+.div-centros{
+	width: 250px;
+	margin-left:auto;
+  margin-right:auto;
 }

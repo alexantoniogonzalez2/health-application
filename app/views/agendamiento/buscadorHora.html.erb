@@ -1,60 +1,56 @@
 
 <div class="panel panel-success">
 <div class="panel-heading">
-  <h3 class="panel-title">Atención de Salud</h3>
+  <h3 class="panel-title">Buscador de horas</h3>
 </div>
 <div class="panel-body">
 <div class="row">
-	<div class="col-md-6 div-form-atencion">
-		<form class="form-horizontal">
-		<label class="col-md-4 control-label" for="select_especialidad">Especialidad</label>  
-	    <select id="select_especialidad" name="select_especialidad" data-placeholder="Seleccione una especialidad" class="chosen-select"  >
-	      <option></option>
-	      <% @especialidades.each do |e| %>
-          <option value="<%= e.id%>"><%= e.nombre %></option>
-        <% end %>
-	    </select> 
-	    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Buscar por especialidad</button> 
-	  	<label class="col-md-4 control-label" for="select_especialista">Especialista</label>
-	    <select id="select_especialista" name="select_especialista" data-placeholder="Seleccione un especialista" class="chosen-select" >
-	      <option></option>
-	       <% @profesionales.each do |pro| %>
-          <option value="<%= pro.id%>"><%= pro.showName('%n%p%m') %></option>
-        <% end %>
-	    </select>
-    </form>
 
-	</div>
-	<div class="col-md-6 div-form-atencion">
-
-		<% @prestadores.each do |p| %>
-          <option value="<%= p.id%>"><%= p.nombre %></option>
-        <% end %>
-		
-	<div class="form-group">
-	  <label class="col-md-4 control-label" for="checkboxes">Centros médicos</label>
-
-	  <div class="col-md-4" id="checkbox_centros">
-	  	<fieldset>
-
-	  		 <div class="checkbox"><label for="parentCheckBox" ><input type="checkbox" class="parentCheckBox" id="parentCheckBox" checked onchange="actualizarTodosLosCentros();">Todos los centros</label></div>
-			    
-				<div class="content">
-	  		<% @prestadores.each do |p| %>  
-			  
-	     		<div class="checkbox"><label><input type="checkbox" name="centros_option[]" class="childCheckBox" checked value="<%= p.id%>" onchange="actualizarCentro();" > <%= p.nombre %></label></div>			 
-			
+	<div class="col-md-4 div-form-buscar-hora">	
+		<div class="div-centros">
+			<label>Centros médicos</label>
+	  	<fieldset id="checkbox_centros">
+	  		 <div class="checkbox"><label for="parentCheckBox" ><input type="checkbox" class="parentCheckBox" id="parentCheckBox" checked onchange="actualizarTodosLosCentros();">Todos los centros</label></div>				    
+				<div class="div_checkbox_centros">
+	  		<% @prestadores.each do |p| %>  				  
+	     		<div class="checkbox"><label><input type="checkbox" name="centros_option[]" class="childCheckBox" checked value="<%= p.id%>" onchange="actualizarCentro();" > <%= p.nombre %></label></div>					
 	  		<% end %>
 	  		</div>
 	  	</fieldset>
-	  </div>
+		</div>
 	</div>
 
+	<div class="col-md-8 div-form-buscar-hora">
 
+			<div class="row clearfix row-buscar-hora">
+				<div class="col-md-3 column">
+					<label>Especialidad</label> 
+				</div>
+				<div class="col-md-9 column">	 
+			    <select id="select_especialidad" name="select_especialidad" data-placeholder="Seleccione una especialidad" class="chosen-select"  >
+			      <option></option>
+			      <% @especialidades.each do |e| %>
+		          <option value="<%= e.id%>"><%= e.nombre %></option>
+		        <% end %>
+			    </select>			    
+		    </div>
+	    </div>
 
-	<button id="singlebutton" name="singlebutton" class="btn btn-primary">Limpiar formulario</button>
-
+	    <div class="row clearfix row-buscar-hora">
+	    	<div class="col-md-3 column">
+		  		<label>Especialista</label>
+		  	</div>	
+		  	<div class="col-md-9 column">	
+			    <select id="select_especialista" name="select_especialista" data-placeholder="Seleccione un especialista" class="chosen-select" >
+			      <option></option>
+			       <% @profesionales.each do |pro| %>
+		          <option value="<%= pro.id%>"><%= pro.showName('%n%p%m') %></option>
+		        <% end %>
+			    </select>
+		    </div>
+	    </div>
 	</div>
+
 </div> <!--Cierre div row -->
 </div> <!--Cierre div panel-body -->
 </div> <!--Cierre div panel -->
@@ -63,5 +59,12 @@
 
 
 <%= javascript_include_tag "agendamiento/buscadorHora" %>
+
+<div class="row clearfix">
+	<div class="col-md-6 column">
+	</div>
+	<div class="col-md-6 column">
+	</div>
+</div>
 
 

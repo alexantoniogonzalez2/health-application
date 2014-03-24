@@ -8,14 +8,6 @@ class AgendamientoController < ApplicationController
 		@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')		
 	end
 
-	def cargarTodos
-		@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
-		@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
-		@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')
-
-		render "buscadorHora.html.erb"
-	end
-
 	def filtrarProfesionales
 		resp="<option></option>"
 
