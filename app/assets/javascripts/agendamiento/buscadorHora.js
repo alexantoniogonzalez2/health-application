@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
 		$(".chosen-select").chosen({
-			allow_single_deselect: false,
 	    no_results_text: 'No hubo coincidencias.',
 	    width: '300px',
 	    allow_single_deselect: true
@@ -14,7 +13,7 @@ $(document).ready(function() {
 $('#buscadorHora').fullCalendar({
 
 	header: {
-		left: 'prev,next month,agendaWeek,agendaDay',
+		left: 'prev,next month,agendaWeek,agendaDay,today',
 		center: '',
 		right: 'title',
 	},
@@ -28,42 +27,34 @@ $('#buscadorHora').fullCalendar({
 	},
 	titleFormat:{
 		month: 'MMMM yyyy',
-		week: 'MMM d{ - MMM d}',
-		day: 'd MMMM yyyy'
+		week: 'd MMMM { - d MMMM}',
+		day: 'd MMMM yyyy',
+
 	},
 	slotMinutes: 30,
 	firstHour: 8,
 	maxTime: 20,
 	minTime: 8,
 	columnFormat: {
-		day: 'dddd',
-		week:'dddd d/M'
+		day: 'dddd d',
+		week: 'dddd d',
+		month: 'dddd',
 	},
 	selectable: true,
 	buttonText: {
-	   // today:    'Hoy',
-	    month:    'Mes',
-	    week:     'Semana',
-	    day:      'Día'
+    today: 'Hoy',
+    month: 'Mes',
+    week: 'Semana',
+    day: 'Día'
 	},
 	axisFormat: 'H:mm',
 	allDaySlot:false,
-	firstDay: 5,
+	firstDay: 1,
 	editable: false,
 	defaultView: 'agendaWeek',
      // will hide Saturdays and Sundays
-  dayClick: function() {
- 		alert('a day has been clicked!');
- 		var myCalendar = $('#buscadorHora'); 
-		myCalendar.fullCalendar();
-		var myEvent = {
-		  title:"my new event",
-		  allDay: true,
-		  start: new Date(),
-		  end: new Date()
-		};
-		myCalendar.fullCalendar( 'renderEvent', myEvent );
-	}
+  viewRender: function() { } , 
+  dayClick: function() { }
 
 })
 
@@ -86,6 +77,19 @@ $("#select_especialidad").on("change", function(e) {
     error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
   });  
 
+  $('#buscadorHora').fullCalendar('removeEvents');
+  actualizarCentro();
+
+})
+
+$("#select_especialista").on("change", function(e) { 
+
+  var value = $("#select_especialista").val();
+  var text = $('#select_especialista option:selected').html();
+  
+  $('#buscadorHora').fullCalendar('removeEvents');
+  actualizarCentro();
+
 })
 
 
@@ -102,7 +106,37 @@ function actualizarCentro(){
 			centros_seleccionados.push(cent_sel[i].value); 	
 
 	}
-	alert(centros_seleccionados);
+
+	var especialidad = $("#select_especialidad").val();
+	var especialista = $("#select_especialista").val();
+
+	if (centros_seleccionados.length > 0 ){
+		if(especialidad != '' || especialista != ''){
+
+		  $.ajax({
+		    type: 'POST',
+		    url: '/buscar_horas',
+		    data: {
+		      centros: centros_seleccionados, 
+		      especialidad: especialidad,
+		      especialista: especialista,    
+		    },
+		    success: function(response) {
+		    	  $('#buscadorHora').fullCalendar('addEventSource',response);
+		    },
+		    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+		  }); 		
+		}
+		else{
+			alert('Seleccione una especialidad o un especialista.');
+		}
+	}
+	else{
+		
+	}  
+
+
+
 }
 
 function actualizarTodosLosCentros(){
@@ -110,18 +144,26 @@ function actualizarTodosLosCentros(){
   var cent_sel = document.getElementById("parentCheckBox");	
 
 	if(cent_sel.checked ){
-		var especialidades = $('#select_especialidad option').attr('disabled', false);
+		var especialidades = $('#select_especialidad option').attr('disabled', false);		
 		$('#select_especialidad').trigger("chosen:updated");
 
 		var especialistas = $('#select_especialista option').attr('disabled', false);
 		$('#select_especialista').trigger("chosen:updated"); 
+
+		 actualizarCentro();
 	}
 	else{
 		var especialidades = $('#select_especialidad option').attr('disabled', true);
 		$('#select_especialidad').trigger("chosen:updated");
 
 		var especialistas = $('#select_especialista option').attr('disabled', true);
-		$('#select_especialista').trigger("chosen:updated");    
+		$('#select_especialista').trigger("chosen:updated");  
+
+		$('#select_especialidad').val('');
+		$('#select_especialidad').trigger("chosen:updated");
+		$('#select_especialista').val('');
+		$('#select_especialista').trigger("chosen:updated");
+		$('#buscadorHora').fullCalendar('removeEvents');
 		
 	}	
 

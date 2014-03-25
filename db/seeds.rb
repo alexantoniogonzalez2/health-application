@@ -290,6 +290,14 @@ S7=AgAgendamientoEstados.new
 S7.nombre="Paciente atendido" #La atención se realizó por completo
 S7.save
 
+S8=AgAgendamientoEstados.new
+S8.nombre="Hora cancelada" #La atención se realizó por completo
+S8.save
+
+S9=AgAgendamientoEstados.new
+S9.nombre="Paciente no llegó" #La atención se realizó por completo
+S9.save
+
 puts 'Agendamientos'
 U1= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,0),
 														:fecha_final => DateTime.new(2014,3,24,10,30),

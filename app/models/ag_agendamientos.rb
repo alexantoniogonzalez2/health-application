@@ -53,41 +53,49 @@ class AgAgendamientos < ActiveRecord::Base
   end
 
   def event
-    color = '#07157E'
     description= ''
     show=false
     if agendamiento_estado.nombre == 'Hora disponible'
-        color = '#DED335'
+        className = 'disponible'
         description<< "<u><b>Hora disponible</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
       
     elsif agendamiento_estado.nombre == 'Hora no disponible'
-        color='#D86C64'
+        className = 'no_disponible'
         description<< "<u><b>Hora no disponible</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: <s>#{range('estimado')}</s>"
         show=true
     elsif agendamiento_estado.nombre == 'Hora reservada'
+        className = 'no_disponible'
         description<< "<u><b>Hora reservada</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true  
     elsif agendamiento_estado.nombre == 'Hora confirmada' 
+        className = 'no_disponible'
         description<< "<u><b>Hora confirmada</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true         
     elsif agendamiento_estado.nombre == 'Paciente en espera'
-        description<< "<u><b>Hora reservada</b></u>"
-        color='#21CAA8'
+        className = 'no_disponible'
         description<< "<u><b>Paciente en espera</b></u>"
+        color='#21CAA8'
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
+    elsif agendamiento_estado.nombre == 'Paciente siendo atendido'
+        className = 'no_disponible'
+        color='#21CAA8'
+        description<< "<u><b>Paciente siendo atendido</b></u>"
+        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        description<<"</br>Hora: #{range('estimado')}"
+        show=true    
     elsif agendamiento_estado.nombre == 'Paciente atendido'
-        description<< "<u><b>Hora reservada</b></u>"
+        className = 'no_disponible'
         color='#28DC52'
         description<< "<u><b>Paciente atendido</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
@@ -102,10 +110,9 @@ class AgAgendamientos < ActiveRecord::Base
         'title'       => '',
         'start'       => fecha_comienzo.strftime("%Y-%m-%d %H:%M")+":00.0",
         'end'         => fecha_final.strftime("%Y-%m-%d %H:%M")+":00.0",
-        'allDay'      => false,
-        'color'       => color,
-        'textColor'   => '#FFFFFF',
+        'allDay'      => false,        
         'description' => description,
+        'className'   => className
         
       }
     else

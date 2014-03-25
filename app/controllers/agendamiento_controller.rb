@@ -23,6 +23,27 @@ class AgendamientoController < ApplicationController
 		render :text =>resp	
 	end
 
+	def buscarHoras
+		
+		events=[]
+
+		if params[:especialidad] != '' and params[:especialista] != ''
+			@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:especialista],params[:centros] )
+		elsif params[:especialidad] != ''
+			@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:centros] )
+		elsif params[:especialista] != '' 	
+			@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialista],params[:centros] )
+		end
+
+		@Fechas.each do |f|
+			events << f.event				
+		end
+
+		respond_to do |f|
+			f.json {render json:events}
+		end	
+		
+	end
 
 	def showFormBusqueda
 

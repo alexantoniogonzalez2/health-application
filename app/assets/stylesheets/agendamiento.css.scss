@@ -2,32 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$azul_evento: #05c;
+$rojo_evento: #ee5f5b;
+
 .container { 
 	width: 800px;
 	margin: 0 auto;
 }
-/*
-.autocomplete-suggestions {
-	border: 1px solid #999;
-	background: #FFF;
-	cursor: default;
-	overflow: auto;
-	-webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
-	-moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
-	box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64);
-}
-.autocomplete-suggestion { 
-	padding: 2px 5px;
-	white-space: nowrap;
-	overflow: hidden;
-}
-.autocomplete-selected {
-	background: #F0F0F0;
-}
-.autocomplete-suggestions strong {
-	font-weight: normal;
-	color: #3399FF;
-}*/
 
 #calendar { 
 	position: relative;
@@ -64,3 +45,19 @@
 	margin-left:auto;
   margin-right:auto;
 }
+
+.disponible,
+.fc-agenda .disponible .fc-event-inner,
+.disponible a {
+    background-color: $azul_evento; /* background color */
+    border-color: $azul_evento;     /* border color */
+    color: white;           /* text color */
+}
+
+.no_disponible,
+.fc-agenda .no_disponible .fc-event-inner,
+.no_disponible a {
+    background-color: $rojo_evento; /* background color */
+    border-color: $rojo_evento;     /* border color */
+    color: white;           /* text color */
+ }    

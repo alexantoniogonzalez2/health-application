@@ -11,7 +11,6 @@
  *= require jquery.ui.datepicker
  *= require jquery.ui.autocomplete
  *= require fullcalendar
- *= require fullcalendar.print
  *= require jquery.ui.tabs
  *= require chosen
  *= require jquery.qtip.css
