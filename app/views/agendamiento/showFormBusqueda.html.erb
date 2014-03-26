@@ -7,12 +7,14 @@
     <% end %>
 
     <% if tieneRol('Genera agendamientos') %>
-      <select id="e1" name="e1" style="display: none">        
+    <div style="display: none">
+      <select id="e1" name="e1" class="chosen-select" style="display: none">        
           <option value="<%= getIdPrestador('administrativo') %>"></option>       
-      </select>    
+      </select>
+     </div>     
     <% else %> 
       Recinto de salud:
-      <select id="e1" name="e1" data-placeholder="Seleccione un recinto de salud" >
+      <select id="e1" name="e1" class="chosen-select" data-placeholder="Seleccione un recinto de salud" >
           <option></option>
         <% @prestadores.each do |p| %>
           <option value="<%= p.id%>"><%= p.nombre %></option>
@@ -30,16 +32,15 @@
       </select> <br/>
      
       Especialista:
-      <select id="e3" name="e3" data-placeholder="Seleccione un especialista">
+      <select id="e3" name="e3" class="chosen-select" data-placeholder="Seleccione un especialista">
           <option></option>
         <% @profesionales.each do |pro| %>
           <option value="<%= pro.id%>"><%= pro.showName('%n%p%m') %></option>
         <% end %>
       </select> 
 
+  <%= submit_tag("Ir a la agenda") %>
 
-
-
-
-  <%= submit_tag("Search") %>
 <% end %>
+
+<%= javascript_include_tag "agendamiento/buscar-especialista" %>

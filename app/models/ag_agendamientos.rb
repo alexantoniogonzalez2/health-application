@@ -54,51 +54,49 @@ class AgAgendamientos < ActiveRecord::Base
 
   def event
     description= ''
+    custom=''
     show=false
     if agendamiento_estado.nombre == 'Hora disponible'
         className = 'disponible'
-        description<< "<u><b>Hora disponible</b></u>"
-        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        custom<< "<b>Hora disponible</b>"
+        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
       
     elsif agendamiento_estado.nombre == 'Hora no disponible'
         className = 'no_disponible'
-        description<< "<u><b>Hora no disponible</b></u>"
-        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        custom<< "<b>Hora no disponible</b>"
+        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: <s>#{range('estimado')}</s>"
         show=true
     elsif agendamiento_estado.nombre == 'Hora reservada'
         className = 'no_disponible'
-        description<< "<u><b>Hora reservada</b></u>"
-        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        custom<< "<b>Hora reservada</b>"
+        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true  
     elsif agendamiento_estado.nombre == 'Hora confirmada' 
         className = 'no_disponible'
-        description<< "<u><b>Hora confirmada</b></u>"
-        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        custom<< "<b>Hora confirmada</b>"
+        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true         
     elsif agendamiento_estado.nombre == 'Paciente en espera'
         className = 'no_disponible'
-        description<< "<u><b>Paciente en espera</b></u>"
-        color='#21CAA8'
-        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        custom<< "<b>Paciente en espera</b>"
+        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
     elsif agendamiento_estado.nombre == 'Paciente siendo atendido'
         className = 'no_disponible'
-        color='#21CAA8'
-        description<< "<u><b>Paciente siendo atendido</b></u>"
-        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        custom<< "<b>Paciente siendo atendido</b>"
+        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true    
     elsif agendamiento_estado.nombre == 'Paciente atendido'
         className = 'no_disponible'
-        color='#28DC52'
-        description<< "<u><b>Paciente atendido</b></u>"
-        description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+        custom<< "<b>Paciente atendido</b>"
+        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
     end
@@ -110,7 +108,8 @@ class AgAgendamientos < ActiveRecord::Base
         'title'       => '',
         'start'       => fecha_comienzo.strftime("%Y-%m-%d %H:%M")+":00.0",
         'end'         => fecha_final.strftime("%Y-%m-%d %H:%M")+":00.0",
-        'allDay'      => false,        
+        'allDay'      => false,   
+        'custom'       => custom,     
         'description' => description,
         'className'   => className
         
@@ -144,7 +143,7 @@ class AgAgendamientos < ActiveRecord::Base
     cancelar =''
     hora_llegada =''
     hora_inicio_atencion =''
-    hora_termino_atencio =''
+    hora_termino_atencion =''
     estado = agendamiento_estado.nombre
 
     detalle<<'<div class="modal-header">
