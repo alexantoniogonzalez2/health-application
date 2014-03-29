@@ -24,8 +24,8 @@ $(function(){
 	});
 
 	$.validator.addMethod("greaterOrEqualThan1",function(value, element, params){
-		var ti=params[0].split('/')
-		var tf=value.split('/');
+		var ti=params[0].split('-')
+		var tf=value.split('-');
 
 		d_i=new Date(ti[2]+"-"+ti[1]+"-"+ti[0]+" 00:00:00.0")
 		d_f=new Date(tf[2]+"-"+tf[1]+"-"+tf[0]+" 00:00:00.0")
@@ -37,28 +37,28 @@ $(function(){
 	
 
 	$.validator.addMethod("greaterThan1",function(value, element, params){
-		di=params[0].split('/');
+		di=params[0].split('-');
 		ti=params[1].split(':');
-		df=params[2].split('/');
+		df=params[2].split('-');
 		tf=value.split(':');
 
-		d_i=new Date(di[2]+"-"+di[1]+"-"+di[0]+" "+ti[0]+":"+ti[1]+":00.0");
-		d_f=new Date(df[2]+"-"+df[1]+"-"+df[0]+" "+tf[0]+":"+tf[1]+":00.0");
+		d_i=new Date(di[0]+"-"+di[1]+"-"+di[2]+" "+ti[0]+":"+ti[1]+":00.0");
+		d_f=new Date(df[0]+"-"+df[1]+"-"+df[2]+" "+tf[0]+":"+tf[1]+":00.0");
 
 		if (d_i>=d_f) return false;
 		return true;
 	});
 
 	$.validator.addMethod("intervalOk", function(value,element,params){
-		di=params[0].split('/');
+		di=params[0].split('-');
 		ti=params[1].split(':');
-		df=params[2].split('/');
+		df=params[2].split('-');
 		tf=params[3].split(':');
 
 		step=parseInt(value);
 
-		d_i=new Date(di[2]+"-"+di[1]+"-"+di[0]+" "+ti[0]+":"+ti[1]+":00.0");
-		d_f=new Date(df[2]+"-"+df[1]+"-"+df[0]+" "+tf[0]+":"+tf[1]+":00.0");
+		d_i=new Date(di[0]+"-"+di[1]+"-"+di[2]+" "+ti[0]+":"+ti[1]+":00.0");
+		d_f=new Date(df[0]+"-"+df[1]+"-"+df[2]+" "+tf[0]+":"+tf[1]+":00.0");
 
 		while(d_i < d_f)
 			{
@@ -80,7 +80,7 @@ $(function(){
 
 	$('#calendar').fullCalendar({
 		header: {
-			left: 'prev,next month,agendaWeek,agendaDay',
+			left: 'prev,next month,agendaWeek,agendaDay,today',
 			center: '',
 			right: 'title',
 		},
@@ -105,7 +105,7 @@ $(function(){
 		},
 		selectable: true,
 		buttonText: {
-		   // today:    'Hoy',
+		    today:    'Hoy',
 		    month:    'Mes',
 		    week:     'Semana',
 		    day:      'Día'
@@ -245,6 +245,37 @@ $(function(){
 					});
 				});
 
+				// Si existe el botón "bloquear-hora", le pondrá la siguiente acción al hacer click
+				$('#modal-content .modal-footer .bloquear-hora').click(function(){
+
+					$.ajax({
+						type: 'POST',
+						url: '/aux/bloquearHora',
+						data: {	agendamiento_id: calEvent.id	},
+						success: function(response) {
+							id=calEvent.id
+							$('#calendar').fullCalendar('removeEvents',id)
+							if (response=="1"){ $('#modal-container').modal('hide') }
+							else{	alert("No se puede confirmar la hora")			}
+
+							// Re-cargamos el evento modificado
+							$.ajax({
+								type: 'POST',
+								url: '/aux/mostrarEventos',
+								data: {
+									evento_id: id,
+									especialidad_id: especialidad_id,
+									profesional_id: profesional_id,
+									prestador_id: prestador_id,
+								},
+								success: function(response) {	$('#calendar').fullCalendar('addEventSource',response);	},
+								error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
+							});
+						},
+						error: function(xhr, status, error){alert("No se pudieron cargar las horas de atención");	}
+					});
+				});				
+
 
 				// Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click
 				$('#modal-content .modal-footer .pedir-hora').click(function(){
@@ -377,8 +408,8 @@ $(function(){
 		$('#calendar').fullCalendar('removeEvents','tmp');
 		$('#calendar').fullCalendar('removeEvents','err');
 
-		di=$(form).find('input[name="di"]').val().split('/');
-		dt=$(form).find('input[name="dt"]').val().split('/');
+		di=$(form).find('input[name="di"]').val().split('-');
+		dt=$(form).find('input[name="dt"]').val().split('-');
 
 		
 		daysOfWeek=[];
@@ -389,8 +420,8 @@ $(function(){
 
 		
 
-		d_inicio=di[2]+"-"+di[1]+"-"+di[0]+" 00:00:00.0";
-		d_final=dt[2]+"-"+dt[1]+"-"+dt[0]+" 23:59:59.0";
+		d_inicio=di[0]+"-"+di[1]+"-"+di[2]+" 00:00:00.0";
+		d_final=dt[0]+"-"+dt[1]+"-"+dt[2]+" 23:59:59.0";
 
 		d_i=new Date(d_inicio);
 		d_f=new Date(d_final);
@@ -561,19 +592,19 @@ $(function(){
 			$('#calendar').fullCalendar('removeEvents','err');
 
 
-			di=$(form).find('input[name="di"]').val().split('/');
-			dt=$(form).find('input[name="dt"]').val().split('/');
+			di=$(form).find('input[name="di"]').val().split('-');
+			dt=$(form).find('input[name="dt"]').val().split('-');
 			hi=$(form).find('input[name="hi"]').val().split(':');
 			ht=$(form).find('input[name="ht"]').val().split(':');
 			step=parseInt($(form).find('input[name="i"]').val());
 
-			d_i_s=di[2]+"-"+di[1]+"-"+di[0]+" "+hi[0]+":"+hi[1]+":00.0";
-			d_f_s=dt[2]+"-"+dt[1]+"-"+dt[0]+" "+ht[0]+":"+ht[1]+":00.0";
+			d_i_s=di[0]+"-"+di[1]+"-"+di[2]+" "+hi[0]+":"+hi[1]+":00.0";
+			d_f_s=dt[0]+"-"+dt[1]+"-"+dt[2]+" "+ht[0]+":"+ht[1]+":00.0";
 			d_i=new Date(d_i_s);
 			d_f=new Date(d_f_s);
 			add_events=[];
 			i=0;
-			$('#calendar').fullCalendar('gotoDate',di[2],parseInt(di[1])-1,di[0]);
+			$('#calendar').fullCalendar('gotoDate',di[0],parseInt(di[1])-1,di[2]);
 			while(d_i < d_f)
 			{
 				tmp_i=d_i;
@@ -599,7 +630,7 @@ $(function(){
 			}
 			$('#calendar').fullCalendar('addEventSource', add_events);
 
-
+			
 			$('#diaForm .status').html(link_loading);
 			$.ajax({
 				type: 'POST',
@@ -648,10 +679,10 @@ $(function(){
 
 	function Mostrar(){
 		$('#action button').unbind('click');
-		$('#form-container').toggle('slide', {direction: 'right'}, 1000,function(){
+		$('#form-container').toggle('slide', function(){
 			$('#action button').html('Ocultar >>');
 			$('#action button').click(function(){
-				Esconder()
+				Esconder();
 			});
 		});
 		
@@ -659,7 +690,7 @@ $(function(){
 
 	function Esconder(){
 		$('#action button').unbind('click');
-		$('#form-container').toggle('slide', {direction: 'right'}, 1000, function(){
+		$('#form-container').toggle('slide', function(){
 			$('#action button').html('Agregar horas <<');
 			$('#action button').click(function(){
 				Mostrar()

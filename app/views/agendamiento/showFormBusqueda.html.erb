@@ -1,4 +1,4 @@
-<%= form_tag("", :id=>"form_hora" ) do %>
+
    
     <% if tieneRol('Genera agendamientos') %>
       Buscador de profesionales
@@ -24,7 +24,7 @@
     <% end %>
       <br/>
       Especialidad:
-      <select id="e2" name="e2" data-placeholder="Seleccione una especialidad"  >
+      <select id="e2" name="e2" class="chosen-select" data-placeholder="Seleccione una especialidad"  >
           <option></option>
         <% @especialidades.each do |e| %>
           <option value="<%= e.id%>"><%= e.nombre %></option>
@@ -38,9 +38,9 @@
           <option value="<%= pro.id%>"><%= pro.showName('%n%p%m') %></option>
         <% end %>
       </select> 
+      <button id="save">Ir a la agenda</button>
 
-  <%= submit_tag("Ir a la agenda") %>
+  
 
-<% end %>
 
 <%= javascript_include_tag "agendamiento/buscar-especialista" %>

@@ -56,30 +56,30 @@ class AgAgendamientoEstados < ActiveRecord::Base
     color = '#07157E'
     description= ''
     show=false
-    if agendamiento_estado.nombre == 'Disponible'
+    if agendamiento_estado.nombre == 'Hora disponible'
         color = '#DED335'
         description<< "<u><b>Hora disponible</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
-    elsif agendamiento_estado.nombre == 'No Disponible'
+    elsif agendamiento_estado.nombre == 'Hora bloqueada'
         color='#D86C64'
-        description<< "<u><b>Hora cancelada</b></u>"
+        description<< "<u><b>Hora bloqueada</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: <s>#{range('estimado')}</s>"
         show=true
-    elsif agendamiento_estado.nombre == 'Hora Reservada'
+    elsif agendamiento_estado.nombre == 'Hora reservada'
         description<< "<u><b>Hora reservada</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
-    elsif agendamiento_estado.nombre == 'Cliente En Espera'
+    elsif agendamiento_estado.nombre == 'Paciente en espera'
         color='#21CAA8'
         description<< "<u><b>Paciente en espera a ser atendido</b></u>"
         description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
-    elsif agendamiento_estado.nombre == 'Cliente Atendido'
+    elsif agendamiento_estado.nombre == 'Cliente atendido'
         color='#28DC52'
         description<< "<u><b>Paciente atendido</b></u>"        
       	description<<"</br>Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"

@@ -7,13 +7,12 @@ $(document).ready(function() {
 
 	}); 
 
-
-	
+  /* 
 $('#form_hora').validate({
   rules: {
     e1: { required: true },
-    e2:{ required: true  },
-    e3:{ required: true  },
+    e2: { required: true },
+    e3: { required: true },
   },
   messages: {
   	e3: "No se ha seleccionado una especialista",
@@ -24,6 +23,25 @@ $('#form_hora').validate({
     window.location="/agendamiento/pedirHora"+"/"+$("#e2").val()+"/"+$("#e1").val()+"/"+$("#e3").val();
 
   }
-})
+})*/
+
+});
+
+$('#save').click( function() {
+
+  var centro = $("#e1").val();
+  var especialidad = $("#e2").val();
+  var especialista = $("#e3").val();
+  
+  if (especialidad == '' ) 
+    alert('Seleccione una especialidad.');
+  if (especialista == '' )
+    alert('Seleccione un especialista');
+  if (centro == '')
+    alert('Seleccione un centro médico.');     
+  
+  if(especialidad != '' && especialista != '' && centro != '') {
+    window.location="/agendamiento/pedirHora"+"/"+$("#e2").val()+"/"+$("#e1").val()+"/"+$("#e3").val();
+  }
 
 });

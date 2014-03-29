@@ -267,7 +267,7 @@ S1.nombre="Hora disponible" #Estado inicial cuando un Dr esta disponible en un l
 S1.save
 
 S2=AgAgendamientoEstados.new
-S2.nombre="Hora no disponible" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
+S2.nombre="Hora bloqueada" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
 S2.save
 
 S3=AgAgendamientoEstados.new
@@ -291,12 +291,16 @@ S7.nombre="Paciente atendido" #La atención se realizó por completo
 S7.save
 
 S8=AgAgendamientoEstados.new
-S8.nombre="Hora cancelada" #La atención se realizó por completo
+S8.nombre="Hora cancelada por paciente" 
 S8.save
 
 S9=AgAgendamientoEstados.new
-S9.nombre="Paciente no llegó" #La atención se realizó por completo
+S9.nombre="Paciente no llegó" 
 S9.save
+
+S10=AgAgendamientoEstados.new
+S10.nombre="Hora cancelada por centro" 
+S10.save
 
 puts 'Agendamientos'
 U1= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,0),

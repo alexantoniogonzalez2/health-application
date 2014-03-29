@@ -189,6 +189,21 @@ class AgendamientoController < ApplicationController
 		render :text=> respuesta
 	end
 
+	def bloquearHora
+		#Posible problema por transacciones
+		respuesta="0"
+		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
+		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora bloqueada").first
+		@Agendamiento.transaction do
+			respuesta="1"
+			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.admin_confirma=PerPersonas.find(current_user.id) 
+			@Agendamiento.save			
+		end
+		
+		render :text=> respuesta
+	end
+
 	def marcarLlegada
 		#Posible problema por transacciones
 		respuesta="0"

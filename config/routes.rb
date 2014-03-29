@@ -37,6 +37,7 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/pedirHoraEvento', to: 'agendamiento#pedirHoraEvento', :as => :pedirHoraEvento
   post '/aux/cancelarHora', to: 'agendamiento#cancelarHora', :as => :cancelarHora
   post '/aux/confirmarHora', to: 'agendamiento#confirmarHora', :as => :confirmarHora
+  post '/aux/bloquearHora', to: 'agendamiento#bloquearHora', :as => :bloquearHora
   post '/aux/marcarLlegada', to: 'agendamiento#marcarLlegada', :as => :marcarLlegada
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
 

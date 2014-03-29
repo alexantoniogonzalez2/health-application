@@ -63,7 +63,7 @@ class AgAgendamientos < ActiveRecord::Base
         description<<"</br>Hora: #{range('estimado')}"
         show=true
       
-    elsif agendamiento_estado.nombre == 'Hora no disponible'
+    elsif agendamiento_estado.nombre == 'Hora bloqueada'
         className = 'no_disponible'
         custom<< "<b>Hora no disponible</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
@@ -137,6 +137,7 @@ class AgAgendamientos < ActiveRecord::Base
     detalle2 = ''
     tomar_hora =''
     reabrir =''
+    bloquear = ''
     paciente = ''
     llegada_paciente =''
     confirmar =''
@@ -158,10 +159,16 @@ class AgAgendamientos < ActiveRecord::Base
               <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
     #los elementos se configuran si se cumplen los permisos                
-    tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
-    reabrir = "<button class='btn btn-primary'>Re-Abrir</button>Tomar hora</button>"
+   
+    reabrir = "<button class='btn btn-primary'>Re-Abrir</button>"
+    if perm_admin_genera and estado == 'Hora disponible'
+      bloquear =  "<button class='btn btn-primary bloquear-hora'>Bloquear hora</button>"
+    end  
+    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe
+       tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
+    end   
     if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
-      if estado != 'Hora disponible' and estado != 'Hora no disponible'     
+      if estado != 'Hora disponible' and estado != 'Hora bloqueada'     
       paciente<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr>"
       end
     end 
@@ -188,8 +195,8 @@ class AgAgendamientos < ActiveRecord::Base
       
     case estado
       when 'Hora disponible'
-        detalle<<'</table></div><div class="modal-footer">'<<tomar_hora
-      when 'Hora no disponible'        
+        detalle<<'</table></div><div class="modal-footer">'<<tomar_hora<<bloquear
+      when 'Hora bloqueada'        
         detalle<<'</table></div><div class="modal-footer">'<<reabrir
       when 'Hora reservada' 
         detalle<<paciente<<'</table></div><div class="modal-footer">'<<llegada_paciente<<confirmar<<cancelar
