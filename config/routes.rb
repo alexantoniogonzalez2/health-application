@@ -7,6 +7,10 @@ AplicacionMedica::Application.routes.draw do
 
   root :to =>'home#index'
 
+  #Horas agendadas
+  post '/bloquear_hora', to: 'agendamiento#bloquearHora', :as => :bloquearHora
+  post '/desbloquear_hora', to: 'agendamiento#desbloquearHora', :as => :desbloquearHora
+
   #Modulo atencion salud
   resources :atenciones_salud
   post '/agregar_examen', to: 'persona_examen#agregarExamen', :as => :agregarExamen
@@ -37,7 +41,6 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/pedirHoraEvento', to: 'agendamiento#pedirHoraEvento', :as => :pedirHoraEvento
   post '/aux/cancelarHora', to: 'agendamiento#cancelarHora', :as => :cancelarHora
   post '/aux/confirmarHora', to: 'agendamiento#confirmarHora', :as => :confirmarHora
-  post '/aux/bloquearHora', to: 'agendamiento#bloquearHora', :as => :bloquearHora
   post '/aux/marcarLlegada', to: 'agendamiento#marcarLlegada', :as => :marcarLlegada
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
 

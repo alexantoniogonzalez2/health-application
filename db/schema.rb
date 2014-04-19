@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210231541) do
+ActiveRecord::Schema.define(version: 20140418235952) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.text     "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "ag_agendamiento_log_estados", force: true do |t|
+    t.integer  "responsable_id"
+    t.integer  "agendamiento_estado_id"
+    t.integer  "agendamiento_id"
+    t.datetime "fecha"
   end
 
   create_table "ag_agendamientos", force: true do |t|
@@ -26,9 +33,6 @@ ActiveRecord::Schema.define(version: 20140210231541) do
     t.datetime "fecha_final_real"
     t.datetime "fecha_llegada_paciente"
     t.integer  "persona_id"
-    t.integer  "admin_genera_id"
-    t.integer  "admin_confirma_id"
-    t.integer  "admin_recibe_id"
     t.integer  "agendamiento_estado_id"
     t.integer  "especialidad_prestador_profesional_id"
     t.datetime "created_at"

@@ -1,12 +1,12 @@
 
    
-    <% if tieneRol('Genera agendamientos') %>
+    <% if tieneRol('Generar agendamientos') %>
       Buscador de profesionales
     <% else %>    
       Buscador de atenciones de salud
     <% end %>
 
-    <% if tieneRol('Genera agendamientos') %>
+    <% if tieneRol('Generar agendamientos') %>
     <div style="display: none">
       <select id="e1" name="e1" class="chosen-select" style="display: none">        
           <option value="<%= getIdPrestador('administrativo') %>"></option>       

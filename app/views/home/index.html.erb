@@ -9,16 +9,15 @@
 		<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
 		<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
 
-  	<% if tieneRol('Genera agendamientos') %>
+  	<% if tieneRol('Generar agendamientos') %>
 			<%= link_to 'Agregar horas', agendaShowFormBusqueda_path %><br/>
 		<% elsif esProfesionalSalud %>
 				<div class="row clearfix">
 					<div class="col-md-8 column">
-						<%= render "pacientes_en_espera" %>
+						<%= render "horas_agendadas" %>
 					</div>
 					<div class="col-md-4 column">
 						<%= render "proximos_pacientes" %>
-						<%= render "pacientes_atendidos" %>
 					</div>						
 				</div>			
 		<% else %>		

@@ -129,20 +129,24 @@ C2.save
 #Rol Administrativo
 puts 'Rol Administrativo'
 R1=PreRolAdministrativos.new
-R1.nombre="Genera agendamientos"
+R1.nombre="Generar agendamientos"
 R1.save
 
 R2=PreRolAdministrativos.new
-R2.nombre="Confirma agendamientos"
+R2.nombre="Confirmar agendamientos"
 R2.save
 
 R3=PreRolAdministrativos.new
-R3.nombre="Recibe pacientes"
+R3.nombre="Recibir pacientes"
 R3.save
 
 R4=PreRolAdministrativos.new
-R4.nombre="Genera estadisticas"
+R4.nombre="Bloquear horas"
 R4.save
+
+R5=PreRolAdministrativos.new
+R5.nombre="Generar estadísticas"
+R5.save
 
 puts 'Relación Prestador - Administrativo'
 PA=PrePrestadorAdministrativos.new
@@ -163,6 +167,11 @@ PA.administrativo=A
 PA.rol_administrativo=R3
 PA.save
 
+PA=PrePrestadorAdministrativos.new
+PA.prestador=C1
+PA.administrativo=A
+PA.rol_administrativo=R4
+PA.save
 
 PA2=PrePrestadorAdministrativos.new
 PA2.prestador=C2
@@ -291,89 +300,76 @@ S7.nombre="Paciente atendido" #La atención se realizó por completo
 S7.save
 
 S8=AgAgendamientoEstados.new
-S8.nombre="Hora cancelada por paciente" 
+S8.nombre="Hora cancelada" 
 S8.save
 
 S9=AgAgendamientoEstados.new
 S9.nombre="Paciente no llegó" 
 S9.save
 
-S10=AgAgendamientoEstados.new
-S10.nombre="Hora cancelada por centro" 
-S10.save
-
+=begin
 puts 'Agendamientos'
 U1= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,0),
 														:fecha_final => DateTime.new(2014,3,24,10,30),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4
 
 U2= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,30),
 														:fecha_final => DateTime.new(2014,3,24,11,00),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4
 
 U3= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,11,00),
 														:fecha_final => DateTime.new(2014,3,24,11,30),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4	
 
 U4= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,11,30),
 														:fecha_final => DateTime.new(2014,3,24,12,00),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4	
 
 U5= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,0),
 														:fecha_final => DateTime.new(2014,3,25,10,30),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4
 
 U6= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
 														:fecha_final => DateTime.new(2014,3,25,11,00),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4
 
 U7= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,00),
 														:fecha_final => DateTime.new(2014,3,25,11,30),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4	
 
 U8= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,30),
 														:fecha_final => DateTime.new(2014,3,25,12,00),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP4
 
 U9= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,0),
 														:fecha_final => DateTime.new(2014,3,25,10,30),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP1
 
 U10= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
 														:fecha_final => DateTime.new(2014,3,25,11,00),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP1
 
 U11= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,00),
 														:fecha_final => DateTime.new(2014,3,25,11,30),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
 														:especialidad_prestador_profesional => PP1	
 
 U12= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,30),
 														:fecha_final => DateTime.new(2014,3,25,12,00),
-														:admin_genera => A,
 														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP1																																																						
+														:especialidad_prestador_profesional => PP1	
+
+=end																																																																			
 
 puts 'Examenes'
 #Examen

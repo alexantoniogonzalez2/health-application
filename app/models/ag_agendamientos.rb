@@ -2,11 +2,10 @@ class AgAgendamientos < ActiveRecord::Base
 
 	belongs_to :especialidad_prestador_profesional, :class_name => 'PrePrestadorProfesionales'
 	belongs_to :persona, :class_name => 'PerPersonas'
-	belongs_to :admin_genera, :class_name => 'PerPersonas'
-  belongs_to :admin_confirma, :class_name => 'PerPersonas'
-  belongs_to :admin_recibe, :class_name => 'PerPersonas'
 	belongs_to :agendamiento_estado, :class_name => 'AgAgendamientoEstados'
   has_one :atencion_salud, :class_name => 'FiAtencionesSalud', :foreign_key => 'agendamiento_id'
+  has_many :agendamiento_logs, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'agendamiento_id'
+
 
   def month(val)
     if val==1
@@ -130,7 +129,7 @@ class AgAgendamientos < ActiveRecord::Base
 
 
 
-  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_paciente) #los parámetros corresponden a permisos
+  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_paciente,perm_profesional) #los parámetros corresponden a permisos
 
     show=false
     detalle = ''
@@ -159,9 +158,10 @@ class AgAgendamientos < ActiveRecord::Base
               <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
     #los elementos se configuran si se cumplen los permisos                
-   
-    reabrir = "<button class='btn btn-primary'>Re-Abrir</button>"
-    if perm_admin_genera and estado == 'Hora disponible'
+    if perm_admin_bloquea or perm_profesional
+      reabrir = "<button class='btn btn-primary desbloquear-hora'>Desbloquear Hora</button>"
+    end  
+    if perm_admin_bloquea and estado == 'Hora disponible'
       bloquear =  "<button class='btn btn-primary bloquear-hora'>Bloquear hora</button>"
     end  
     if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe
@@ -217,11 +217,9 @@ class AgAgendamientos < ActiveRecord::Base
 
   private
   def app_params
-    params.require(:list).permit( :admin_genera,
-                                  :admin_confirma,
-                                  :admin_recibe,
-                                  :atencion_medica,
+    params.require(:list).permit( :atencion_medica,
                                   :agendamiento_estado,
+                                  :agendamiento_logs,
                                   :fecha_comienzo, 
                                   :fecha_comienzo_real, 
                                   :fecha_final, 

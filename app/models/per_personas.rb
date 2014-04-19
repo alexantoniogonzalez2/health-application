@@ -6,9 +6,7 @@ class PerPersonas < ActiveRecord::Base
   has_many :prestador_administrativos, :class_name => 'PrePrestadorAdministrativos', :foreign_key => 'administrativo_id'	
   has_many :profesionales, :class_name => 'ProProfesionales', :foreign_key => 'profesional_id'  
   has_many :persona_agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'persona_id'
-  has_many :admin_genera_agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'administrativo_id'
-  has_many :admin_recibe_agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'administrativo_id'
-  has_many :admin_confirma_agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'administrativo_id'
+  has_many :responsable_agendamientos, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'responsable_id'
   has_many :persona_examenes, :class_name => 'FiPersonaExamenes', :foreign_key => 'persona_id' 
   has_many :persona_diagnosticos, :class_name => 'FiPersonaDiagnosticos', :foreign_key => 'persona_id' 
   has_many :gesta, :class_name => 'FiGestas', :foreign_key => 'persona_id'  
@@ -114,6 +112,7 @@ class PerPersonas < ActiveRecord::Base
                     :admin_recibe_agendamientos,
                     :persona_examenes,
                     :persona_diagnosticos,
+                    :responsable_agendamientos,
                     :gesta,
                     :persona_medicamentos,
                     :persona_metricas,

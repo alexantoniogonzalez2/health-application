@@ -7,9 +7,6 @@ class CreateAgAgendamientos < ActiveRecord::Migration
       t.datetime :fecha_final_real      #fecha_final_real
       t.datetime :fecha_llegada_paciente #fecha_final_real
       t.references :persona             #persona_id
-      t.references :admin_genera      #admin_genera_id
-      t.references :admin_confirma    #admin_confirma_id
-      t.references :admin_recibe      #admin_recibe_id
       t.references :agendamiento_estado #agendamiento_estado_id
       t.references :especialidad_prestador_profesional  #especialidad_prestador_profesional_id
 
