@@ -408,6 +408,7 @@ Ex5.indicaciones="Indicaciones 5"
 Ex5.codigo_isapre="codigo5"
 Ex5.save
 
+=begin
 #Diagnostico
 D1 = MedDiagnosticos.create! :nombre => 'Colera debido a vibrio cholerae o1, biotipo cholerae', :descripcion => 'descripcion', :codigo_cie10 => 'A000'
 D2 = MedDiagnosticos.create! :nombre => 'Colera debido a vibrio cholerae o1, biotipo el tor', :descripcion => 'descripcion', :codigo_cie10 => 'A001'
@@ -424,7 +425,7 @@ D12 = MedDiagnosticos.create! :nombre => 'Septicemia debida a salmonella', :desc
 D13 = MedDiagnosticos.create! :nombre => 'Infecciones localizadas debida a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A022'
 D14 = MedDiagnosticos.create! :nombre => 'Otras infecciones especificadas como debidas a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A028'
 
-
+=end
 
 #Medicamentos
 Di1=MedMedicamentos.new

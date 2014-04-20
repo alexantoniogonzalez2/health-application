@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140418235952) do
+ActiveRecord::Schema.define(version: 20140420073640) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.text     "nombre"
@@ -146,6 +146,10 @@ ActiveRecord::Schema.define(version: 20140418235952) do
     t.text     "nombre"
     t.text     "codigo_cie10"
     t.text     "descripcion"
+    t.integer  "grupo_id"
+    t.integer  "numero"
+    t.boolean  "frecuente"
+    t.boolean  "nodo_terminal"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -155,6 +159,13 @@ ActiveRecord::Schema.define(version: 20140418235952) do
     t.text     "descripcion"
     t.text     "indicaciones"
     t.text     "codigo_isapre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_grupos", force: true do |t|
+    t.text     "codigo"
+    t.text     "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

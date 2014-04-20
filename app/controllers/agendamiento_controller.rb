@@ -231,7 +231,6 @@ class AgendamientoController < ApplicationController
 			respuesta="1"
 			@Agendamiento.fecha_llegada_paciente = DateTime.current 
 			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
-			@Agendamiento.admin_recibe=PerPersonas.find(current_user.id) 
 			@Agendamiento.save			
 		end
 
