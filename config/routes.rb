@@ -18,6 +18,7 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
+  post '/cargar_no_frecuentes', to: 'atenciones_salud#cargarNoFrecuentes'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico
   

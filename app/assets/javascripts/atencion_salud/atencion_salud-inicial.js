@@ -1,4 +1,27 @@
+$("#select_diagnostico").chosen({
+  no_results_text: 'No hubo coincidencias.',
+  allow_single_deselect: false,
+  width: "300px" 
+}); 
 
+$("#select_examen").chosen({
+  no_results_text: 'No hubo coincidencias.',
+  allow_single_deselect: false,
+  width: "300px" 
+}); 
+
+
+$('#modal-no-frecuente').on('show.bs.modal', function (e) {
+
+  $.ajax({
+    type: 'POST',
+    url: '/cargar_no_frecuentes',
+    data: {},
+    success: function(response) {  },
+    error: function(xhr, status, error){ alert("No se pudo cargar los diagnósticos no frecuentes.");   }
+  });
+  
+})
 
 $("#select_diagnostico").on("change", function(e) { 
 

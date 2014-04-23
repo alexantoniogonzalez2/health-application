@@ -37,7 +37,7 @@ class AtencionesSaludController < ApplicationController
 	  @atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona_diagnostico = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
-	  @diagnosticos = MedDiagnosticos.all
+	  @diagnosticos = MedDiagnosticos.where('frecuente = ?',true)
 	  @examenes = MedExamenes.all
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 	  @persona_examen = FiPersonaExamenes.where('atencion_salud_id = ? ', params[:id])
@@ -75,10 +75,23 @@ class AtencionesSaludController < ApplicationController
 	end
 
 	def editarAtencion		
-		
 
   	redirect_to :action => "edit", :id =>params[:id]
 	
+	end
+
+	def cargarNoFrecuentes
+
+		diag=[]
+		@diagnosticos = MedDiagnosticos.all
+		
+		@diagnosticos.each do |f|
+			diag << f			
+		end
+
+		respond_to do |f|
+			f.json {render json:diag}
+		end	
 	end
 
 	private

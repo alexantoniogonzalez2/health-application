@@ -13,7 +13,8 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
   								:estado_diagnostico,
   				  			:id,
   								:persona_diagnostico,
-  								:prioridad)
+  								:prioridad,
+                  :comentario)
   end
 								
 end

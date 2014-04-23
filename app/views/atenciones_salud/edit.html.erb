@@ -62,19 +62,40 @@
 <div class="col-md-6 div-form-atencion">
 
 
+
   <%= f.label :"Diagnóstico:" %>
   <select id="select_diagnostico" class="chosen-select" data-placeholder="Seleccione un diagnóstico" >
       <option></option>
     <% @diagnosticos.each do |d| %>
-      <option value="<%= d.id%>"><%= d.nombre %></option>
+      <option value="<%= d.id%>"><%= d.codigo_cie10 + ' ' + d.nombre %></option>
     <% end %>
     <option></option>
   </select>
+ <br/><a href="#modal-no-frecuente" data-toggle="modal">Incluir diagnóstico no frecuente</a>
+
+
+  <div class="modal fade" id="modal-no-frecuente" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title" id="myModalLabel">No frecuentes</h4>
+        </div>
+        <div class="modal-body" id="modal-body-no-frecuente"> 
+        </div>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"   class="btn btn-primary">Guardar</button>
+        </div>
+      </div>            
+    </div>        
+  </div>
+
+
 
   <div class="list-group div-form-diag" name="diagnostico-div" id="diagnostico-div">	
     <% @persona_diagnostico.each do |p_d| %>
       <a href="#modal-container-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
-        <p class="list-group-item-text"><%= p_d.diagnostico.nombre %><button id="bc<%= p_d.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button></p></a>
+        <p class="list-group-item-text"><%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %><button id="bc<%= p_d.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button></p></a>
     <% end %>
 	</div>
   <div id="diag_modal-div" >
@@ -104,7 +125,7 @@
       </div>        
     </div>
   <% end %>      
-</div>
+  </div>
 	<%= f.label :"Indicaciones:"  %>
 	<%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
 </div>
