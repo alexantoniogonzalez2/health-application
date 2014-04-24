@@ -69,7 +69,6 @@
     <% @diagnosticos.each do |d| %>
       <option value="<%= d.id%>"><%= d.codigo_cie10 + ' ' + d.nombre %></option>
     <% end %>
-    <option></option>
   </select>
  <br/><a href="#modal-no-frecuente" data-toggle="modal">Incluir diagnóstico no frecuente</a>
 
@@ -81,7 +80,8 @@
            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4 class="modal-title" id="myModalLabel">No frecuentes</h4>
         </div>
-        <div class="modal-body" id="modal-body-no-frecuente"> 
+        <div class="modal-body" id="modal-body-no-frecuente">
+          <select id="select_diagnostico_frecuente" class="chosen-select" data-placeholder="Seleccione un diagnóstico"></select> 
         </div>
         <div class="modal-footer">
            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"   class="btn btn-primary">Guardar</button>

@@ -10,16 +10,38 @@ $("#select_examen").chosen({
   width: "300px" 
 }); 
 
+$("#select_diagnostico_frecuente").chosen({
+  no_results_text: 'No hubo coincidencias.',
+  allow_single_deselect: false,
+  width: "500px" 
+}); 
+
 
 $('#modal-no-frecuente').on('show.bs.modal', function (e) {
+   
+  if ($('#option_select_df').length){
+    
+  }
+  else{
 
-  $.ajax({
-    type: 'POST',
-    url: '/cargar_no_frecuentes',
-    data: {},
-    success: function(response) {  },
-    error: function(xhr, status, error){ alert("No se pudo cargar los diagnósticos no frecuentes.");   }
-  });
+    $.ajax({
+      type: 'POST',
+      url: '/cargar_no_frecuentes',
+      data: {},
+      success: function(response) { 
+
+        option = '<option id="option_select_df"></option>';
+        for (i=0;i<response.length;i++)
+          option += '<option value="'+response[i]['id']+'">'+response[i]['nombre']+'</option>';
+        
+        $('#select_diagnostico_frecuente').append(option);
+        $("#select_diagnostico_frecuente").trigger("chosen:updated");
+
+     },
+      error: function(xhr, status, error){ alert("No se pudo cargar los diagnósticos no frecuentes.");   }
+    });
+
+  } 
   
 })
 
@@ -41,10 +63,9 @@ $("#select_diagnostico").on("change", function(e) {
       if (response.success){
         option = '';
         est = response.estados;
-        for (i=0;i<est.length;i++){
+        for (i=0;i<est.length;i++)
           option += '<option value="'+est[i]['id']+'">'+est[i]['nombre']+'</option>';
-        }
-
+        
         pe_di = response.per_diag;
         $('#diagnostico-div').append('<a href="#modal-container-'+pe_di+'" class="list-group-item" data-toggle="modal" id="pd'+pe_di+'"><p class="list-group-item-text">'+text+'<button id="bc'+pe_di+'" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico('+pe_di+')" >Eliminar</button></p></a>');
         $('#diag_modal-div').append('<div class="modal fade" id="modal-container-'+pe_di+'" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel">'+text+'</h4></div><div class="modal-body"><p>Fecha inicio: <input name="f_i_'+pe_di+'" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="'+response.fe_ini+'"></p><p>Fecha término: <input name="f_t_'+pe_di+'" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" ></p><p>Estado de diagnóstico actual:<select id="e_d_'+pe_di+'" name="selectbasic" class="form-control" >'+option+'</select></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"  onclick="guardarDiagnostico('+pe_di+')" class="btn btn-primary">Guardar</button></div></div></div></div>');
