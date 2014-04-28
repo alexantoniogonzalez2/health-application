@@ -6,9 +6,7 @@ class AtencionesSaludController < ApplicationController
 	end
 
 	def create		
-		#@atencion_salud = FiAtencionesSalud.new(:motivo_consulta => params[:atencion_salud][:motivo_consulta],
-		#																				:indicaciones_generales => params[:atencion_salud][:indicaciones_generales], )
-
+	
 		@atencion_salud = FiAtencionesSalud.new(app_params)
 				
 	  if @atencion_salud.save
@@ -80,18 +78,20 @@ class AtencionesSaludController < ApplicationController
 	
 	end
 
-	def cargarNoFrecuentes
+  def cargarNoFrecuentes		
 
+		term= params[:q]
 		diag=[]
-		@diagnosticos = MedDiagnosticos.all
+		@diagnosticos = MedDiagnosticos.where("nombre LIKE ? ", "%#{term}%")
 		
 		@diagnosticos.each do |f|
-			diag << f			
+			diag << f.formato_lista			
 		end
 
-		respond_to do |f|
-			f.json {render json:diag}
-		end	
+		respond_to do |format|
+			format.json { render json: diag}
+		end
+				
 	end
 
 	private

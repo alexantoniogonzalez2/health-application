@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20140420073640) do
     t.integer  "persona_diagnostico_id"
     t.integer  "atencion_salud_id"
     t.integer  "estado_diagnostico_id"
+    t.text     "comentario"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

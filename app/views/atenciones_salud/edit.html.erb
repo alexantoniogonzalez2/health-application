@@ -1,6 +1,7 @@
   <script>
 		var persona_id=<%=@agendamiento.persona.id  %>
 		var atencion_salud_id=<%= @atencion_salud.id %>
+    var link_loading = '<%= image_tag("loading.gif", alt: "Rails") %>'
 		
 	</script>
 
@@ -81,7 +82,9 @@
           <h4 class="modal-title" id="myModalLabel">No frecuentes</h4>
         </div>
         <div class="modal-body" id="modal-body-no-frecuente">
-          <select id="select_diagnostico_frecuente" class="chosen-select" data-placeholder="Seleccione un diagnóstico"></select> 
+          <div id="status"></div> 
+         <!-- <select id="select_diagnostico_frecuente" class="chosen-select" data-placeholder="Seleccione un diagnóstico"></select> -->
+<input type='hidden'id="select"></input>
         </div>
         <div class="modal-footer">
            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"   class="btn btn-primary">Guardar</button>
@@ -116,6 +119,9 @@
                   <option value="<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> selected="selected" <% end %>  ><%= e_d.nombre %></option>
                 <% end %>
               </select>
+            </p>
+            <p>Comentario:
+              <textarea class="form-control" id="comentario_<%= p_d.id%>"><%= p_d.getComentario %></textarea>
             </p>  
           </div>
           <div class="modal-footer">

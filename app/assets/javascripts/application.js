@@ -20,6 +20,8 @@
 //= require jquery.ui.datepicker
 //= require fullcalendar
 //= require chosen-jquery
+//= require select2
+//= require select2_locale_es
 //= require jquery.ui.tabs
 //= require jquery.qtip.js
 //= require_tree .

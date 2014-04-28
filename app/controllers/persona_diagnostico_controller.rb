@@ -42,7 +42,7 @@ class PersonaDiagnosticoController < ApplicationController
   	@persona_diagnostico.update( estado_diagnostico: @estado, fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino] )
 
   	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("persona_diagnostico_id = ?",params[:persona_diagnostico_id]).first	
-		@persona_diagnostico_atencion.update( estado_diagnostico: @estado )
+		@persona_diagnostico_atencion.update( estado_diagnostico: @estado , comentario: params[:comentario])
 
   	render :json => { :success => true }	
 	end

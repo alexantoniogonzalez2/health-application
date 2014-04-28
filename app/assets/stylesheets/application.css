@@ -13,6 +13,8 @@
  *= require fullcalendar
  *= require jquery.ui.tabs
  *= require chosen
+ *= require select2
+ *= require select2-bootstrap
  *= require jquery.qtip.css
  *= require_self
  *= require_tree .

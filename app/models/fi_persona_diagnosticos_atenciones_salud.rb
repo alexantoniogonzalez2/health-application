@@ -6,7 +6,6 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
 	belongs_to :atencion_salud, :class_name => 'FiAtencionesSalud'
 	belongs_to :estado_diagnostico, :class_name => 'MedDiagnosticoEstados'
 
- 
   private
   def app_params
     params.require(:list).permit(:atencion_salud,
