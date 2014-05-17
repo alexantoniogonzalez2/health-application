@@ -1,4 +1,4 @@
-class MedGrupos < ActiveRecord::Base
+class MedDiagnosticosGrupos < ActiveRecord::Base
 
 	has_many :diagnosticos, :class_name => 'MedDiagnosticos', :foreign_key => 'grupo_id' 	
 

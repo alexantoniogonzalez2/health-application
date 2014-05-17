@@ -31,6 +31,23 @@ $(document).ready(function(){
       }
     }
   });
+  $('#select2').select2({
+    width: '100%',
+    minimumInputLength: 3,
+    ajax: {
+      url: '/cargar_examenes',
+      dataType: 'json',
+      type: 'POST',
+      data: function (term, page) {
+        return {
+          q: term
+        };
+      },
+      results: function (data, page) {
+        return { results: data };
+      }
+    }
+  });
 });
 
 function cargarCalendario(){

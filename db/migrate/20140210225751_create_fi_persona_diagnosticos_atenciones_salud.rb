@@ -7,6 +7,8 @@ class CreateFiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Migration
       t.references :atencion_salud	#atencion_salud_id
       t.references :estado_diagnostico 	#estado_diagnostico_id
       t.text :comentario
+      t.datetime :fecha_inicio
+      t.datetime :fecha_termino
 
 
       t.timestamps

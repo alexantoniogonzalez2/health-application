@@ -83,7 +83,7 @@
         </div>
         <div class="modal-body" id="modal-body-no-frecuente">
           <div id="status"></div> 
-         <!-- <select id="select_diagnostico_frecuente" class="chosen-select" data-placeholder="Seleccione un diagnóstico"></select> -->
+         
 <input type='hidden'id="select"></input>
         </div>
         <div class="modal-footer">
@@ -114,14 +114,14 @@
             <p>Fecha inicio: <input name="f_i_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaInicio %>"></p>
             <p>Fecha término: <input name="f_t_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaTermino %>"></p>
             <p>Estado de diagnóstico actual:
-              <select id="e_d_<%= p_d.id%>" name="selectbasic" class="form-control" >
+              <select id="e_d_<%= p_d.id %>" name="selectbasic" class="form-control" >
                 <% @estados_diagnostico.each do |e_d| %>  
                   <option value="<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> selected="selected" <% end %>  ><%= e_d.nombre %></option>
                 <% end %>
               </select>
             </p>
             <p>Comentario:
-              <textarea class="form-control" id="comentario_<%= p_d.id%>"><%= p_d.getComentario %></textarea>
+              <textarea class="form-control" id="comentario_<%= p_d.id%>"><%= getComentario(p_d.id) %></textarea>
             </p>  
           </div>
           <div class="modal-footer">
@@ -139,13 +139,7 @@
 <div class="col-md-6 div-form-atencion">
 
 	<%= f.label :"Exámenes:" %>
-  <select id="select_examen" class="chosen-select" data-placeholder="Seleccione un examen" >
-      <option></option>
-    <% @examenes.each do |e| %>
-      <option value="<%= e.id%>"><%= e.nombre %></option>
-    <% end %>
-    <option></option>
-  </select>
+  <input type='hidden'id="select2"></input>
 
   <div class="list-group div-form-diag" name="examen-div" id="examen-div">  
     <% @persona_examen.each do |p_e| %>

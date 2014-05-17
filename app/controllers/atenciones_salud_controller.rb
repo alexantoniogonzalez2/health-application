@@ -35,10 +35,11 @@ class AtencionesSaludController < ApplicationController
 	  @atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona_diagnostico = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
+
 	  @diagnosticos = MedDiagnosticos.where('frecuente = ?',true)
-	  @examenes = MedExamenes.all
+	  #@examenes = MedExamenes.all
 	  @estados_diagnostico = MedDiagnosticoEstados.all
-	  @persona_examen = FiPersonaExamenes.where('atencion_salud_id = ? ', params[:id])
+	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? ', params[:id])
 
 	end
 

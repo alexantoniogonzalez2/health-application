@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140420073640) do
+ActiveRecord::Schema.define(version: 20140517053250) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.text     "nombre"
@@ -106,14 +106,8 @@ ActiveRecord::Schema.define(version: 20140420073640) do
     t.integer  "atencion_salud_id"
     t.integer  "estado_diagnostico_id"
     t.text     "comentario"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "fi_persona_examenes", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "examen_id"
-    t.integer  "atencion_salud_id"
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_termino"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -137,6 +131,14 @@ ActiveRecord::Schema.define(version: 20140420073640) do
     t.datetime "updated_at"
   end
 
+  create_table "fi_persona_prestaciones", force: true do |t|
+    t.integer  "persona_id"
+    t.integer  "prestacion_id"
+    t.integer  "atencion_salud_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "med_diagnostico_estados", force: true do |t|
     t.text     "nombre"
     t.datetime "created_at"
@@ -155,16 +157,7 @@ ActiveRecord::Schema.define(version: 20140420073640) do
     t.datetime "updated_at"
   end
 
-  create_table "med_examenes", force: true do |t|
-    t.text     "nombre"
-    t.text     "descripcion"
-    t.text     "indicaciones"
-    t.text     "codigo_isapre"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "med_grupos", force: true do |t|
+  create_table "med_diagnosticos_grupos", force: true do |t|
     t.text     "codigo"
     t.text     "nombre"
     t.datetime "created_at"
@@ -176,6 +169,30 @@ ActiveRecord::Schema.define(version: 20140420073640) do
     t.text     "descripcion"
     t.text     "principio_activo"
     t.text     "codigo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_prestaciones", force: true do |t|
+    t.text     "nombre"
+    t.text     "descripcion"
+    t.text     "codigo_fonasa"
+    t.integer  "subgrupo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_prestaciones_grupos", force: true do |t|
+    t.text     "nombre"
+    t.text     "descripcion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_prestaciones_subgrupos", force: true do |t|
+    t.text     "nombre"
+    t.text     "descripcion"
+    t.integer  "grupo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

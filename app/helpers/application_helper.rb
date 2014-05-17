@@ -86,11 +86,4 @@ module ApplicationHelper
 		
 	end
 
-	def getDia
-	
-		return 55
-		
-	end
-
-
 end

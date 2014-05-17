@@ -332,35 +332,40 @@ class AgendamientoController < ApplicationController
 		@EstadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
 
 		if params[:tipo]=='diario'
-		fecha_comienzo=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
-		fecha_termino=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
-		step=params[:step]
-			while fecha_comienzo < fecha_termino do
-				tmp_i=fecha_comienzo
-				tmp_f=fecha_comienzo+step.to_i.minutes
+			
+			fecha_comienzo=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
+			fecha_termino=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
+			step=params[:step]
+			ActiveRecord::Base.transaction do
+				while fecha_comienzo < fecha_termino do
+					tmp_i=fecha_comienzo
+					tmp_f=fecha_comienzo+step.to_i.minutes
 
-				#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
-				#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
+					#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
+					#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
 
-				@Agendamiento=AgAgendamientos.new
-				@Agendamiento.fecha_comienzo=tmp_i
-				@Agendamiento.fecha_final=tmp_f
-				@Agendamiento.agendamiento_estado = @EstadoAgendamiento
-				@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
-				@Agendamiento.save
+					@Agendamiento=AgAgendamientos.new
+					@Agendamiento.fecha_comienzo=tmp_i
+					@Agendamiento.fecha_final=tmp_f
+					@Agendamiento.agendamiento_estado = @EstadoAgendamiento
+					@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
+					@Agendamiento.save
 
-				@agendamiento_log = AgAgendamientoLogEstados.new
-				@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
-				@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
-				@agendamiento_log.agendamiento = @Agendamiento
-				@agendamiento_log.fecha = DateTime.current
-				@agendamiento_log.save
+					@agendamiento_log = AgAgendamientoLogEstados.new
+					@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+					@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
+					@agendamiento_log.agendamiento = @Agendamiento
+					@agendamiento_log.fecha = DateTime.current
+					@agendamiento_log.save
 
-				events << @Agendamiento.event
+					events << @Agendamiento.event
 
-				fecha_comienzo=tmp_f
-			end
+					fecha_comienzo=tmp_f
+				end # end while
+			end #end transaction
+
 		elsif params[:tipo]=='comportamiento'
+
 			fecha_inicio=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
 			fecha_final=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
 			step=params[:step]
@@ -381,47 +386,50 @@ class AgendamientoController < ApplicationController
 				d_i=tmp_f
 			end
 
-			days.each do |d|
+			ActiveRecord::Base.transaction do
+				days.each do |d|
 
-				tmp=d.strftime("%Y-%m-%d")+" "+hora_inicio
-				d_i=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
-				tmp=d.strftime("%Y-%m-%d")+" "+hora_termino
-				d_f=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
-				if d_f<=d_i
-					d_f=d_f+1.days
-				end
+					tmp=d.strftime("%Y-%m-%d")+" "+hora_inicio
+					d_i=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
+					tmp=d.strftime("%Y-%m-%d")+" "+hora_termino
+					d_f=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
+					if d_f<=d_i
+						d_f=d_f+1.days
+					end
 
 
-				fecha_comienzo=d_i
-				fecha_termino=d_f
+					fecha_comienzo=d_i
+					fecha_termino=d_f
 
-				while fecha_comienzo < fecha_termino do
+					while fecha_comienzo < fecha_termino do
 
-					tmp_i=fecha_comienzo
-					tmp_f=fecha_comienzo+step.to_i.minutes
+						tmp_i=fecha_comienzo
+						tmp_f=fecha_comienzo+step.to_i.minutes
 
-					#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
-					#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
+						#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
+						#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
 
-					@Agendamiento=AgAgendamientos.new
-					@Agendamiento.fecha_comienzo=tmp_i
-					@Agendamiento.fecha_final=tmp_f
-					@Agendamiento.agendamiento_estado=@EstadoAgendamiento
-					@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
-					@Agendamiento.save
-					
-					@agendamiento_log = AgAgendamientoLogEstados.new
-					@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
-					@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
-					@agendamiento_log.agendamiento = @Agendamiento
-					@agendamiento_log.fecha = DateTime.current
-					@agendamiento_log.save
+						@Agendamiento=AgAgendamientos.new
+						@Agendamiento.fecha_comienzo=tmp_i
+						@Agendamiento.fecha_final=tmp_f
+						@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+						@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
+						@Agendamiento.save
+						
+						@agendamiento_log = AgAgendamientoLogEstados.new
+						@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+						@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
+						@agendamiento_log.agendamiento = @Agendamiento
+						@agendamiento_log.fecha = DateTime.current
+						@agendamiento_log.save
 
-					events << @Agendamiento.event
+						events << @Agendamiento.event
 
-					fecha_comienzo=tmp_f
-				end #while
-			end #days.each
+						fecha_comienzo=tmp_f
+					end #while
+				end #days.each
+			end #transaction
+
 			else
 				events << { 
 					'id'				=> 'err',

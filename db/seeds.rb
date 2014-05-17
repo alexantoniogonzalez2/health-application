@@ -305,127 +305,7 @@ S8.save
 
 S9=AgAgendamientoEstados.new
 S9.nombre="Paciente no llegó" 
-S9.save
-
-=begin
-puts 'Agendamientos'
-U1= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,0),
-														:fecha_final => DateTime.new(2014,3,24,10,30),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4
-
-U2= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,10,30),
-														:fecha_final => DateTime.new(2014,3,24,11,00),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4
-
-U3= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,11,00),
-														:fecha_final => DateTime.new(2014,3,24,11,30),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4	
-
-U4= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,24,11,30),
-														:fecha_final => DateTime.new(2014,3,24,12,00),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4	
-
-U5= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,0),
-														:fecha_final => DateTime.new(2014,3,25,10,30),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4
-
-U6= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
-														:fecha_final => DateTime.new(2014,3,25,11,00),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4
-
-U7= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,00),
-														:fecha_final => DateTime.new(2014,3,25,11,30),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4	
-
-U8= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,30),
-														:fecha_final => DateTime.new(2014,3,25,12,00),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP4
-
-U9= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,0),
-														:fecha_final => DateTime.new(2014,3,25,10,30),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP1
-
-U10= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,10,30),
-														:fecha_final => DateTime.new(2014,3,25,11,00),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP1
-
-U11= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,00),
-														:fecha_final => DateTime.new(2014,3,25,11,30),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP1	
-
-U12= AgAgendamientos.create! :fecha_comienzo => DateTime.new(2014,3,25,11,30),
-														:fecha_final => DateTime.new(2014,3,25,12,00),
-														:agendamiento_estado => S1,
-														:especialidad_prestador_profesional => PP1	
-
-=end																																																																			
-
-puts 'Examenes'
-#Examen
-Ex1=MedExamenes.new
-Ex1.nombre="Examen1"
-Ex1.descripcion="Desc examen 1"
-Ex1.indicaciones="Indicaciones 1"
-Ex1.codigo_isapre="codigo1"
-Ex1.save
-
-Ex2=MedExamenes.new
-Ex2.nombre="Examen2"
-Ex2.descripcion="Desc examen 2"
-Ex2.indicaciones="Indicaciones 2"
-Ex2.codigo_isapre="codigo2"
-Ex2.save
-
-Ex3=MedExamenes.new
-Ex3.nombre="Examen3"
-Ex3.descripcion="Desc examen 3"
-Ex3.indicaciones="Indicaciones 3"
-Ex3.codigo_isapre="codigo3"
-Ex3.save
-
-Ex4=MedExamenes.new
-Ex4.nombre="Examen4"
-Ex4.descripcion="Desc examen 4"
-Ex4.indicaciones="Indicaciones 4"
-Ex4.codigo_isapre="codigo4"
-Ex4.save
-
-Ex5=MedExamenes.new
-Ex5.nombre="Examen5"
-Ex5.descripcion="Desc examen 5"
-Ex5.indicaciones="Indicaciones 5"
-Ex5.codigo_isapre="codigo5"
-Ex5.save
-
-=begin
-#Diagnostico
-D1 = MedDiagnosticos.create! :nombre => 'Colera debido a vibrio cholerae o1, biotipo cholerae', :descripcion => 'descripcion', :codigo_cie10 => 'A000'
-D2 = MedDiagnosticos.create! :nombre => 'Colera debido a vibrio cholerae o1, biotipo el tor', :descripcion => 'descripcion', :codigo_cie10 => 'A001'
-D3 = MedDiagnosticos.create! :nombre => 'Colera no especificado', :descripcion => 'descripcion', :codigo_cie10 => 'A009'
-D4 = MedDiagnosticos.create! :nombre => 'Fiebres tifoidea y paratifoidea', :descripcion => 'descripcion', :codigo_cie10 => 'A01'
-D5 = MedDiagnosticos.create! :nombre => 'Fiebre tifoidea', :descripcion => 'descripcion', :codigo_cie10 => 'A010'
-D6 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea a', :descripcion => 'descripcion', :codigo_cie10 => 'A011'
-D7 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea b', :descripcion => 'descripcion', :codigo_cie10 => 'A012'
-D8 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea c', :descripcion => 'descripcion', :codigo_cie10 => 'A013'
-D9 = MedDiagnosticos.create! :nombre => 'Fiebre paratifoidea, no especificada', :descripcion => 'descripcion', :codigo_cie10 => 'A014'
-D10 = MedDiagnosticos.create! :nombre => 'Otras infecciones debidas a Salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A02'
-D11 = MedDiagnosticos.create! :nombre => 'Enteritis debida a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A020'
-D12 = MedDiagnosticos.create! :nombre => 'Septicemia debida a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A021'
-D13 = MedDiagnosticos.create! :nombre => 'Infecciones localizadas debida a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A022'
-D14 = MedDiagnosticos.create! :nombre => 'Otras infecciones especificadas como debidas a salmonella', :descripcion => 'descripcion', :codigo_cie10 => 'A028'
-
-=end
+S9.save																																																																
 
 #Medicamentos
 Di1=MedMedicamentos.new
@@ -500,6 +380,31 @@ TF1.save
 TF2=FiFichaTipos.new
 TF2.nombre="Tipo ficha control infantil"
 TF2.save
+
+puts 'GruposPrestaciones'
+G1 = MedPrestacionesGrupos.create! :id => 3 , :nombre => 'EXAMENES DE LABORATORIO', :descripcion => ''
+G2 = MedPrestacionesGrupos.create! :id => 4 , :nombre => 'IMAGENOLOGIA', :descripcion => ''
+G3 = MedPrestacionesGrupos.create! :id => 5 , :nombre => 'MEDICINA NUCLEAR Y RADIOTERAPIA', :descripcion => ''
+G4 = MedPrestacionesGrupos.create! :id => 7 , :nombre => 'MEDICINA TRANSFUSIONAL', :descripcion => 'Transfusión de hemocomponentes. Cobro de acto transfusional por cada 4 unidades de glóbulos rojos o plasma, y por cada 6 unidades de crioprecipitados o plaquetas. Incluye el tratamiento de las complicaciones medicas inmediatas. No incluye preparación de hemocomponentes ni estudios previos, salvo que el procedimiento transfusional así lo explicite.'
+G5 = MedPrestacionesGrupos.create! :id => 8 , :nombre => 'ANATOMIA PATOLOGICA', :descripcion => ''
+G6 = MedPrestacionesGrupos.create! :id => 9 , :nombre => 'PSIQUIATRIA Y SALUD MENTAL', :descripcion => ''
+G7 = MedPrestacionesGrupos.create! :id => 11 , :nombre => 'NEUROLOGIA Y NEUROCIRUGIA', :descripcion => ''
+G8 = MedPrestacionesGrupos.create! :id => 12 , :nombre => 'CIRUGIA OFTALMOLOGICA', :descripcion => 'Además, véase Cirugía Plástica y Reparadora, y Cirugía de Cabeza y Cuello. Todas las intervenciones se refieren a un ojo y sus anexos, salvo que se especifique otra cosa.'
+G9 = MedPrestacionesGrupos.create! :id => 13 , :nombre => 'CIRUGIA OTORRINOLARINGOLOGICA', :descripcion => 'En los casos de realización de técnicas endoscópicas y en ausencia de códigos para ellos, se aplicarán los correspondientes a las técnicas convencionales. Para el código adicional se aplicará en estos casos, el correspondiente a la intervención convencional aumentado en dos dígitos. Véase, además, Cirugía Plástica y Reparadora y Cirugía de Cabeza y Cuello. Todas las intervenciones sobre el oído se refieren a un lado.'
+G10 = MedPrestacionesGrupos.create! :id => 14 , :nombre => 'CIRUGIA DE CABEZA Y CUELLO', :descripcion => 'Además, véase intervenciones quirúrgicas de Oftalmología, Otorrinolaringología y Cirugía Plástica y Reparadora.'
+G11 = MedPrestacionesGrupos.create! :id => 15 , :nombre => 'CIRUGIA PLASTICA Y REPARADORA', :descripcion => ''
+G12 = MedPrestacionesGrupos.create! :id => 16 , :nombre => 'DERMATOLOGIA Y TEGUMENTOS', :descripcion => 'CIRUGIAS. En sala de procedimientos o pabellón quirúrgico.'
+G13 = MedPrestacionesGrupos.create! :id => 17 , :nombre => 'CARDIOLOGIA', :descripcion => ''
+G14 = MedPrestacionesGrupos.create! :id => 18 , :nombre => 'GASTROENTEROLOGIA', :descripcion => ''
+G15 = MedPrestacionesGrupos.create! :id => 19 , :nombre => 'UROLOGIA Y NEFROLOGIA', :descripcion => ''
+G16 = MedPrestacionesGrupos.create! :id => 20 , :nombre => 'GINECOLOGIA Y OBSTETRICIA', :descripcion => ''
+G17 = MedPrestacionesGrupos.create! :id => 21 , :nombre => 'TRAUMATOLOGIA', :descripcion => ''
+G18 = MedPrestacionesGrupos.create! :id => 22 , :nombre => 'ANESTESIA', :descripcion => ''
+G19 = MedPrestacionesGrupos.create! :id => 24 , :nombre => 'RESCATES, TRASLADOS Y RONDAS RURALES', :descripcion => ''
+G20 = MedPrestacionesGrupos.create! :id => 25 , :nombre => 'PAGO ASOCIADO A DIAGNOSTICO (PAD)', :descripcion => ''
+G21 = MedPrestacionesGrupos.create! :id => 27 , :nombre => 'ATENCION ODONTOLOGICA', :descripcion => 'Incluye el valor del derecho a pabellón cuando corresponde'
+G22 = MedPrestacionesGrupos.create! :id => 30 , :nombre => 'GRUPO DE PRESTACIONES: lentes, audífonos, PNDA y TBC.', :descripcion => ''
+
 
 puts 'Fin Seed'
 

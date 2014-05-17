@@ -11,6 +11,8 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
     params.require(:list).permit(:atencion_salud,
   								:estado_diagnostico,
   				  			:id,
+                  :fecha_inicio,
+                  :fecha_termino,
   								:persona_diagnostico,
   								:prioridad,
                   :comentario)
