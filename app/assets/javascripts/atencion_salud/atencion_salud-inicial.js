@@ -4,17 +4,13 @@ $("#select_diagnostico").chosen({
   width: "300px" 
 }); 
 
-$("#select_examen").chosen({
-  no_results_text: 'No hubo coincidencias.',
-  allow_single_deselect: false,
-  width: "300px" 
-}); 
+
 
 $(document).ready(function(){
 
   cargarCalendario();
 
-  $('#select').select2({
+  $('#select_diag_no_frec').select2({
     width: '100%',
     minimumInputLength: 3,
     ajax: {
@@ -31,16 +27,17 @@ $(document).ready(function(){
       }
     }
   });
-  $('#select2').select2({
+  $('#select_examen').select2({
     width: '100%',
     minimumInputLength: 3,
     ajax: {
-      url: '/cargar_examenes',
+      url: '/cargar_prestaciones',
       dataType: 'json',
       type: 'POST',
       data: function (term, page) {
         return {
-          q: term
+          q: term,
+          tipo: 'examen'
         };
       },
       results: function (data, page) {
@@ -48,6 +45,25 @@ $(document).ready(function(){
       }
     }
   });
+  $('#select_procedimiento').select2({
+    width: '100%',
+    minimumInputLength: 3,
+    ajax: {
+      url: '/cargar_prestaciones',
+      dataType: 'json',
+      type: 'POST',
+      data: function (term, page) {
+        return {
+          q: term,
+          tipo: 'procedimiento'
+        };
+      },
+      results: function (data, page) {
+        return { results: data };
+      }
+    }
+  });
+
 });
 
 function cargarCalendario(){
@@ -93,7 +109,7 @@ $("#select_diagnostico").on("change", function(e) {
 
 })
 
-$("#select").on("change", function(e) { 
+$("#select_diag_no_frec").on("change", function(e) { 
 
   var value = $("#select").select2('data').id;
   var text = $("#select").select2('data').text;
@@ -131,6 +147,61 @@ function agregarDiagnostico(value,text){
   });
 
 }
+
+$("#select_examen").on("change", function(e) { 
+
+  var value = $("#select_examen").select2('data').id;
+  var text = $("#select_examen").select2('data').text;
+  
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_prestacion',
+    data: {
+      persona_id: persona_id,
+      prestacion_id: value,
+      atencion_salud_id: atencion_salud_id,
+    },
+    success: function(response) {
+
+      if (response.success){
+            
+        pe_exa = response.per_exa;
+        $('#examen-div').append('<a href="#modal-container-'+pe_exa+'" class="list-group-item" data-toggle="modal" id="pp'+pe_exa+'"><p class="list-group-item-text">'+text+'<button id="bcp'+pe_exa+'" type="button" class="btn btn-xs btn-danger" onclick="eliminarPrestacion('+pe_exa+')" >Eliminar</button></p></a>');
+        
+      }
+    },
+    error: function(xhr, status, error){ alert("No se pudo agregar el examen o procedimiento del paciente."); }
+  });  
+
+})
+
+$("#select_procedimiento").on("change", function(e) { 
+
+  var value = $("#select_procedimiento").select2('data').id;
+  var text = $("#select_procedimiento").select2('data').text;
+  
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_prestacion',
+    data: {
+      persona_id: persona_id,
+      prestacion_id: value,
+      atencion_salud_id: atencion_salud_id,
+    },
+    success: function(response) {
+
+      if (response.success){
+            
+        pe_pro = response.per_pro;
+        $('#procedimiento-div').append('<a href="#modal-container-'+pe_pro+'" class="list-group-item" data-toggle="modal" id="pp'+pe_pro+'"><p class="list-group-item-text">'+text+'<button id="bcp'+pe_pro+'" type="button" class="btn btn-xs btn-danger" onclick="eliminarPrestacion('+pe_pro+')" >Eliminar</button></p></a>');
+        
+      }
+    },
+    error: function(xhr, status, error){ alert("No se pudo agregar el examen o procedimiento del paciente."); }
+  });  
+
+})
+
 
 function eliminarDiagnostico(pers_diag) {
   var div = document.getElementById("modal-container-"+pers_diag);
@@ -170,45 +241,15 @@ function guardarDiagnostico(pers_diag) {
 
 }
 
-$("#select_examen").on("change", function(e) { 
-
-  var value = $("#select_examen").val();
-  var text = $('#select_examen option:selected').html();
-
+function eliminarPrestacion(pers_pre) {
+   
   $.ajax({
     type: 'POST',
-    url: '/agregar_examen',
-    data: {
-      persona_id: persona_id,
-      examen_id: value,
-      atencion_salud_id: atencion_salud_id,
-    },
-    success: function(response) {
+    url: '/eliminar_prestacion',
+    data: { persona_prestacion_id: pers_pre },
 
-      if (response.success){       
-
-        pe_exa = response.per_exa;
-        $('#examen-div').append('<a href="#modal-container-'+pe_exa+'" class="list-group-item" data-toggle="modal" id="pe'+pe_exa+'"><p class="list-group-item-text">'+text+'<button id="bce'+pe_exa+'" type="button" class="btn btn-xs btn-danger" onclick="eliminarExamen('+pe_exa+')" >Eliminar</button></p></a>');
-        //$('#diag_modal-div').append('<div class="modal fade" id="modal-container-'+pe_di+'" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel">'+text+'</h4></div><div class="modal-body"><p>Fecha inicio: <input name="f_i_'+pe_di+'" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="'+response.fe_ini+'"></p><p>Fecha término: <input name="f_t_'+pe_di+'" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" ></p><p>Estado de diagnóstico actual:<select id="e_d_'+pe_di+'" name="selectbasic" class="form-control" >'+option+'</select></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"  onclick="guardarDiagnostico('+pe_di+')" class="btn btn-primary">Guardar</button></div></div></div></div>');
-      
-      }
-    },
-    error: function(xhr, status, error){ alert("No se pudieron los diagnósticos del paciente."); }
-  });
-
-})
-
-function eliminarExamen(pers_exa) {
-  //var div = document.getElementById("modal-container-"+pers_exa);
-  //div.parentNode.removeChild(div);
-  
-  $.ajax({
-    type: 'POST',
-    url: '/eliminar_examen',
-    data: { persona_examen_id: pers_exa },
-
-    success: function(response) { $( "#pe"+pers_exa).remove();$( "#bce"+pers_exa).remove(); },
-    error: function(xhr, status, error){ alert("No se pudo eliminar el examen del paciente.");   }
+    success: function(response) { $( "#pp"+pers_pre).remove();$( "#bcp"+pers_pre).remove(); },
+    error: function(xhr, status, error){ alert("No se pudo eliminar el examen o procedimiento del paciente.");   }
   });
    
 }

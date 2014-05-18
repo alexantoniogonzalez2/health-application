@@ -13,13 +13,13 @@ AplicacionMedica::Application.routes.draw do
 
   #Modulo atencion salud
   resources :atenciones_salud
-  post '/agregar_examen', to: 'persona_examen#agregarExamen', :as => :agregarExamen
-  post '/eliminar_examen', to: 'persona_examen#eliminarExamen', :as => :eliminarExamen
+  post '/agregar_prestacion', to: 'persona_prestacion#agregarPrestacion', :as => :agregarExamen
+  post '/eliminar_prestacion', to: 'persona_prestacion#eliminarPrestacion', :as => :eliminarPrestacion
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
   post '/cargar_no_frecuentes', to: 'atenciones_salud#cargarNoFrecuentes'
-  post '/cargar_examenes', to: 'persona_prestacion#cargarExamenes'
+  post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico
   

@@ -45,20 +45,14 @@
 	  </a>
 
 	</div>
+
+
+  <%= f.label :"Motivo de consulta:" %>
+  <%= f.text_area :motivo_consulta , :class => "form-control", :size => "50x4" %><br>
+  <%= link_to 'Examen Físico', agendaShowFormBusqueda_path %><br/>
+  <%= link_to 'Métricas', agendaShowFormBusqueda_path %><br/> 
  
 </div>
-
-<div class="col-md-6 div-form-atencion">
-	<%= f.label :"Motivo de consulta:" %>
-	<%= f.text_area :motivo_consulta , :class => "form-control", :size => "50x4" %><br>
-	<%= link_to 'Examen Físico', agendaShowFormBusqueda_path %><br/>
-	<%= link_to 'Métricas', agendaShowFormBusqueda_path %><br/>	
-	
-
-</div>
-
-</div>
-<div class="row">
 
 <div class="col-md-6 div-form-atencion">
 
@@ -84,7 +78,8 @@
         <div class="modal-body" id="modal-body-no-frecuente">
           <div id="status"></div> 
          
-<input type='hidden'id="select"></input>
+          <input type='hidden'id="select_diag_no_frec"></input>
+
         </div>
         <div class="modal-footer">
            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"   class="btn btn-primary">Guardar</button>
@@ -93,14 +88,13 @@
     </div>        
   </div>
 
-
-
-  <div class="list-group div-form-diag" name="diagnostico-div" id="diagnostico-div">	
+  <div class="list-group" name="diagnostico-div" id="diagnostico-div">	
     <% @persona_diagnostico.each do |p_d| %>
       <a href="#modal-container-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
         <p class="list-group-item-text"><%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %><button id="bc<%= p_d.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button></p></a>
     <% end %>
 	</div>
+
   <div id="diag_modal-div" >
   <% @persona_diagnostico.each do |p_d| %> 
     <div class="modal fade" id="modal-container-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -132,22 +126,29 @@
     </div>
   <% end %>      
   </div>
-	<%= f.label :"Indicaciones:"  %>
-	<%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
-</div>
-
-<div class="col-md-6 div-form-atencion">
-
+	
 	<%= f.label :"Exámenes:" %>
-  <input type='hidden'id="select2"></input>
+  <input type='hidden'id="select_examen"></input>
 
-  <div class="list-group div-form-diag" name="examen-div" id="examen-div">  
+  <div class="list-group" name="examen-div" id="examen-div">  
     <% @persona_examen.each do |p_e| %>
-      <a href="#" data-toggle="modal" class="list-group-item" id="pe<%= p_e.id%>" >
-        <p class="list-group-item-text"><%= p_e.examen.nombre %><button id="bce<%= p_e.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarExamen(<%= p_e.id%>)">Eliminar</button></p></a>
+      <a href="#" data-toggle="modal" class="list-group-item" id="pp<%= p_e.id%>" >
+        <p class="list-group-item-text"><%= p_e.prestacion.codigo_fonasa+' ' + p_e.prestacion.nombre %><button id="bcp<%= p_e.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarPrestacion(<%= p_e.id%>)">Eliminar</button></p></a>
     <% end %>
   </div>
 
+  <%= f.label :"Procedimientos/Cirugías:" %>
+  <input type='hidden'id="select_procedimiento"></input>
+
+  <div class="list-group" name="procedimiento-div" id="procedimiento-div">  
+    <% @persona_procedimiento.each do |p_p| %>
+      <a href="#" data-toggle="modal" class="list-group-item" id="pp<%= p_p.id%>" >
+        <p class="list-group-item-text"><%= p_p.prestacion.codigo_fonasa+' ' + p_p.prestacion.nombre %><button id="bcp<%= p_p.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarPrestacion(<%= p_p.id%>)">Eliminar</button></p></a>
+    <% end %>
+  </div>
+
+  <%= f.label :"Indicaciones:"  %>
+  <%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
 		
 	<%= link_to 'Prescribir medicamentos', agendaShowFormBusqueda_path %><br/>
 	<%= link_to 'Emitir certificado', agendaShowFormBusqueda_path %><br/>

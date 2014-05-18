@@ -37,9 +37,10 @@ class AtencionesSaludController < ApplicationController
 	  @persona_diagnostico = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
 
 	  @diagnosticos = MedDiagnosticos.where('frecuente = ?',true)
-	  #@examenes = MedExamenes.all
 	  @estados_diagnostico = MedDiagnosticoEstados.all
-	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? ', params[:id])
+	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
+	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
+	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
 
 	end
 

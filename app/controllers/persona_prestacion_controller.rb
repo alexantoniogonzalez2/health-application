@@ -1,44 +1,54 @@
 class PersonaPrestacionController < ApplicationController
 	
-	def agregarExamen		
+	def agregarPrestacion		
 
-		persona_examen_actual = FiPersonaPrestaciones.where('atencion_salud_id = ? AND persona_id = ? AND prestacion_id = ? ', params[:atencion_salud_id], params[:persona_id], params[:examen_id]).first
+		persona_prestacion_actual = FiPersonaPrestaciones.where('atencion_salud_id = ? AND persona_id = ? AND prestacion_id = ? ', params[:atencion_salud_id], params[:persona_id], params[:examen_id]).first
 
-		if persona_examen_actual
+		if persona_prestacion_actual
 
 			render :json => { :success => false }		
 
 		else 
-			@persona_examen = FiPersonaPrestaciones.new
-			@persona_examen.persona_id = params[:persona_id]
-			@persona_examen.atencion_salud_id = params[:atencion_salud_id]
-			@persona_examen.examen_id = params[:examen_id]
-			@persona_examen.save!
+			@persona_prestacion = FiPersonaPrestaciones.new
+			@persona_prestacion.persona_id = params[:persona_id]
+			@persona_prestacion.atencion_salud_id = params[:atencion_salud_id]
+			@persona_prestacion.prestacion_id = params[:prestacion_id]
+			@persona_prestacion.save!
 
-			render :json => { :success => true, :per_exa => @persona_examen.id }	
+			render :json => { :success => true, :per_exa => @persona_prestacion.id }	
 		
 		end  	
 	end
 
-	def cargarExamenes		
+	def cargarPrestaciones		
 
 		term= params[:q]
-		exam=[]
-		@examenes = MedPrestaciones.joins(:subgrupos).where("med_prestaciones.nombre LIKE ? ", "%#{term}%")
+		pres=[]
 		
-		@examenes.each do |f|
-			exam << f.formato_examenes			
+		if params[:tipo] == 'examen'
+			min  = 1
+			max = 56
+		else
+			min = 57
+			max = 250
+		end		
+
+		#se puede mejorar consulta para filtrar por grupos 3 y 4 en vez de filtrar por los subgrupos	
+		@prestaciones = MedPrestaciones.joins(:subgrupo).where("med_prestaciones.nombre LIKE ? AND med_prestaciones_subgrupos.id BETWEEN ? and ? ", "%#{term}%",min,max)
+		
+		@prestaciones.each do |f|
+			pres << f.formato_prestaciones			
 		end
 
 		respond_to do |format|
-			format.json { render json: exam}
+			format.json { render json: pres}
 		end
 				
 	end
 
-	def eliminarExamen		
-		@persona_examen = FiPersonaPrestaciones.find(params[:persona_examen_id])
-  	@persona_examen.destroy 
+	def eliminarPrestacion		
+		@persona_prestacion = FiPersonaPrestaciones.find(params[:persona_prestacion_id])
+  	@persona_prestacion.destroy 
 
   	render :json => { :success => true }	
 	end
