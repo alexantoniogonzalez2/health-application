@@ -431,6 +431,7 @@ puts 'Componente'
 C1 = MedComponentes.create! :id => 1, :nombre => 'Componente 1'
 C2 = MedComponentes.create! :id => 2, :nombre => 'Componente 2'
 
+
 puts 'Medicamentos Componente'
 C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
 C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
