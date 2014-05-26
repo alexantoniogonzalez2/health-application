@@ -3,9 +3,11 @@ class CreateMedMedicamentos < ActiveRecord::Migration
     create_table :med_medicamentos do |t|
       t.text :nombre
       t.text :descripcion
-      t.text :principio_activo
-      t.text :codigo
-
+      t.text :codigo_isp
+      t.integer :cantidad
+      t.references :medicamento_tipo #medicamento_tipo_id
+      t.references :laboratorio #laboratorio_id
+      
       t.timestamps
     end
   end

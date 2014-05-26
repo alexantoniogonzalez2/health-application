@@ -7,6 +7,10 @@ class CreateFiPersonaMedicamentos < ActiveRecord::Migration
       t.references :medicamento 	#medicamento_id
       t.references :persona_diagnostico 	#persona_diagnostico_id
       t.references :atencion_salud 	#atencion_salud_id
+      t.integer :cantidad
+      t.integer :periodicidad
+      t.integer :duracion
+      t.integer :total
 
       t.timestamps
     end

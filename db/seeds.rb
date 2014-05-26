@@ -6,8 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-#Users 
-
+#Users
 puts 'Users'
 U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
 U2= User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
@@ -405,6 +404,36 @@ G20 = MedPrestacionesGrupos.create! :id => 25 , :nombre => 'PAGO ASOCIADO A DIAG
 G21 = MedPrestacionesGrupos.create! :id => 27 , :nombre => 'ATENCION ODONTOLOGICA', :descripcion => 'Incluye el valor del derecho a pabellón cuando corresponde'
 G22 = MedPrestacionesGrupos.create! :id => 30 , :nombre => 'GRUPO DE PRESTACIONES: lentes, audífonos, PNDA y TBC.', :descripcion => ''
 
+puts 'Metatipos de Medicamentos'
+MTM1 = MedMedicamentosMetatipos.create! :id => 1, :nombre => 'Comprimido'
+MTM2 = MedMedicamentosMetatipos.create! :id => 2, :nombre => 'Jarabe'
+MTM3 = MedMedicamentosMetatipos.create! :id => 3, :nombre => 'Gotas'
+MTM4 = MedMedicamentosMetatipos.create! :id => 4, :nombre => 'Pomadas'
+
+puts 'Tipos de Medicamentos'
+TM1 = MedMedicamentosTipos.create! :id => 1, :unidad => 'comprimidos', :medicamento_metatipo_id => 1
+TM2 = MedMedicamentosTipos.create! :id => 2, :unidad => 'cápsulas', :medicamento_metatipo_id => 1
+TM3 = MedMedicamentosTipos.create! :id => 3, :unidad => 'ml', :medicamento_metatipo_id => 2
+TM4 = MedMedicamentosTipos.create! :id => 4, :unidad => 'gotas',:medicamento_metatipo_id => 3
+TM5 = MedMedicamentosTipos.create! :id => 5, :unidad => 'crema',:medicamento_metatipo_id => 4
+
+puts 'Laboratorios'
+L1 = MedLaboratorios.create! :id => 1, :nombre => 'Laboratorio 1'
+
+puts 'Medicamentos'
+M1 = MedMedicamentos.create! :id => 1, :nombre => 'Medicamentos en comprimidos', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 1, :cantidad => 12, :laboratorio_id => 1
+M2 = MedMedicamentos.create! :id => 2, :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 2, :cantidad => 20, :laboratorio_id => 1
+M3 = MedMedicamentos.create! :id => 3, :nombre => 'Medicamentos en jarabe', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 3, :cantidad => 100, :laboratorio_id => 1
+M4 = MedMedicamentos.create! :id => 4, :nombre => 'Medicamentos en gotas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 4, :cantidad => 50, :laboratorio_id => 1
+M5 = MedMedicamentos.create! :id => 5, :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 5, :cantidad => 50, :laboratorio_id => 1
+
+puts 'Componente'
+C1 = MedComponentes.create! :id => 1, :nombre => 'Componente 1'
+C2 = MedComponentes.create! :id => 2, :nombre => 'Componente 2'
+
+puts 'Medicamentos Componente'
+C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
+C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
 
 puts 'Fin Seed'
 
