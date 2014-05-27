@@ -65,8 +65,8 @@
       <option value="<%= d.id%>"><%= d.codigo_cie10 + ' ' + d.nombre %></option>
     <% end %>
   </select>
- <br/><a href="#modal-no-frecuente" data-toggle="modal">Incluir diagnóstico no frecuente</a>
 
+ <br/><a href="#modal-no-frecuente" data-toggle="modal">Incluir diagnóstico no frecuente</a>
 
   <div class="modal fade" id="modal-no-frecuente" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -90,18 +90,18 @@
 
   <div class="list-group" name="diagnostico-div" id="diagnostico-div">	
     <% @persona_diagnostico.each do |p_d| %>
-      <a href="#modal-container-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
+      <a href="#modal-container-diag-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
         <p class="list-group-item-text"><%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %><button id="bc<%= p_d.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button></p></a>
     <% end %>
 	</div>
 
   <div id="diag_modal-div" >
   <% @persona_diagnostico.each do |p_d| %> 
-    <div class="modal fade" id="modal-container-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-container-diag-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="myModalLabel"><%= p_d.diagnostico.nombre %></h4>
           </div>
           <div class="modal-body">
@@ -119,7 +119,8 @@
             </p>  
           </div>
           <div class="modal-footer">
-             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"  onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+             <button type="button"  onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
           </div>
         </div>            
       </div>        
@@ -147,13 +148,43 @@
     <% end %>
   </div>
 
+  <%= f.label :"Medicamentos:" %>
+  <input type='hidden'id="select_medicamento"></input>
+
+  <div class="list-group" name="medicamento-div" id="medicamento-div">  
+    <% @persona_medicamento.each do |p_m| %>
+      <a href="#modal-container-med-<%= p_m.id%>" data-toggle="modal" class="list-group-item" id="pm<%= p_m.id%>" >
+        <p class="list-group-item-text"><%= p_m.medicamento.nombre %><button id="bpm<%= p_m.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarMedicamento(<%= p_m.id%>)">Eliminar</button></p></a>
+    <% end %>
+  </div>
+
+  <div id="med_modal-div" >
+  <% @persona_medicamento.each do |p_m| %> 
+    <div class="modal fade" id="modal-container-med-<%= p_m.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel"><%= p_m.medicamento.nombre %></h4>
+          </div>
+          <div class="modal-body">hola </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+             <button type="button"  onclick="guardarMedicamento(<%= p_m.id%>)" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>            
+      </div>        
+    </div>
+  <% end %>      
+  </div>
+
   <%= f.label :"Indicaciones:"  %>
   <%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
 		
-	<%= link_to 'Prescribir medicamentos', agendaShowFormBusqueda_path %><br/>
+
 	<%= link_to 'Emitir certificado', agendaShowFormBusqueda_path %><br/>
 	<%= link_to 'Generar interconsulta', agendaShowFormBusqueda_path %><br/>
- <%= f.submit :"Cerrar Atención", :id => "submit" , :class=>"btn btn-success" %> 
+  <%= f.submit :"Cerrar Atención", :id => "submit" , :class=>"btn btn-success" %> 
   <button class="btn btn-info" >Guardar</button>
 
 </div>

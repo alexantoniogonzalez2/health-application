@@ -5,6 +5,16 @@ class MedMedicamentos < ActiveRecord::Base
 	belongs_to :medicamento_tipo, :class_name => 'MedMedicamentosTipos'
 	belongs_to :laboratorio, :class_name => 'MedLaboratorios'
 
+	def formato_medicamentos
+
+  {
+    'id'        => id,
+    'text'      => nombre,
+    'tipo'		  => medicamento_tipo_id     
+  }
+
+  end 
+
   private
   def app_params
     params.require(:list).permit( :id, :nombre, :descripcion, :codigo_isp, :medicamento_tipo, :cantidad, :laboratorio, :persona_medicamentos, :medicamento_componente )

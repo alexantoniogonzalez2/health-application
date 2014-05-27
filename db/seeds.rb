@@ -306,42 +306,6 @@ S9=AgAgendamientoEstados.new
 S9.nombre="Paciente no llegó" 
 S9.save																																																																
 
-#Medicamentos
-Di1=MedMedicamentos.new
-Di1.nombre="Medicamentos1"
-Di1.descripcion="Desc med 1"
-Di1.principio_activo="principio activo 1"
-Di1.codigo="codigo med 1"
-Di1.save
-
-Di2=MedMedicamentos.new
-Di2.nombre="Medicamentos2"
-Di2.descripcion="Desc med 2"
-Di2.principio_activo="principio activo 2"
-Di2.codigo="codigo med 2"
-Di2.save
-
-Di3=MedMedicamentos.new
-Di3.nombre="Medicamentos3"
-Di3.descripcion="Desc med 3"
-Di3.principio_activo="principio activo 3"
-Di3.codigo="codigo med 3"
-Di3.save
-
-Di4=MedMedicamentos.new
-Di4.nombre="Medicamentos4"
-Di4.descripcion="Desc med 4"
-Di4.principio_activo="principio activo 4"
-Di4.codigo="codigo med 4"
-Di4.save
-
-Di5=MedMedicamentos.new
-Di5.nombre="Medicamentos5"
-Di5.descripcion="Desc med 5"
-Di5.principio_activo="principio activo 5"
-Di5.codigo="codigo med 5"
-Di5.save
-
 #Estados Diagnóstico
 ED1=MedDiagnosticoEstados.new
 ED1.nombre="Confirmado"

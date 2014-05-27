@@ -41,6 +41,8 @@ class AtencionesSaludController < ApplicationController
 	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
 	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
 	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
+	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ?', params[:id])
+
 
 	end
 

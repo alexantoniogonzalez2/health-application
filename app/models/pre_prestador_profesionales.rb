@@ -6,12 +6,12 @@ class PrePrestadorProfesionales < ActiveRecord::Base
 	has_many :agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'especialidad_prestador_profesional_id'
 
 	private
-	  def app_params
-	    params.require(:list).permit(:id,
-  								:prestador,
-  								:profesional,
-  								:especialidad)
-	  end
+  def app_params
+    params.require(:list).permit(:id,
+								:prestador,
+								:profesional,
+								:especialidad)
+  end
 
   								
 end

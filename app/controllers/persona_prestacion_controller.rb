@@ -15,7 +15,7 @@ class PersonaPrestacionController < ApplicationController
 			@persona_prestacion.prestacion_id = params[:prestacion_id]
 			@persona_prestacion.save!
 
-			render :json => { :success => true, :per_exa => @persona_prestacion.id }	
+			render :json => { :success => true, :per_pre => @persona_prestacion.id }	
 		
 		end  	
 	end

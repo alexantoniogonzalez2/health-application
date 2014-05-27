@@ -21,10 +21,11 @@ AplicacionMedica::Application.routes.draw do
   post '/cargar_no_frecuentes', to: 'atenciones_salud#cargarNoFrecuentes'
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
-  post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico
-  
+  post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
+  post '/cargar_medicamentos', to: 'persona_medicamento#cargarMedicamentos'
+  post '/agregar_medicamento', to: 'persona_medicamento#agregarMedicamento'
+
   #Modulo agendamiento
-  # get '/agendamiento/agendaCompleta/:prestador_id/:profesional_id', to: 'agendamiento#showAgenda', :as => :agenda_show_all
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
   get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda
   get '/agendamiento/pedirHora/:especialidad_id/:prestador_id/:profesional_id', to: 'agendamiento#pedirHora'
@@ -33,10 +34,6 @@ AplicacionMedica::Application.routes.draw do
   post '/cargarTodos', to: 'agendamiento#cargarTodos', :as => :agendamientoCargarTodos
   post '/filtrar_profesionales', to: 'agendamiento#filtrarProfesionales', :as => :filtrarProfesionales
   post '/buscar_horas', to: 'agendamiento#buscarHoras', :as => :buscarHoras
-  # get '/agendamiento/agregarHora/:prestador_id', to: 'agendamiento#agregarHoraS1', :as => :agregar_hora_s1
-  # get '/agendamiento/agregarHora/:prestador_id/:profesional_id', to: 'agendamiento#agregarHoraS2', :as => :agregar_hora_s2
-
-
   post '/aux/formNuevaHora', to: 'agendamiento#agregarNuevaHora', :as => :agregarHora
   post '/aux/mostrarEventos', to: 'agendamiento#mostrarEventos', :as => :showEventos
   post '/aux/detalleEvento', to: 'agendamiento#detalleEvento', :as => :detalleEvento

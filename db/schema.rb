@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140517053250) do
+ActiveRecord::Schema.define(version: 20140526031159) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.text     "nombre"
@@ -119,6 +119,10 @@ ActiveRecord::Schema.define(version: 20140517053250) do
     t.integer  "medicamento_id"
     t.integer  "persona_diagnostico_id"
     t.integer  "atencion_salud_id"
+    t.integer  "cantidad"
+    t.integer  "periodicidad"
+    t.integer  "duracion"
+    t.integer  "total"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -135,6 +139,13 @@ ActiveRecord::Schema.define(version: 20140517053250) do
     t.integer  "persona_id"
     t.integer  "prestacion_id"
     t.integer  "atencion_salud_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_componentes", force: true do |t|
+    t.text     "nombre"
+    t.text     "descripcion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -164,11 +175,41 @@ ActiveRecord::Schema.define(version: 20140517053250) do
     t.datetime "updated_at"
   end
 
+  create_table "med_laboratorios", force: true do |t|
+    t.text     "nombre"
+    t.text     "descripcion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "med_medicamentos", force: true do |t|
     t.text     "nombre"
     t.text     "descripcion"
-    t.text     "principio_activo"
-    t.text     "codigo"
+    t.text     "codigo_isp"
+    t.integer  "cantidad"
+    t.integer  "medicamento_tipo_id"
+    t.integer  "laboratorio_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_medicamentos_componentes", force: true do |t|
+    t.decimal  "relacion",       precision: 10, scale: 0
+    t.integer  "medicamento_id"
+    t.integer  "componente_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_medicamentos_metatipos", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_medicamentos_tipos", force: true do |t|
+    t.text     "unidad"
+    t.integer  "medicamento_metatipo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
