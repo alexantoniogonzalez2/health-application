@@ -24,6 +24,7 @@ AplicacionMedica::Application.routes.draw do
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
   post '/cargar_medicamentos', to: 'persona_medicamento#cargarMedicamentos'
   post '/agregar_medicamento', to: 'persona_medicamento#agregarMedicamento'
+  post '/eliminar_medicamento', to: 'persona_medicamento#eliminarMedicamento'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

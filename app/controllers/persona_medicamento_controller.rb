@@ -33,9 +33,20 @@ class PersonaMedicamentoController < ApplicationController
 			@persona_medicamento.medicamento_id = params[:medicamento_id]
 			@persona_medicamento.save!
 
-			render :json => { :success => true, :per_med => @persona_medicamento.id }	
+			respond_to do |format|     
+      	format.js   {}
+      	format.json { render :json => { :success => true, :per_med => @persona_medicamento.id } }
+      end	
+			#render :json => { :success => true, :per_med => @persona_medicamento.id }	
 		
 		end  	
+	end
+
+	def eliminarMedicamento		
+		@persona_medicamento = FiPersonaMedicamentos.find(params[:persona_medicamento_id])
+  	@persona_medicamento.destroy 
+
+  	render :json => { :success => true }	
 	end
 
 end

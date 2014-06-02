@@ -5,7 +5,7 @@
 		
 	</script>
 
-<%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"}, method: :put do |f| %>
+<%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"}, :remote => true, method: :put do |f| %>
  <% if @atencion_salud.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@atencion_salud.errors.count, "error") %> prohibited
@@ -153,28 +153,13 @@
 
   <div class="list-group" name="medicamento-div" id="medicamento-div">  
     <% @persona_medicamento.each do |p_m| %>
-      <a href="#modal-container-med-<%= p_m.id%>" data-toggle="modal" class="list-group-item" id="pm<%= p_m.id%>" >
-        <p class="list-group-item-text"><%= p_m.medicamento.nombre %><button id="bpm<%= p_m.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarMedicamento(<%= p_m.id%>)">Eliminar</button></p></a>
+      <%= render :partial => "persona_medicamento/persona_medicamento", :locals => {:id => p_m.id, :nombre => p_m.medicamento.nombre } %>      
     <% end %>
   </div>
 
   <div id="med_modal-div" >
-  <% @persona_medicamento.each do |p_m| %> 
-    <div class="modal fade" id="modal-container-med-<%= p_m.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title" id="myModalLabel"><%= p_m.medicamento.nombre %></h4>
-          </div>
-          <div class="modal-body">hola </div>
-          <div class="modal-footer">
-             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-             <button type="button"  onclick="guardarMedicamento(<%= p_m.id%>)" class="btn btn-primary">Guardar</button>
-          </div>
-        </div>            
-      </div>        
-    </div>
+  <% @persona_medicamento.each do |p_m| %>
+    <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:id => p_m.id, :nombre => p_m.medicamento.nombre } %> 
   <% end %>      
   </div>
 

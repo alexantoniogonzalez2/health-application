@@ -235,11 +235,11 @@ $("#select_medicamento").on("change", function(e) {
     success: function(response) {
 
       if (response.success){
-            
+        /*    
         pe_med = response.per_med;
         $('#medicamento-div').append('<a href="#modal-container-med-'+pe_med+'" class="list-group-item" data-toggle="modal" id="pm'+pe_med+'"><p class="list-group-item-text">'+text+'<button id="bpm'+pe_med+'" type="button" class="btn btn-xs btn-danger" onclick="eliminarMedicamento('+pe_med+')" >Eliminar</button></p></a>');
-        $('#med_modal-div').append('<div class="modal fade" id="modal-container-med-'+pe_med+'" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel">'+text+'</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"  onclick="guardarMedicamento('+pe_med+')" class="btn btn-primary">Guardar</button></div></div></div></div>');
-
+        $('#med_modal-div').append('<div class="modal fade" id="modal-container-med-'+pe_med+'" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel">'+text+'</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button"  onclick="guardarMedicamento('+pe_med+')" class="btn btn-primary">Guardar</button></div></div></div></div>')
+        */
       }
     },
     error: function(xhr, status, error){ alert("No se pudo agregar el medicamento del paciente."); }
@@ -265,7 +265,7 @@ function eliminarDiagnostico(pers_diag) {
 }
 
 function eliminarMedicamento(pers_med) {
-  var div = document.getElementById("modal-container-"+pers_med);
+  var div = document.getElementById("modal-container-med-"+pers_med);
   div.parentNode.removeChild(div);
 
   $.ajax({
@@ -302,9 +302,9 @@ function guardarDiagnostico(pers_diag) {
 
 }
 
-function guardarExamen(pers_exa) {
+function guardarMedicamento(pers_med) {
 
-  alert('hola');
+  alert(pers_med);
 
 }
 
