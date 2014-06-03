@@ -304,7 +304,20 @@ function guardarDiagnostico(pers_diag) {
 
 function guardarMedicamento(pers_med) {
 
-  alert(pers_med);
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_medicamento',
+    data: {
+      persona_medicamento_id: pers_med,
+      cantidad: $( "#cantidad-"+pers_med).val(),
+      periodicidad: $( "#periodicidad-"+pers_med).val(),
+      duracion: $( "#duracion-"+pers_med).val(),  
+      total: $( "#total-"+pers_med).val(),
+      
+    },
+    success: function(response) { $( "#modal-container-med-"+pers_med).modal('hide'); },
+    error: function(xhr, status, error){ alert("No se pudo guardar el medicamento del paciente.");   }
+  });
 
 }
 
@@ -319,4 +332,13 @@ function eliminarPrestacion(pers_pre) {
     error: function(xhr, status, error){ alert("No se pudo eliminar el examen o procedimiento del paciente.");   }
   });
    
+}
+
+function calcularTotalMedicamentos(pers_med) {
+  var cantidad = $( "#cantidad-"+pers_med).val();
+  var periodicidad = $( "#periodicidad-"+pers_med).val();
+  var duracion = $( "#duracion-"+pers_med).val();  
+  var total = cantidad*periodicidad*duracion;
+ 
+  $( "#total-"+pers_med).val(total);
 }

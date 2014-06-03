@@ -159,7 +159,7 @@
 
   <div id="med_modal-div" >
   <% @persona_medicamento.each do |p_m| %>
-    <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:id => p_m.id, :nombre => p_m.medicamento.nombre } %> 
+    <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m} %> 
   <% end %>      
   </div>
 

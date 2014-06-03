@@ -43,7 +43,6 @@ class AtencionesSaludController < ApplicationController
 	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
 	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ?', params[:id])
 
-
 	end
 
 	def update
