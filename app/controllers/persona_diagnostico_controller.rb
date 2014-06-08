@@ -24,7 +24,10 @@ class PersonaDiagnosticoController < ApplicationController
 
 			@estados_diagnostico = MedDiagnosticoEstados.all
 
-			render :json => { :success => true, :per_diag => @persona_diagnostico.id, :fe_ini => DateTime.current.strftime('%Y-%m-%d'), :estados => @estados_diagnostico }	
+			respond_to do |format|     
+      	format.js   {}
+      	format.json { render :json => { :success => true } }
+      end		
 		
 		end  	
 	end

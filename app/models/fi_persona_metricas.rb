@@ -5,10 +5,7 @@ class FiPersonaMetricas < ActiveRecord::Base
 
   private
   def app_params
-    params.require(:list).permit(:atencion_salud,
-  								:id,
-  								:metricas,
-  								:persona)
+    params.require(:list).permit(:atencion_salud,:id,:metrica,:persona,:fecha,:valor)
   end
 								
 end

@@ -24,4 +24,7 @@
 //= require select2_locale_es
 //= require jquery.ui.tabs
 //= require jquery.qtip.js
+//= require highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/modules/exporting
 //= require_tree .

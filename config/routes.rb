@@ -18,7 +18,7 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
-  post '/cargar_no_frecuentes', to: 'atenciones_salud#cargarNoFrecuentes'
+  post '/cargar_diagnosticos', to: 'atenciones_salud#cargarDiagnosticos'
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
@@ -26,6 +26,7 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_medicamento', to: 'persona_medicamento#agregarMedicamento'
   post '/eliminar_medicamento', to: 'persona_medicamento#eliminarMedicamento'
   post '/guardar_medicamento', to: 'persona_medicamento#guardarMedicamento'
+  post '/guardar_metricas', to: 'atenciones_salud#guardarMetricas'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

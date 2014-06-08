@@ -1,0 +1,59 @@
+<div class="modal fade" id="modal-container-metricas" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">
+          Métricas
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="tabbable" id="tabs-360641">
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a href="#panel-925172" data-toggle="tab">Ingresar datos</a>
+          </li>
+          <li>
+            <a href="#panel-748378" data-toggle="tab">Gráfico peso</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="panel-925172">            
+            <table>
+              <tr>
+                <td><span>Estatura</span></td>
+                <td><input id="estatura-<%= id %>" type="text" class="form-control metrica" value="<%= p_e %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
+                <td><span class="text-med">centimetros</span></td>
+              </tr>
+              <tr>
+                <td><span>Peso</span></td>
+                <td><input id="peso-<%= id %>" type="text" class="form-control metrica" value="<%= p_p %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
+                <td><span class="text-med">kilos</span></td>
+              </tr>
+              <tr>
+                <td><span>IMC</span></td>
+                <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>"maxlength="4" size="4" ></td>
+                <td><span class="text-med">kilos/metros2</span></td>
+              </tr>
+              <tr>
+                <td><span>Presión</span></td>
+                <td><input id="presion-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr %>"maxlength="4" size="4" ></td>
+                <td><span class="text-med">mm HG</span></td>
+              </tr>
+            </table>              
+          </div>
+          <div class="tab-pane" id="panel-748378">
+            
+             <div id="grafico_peso" style="min-width: 400px; height: 200px; margin: 0 auto"></div>
+            
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <button type="button" onclick="guardarMetricas(<%= id %>)" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>      
+  </div>    
+</div>

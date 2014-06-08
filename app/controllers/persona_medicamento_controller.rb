@@ -39,14 +39,13 @@ class PersonaMedicamentoController < ApplicationController
 		    @unidad = 'comprimidos'
 		  else tipo == 2
 		    @unidad = 'ml'
-		  end 
-
+		  end
 
 			respond_to do |format|     
       	format.js   {}
-      	format.json { render :json => { :success => true, :per_med => @persona_medicamento.id } }
+      	format.json { render :json => { :success => true } }
       end	
-			#render :json => { :success => true, :per_med => @persona_medicamento.id }	
+			
 		
 		end  	
 	end

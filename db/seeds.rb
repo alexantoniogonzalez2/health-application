@@ -322,18 +322,23 @@ ED3.save
 #Métricas
 Metr1=FiMetricas.new
 Metr1.nombre="Estatura"
-Metr1.unidad="cms"
+Metr1.unidad="metros"
 Metr1.save
 
 Metr2=FiMetricas.new
 Metr2.nombre="Peso"
-Metr2.unidad="kg"
+Metr2.unidad="kilogramos"
 Metr2.save
 
 Metr3=FiMetricas.new
 Metr3.nombre="Presion"
 Metr3.unidad="mb"
 Metr3.save
+
+Metr4=FiMetricas.new
+Metr4.nombre="IMC"
+Metr4.unidad="kilogramos/metros2"
+Metr4.save
 
 #Tipos Ficha
 TF1=FiFichaTipos.new

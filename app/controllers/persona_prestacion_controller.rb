@@ -3,20 +3,31 @@ class PersonaPrestacionController < ApplicationController
 	def agregarPrestacion		
 
 		persona_prestacion_actual = FiPersonaPrestaciones.where('atencion_salud_id = ? AND persona_id = ? AND prestacion_id = ? ', params[:atencion_salud_id], params[:persona_id], params[:examen_id]).first
-
+		
 		if persona_prestacion_actual
 
 			render :json => { :success => false }		
 
 		else 
+			
 			@persona_prestacion = FiPersonaPrestaciones.new
 			@persona_prestacion.persona_id = params[:persona_id]
 			@persona_prestacion.atencion_salud_id = params[:atencion_salud_id]
 			@persona_prestacion.prestacion_id = params[:prestacion_id]
 			@persona_prestacion.save!
 
-			render :json => { :success => true, :per_pre => @persona_prestacion.id }	
-		
+			if params[:tipo] == 'examen'
+				respond_to do |format|     
+	      	format.js   { render 'agregarExamen'}
+	      	format.json { render :json => { :success => true } }
+	      end	
+	    else
+	    	respond_to do |format|     
+	      	format.js   { render 'agregarProcedimiento'}
+	      	format.json { render :json => { :success => true } }
+	      end    
+	    end  
+
 		end  	
 	end
 

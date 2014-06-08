@@ -4,6 +4,8 @@ class CreateFiPersonaMetricas < ActiveRecord::Migration
       t.references :persona 	#persona_id
       t.references :metrica 	#metrica_id
       t.references :atencion_salud 	#atencion_salud_id
+      t.decimal :valor
+      t.datetime :fecha
 
       t.timestamps
     end

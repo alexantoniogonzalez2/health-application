@@ -1,0 +1,30 @@
+<div class="modal fade" id="modal-container-diag-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel"><%= p_d.diagnostico.nombre %></h4>
+      </div>
+      <div class="modal-body">
+        <p>Fecha inicio: <input name="f_i_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaInicio %>"></p>
+        <p>Fecha término: <input name="f_t_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaTermino %>"></p>
+        <p>Estado de diagnóstico actual:
+          <select id="e_d_<%= p_d.id %>" name="selectbasic" class="form-control" >
+            <% @estados_diagnostico.each do |e_d| %>  
+              <option value="<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> selected="selected" <% end %>  ><%= e_d.nombre %></option>
+            <% end %>
+          </select>
+        </p>
+        <p>Comentario:
+          <textarea class="form-control" id="comentario_<%= p_d.id%>"><%= getComentario(p_d.id) %></textarea>
+        </p>  
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+         <button type="button"  onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>            
+  </div>        
+</div>
+
+<%= javascript_include_tag "atencion_salud/cargar_calendario" %>

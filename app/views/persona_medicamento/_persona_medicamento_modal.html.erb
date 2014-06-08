@@ -16,27 +16,25 @@
         <h4 class="modal-title" id="myModalLabel"><%= persona_medicamento.medicamento.nombre %></h4>
       </div>
       <div class="modal-body">
-
-
         <table>
           <tr>
             <td><span>Ingerir</span></td>
             <td><input id="cantidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.cantidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
-            <td><span class="text-med"><%= unidad %></span></span></td>
+            <td><span class="text-med"><%= unidad %></span></td>
           </tr>
           <tr>
             <td><span>cada</span></td>
-            <td><input id="periodicidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+            <td><input id="periodicidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.periodicidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
             <td><span class="text-med">horas</span></td>
           </tr>
           <tr>
             <td><span>por</span></td>
-            <td><input id="duracion-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+            <td><input id="duracion-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.duracion %>"maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
             <td><span class="text-med">días.</span></td>
           </tr>
           <tr>
             <td><span>Total:</span></td>
-            <td><input id="total-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+            <td><input id="total-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.total %>"maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
             <td><span class="text-med"><%= unidad %>.</span></td>
           </tr>
         </table>       
