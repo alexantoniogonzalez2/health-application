@@ -1,5 +1,27 @@
 class PersonaDiagnosticoController < ApplicationController
 
+	 def cargarDiagnosticos		
+
+		diag = []
+  	
+		term = params[:q]
+
+		if params[:diag_no_frec] == 'true'
+			@diagnosticos = MedDiagnosticos.where("nombre LIKE ? ", "%#{term}%")
+		else
+			@diagnosticos = MedDiagnosticos.where("nombre LIKE ? AND frecuente = ? ", "%#{term}%",true)
+		end			
+		
+		@diagnosticos.each do |f|
+			diag << f.formato_lista			
+		end
+
+		respond_to do |format|
+			format.json { render json: diag}
+		end
+				
+	end
+
 	def agregarDiagnostico		
 
 		persona_diagnostico_actual = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND diagnostico_id = ? ' , params[:atencion_salud_id], params[:diagnostico_id]).first

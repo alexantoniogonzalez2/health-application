@@ -51,7 +51,7 @@
 <%= f.text_area :examen_fisico , :class => "form-control", :size => "50x3" %><br>
  
 <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>
-<%= render :partial => "metricas", :locals => {:id => @atencion_salud.id, :p_e => @persona_estatura.valor, :p_p => @persona_peso.valor, :p_imc => @persona_imc.valor, :p_pr => @persona_presion.valor} %>
+<%= render :partial => "metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :p_pr => @presion} %>
  
 </div>
 
@@ -124,3 +124,5 @@
 
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
+
+<%= javascript_include_tag "atencion_salud/grafico_peso" %>
