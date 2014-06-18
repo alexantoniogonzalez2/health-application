@@ -46,17 +46,29 @@ class PersonaDiagnosticoController < ApplicationController
 
 			@estados_diagnostico = MedDiagnosticoEstados.all
 
+			pers_diag = @persona_diagnostico.id
+
 			respond_to do |format|     
       	format.js   {}
-      	format.json { render :json => { :success => true } }
+      	format.json { render :json => { :success => true, :pers_diag => @persona_diagnostico.id }	 }
       end		
 		
 		end  	
 	end
 
 	def eliminarDiagnostico		
-		@persona_diagnostico = FiPersonaDiagnosticos.find(params[:persona_diagnostico_id])
-  	@persona_diagnostico.destroy 
+
+
+  	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? AND atencion_salud_id ? ",params[:persona_diagnostico_id],params[:atencion_salud_id])
+  	@persona_diagnostico_atencion.destroy 
+
+  	#Si no hay otra, se elimina el diagnóstico
+  	@persona_diagnostico_atencion_otro = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? ",params[:atencion_salud_id])
+
+  	if @persona_diagnostico_atencion_otro 
+  		@persona_diagnostico = FiPersonaDiagnosticos.find(params[:persona_diagnostico_id])
+  		@persona_diagnostico.destroy 
+  	end	
 
   	render :json => { :success => true }	
 	end
@@ -69,7 +81,7 @@ class PersonaDiagnosticoController < ApplicationController
   	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("persona_diagnostico_id = ?",params[:persona_diagnostico_id]).first	
 		@persona_diagnostico_atencion.update( estado_diagnostico: @estado , comentario: params[:comentario])
 
-  	render :json => { :success => true }	
+  	render :json => { :success => true, :pers_diag => @persona_diagnostico.id }	
 	end
 
 

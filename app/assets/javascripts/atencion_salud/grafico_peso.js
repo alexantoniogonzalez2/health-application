@@ -1,30 +1,21 @@
-$(document).ready(function() {
+$(document).ready(function() {   
 
   $.ajax({
     type: 'POST',
     url: '/cargar_datos_peso',
     data: {
-      persona_id: persona_id,
+      persona_id: $('#persona_id').val() ,
     },
     success: function(response) {   
-      //alert (response.valor);
-      //alert (response);
-
-      /*$.getJSON(response, function(data) {
-        options.series[0].data = data;
-        
-      });*/
-
-      cargarGraficoPeso(response);
+      cargarGraficoPeso(response.datos,response.texto);
     },
     error: function(xhr, status, error){ alert("No se pudo cargar los datos de peso del paciente.");   }
   });
-   
- });
 
-function cargarGraficoPeso (data){
+  
+});
 
- // alert(data);
+function cargarGraficoPeso (data,text){
 
   $('#grafico_peso').highcharts({
       title: {
@@ -36,8 +27,7 @@ function cargarGraficoPeso (data){
           x: -20
       },
       xAxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+          categories: text
       },
       yAxis: {
           title: {

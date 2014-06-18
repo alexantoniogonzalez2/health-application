@@ -42,12 +42,21 @@ class PersonaMetricasController < ApplicationController
 
 	def cargarDatosPeso
 
+    @datos = []
+    @texto = []
+
 		@datos_peso = FiPersonaMetricas.where("metrica_id = ? AND persona_id = ?",2,params[:persona_id])
 
-		datos = [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+		datos2 = [7.0, 6.9]
+    texto2 = ['hola', 'Feb']
 
-		respond_to do |format|     
-    	format.json { render json: datos }
+    @datos_peso.each do |d_p|
+      @datos << d_p.valor
+      @texto << d_p.id
+    end 
+
+   	respond_to do |format|     
+    	format.json { render json: {:datos => @datos,:texto => @texto} }
     end		
 
 	end

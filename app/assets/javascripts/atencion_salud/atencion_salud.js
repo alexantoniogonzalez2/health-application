@@ -69,15 +69,14 @@ $('#select_medicamento').select2({
 $("#select_diagnostico").on("change", function(e) { 
 
   var value = $("#select_diagnostico").select2('data').id;
-  var text = $("#select_diagnostico").select2('data').text;
-  agregarDiagnostico(value,text);
+ 
+  agregarDiagnostico(value);
 
 })
 
 $("#select_examen").on("change", function(e) { 
 
   var value = $("#select_examen").select2('data').id;
-  var text = $("#select_examen").select2('data').text;
   
   $.ajax({
     type: 'POST',
@@ -147,7 +146,7 @@ function diagnosticoNoFrecuente(){
 
 }
 
-function agregarDiagnostico(value,text){
+function agregarDiagnostico(value){
  
  $.ajax({
     type: 'POST',
@@ -158,10 +157,9 @@ function agregarDiagnostico(value,text){
       atencion_salud_id: atencion_salud_id,
     },
     success: function(response) {
-
-      if (response.success){   }
+          
     },
-    error: function(xhr, status, error){ alert("No se pudieron los diagnósticos del paciente."); }
+    error: function(xhr, status, error){ alert("No se pudo agregar el diagnóstico del paciente."); }
   });
 
 }
@@ -173,7 +171,10 @@ function eliminarDiagnostico(pers_diag) {
   $.ajax({
     type: 'POST',
     url: '/eliminar_diagnostico',
-    data: { persona_diagnostico_id: pers_diag},
+    data: { 
+      persona_diagnostico_id: pers_diag,
+      atencion_salud_id: atencion_salud_id
+    },
 
     success: function(response) { $( "#pd"+pers_diag).remove();$( "#bc"+pers_diag).remove(); },
     error: function(xhr, status, error){ alert("No se pudo eliminar el diagnóstico del paciente.");   }
@@ -196,6 +197,11 @@ function eliminarMedicamento(pers_med) {
    
 }
 
+function actualizarDiagnostico(diag){
+
+  agregarDiagnostico(diag);
+}
+
 function guardarDiagnostico(pers_diag) {
 
   var f_i = $('.datepicker[name=f_i_'+pers_diag+']').datepicker("getDate");
@@ -211,7 +217,7 @@ function guardarDiagnostico(pers_diag) {
       fecha_inicio: f_i,
       fecha_termino: f_t,
       estado_diagnostico: e_d,
-      comentario: comentario
+      comentario: comentario,
      },
     success: function(response) { $( "#modal-container-"+pers_diag).modal('hide'); },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }

@@ -32,9 +32,12 @@ class AtencionesSaludController < ApplicationController
 
 	def edit
 
+		#validar que tenga acceso a esta atención
+		
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona_diagnostico = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
+	  @persona_diagnostico_anteriores = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('persona_id = ? and fi_persona_diagnosticos_atenciones_salud.atencion_salud_id != ?', @atencion_salud.persona.id,params[:id])
 
 	  @diagnosticos = MedDiagnosticos.where('frecuente = ?',true)
 	  @estados_diagnostico = MedDiagnosticoEstados.all

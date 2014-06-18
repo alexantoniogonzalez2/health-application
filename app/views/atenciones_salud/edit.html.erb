@@ -18,6 +18,8 @@
   </div>
   <% end %>
 
+<input type="hidden" id="persona_id" value=<%=@agendamiento.persona.id  %> >
+
 <div class="panel panel-success">
 <div class="panel-heading">
   <h3 class="panel-title">Atención de Salud</h3>
@@ -33,16 +35,18 @@
 <%= @agendamiento.persona.showRut %><br/>
 <%= f.label 'Sexo:' %>
 <%= @agendamiento.persona.showSexo %><br/>
-<%= f.label 'Otros datos' %><br/>
 <%= f.label 'Antecedentes' %><br/>
+<%= f.label 'Diagnósticos anteriores' %><br/>
 
-<div class="list-group">
-	<a href="#" class="list-group-item">
-    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.</p>
-  </a>
-  <a href="#" class="list-group-item">
-    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. </p>
-  </a>
+<div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">  
+  <% @persona_diagnostico_anteriores.each do |p_d| %>
+    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+  <% end %>
+</div>
+<div id="diag_ant-modal-div" >
+  <% @persona_diagnostico_anteriores.each do |p_d| %>
+     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+  <% end %>      
 </div>
 
 <%= f.label :"Motivo de consulta:" %>
@@ -51,7 +55,7 @@
 <%= f.text_area :examen_fisico , :class => "form-control", :size => "50x3" %><br>
  
 <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>
-<%= render :partial => "metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :p_pr => @presion} %>
+<%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :p_pr => @presion} %>
  
 </div>
 
@@ -125,4 +129,3 @@
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
 
-<%= javascript_include_tag "atencion_salud/grafico_peso" %>
