@@ -156,9 +156,7 @@ function agregarDiagnostico(value){
       diagnostico_id: value,
       atencion_salud_id: atencion_salud_id,
     },
-    success: function(response) {
-          
-    },
+    success: function(response) {  },
     error: function(xhr, status, error){ alert("No se pudo agregar el diagnóstico del paciente."); }
   });
 
@@ -219,7 +217,7 @@ function guardarDiagnostico(pers_diag) {
       estado_diagnostico: e_d,
       comentario: comentario,
      },
-    success: function(response) { $( "#modal-container-"+pers_diag).modal('hide'); },
+    success: function(response) { $( "#modal-container-diag-"+pers_diag).modal('hide'); },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
 

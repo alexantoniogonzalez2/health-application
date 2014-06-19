@@ -24,19 +24,26 @@ class PersonaDiagnosticoController < ApplicationController
 
 	def agregarDiagnostico		
 
-		persona_diagnostico_actual = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND diagnostico_id = ? ' , params[:atencion_salud_id], params[:diagnostico_id]).first
+		persona_diagnostico_atencion_actual = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND diagnostico_id = ? ' , params[:atencion_salud_id], params[:diagnostico_id]).first
 
-		if persona_diagnostico_actual
+		if persona_diagnostico_atencion_actual
 
 			render :json => { :success => false }		
 
 		else 
-			@persona_diagnostico = FiPersonaDiagnosticos.new
-			@persona_diagnostico.persona_id = params[:persona_id]
-			@persona_diagnostico.diagnostico_id = params[:diagnostico_id]
-			@persona_diagnostico.fecha_inicio = DateTime.current
-			@persona_diagnostico.estado_diagnostico_id = 1
-			@persona_diagnostico.save!
+
+			@persona_diagnostico = FiPersonaDiagnosticos.where('diagnostico_id = ? ',params[:diagnostico_id]).first
+
+			if !@persona_diagnostico
+
+				@persona_diagnostico = FiPersonaDiagnosticos.new
+				@persona_diagnostico.persona_id = params[:persona_id]
+				@persona_diagnostico.diagnostico_id = params[:diagnostico_id]
+				@persona_diagnostico.fecha_inicio = DateTime.current
+				@persona_diagnostico.estado_diagnostico_id = 1
+				@persona_diagnostico.save!
+				
+			end	
 
 			@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.new
 			@persona_diagnostico_atencion.persona_diagnostico_id = @persona_diagnostico.id
@@ -45,8 +52,6 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona_diagnostico_atencion.save
 
 			@estados_diagnostico = MedDiagnosticoEstados.all
-
-			pers_diag = @persona_diagnostico.id
 
 			respond_to do |format|     
       	format.js   {}
@@ -59,8 +64,8 @@ class PersonaDiagnosticoController < ApplicationController
 	def eliminarDiagnostico		
 
 
-  	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? AND atencion_salud_id ? ",params[:persona_diagnostico_id],params[:atencion_salud_id])
-  	@persona_diagnostico_atencion.destroy 
+  	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? AND atencion_salud_id = ? ",params[:persona_diagnostico_id],params[:atencion_salud_id])
+  	@persona_diagnostico_atencion.destroy_all 
 
   	#Si no hay otra, se elimina el diagnóstico
   	@persona_diagnostico_atencion_otro = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? ",params[:atencion_salud_id])
