@@ -40,6 +40,7 @@
         </table>       
       </div>
       <div class="modal-footer">
+         <button id="bpm<%= persona_medicamento.id %>" type="button" class="btn btn-danger" onclick="eliminarMedicamento(<%= persona_medicamento.id %>)">Eliminar</button>
          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
          <button type="button" onclick="guardarMedicamento(<%= persona_medicamento.id %>)" class="btn btn-primary">Guardar</button>
       </div>

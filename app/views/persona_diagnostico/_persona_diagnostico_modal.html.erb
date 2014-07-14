@@ -6,6 +6,9 @@
         <h4 class="modal-title" id="myModalLabel"><%= p_d.diagnostico.nombre %></h4>
       </div>
       <div class="modal-body">
+        <% if p_d.diagnostico.auge %>
+          <%= link_to 'Imprimir constancia GES', agendaShowFormBusqueda_path %><br/><br/>
+        <% end %>
         <p>Fecha inicio: <input name="f_i_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaInicio %>"></p>
         <p>Fecha término: <input name="f_t_<%= p_d.id%>" class="datepicker" type="text" placeholder="Ej.: 2014-03-13" value="<%= p_d.getFechaTermino %>"></p>
         <p>Estado de diagnóstico actual:
@@ -22,6 +25,7 @@
       <div class="modal-footer">
          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
          <button type="button"  onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
+         <button id="bc<%= p_d.id%>" type="button" class="btn btn-danger" onclick="eliminarDiagnostico(<%= p_d.id%>)">Eliminar</button>
       </div>
     </div>            
   </div>        

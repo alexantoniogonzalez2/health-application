@@ -1,5 +1,3 @@
-<a href="#" data-toggle="modal" class="list-group-item" id="pp<%= p_p.id%>" >
-  <p class="list-group-item-text"><%= p_p.prestacion.codigo_fonasa+' ' + p_p.prestacion.nombre %>
-  	<button id="bcp<%= p_p.id%>" type="button" class="btn btn-xs btn-danger" onclick="eliminarPrestacion(<%= p_p.id%>)">Eliminar</button>
-  </p>
+<a href="#modal-container-pres-<%= p_p.id%>" data-toggle="modal" class="list-group-item" id="pp<%= p_p.id%>" >
+  <p class="list-group-item-text"><%= p_p.prestacion.nombre %></p>
 </a>

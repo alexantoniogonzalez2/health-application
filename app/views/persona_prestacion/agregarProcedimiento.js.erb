@@ -1,1 +1,2 @@
 $("<%= escape_javascript( render :partial => "persona_prestacion", :locals => {:p_p => @persona_prestacion} ) %>").appendTo("#procedimiento-div");
+$("<%= escape_javascript( render :partial => "persona_prestacion_modal", :locals => {:p_p => @persona_prestacion} ) %>").appendTo("#proc_modal-div");

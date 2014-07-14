@@ -28,7 +28,8 @@ AplicacionMedica::Application.routes.draw do
   post '/guardar_medicamento', to: 'persona_medicamento#guardarMedicamento'
   post '/guardar_metricas', to: 'persona_metricas#guardarMetricas'
   post '/cargar_datos_peso', to: 'persona_metricas#cargarDatosPeso'
-
+  post '/guardar_texto', to: 'atenciones_salud#guardarTexto'
+ 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
   get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda

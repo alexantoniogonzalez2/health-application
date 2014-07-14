@@ -7,9 +7,9 @@ class PersonaDiagnosticoController < ApplicationController
 		term = params[:q]
 
 		if params[:diag_no_frec] == 'true'
-			@diagnosticos = MedDiagnosticos.where("nombre LIKE ? ", "%#{term}%")
+			@diagnosticos = MedDiagnosticos.where("nodo_terminal = 1 AND (nombre LIKE ? OR codigo_cie10 LIKE ? )", "%#{term}%", "%#{term}%")
 		else
-			@diagnosticos = MedDiagnosticos.where("nombre LIKE ? AND frecuente = ? ", "%#{term}%",true)
+			@diagnosticos = MedDiagnosticos.where("nodo_terminal = 1 AND frecuente = ? AND (nombre LIKE ? OR codigo_cie10 LIKE ?) ", true, "%#{term}%", "%#{term}%")
 		end			
 		
 		@diagnosticos.each do |f|
@@ -65,12 +65,13 @@ class PersonaDiagnosticoController < ApplicationController
 
 
   	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? AND atencion_salud_id = ? ",params[:persona_diagnostico_id],params[:atencion_salud_id])
-  	@persona_diagnostico_atencion.destroy_all 
+  	@persona_diagnostico_atencion.destroy_all
 
   	#Si no hay otra, se elimina el diagnóstico
-  	@persona_diagnostico_atencion_otro = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? ",params[:atencion_salud_id])
+  	#@persona_diagnostico_atencion_otro = FiPersonaDiagnosticosAtencionesSalud.where(" persona_diagnostico_id = ? ",params[:persona_diagnostico_id])
+  	@persona_diagnostico_atencion_otro = FiPersonaDiagnosticosAtencionesSalud.find_by persona_diagnostico_id: params[:persona_diagnostico_id]
 
-  	if @persona_diagnostico_atencion_otro 
+  	if !@persona_diagnostico_atencion_otro 
   		@persona_diagnostico = FiPersonaDiagnosticos.find(params[:persona_diagnostico_id])
   		@persona_diagnostico.destroy 
   	end	
@@ -83,8 +84,8 @@ class PersonaDiagnosticoController < ApplicationController
 		@estado = MedDiagnosticoEstados.find(params[:estado_diagnostico])
   	@persona_diagnostico.update( estado_diagnostico: @estado, fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino] )
 
-  	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("persona_diagnostico_id = ?",params[:persona_diagnostico_id]).first	
-		@persona_diagnostico_atencion.update( estado_diagnostico: @estado , comentario: params[:comentario])
+  	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("persona_diagnostico_id = ? and atencion_salud_id = ? ",params[:persona_diagnostico_id],params[:atencion_salud_id]).first	
+		@persona_diagnostico_atencion.update( estado_diagnostico: @estado , comentario: params[:comentario], fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino] )
 
   	render :json => { :success => true, :pers_diag => @persona_diagnostico.id }	
 	end

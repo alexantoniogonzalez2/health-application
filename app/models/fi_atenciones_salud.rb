@@ -12,8 +12,6 @@ class FiAtencionesSalud < ActiveRecord::Base
   has_many :interconsultas, :class_name => 'FiInterconsultas', :foreign_key => 'atencion_salud_id'
   has_many :persona_metricas, :class_name => 'FiPersonaMetricas', :foreign_key => 'atencion_salud_id'
 
-  validates :motivo_consulta, presence: true, length: { minimum: 5 }
-
  	private
   def app_params
     params.require(:list).permit(:persona,
@@ -26,6 +24,7 @@ class FiAtencionesSalud < ActiveRecord::Base
   								:interconsultas,
   								:persona_metricas,
   								:motivo_consulta,
+                  :examen_fisico,
   								:indicaciones_generales,
 
   								)

@@ -8,6 +8,11 @@
         dateFormat: 'yy-mm-dd',
         dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
       });
+      $( ".datepicker-disabled" ).datepicker({
+        disabled: true,
+        dateFormat: 'yy-mm-dd',
+        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+      });
   });
 
   $(function($){

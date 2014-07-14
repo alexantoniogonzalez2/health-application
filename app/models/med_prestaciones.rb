@@ -8,7 +8,7 @@ class MedPrestaciones < ActiveRecord::Base
 
   {
     'id'        => id,
-    'text'      => codigo_fonasa + ' ' + nombre      
+    'text'      => nombre      
   }
 
   end 

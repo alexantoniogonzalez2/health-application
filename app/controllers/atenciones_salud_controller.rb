@@ -32,8 +32,7 @@ class AtencionesSaludController < ApplicationController
 
 	def edit
 
-		#validar que tenga acceso a esta atención
-		
+		#validar que tenga acceso a esta atención		
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona_diagnostico = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud).where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
@@ -59,20 +58,6 @@ class AtencionesSaludController < ApplicationController
 
 	end
 
-	def update
-	  @atencion_salud = FiAtencionesSalud.find(params[:id])
-	  
-	  @atencion_salud.update_attributes(params[:atencion_salud].permit(:indicaciones_generales,:motivo_consulta,:examen_fisico))
-
-	 	@agendamiento =  AgAgendamientos.find(@atencion_salud.agendamiento_id)	
-		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
-		@agendamiento.agendamiento_estado = @estadoAgendamiento
-		@agendamiento.save
-
-	  redirect_to root_path
-	  
-	end
-
 	def crearAtencion	
 
 		@agendamiento =  AgAgendamientos.find(params[:id])
@@ -94,6 +79,41 @@ class AtencionesSaludController < ApplicationController
   	redirect_to :action => "edit", :id =>params[:id]
 	
 	end
+		
+	def guardarTexto
+
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+
+		case params[:tipo_texto]
+		when 'motivo'
+			@atencion_salud.update( motivo_consulta: params[:texto] )						
+		when 'examen'
+			@atencion_salud.update( examen_fisico: params[:texto] )					
+		when 'indicaciones'
+			@atencion_salud.update( indicaciones_generales: params[:texto] )	
+		end
+
+		render :json => { :success => true } 	  
+	
+	end
+
+	def update
+		@atencion_salud = FiAtencionesSalud.find(params[:id])
+		@atencion_salud.update( motivo_consulta: params['atencion_salud']['motivo_consulta'], examen_fisico: params['atencion_salud']['examen_fisico'], indicaciones_generales: params['atencion_salud']['indicaciones_generales'] )
+
+		if params[:finalizar] 
+			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
+			@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
+			@agendamiento.agendamiento_estado = @estadoAgendamiento
+			@agendamiento.save
+		end
+
+		redirect_to root_path
+
+
+	end
+
+
 
 	private
 	  def app_params

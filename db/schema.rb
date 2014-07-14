@@ -131,6 +131,8 @@ ActiveRecord::Schema.define(version: 20140526031159) do
     t.integer  "persona_id"
     t.integer  "metrica_id"
     t.integer  "atencion_salud_id"
+    t.decimal  "valor",             precision: 10, scale: 0
+    t.datetime "fecha"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -164,6 +166,8 @@ ActiveRecord::Schema.define(version: 20140526031159) do
     t.integer  "numero"
     t.boolean  "frecuente"
     t.boolean  "nodo_terminal"
+    t.boolean  "auge"
+    t.date     "fecha_inicio_auge"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

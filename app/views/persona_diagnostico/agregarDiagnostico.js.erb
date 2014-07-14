@@ -1,3 +1,2 @@
 $("<%= escape_javascript( render :partial => "persona_diagnostico", :locals => {:p_d => @persona_diagnostico} ) %>").appendTo("#diagnostico-div");
 $("<%= escape_javascript( render :partial => "persona_diagnostico_modal", :locals => {:p_d => @persona_diagnostico, :e_d => @estados_diagnostico} ) %>").appendTo("#diag_modal-div");
-$( "#modal-container-diag-<%= @persona_diagnostico.id %>").modal('show'); 

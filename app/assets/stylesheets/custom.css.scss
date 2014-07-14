@@ -96,12 +96,11 @@ footer {
 }
 
 .panel-body{
-  padding : 0px;
-
+  padding : 0px 0px 10px 0px;
 }
 
 .table{
-  margin-bottom: 0px;
+  margin-bottom: 0px;  
 }
 
 .row {
@@ -126,3 +125,23 @@ footer {
 .text-med {
   margin-left: 12px; 
 }
+
+button[disabled],
+html input[disabled] {
+  cursor: not-allowed !important;
+}
+
+textarea.form-control {
+  margin-bottom: 10px;
+  padding: 6px;
+}
+
+a.btn {
+  padding: 0px;
+}
+
+span.label{
+  float: right;
+  display: none;
+}
+

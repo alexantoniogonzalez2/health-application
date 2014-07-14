@@ -1,11 +1,10 @@
-  <script>
-		var persona_id=<%=@agendamiento.persona.id  %>
-		var atencion_salud_id=<%= @atencion_salud.id %>
-    var link_loading = '<%= image_tag("loading.gif", alt: "Rails") %>'
-		
-	</script>
+<script>
+  var persona_id=<%=@agendamiento.persona.id  %>
+	var atencion_salud_id=<%= @atencion_salud.id %>
+  var link_loading = '<%= image_tag("loading.gif", alt: "Rails") %>'	
+</script>
 
-<%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"}, :remote => true, method: :put do |f| %>
+<%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"},  method: :put do |f|  %>
  <% if @atencion_salud.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@atencion_salud.errors.count, "error") %> prohibited
@@ -49,10 +48,10 @@
   <% end %>      
 </div>
 
-<%= f.label :"Motivo de consulta:" %>
-<%= f.text_area :motivo_consulta , :class => "form-control", :size => "50x3" %><br>
-<%= f.label :"Examen físico:" %>
-<%= f.text_area :examen_fisico , :class => "form-control", :size => "50x3" %><br>
+<%= f.label :"Motivo de consulta:" %><span id="auto-motivo" class="label label-success">Autoguardado</span>
+<%= f.text_area :motivo_consulta , :class => "form-control", :size => "50x3" %>
+<%= f.label :"Examen físico:" %><span id="auto-examen" class="label label-success">Autoguardado</span>
+<%= f.text_area :examen_fisico , :class => "form-control", :size => "50x3" %>
  
 <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>
 <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :p_pr => @presion} %>
@@ -87,6 +86,11 @@
       <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_e} %> 
     <% end %>
   </div>
+  <div id="exa_modal-div" >
+    <% @persona_examen.each do |p_e| %>
+      <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_e} %> 
+    <% end %>      
+  </div>
 
   <%= f.label :"Procedimientos/Cirugías:" %>
   <input type='hidden'id="select_procedimiento"></input>
@@ -95,36 +99,56 @@
       <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_p} %>  
     <% end %>
   </div>
+  <div id="proc_modal-div" >
+    <% @persona_procedimiento.each do |p_p| %>
+      <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_p} %> 
+    <% end %>      
+  </div> 
 
   <%= f.label :"Medicamentos:" %>
   <input type='hidden'id="select_medicamento"></input>
   <div class="list-group" name="medicamento-div" id="medicamento-div">  
     <% @persona_medicamento.each do |p_m| %>
-      <%= render :partial => "persona_medicamento/persona_medicamento", :locals => {:persona_medicamento => p_m} %>      
+      <%= render :partial => "persona_medicamento/persona_medicamento", :locals => {:persona_medicamento => p_m} %>     
     <% end %>
   </div>
   <div id="med_modal-div" >
-  <% @persona_medicamento.each do |p_m| %>
-    <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m} %> 
-  <% end %>      
+    <% @persona_medicamento.each do |p_m| %>
+      <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m} %> 
+    <% end %>      
   </div>
 
-  <%= f.label :"Indicaciones:"  %>
+  <%= f.label :"Indicaciones:"  %><span id="auto-indicaciones" class="label label-success">Autoguardado</span>
   <%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
-		
 
-	<%= link_to 'Emitir certificado', agendaShowFormBusqueda_path %><br/>
-	<%= link_to 'Generar interconsulta', agendaShowFormBusqueda_path %><br/>
-  <%= f.submit :"Cerrar Atención", :id => "submit", :class=>"btn btn-success" %> 
-  <button class="btn btn-info" >Guardar</button>
+  <a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Emitir certificado</a>
+  <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id} %><br>
+  <a id="modal-" href="#modal-container-interconsultas" role="button" class="btn" data-toggle="modal">Generar interconsulta</a>
+  <%= render :partial => "interconsultas", :locals => {:id => @atencion_salud.id} %><br>
+
+
 
 </div>
 
 </div> <!--Cierre div row -->
+
+<div class="row">
+  <div class="col-md-12 column">
+
+    <%= f.submit :"Finalizar atención", :id => "finalizar", :name =>"finalizar", :class=>"btn btn-info" %>
+    <%= f.submit :"Guardar atención", :id => "guardar", :class=>"btn btn-success" %>
+     <!--
+    <button id="finalizar" class="btn btn-info" >Finalizar atención</button>
+    <button id="guardar" class="btn btn-success" >Guardar atención</button>-->
+    
+  </div>
+</div>  
+
 </div> <!--Cierre div panel-body -->
 </div> <!--Cierre div panel -->
 
 <% end %>
+ 
 
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>

@@ -20,7 +20,9 @@ class MedDiagnosticos < ActiveRecord::Base
                                   :grupo,
                   							  :id,
                   							  :nombre,
-                  							  :persona_diagnosticos )
+                  							  :persona_diagnosticos,
+                                  :auge,
+                                  :fecha_inicio_auge )
   end
 							  
 end
