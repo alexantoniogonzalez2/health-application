@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20140526031159) do
     t.integer  "agendamiento_id"
     t.integer  "persona_id"
     t.integer  "tipo_ficha_id"
+    t.boolean  "es_cronica"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -108,6 +109,7 @@ ActiveRecord::Schema.define(version: 20140526031159) do
     t.text     "comentario"
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
+    t.boolean  "es_cronica"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -253,6 +255,7 @@ ActiveRecord::Schema.define(version: 20140526031159) do
   create_table "per_personas", force: true do |t|
     t.integer  "user_id"
     t.integer  "rut"
+    t.string   "digito_verificador", limit: 1
     t.string   "nombre"
     t.string   "apellido_paterno"
     t.string   "apellido_materno"

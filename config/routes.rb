@@ -29,6 +29,7 @@ AplicacionMedica::Application.routes.draw do
   post '/guardar_metricas', to: 'persona_metricas#guardarMetricas'
   post '/cargar_datos_peso', to: 'persona_metricas#cargarDatosPeso'
   post '/guardar_texto', to: 'atenciones_salud#guardarTexto'
+  post '/autoguardar_comentario', to: 'persona_diagnostico#autoguardarComentario'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

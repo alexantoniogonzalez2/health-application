@@ -22,6 +22,7 @@ U9= User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :passwor
 puts 'Paciente 1'
 P1=PerPersonas.new
 P1.rut=10000000
+P1.digito_verificador='k'
 P1.nombre="Paciente 1"
 P1.apellido_paterno="Gutierrez"
 P1.apellido_materno="Gutierrez"
@@ -32,6 +33,7 @@ P1.save
 puts 'Paciente 2'
 P2=PerPersonas.new
 P2.rut=20000000
+P2.digito_verificador='k'
 P2.nombre="Paciente 2"
 P2.apellido_paterno="Hurtado"
 P2.apellido_materno="Hurtado"
@@ -42,6 +44,7 @@ P2.save
 puts 'Paciente 3'
 P3=PerPersonas.new
 P3.rut=30000000
+P3.digito_verificador='k'
 P3.nombre="Paciente 3"
 P3.apellido_paterno="Saldivar"
 P3.apellido_materno="Saldivar"
@@ -53,6 +56,7 @@ P3.save
 puts 'Doctor1'
 D1=PerPersonas.new
 D1.rut=40000000
+D1.digito_verificador=1
 D1.nombre="Fabricio"
 D1.apellido_paterno="Rio"
 D1.apellido_materno="Rio"
@@ -63,6 +67,7 @@ D1.save
 puts 'Doctor2'
 D2=PerPersonas.new
 D2.rut=4000004
+D2.digito_verificador='k'
 D2.nombre="Marcela"
 D2.apellido_paterno="Cardemil"
 D2.apellido_materno="Cardemil"
@@ -73,6 +78,7 @@ D2.save
 puts 'Doctor3'
 D3=PerPersonas.new
 D3.rut=40000040
+D3.digito_verificador='k'
 D3.nombre="Esteban"
 D3.apellido_paterno="Lopez"
 D3.apellido_materno="Lopez"
@@ -83,6 +89,7 @@ D3.save
 puts 'Doctor4'
 D4=PerPersonas.new
 D4.rut=40000400
+D4.digito_verificador='k'
 D4.nombre="Alex"
 D4.apellido_paterno="Lagos"
 D4.apellido_materno="Lagos"
@@ -94,6 +101,7 @@ D4.save
 puts 'Secretaria'
 A=PerPersonas.new
 A.rut=50000000
+A.digito_verificador='k'
 A.nombre="Maricela"
 A.apellido_paterno="Santibañez"
 A.apellido_materno="Santibañez"
@@ -105,6 +113,7 @@ A.save
 puts 'Secretaria'
 B=PerPersonas.new
 B.rut=60000000
+B.digito_verificador='k'
 B.nombre="Fernanda"
 B.apellido_paterno="González"
 B.apellido_materno="González"

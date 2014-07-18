@@ -8,7 +8,11 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
 	has_many :persona_diagnosticos_atencion_salud, :class_name => 'FiPersonaDiagnosticosAtencionesSalud', :foreign_key => 'persona_diagnostico_id', dependent: :destroy 
 
   def getFechaInicio
-    return fecha_inicio.strftime('%Y-%m-%d')
+    fecha_formato = ''
+    if fecha_inicio
+      fecha_formato = fecha_inicio.strftime('%Y-%m-%d')
+    end
+    return fecha_formato  
   end
 
   def getFechaTermino
@@ -25,6 +29,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
                    :estado_diagnostico,
                    :fecha_inicio,
                    :fecha_termino,
+                   :es_cronica,
                    :gesta,
                    :id,
                    :persona,

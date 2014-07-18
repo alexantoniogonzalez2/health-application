@@ -9,45 +9,45 @@
       </div>
       <div class="modal-body">
         <div class="tabbable" >
-        <ul class="nav nav-tabs">
-          <li class="active">
-            <a href="#panel-metricas" data-toggle="tab">Ingresar datos</a>
-          </li>
-          <li>
-            <a href="#panel-peso" data-toggle="tab">Gráfico peso</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="panel-metricas">            
-            <table>
-              <tr>
-                <td><span>Estatura</span></td>
-                <td><input id="estatura-<%= id %>" type="text" class="form-control metrica" value="<%= p_e %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
-                <td><span class="text-med">centimetros</span></td>
-              </tr>
-              <tr>
-                <td><span>Peso</span></td>
-                <td><input id="peso-<%= id %>" type="text" class="form-control metrica" value="<%= p_p %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
-                <td><span class="text-med">kilos</span></td>
-              </tr>
-              <tr>
-                <td><span>IMC</span></td>
-                <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>"maxlength="4" size="4" ></td>
-                <td><span class="text-med">kilos/metros2</span></td>
-              </tr>
-              <tr>
-                <td><span>Presión</span></td>
-                <td><input id="presion-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr %>"maxlength="4" size="4" ></td>
-                <td><span class="text-med">mm HG</span></td>
-              </tr>
-            </table>              
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#panel-metricas" data-toggle="tab">Ingresar datos</a>
+            </li>
+            <li>
+              <a href="#panel-peso" data-toggle="tab">Gráfico peso</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="panel-metricas">            
+              <table>
+                <tr>
+                  <td><span>Estatura</span></td>
+                  <td><input id="estatura-<%= id %>" type="text" class="form-control metrica" value="<%= p_e %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
+                  <td><span class="text-med">centimetros</span></td>
+                </tr>
+                <tr>
+                  <td><span>Peso</span></td>
+                  <td><input id="peso-<%= id %>" type="text" class="form-control metrica" value="<%= p_p %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
+                  <td><span class="text-med">kilos</span></td>
+                </tr>
+                <tr>
+                  <td><span>IMC</span></td>
+                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>"maxlength="4" size="4" ></td>
+                  <td><span class="text-med">kilos/metros2</span></td>
+                </tr>
+                <tr>
+                  <td><span>Presión</span></td>
+                  <td><input id="presion-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr %>"maxlength="4" size="4" ></td>
+                  <td><span class="text-med">mm HG</span></td>
+                </tr>
+              </table>              
+            </div>
+            <div class="tab-pane" id="panel-peso">
+              
+               <div id="grafico_peso" style="min-width: 400px; height: 200px; margin: 0 auto"></div>
+              
+            </div>
           </div>
-          <div class="tab-pane" id="panel-peso">
-            
-             <div id="grafico_peso" style="min-width: 400px; height: 200px; margin: 0 auto"></div>
-            
-          </div>
-        </div>
         </div>
       </div>
       <div class="modal-footer">

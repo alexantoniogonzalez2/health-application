@@ -9,7 +9,7 @@ class CreateFiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Migration
       t.text :comentario
       t.datetime :fecha_inicio
       t.datetime :fecha_termino
-
+      t.boolean :es_cronica 
 
       t.timestamps
     end

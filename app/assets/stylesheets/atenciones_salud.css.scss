@@ -16,13 +16,17 @@
   margin-bottom: 0px;
 }
 
-#diagnostico-div, #examen-div, #procedimiento-div, #medicamento-div {
+#examen-div, #procedimiento-div, #medicamento-div {
   margin-bottom: 0px;
+}
+
+#diagnostico-div {
+  margin-bottom: 10px;
 }
 div.list-group {
   margin-bottom: 0px;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   padding-left: 5px;
 
   a.list-group-item {
@@ -42,8 +46,11 @@ div.select2-container{
 
 .boton-auge{
   position: relative;
-  bottom: 3px; 
-  left: 47px;
+  bottom: 20px;
+  float: right;
+  padding: 2px !important;
+  margin-bottom: 0px !important; 
+  /*left: 47px;*/
 }
 
 label {
@@ -51,8 +58,7 @@ label {
 }
 
 p {
-  margin: 0px;
-  
+  margin: 0px;  
 }
 
 textarea.form-control {
@@ -61,12 +67,71 @@ textarea.form-control {
   line-height:100%;
  }
 
- button {
-  float:right;
-  padding-right:5px;
- }
+button.btn {
+  float: right;
+  /*padding-right: 5px;*/
+}
 
- .div-form-atencion{
+input.btn {
+  float: right !important;
+  margin-left: 5px !important;
+}
+
+.div-form-atencion{
   padding-top: 10px;
- }
+}
 
+div.tab-content {
+  padding: 10px 10px 10px 20px;
+  border-style: solid;
+  border: 1px solid #dddddd;
+  border-radius: 0px 4px 4px 4px;
+}
+
+a.panel_tab {
+  border-color: #dddddd !important;
+} 
+
+.container-corregido {
+  width: 100% !important;
+  .column { 
+    padding-left: 0px;
+  }
+}
+
+.form-estado {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+input.datepicker, input.datepicker-disabled {
+  width: 165px;
+  border-style: solid !important;
+  border: 1px solid #dddddd !important;
+  border-radius: 3px !important;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 20px;
+  text-align: right;
+}
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+.disabled{
+  cursor: not-allowed !important;
+}
+
+#auto-motivo,#auto-indicaciones,#auto-examen,.comentario{
+  float: right;
+  padding: 3px !important;
+  margin-bottom: 0px!important;
+  display: none;
+}
+
+textarea.form-control {
+  margin-bottom: 10px;
+  margin-top: 5px;
+  padding: 6px;
+}

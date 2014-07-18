@@ -1,3 +1,15 @@
+
+$('.modal-diag').on('show.bs.modal', function (e) {
+
+  id_mod = this.id.substring(21);
+  pre_f_i = $('.datepicker[name=f_i_'+id_mod+']').datepicker("getDate");
+  pre_f_t = $('.datepicker[name=f_t_'+id_mod+']').datepicker("getDate");
+  pre_e_d = $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']:checked').val();
+  pre_enf_cro = $('#enf_cro_'+id_mod).find('input[name=checkboxes]').is(':checked');
+  pre_comentario = $('#comentario_'+id_mod).val();
+})
+
+
 $('#atencion_salud_motivo_consulta').keyup( function(e) { 
 
   if (typeof contador_mot === 'undefined') { } 
@@ -22,6 +34,17 @@ $('#atencion_salud_indicaciones_generales').keyup( function(e) {
   else { clearTimeout(contador_ind);}
 
   contador_ind = setTimeout(function(){ guardarTexto('indicaciones') },2000);
+
+})
+
+$('.comentario').keyup( function(e) { 
+
+  if (typeof contador_com === 'undefined') { } 
+  else { clearTimeout(contador_com);}
+
+  id = this.id;
+ 
+  contador_com = setTimeout(function(){ autoguardarComentario(id.substring(11)) },500);
 
 })
 
@@ -164,7 +187,7 @@ $("#select_medicamento").on("change", function(e) {
 function diagnosticoNoFrecuente(){
 
   var check_no_frec = $("#diag-no-frec").is(':checked');  
-  return vcheck_no_frec;
+  return check_no_frec;
 
 }
 
@@ -184,19 +207,18 @@ function agregarDiagnostico(diag_id){
 
 }
 
-function eliminarDiagnostico(pers_diag) {
-  var div = document.getElementById("modal-container-diag-"+pers_diag);
-  //div.parentNode.removeChild(div);
+function eliminarDiagnostico(pers_diag_aten_sal) {
+  var div = document.getElementById("modal-container-diag-"+pers_diag_aten_sal);
 
   $.ajax({
     type: 'POST',
     url: '/eliminar_diagnostico',
     data: { 
-      persona_diagnostico_id: pers_diag,
+      persona_diagnostico_atencion_salud_id: pers_diag_aten_sal,
       atencion_salud_id: atencion_salud_id
     },
 
-    success: function(response) { $("#modal-container-diag-"+pers_diag).modal('hide'); $("#pd"+pers_diag).remove();  },
+    success: function(response) { $("#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); $("#pd"+pers_diag_aten_sal).remove();  },
     error: function(xhr, status, error){ alert("No se pudo eliminar el diagnóstico del paciente.");   }
   });
    
@@ -204,7 +226,6 @@ function eliminarDiagnostico(pers_diag) {
 
 function eliminarMedicamento(pers_med) {
   var div = document.getElementById("modal-container-med-"+pers_med);
-  //div.parentNode.removeChild(div);
 
   $.ajax({
     type: 'POST',
@@ -224,25 +245,27 @@ function actualizarDiagnostico(diag,pers_diag){
   $( "#modal-container-diag-"+pers_diag).modal('show');
 }
 
-function guardarDiagnostico(pers_diag) {
+function guardarDiagnostico(pers_diag_aten_sal) {
 
-  var f_i = $('.datepicker[name=f_i_'+pers_diag+']').datepicker("getDate");
-  var f_t = $('.datepicker[name=f_t_'+pers_diag+']').datepicker("getDate");
-  var e_d = $('#e_d_'+pers_diag).val();
-  var comentario = $('#comentario_'+pers_diag).val();
+  var f_i = $('.datepicker[name=f_i_'+pers_diag_aten_sal+']').datepicker("getDate");
+  var f_t = $('.datepicker[name=f_t_'+pers_diag_aten_sal+']').datepicker("getDate");
+  var e_d = $('#e_d_'+pers_diag_aten_sal).find('input[name=radios-'+pers_diag_aten_sal+']:checked').val();
+  var enf_cro = $('#enf_cro_'+pers_diag_aten_sal).find('input[name=checkboxes]').is(':checked');
+  var comentario = $('#comentario_'+pers_diag_aten_sal).val();
 
   $.ajax({
     type: 'POST',
     url: '/guardar_diagnostico',
     data: {
-      persona_diagnostico_id: pers_diag,
+      persona_diagnostico_atencion_salud_id: pers_diag_aten_sal,
       atencion_salud_id: atencion_salud_id,
       fecha_inicio: f_i,
       fecha_termino: f_t,
       estado_diagnostico: e_d,
       comentario: comentario,
+      enf_cro: enf_cro,
      },
-    success: function(response) { $( "#modal-container-diag-"+pers_diag).modal('hide'); },
+    success: function(response) { $( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
 
@@ -322,7 +345,6 @@ function guardarMetricas(pers_aten) {
 function guardarTexto(tipo_texto) {
 
   switch (tipo_texto) {
-
     case 'motivo':      
       texto = $('#atencion_salud_motivo_consulta').val();
       break;     
@@ -348,6 +370,41 @@ function guardarTexto(tipo_texto) {
                                 },
     error: function(xhr, status, error){ alert('No se pudo guardar la información de la atención de salud.'); }
   });
+
+}
+
+function autoguardarComentario(pers_diag_aten_sal) {
+
+  var comentario = $('#comentario_'+pers_diag_aten_sal).val();
+
+  $.ajax({
+    type: 'POST',
+    url: '/autoguardar_comentario',
+    data: {
+      persona_diagnostico_atencion_salud_id: pers_diag_aten_sal,
+      atencion_salud_id: atencion_salud_id,      
+      comentario: comentario,      
+     },
+    success: function(response) { 
+                                  $('#comentario-'+pers_diag_aten_sal).show("hide");
+                                  setTimeout(function(){$('#comentario-'+pers_diag_aten_sal).hide("hide");},2000) ;
+                                  pre_comentario = comentario;
+                                },
+    error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
+  });
+
+}
+
+function cerrarDiagnostico(pers_diag_aten_sal){ 
+
+  $('#modal-container-diag-'+pers_diag_aten_sal).modal('hide');
+  id_mod = pers_diag_aten_sal
+
+  $('.datepicker[name=f_i_'+id_mod+']').datepicker("setDate",pre_f_i);
+  $('.datepicker[name=f_t_'+id_mod+']').datepicker("setDate",pre_f_t);
+  $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']').val([pre_e_d]);
+  $('#enf_cro_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_enf_cro);
+  $('#comentario_'+id_mod).val(pre_comentario);
 
 }
 

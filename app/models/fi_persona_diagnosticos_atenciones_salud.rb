@@ -10,6 +10,7 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
   def app_params
     params.require(:list).permit(:atencion_salud,
   								:estado_diagnostico,
+                  :es_cronica,
   				  			:id,
                   :fecha_inicio,
                   :fecha_termino,

@@ -1,4 +1,5 @@
-class PerPersonas < ActiveRecord::Base
+class PerPersonas < ActiveRecord::Base 
+  include ActionView::Helpers::NumberHelper
 
 	has_many :hijos, :class_name => 'PerParentescos', :foreign_key => 'hijo_id'
 	has_many :progenitores, :class_name => 'PerParentescos', :foreign_key => 'progenitor_id'	
@@ -62,10 +63,10 @@ class PerPersonas < ActiveRecord::Base
   end 
 
   def showRut
-    return rut
+    return number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador 
   end 
 
-  def digitoVerificador #Calculo digito verificador
+  def revisarDigitoVerificador #Calculo digito verificador
     t=rut
     v=1
     s=0
@@ -100,6 +101,7 @@ class PerPersonas < ActiveRecord::Base
                     :genero, 
                     :nombre, 
                     :rut,
+                    :digito_verificador,
                     :hijos,
                     :progenitores,
                     :prestador_profesionales,

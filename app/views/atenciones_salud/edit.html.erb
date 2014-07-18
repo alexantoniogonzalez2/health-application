@@ -5,17 +5,6 @@
 </script>
 
 <%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"},  method: :put do |f|  %>
- <% if @atencion_salud.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@atencion_salud.errors.count, "error") %> prohibited
-      this post from being saved:</h2>
-    <ul>
-    <% @atencion_salud.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-  <% end %>
 
 <input type="hidden" id="persona_id" value=<%=@agendamiento.persona.id  %> >
 
@@ -27,16 +16,48 @@
 
 <div class="row">
 
-<div class="col-md-6 div-form-atencion">	
-<%= f.label 'Paciente:' %>
-<%= @agendamiento.persona.showName('%n%p%m')  %><br/>
-<%= f.label 'Rut:' %>
-<%= @agendamiento.persona.showRut %><br/>
-<%= f.label 'Sexo:' %>
-<%= @agendamiento.persona.showSexo %><br/>
-<%= f.label 'Antecedentes' %><br/>
-<%= f.label 'Diagnósticos anteriores' %><br/>
+<div class="col-md-6 div-form-atencion">
 
+  <div class="container-corregido">
+    <div class="row clearfix">
+      <div class="col-md-4 column">
+        <%= f.label 'Paciente' %>
+      </div>
+      <div class="col-md-8 column">:
+        <%= @agendamiento.persona.showName('%n%p%m') %>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-md-4 column">
+        <%= f.label 'Rut' %>
+      </div>
+      <div class="col-md-8 column">:
+        <%= @agendamiento.persona.showRut %>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-md-4 column">
+        <%= f.label 'Sexo' %>
+      </div>
+      <div class="col-md-8 column">:
+        <%= @agendamiento.persona.showSexo %>
+      </div>
+    </div>
+  </div>
+
+<%= f.label 'Antecedentes' %><br/>
+<div class="list-group" name="antecedentes-div" id="antecedentes-div">  
+  <% @antecedentes.each do |p_d| %>
+    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+  <% end %>
+</div>
+<div id="antecedentes-modal-div" >
+  <% @antecedentes.each do |p_d| %>
+     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+  <% end %>      
+</div>
+
+<%= f.label 'Diagnósticos anteriores' %><br/>
 <div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">  
   <% @persona_diagnostico_anteriores.each do |p_d| %>
     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
@@ -48,9 +69,9 @@
   <% end %>      
 </div>
 
-<%= f.label :"Motivo de consulta:" %><span id="auto-motivo" class="label label-success">Autoguardado</span>
+<%= f.label :"Motivo de consulta" %><span class="alert alert-info" id="auto-motivo" >Autoguardado</span>
 <%= f.text_area :motivo_consulta , :class => "form-control", :size => "50x3" %>
-<%= f.label :"Examen físico:" %><span id="auto-examen" class="label label-success">Autoguardado</span>
+<%= f.label :"Examen físico" %><span class="alert alert-info" id="auto-examen" >Autoguardado</span>
 <%= f.text_area :examen_fisico , :class => "form-control", :size => "50x3" %>
  
 <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>
@@ -60,7 +81,7 @@
 
 <div class="col-md-6 div-form-atencion">
 
-  <%= f.label :"Diagnóstico:" %>
+  <%= f.label :"Diagnóstico" %>
   <input type='hidden'id="select_diagnostico"></input>
   <div class="checkbox">
     <label for="diag-no-frec">
@@ -79,7 +100,8 @@
     <% end %>      
   </div>
 	
-	<%= f.label :"Exámenes:" %>
+	<%= f.label :"Exámenes" %>
+
   <input type='hidden'id="select_examen"></input>
   <div class="list-group" name="examen-div" id="examen-div">  
     <% @persona_examen.each do |p_e| %>
@@ -92,7 +114,7 @@
     <% end %>      
   </div>
 
-  <%= f.label :"Procedimientos/Cirugías:" %>
+  <%= f.label :"Procedimientos/Cirugías" %>
   <input type='hidden'id="select_procedimiento"></input>
   <div class="list-group" name="procedimiento-div" id="procedimiento-div">  
     <% @persona_procedimiento.each do |p_p| %>
@@ -105,7 +127,7 @@
     <% end %>      
   </div> 
 
-  <%= f.label :"Medicamentos:" %>
+  <%= f.label :"Medicamentos" %>
   <input type='hidden'id="select_medicamento"></input>
   <div class="list-group" name="medicamento-div" id="medicamento-div">  
     <% @persona_medicamento.each do |p_m| %>
@@ -118,14 +140,11 @@
     <% end %>      
   </div>
 
-  <%= f.label :"Indicaciones:"  %><span id="auto-indicaciones" class="label label-success">Autoguardado</span>
+  <%= f.label :"Indicaciones"  %><span id="auto-indicaciones" class="alert alert-info">Autoguardado</span>
   <%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
 
   <a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Emitir certificado</a>
   <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id} %><br>
-  <a id="modal-" href="#modal-container-interconsultas" role="button" class="btn" data-toggle="modal">Generar interconsulta</a>
-  <%= render :partial => "interconsultas", :locals => {:id => @atencion_salud.id} %><br>
-
 
 
 </div>
@@ -137,10 +156,7 @@
 
     <%= f.submit :"Finalizar atención", :id => "finalizar", :name =>"finalizar", :class=>"btn btn-info" %>
     <%= f.submit :"Guardar atención", :id => "guardar", :class=>"btn btn-success" %>
-     <!--
-    <button id="finalizar" class="btn btn-info" >Finalizar atención</button>
-    <button id="guardar" class="btn btn-success" >Guardar atención</button>-->
-    
+        
   </div>
 </div>  
 

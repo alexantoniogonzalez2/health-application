@@ -7,6 +7,7 @@ class CreateFiPersonaDiagnosticos < ActiveRecord::Migration
       t.references :diagnostico 	#diagnostico_id
       t.references :estado_diagnostico 	#estado_diagnostico_id
       t.references :gesta 	#gesta_id
+      t.boolean :es_cronica 
 
       t.timestamps
     end

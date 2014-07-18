@@ -4,6 +4,7 @@ class CreatePerPersonas < ActiveRecord::Migration
     	
     	t.references :user #user_id	
       t.integer :rut
+      t.string :digito_verificador , :limit => 1
       t.string :nombre
       t.string :apellido_paterno
       t.string :apellido_materno

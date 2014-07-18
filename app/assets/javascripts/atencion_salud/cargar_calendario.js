@@ -1,21 +1,24 @@
+$(".datepicker").attr( 'readOnly' , 'true' );
+$(".datepicker-disabled" ).attr( 'readOnly' , 'true' );
 
-  $(function() {
-      $( ".datepicker" ).datepicker({
+
+      $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
         showOtherMonths: true,
         electOtherMonths: true,
         changeMonth: true,
         changeYear: true,
         dateFormat: 'yy-mm-dd',
         dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+        showButtonPanel: true,        
       });
       $( ".datepicker-disabled" ).datepicker({
         disabled: true,
         dateFormat: 'yy-mm-dd',
         dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
       });
-  });
+  
 
-  $(function($){
+  
       $.datepicker.regional['es'] = {
           closeText: 'Cerrar',
           prevText: 'Anterior',
@@ -33,4 +36,4 @@
           yearSuffix: ''
       };
       $.datepicker.setDefaults($.datepicker.regional['es']);
-  });
+
