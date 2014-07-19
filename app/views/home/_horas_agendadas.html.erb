@@ -29,9 +29,9 @@
              
           <td>
             <% if agendamiento.agendamiento_estado_id == 7 %> 
-              <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-info">Atención finalizada</button> 
+              <%= button_to "Reabrir atención", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => getIdAtencion(agendamiento.id), :id_agen => agendamiento.id}, :method => :post,class: "btn btn-xs btn-info" %>
             <% elsif existeAtencion(agendamiento.id) %>
-              <%= button_to "Continuar atención", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => getIdAtencion(agendamiento.id) }, :method => :post,class: "btn btn-xs btn-primary" %>
+              <%= button_to "Continuar atención", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => getIdAtencion(agendamiento.id) }, :method => :post,class: "btn btn-xs btn-success" %>
             <% elsif agendamiento.persona_id %>    
               <%= button_to "Atender paciente", {:controller => :atenciones_salud,
               :action => 'crearAtencion', :id => agendamiento.id }, :method => :post,class: "btn btn-xs btn-success" %>

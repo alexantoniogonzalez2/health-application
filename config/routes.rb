@@ -17,6 +17,7 @@ AplicacionMedica::Application.routes.draw do
   post '/eliminar_prestacion', to: 'persona_prestacion#eliminarPrestacion', :as => :eliminarPrestacion
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
+  post '/reabrir_atencion', to: 'atenciones_salud#reabrirAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
   post '/cargar_diagnosticos', to: 'persona_diagnostico#cargarDiagnosticos'
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
@@ -40,6 +41,7 @@ AplicacionMedica::Application.routes.draw do
   post '/cargarTodos', to: 'agendamiento#cargarTodos', :as => :agendamientoCargarTodos
   post '/filtrar_profesionales', to: 'agendamiento#filtrarProfesionales', :as => :filtrarProfesionales
   post '/buscar_horas', to: 'agendamiento#buscarHoras', :as => :buscarHoras
+  post '/buscar_horas_profesional', to: 'agendamiento#buscarHorasProfesional'
   post '/aux/formNuevaHora', to: 'agendamiento#agregarNuevaHora', :as => :agregarHora
   post '/aux/mostrarEventos', to: 'agendamiento#mostrarEventos', :as => :showEventos
   post '/aux/detalleEvento', to: 'agendamiento#detalleEvento', :as => :detalleEvento

@@ -121,7 +121,7 @@ class AgAgendamientos < ActiveRecord::Base
   end
 
   def dateTimeFormat(dt,val)
-    if val=='extendido'
+    if val=='extendido' and dt
       dt.strftime('%H:%M del %d') + " de " + month(dt.strftime('%m').to_i) + " de " + dt.strftime('%Y')
     end
   end
@@ -161,10 +161,10 @@ class AgAgendamientos < ActiveRecord::Base
     if perm_admin_bloquea or perm_profesional
       reabrir = "<button class='btn btn-primary desbloquear-hora'>Desbloquear Hora</button>"
     end  
-    if perm_admin_bloquea and estado == 'Hora disponible'
+    if (perm_admin_bloquea or perm_profesional) and (estado == 'Hora disponible')
       bloquear =  "<button class='btn btn-primary bloquear-hora'>Bloquear hora</button>"
     end  
-    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe
+    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional
        tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
     end   
     if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
@@ -181,15 +181,15 @@ class AgAgendamientos < ActiveRecord::Base
     if perm_admin_confirma or perm_paciente  
       cancelar<<"<button class='btn btn-primary cancelar-hora'>Cancelar hora</button>" 
     end
-    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente
+    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional
       if estado == 'Paciente en espera' or estado == 'Paciente atendido'            
         hora_llegada = "<tr><td><h5>Fecha y hora de llegada paciente</h5></td><td>:  #{dateTimeFormat(fecha_llegada_paciente,'extendido')}</td></tr>"
       end         
     end
-    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
+    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional 
       if estado == 'Paciente atendido'         
         hora_inicio_atencion = "<tr><td><h5>Fecha y hora de inicio atención</h5></td><td>: #{dateTimeFormat(fecha_comienzo_real,'extendido')}</td></tr>"
-        hora_termino_atencio = "<tr><td><h5>Fecha y hora de término atención</h5></td><td>: #{dateTimeFormat(fecha_final_real,'extendido')}</td></tr>" 
+        hora_termino_atencion = "<tr><td><h5>Fecha y hora de término atención</h5></td><td>: #{dateTimeFormat(fecha_final_real,'extendido')}</td></tr>" 
       end  
     end      
       
@@ -205,7 +205,9 @@ class AgAgendamientos < ActiveRecord::Base
       when 'Paciente en espera'  
         detalle<<paciente<<hora_llegada<<'</table></div><div class="modal-footer">'
       when 'Paciente atendido'  
-        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table></div><div class="modal-footer">'                           
+        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table></div><div class="modal-footer">' 
+       when 'Paciente siendo atendido'  
+        detalle<<'</table></div><div class="modal-footer">'                                 
     end                
 
     detalle<<'<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button></div>'           

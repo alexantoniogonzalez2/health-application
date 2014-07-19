@@ -35,6 +35,8 @@ class AtencionesSaludController < ApplicationController
 		#validar que tenga acceso a esta atención		
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
+
 	  @persona_diagnostico = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
 	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
@@ -47,16 +49,22 @@ class AtencionesSaludController < ApplicationController
 	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
 	  
 	  @persona_diagnostico_anteriores = FiPersonaDiagnosticos
-	  	.joins(:persona_diagnosticos_atencion_salud)
-	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
-	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
-	  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+	  	.joins('JOIN fi_persona_diagnosticos_atenciones_salud as fpdas ON 
+			 				fi_persona_diagnosticos.id = fpdas.persona_diagnostico_id
+			 				JOIN fi_atenciones_salud
+			 				ON fpdas.atencion_salud_id = fi_atenciones_salud.id
+			 				JOIN ag_agendamientos 
+			 				ON fi_atenciones_salud.agendamiento_id = ag_agendamientos.id ')
+	  	.select("fpdas.id,
+	  					fpdas.fecha_inicio,
+	  					fpdas.fecha_termino,
 	  					fi_persona_diagnosticos.diagnostico_id,
-	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
-	  					fi_persona_diagnosticos_atenciones_salud.comentario,
-	  					fi_persona_diagnosticos_atenciones_salud.es_cronica")
-	  	.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.atencion_salud_id != ? 
-	  					AND fi_persona_diagnosticos_atenciones_salud.es_cronica = 0', @atencion_salud.persona.id,params[:id])
+	  					fpdas.estado_diagnostico_id,
+	  					fpdas.comentario,
+	  					fpdas.es_cronica")
+	  	.where('fi_persona_diagnosticos.persona_id = ? AND fpdas.atencion_salud_id != ? 
+	  					AND fpdas.es_cronica = 0 AND ag_agendamientos.fecha_comienzo_real < ?',
+	  					 @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
 
 	  @antecedentes = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
@@ -100,6 +108,7 @@ class AtencionesSaludController < ApplicationController
 
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
 		@agendamiento.agendamiento_estado = @estadoAgendamiento
+		@agendamiento.fecha_comienzo_real = DateTime.current
 		@agendamiento.save
 
 	 	redirect_to :action => "edit", :id => @atencion_salud.id
@@ -110,6 +119,14 @@ class AtencionesSaludController < ApplicationController
 
   	redirect_to :action => "edit", :id =>params[:id]
 	
+	end
+
+	def reabrirAtencion	
+		@agendamiento =  AgAgendamientos.find(params[:id_agen])
+		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
+		@agendamiento.agendamiento_estado = @estadoAgendamiento
+		@agendamiento.save	
+  	redirect_to :action => "edit", :id =>params[:id_atencion]	
 	end
 		
 	def guardarTexto
@@ -137,6 +154,7 @@ class AtencionesSaludController < ApplicationController
 			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
 			@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
 			@agendamiento.agendamiento_estado = @estadoAgendamiento
+			@agendamiento.fecha_final_real = DateTime.current
 			@agendamiento.save
 		end
 

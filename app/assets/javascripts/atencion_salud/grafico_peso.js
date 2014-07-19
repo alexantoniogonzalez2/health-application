@@ -1,22 +1,24 @@
-$(document).ready(function() {   
+$(function() {
 
-  $.ajax({
-    type: 'POST',
-    url: '/cargar_datos_peso',
-    data: {
-      persona_id: $('#persona_id').val() ,
-    },
-    success: function(response) {   
-      cargarGraficoPeso(response.datos,response.texto);
-    },
-    error: function(xhr, status, error){ alert("No se pudo cargar los datos de peso del paciente.");   }
-  });
+    $('#tabpanel-peso').bind('click', function (e) {
 
-  
+        $.ajax({
+          type: 'POST',
+          url: '/cargar_datos_peso',
+          data: {
+            persona_id: $('#persona_id').val() ,
+          },
+          success: function(response) {   
+            cargarGraficoPeso(response.datos,response.texto);
+          },
+          error: function(xhr, status, error){ alert("No se pudo cargar los datos de peso del paciente.");   }
+      });
+      
+    });
 });
 
 function cargarGraficoPeso (data,text){
-
+ 
   $('#grafico_peso').highcharts({
       title: {
           text: 'Peso Histórico',
@@ -54,6 +56,12 @@ function cargarGraficoPeso (data,text){
       }]
   });
 
+
+
 }
     
+
+  
+
+
 

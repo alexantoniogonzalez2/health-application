@@ -8,7 +8,7 @@ class AgAgendamientoEstados < ActiveRecord::Base
     params.require(:list).permit(:id, :nombre,:agendamientos,:agendamiento_log_estados)
   end
  	
- 	  def month(val)
+ 	def month(val)
     if val==1
       "Enero"
     elsif val==2

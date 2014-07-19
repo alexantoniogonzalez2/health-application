@@ -45,6 +45,22 @@ class AgendamientoController < ApplicationController
 		
 	end
 
+	def buscarHorasProfesional
+		
+		events=[]
+
+		@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ?",current_user.id)
+		
+		@Fechas.each do |f|
+			events << f.event				
+		end
+
+		respond_to do |f|
+			f.json {render json:events}
+		end	
+		
+	end
+
 	def showFormBusqueda
 
 		if tieneRol('Generar agendamientos') 

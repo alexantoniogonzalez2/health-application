@@ -1,4 +1,17 @@
-$(document).ready(function() {
+if ( $( "#profesional" ).length ){
+	  
+	$.ajax({
+    type: 'POST',
+    url: '/buscar_horas_profesional',
+    data: {  },
+    success: function(response) {
+    	  $('#buscadorHora').fullCalendar('addEventSource',response);
+    },
+    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+  });
+}
+
+$(document).ready(function() {	
 
 	$(".chosen-select").chosen({
     no_results_text: 'No hubo coincidencias.',
@@ -107,6 +120,73 @@ $('#buscadorHora').fullCalendar({
 					error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
 				});	 				
  			});
+
+			// Si existe el botón "bloquear-hora", le pondrá la siguiente acción al hacer click
+			$('#modal-content .modal-footer .bloquear-hora').click(function(){
+
+				$.ajax({
+					type: 'POST',
+					url: '/bloquear_hora',
+					data: {	agendamiento_id: calEvent.id},
+					success: function(response) {
+
+						id=calEvent.id
+						$('#buscadorHora').fullCalendar('removeEvents',id)
+
+						if ( response=="1"){ $('#modal-container').modal('hide') }
+						else{	alert("No se pudo bloquear la hora")	}
+
+						// Re-cargamos el evento modificado
+						$.ajax({
+							type: 'POST',
+							url: '/aux/mostrarEventos',
+							data: {
+								evento_id: id,
+								especialidad_id: especialidad_id,
+								profesional_id: profesional_id,
+								prestador_id: prestador_id,
+							},
+							success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+							error: function(xhr, status, error){	alert("Hubo un problema al bloquear la hora de atención.");	}
+						});
+					},
+					error: function(xhr, status, error){ alert("No se pudo bloquear la hora de atención."); }
+				});	 				
+ 			});
+
+ 			// Si existe el botón "bloquear-hora", le pondrá la siguiente acción al hacer click
+			$('#modal-content .modal-footer .desbloquear-hora').click(function(){
+
+				$.ajax({
+					type: 'POST',
+					url: '/desbloquear_hora',
+					data: {	agendamiento_id: calEvent.id},
+					success: function(response) {
+
+						id=calEvent.id
+						$('#buscadorHora').fullCalendar('removeEvents',id)
+
+						if ( response=="1"){ $('#modal-container').modal('hide') }
+						else{	alert("No se pudo desbloquear la hora")	}
+
+						// Re-cargamos el evento modificado
+						$.ajax({
+							type: 'POST',
+							url: '/aux/mostrarEventos',
+							data: {
+								evento_id: id,
+								especialidad_id: especialidad_id,
+								profesional_id: profesional_id,
+								prestador_id: prestador_id,
+							},
+							success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+							error: function(xhr, status, error){	alert("Hubo un problema al desbloquear la hora de atención.");	}
+						});
+					},
+					error: function(xhr, status, error){ alert("No se pudo desbloquear la hora de atención."); }
+				});	 				
+ 			});
+				
 				
 			// Si existe el botón "confirmar-hora", le pondrá la siguiente acción al hacer click
 			$('#modal-content .modal-footer .confirmar-hora').click(function(){
@@ -328,7 +408,7 @@ function actualizarTodosLosCentros(){
 }
 
 
-
+//Este código es para simular el efecto árbol del checkbox
 $(document).ready(
     
 	function() {

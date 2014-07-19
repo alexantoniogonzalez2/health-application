@@ -3,15 +3,13 @@
 
   <% if user_signed_in? %>
   	<h2>Ha ingresado correctamente a la aplicación.</h2>
-  	<%= link_to 'Buscador de horas', agendamientoBuscadorHora_path %><br/>
-
-		<%= link_to 'Atender paciente', new_atenciones_salud_path %><br/>
-		<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
-		<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>
 
   	<% if tieneRol('Generar agendamientos') %>
 			<%= link_to 'Agregar horas', agendaShowFormBusqueda_path %><br/>
+			<%= link_to 'Buscador de horas', agendamientoBuscadorHora_path %><br/>
 		<% elsif esProfesionalSalud %>
+		<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
+		<%= link_to 'Ver agenda', agendamientoBuscadorHora_path %><br/>
 				<div class="row clearfix">
 					<div class="col-md-8 column">
 						<%= render "horas_agendadas" %>
@@ -21,7 +19,7 @@
 					</div>						
 				</div>			
 		<% else %>		
-			<%= link_to 'Reservar hora', agendaShowFormBusqueda_path %><br/>			
+			<%= link_to 'Buscador de horas', agendamientoBuscadorHora_path %><br/>		
 		<% end %>
 
 	<% else %>
@@ -31,6 +29,5 @@
 		<%= link_to "Crear cuenta", new_user_registration_path, :method => :get , class: "btn btn-large btn-primary"%>
 
 	<% end %>
-
 
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>

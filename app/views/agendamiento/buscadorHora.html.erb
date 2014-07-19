@@ -1,10 +1,14 @@
+<% if esProfesionalSalud %>
+<div id="profesional"></div>	
+
+<% else %>
+
 <div class="panel panel-success">
 <div class="panel-heading">
   <h3 class="panel-title">Buscador de horas</h3>
 </div>
 <div class="panel-body">
 <div class="row">
-
 	<div class="col-md-4 div-form-buscar-hora">	
 		<div class="div-centros">
 			<label>Centros médicos</label>
@@ -54,6 +58,8 @@
 </div> <!--Cierre div panel-body -->
 </div> <!--Cierre div panel -->
 
+<% end %>
+
 <div id='buscadorHora'></div>
 
   <div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -62,7 +68,6 @@
       </div>          
     </div>        
   </div> 
-
 
 <%= javascript_include_tag "agendamiento/buscador_hora" %>
 

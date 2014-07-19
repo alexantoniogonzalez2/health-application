@@ -27,4 +27,6 @@
 //= require highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/modules/exporting
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require_tree .
