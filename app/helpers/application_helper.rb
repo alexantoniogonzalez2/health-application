@@ -46,15 +46,6 @@ module ApplicationHelper
 		return @agendamientos
 	end
 
-	def getHorasAgendadas
-		inicio_hoy = Date.today.day;
-
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
-		@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
-		
-		return @agendamientos
-	end
-
 	def getProximosPacientes
 		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
 		@agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id => [1], especialidad_prestador_profesional_id: @especialidad_prestador_profesional })

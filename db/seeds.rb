@@ -331,7 +331,7 @@ ED3.save
 #Métricas
 Metr1=FiMetricas.new
 Metr1.nombre="Estatura"
-Metr1.unidad="metros"
+Metr1.unidad="centimetros"
 Metr1.save
 
 Metr2=FiMetricas.new

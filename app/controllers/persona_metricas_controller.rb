@@ -40,23 +40,41 @@ class PersonaMetricasController < ApplicationController
 	
 	end
 
-	def cargarDatosPeso
+	def cargarDatosMetricas
+
+    case params[:tipo]
+    when 'estatura'
+      metrica_id = 1
+    when 'peso'
+      metrica_id = 2
+    when 'presion'
+      metrica_id = 3
+    when 'IMC'
+      metrica_id = 4      
+    end
 
     @datos = []
     @texto = []
 
-		@datos_peso = FiPersonaMetricas.where("metrica_id = ? AND persona_id = ?",2,params[:persona_id])
-
-		datos2 = [7.0, 6.9]
-    texto2 = ['hola', 'Feb']
+		@datos_peso = FiPersonaMetricas.where("metrica_id = ? AND persona_id = ?",metrica_id,params[:persona_id])
+    @persona = PerPersonas.find (params[:persona_id])
 
     @datos_peso.each do |d_p|
       @datos << d_p.valor
-      @texto << d_p.id
+      @texto << d_p.showFecha
     end 
 
+    metrica = FiMetricas.find(metrica_id)
+
    	respond_to do |format|     
-    	format.json { render json: {:datos => @datos,:texto => @texto} }
+    	format.json { render json: {
+                                    :datos => @datos,
+                                    :texto => @texto,
+                                    :paciente => @persona.showName('%n%p%m'),
+                                    :nombre_metrica => metrica.nombre,
+                                    :unidad => metrica.unidad
+                                  } 
+                  }
     end		
 
 	end

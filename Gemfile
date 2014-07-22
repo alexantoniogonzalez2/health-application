@@ -61,4 +61,11 @@ gem 'chosen-rails'
 gem "r18n-core"
 gem "highcharts-rails", "~> 3.0.0"
 gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
+#gem 'ruby-debug'
+#gem "rack-insight"
 
+#group :development do
+ # gem "better_errors"
+#end
+
+#gem "binding_of_caller"

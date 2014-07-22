@@ -1,0 +1,14 @@
+<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
+<%= link_to 'Ver agenda', agendamientoBuscadorHora_path %><br/><br/>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="horas_agendadas col-md-8 column">
+			<%= render :partial => "horas_agendadas", :locals => {:agendamientos => @agendamientos} %>
+		</div>
+		<div class="ultimos_eventos col-md-4 column">
+			<%= render :partial => "log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %>
+		</div>
+	</div>
+</div>
+

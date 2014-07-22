@@ -10,6 +10,11 @@ class FiPersonaMetricas < ActiveRecord::Base
     }
 
   end 
+
+  def showFecha
+    return fecha.strftime('%d/%M/%Y')
+  end  
+
   private
   def app_params
     params.require(:list).permit(:atencion_salud,:id,:metrica,:persona,:fecha,:valor)

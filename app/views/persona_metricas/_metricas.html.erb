@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-container-metricas" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div id="modal-dialog-metricas" class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -14,7 +14,16 @@
               <a href="#panel-metricas" data-toggle="tab">Ingresar datos</a>
             </li>
             <li>
+              <a id="tabpanel-estatura" href="#panel-estatura" data-toggle="tab">Gráfico estatura</a>
+            </li>
+            <li>
               <a id="tabpanel-peso" href="#panel-peso" data-toggle="tab">Gráfico peso</a>
+            </li>
+            <li>
+              <a id="tabpanel-presion" href="#panel-presion" data-toggle="tab">Gráfico presión</a>
+            </li>
+            <li>
+              <a id="tabpanel-IMC" href="#panel-IMC" data-toggle="tab">Gráfico IMC</a>
             </li>
           </ul>
           <div class="tab-content">
@@ -31,21 +40,28 @@
                   <td><span class="text-med">kilos</span></td>
                 </tr>
                 <tr>
-                  <td><span>IMC</span></td>
-                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>"maxlength="4" size="4" ></td>
-                  <td><span class="text-med">kilos/metros2</span></td>
-                </tr>
-                <tr>
                   <td><span>Presión</span></td>
                   <td><input id="presion-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr %>"maxlength="4" size="4" ></td>
                   <td><span class="text-med">mm HG</span></td>
                 </tr>
+                <tr>
+                  <td><span>IMC</span></td>
+                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>"maxlength="4" size="4" ></td>
+                  <td><span class="text-med">kilos/metros2</span></td>
+                </tr>
               </table>              
             </div>
-            <div class="tab-pane" id="panel-peso">
-              
-               <div id="grafico_peso" style="min-width: 400px; height: 200px; margin: 0 auto"></div>
-              
+            <div class="tab-pane" id="panel-estatura">              
+              <div id="grafico_estatura" style="min-width: 400px; height: 200px; margin: 0 auto"></div>         
+            </div>
+            <div class="tab-pane" id="panel-peso">              
+              <div id="grafico_peso" style="min-width: 400px; height: 200px; margin: 0 auto"></div>            
+            </div>
+            <div class="tab-pane" id="panel-presion">              
+              <div id="grafico_presion" style="min-width: 400px; height: 200px; margin: 0 auto"></div>            
+            </div>
+            <div class="tab-pane" id="panel-IMC">              
+              <div id="grafico_IMC" style="min-width: 400px; height: 200px; margin: 0 auto"></div>            
             </div>
           </div>
         </div>

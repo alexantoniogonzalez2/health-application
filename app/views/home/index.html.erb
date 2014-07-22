@@ -1,33 +1,4 @@
-
-  <h1>Bienvenido a <%= AplicacionMedica::Application.config.site_name %></h1>
-
-  <% if user_signed_in? %>
-  	<h2>Ha ingresado correctamente a la aplicación.</h2>
-
-  	<% if tieneRol('Generar agendamientos') %>
-			<%= link_to 'Agregar horas', agendaShowFormBusqueda_path %><br/>
-			<%= link_to 'Buscador de horas', agendamientoBuscadorHora_path %><br/>
-		<% elsif esProfesionalSalud %>
-		<%= link_to 'Ver atenciones', atenciones_salud_index_path %><br/>
-		<%= link_to 'Ver agenda', agendamientoBuscadorHora_path %><br/>
-				<div class="row clearfix">
-					<div class="col-md-8 column">
-						<%= render "horas_agendadas" %>
-					</div>
-					<div class="col-md-4 column">
-						<%= render "proximos_pacientes" %>
-					</div>						
-				</div>			
-		<% else %>		
-			<%= link_to 'Buscador de horas', agendamientoBuscadorHora_path %><br/>		
-		<% end %>
-
-	<% else %>
-
-		<h1> Ingrese a MedRacer</h1>
-		<%= link_to "Entrar", new_user_session_path, :method => :get ,class: "btn btn-large btn-primary" %>
-		<%= link_to "Crear cuenta", new_user_registration_path, :method => :get , class: "btn btn-large btn-primary"%>
-
-	<% end %>
-
+<h1>Ingrese a <%= AplicacionMedica::Application.config.site_name %></h1>
+<%= link_to "Entrar", new_user_session_path, :method => :get ,class: "btn btn-large btn-primary" %>
+<%= link_to "Crear cuenta", new_user_registration_path, :method => :get , class: "btn btn-large btn-primary"%>
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>

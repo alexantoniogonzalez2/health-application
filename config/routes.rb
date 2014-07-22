@@ -5,7 +5,7 @@ AplicacionMedica::Application.routes.draw do
   get 'about',   to: 'home#about',  as: 'about' 
   get 'dashboard' => 'home#dashboard'
 
-  root :to =>'home#index'
+  #root :to =>'home#index'
 
   #Horas agendadas
   post '/bloquear_hora', to: 'agendamiento#bloquearHora', :as => :bloquearHora
@@ -28,7 +28,7 @@ AplicacionMedica::Application.routes.draw do
   post '/eliminar_medicamento', to: 'persona_medicamento#eliminarMedicamento'
   post '/guardar_medicamento', to: 'persona_medicamento#guardarMedicamento'
   post '/guardar_metricas', to: 'persona_metricas#guardarMetricas'
-  post '/cargar_datos_peso', to: 'persona_metricas#cargarDatosPeso'
+  post '/cargar_datos_metricas', to: 'persona_metricas#cargarDatosMetricas'
   post '/guardar_texto', to: 'atenciones_salud#guardarTexto'
   post '/autoguardar_comentario', to: 'persona_diagnostico#autoguardarComentario'
  
@@ -50,6 +50,11 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/confirmarHora', to: 'agendamiento#confirmarHora', :as => :confirmarHora
   post '/aux/marcarLlegada', to: 'agendamiento#marcarLlegada', :as => :marcarLlegada
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
+
+  #Home
+  root :controller => 'home', :action => :index
+  post '/actualizar_atenciones', to: 'home#actualizarAtenciones'
+  post '/revisar_actualizaciones', to: 'home#revisarActualizaciones'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

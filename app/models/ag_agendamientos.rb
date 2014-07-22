@@ -4,7 +4,7 @@ class AgAgendamientos < ActiveRecord::Base
 	belongs_to :persona, :class_name => 'PerPersonas'
 	belongs_to :agendamiento_estado, :class_name => 'AgAgendamientoEstados'
   has_one :atencion_salud, :class_name => 'FiAtencionesSalud', :foreign_key => 'agendamiento_id'
-  has_many :agendamiento_logs, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'agendamiento_id'
+  has_many :agendamiento_log_estados, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'agendamiento_id'
 
 
   def month(val)
@@ -221,7 +221,7 @@ class AgAgendamientos < ActiveRecord::Base
   def app_params
     params.require(:list).permit( :atencion_medica,
                                   :agendamiento_estado,
-                                  :agendamiento_logs,
+                                  :agendamiento_log_estados,
                                   :fecha_comienzo, 
                                   :fecha_comienzo_real, 
                                   :fecha_final, 

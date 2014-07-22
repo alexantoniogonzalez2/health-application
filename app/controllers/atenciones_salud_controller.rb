@@ -122,7 +122,8 @@ class AtencionesSaludController < ApplicationController
 	end
 
 	def reabrirAtencion	
-		@agendamiento =  AgAgendamientos.find(params[:id_agen])
+		@atencion_salud = FiAtencionesSalud.find(params[:id_atencion])
+	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
 		@agendamiento.agendamiento_estado = @estadoAgendamiento
 		@agendamiento.save	

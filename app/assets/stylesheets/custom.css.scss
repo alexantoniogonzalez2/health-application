@@ -1,6 +1,5 @@
 @import "bootstrap";
 
-
 /* colors */
 
 $lightGray: #999;
@@ -137,4 +136,9 @@ a.btn {
   padding: 0px;
 }
 
-
+div.horas_agendadas {
+  padding: 0px;
+}
+div.ultimos_eventos {
+  padding-right: 0px;
+}
