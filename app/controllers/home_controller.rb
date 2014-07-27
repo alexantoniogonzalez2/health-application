@@ -6,10 +6,22 @@ class HomeController < ApplicationController
 
 		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
 		@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
+		@actualizaciones = AgAgendamientoLogEstados
+			.joins(:agendamiento)
+			.select("ag_agendamiento_log_estados.fecha,
+							 ag_agendamiento_log_estados.agendamiento_estado_id,
+							 ag_agendamiento_log_estados.responsable_id,
+							 ag_agendamientos.persona_id")
+			.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
+				 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
+			.order(fecha: :desc)
+
+		@hora_actual = DateTime.current
+	
 
 		respond_to do |format|     
     	format.js   {}
-    	format.json { render :json => { :success => true, :agendamientos => @agendamientos }	 }
+    	format.json { render :json => { :success => true, :agendamientos => @agendamientos, :actualizaciones => @actualizaciones, :hora_actual => @hora_actual }	 }
     end
 
 
@@ -59,19 +71,21 @@ actualizaciones = AgAgendamientos
 			if tieneRol('Generar agendamientos')
 				render 'index_agendamiento'
 		  elsif esProfesionalSalud 
+		  	@hora_actual = DateTime.current
 				@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
 				@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
-  			@actualizaciones = AgAgendamientos
-					.joins('JOIN ag_agendamiento_log_estados ON 
-										ag_agendamientos.id = ag_agendamiento_log_estados.agendamiento_id')
-					.select("ag_agendamiento_log_estados.responsable_id,
+  			@actualizaciones = AgAgendamientoLogEstados
+					.joins(:agendamiento)
+					.select("ag_agendamiento_log_estados.fecha,
 									 ag_agendamiento_log_estados.agendamiento_estado_id,
-									 ag_agendamiento_log_estados.agendamiento_id,
-									 ag_agendamiento_log_estados.fecha,
+									 ag_agendamiento_log_estados.responsable_id,
 									 ag_agendamientos.persona_id")
-					.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ",
-						 @especialidad_prestador_profesional,Date.today, Date.tomorrow )
-					.order("fecha DESC")
+					.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
+						 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
+					.order(fecha: :desc)
+
+		#render :text => @actualizaciones.inspect
+					#logger.debug "New post: #{@persona_diagnostico_anteriores}"
   			
   			render 'index_profesional'
 

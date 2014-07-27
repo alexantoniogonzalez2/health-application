@@ -5,11 +5,6 @@ belongs_to :agendamiento_estado, :class_name => 'AgAgendamientoEstados'
 belongs_to :agendamiento, :class_name => 'AgAgendamientos'	
 
 
-def getResponsable
-	return :responsable
-end	
-	
-
 private
   def app_params
     params.require(:list).permit( :id,

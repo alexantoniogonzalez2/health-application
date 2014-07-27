@@ -1,27 +1,22 @@
 
 
-$("#actualizar").on("click", function(){
-
-	 actualizar_atenciones();
-
- });
-
 function actualizar_atenciones(){
+  $('a, button').toggleClass('active'); 
 	$.ajax({
 	    type: 'POST',
 	    url: '/actualizar_atenciones',
 	    data: {
 	     
 	    },
-	    success: function(response) {  },
-	    error: function(xhr, status, error){}
+	    success: function(response) { $('a, button').toggleClass('active');},
+	    error: function(xhr, status, error ){}
 	  });
 }
 
 $( document ).ready(function() {
 
   $("#actualizar").on("click", function(){ actualizar_atenciones();	});
-
+/*
   if ($('#horas-agendadas').length){	
 
 		window.setInterval(function(){
@@ -41,6 +36,6 @@ $( document ).ready(function() {
 		  
 		}, 30000);
 
-	}
+	}*/
   
 });

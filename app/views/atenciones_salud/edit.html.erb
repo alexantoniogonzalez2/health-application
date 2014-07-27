@@ -2,6 +2,8 @@
   var persona_id=<%=@agendamiento.persona.id  %>
 	var atencion_salud_id=<%= @atencion_salud.id %>
   var link_loading = '<%= image_tag("loading.gif", alt: "Rails") %>'	
+  var id=<%= @id %>
+
 </script>
 
 <%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"},  method: :put do |f|  %>

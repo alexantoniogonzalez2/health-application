@@ -1,5 +1,7 @@
 class PersonaDiagnosticoController < ApplicationController
 
+
+
 	 def cargarDiagnosticos		
 
 		diag = []

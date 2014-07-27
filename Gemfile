@@ -61,6 +61,9 @@ gem 'chosen-rails'
 gem "r18n-core"
 gem "highcharts-rails", "~> 3.0.0"
 gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
+gem "font-awesome-rails"
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 #gem 'ruby-debug'
 #gem "rack-insight"
 

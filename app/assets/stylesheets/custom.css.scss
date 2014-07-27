@@ -7,11 +7,9 @@ $lightGray: #999;
 /* universal */
 
 .container {
-
   width: 1000px;
   padding-left: 0px;
   padding-right: 0px;
-
 }
 
 html {
@@ -131,7 +129,6 @@ html input[disabled] {
   cursor: not-allowed !important;
 }*/
 
-
 a.btn {
   padding: 0px;
 }
@@ -141,4 +138,68 @@ div.horas_agendadas {
 }
 div.ultimos_eventos {
   padding-right: 0px;
+  padding-left: 5px;
+}
+
+div.panel-home {
+  padding: 0px;
+}
+
+table.table{
+  font-size: 13px;
+}
+
+table.table-log{
+  font-size: 11px;
+}
+
+.table thead>tr>th.vert-align{
+    vertical-align: middle;
+}
+
+span.actualizar{
+  float:right;  
+  font-size: 13px;
+}
+
+#actualizar{    
+  font-size: 14px;
+  /*position: relative;
+  top: -9px;
+  right: -14px;*/
+}
+.spinner {
+  display: inline-block;
+  opacity: 0;
+  width: 0;
+
+  -webkit-transition: opacity 0.25s, width 0.25s;
+  -moz-transition: opacity 0.25s, width 0.25s;
+  -o-transition: opacity 0.25s, width 0.25s;
+  transition: opacity 0.25s, width 0.25s;
+}
+
+.has-spinner.active {
+  cursor:progress;
+}
+
+.has-spinner.active .spinner {
+  opacity: 1;
+  width: auto; /* This doesn't work, just fix for unkown width elements */
+}
+
+.has-spinner.btn-mini.active .spinner {
+    width: 10px;
+}
+
+.has-spinner.btn-small.active .spinner {
+    width: 13px;
+}
+
+.has-spinner.btn.active .spinner {
+    width: 16px;
+}
+
+.has-spinner.btn-large.active .spinner {
+    width: 19px;
 }

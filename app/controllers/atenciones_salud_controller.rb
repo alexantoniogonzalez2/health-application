@@ -1,5 +1,12 @@
 class AtencionesSaludController < ApplicationController
 
+		def download 
+  html = render_to_string(:partial => "persona_diagnostico/prueba") 
+  pdf = WickedPdf.new.pdf_from_string(html) 
+  send_data(pdf, 
+    :filename    => "my_pdf_name.pdf", 
+    :disposition => 'attachment') 
+end	
 	
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
@@ -33,6 +40,7 @@ class AtencionesSaludController < ApplicationController
 	def edit
 
 		#validar que tenga acceso a esta atención		
+		@id = params[:id]
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real

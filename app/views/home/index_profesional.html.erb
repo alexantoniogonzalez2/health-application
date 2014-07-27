@@ -3,6 +3,10 @@
 
 <div class="container">
 	<div class="row clearfix">
+		<button id="actualizar" class="btn btn-success has-spinner">
+  	<span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>
+  	Actualizar atenciones
+		</button>
 		<div class="horas_agendadas col-md-8 column">
 			<%= render :partial => "horas_agendadas", :locals => {:agendamientos => @agendamientos} %>
 		</div>

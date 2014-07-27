@@ -1,3 +1,15 @@
+function imprimir(){
+
+  $.ajax({
+    type: 'POST',
+    url: '/imprimir',
+    data: { id: id  },
+    success: function(response) {  },
+    error: function(xhr, status, error){  }
+  }); 
+
+}
+
 
 $('.modal-diag').on('show.bs.modal', function (e) {
 

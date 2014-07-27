@@ -1,16 +1,18 @@
 <div id="horas-agendadas">
-
 <div class="panel panel-danger">
   <div class="panel-heading">
-    <h3 class="panel-title">Horas agendadas para el día<button id="actualizar" type="button" class="btn btn-xs btn-warning" >Actualizar</button></h3>
-    
+    <h3 class="panel-title">Horas agendadas para el día
+      <span id="texto-actualizar" class="actualizar">Actualizado a las <%= l @hora_actual, format: :hms %></span></h3>    
   </div>
-  <div class="panel-body">
+  <div class="panel-body panel-home">
     <table class="table table-striped table-bordered table-hover table-condensed">
       <thead>
-        <tr><th>Hora de atención</th><th>Paciente</th><th>Estado</th><th>Hora de llegada</th><th>Acción</th></tr>
+        <tr><th class="col-sm-1 vert-align">Hora de atención</th><th class="col-sm-3 vert-align">Paciente</th><th class="col-sm-2 vert-align">Estado</th><th class="col-sm-1 vert-align">Hora de llegada</th><th class="col-sm-2 vert-align">Acción</th></tr>
       </thead>
       <tbody>
+      <% if @agendamientos.empty? %>
+        <tr><td colspan="5" >No hay horas agendadas para hoy.</td></tr>
+      <% end %>
       <% @agendamientos.each do |agendamiento| %>
         <tr>
           <td><%= agendamiento.fecha_comienzo.to_s(:time) %></td> 
@@ -50,9 +52,9 @@
     </table>
    
   </div>
-  <div class="panel-footer">
+  <!--<div class="panel-footer">
 <%= l Time.now, format: :long %>
-</div>
+</div>-->
 </div>
 
 
