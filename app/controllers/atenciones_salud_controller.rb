@@ -1,13 +1,5 @@
 class AtencionesSaludController < ApplicationController
 
-		def download 
-  html = render_to_string(:partial => "persona_diagnostico/prueba") 
-  pdf = WickedPdf.new.pdf_from_string(html) 
-  send_data(pdf, 
-    :filename    => "my_pdf_name.pdf", 
-    :disposition => 'attachment') 
-end	
-	
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
 	end

@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+#require 'wicked_pdf'
+
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -30,5 +32,8 @@ module AplicacionMedica
     #Nombre del sitio
     config.site_name = "MedRace"
 
+    #config.middleware.use WickedPdf::Middleware 
+
   end
 end
+

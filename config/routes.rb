@@ -31,7 +31,7 @@ AplicacionMedica::Application.routes.draw do
   post '/cargar_datos_metricas', to: 'persona_metricas#cargarDatosMetricas'
   post '/guardar_texto', to: 'atenciones_salud#guardarTexto'
   post '/autoguardar_comentario', to: 'persona_diagnostico#autoguardarComentario'
-  post '/imprimir', to: 'atenciones_salud#download'
+  post '/descargar_constancia_ges', to: 'persona_diagnostico#descargarConstanciaGes'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

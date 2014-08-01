@@ -1,7 +1,5 @@
 class PersonaDiagnosticoController < ApplicationController
 
-
-
 	 def cargarDiagnosticos		
 
 		diag = []
@@ -131,6 +129,33 @@ class PersonaDiagnosticoController < ApplicationController
 
 	end
 
+	def descargarConstanciaGes 
 
+		p_d = FiPersonaDiagnosticos
+  	.joins(:persona_diagnosticos_atencion_salud)
+  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+  					fi_persona_diagnosticos.diagnostico_id,
+  					fi_persona_diagnosticos.persona_id,
+  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+  					fi_persona_diagnosticos_atenciones_salud.comentario,
+  					fi_persona_diagnosticos_atenciones_salud.es_cronica")
+  	.where('fi_persona_diagnosticos_atenciones_salud.id' => params[:id]).first
+
+	  @estados_diagnostico = MedDiagnosticoEstados.all
+
+	  nombre = l DateTime.current, format: :timestamp
+	  nombre.to_s << ' ' << params[:id] << ' ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+
+		respond_to do |format|
+			format.pdf do
+          render :pdf => nombre,
+                 :template => "persona_diagnostico/constancia_ges.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} ,
+                 :disposition => 'attachment'                 
+ 					 end               
+		end
+
+	end	
 
 end

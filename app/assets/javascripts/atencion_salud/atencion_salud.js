@@ -1,10 +1,10 @@
-function imprimir(){
+function imprimir(id){
 
   $.ajax({
     type: 'POST',
     url: '/imprimir',
     data: { id: id  },
-    success: function(response) {  },
+    success: function(response) { },
     error: function(xhr, status, error){  }
   }); 
 

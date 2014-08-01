@@ -84,13 +84,15 @@
             <div class="tab-pane" id="panel-interconsulta-<%= p_d.id %>">              
             </div>
             <% if p_d.diagnostico.auge %>
-              <div class="tab-pane" id="panel-constancia-ges-<%= p_d.id %>">                
-              <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post %>
-              <%= render :partial => "persona_diagnostico/constancia_ges", :locals => {:p_d => p_d} %>          
+              <div class="tab-pane" id="panel-constancia-ges-<%= p_d.id %>">
+              <%= link_to 'Imprimir constancia GES', agendaShowFormBusqueda_path %>              
               </div>
             <% end %>
             <div class="tab-pane" id="panel-notificacion-obligatoria-<%= p_d.id %>">
+              <p>hola</p> 
+              <button type="button" onclick="imprimir()">Imprimir</button>             
             </div>
+
           </div>
         </div>            
  
