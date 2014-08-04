@@ -6,10 +6,17 @@ $lightGray: #999;
 
 /* universal */
 
-.container {
-  width: 1000px;
+.container { 
   padding-left: 0px;
   padding-right: 0px;
+  width: 1000px;
+}
+
+.ajustado {
+  width: 100% !important;
+  .column { 
+    padding-left: 0px;
+  }
 }
 
 html {
@@ -92,9 +99,10 @@ footer {
   }
 }
 
+/*
 .panel-body{
   padding : 0px 0px 10px 0px;
-}
+}*/
 
 .table{
   margin-bottom: 0px;  
@@ -189,17 +197,25 @@ span.actualizar{
 }
 
 .has-spinner.btn-mini.active .spinner {
-    width: 10px;
+  width: 10px;
 }
 
 .has-spinner.btn-small.active .spinner {
-    width: 13px;
+  width: 13px;
 }
 
 .has-spinner.btn.active .spinner {
-    width: 16px;
+  width: 16px;
 }
 
 .has-spinner.btn-large.active .spinner {
-    width: 19px;
+  width: 19px;
+}
+
+.modal-dialog {
+  width: 800px !important;
+}
+
+.row-ajustado {
+  margin-left: 20px;
 }

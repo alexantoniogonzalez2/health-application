@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526031159) do
+ActiveRecord::Schema.define(version: 20140803074951) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.text     "nombre"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20140526031159) do
     t.integer  "diagnostico_id"
     t.integer  "estado_diagnostico_id"
     t.integer  "gesta_id"
+    t.boolean  "es_cronica"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -266,6 +267,37 @@ ActiveRecord::Schema.define(version: 20140526031159) do
     t.datetime "updated_at"
   end
 
+  create_table "per_personas_direcciones", force: true do |t|
+    t.integer  "persona_id"
+    t.integer  "direccion_id"
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_termino"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "per_personas_previsiones_salud", force: true do |t|
+    t.integer  "persona_id"
+    t.integer  "prevision_salud_id"
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_termino"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "per_personas_telefonos", force: true do |t|
+    t.integer  "persona_id"
+    t.integer  "telefono_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "per_previsiones_salud", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pre_prestador_administrativos", force: true do |t|
     t.integer  "prestador_id"
     t.integer  "rol_administrativo_id"
@@ -285,6 +317,20 @@ ActiveRecord::Schema.define(version: 20140526031159) do
   create_table "pre_prestadores", force: true do |t|
     t.integer  "rut"
     t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pre_prestadores_direcciones", force: true do |t|
+    t.integer  "prestador_id"
+    t.integer  "direccion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pre_prestadores_telefonos", force: true do |t|
+    t.integer  "prestador_id"
+    t.integer  "telefono_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -312,6 +358,55 @@ ActiveRecord::Schema.define(version: 20140526031159) do
     t.integer  "profesional_id"
     t.integer  "especialidad_id"
     t.integer  "institucion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_ciudades", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_comunas", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_direcciones", force: true do |t|
+    t.text     "calle"
+    t.integer  "numero"
+    t.integer  "departamento"
+    t.integer  "comuna_id"
+    t.integer  "ciudad_id"
+    t.integer  "pais_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_paises", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_regiones", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_regiones_comunas", force: true do |t|
+    t.integer  "region_id"
+    t.integer  "comuna_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_telefonos", force: true do |t|
+    t.integer  "codigo"
+    t.integer  "numero"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

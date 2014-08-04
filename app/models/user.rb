@@ -6,7 +6,10 @@ class User < ActiveRecord::Base
 
   has_one :persona, :class_name => 'PerPersonas'
   
-  #attr_accessible :email, :password, :password_confirmation; :persona         
+  #attr_accessible :email, :password, :password_confirmation; :persona     
+ 	  def app_params
+    params.require(:user).permit(:email)
+  end
   
          
 end

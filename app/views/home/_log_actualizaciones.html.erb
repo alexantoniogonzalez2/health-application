@@ -11,23 +11,24 @@
       </thead>
       <tbody>
         <% if @actualizaciones %>
-        <% if @actualizaciones[0] == nil %>
-        <tr><td colspan="4" >No hay actualizaciones que mostrar.</td></tr>
-        <% end %>
-        <% end %>
-        <% @actualizaciones.each do |actualizacion| %>
-          <tr>
-            <td>  <%= PerPersonas.find(actualizacion.persona_id).showName('%n%p%m') %>    </td>
-            <td><% if actualizacion.fecha %>
-                  <%= actualizacion.fecha.to_s(:time) %>
-                <% else %>
-                  No agendada.
-                <% end %>
-            </td>          
-            <td><%= actualizacion.agendamiento_estado.nombre %></td> 
-            <td><%= actualizacion.responsable.showName('%n%p%m') %> </td> 
-          </tr>
-        <% end %>  
+          <% if @actualizaciones[0] == nil %>
+            <tr><td colspan="4" >No hay actualizaciones que mostrar.</td></tr>
+          <% end %>
+        <% else %>
+          <% @actualizaciones.each do |actualizacion| %>
+            <tr>
+              <td>  <%= PerPersonas.find(actualizacion.persona_id).showName('%n%p%m') %>    </td>
+              <td><% if actualizacion.fecha %>
+                    <%= actualizacion.fecha.to_s(:time) %>
+                  <% else %>
+                    No agendada.
+                  <% end %>
+              </td>          
+              <td><%= actualizacion.agendamiento_estado.nombre %></td> 
+              <td><%= actualizacion.responsable.showName('%n%p%m') %> </td> 
+            </tr>
+          <% end %>
+        <% end %>      
       </tbody>
     </table>
    

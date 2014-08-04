@@ -26,16 +26,13 @@
 
           <div class="tab-content">
             <div class="tab-pane active" id="panel-diagnostico-<%= p_d.id %>">
-              <div class="container container-corregido">                
+              <div class="container ajustado">                
                 <div class="row clearfix">
 
                   <div class="form-group">
                     <div class="col-md-4">
                       <div class="checkbox" id="enf_cro_<%= p_d.id %>">
-                        <label for="checkboxes-<%= p_d.id %>">
-                          <input type="checkbox" name="checkboxes" id="checkboxes-<%= p_d.id %>" value="1" <% if p_d.es_cronica %> checked="checked" <% end %>>
-                          Enfermedad crónica
-                        </label>
+                        <label class="enf_cro" for="checkboxes-<%= p_d.id %>">Enfermerdad crónica<input class="enf_cro" type="checkbox" name="checkboxes" id="checkboxes-<%= p_d.id %>" value="1" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
                       </div>                
                     </div>
                   </div>
@@ -65,40 +62,54 @@
                       <div>
                         <% @estados_diagnostico.each do |e_d| %>  
                           <div class="radio">
-                            <label for="radios-<%= p_d.id%>-<%= e_d.id %>">
-                              <input type="radio" name="radios-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> >
-                              <%= e_d.nombre %>
-                            </label>
+                            <label for="radios-<%= p_d.id%>-<%= e_d.id %>"><input type="radio" name="radios-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
                           </div> 
                         <% end %>  
                       </div>
                     </div>
                     <label>Comentario</label><span id="comentario-<%= p_d.id %>" class="alert alert-info comentario">Autoguardado</span>
-                    <textarea class="form-control comentario" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>        
+                    <textarea class="form-control comentario" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
                   </div>                  
                 </div>
-
+                <div class="row clearfix footer">
+                  <div class="col-md-12 column">
+                    <button type="button" onclick="cerrarDiagnostico(<%= p_d.id%>)" class="btn btn-default" >Cancelar</button>
+                    <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
+                    <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger" id="bc<%= p_d.id%>" >Eliminar diagnóstico</button> 
+                  </div>                  
+                </div>
               </div> <!--Cierre container -->
             </div> <!--Cierre panel diagnostico -->
 
             <div class="tab-pane" id="panel-interconsulta-<%= p_d.id %>">              
             </div>
+
             <% if p_d.diagnostico.auge %>
-              <div class="tab-pane" id="panel-constancia-ges-<%= p_d.id %>">                
-              <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post %>
-              <%= render :partial => "persona_diagnostico/constancia_ges", :locals => {:p_d => p_d} %>          
-              </div>
+              <div class="tab-pane" id="panel-constancia-ges-<%= p_d.id %>">
+                <div class="container ajustado">  
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">              
+                      <%= render :partial => "persona_diagnostico/constancia_ges", :locals => {:p_d => p_d, :@agendamiento => @agendamiento} %>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">              
+                      <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
+                    </div>
+                  </div>
+                
+                </div> <!--Cierre container -->
+              </div> <!--Cierre panel constancia -->
             <% end %>
+
             <div class="tab-pane" id="panel-notificacion-obligatoria-<%= p_d.id %>">
             </div>
           </div>
-        </div>            
- 
+        </div> 
+
+
       </div>
       <div class="modal-footer">
-         <button type="button" onclick="cerrarDiagnostico(<%= p_d.id%>)" class="btn btn-default" >Cancelar</button>
-         <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
-         <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger" id="bc<%= p_d.id%>" >Eliminar diagnóstico</button>
       </div>
     </div>            
   </div>        

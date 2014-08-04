@@ -6,6 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+puts 'Direcciones'
+TraPaises.create! :nombre => "Chile"
+TraRegiones.create! :nombre => "Región Metropolitana"
+TraCiudades.create! :nombre => "Santiago"
+TraComunas.create! :nombre => "San Miguel"
+TraRegionesComunas.create! :region_id => 1, :comuna_id => 1
+TraTelefonos.create! :codigo => 2, :numero => 22222222 
+TraTelefonos.create! :codigo => 9, :numero => 22222222 
+TraDirecciones.create! :calle => "Calle", :numero => 1111, :comuna_id => 1, :ciudad_id => 1, :pais_id => 1
+TraDirecciones.create! :calle => "Calle2", :numero => 3333, :comuna_id => 1, :ciudad_id => 1, :pais_id => 1
+
 #Users
 puts 'Users'
 U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
@@ -121,6 +132,49 @@ B.genero="Femenino"
 B.user = U9
 B.save
 
+puts 'Personas-telefono'
+PerPersonasTelefonos.create! :persona_id => 1, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 1, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 2, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 2, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 3, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 3, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 4, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 4, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 5, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 5, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 6, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 6, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 7, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 7, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 8, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 8, :telefono_id => 2
+PerPersonasTelefonos.create! :persona_id => 9, :telefono_id => 1
+PerPersonasTelefonos.create! :persona_id => 9, :telefono_id => 2
+
+puts 'Personas-direcciones'
+PerPersonasDirecciones.create! :persona_id => 1, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 2, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 3, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 4, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 5, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 6, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 7, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 8, :direccion_id => 1
+PerPersonasDirecciones.create! :persona_id => 9, :direccion_id => 1
+
+puts 'Previsiones de Salud'
+PerPrevisionesSalud.create! :nombre => 'Fonasa'
+PerPrevisionesSalud.create! :nombre => 'Isapre 1'
+PerPrevisionesSalud.create! :nombre => 'Isapre 2'
+
+puts 'Personas - Previsiones de Salud'
+PerPersonasPrevisionesSalud.create! :persona_id => 1, :prevision_salud_id => 1, :fecha_inicio => '2013-01-01', :fecha_termino => '2013-12-31'
+PerPersonasPrevisionesSalud.create! :persona_id => 1, :prevision_salud_id => 2, :fecha_inicio => '2014-01-01'
+PerPersonasPrevisionesSalud.create! :persona_id => 2, :prevision_salud_id => 2
+PerPersonasPrevisionesSalud.create! :persona_id => 3, :prevision_salud_id => 3
+
+
 #Prestador (Clinica)
 puts 'Prestador 1'
 C1=PrePrestadores.new
@@ -133,6 +187,14 @@ C2=PrePrestadores.new
 C2.nombre= "Centro Médico 2"
 C2.rut=109000001
 C2.save
+
+puts 'Prestador - Direcciones '
+PrePrestadoresDirecciones.create! :prestador_id => 1, :direccion_id => 2
+PrePrestadoresDirecciones.create! :prestador_id => 2, :direccion_id => 2
+
+puts 'Prestador - Telefonos '
+PrePrestadoresTelefonos.create! :prestador_id => 1, :telefono_id => 1
+PrePrestadoresTelefonos.create! :prestador_id => 2, :telefono_id => 2
 
 #Rol Administrativo
 puts 'Rol Administrativo'
@@ -413,6 +475,8 @@ C2 = MedComponentes.create! :id => 2, :nombre => 'Componente 2'
 puts 'Medicamentos Componente'
 C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
 C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
+
+
 
 puts 'Fin Seed'
 

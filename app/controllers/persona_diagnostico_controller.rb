@@ -22,7 +22,10 @@ class PersonaDiagnosticoController < ApplicationController
 				
 	end
 
-	def agregarDiagnostico		
+	def agregarDiagnostico
+
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)		
 
 		persona_diagnostico_atencion_actual = FiPersonaDiagnosticos
 																						.joins(:persona_diagnosticos_atencion_salud)

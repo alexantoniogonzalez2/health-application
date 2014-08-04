@@ -14,7 +14,11 @@ class PerPersonas < ActiveRecord::Base
   has_many :persona_medicamentos, :class_name => 'FiPersonaMedicamentos', :foreign_key => 'persona_id'
   has_many :atenciones_medicas, :class_name => 'FiAtencionesMedicas', :foreign_key => 'persona_id'
   has_many :persona_metricas, :class_name => 'FiPersonaMetricas', :foreign_key => 'persona_id'
+  has_many :personas_direcciones, :class_name => 'PerPersonasDirecciones', :foreign_key => 'persona_id'
+  has_many :personas_previsiones_salud, :class_name => 'PerPersonasPrevisionesSalud', :foreign_key => 'persona_id'
+  has_many :personas_telefonos, :class_name => 'PerPersonasTelefonos', :foreign_key => 'persona_id'
   belongs_to :user, :class_name => 'User'
+
 
   def esProfesional(prestador_id)
     #Tomará sentido siempre que no exista un "deleted"
@@ -64,6 +68,26 @@ class PerPersonas < ActiveRecord::Base
 
   def showRut
     return number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador 
+  end 
+
+  def getPrevision
+    prevision = personas_previsiones_salud.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
+    return prevision
+  end  
+
+  def getDomicilio
+    domicilio = personas_direcciones.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
+    return domicilio.direccion.calle << ' ' << domicilio.direccion.numero.to_s << ', ' << domicilio.direccion.comuna.nombre << ', '<< domicilio.direccion.ciudad.nombre
+  end 
+
+  def getTelefonoFijo
+    telefono_fijo = personas_telefonos.joins(:telefono).select('tra_telefonos.codigo, tra_telefonos.numero').where('tra_telefonos.codigo != 9').first
+    return telefono_fijo.codigo.to_s << ' ' << telefono_fijo.numero.to_s
+  end 
+
+  def getCelular
+    celular = personas_telefonos.joins(:telefono).select('tra_telefonos.codigo, tra_telefonos.numero').where('tra_telefonos.codigo = 9').first
+    return celular.codigo.to_s << ' ' << celular.numero.to_s
   end 
 
   def revisarDigitoVerificador #Calculo digito verificador
@@ -118,7 +142,9 @@ class PerPersonas < ActiveRecord::Base
                     :gesta,
                     :persona_medicamentos,
                     :persona_metricas,
-                    :user)
+                    :user,
+                    :personas_previsiones_salud,
+                    :personas_telefonos)
   end
 
 end
