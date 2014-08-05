@@ -6,28 +6,28 @@
   </div>
   <div class="panel-body">
 	<div class="container ajustado">
-		<div class="row clearfix row-ajustado">
+		<div class="row clearfix">
 			<div class="col-md-4 column">
 				<label>Institución</label>
 			</div>
 			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">	
+		<div class="row clearfix">	
 			<div class="col-md-4 column">
 				<label>Dirección</label>
 			</div>
 			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">	
+		<div class="row clearfix">	
 			<div class="col-md-4 column">
 				<label>Profesional que notifica</label>
 			</div>
 			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">			
+		<div class="row clearfix">			
 			<div class="col-md-4 column">
 				<label>Rut profesional</label>
 			</div>
@@ -44,7 +44,7 @@
   </div>
   <div class="panel-body">
 	<div class="container ajustado">
-		<div class="row clearfix row-ajustado">
+		<div class="row clearfix">
 			<div class="col-md-4 column">
 				<label>Nombre</label>
 			</div>
@@ -52,7 +52,7 @@
 				<%= @agendamiento.persona.showName('%n%p%m') %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">	
+		<div class="row clearfix">	
 			<div class="col-md-4 column">
 				<label>Rut</label>
 			</div>
@@ -60,7 +60,7 @@
 				<%= @agendamiento.persona.showRut %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">	
+		<div class="row clearfix">	
 			<div class="col-md-4 column">
 				<label>Previsión de salud</label>
 			</div>
@@ -68,7 +68,7 @@
 				<%= @agendamiento.persona.getPrevision.prevision_salud.nombre %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">			
+		<div class="row clearfix">			
 			<div class="col-md-4 column">
 				<label>Domicilio</label>
 			</div>
@@ -76,7 +76,7 @@
 				<%= @agendamiento.persona.getDomicilio %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">			
+		<div class="row clearfix">			
 			<div class="col-md-4 column">
 				<label>Correo electrónico</label>
 			</div>
@@ -84,7 +84,7 @@
 				<%= @agendamiento.persona.user.email %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">			
+		<div class="row clearfix">			
 			<div class="col-md-4 column">
 				<label>Telefono fijo</label>
 			</div>
@@ -92,7 +92,7 @@
 				<%= @agendamiento.persona.getTelefonoFijo %>
 			</div>
 		</div>
-		<div class="row clearfix row-ajustado">			
+		<div class="row clearfix">			
 			<div class="col-md-4 column">
 				<label>Celular</label>
 			</div>
@@ -115,19 +115,26 @@
 				<label>Confirmación Diagnóstica GES </label>
 			</div>
 			<div class="col-md-8 column">:
+				<%= p_d.diagnostico.nombre %>
 			</div>
 		</div>
 		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Confirmación Diagnóstica - Paciente en tratamiento</label>
+			<div class="col-md-12 column">
+	      <div class="checkbox" id="conf_<%= p_d.id %>">
+	        <label class="checkbox-der" for="checkboxes-conf-<%= p_d.id %>">Confirmación Diagnóstica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-conf-<%= p_d.id %>" value="1" <% if p_d.estado_diagnostico.nombre == 'Confirmado' %> checked="checked" <% end %> ></label>
+	      </div>
 			</div>
-			<div class="col-md-8 column">:
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-12 column">
+				<div class="checkbox" id="trat_<%= p_d.id %>">
+					<label class="checkbox-der" for="checkboxes-trat-<%= p_d.id %>">Paciente en tratamiento<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" value="1" <% if true%> checked="checked" <% end %> ></label>
+				</div>	
 			</div>
 		</div>		
 	</div>
   </div>
 </div>
-
 
 <div class="panel panel-default">
 	<div class="panel-body">

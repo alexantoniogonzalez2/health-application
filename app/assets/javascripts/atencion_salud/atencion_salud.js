@@ -1,18 +1,14 @@
-function imprimir(id){
+$('input[type=radio][name^=radios-]').change(function() {
+  var pers_diag = $(this).attr('name').substring(7);
+  guardarDiagnostico(pers_diag);
+});
 
-  $.ajax({
-    type: 'POST',
-    url: '/imprimir',
-    data: { id: id  },
-    success: function(response) { },
-    error: function(xhr, status, error){  }
-  }); 
-
-}
-
+$('input[type=checkbox][id^=checkboxes-cron-]').change(function() {
+  var pers_diag = $(this).attr('id').substring(16);
+  guardarDiagnostico(pers_diag);
+});
 
 $('.modal-diag').on('show.bs.modal', function (e) {
-
   id_mod = this.id.substring(21);
   pre_f_i = $('.datepicker[name=f_i_'+id_mod+']').datepicker("getDate");
   pre_f_t = $('.datepicker[name=f_t_'+id_mod+']').datepicker("getDate");
@@ -151,9 +147,7 @@ $("#select_examen").on("change", function(e) {
     },
     success: function(response) { $("#select_examen").select2("val", ""); },
     error: function(xhr, status, error){ alert("No se pudo agregar el examen del paciente."); }
-  }); 
-
-   
+  });   
 
 })
 
@@ -265,6 +259,9 @@ function guardarDiagnostico(pers_diag_aten_sal) {
   var enf_cro = $('#enf_cro_'+pers_diag_aten_sal).find('input[name=checkboxes]').is(':checked');
   var comentario = $('#comentario_'+pers_diag_aten_sal).val();
 
+  var estado = (e_d == 1) ? true : false;  
+  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);
+
   $.ajax({
     type: 'POST',
     url: '/guardar_diagnostico',
@@ -277,7 +274,7 @@ function guardarDiagnostico(pers_diag_aten_sal) {
       comentario: comentario,
       enf_cro: enf_cro,
      },
-    success: function(response) { $( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); },
+    success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); */},
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
 
@@ -417,6 +414,25 @@ function cerrarDiagnostico(pers_diag_aten_sal){
   $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']').val([pre_e_d]);
   $('#enf_cro_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_enf_cro);
   $('#comentario_'+id_mod).val(pre_comentario);
+
+  var estado = (pre_e_d == 1) ? true : false;  
+  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);
+
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_diagnostico',
+    data: {
+      persona_diagnostico_atencion_salud_id: pers_diag_aten_sal,
+      atencion_salud_id: atencion_salud_id,
+      fecha_inicio: pre_f_i,
+      fecha_termino: pre_f_t,
+      estado_diagnostico: pre_e_d,
+      comentario: pre_comentario,
+      enf_cro: pre_enf_cro,
+     },
+    success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); */},
+    error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
+  });
 
 }
 
