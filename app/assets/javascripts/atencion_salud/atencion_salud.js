@@ -1,3 +1,11 @@
+$('#hola').each(function() {
+         $(this).qtip({
+             content: {
+                 text: $(this).next('.tooltiptext')
+             }
+         });
+     });
+
 $('input[type=radio][name^=radios-]').change(function() {
   var pers_diag = $(this).attr('name').substring(7);
   guardarDiagnostico(pers_diag);

@@ -186,7 +186,7 @@ es:
   time:
     am: am
     formats:
-      default: ! '%A, %d de %B de %Y %H:%M:%S %z'
+      default: ! '%A, %d de %B de %Y %H:%M:%S'
       long: ! '%A %d de %B de %Y'
       short: ! '%d de %b %H:%M'
       hms: ! '%H:%M:%S'

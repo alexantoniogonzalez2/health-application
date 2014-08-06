@@ -173,3 +173,29 @@ div.ges{
   margin-bottom: 0px;
   border-radius: 0px;
 }
+
+p.texto_font_bajo {
+  font-size: 13px;
+
+}
+
+label.firma {
+  text-decoration: overline;
+  margin: auto;
+  display: table;
+}
+
+label.pie_firma {
+  margin: auto;
+  display: table;
+  font-weight: normal;
+}
+
+div.firma{ 
+  padding-top: 60px;
+}
+
+div.panel-ges {
+  padding: 15px 0px;
+  font-size: 13px;
+}
