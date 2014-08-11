@@ -4,7 +4,7 @@
   <div class="panel-heading">
     <h3 class="panel-title">Datos del prestador</h3>
   </div>
-  <div class="panel-body">
+  <div class="panel-body panel-body-ajustado">
 	<div class="container ajustado">
 		<div class="row clearfix">
 			<div class="col-md-4 column">
@@ -42,7 +42,7 @@
   <div class="panel-heading">
     <h3 class="panel-title">Datos del paciente</h3>
   </div>
-  <div class="panel-body">
+  <div class="panel-body panel-body-ajustado">
 	<div class="container ajustado">
 		<div class="row clearfix">
 			<div class="col-md-4 column">
@@ -108,36 +108,42 @@
   <div class="panel-heading">
     <h3 class="panel-title">Información médica</h3>
   </div>
-  <div class="panel-body">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Confirmación Diagnóstica GES </label>
+  <div class="panel-body panel-body-ajustado">
+		<div class="container ajustado">
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					<label>Diagnóstico</label>
+				</div>
+				<div class="col-md-8 column">:
+					<%= p_d.diagnostico.nombre %>
+				</div>
 			</div>
-			<div class="col-md-8 column">:
-				<%= p_d.diagnostico.nombre %>
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					<label>Código CIE10</label>
+				</div>
+				<div class="col-md-8 column">:
+					<%= p_d.diagnostico.codigo_cie10 %>
+				</div>
 			</div>
+			<div class="row clearfix">	
+				<div class="col-md-12 column">
+					<div class="form-group form-ges" id="ges_<%= p_d.id %>">						
+				    <div class="radio">
+				      <label for="radios-conf-<%= p_d.id%>"><input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="1" id="radios-conf-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and !p_d.en_tratamiento %> checked <% end %>>Confirmación diagnóstica</label>
+				    </div> 						
+				    <div class="radio">
+				      <label for="radios-trat-<%= p_d.id%>"><input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="2" id="radios-trat-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento %> checked <% end %>>Paciente en tratamiento</label>
+				    </div> 						
+					</div>
+				</div>
+			</div>		
 		</div>
-		<div class="row clearfix">	
-			<div class="col-md-12 column">
-	      <div class="checkbox" id="conf_<%= p_d.id %>">
-	        <label class="checkbox-der" for="checkboxes-conf-<%= p_d.id %>">Confirmación Diagnóstica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-conf-<%= p_d.id %>" value="1" <% if p_d.estado_diagnostico.nombre == 'Confirmado' %> checked="checked" <% end %> ></label>
-	      </div>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-12 column">
-				<div class="checkbox" id="trat_<%= p_d.id %>">
-					<label class="checkbox-der" for="checkboxes-trat-<%= p_d.id %>">Paciente en tratamiento<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" value="1" <% if true%> checked="checked" <% end %> ></label>
-				</div>	
-			</div>
-		</div>		
-	</div>
   </div>
 </div>
 
 <div class="panel panel-default">
-	<div class="panel-body">
+	<div class="panel-body panel-body-ajustado">
 		<div class="container ajustado">
 			<div class="row clearfix">
 				<div class="col-md-12 column">
@@ -149,7 +155,7 @@
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-4 column">
-					<label>Fecha y hora de la noticiación</label>
+					<label>Fecha y hora de la notificación</label>
 				</div>
 				<div class="col-md-8 column">:
 					<%= l Time.now %>
@@ -170,7 +176,7 @@
 </div>
 
 <div class="panel panel-default">
-	<div class="panel-body">
+	<div class="panel-body panel-body-ajustado">
 		<div class="container ajustado">
 			<div class="row clearfix">	
 				<div class="col-md-12 column">
@@ -216,7 +222,7 @@
 			 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-GES" href="#panel-element-GES">Problemas de Salud Garantizados según D.S. N° 4, de 2012, de Salud</a>
 		</div>
 		<div id="panel-element-GES" class="panel-collapse collapse">
-			<div class="panel-body panel-ges">
+			<div class="panel-body panel-body-ajustado panel-ges">
 				<ol>	
 					<li>Enfermedad renal crónica etapa 4 y 5</li>
 					<li>Cardiopatías Congénitas Operables en menores de 15 años</li>

@@ -32,7 +32,7 @@
                   <div class="form-group">
                     <div class="col-md-4">
                       <div class="checkbox" id="enf_cro_<%= p_d.id %>">
-                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" value="1" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
+                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
                       </div>                
                     </div>
                   </div>
@@ -56,7 +56,7 @@
                   </div>
                 </div>
                 <div class="row clearfix">
-                  <div class="col-md-12 column">
+                  <div class="col-md-3 column">
                     <div class="form-group form-estado" id="e_d_<%= p_d.id %>">
                       <label class="control-label" for="radios">Estado de diagnóstico</label>
                       <div>
@@ -67,6 +67,19 @@
                         <% end %>  
                       </div>
                     </div>
+                  </div>
+                  <% if p_d.primer_diagnostico and p_d.estado_diagnostico.id == 1 %>         
+                    <div id="checkboxes-trat-div-<%= p_d.id %>" class="col-md-9 column">
+                      <div class="form-group trat">                      
+                        <div class="checkbox" id="trat_<%= p_d.id %>">
+                          <label class="checkbox-der trat" for="checkboxes-trat-<%= p_d.id %>">No es el primer diagnóstico o el paciente ya estaba en tratamiento<input type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" value="1" <% if p_d.en_tratamiento %> checked="checked" <% end %> ></label>
+                        </div>                      
+                      </div>
+                    </div>
+                  <% end %>  
+                </div>
+                <div class="row clearfix">  
+                  <div class="col-md-12 column">  
                     <label>Comentario</label><span id="comentario-<%= p_d.id %>" class="alert alert-info comentario">Autoguardado</span>
                     <textarea class="form-control comentario" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
                   </div>                  
@@ -81,7 +94,19 @@
               </div> <!--Cierre container -->
             </div> <!--Cierre panel diagnostico -->
 
-            <div class="tab-pane" id="panel-interconsulta-<%= p_d.id %>">              
+            <div class="tab-pane" id="panel-interconsulta-<%= p_d.id %>">
+              <div class="container ajustado">  
+                <div class="row clearfix">
+                  <div class="col-md-12 column">              
+                    <%= render :partial => "persona_diagnostico/interconsulta", :locals => {:p_d => p_d, :@agendamiento => @agendamiento} %>
+                  </div>
+                </div>
+                <div class="row clearfix">
+                  <div class="col-md-12 column">              
+                    <%= link_to 'Descargar Interconsulta', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
+                  </div>
+                </div>                
+              </div> <!--Cierre container -->
             </div>
 
             <% if p_d.diagnostico.auge %>
@@ -96,14 +121,28 @@
                     <div class="col-md-12 column">              
                       <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
                     </div>
-                  </div>
-                
-                </div> <!--Cierre container -->
-              </div> <!--Cierre panel constancia -->
+                  </div>                
+                </div> 
+              </div> 
             <% end %>
 
-            <div class="tab-pane" id="panel-notificacion-obligatoria-<%= p_d.id %>">
-            </div>
+            <% if p_d.diagnostico.auge %>
+              <div class="tab-pane" id="panel-notificacion-obligatoria-<%= p_d.id %>">
+                <div class="container ajustado">  
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">              
+                      <%= render :partial => "persona_diagnostico/notificacion_obligatoria", :locals => {:p_d => p_d, :@agendamiento => @agendamiento} %>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">              
+                      <%= link_to 'Descargar Notificación Obligatoria', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
+                    </div>
+                  </div>                
+                </div> 
+              </div> 
+            <% end %>
+
           </div>
         </div> 
 

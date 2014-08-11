@@ -45,7 +45,9 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos.diagnostico_id,
 	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
 	  					fi_persona_diagnosticos_atenciones_salud.comentario,
-	  					fi_persona_diagnosticos_atenciones_salud.es_cronica")
+	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
+	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
 	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
 	  
 	  @persona_diagnostico_anteriores = FiPersonaDiagnosticos
@@ -61,7 +63,9 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos.diagnostico_id,
 	  					fpdas.estado_diagnostico_id,
 	  					fpdas.comentario,
-	  					fpdas.es_cronica")
+	  					fpdas.es_cronica,
+	  					fpdas.en_tratamiento,
+	  					fpdas.primer_diagnostico")
 	  	.where('fi_persona_diagnosticos.persona_id = ? AND fpdas.atencion_salud_id != ? 
 	  					AND fpdas.es_cronica = 0 AND ag_agendamientos.fecha_comienzo_real < ?',
 	  					 @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
@@ -74,12 +78,16 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos.diagnostico_id,
 	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
 	  					fi_persona_diagnosticos_atenciones_salud.comentario,
-	  					fi_persona_diagnosticos_atenciones_salud.es_cronica")
+	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento,
+	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico")
 	  	.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.atencion_salud_id != ? 
 	  					AND fi_persona_diagnosticos_atenciones_salud.es_cronica = 1', @atencion_salud.persona.id,params[:id])	
 
 	  @diagnosticos = MedDiagnosticos.where('frecuente = ?',true)
 	  @estados_diagnostico = MedDiagnosticoEstados.all
+	  @prestadores = PrePrestadores.all
+	  @especialidades = ProEspecialidades.all
 	  
 	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
 	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)

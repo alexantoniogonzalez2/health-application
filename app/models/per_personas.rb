@@ -77,7 +77,7 @@ class PerPersonas < ActiveRecord::Base
 
   def getDomicilio
     domicilio = personas_direcciones.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
-    return domicilio.direccion.calle << ' ' << domicilio.direccion.numero.to_s << ', ' << domicilio.direccion.comuna.nombre << ', '<< domicilio.direccion.ciudad.nombre
+    return domicilio.direccion.calle + ' ' + domicilio.direccion.numero.to_s + ', ' + domicilio.direccion.comuna.nombre + ', '+ domicilio.direccion.ciudad.nombre
   end 
 
   def getTelefonoFijo

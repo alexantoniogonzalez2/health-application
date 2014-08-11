@@ -25,7 +25,8 @@ class PersonaDiagnosticoController < ApplicationController
 	def agregarDiagnostico
 
 		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
-	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)		
+	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
+	  @primer_diagnostico = 0	
 
 		persona_diagnostico_atencion_actual = FiPersonaDiagnosticos
 																						.joins(:persona_diagnosticos_atencion_salud)
@@ -50,6 +51,7 @@ class PersonaDiagnosticoController < ApplicationController
 				@persona_diagnostico.estado_diagnostico_id = 1
 				@persona_diagnostico.es_cronica = 0
 				@persona_diagnostico.save!
+				@primer_diagnostico = 1
 				
 			end	
 
@@ -60,6 +62,8 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona_diagnostico_atencion.fecha_inicio = @persona_diagnostico.fecha_inicio
 			@persona_diagnostico_atencion.fecha_termino = @persona_diagnostico.fecha_termino
 			@persona_diagnostico_atencion.es_cronica = @persona_diagnostico.es_cronica
+			@persona_diagnostico_atencion.en_tratamiento = params[:en_tratamiento]
+			@persona_diagnostico_atencion.primer_diagnostico = @primer_diagnostico
 			@persona_diagnostico_atencion.save
 
 			@estados_diagnostico = MedDiagnosticoEstados.all
@@ -72,7 +76,9 @@ class PersonaDiagnosticoController < ApplicationController
 		  					fi_persona_diagnosticos.diagnostico_id,
 		  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
 		  					fi_persona_diagnosticos_atenciones_salud.comentario,
-		  					fi_persona_diagnosticos_atenciones_salud.es_cronica")
+		  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+		  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento,
+		  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico")
 		  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND diagnostico_id = ? ' ,
 		  	 params[:atencion_salud_id],
 		  	 params[:diagnostico_id]).first
@@ -114,7 +120,7 @@ class PersonaDiagnosticoController < ApplicationController
 		@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("id = ?",params[:persona_diagnostico_atencion_salud_id]).first	
 		@persona_diagnostico_id = @persona_diagnostico_atencion.persona_diagnostico_id
 		@estado = MedDiagnosticoEstados.find(params[:estado_diagnostico])
-		@persona_diagnostico_atencion.update( estado_diagnostico: @estado , comentario: params[:comentario], fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino], es_cronica: params[:enf_cro]  )	
+		@persona_diagnostico_atencion.update( estado_diagnostico: @estado , comentario: params[:comentario], fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino], es_cronica: params[:enf_cro], en_tratamiento: params[:trat])	
 		
 		@persona_diagnostico = FiPersonaDiagnosticos.find(@persona_diagnostico_id)		
   	@persona_diagnostico.update( estado_diagnostico: @estado, fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino], es_cronica: params[:enf_cro] )

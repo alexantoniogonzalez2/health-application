@@ -7,7 +7,7 @@ class PrePrestadores < ActiveRecord::Base
 	has_many :prestadores_telefonos, :class_name => 'PrePrestadoresTelefonos', :foreign_key => 'prestador_id'
 
 	 def getDireccion
-  	return prestadores_direcciones.direccion.calle << ' ' << prestadores_direcciones.direccion.numero.to_s << ', ' << prestadores_direcciones.direccion.comuna.nombre << ', ' << prestadores_direcciones.direccion.ciudad.nombre
+  	return prestadores_direcciones.direccion.calle + ' ' + prestadores_direcciones.direccion.numero.to_s + ', ' + prestadores_direcciones.direccion.comuna.nombre + ', ' + prestadores_direcciones.direccion.ciudad.nombre
   end 
 
 	private

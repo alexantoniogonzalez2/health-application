@@ -16,6 +16,8 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
                   :fecha_termino,
   								:persona_diagnostico,
   								:prioridad,
+                  :en_tratamiento,
+                  :primer_diagnostico,
                   :comentario)
   end
 								

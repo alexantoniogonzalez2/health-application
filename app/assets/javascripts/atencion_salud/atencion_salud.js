@@ -1,14 +1,24 @@
-$('#hola').each(function() {
-         $(this).qtip({
-             content: {
-                 text: $(this).next('.tooltiptext')
-             }
-         });
-     });
-
 $('input[type=radio][name^=radios-]').change(function() {
-  var pers_diag = $(this).attr('name').substring(7);
+  var pers_diag = $(this).attr('name').substring(7);  
+  var e_d = $('#e_d_'+pers_diag).find('input[name=radios-'+pers_diag+']:checked').val();
+  trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
+  (e_d == 1) ? $( '#checkboxes-trat-div-'+pers_diag).show() : $( '#checkboxes-trat-div-'+pers_diag).hide();
+  
+  if(e_d == 1) { estado_ges = (trat == 1) ? 2 : 1; $('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]); }
+  else { $('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').prop('checked', false); }
+
   guardarDiagnostico(pers_diag);
+
+});
+
+$('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
+  var pers_diag = $(this).attr('id').substring(16);
+  trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
+  
+  estado_ges = (trat == 1) ? 2 : 1;
+  $('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]);
+  guardarDiagnostico(pers_diag);
+
 });
 
 $('input[type=checkbox][id^=checkboxes-cron-]').change(function() {
@@ -22,6 +32,7 @@ $('.modal-diag').on('show.bs.modal', function (e) {
   pre_f_t = $('.datepicker[name=f_t_'+id_mod+']').datepicker("getDate");
   pre_e_d = $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']:checked').val();
   pre_enf_cro = $('#enf_cro_'+id_mod).find('input[name=checkboxes]').is(':checked');
+  pre_trat = $('#trat_'+id_mod).find('input[name=checkboxes]').is(':checked');
   pre_comentario = $('#comentario_'+id_mod).val();
 })
 
@@ -58,11 +69,23 @@ $('.comentario').keyup( function(e) {
   if (typeof contador_com === 'undefined') { } 
   else { clearTimeout(contador_com);}
 
-  id = this.id;
- 
+  id = this.id; 
   contador_com = setTimeout(function(){ autoguardarComentario(id.substring(11)) },500);
 
 })
+
+$('#select_especialidad').select2({
+  width: '80%',
+  placeholder: "Seleccione una especialidad",
+
+});
+
+$('#select_prestadores').select2({
+  width: '80%',
+  placeholder: "Seleccione un establecimiento",
+
+});
+
 
 $('#select_diagnostico').select2({
   width: '80%',
@@ -265,10 +288,11 @@ function guardarDiagnostico(pers_diag_aten_sal) {
   var f_t = $('.datepicker[name=f_t_'+pers_diag_aten_sal+']').datepicker("getDate");
   var e_d = $('#e_d_'+pers_diag_aten_sal).find('input[name=radios-'+pers_diag_aten_sal+']:checked').val();
   var enf_cro = $('#enf_cro_'+pers_diag_aten_sal).find('input[name=checkboxes]').is(':checked');
+  var trat = $('#trat_'+pers_diag_aten_sal).find('input[name=checkboxes]').is(':checked');
   var comentario = $('#comentario_'+pers_diag_aten_sal).val();
 
-  var estado = (e_d == 1) ? true : false;  
-  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);
+  /*var estado = (e_d == 1) ? true : false;  
+  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);*/
 
   $.ajax({
     type: 'POST',
@@ -281,6 +305,7 @@ function guardarDiagnostico(pers_diag_aten_sal) {
       estado_diagnostico: e_d,
       comentario: comentario,
       enf_cro: enf_cro,
+      trat: trat
      },
     success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); */},
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
@@ -402,11 +427,11 @@ function autoguardarComentario(pers_diag_aten_sal) {
       atencion_salud_id: atencion_salud_id,      
       comentario: comentario,      
      },
-    success: function(response) { 
-                                  $('#comentario-'+pers_diag_aten_sal).show("hide");
-                                  setTimeout(function(){$('#comentario-'+pers_diag_aten_sal).hide("hide");},2000) ;
-                                  pre_comentario = comentario;
-                                },
+    success: function(response) {                                   
+      $('#comentario-'+pers_diag_aten_sal).show("hide");
+      setTimeout(function(){$('#comentario-'+pers_diag_aten_sal).hide("hide");},2000) ;
+      pre_comentario = comentario;
+    },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
 
@@ -421,10 +446,11 @@ function cerrarDiagnostico(pers_diag_aten_sal){
   $('.datepicker[name=f_t_'+id_mod+']').datepicker("setDate",pre_f_t);
   $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']').val([pre_e_d]);
   $('#enf_cro_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_enf_cro);
+  $('#trat_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_trat);
   $('#comentario_'+id_mod).val(pre_comentario);
 
-  var estado = (pre_e_d == 1) ? true : false;  
-  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);
+  /*var estado = (pre_e_d == 1) ? true : false;  
+  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);*/
 
   $.ajax({
     type: 'POST',
@@ -437,6 +463,7 @@ function cerrarDiagnostico(pers_diag_aten_sal){
       estado_diagnostico: pre_e_d,
       comentario: pre_comentario,
       enf_cro: pre_enf_cro,
+      trat: pre_trat,
      },
     success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); */},
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }

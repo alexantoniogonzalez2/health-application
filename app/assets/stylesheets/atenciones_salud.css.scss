@@ -9,7 +9,11 @@
 }
 
 .panel-body{
-  padding: 10px;
+  padding: 0px !important;
+}
+
+.panel-body-ajustado{
+  padding: 10px !important;
 }
 
 .table {
@@ -176,7 +180,6 @@ div.ges{
 
 p.texto_font_bajo {
   font-size: 13px;
-
 }
 
 label.firma {
@@ -192,10 +195,29 @@ label.pie_firma {
 }
 
 div.firma{ 
-  padding-top: 60px;
+  padding-top: 40px;
 }
 
 div.panel-ges {
-  padding: 15px 0px;
+  padding: 15px 0px !important;
   font-size: 13px;
+}
+
+div.trat{
+  padding-top: 26px !important; 
+}
+
+label.trat{
+  font-weight: normal !important;
+}
+
+.form-ges {
+  margin: 0px !important;
+}
+
+select.select-ajuste{
+  width: 80%;
+  height: 24px;
+  display: inline;
+  padding: 1px 5px;
 }
