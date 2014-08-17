@@ -8,8 +8,6 @@ class CreateMedDiagnosticos < ActiveRecord::Migration
       t.integer :numero
       t.boolean :frecuente
       t.boolean :nodo_terminal
-      t.boolean :auge 
-      t.date :fecha_inicio_auge
       t.timestamps
     end
   end

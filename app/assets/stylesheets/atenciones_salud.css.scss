@@ -178,9 +178,7 @@ div.ges{
   border-radius: 0px;
 }
 
-p.texto_font_bajo {
-  font-size: 13px;
-}
+p.texto_font_bajo { font-size: 13px; }
 
 label.firma {
   text-decoration: overline;
@@ -194,30 +192,26 @@ label.pie_firma {
   font-weight: normal;
 }
 
-div.firma{ 
-  padding-top: 40px;
-}
+div.firma{ padding-top: 40px; }
 
 div.panel-ges {
   padding: 15px 0px !important;
   font-size: 13px;
 }
 
-div.trat{
-  padding-top: 26px !important; 
+div.trat{ padding-top: 26px !important; }
+label.trat{ font-weight: normal !important; }
+.form-ges { margin: 0px !important; }
+#icon-eno { color: green !important; }
+
+div.ajuste-eno { 
+  display: inline-block;
+  margin: 0px 0px 0px 20px !important;
 }
 
-label.trat{
-  font-weight: normal !important;
+.fc-event-time { 
+  font-weight: bold !important;
+  font-size: 12px !important;
 }
 
-.form-ges {
-  margin: 0px !important;
-}
-
-select.select-ajuste{
-  width: 80%;
-  height: 24px;
-  display: inline;
-  padding: 1px 5px;
-}
+.fa-child{ float: right;}

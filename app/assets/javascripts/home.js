@@ -16,7 +16,7 @@ function actualizar_atenciones(){
 $( document ).ready(function() {
 
   $("#actualizar").on("click", function(){ actualizar_atenciones();	});
-/*
+
   if ($('#horas-agendadas').length){	
 
 		window.setInterval(function(){
@@ -36,6 +36,6 @@ $( document ).ready(function() {
 		  
 		}, 30000);
 
-	}*/
+	}
   
 });

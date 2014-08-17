@@ -52,53 +52,77 @@ class AgAgendamientos < ActiveRecord::Base
   end
 
   def event
-    description= ''
-    custom=''
-    show=false
-    if agendamiento_estado.nombre == 'Hora disponible'
+    description = ''
+    custom = ''
+    icon = ''
+    show = false
+    grupo_etareo = ''
+
+    case agendamiento_estado.nombre
+    when 'Hora disponible'
         className = 'disponible'
         custom<< "<b>Hora disponible</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
-        show=true
-      
-    elsif agendamiento_estado.nombre == 'Hora bloqueada'
+        show=true        
+    when 'Hora bloqueada'
         className = 'no_disponible'
         custom<< "<b>Hora no disponible</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: <s>#{range('estimado')}</s>"
         show=true
-    elsif agendamiento_estado.nombre == 'Hora reservada'
+    when 'Hora reservada'
         className = 'no_disponible'
         custom<< "<b>Hora reservada</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
-        show=true  
-    elsif agendamiento_estado.nombre == 'Hora confirmada' 
+        show=true
+        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)  
+    when 'Hora confirmada' 
         className = 'no_disponible'
         custom<< "<b>Hora confirmada</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
-        show=true         
-    elsif agendamiento_estado.nombre == 'Paciente en espera'
+        show=true
+        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)         
+    when 'Paciente en espera'
         className = 'no_disponible'
         custom<< "<b>Paciente en espera</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
-    elsif agendamiento_estado.nombre == 'Paciente siendo atendido'
+        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)
+    when 'Paciente siendo atendido'
         className = 'no_disponible'
         custom<< "<b>Paciente siendo atendido</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
-        show=true    
-    elsif agendamiento_estado.nombre == 'Paciente atendido'
+        show=true 
+        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)   
+    when 'Paciente atendido'
         className = 'no_disponible'
         custom<< "<b>Paciente atendido</b>"
         description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
         description<<"</br>Hora: #{range('estimado')}"
         show=true
+        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)
     end
+
+    case grupo_etareo
+    when 'Recién nacido'
+      icon = "<i class='fa fa-child'></i>";      
+    when 'Lactante'
+      icon = "<i class='fa fa-child'></i>";
+    when 'Pediatria'
+      icon = "<i class='fa fa-child'></i>";
+    when 'Adolescente'
+      icon = "<i class='fa fa-child'></i>";
+    when 'Adulto'
+      icon = "<i class='fa fa-child'></i>";
+    when 'Adulto mayor'
+      icon = "<i class='fa fa-child'></i>";
+    end  
+
 
 
     if show
@@ -108,9 +132,10 @@ class AgAgendamientos < ActiveRecord::Base
         'start'       => fecha_comienzo.strftime("%Y-%m-%d %H:%M")+":00.0",
         'end'         => fecha_final.strftime("%Y-%m-%d %H:%M")+":00.0",
         'allDay'      => false,   
-        'custom'       => custom,     
+        'custom'      => custom,     
         'description' => description,
-        'className'   => className
+        'className'   => className,
+        'icon'        => icon 
         
       }
     else
@@ -165,7 +190,7 @@ class AgAgendamientos < ActiveRecord::Base
       bloquear =  "<button class='btn btn-primary bloquear-hora'>Bloquear hora</button>"
     end  
     if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional
-       tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
+       tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button><div>Su motivo de consulta:</div>"
     end   
     if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
       if estado != 'Hora disponible' and estado != 'Hora bloqueada'     
@@ -210,7 +235,7 @@ class AgAgendamientos < ActiveRecord::Base
         detalle<<'</table></div><div class="modal-footer">'                                 
     end                
 
-    detalle<<'<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button></div>'           
+    detalle<<'</div>'           
     
     detalle
   

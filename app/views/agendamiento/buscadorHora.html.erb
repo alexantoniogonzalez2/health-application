@@ -1,6 +1,5 @@
 <% if esProfesionalSalud %>
-<div id="profesional"></div>	
-
+	<div id="profesional"></div>
 <% else %>
 
 <div class="panel panel-success">
@@ -62,12 +61,25 @@
 
 <div id='buscadorHora'></div>
 
-  <div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content" id="modal-content">        
-      </div>          
-    </div>        
-  </div> 
+<% if esProfesionalSalud %>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Recién nacido</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Lactante</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Pediatría</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Adolescente</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Adulto</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Adulto mayor</div>		
+	</div>
+</div>
+<% end %>
+
+<div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" id="modal-content">        
+    </div>          
+  </div>        
+</div> 
 
 <%= javascript_include_tag "agendamiento/buscador_hora" %>
 

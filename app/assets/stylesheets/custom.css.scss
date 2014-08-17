@@ -19,23 +19,12 @@ $lightGray: #999;
   }
 }
 
-html {
-  overflow-y: scroll;
-}
-
-body {
-  padding-top: 60px;
-}
-
-section {
-  overflow: auto;
-}
-
+html { overflow-y: scroll; }
+body { padding-top: 60px; }
+section { overflow: auto; }
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
+h1, h2, h3, h4, h5, h6 { line-height: 1;}
 
 h1 {
   font-size: 3em;
@@ -99,11 +88,6 @@ footer {
   }
 }
 
-/*
-.panel-body{
-  padding : 0px 0px 10px 0px;
-}*/
-
 .table{
   margin-bottom: 0px;  
 }
@@ -131,15 +115,7 @@ footer {
   margin-left: 12px; 
 }
 
-/*
-button[disabled],
-html input[disabled] {
-  cursor: not-allowed !important;
-}*/
-
-a.btn {
-  padding: 0px;
-}
+a.btn { padding: 0px; }
 
 div.horas_agendadas {
   padding: 0px;
@@ -149,21 +125,11 @@ div.ultimos_eventos {
   padding-left: 5px;
 }
 
-div.panel-home {
-  padding: 0px;
-}
-
-table.table{
-  font-size: 13px;
-}
-
-table.table-log{
-  font-size: 11px;
-}
-
-.table thead>tr>th.vert-align{
-    vertical-align: middle;
-}
+div.panel-home { padding: 0px; }
+table.table { }
+table.table-log { font-size: 11px; }
+.table thead>tr>th.enc-horas{ vertical-align: middle; font-weight: normal; text-align: center}
+.table tbody>tr>td{ padding: 2px 4px; vertical-align: middle; font-size: 12px; }
 
 span.actualizar{
   float:right;  

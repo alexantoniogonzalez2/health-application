@@ -167,6 +167,8 @@
 
 <% end %> 
 
+<%= render :partial => "home/log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %>
+
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
 

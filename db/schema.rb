@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803074951) do
+ActiveRecord::Schema.define(version: 20140816170308) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.text     "nombre"
@@ -51,6 +51,17 @@ ActiveRecord::Schema.define(version: 20140803074951) do
     t.datetime "updated_at"
   end
 
+  create_table "fi_calendario_vacunas", force: true do |t|
+    t.integer  "vacuna_id"
+    t.integer  "edad"
+    t.integer  "numero_vacuna"
+    t.text     "grupo_objetivo"
+    t.integer  "agno"
+    t.text     "protege_contra"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "fi_certificados", force: true do |t|
     t.text     "motivo"
     t.datetime "fecha_inicio"
@@ -75,10 +86,69 @@ ActiveRecord::Schema.define(version: 20140803074951) do
     t.datetime "updated_at"
   end
 
+  create_table "fi_habitos_alcohol", force: true do |t|
+    t.integer  "persona_id"
+    t.datetime "fecha_test_audit"
+    t.integer  "audit_1"
+    t.integer  "audit_2"
+    t.integer  "audit_3"
+    t.integer  "audit_4"
+    t.integer  "audit_5"
+    t.integer  "audit_6"
+    t.integer  "audit_7"
+    t.integer  "audit_8"
+    t.integer  "audit_9"
+    t.integer  "audit_10"
+    t.integer  "audit_puntaje"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fi_habitos_drogas", force: true do |t|
+    t.integer  "persona_id"
+    t.datetime "fecha_test_dast"
+    t.text     "tipo_dast"
+    t.integer  "dast_1"
+    t.integer  "dast_2"
+    t.integer  "dast_3"
+    t.integer  "dast_4"
+    t.integer  "dast_5"
+    t.integer  "dast_6"
+    t.integer  "dast_7"
+    t.integer  "dast_8"
+    t.integer  "dast_9"
+    t.integer  "dast_10"
+    t.integer  "dast_11"
+    t.integer  "dast_12"
+    t.integer  "dast_13"
+    t.integer  "dast_14"
+    t.integer  "dast_15"
+    t.integer  "dast_16"
+    t.integer  "dast_17"
+    t.integer  "dast_19"
+    t.integer  "dast_20"
+    t.integer  "dast_puntaje"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fi_habitos_tabaco", force: true do |t|
+    t.integer  "persona_id"
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_final"
+    t.integer  "cigarros_por_dia"
+    t.integer  "paquetes_agno"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "fi_interconsultas", force: true do |t|
-    t.text     "motivo"
+    t.integer  "persona_diagnostico_atencion_salud_id"
+    t.datetime "fecha_solicitud"
     t.integer  "prestador_destino_id"
-    t.integer  "atencion_salud_id"
+    t.integer  "especialidad_id"
+    t.text     "proposito"
+    t.text     "comentario"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -86,6 +156,29 @@ ActiveRecord::Schema.define(version: 20140803074951) do
   create_table "fi_metricas", force: true do |t|
     t.text     "nombre"
     t.text     "unidad"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fi_notificaciones_eno", force: true do |t|
+    t.integer  "persona_diagnostico_atencion_salud_id"
+    t.datetime "fecha_notificacion"
+    t.datetime "fecha_primeros_sintomas"
+    t.text     "confirmacion_diagnostica"
+    t.text     "antecedentes_vacunacion"
+    t.integer  "pais_contagio_id"
+    t.text     "embarazo"
+    t.integer  "semanas_gestacion"
+    t.text     "tbc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fi_notificaciones_ges", force: true do |t|
+    t.integer  "persona_diagnostico_atencion_salud_id"
+    t.integer  "persona_conocimiento_id"
+    t.text     "confirmacion_diagnostica"
+    t.datetime "fecha_notificacion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -111,6 +204,8 @@ ActiveRecord::Schema.define(version: 20140803074951) do
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
     t.boolean  "es_cronica"
+    t.boolean  "en_tratamiento"
+    t.boolean  "primer_diagnostico"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -148,6 +243,26 @@ ActiveRecord::Schema.define(version: 20140803074951) do
     t.datetime "updated_at"
   end
 
+  create_table "fi_personas_alergias", force: true do |t|
+    t.integer  "persona_id"
+    t.integer  "alergia_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fi_personas_vacunas", force: true do |t|
+    t.integer  "persona_id"
+    t.integer  "vacuna_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_alergias", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "med_componentes", force: true do |t|
     t.text     "nombre"
     t.text     "descripcion"
@@ -169,8 +284,6 @@ ActiveRecord::Schema.define(version: 20140803074951) do
     t.integer  "numero"
     t.boolean  "frecuente"
     t.boolean  "nodo_terminal"
-    t.boolean  "auge"
-    t.date     "fecha_inicio_auge"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -178,6 +291,16 @@ ActiveRecord::Schema.define(version: 20140803074951) do
   create_table "med_diagnosticos_grupos", force: true do |t|
     t.text     "codigo"
     t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_enfermedades_notificacion_obligatoria", force: true do |t|
+    t.text     "nombre"
+    t.integer  "diagnostico_id"
+    t.text     "tipo_vigilancia"
+    t.text     "frecuencia_notificacion"
+    t.integer  "prioridad"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -245,6 +368,18 @@ ActiveRecord::Schema.define(version: 20140803074951) do
     t.datetime "updated_at"
   end
 
+  create_table "med_problemas_salud_auge", force: true do |t|
+    t.text     "nombre"
+    t.integer  "diagnostico_id"
+    t.integer  "edad_desde"
+    t.integer  "edad_hasta"
+    t.text     "genero"
+    t.integer  "prioridad"
+    t.datetime "fecha_inicio_auge"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "per_parentescos", force: true do |t|
     t.integer  "hijo_id"
     t.integer  "progenitor_id"
@@ -281,6 +416,15 @@ ActiveRecord::Schema.define(version: 20140803074951) do
     t.integer  "prevision_salud_id"
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "per_personas_profesiones_oficios", force: true do |t|
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_termino"
+    t.integer  "persona_id"
+    t.integer  "profesion_oficio_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -386,6 +530,12 @@ ActiveRecord::Schema.define(version: 20140803074951) do
   end
 
   create_table "tra_paises", force: true do |t|
+    t.text     "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tra_profesiones_oficios", force: true do |t|
     t.text     "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"

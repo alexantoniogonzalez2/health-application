@@ -17,7 +17,41 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_direcciones, :class_name => 'PerPersonasDirecciones', :foreign_key => 'persona_id'
   has_many :personas_previsiones_salud, :class_name => 'PerPersonasPrevisionesSalud', :foreign_key => 'persona_id'
   has_many :personas_telefonos, :class_name => 'PerPersonasTelefonos', :foreign_key => 'persona_id'
+  has_many :personas_profesiones_oficios, :class_name => 'PerPersonasProfesionesOficios', :foreign_key => 'persona_id'
+  has_many :personas_alergias, :class_name => 'FiPersonasAlergias', :foreign_key => 'persona_id'
+  has_many :personas_habitos_tabaco, :class_name => 'FiHabitosTabaco', :foreign_key => 'persona_id'
+  has_many :personas_habitos_drogas, :class_name => 'FiHabitosDrogas', :foreign_key => 'persona_id'
+  has_many :personas_habitos_alcohol, :class_name => 'FiHabitosAlcohol', :foreign_key => 'persona_id'
+  has_many :personas_vacunas, :class_name => 'FiPersonasVacunas', :foreign_key => 'persona_id'
+  has_many :personas_conocimiento_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_conocimiento_id'
   belongs_to :user, :class_name => 'User'
+
+  def getGrupoEtareo(fecha_atencion_salud)
+    if fecha_nacimiento
+
+      limite_recien_nacido = fecha_nacimiento + 28.days
+      limite_lactante = fecha_nacimiento + 2.years
+      limite_pediatria = fecha_nacimiento + 10.years
+      limite_adolescente = fecha_nacimiento + 18.years
+      limite_adulto = fecha_nacimiento + 65.years
+
+      if fecha_atencion_salud < limite_recien_nacido 
+        'Recién nacido'
+      elsif fecha_atencion_salud < limite_lactante
+        'Lactante'
+      elsif fecha_atencion_salud < limite_pediatria
+        'Pediatria'
+      elsif fecha_atencion_salud < limite_adolescente
+        'Adolescente'
+      elsif fecha_atencion_salud < limite_adulto 
+        'Adulto'
+      else
+        'Adulto mayor'
+      end   
+    else
+      'Sin fecha nacimiento'
+    end  
+  end  
 
 
   def esProfesional(prestador_id)
@@ -119,32 +153,38 @@ class PerPersonas < ActiveRecord::Base
   private
   def app_params
     params.require(:persona).permit(:apellido_materno,
-                    :apellido_paterno, 
-                    :fecha_muerte, 
-                    :fecha_nacimiento, 
-                    :genero, 
-                    :nombre, 
-                    :rut,
-                    :digito_verificador,
-                    :hijos,
-                    :progenitores,
-                    :prestador_profesionales,
-                    :prestador_administrativos,
-                    :profesionales,
-                    :profesional_agendamientos,
-                    :persona_agendamientos,
-                    :admin_genera_agendamientos,
-                    :admin_confirma_agendamientos,
-                    :admin_recibe_agendamientos,
-                    :persona_examenes,
-                    :persona_diagnosticos,
-                    :responsable_agendamientos,
-                    :gesta,
-                    :persona_medicamentos,
-                    :persona_metricas,
-                    :user,
-                    :personas_previsiones_salud,
-                    :personas_telefonos)
+                                    :apellido_paterno, 
+                                    :fecha_muerte, 
+                                    :fecha_nacimiento, 
+                                    :genero, 
+                                    :nombre, 
+                                    :rut,
+                                    :digito_verificador,
+                                    :hijos,
+                                    :progenitores,
+                                    :prestador_profesionales,
+                                    :prestador_administrativos,
+                                    :profesionales,
+                                    :profesional_agendamientos,
+                                    :persona_agendamientos,
+                                    :admin_genera_agendamientos,
+                                    :admin_confirma_agendamientos,
+                                    :admin_recibe_agendamientos,
+                                    :persona_examenes,
+                                    :persona_diagnosticos,
+                                    :responsable_agendamientos,
+                                    :gesta,
+                                    :persona_medicamentos,
+                                    :persona_metricas,
+                                    :user,
+                                    :personas_previsiones_salud,
+                                    :personas_telefonos,
+                                    :personas_profesiones_oficios,
+                                    :personas_alergias,
+                                    :personas_habitos_tabaco,
+                                    :personas_habitos_drogas,
+                                    :personas_habitos_alcohol,
+                                    :personas_vacunas)
   end
 
 end

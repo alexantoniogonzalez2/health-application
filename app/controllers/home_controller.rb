@@ -32,35 +32,18 @@ class HomeController < ApplicationController
 		especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
 		agendamientos= AgAgendamientos.where( "especialidad_prestdor_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 
-=begin
-actualizaciones = AgAgendamientos
-			.joins('JOIN ag_agendamiento_log_estados ON 
-								ag_agendamientos.id = ag_agendamiento_log_estados.agendamiento_id')
-			.select("ag_agendamiento_log_estados.responsable_id,
-							 ag_agendamiento_log_estados.agendamiento_estado_id,
-							 ag_agendamiento_log_estados.agendamiento_id,
-							 ag_agendamiento_log_estados.fecha,
-							 ag_agendamientos.persona_id")
-			.where( "fecha > ? AND especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ",
-				lapso_tiempo, especialidad_prestador_profesional,Date.today, Date.tomorrow )
-
-						#logger.debug "New post: #{@persona_diagnostico_anteriores}"	
-	
-=end
-
 		actualizaciones = AgAgendamientos
 			.joins(:agendamiento_log_estados)
 			.where( "fecha > ? AND especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ",
 				lapso_tiempo, especialidad_prestador_profesional,Date.today, Date.tomorrow )
 			
-  	#respuesta = actualizaciones.empty? ? true : false;
   	respuesta = false
   	actualizaciones.each do |act|
   		respuesta = true
   	end	
 									
 		respond_to do |format|     
-    	format.json { render :json => { :success => true, :respuesta => respuesta}	 }
+    	format.json { render :json => { :success => true, :respuesta => respuesta} }
     end						
 
 	end	

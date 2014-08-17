@@ -7,7 +7,7 @@
   <div class="panel-body panel-home">
     <table class="table table-striped table-bordered table-hover table-condensed">
       <thead>
-        <tr><th class="col-sm-1 vert-align">Hora de atención</th><th class="col-sm-3 vert-align">Paciente</th><th class="col-sm-2 vert-align">Estado</th><th class="col-sm-1 vert-align">Hora de llegada</th><th class="col-sm-2 vert-align">Acción</th></tr>
+        <tr><th class="col-sm-1 enc-horas">Hora de atención</th><th class="col-sm-3 enc-horas">Paciente</th><th class="col-sm-1 enc-horas">Rut</th><th class="col-sm-2 enc-horas">Estado</th><th class="col-sm-1 enc-horas">Hora de llegada</th><th class="col-sm-2 enc-horas">Acción</th></tr>
       </thead>
       <tbody>
       <% if @agendamientos.empty? %>
@@ -16,13 +16,18 @@
       <% @agendamientos.each do |agendamiento| %>
         <tr>
           <td><%= agendamiento.fecha_comienzo.to_s(:time) %></td> 
-          <td>
-            <% if agendamiento.persona %>
+          <% if agendamiento.persona %>
+            <td>
               <%= agendamiento.persona.showName('%n%p%m') %>
+            </td>
+            <td>
+              <%= agendamiento.persona.showRut %>
+            </td>   
             <% else %>
+            <td align='center' colspan='2'>
               No agendada.
-            <% end %>  
-          </td>          
+            </td>  
+          <% end %>                 
           <td><%= agendamiento.agendamiento_estado.nombre %></td>
           <td>
             <% if  agendamiento.fecha_llegada_paciente %>

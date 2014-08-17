@@ -1,3 +1,9 @@
+$('#icon-eno').qtip({ // Grab some elements to apply the tooltip to
+    content: {
+        text: 'Fecha de primeros síntomas o de primera consulta.'
+    }
+})
+
 $('input[type=radio][name^=radios-]').change(function() {
   var pers_diag = $(this).attr('name').substring(7);  
   var e_d = $('#e_d_'+pers_diag).find('input[name=radios-'+pers_diag+']:checked').val();
@@ -74,18 +80,10 @@ $('.comentario').keyup( function(e) {
 
 })
 
-$('#select_especialidad').select2({
-  width: '80%',
-  placeholder: "Seleccione una especialidad",
-
-});
-
-$('#select_prestadores').select2({
-  width: '80%',
-  placeholder: "Seleccione un establecimiento",
-
-});
-
+$('#select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad' });
+$('#select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento' });
+$('#select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico' });
+$('#select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio' });
 
 $('#select_diagnostico').select2({
   width: '80%',
@@ -291,8 +289,7 @@ function guardarDiagnostico(pers_diag_aten_sal) {
   var trat = $('#trat_'+pers_diag_aten_sal).find('input[name=checkboxes]').is(':checked');
   var comentario = $('#comentario_'+pers_diag_aten_sal).val();
 
-  /*var estado = (e_d == 1) ? true : false;  
-  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);*/
+  $('.datepicker[name=f_s_'+pers_diag_aten_sal+']').datepicker("setDate",f_i);
 
   $.ajax({
     type: 'POST',
@@ -307,7 +304,7 @@ function guardarDiagnostico(pers_diag_aten_sal) {
       enf_cro: enf_cro,
       trat: trat
      },
-    success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); */},
+    success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide');*/ },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
 

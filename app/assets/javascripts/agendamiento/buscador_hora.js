@@ -33,10 +33,12 @@ $('#buscadorHora').fullCalendar({
 	dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sáb'],
 	monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
 	monthNamesShort:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-	timeFormat: {
-		agenda: 'H:mm{ - H:mm}',
-		'': 'H:mm {- H:mm}'
-	},
+	timeFormat: { 
+		week: 'H:mm-{H:mm}',
+		month: 'H:mm-{H:mm}',
+		day: 'H:mm-{H:mm}',
+		'': 'H:mm-{H:mm}' 
+},
 	titleFormat:{
 		month: 'MMMM yyyy',
 		week: 'd MMMM { - d MMMM}',
@@ -64,7 +66,8 @@ $('#buscadorHora').fullCalendar({
 	firstDay: 1,
 	editable: false,
 	defaultView: 'agendaWeek',     
-  eventRender: function(event,element){
+  eventRender: function(event,element,view){
+
 		element.qtip({
 			
 			content: {text: event.description,title: event.custom },
@@ -76,6 +79,11 @@ $('#buscadorHora').fullCalendar({
 			}
 		})
 	},
+	eventAfterRender: function(event, element, view) {
+    var formattedTime = $.fullCalendar.formatDates(event.start, event.end, "HH:mm { - HH:mm}");
+    element.find(".fc-event-time").html(formattedTime + ' ' + event.icon);
+
+},
 	eventClick: function(calEvent, jsEvent, view){
 				
 		// Mostramos el detalle del evento

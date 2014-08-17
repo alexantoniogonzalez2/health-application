@@ -7,12 +7,7 @@ class PerPersonasPrevisionesSalud < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(
-    															:id,
-    															:fecha_inicio,
-    															:fecha_termino,
-    															:persona,
-    															:prevision_salud)
+    params.require(:list).permit(:id,:fecha_inicio,:fecha_termino,:persona,:prevision_salud)
   end
 
 end

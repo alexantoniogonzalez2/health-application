@@ -31,6 +31,20 @@ class AtencionesSaludController < ApplicationController
 
 	def edit
 
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
+		@actualizaciones = AgAgendamientoLogEstados
+			.joins(:agendamiento)
+			.select("ag_agendamiento_log_estados.fecha,
+							 ag_agendamiento_log_estados.agendamiento_estado_id,
+							 ag_agendamiento_log_estados.responsable_id,
+							 ag_agendamientos.persona_id")
+			.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
+				 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
+			.order(fecha: :desc)
+
+		@hora_actual = DateTime.current	
+
 		#validar que tenga acceso a esta atención		
 		@id = params[:id]
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
@@ -88,6 +102,7 @@ class AtencionesSaludController < ApplicationController
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 	  @prestadores = PrePrestadores.all
 	  @especialidades = ProEspecialidades.all
+	  @paises = TraPaises.all
 	  
 	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
 	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)

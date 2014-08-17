@@ -25,7 +25,10 @@ class PersonaDiagnosticoController < ApplicationController
 	def agregarDiagnostico
 
 		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
-	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
+	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @prestadores = PrePrestadores.all
+	  @especialidades = ProEspecialidades.all
+	  @paises = TraPaises.all	
 	  @primer_diagnostico = 0	
 
 		persona_diagnostico_atencion_actual = FiPersonaDiagnosticos

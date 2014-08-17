@@ -6,34 +6,35 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
+
 puts 'Direcciones'
-TraPaises.create! :nombre => "Chile"
 TraRegiones.create! :nombre => "Región Metropolitana"
 TraCiudades.create! :nombre => "Santiago"
 TraComunas.create! :nombre => "San Miguel"
 TraRegionesComunas.create! :region_id => 1, :comuna_id => 1
 TraTelefonos.create! :codigo => 2, :numero => 22222222 
 TraTelefonos.create! :codigo => 9, :numero => 22222222 
-TraDirecciones.create! :calle => "Calle", :numero => 1111, :comuna_id => 1, :ciudad_id => 1, :pais_id => 1
-TraDirecciones.create! :calle => "Calle2", :numero => 3333, :comuna_id => 1, :ciudad_id => 1, :pais_id => 1
+TraDirecciones.create! :calle => "Calle", :numero => 1111, :comuna_id => 1, :ciudad_id => 1, :pais_id => 46
+TraDirecciones.create! :calle => "Calle2", :numero => 3333, :comuna_id => 1, :ciudad_id => 1, :pais_id => 46
 
 #Users
 puts 'Users'
-U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U2= User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U3= User.create! :email => 'paciente3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U4= User.create! :email => 'doctor1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U5= User.create! :email => 'doctor2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U6= User.create! :email => 'doctor3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U7= User.create! :email => 'doctor4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U8= User.create! :email => 'secre1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U9= User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U2= User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U3= User.create! :email => 'paciente3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U4= User.create! :email => 'doctor1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U5= User.create! :email => 'doctor2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U6= User.create! :email => 'doctor3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U7= User.create! :email => 'doctor4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U8= User.create! :email => 'secre1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U9= User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
 
 #Pacientes
 puts 'Paciente 1'
 P1=PerPersonas.new
 P1.rut=10000000
-P1.digito_verificador='k'
+P1.digito_verificador='K'
 P1.nombre="Paciente 1"
 P1.apellido_paterno="Gutierrez"
 P1.apellido_materno="Gutierrez"
@@ -44,7 +45,7 @@ P1.save
 puts 'Paciente 2'
 P2=PerPersonas.new
 P2.rut=20000000
-P2.digito_verificador='k'
+P2.digito_verificador='K'
 P2.nombre="Paciente 2"
 P2.apellido_paterno="Hurtado"
 P2.apellido_materno="Hurtado"
@@ -55,7 +56,7 @@ P2.save
 puts 'Paciente 3'
 P3=PerPersonas.new
 P3.rut=30000000
-P3.digito_verificador='k'
+P3.digito_verificador='K'
 P3.nombre="Paciente 3"
 P3.apellido_paterno="Saldivar"
 P3.apellido_materno="Saldivar"
@@ -78,7 +79,7 @@ D1.save
 puts 'Doctor2'
 D2=PerPersonas.new
 D2.rut=4000004
-D2.digito_verificador='k'
+D2.digito_verificador='K'
 D2.nombre="Marcela"
 D2.apellido_paterno="Cardemil"
 D2.apellido_materno="Cardemil"
@@ -89,7 +90,7 @@ D2.save
 puts 'Doctor3'
 D3=PerPersonas.new
 D3.rut=40000040
-D3.digito_verificador='k'
+D3.digito_verificador='K'
 D3.nombre="Esteban"
 D3.apellido_paterno="Lopez"
 D3.apellido_materno="Lopez"
@@ -100,7 +101,7 @@ D3.save
 puts 'Doctor4'
 D4=PerPersonas.new
 D4.rut=40000400
-D4.digito_verificador='k'
+D4.digito_verificador='K'
 D4.nombre="Alex"
 D4.apellido_paterno="Lagos"
 D4.apellido_materno="Lagos"
@@ -112,7 +113,7 @@ D4.save
 puts 'Secretaria'
 A=PerPersonas.new
 A.rut=50000000
-A.digito_verificador='k'
+A.digito_verificador='K'
 A.nombre="Maricela"
 A.apellido_paterno="Santibañez"
 A.apellido_materno="Santibañez"
@@ -124,7 +125,7 @@ A.save
 puts 'Secretaria'
 B=PerPersonas.new
 B.rut=60000000
-B.digito_verificador='k'
+B.digito_verificador='K'
 B.nombre="Fernanda"
 B.apellido_paterno="González"
 B.apellido_materno="González"
@@ -173,7 +174,6 @@ PerPersonasPrevisionesSalud.create! :persona_id => 1, :prevision_salud_id => 1, 
 PerPersonasPrevisionesSalud.create! :persona_id => 1, :prevision_salud_id => 2, :fecha_inicio => '2014-01-01'
 PerPersonasPrevisionesSalud.create! :persona_id => 2, :prevision_salud_id => 2
 PerPersonasPrevisionesSalud.create! :persona_id => 3, :prevision_salud_id => 3
-
 
 #Prestador (Clinica)
 puts 'Prestador 1'
@@ -257,7 +257,6 @@ I.nombre="Pontificia Universidad Católica de Chile"
 I.save
 
 #Especialidad
-
 puts 'Especialidad 1'
 E1=ProEspecialidades.new
 E1.nombre="Medicina General"
@@ -274,7 +273,6 @@ E3.nombre="Cardiología"
 E3.save
 
 #Profesionales
-
 puts 'Relación Persona-Profesión'
 P=ProProfesionales.new
 P.validado = true
@@ -341,41 +339,16 @@ PP6.save
 
 #Estado agendamiento
 puts 'Estados Agendamientos'
-S1=AgAgendamientoEstados.new
-S1.nombre="Hora disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
-S1.save
-
-S2=AgAgendamientoEstados.new
-S2.nombre="Hora bloqueada" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible
-S2.save
-
-S3=AgAgendamientoEstados.new
-S3.nombre="Hora reservada" #Cuando un paciente toma una hora
-S3.save
-
-S4=AgAgendamientoEstados.new
-S4.nombre="Hora confirmada" #La atención se realizó por completo
-S4.save
-
-S5=AgAgendamientoEstados.new
-S5.nombre="Paciente en espera" #El paciente ya hizo el pago de bono y está en espera a que lo atiendan
-S5.save
-
-S6=AgAgendamientoEstados.new
-S6.nombre="Paciente siendo atendido" #El paciente está siendo atendido 
-S6.save
-
-S7=AgAgendamientoEstados.new
-S7.nombre="Paciente atendido" #La atención se realizó por completo
-S7.save
-
-S8=AgAgendamientoEstados.new
-S8.nombre="Hora cancelada" 
-S8.save
-
-S9=AgAgendamientoEstados.new
-S9.nombre="Paciente no llegó" 
-S9.save																																																																
+AgAgendamientoEstados.create! :nombre => "Hora disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
+AgAgendamientoEstados.create! :nombre => "Hora bloqueada" #Si se marcó como disponible a un Dr pero posteriormente, por X motivo, deja de estar disponible 
+AgAgendamientoEstados.create! :nombre => "Hora reservada" #Cuando un paciente toma una hora 
+AgAgendamientoEstados.create! :nombre => "Hora confirmada" #La atención se realizó por completo 
+AgAgendamientoEstados.create! :nombre => "Paciente en espera" #El paciente ya hizo el pago de bono y está en espera a que lo atiendan 
+AgAgendamientoEstados.create! :nombre => "Paciente siendo atendido" #El paciente está siendo atendido  
+AgAgendamientoEstados.create! :nombre => "Paciente atendido" #La atención se realizó por completo  
+AgAgendamientoEstados.create! :nombre => "Hora cancelada"
+AgAgendamientoEstados.create! :nombre => "Paciente no llegó"
+AgAgendamientoEstados.create! :nombre => "Hora reabierta"  
 
 #Estados Diagnóstico
 ED1=MedDiagnosticoEstados.new
@@ -445,38 +418,39 @@ G21 = MedPrestacionesGrupos.create! :id => 27 , :nombre => 'ATENCION ODONTOLOGIC
 G22 = MedPrestacionesGrupos.create! :id => 30 , :nombre => 'GRUPO DE PRESTACIONES: lentes, audífonos, PNDA y TBC.', :descripcion => ''
 
 puts 'Metatipos de Medicamentos'
-MTM1 = MedMedicamentosMetatipos.create! :id => 1, :nombre => 'Comprimido'
-MTM2 = MedMedicamentosMetatipos.create! :id => 2, :nombre => 'Jarabe'
-MTM3 = MedMedicamentosMetatipos.create! :id => 3, :nombre => 'Gotas'
-MTM4 = MedMedicamentosMetatipos.create! :id => 4, :nombre => 'Pomadas'
+MedMedicamentosMetatipos.create! :nombre => 'Comprimido'
+MedMedicamentosMetatipos.create! :nombre => 'Jarabe'
+MedMedicamentosMetatipos.create! :nombre => 'Gotas'
+MedMedicamentosMetatipos.create! :nombre => 'Pomadas'
+MedMedicamentosMetatipos.create! :nombre => 'Vacunas'
 
 puts 'Tipos de Medicamentos'
-TM1 = MedMedicamentosTipos.create! :id => 1, :unidad => 'comprimidos', :medicamento_metatipo_id => 1
-TM2 = MedMedicamentosTipos.create! :id => 2, :unidad => 'cápsulas', :medicamento_metatipo_id => 1
-TM3 = MedMedicamentosTipos.create! :id => 3, :unidad => 'ml', :medicamento_metatipo_id => 2
-TM4 = MedMedicamentosTipos.create! :id => 4, :unidad => 'gotas',:medicamento_metatipo_id => 3
-TM5 = MedMedicamentosTipos.create! :id => 5, :unidad => 'crema',:medicamento_metatipo_id => 4
+MedMedicamentosTipos.create! :unidad => 'comprimidos', :medicamento_metatipo_id => 1
+MedMedicamentosTipos.create! :unidad => 'cápsulas', :medicamento_metatipo_id => 1
+MedMedicamentosTipos.create! :unidad => 'ml', :medicamento_metatipo_id => 2
+MedMedicamentosTipos.create! :unidad => 'gotas',:medicamento_metatipo_id => 3
+MedMedicamentosTipos.create! :unidad => 'crema',:medicamento_metatipo_id => 4
+MedMedicamentosTipos.create! :unidad => '', :medicamento_metatipo_id => 5
 
 puts 'Laboratorios'
-L1 = MedLaboratorios.create! :id => 1, :nombre => 'Laboratorio 1'
+MedLaboratorios.create! :nombre => 'Laboratorio 1'
 
 puts 'Medicamentos'
-M1 = MedMedicamentos.create! :id => 1, :nombre => 'Medicamentos en comprimidos', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 1, :cantidad => 12, :laboratorio_id => 1
-M2 = MedMedicamentos.create! :id => 2, :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 2, :cantidad => 20, :laboratorio_id => 1
-M3 = MedMedicamentos.create! :id => 3, :nombre => 'Medicamentos en jarabe', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 3, :cantidad => 100, :laboratorio_id => 1
-M4 = MedMedicamentos.create! :id => 4, :nombre => 'Medicamentos en gotas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 4, :cantidad => 50, :laboratorio_id => 1
-M5 = MedMedicamentos.create! :id => 5, :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 5, :cantidad => 50, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Medicamentos en comprimidos', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 1, :cantidad => 12, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 2, :cantidad => 20, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Medicamentos en jarabe', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 3, :cantidad => 100, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Medicamentos en gotas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 4, :cantidad => 50, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 5, :cantidad => 50, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 6, :cantidad => 50, :laboratorio_id => 1
+
 
 puts 'Componente'
 C1 = MedComponentes.create! :id => 1, :nombre => 'Componente 1'
 C2 = MedComponentes.create! :id => 2, :nombre => 'Componente 2'
 
-
 puts 'Medicamentos Componente'
 C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
 C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
-
-
 
 puts 'Fin Seed'
 

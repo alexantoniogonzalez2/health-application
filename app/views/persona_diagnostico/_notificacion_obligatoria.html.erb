@@ -128,10 +128,10 @@
 			</div>
 			<div class="row clearfix">	
 				<div class="col-md-4 column">
-					<label>Fecha primeros síntomas (o primera consulta)</label>
+					<label>Fecha primeros síntomas</label> <span id='icon-eno' class="glyphicon glyphicon-info-sign"></span>
 				</div>
 				<div class="col-md-8 column">:
-					<input name="f_s_<%= p_d.id%>" class="datepicker" type="text" >
+					<input name="f_s_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.getFechaInicio %>" >
 				</div>
 			</div>
 			<div class="row clearfix">
@@ -139,8 +139,8 @@
 					<label>Confirmación diagnóstica</label>
 				</div>
 				<div class="col-md-6 column">:
-					<select id="selectbasic" name="selectbasic" class="form-control select-ajuste">
-						<option value="" selected disabled>Seleccione un tipo de diagnóstico</option>
+					<select id="select-conf-diag" name="selectbasic">
+						<option></option>
 			      <option value="1">Clínica (incluye imagenología)</option>
 			      <option value="2">Epidemiológica</option>
 			      <option value="3">Frotis</option>
@@ -149,21 +149,32 @@
 			      <option value="6">Biopsia</option>
 			      <option value="7">Autopsia</option>
 			    </select>
-				</div>
-				
+				</div>				
 			</div>
 			<div class="row clearfix">	
 				<div class="col-md-4 column">
 					<label>Antecedentes de vacunación</label>
 				</div>
 				<div class="col-md-8 column">:
+					<div class="form-group ajuste-eno">
+					  <label class="radio-inline" for="radios-0"><input type="radio" name="radios" id="radios-0" value="1" checked="checked">Sí</label> 
+					  <label class="radio-inline" for="radios-1"><input type="radio" name="radios" id="radios-1" value="2">No</label> 
+					  <label class="radio-inline" for="radios-2"><input type="radio" name="radios" id="radios-2" value="3">Ignorado</label> 
+					  <label class="radio-inline" for="radios-3"><input type="radio" name="radios" id="radios-3" value="4">No corresponde</label>
+					</div>
 				</div>
 			</div>
 			<div class="row clearfix">	
 				<div class="col-md-4 column">
 					<label>País de contagio</label>
 				</div>
-				<div class="col-md-8 column">:
+				<div class="col-md-6 column">:
+					<select id="select-pais-contagio" name="selectbasic">
+						<option></option>					
+						  <% @paises.each do |pais| %>
+						  	<option value="<%= pais.id %>"><%= pais.nombre %></option>      			
+	   					<% end %>
+			    </select>
 				</div>
 			</div>
 			<div class="row clearfix">	
@@ -171,6 +182,13 @@
 					<label>Embarazo</label>
 				</div>
 				<div class="col-md-8 column">:
+					<div class="form-group ajuste-eno">
+					  <label class="radio-inline" for="radios-0"><input type="radio" name="radios" id="radios-0" value="1" checked="checked">Sí</label> 
+					  <label class="radio-inline" for="radios-1"><input type="radio" name="radios" id="radios-1" value="2">No</label> 
+					  <label class="radio-inline" for="radios-3"><input type="radio" name="radios" id="radios-3" value="4">No corresponde</label>
+					  <label>Semanas de gestación</label>
+					  <input id="semanas" type="text" class="form-control" maxlength="2" size="2" >
+					</div>
 				</div>
 			</div>
 			<div class="row clearfix">	
@@ -205,47 +223,6 @@
 					<label class="firma">Firma profesional</label>
 				</div>				
 			</div>
-		</div>
- 	</div>
-</div>
-
-<div class="panel panel-default">
-	<div class="panel-body panel-body-ajustado">
-		<div class="container ajustado">
-			<div class="row clearfix">	
-				<div class="col-md-12 column">
-				En caso que la persona que tomó conocimiento no sea el paciente, identificar:			
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Nombre</label>
-				</div>
-				<div class="col-md-8 column">:					
-				</div>				
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Rut</label>
-				</div>
-				<div class="col-md-8 column">:					
-				</div>				
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Correo electrónico</label>
-				</div>
-				<div class="col-md-8 column">:					
-				</div>				
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Celular</label>
-				</div>
-				<div class="col-md-8 column">:					
-				</div>				
-			</div>
-
 		</div>
  	</div>
 </div>
