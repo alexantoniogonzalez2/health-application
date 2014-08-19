@@ -1,3 +1,14 @@
+function cargarMotivos(){
+
+	$('input[type=radio][name^=radios-motivo-]').change(function() {
+	  var id_agend = $(this).attr('name').substring(14);
+	  var m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();
+	  m_c == 1 ? $('#select-motivo-'+id_agend).hide() : $('#select-motivo-'+id_agend).show();
+	  return m_c;
+	});
+
+}
+
 if ( $( "#profesional" ).length ){
 	  
 	$.ajax({
@@ -95,6 +106,8 @@ $('#buscadorHora').fullCalendar({
 
 			$('#modal-content').html(response);
     	$('#modal-container').modal('show')	
+    	motivo = cargarMotivos();
+
 
 			// Si existe el botón "cancelar-hora", le pondrá la siguiente acción al hacer click
 			$('#modal-content .modal-footer .cancelar-hora').click(function(){
@@ -263,24 +276,30 @@ $('#buscadorHora').fullCalendar({
 
 			// Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click
 			$('#modal-content .modal-footer .pedir-hora').click(function(){
+
+				id_agend = calEvent.id
+				m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();				
 				
 				$.ajax({
 					type: 'POST',
 					url: '/aux/pedirHoraEvento',
-					data: {	agendamiento_id: calEvent.id	},
+					data: {	
+						agendamiento_id: id_agend,
+						motivo: m_c,
+						antedente: 'hola'
+
+					},
 					success: function(response) {
 
-						id=calEvent.id
-						$('#buscadorHora').fullCalendar('removeEvents',id)
-						if (response=="1"){	$('#modal-container').modal('hide')	}
-						else{	alert("La hora ya fue tomada")}
+						$('#buscadorHora').fullCalendar('removeEvents',id_agend)
+						response == "1" ? $('#modal-container').modal('hide')	:	alert("La hora ya fue tomada");
 
 						// Re-cargamos el evento modificado
 						$.ajax({
 							type: 'POST',
 							url: '/aux/mostrarEventos',
 							data: {
-								evento_id: id,
+								evento_id: id_agend,
 								especialidad_id: especialidad_id,
 								profesional_id: profesional_id,
 								prestador_id: prestador_id,

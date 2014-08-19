@@ -14,7 +14,7 @@
             <li>
               <a href="#panel-interconsulta-<%= p_d.id %>" class="panel_tab" data-toggle="tab">Interconsulta</a>
             </li>
-            <% if p_d.diagnostico.auge %>
+            <% if p_d.diagnostico.esAuge %>
               <li>
                 <a href="#panel-constancia-ges-<%= p_d.id %>" class="panel_tab" data-toggle="tab">Constancia GES</a>
               </li>
@@ -58,14 +58,12 @@
                 <div class="row clearfix">
                   <div class="col-md-3 column">
                     <div class="form-group form-estado" id="e_d_<%= p_d.id %>">
-                      <label class="control-label" for="radios">Estado de diagnóstico</label>
-                      <div>
-                        <% @estados_diagnostico.each do |e_d| %>  
-                          <div class="radio">
-                            <label for="radios-<%= p_d.id%>-<%= e_d.id %>"><input type="radio" name="radios-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
-                          </div> 
-                        <% end %>  
-                      </div>
+                      <label class="control-label" for="radios">Estado de diagnóstico</label>                      
+                      <% @estados_diagnostico.each do |e_d| %>  
+                        <div class="radio">
+                          <label for="radios-<%= p_d.id%>-<%= e_d.id %>"><input type="radio" name="radios-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
+                        </div> 
+                      <% end %>                    
                     </div>
                   </div>
                   <% if p_d.primer_diagnostico and p_d.estado_diagnostico.id == 1 %>         
@@ -109,7 +107,7 @@
               </div> <!--Cierre container -->
             </div>
 
-            <% if p_d.diagnostico.auge %>
+            <% if p_d.diagnostico.esAuge %>
               <div class="tab-pane" id="panel-constancia-ges-<%= p_d.id %>">
                 <div class="container ajustado">  
                   <div class="row clearfix">
@@ -126,7 +124,7 @@
               </div> 
             <% end %>
 
-            <% if p_d.diagnostico.auge %>
+            <% if p_d.diagnostico.esAuge %>
               <div class="tab-pane" id="panel-notificacion-obligatoria-<%= p_d.id %>">
                 <div class="container ajustado">  
                   <div class="row clearfix">

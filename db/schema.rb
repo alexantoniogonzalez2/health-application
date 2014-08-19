@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140816170308) do
+ActiveRecord::Schema.define(version: 20140819051337) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.text     "nombre"
@@ -27,14 +27,17 @@ ActiveRecord::Schema.define(version: 20140816170308) do
   end
 
   create_table "ag_agendamientos", force: true do |t|
+    t.integer  "persona_id"
     t.datetime "fecha_comienzo"
     t.datetime "fecha_final"
+    t.datetime "fecha_llegada_paciente"
     t.datetime "fecha_comienzo_real"
     t.datetime "fecha_final_real"
-    t.datetime "fecha_llegada_paciente"
-    t.integer  "persona_id"
     t.integer  "agendamiento_estado_id"
     t.integer  "especialidad_prestador_profesional_id"
+    t.boolean  "motivo_consulta_nuevo"
+    t.integer  "persona_diagnostico_control_id"
+    t.integer  "capitulo_cie10_control_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -288,9 +291,26 @@ ActiveRecord::Schema.define(version: 20140816170308) do
     t.datetime "updated_at"
   end
 
-  create_table "med_diagnosticos_grupos", force: true do |t|
-    t.text     "codigo"
+  create_table "med_diagnosticos_bloques", force: true do |t|
     t.text     "nombre"
+    t.text     "codigo"
+    t.integer  "capitulo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_diagnosticos_capitulos", force: true do |t|
+    t.text     "nombre"
+    t.text     "codigo"
+    t.text     "descripcion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_diagnosticos_grupos", force: true do |t|
+    t.text     "nombre"
+    t.text     "codigo"
+    t.integer  "bloque_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

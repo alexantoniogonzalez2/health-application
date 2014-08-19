@@ -11,6 +11,10 @@ class MedDiagnosticos < ActiveRecord::Base
 
   end  
 
+  def esAuge
+    true
+  end  
+
   private
   def app_params
     params.require(:list).permit(:codigo_cie10,:descripcion,:frecuente,:nodo_terminal,:grupo,:id,:nombre,:persona_diagnosticos,:problemas_salud_auge,:enfermedades_notificacion_obligatoria)

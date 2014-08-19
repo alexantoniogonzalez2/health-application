@@ -1,4 +1,4 @@
-$('#icon-eno').qtip({ // Grab some elements to apply the tooltip to
+$('#icon-eno').qtip({ 
     content: {
         text: 'Fecha de primeros síntomas o de primera consulta.'
     }

@@ -6,7 +6,8 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
 	belongs_to :gesta, :class_name => 'FiGestas'
 	has_many :persona_medicamentos, :class_name => 'FiPersonaMedicamentos', :foreign_key => 'persona_diagnostico_id' 
 	has_many :persona_diagnosticos_atencion_salud, :class_name => 'FiPersonaDiagnosticosAtencionesSalud', :foreign_key => 'persona_diagnostico_id', dependent: :destroy 
-
+  has_many :agendamientos_control, :class_name => 'AgAgendamientos', :foreign_key => 'persona_diagnostico_control_id'
+  
   def getFechaInicio
     fecha_formato = ''
     if fecha_inicio
@@ -34,7 +35,8 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
                    :id,
                    :persona,
                    :persona_diagnosticos_atencion_salud,
-                   :persona_medicamentos)
+                   :persona_medicamentos,
+                   :agendamientos_control)
   end        
 
 end

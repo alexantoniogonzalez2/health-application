@@ -20,118 +20,33 @@ TraDirecciones.create! :calle => "Calle2", :numero => 3333, :comuna_id => 1, :ci
 
 #Users
 puts 'Users'
-U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U2= User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U3= User.create! :email => 'paciente3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U4= User.create! :email => 'doctor1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U5= User.create! :email => 'doctor2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U6= User.create! :email => 'doctor3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U7= User.create! :email => 'doctor4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U8= User.create! :email => 'secre1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
-U9= User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234', :fecha_nacimiento => '2014-10-23'
+U1= User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U2= User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U3= User.create! :email => 'paciente3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U4= User.create! :email => 'doctor1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U5= User.create! :email => 'doctor2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U6= User.create! :email => 'doctor3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U7= User.create! :email => 'doctor4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U8= User.create! :email => 'secre1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U9= User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
 
 #Pacientes
-puts 'Paciente 1'
-P1=PerPersonas.new
-P1.rut=10000000
-P1.digito_verificador='K'
-P1.nombre="Paciente 1"
-P1.apellido_paterno="Gutierrez"
-P1.apellido_materno="Gutierrez"
-P1.genero="Masculino"
-P1.user = U1
-P1.save
+puts 'Pacientes'
+P1 = PerPersonas.create! :rut => 10000000, :digito_verificador => 'K', :nombre => 'Alex', :apellido_paterno => 'González', :apellido_materno => 'Tobar', :genero=> 'Masculino', :fecha_nacimiento => '1984-10-23', :user => U1
+P2 = PerPersonas.create! :rut => 20000000, :digito_verificador => '5', :nombre => 'Camila', :apellido_paterno => 'González', :apellido_materno => 'Aravena', :genero=> 'Femenino', :fecha_nacimiento => '2012-06-28', :user => U2
+P3 = PerPersonas.create! :rut => 30000000, :digito_verificador => '2', :nombre => 'Luis', :apellido_paterno => 'González', :apellido_materno => 'Salazar', :genero=> 'Masculino', :fecha_nacimiento => '1934-10-23', :user => U3
 
-puts 'Paciente 2'
-P2=PerPersonas.new
-P2.rut=20000000
-P2.digito_verificador='K'
-P2.nombre="Paciente 2"
-P2.apellido_paterno="Hurtado"
-P2.apellido_materno="Hurtado"
-P2.genero="Masculino"
-P2.user = U2
-P2.save
-
-puts 'Paciente 3'
-P3=PerPersonas.new
-P3.rut=30000000
-P3.digito_verificador='K'
-P3.nombre="Paciente 3"
-P3.apellido_paterno="Saldivar"
-P3.apellido_materno="Saldivar"
-P3.genero="Femenino"
-P3.user = U3
-P3.save
-
-#Profesional (doctor)
-puts 'Doctor1'
-D1=PerPersonas.new
-D1.rut=40000000
-D1.digito_verificador=1
-D1.nombre="Fabricio"
-D1.apellido_paterno="Rio"
-D1.apellido_materno="Rio"
-D1.genero="Masculino"
-D1.user = U4
-D1.save
-
-puts 'Doctor2'
-D2=PerPersonas.new
-D2.rut=4000004
-D2.digito_verificador='K'
-D2.nombre="Marcela"
-D2.apellido_paterno="Cardemil"
-D2.apellido_materno="Cardemil"
-D2.genero="Femenino"
-D2.user = U5
-D2.save
-
-puts 'Doctor3'
-D3=PerPersonas.new
-D3.rut=40000040
-D3.digito_verificador='K'
-D3.nombre="Esteban"
-D3.apellido_paterno="Lopez"
-D3.apellido_materno="Lopez"
-D3.genero="Masculino"
-D3.user = U6
-D3.save
-
-puts 'Doctor4'
-D4=PerPersonas.new
-D4.rut=40000400
-D4.digito_verificador='K'
-D4.nombre="Alex"
-D4.apellido_paterno="Lagos"
-D4.apellido_materno="Lagos"
-D4.genero="Masculino"
-D4.user = U7
-D4.save
+#Profesionales
+puts 'Doctores'
+D1 = PerPersonas.create! :rut => 40000000, :digito_verificador => '2', :nombre => 'Luis', :apellido_paterno => 'Contreras', :apellido_materno => 'Aravena', :genero=> 'Masculino', :fecha_nacimiento => '1984-07-23', :user => U4
+D2 = PerPersonas.create! :rut => 50000000, :digito_verificador => '2', :nombre => 'Marcela', :apellido_paterno => 'Cardemil', :apellido_materno => 'Lobos', :genero=> 'Masculino', :fecha_nacimiento => '1984-07-23', :user => U5
+D3 = PerPersonas.create! :rut => 60000000, :digito_verificador => '2', :nombre => 'Esteban', :apellido_paterno => 'López', :apellido_materno => 'Pérez', :genero=> 'Masculino', :fecha_nacimiento => '1984-07-23', :user => U6
+D4 = PerPersonas.create! :rut => 70000000, :digito_verificador => '2', :nombre => 'Alex', :apellido_paterno => 'Lagos', :apellido_materno => 'Lagos', :genero=> 'Masculino', :fecha_nacimiento => '1984-07-23', :user => U7
 
 #Administrativo
-puts 'Secretaria'
-A=PerPersonas.new
-A.rut=50000000
-A.digito_verificador='K'
-A.nombre="Maricela"
-A.apellido_paterno="Santibañez"
-A.apellido_materno="Santibañez"
-A.genero="Femenino"
-A.user = U8
-A.save
-
-#Administrativo
-puts 'Secretaria'
-B=PerPersonas.new
-B.rut=60000000
-B.digito_verificador='K'
-B.nombre="Fernanda"
-B.apellido_paterno="González"
-B.apellido_materno="González"
-B.genero="Femenino"
-B.user = U9
-B.save
+puts 'Secretarias'
+A = PerPersonas.create! :rut => 80000000, :digito_verificador => '2', :nombre => 'Maricela', :apellido_paterno => 'Santibañez', :apellido_materno => 'Santibañez', :genero=> 'Femenino', :fecha_nacimiento => '1984-07-23', :user => U8
+B = PerPersonas.create! :rut => 90000000, :digito_verificador => '2', :nombre => 'Fernanda', :apellido_paterno => 'González', :apellido_materno => 'González', :genero=> 'Femenino', :fecha_nacimiento => '1984-07-23', :user => U9
 
 puts 'Personas-telefono'
 PerPersonasTelefonos.create! :persona_id => 1, :telefono_id => 1
@@ -451,6 +366,35 @@ C2 = MedComponentes.create! :id => 2, :nombre => 'Componente 2'
 puts 'Medicamentos Componente'
 C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
 C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
+
+puts 'Capítulos'
+MedDiagnosticosCapitulos.create! :nombre => 'Ciertas enfermedades infecciosas y parasitarias'
+MedDiagnosticosCapitulos.create! :nombre => 'Neoplasias'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades de la sangre y de los organos hematopoyeticos y otros trastornos que afectan el mecanismo de la inmunidad'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades endocrinas, nutricionales y metabolicas'
+MedDiagnosticosCapitulos.create! :nombre => 'Trastornos mentales y del comportamiento'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema nervioso'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del ojo y sus anexos'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del oido y de la apofisis mastoides'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema circulatorio'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema respiratorio'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del aparato digestivo'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades de la piel y el tejido subcutaneo'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema osteomuscular y del tejido conectivo'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del aparato genitourinario'
+MedDiagnosticosCapitulos.create! :nombre => 'Embarazo, parto y puerperio'
+MedDiagnosticosCapitulos.create! :nombre => 'Ciertas afecciones originadas en el periodo perinatal'
+MedDiagnosticosCapitulos.create! :nombre => 'Malformaciones congenitas, deformidades y anomalias cromosomicas'
+MedDiagnosticosCapitulos.create! :nombre => 'Sintomas, signos y hallazgos anormales clinicos y de laboratorio, no clasificados en otra parte'
+MedDiagnosticosCapitulos.create! :nombre => 'Traumatismos, envenenamientos y algunas otras consecuencias de causa externa'
+MedDiagnosticosCapitulos.create! :nombre => 'Causas extremas de morbilidad y de mortalidad'
+MedDiagnosticosCapitulos.create! :nombre => 'Factores que influyen en el estado de salud y contacto con los servicios de salud'
+MedDiagnosticosCapitulos.create! :nombre => 'Codigos para situaciones especiales'
+
+puts 'Alergias'
+MedAlergias.create! :nombre => 'Polvo'
+MedAlergias.create! :nombre => 'Polen'
+
 
 puts 'Fin Seed'
 

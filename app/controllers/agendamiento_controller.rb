@@ -323,7 +323,7 @@ class AgendamientoController < ApplicationController
 			perm_profesional = (current_user.id == @Agendamiento.especialidad_prestador_profesional.profesional_id)? true : false 	
 		end 
 			
-		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_paciente,perm_profesional)
+		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_paciente,perm_profesional,current_user.id)
 		
 		if tmp.length >0 
 			render :text=> tmp

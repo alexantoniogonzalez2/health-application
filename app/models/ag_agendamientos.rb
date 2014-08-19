@@ -3,6 +3,8 @@ class AgAgendamientos < ActiveRecord::Base
 	belongs_to :especialidad_prestador_profesional, :class_name => 'PrePrestadorProfesionales'
 	belongs_to :persona, :class_name => 'PerPersonas'
 	belongs_to :agendamiento_estado, :class_name => 'AgAgendamientoEstados'
+  belongs_to :persona_diagnostico_control, :class_name => 'FiPersonaDiagnosticos'
+  belongs_to :capitulo_cie10_control, :class_name => 'MedDiagnosticosCapitulos'
   has_one :atencion_salud, :class_name => 'FiAtencionesSalud', :foreign_key => 'agendamiento_id'
   has_many :agendamiento_log_estados, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'agendamiento_id'
 
@@ -154,7 +156,7 @@ class AgAgendamientos < ActiveRecord::Base
 
 
 
-  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_paciente,perm_profesional) #los parámetros corresponden a permisos
+  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_paciente,perm_profesional,id_usuario) #los parámetros corresponden a permisos
 
     show=false
     detalle = ''
@@ -169,6 +171,7 @@ class AgAgendamientos < ActiveRecord::Base
     hora_llegada =''
     hora_inicio_atencion =''
     hora_termino_atencion =''
+    informacion_adicional = ''
     estado = agendamiento_estado.nombre
 
     detalle<<'<div class="modal-header">
@@ -182,6 +185,36 @@ class AgAgendamientos < ActiveRecord::Base
               <tr><td><h5>Fecha y hora de inicio</h5></td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
               <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
+    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional 
+
+      @antecedentes = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1', id_usuario)
+     
+      informacion_antecedentes = '<select id="select-motivo-'<<id.to_s<<'" name="selectbasic" class="form-control oculto">'      
+      @antecedentes.each do |ant|
+        informacion_antecedentes<<'<option value="1">'<<ant.diagnostico.nombre<<'</option>'
+      end
+      informacion_antecedentes<<'</select>'
+  
+      informacion_adicional<<'<tr>
+                                <td><h5>Su motivo de consulta:</h5></td>
+                                <td>
+                                  <div id="m_c_'<<id.to_s<<'">
+                                    <div class="radio">
+                                      <label for="radios-0">
+                                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-0" value="1" checked="checked">Es nuevo</label>
+                                    </div>
+                                    <div class="radio">
+                                      <label for="radios-1">
+                                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-1" value="2">Desea controlar un antecedente
+                                      </label>
+                                    </div>
+                                  </div>'<<informacion_antecedentes <<'
+                                </td>
+                              </tr>'
+
+       detalle<<informacion_adicional
+    end 
+
     #los elementos se configuran si se cumplen los permisos                
     if perm_admin_bloquea or perm_profesional
       reabrir = "<button class='btn btn-primary desbloquear-hora'>Desbloquear Hora</button>"
@@ -189,8 +222,8 @@ class AgAgendamientos < ActiveRecord::Base
     if (perm_admin_bloquea or perm_profesional) and (estado == 'Hora disponible')
       bloquear =  "<button class='btn btn-primary bloquear-hora'>Bloquear hora</button>"
     end  
-    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional
-       tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button><div>Su motivo de consulta:</div>"
+    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional 
+       tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
     end   
     if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
       if estado != 'Hora disponible' and estado != 'Hora bloqueada'     
@@ -244,16 +277,21 @@ class AgAgendamientos < ActiveRecord::Base
 
   private
   def app_params
-    params.require(:list).permit( :atencion_medica,
-                                  :agendamiento_estado,
-                                  :agendamiento_log_estados,
-                                  :fecha_comienzo, 
-                                  :fecha_comienzo_real, 
-                                  :fecha_final, 
-                                  :fecha_final_real, 
+    params.require(:list).permit( :id,
+                                  :persona,
+                                  :fecha_comienzo,
+                                  :fecha_final,
                                   :fecha_llegada_paciente,
-                                  :id,
-                                  :persona)
+                                  :fecha_comienzo_real,
+                                  :fecha_final_real,                                  
+                                  :agendamiento_estado,
+                                  :especialidad_prestador_profesional,
+                                  :motivo_consulta_nuevo,
+                                  :persona_diagnostico_control,
+                                  :capitulo_cie10_control,
+                                  :atencion_salud,  
+                                  :agendamiento_log_estados                                  
+                                )
   end
 
 end
