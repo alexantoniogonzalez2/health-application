@@ -3,8 +3,17 @@ function cargarMotivos(){
 	$('input[type=radio][name^=radios-motivo-]').change(function() {
 	  var id_agend = $(this).attr('name').substring(14);
 	  var m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();
-	  m_c == 1 ? $('#select-motivo-'+id_agend).hide() : $('#select-motivo-'+id_agend).show();
+	  if (m_c == 1 ){
+	  	$('#select-motivo-'+id_agend).hide();
+	  	$('#select-capitulo-'+id_agend).show();
+	  } 
+	  else {
+	  	$('#select-motivo-'+id_agend).show();
+	  	$('#select-motivo-'+id_agend).length ? $('#select-capitulo-'+id_agend).hide() : $('#select-capitulo-'+id_agend).show();
+	  };
+
 	  return m_c;
+
 	});
 
 }

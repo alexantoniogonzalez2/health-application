@@ -133,6 +133,10 @@ R5=PreRolAdministrativos.new
 R5.nombre="Generar estadísticas"
 R5.save
 
+R6=PreRolAdministrativos.new
+R6.nombre="Tomar horas"
+R6.save
+
 puts 'Relación Prestador - Administrativo'
 PA=PrePrestadorAdministrativos.new
 PA.prestador=C1
@@ -156,6 +160,12 @@ PA=PrePrestadorAdministrativos.new
 PA.prestador=C1
 PA.administrativo=A
 PA.rol_administrativo=R4
+PA.save
+
+PA=PrePrestadorAdministrativos.new
+PA.prestador=C1
+PA.administrativo=A
+PA.rol_administrativo=R6
 PA.save
 
 PA2=PrePrestadorAdministrativos.new
@@ -370,7 +380,7 @@ C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :compone
 puts 'Capítulos'
 MedDiagnosticosCapitulos.create! :nombre => 'Ciertas enfermedades infecciosas y parasitarias'
 MedDiagnosticosCapitulos.create! :nombre => 'Neoplasias'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades de la sangre y de los organos hematopoyeticos y otros trastornos que afectan el mecanismo de la inmunidad'
+MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades de la sangre y de los organos hematopoyeticos'
 MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades endocrinas, nutricionales y metabolicas'
 MedDiagnosticosCapitulos.create! :nombre => 'Trastornos mentales y del comportamiento'
 MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema nervioso'
@@ -385,7 +395,7 @@ MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del aparato genitourin
 MedDiagnosticosCapitulos.create! :nombre => 'Embarazo, parto y puerperio'
 MedDiagnosticosCapitulos.create! :nombre => 'Ciertas afecciones originadas en el periodo perinatal'
 MedDiagnosticosCapitulos.create! :nombre => 'Malformaciones congenitas, deformidades y anomalias cromosomicas'
-MedDiagnosticosCapitulos.create! :nombre => 'Sintomas, signos y hallazgos anormales clinicos y de laboratorio, no clasificados en otra parte'
+MedDiagnosticosCapitulos.create! :nombre => 'Sintomas, signos y hallazgos anormales clinicos y de laboratorio'
 MedDiagnosticosCapitulos.create! :nombre => 'Traumatismos, envenenamientos y algunas otras consecuencias de causa externa'
 MedDiagnosticosCapitulos.create! :nombre => 'Causas extremas de morbilidad y de mortalidad'
 MedDiagnosticosCapitulos.create! :nombre => 'Factores que influyen en el estado de salud y contacto con los servicios de salud'

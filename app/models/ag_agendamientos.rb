@@ -125,8 +125,6 @@ class AgAgendamientos < ActiveRecord::Base
       icon = "<i class='fa fa-child'></i>";
     end  
 
-
-
     if show
       {
         'id'          => id,
@@ -143,8 +141,6 @@ class AgAgendamientos < ActiveRecord::Base
     else
       {}
     end
-
-
   end
 
   def dateTimeFormat(dt,val)
@@ -156,7 +152,7 @@ class AgAgendamientos < ActiveRecord::Base
 
 
 
-  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_paciente,perm_profesional,id_usuario) #los parámetros corresponden a permisos
+  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_tomar_horas,perm_paciente,perm_profesional,id_usuario) #los parámetros corresponden a permisos
 
     show=false
     detalle = ''
@@ -171,7 +167,10 @@ class AgAgendamientos < ActiveRecord::Base
     hora_llegada =''
     hora_inicio_atencion =''
     hora_termino_atencion =''
-    informacion_adicional = ''
+    motivo = ''
+    informacion_antecedentes = ''
+    elegir_paciente = ''
+    info_cap = ''
     estado = agendamiento_estado.nombre
 
     detalle<<'<div class="modal-header">
@@ -185,35 +184,57 @@ class AgAgendamientos < ActiveRecord::Base
               <tr><td><h5>Fecha y hora de inicio</h5></td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
               <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
-    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional 
-
-      @antecedentes = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1', id_usuario)
-     
-      informacion_antecedentes = '<select id="select-motivo-'<<id.to_s<<'" name="selectbasic" class="form-control oculto">'      
-      @antecedentes.each do |ant|
-        informacion_antecedentes<<'<option value="1">'<<ant.diagnostico.nombre<<'</option>'
+    if perm_tomar_horas
+      elegir_paciente = '<tr><td></td><td><select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="form-control"><option value="" selected disabled>Seleccione un paciente</option>' 
+      @pacientes = PerPersonas.all
+      @pacientes.each do |pac|
+        elegir_paciente<<'<option value="1">'<<pac.showName('%n%p%m')<<'</option>'      
       end
-      informacion_antecedentes<<'</select>'
-  
-      informacion_adicional<<'<tr>
-                                <td><h5>Su motivo de consulta:</h5></td>
-                                <td>
-                                  <div id="m_c_'<<id.to_s<<'">
-                                    <div class="radio">
-                                      <label for="radios-0">
-                                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-0" value="1" checked="checked">Es nuevo</label>
-                                    </div>
-                                    <div class="radio">
-                                      <label for="radios-1">
-                                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-1" value="2">Desea controlar un antecedente
-                                      </label>
-                                    </div>
-                                  </div>'<<informacion_antecedentes <<'
-                                </td>
-                              </tr>'
+      elegir_paciente<<'</select></td></tr>'    
+    end          
 
-       detalle<<informacion_adicional
+
+    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and ((estado == 'Hora disponible' and !perm_profesional) or perm_paciente or (perm_profesional and estado != 'Hora disponible')) or perm_tomar_horas           
+      info_cap = '<tr><td></td><td><select id="select-capitulo-'<<id.to_s<<'" name="selectbasic" class="form-control"><option value="" selected disabled>Seleccione un motivo</option>' 
+      @capitulos = MedDiagnosticosCapitulos.all
+      @capitulos.each do |cap|
+        info_cap<<'<option value="1">'<<cap.nombre<<'</option>'      
+      end
+      info_cap<<'</select></td></tr>'
+    end            
+
+    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe 
+      # De existir, carga los antecedentes del paciente
+      @antecedentes = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1', id_usuario)     
+      unless @antecedentes.empty?
+        informacion_antecedentes = '<tr><td></td><td><select id="select-motivo-'<<id.to_s<<'" name="selectbasic" class="form-control oculto"><option value="" selected disabled>Seleccione un antecedente</option>'      
+        @antecedentes.each do |ant|
+          informacion_antecedentes<<'<option value="1">'<<ant.diagnostico.nombre<<'</option>'      
+        end
+        informacion_antecedentes<<'</select></td></tr>'
+      end
     end 
+    
+    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and ((estado == 'Hora disponible' and !perm_profesional )  or perm_paciente  or (perm_profesional and estado != 'Hora disponible')) or perm_tomar_horas
+      motivo<<'<tr>
+                <td><h5>El motivo de consulta:</h5></td>
+                <td>
+                  <div id="m_c_'<<id.to_s<<'">
+                    <div class="radio">
+                      <label for="radios-0">
+                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-0" value="1" checked="checked">Es nuevo</label>
+                    </div>
+                    <div class="radio">
+                      <label for="radios-1">
+                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-1" value="2">Desea controlar un antecedente
+                      </label>
+                    </div>
+                  </div>
+                </td>
+              </tr>'
+    end
+              
+    detalle<<elegir_paciente<<motivo<<informacion_antecedentes<<info_cap
 
     #los elementos se configuran si se cumplen los permisos                
     if perm_admin_bloquea or perm_profesional

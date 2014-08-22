@@ -312,7 +312,8 @@ class AgendamientoController < ApplicationController
 		perm_admin_genera = tieneRol('Generar agendamientos')
 		perm_admin_confirma = tieneRol('Confirmar agendamientos')
 		perm_admin_recibe = tieneRol('Recibir pacientes')
-		perm_admin_bloquea = tieneRol('Bloquear horas')	
+		perm_admin_bloquea = tieneRol('Bloquear horas')
+		perm_tomar_horas = tieneRol('Tomar horas')	
 		
 		@Agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
 
@@ -323,7 +324,7 @@ class AgendamientoController < ApplicationController
 			perm_profesional = (current_user.id == @Agendamiento.especialidad_prestador_profesional.profesional_id)? true : false 	
 		end 
 			
-		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_paciente,perm_profesional,current_user.id)
+		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_tomar_horas,perm_paciente,perm_profesional,current_user.id)
 		
 		if tmp.length >0 
 			render :text=> tmp
