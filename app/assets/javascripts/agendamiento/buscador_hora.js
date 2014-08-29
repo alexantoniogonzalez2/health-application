@@ -1,15 +1,29 @@
 function cargarMotivos(){
 
+		$(".chosen-select").chosen({
+    no_results_text: 'No hubo coincidencias.',
+    width: '300px',
+    allow_single_deselect: true
+
+	}); 
+
 	$('input[type=radio][name^=radios-motivo-]').change(function() {
 	  var id_agend = $(this).attr('name').substring(14);
 	  var m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();
 	  if (m_c == 1 ){
 	  	$('#select-motivo-'+id_agend).hide();
+	  	$('#select-motivo-'+id_agend).prop('selectedIndex',0);
 	  	$('#select-capitulo-'+id_agend).show();
 	  } 
 	  else {
 	  	$('#select-motivo-'+id_agend).show();
-	  	$('#select-motivo-'+id_agend).length ? $('#select-capitulo-'+id_agend).hide() : $('#select-capitulo-'+id_agend).show();
+	  	
+	  	if($('#select-motivo-'+id_agend).length ){
+	  		$('#select-capitulo-'+id_agend).hide();
+	  		$('#select-capitulo-'+id_agend).prop('selectedIndex',0)
+
+			} else { $('#select-capitulo-'+id_agend).show(); };
+	  
 	  };
 
 	  return m_c;
@@ -287,7 +301,10 @@ $('#buscadorHora').fullCalendar({
 			$('#modal-content .modal-footer .pedir-hora').click(function(){
 
 				id_agend = calEvent.id
-				m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();				
+				m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();	
+				s_m = $('#select-motivo-'+id_agend).val();
+				s_c = $('#select-capitulo-'+id_agend).val();	
+				s_p = $('#select-paciente-'+id_agend).val();	
 				
 				$.ajax({
 					type: 'POST',
@@ -295,8 +312,9 @@ $('#buscadorHora').fullCalendar({
 					data: {	
 						agendamiento_id: id_agend,
 						motivo: m_c,
-						antedente: 'hola'
-
+						antecedente: s_m,
+						capitulo_cie_10: s_c,
+						paciente: s_p
 					},
 					success: function(response) {
 
@@ -311,7 +329,7 @@ $('#buscadorHora').fullCalendar({
 								evento_id: id_agend,
 								especialidad_id: especialidad_id,
 								profesional_id: profesional_id,
-								prestador_id: prestador_id,
+								prestador_id: prestador_id
 							},
 							success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
 							error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }

@@ -184,11 +184,11 @@ class AgAgendamientos < ActiveRecord::Base
               <tr><td><h5>Fecha y hora de inicio</h5></td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
               <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
-    if perm_tomar_horas
-      elegir_paciente = '<tr><td></td><td><select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="form-control"><option value="" selected disabled>Seleccione un paciente</option>' 
+    if (perm_tomar_horas and estado == 'Hora disponible')
+      elegir_paciente = '<tr><td>Paciente</td><td>:<select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="chosen-select" ><option value="" selected disabled>Seleccione un paciente</option>' 
       @pacientes = PerPersonas.all
       @pacientes.each do |pac|
-        elegir_paciente<<'<option value="1">'<<pac.showName('%n%p%m')<<'</option>'      
+        elegir_paciente<<'<option value='<<pac.id.to_s<<'>'<<pac.showRut<<' '<<pac.showName('%n%p%m')<<'</option>'      
       end
       elegir_paciente<<'</select></td></tr>'    
     end          
@@ -198,7 +198,7 @@ class AgAgendamientos < ActiveRecord::Base
       info_cap = '<tr><td></td><td><select id="select-capitulo-'<<id.to_s<<'" name="selectbasic" class="form-control"><option value="" selected disabled>Seleccione un motivo</option>' 
       @capitulos = MedDiagnosticosCapitulos.all
       @capitulos.each do |cap|
-        info_cap<<'<option value="1">'<<cap.nombre<<'</option>'      
+        info_cap<<'<option value='<<cap.id.to_s<<'>'<<cap.nombre<<'</option>'      
       end
       info_cap<<'</select></td></tr>'
     end            
@@ -209,7 +209,7 @@ class AgAgendamientos < ActiveRecord::Base
       unless @antecedentes.empty?
         informacion_antecedentes = '<tr><td></td><td><select id="select-motivo-'<<id.to_s<<'" name="selectbasic" class="form-control oculto"><option value="" selected disabled>Seleccione un antecedente</option>'      
         @antecedentes.each do |ant|
-          informacion_antecedentes<<'<option value="1">'<<ant.diagnostico.nombre<<'</option>'      
+          informacion_antecedentes<<'<option value='<<ant.id.to_s<<'>'<<ant.diagnostico.nombre<<'</option>'      
         end
         informacion_antecedentes<<'</select></td></tr>'
       end
@@ -234,8 +234,6 @@ class AgAgendamientos < ActiveRecord::Base
               </tr>'
     end
               
-    detalle<<elegir_paciente<<motivo<<informacion_antecedentes<<info_cap
-
     #los elementos se configuran si se cumplen los permisos                
     if perm_admin_bloquea or perm_profesional
       reabrir = "<button class='btn btn-primary desbloquear-hora'>Desbloquear Hora</button>"
@@ -243,10 +241,10 @@ class AgAgendamientos < ActiveRecord::Base
     if (perm_admin_bloquea or perm_profesional) and (estado == 'Hora disponible')
       bloquear =  "<button class='btn btn-primary bloquear-hora'>Bloquear hora</button>"
     end  
-    if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional 
+    if (!perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_profesional) or (perm_tomar_horas and estado == 'Hora disponible')
        tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
     end   
-    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente  
+    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional 
       if estado != 'Hora disponible' and estado != 'Hora bloqueada'     
       paciente<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr>"
       end
@@ -273,25 +271,31 @@ class AgAgendamientos < ActiveRecord::Base
     end      
       
     case estado
-      when 'Hora disponible'
-        detalle<<'</table></div><div class="modal-footer">'<<tomar_hora<<bloquear
-      when 'Hora bloqueada'        
-        detalle<<'</table></div><div class="modal-footer">'<<reabrir
       when 'Hora reservada' 
-        detalle<<paciente<<'</table></div><div class="modal-footer">'<<llegada_paciente<<confirmar<<cancelar
+        detalle<<paciente
       when 'Hora confirmada' 
-        detalle<<paciente<<'</table></div><div class="modal-footer">'<<llegada_paciente<<cancelar                             
+        detalle<<paciente                           
       when 'Paciente en espera'  
-        detalle<<paciente<<hora_llegada<<'</table></div><div class="modal-footer">'
+        detalle<<paciente<<hora_llegada
       when 'Paciente atendido'  
-        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion<<'</table></div><div class="modal-footer">' 
-       when 'Paciente siendo atendido'  
-        detalle<<'</table></div><div class="modal-footer">'                                 
-    end                
+        detalle<<paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion
+    end   
 
-    detalle<<'</div>'           
-    
-    detalle
+    detalle<<elegir_paciente<<motivo<<informacion_antecedentes<<info_cap<<'</table></div><div class="modal-footer">'
+
+    case estado
+      when 'Hora disponible'
+        detalle<<tomar_hora<<bloquear
+      when 'Hora bloqueada'        
+        detalle<<reabrir
+      when 'Hora reservada' 
+        detalle<<llegada_paciente<<confirmar<<cancelar
+      when 'Hora confirmada' 
+        detalle<<llegada_paciente<<cancelar 
+    end   
+
+    detalle<<'</div>'
+
   
   end
 

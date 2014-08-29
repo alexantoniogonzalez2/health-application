@@ -37,8 +37,8 @@ div.list-group {
     padding: 5px;
     font-size: 13px;
 
-    p.auge{
-      margin-right: 45px;
+    p.ajuste{
+      margin-right: 67px;
     }
   }
 
@@ -56,14 +56,19 @@ div.select2-container{
   margin-bottom: 0px !important; 
   /*left: 47px;*/
 }
-
-label {
-  margin: 0px;
+.boton-eno{
+  position: relative;
+  bottom: 20px;
+  float: right;
+  padding: 2px !important;
+  margin-bottom: 0px !important; 
+  /*left: 47px;*/
 }
 
-p {
-  margin: 0px;  
-}
+
+label { margin: 0px;}
+
+p { margin: 0px; }
 
 textarea.form-control {
   resize: vertical;

@@ -15,6 +15,10 @@ class MedDiagnosticos < ActiveRecord::Base
     true
   end  
 
+  def esENO
+    true
+  end
+
   private
   def app_params
     params.require(:list).permit(:codigo_cie10,:descripcion,:frecuente,:nodo_terminal,:grupo,:id,:nombre,:persona_diagnosticos,:problemas_salud_auge,:enfermedades_notificacion_obligatoria)

@@ -6,12 +6,16 @@ $('#icon-eno').qtip({
 
 $('input[type=radio][name^=radios-]').change(function() {
   var pers_diag = $(this).attr('name').substring(7);  
-  var e_d = $('#e_d_'+pers_diag).find('input[name=radios-'+pers_diag+']:checked').val();
+  var e_d = $('input[name=radios-'+pers_diag+']:checked').val();
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   (e_d == 1) ? $( '#checkboxes-trat-div-'+pers_diag).show() : $( '#checkboxes-trat-div-'+pers_diag).hide();
   
-  if(e_d == 1) { estado_ges = (trat == 1) ? 2 : 1; $('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]); }
-  else { $('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').prop('checked', false); }
+  if(e_d == 1) { 
+    estado_ges = (trat == 1) ? 2 : 1; 
+    //$('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]);
+    $('input[name=radios-ges-'+pers_diag+'][value=' + estado_ges + ']').prop('checked', true);
+  }
+  else { $('input[name=radios-ges-'+pers_diag+']').prop('checked', false); }
 
   guardarDiagnostico(pers_diag);
 
@@ -22,7 +26,11 @@ $('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   
   estado_ges = (trat == 1) ? 2 : 1;
-  $('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]);
+  /*alert(pers_diag);
+  alert(trat);
+  alert(estado_ges);*/
+  //$('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]);
+  $('input[name=radios-ges-'+pers_diag+'][value=' + estado_ges + ']').prop('checked', true);
   guardarDiagnostico(pers_diag);
 
 });
@@ -290,7 +298,6 @@ function guardarDiagnostico(pers_diag_aten_sal) {
   var comentario = $('#comentario_'+pers_diag_aten_sal).val();
 
   $('.datepicker[name=f_s_'+pers_diag_aten_sal+']').datepicker("setDate",f_i);
-
   $.ajax({
     type: 'POST',
     url: '/guardar_diagnostico',

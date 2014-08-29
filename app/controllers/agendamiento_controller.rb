@@ -163,8 +163,18 @@ class AgendamientoController < ApplicationController
 		@Agendamiento.transaction do
 			if @Agendamiento.agendamiento_estado.nombre=='Hora disponible'
 				respuesta="1"
-				@Agendamiento.persona=@persona
-				@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+				@Agendamiento.persona= @persona
+				@Agendamiento.agendamiento_estado= @EstadoAgendamiento
+				@Agendamiento.motivo_consulta_nuevo = params[:motivo]
+				unless params[:paciente].blank?
+					@Agendamiento.persona = PerPersonas.find_by id: params[:paciente]
+				end
+				unless params[:antecedente].blank?
+					@Agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(params[:antecedente]) 
+				end
+				unless params[:capitulo_cie_10].blank?
+					@Agendamiento.capitulo_cie10_control = MedDiagnosticosCapitulos.find(params[:capitulo_cie_10])
+				end			
 				@Agendamiento.save
 
 				@agendamiento_log = AgAgendamientoLogEstados.new

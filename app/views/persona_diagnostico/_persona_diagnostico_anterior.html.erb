@@ -1,5 +1,5 @@
 <a href="#modal-container-diag-ant<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd_ant<%= p_d.id%>" >
-	<% if p_d.diagnostico.auge %>
+	<% if p_d.diagnostico.esAuge %>
 		<p class="list-group-item-text auge"><%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %></p>
 		<button class="alert alert-success boton-auge" >AUGE</button>		
 	<% else %>

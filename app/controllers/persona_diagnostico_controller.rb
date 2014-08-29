@@ -53,6 +53,7 @@ class PersonaDiagnosticoController < ApplicationController
 				@persona_diagnostico.fecha_inicio = DateTime.current
 				@persona_diagnostico.estado_diagnostico_id = 1
 				@persona_diagnostico.es_cronica = 0
+				@persona_diagnostico.en_tratamiento = 0
 				@persona_diagnostico.save!
 				@primer_diagnostico = 1
 				
@@ -65,7 +66,7 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona_diagnostico_atencion.fecha_inicio = @persona_diagnostico.fecha_inicio
 			@persona_diagnostico_atencion.fecha_termino = @persona_diagnostico.fecha_termino
 			@persona_diagnostico_atencion.es_cronica = @persona_diagnostico.es_cronica
-			@persona_diagnostico_atencion.en_tratamiento = params[:en_tratamiento]
+			@persona_diagnostico_atencion.en_tratamiento = @persona_diagnostico.en_tratamiento
 			@persona_diagnostico_atencion.primer_diagnostico = @primer_diagnostico
 			@persona_diagnostico_atencion.save
 
