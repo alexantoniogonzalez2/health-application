@@ -2,8 +2,7 @@ class PersonaDiagnosticoController < ApplicationController
 
 	 def cargarDiagnosticos		
 
-		diag = []
-  	
+		diag = []  	
 		term = params[:q]
 
 		if params[:diag_no_frec] == 'true'
@@ -18,6 +17,57 @@ class PersonaDiagnosticoController < ApplicationController
 
 		respond_to do |format|
 			format.json { render json: diag}
+		end
+				
+	end
+
+	def cargarPersonas	
+
+		per = []  	
+		term = params[:q]
+
+		@personas = PerPersonas.where("rut LIKE ? OR concat(nombre,' ',apellido_paterno,' ',apellido_materno) LIKE ? ","%#{term}%","%#{term}%")
+
+		@personas.each do |p|
+			per << p.formato_personas			
+		end
+
+		respond_to do |format|
+			format.json { render json: per}
+		end
+				
+	end
+
+	def agregarPersonaNotificacion
+
+		@persona = nil
+		nombre = ''
+		correo = ''
+		celular = ''
+		rut = ''
+
+		unless params[:persona_id].blank? 
+			@persona = PerPersonas.find(params[:persona_id])
+			nombre = @persona.showName('%n%p%m')
+			correo = @persona.user.email
+			celular = @persona.getCelular
+			rut = @persona.showRut
+		end			
+
+		@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:pers_diag]).first
+
+		if @notificacion_ges
+			@notificacion_ges.persona_conocimiento = @persona 
+			params[:persona_id].blank? ? @notificacion_ges.destroy : @notificacion_ges.save
+		else	#se agrega persona temporalmente, sin fecha			
+			@notificacion_ges = FiNotificacionesGes.new
+			@notificacion_ges.persona_diagnostico_atencion_salud_id = params[:pers_diag]
+			@notificacion_ges.persona_conocimiento = @persona 
+			@notificacion_ges.save
+		end	
+
+		respond_to do |format|
+			format.json { render :json => { :success => true, :nombre => nombre, :correo => correo, :celular => celular, :rut => rut }	}
 		end
 				
 	end
@@ -52,8 +102,7 @@ class PersonaDiagnosticoController < ApplicationController
 				@persona_diagnostico.diagnostico_id = params[:diagnostico_id]
 				@persona_diagnostico.fecha_inicio = DateTime.current
 				@persona_diagnostico.estado_diagnostico_id = 1
-				@persona_diagnostico.es_cronica = 0
-				@persona_diagnostico.en_tratamiento = 0
+				@persona_diagnostico.es_cronica = 0		
 				@persona_diagnostico.save!
 				@primer_diagnostico = 1
 				
@@ -66,7 +115,7 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona_diagnostico_atencion.fecha_inicio = @persona_diagnostico.fecha_inicio
 			@persona_diagnostico_atencion.fecha_termino = @persona_diagnostico.fecha_termino
 			@persona_diagnostico_atencion.es_cronica = @persona_diagnostico.es_cronica
-			@persona_diagnostico_atencion.en_tratamiento = @persona_diagnostico.en_tratamiento
+			@persona_diagnostico_atencion.en_tratamiento = params[:en_tratamiento]
 			@persona_diagnostico_atencion.primer_diagnostico = @primer_diagnostico
 			@persona_diagnostico_atencion.save
 
@@ -144,6 +193,30 @@ class PersonaDiagnosticoController < ApplicationController
 
 	def descargarConstanciaGes 
 
+		@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
+		
+		@persona = nil
+		if @notificacion_ges
+			@persona = @notificacion_ges.persona_conocimiento
+			@notificacion_ges.destroy
+		end	
+
+		@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("id = ?",params[:id]).first
+
+		@confirmacion_diagnostica = nil
+		if @persona_diagnostico_atencion.estado_diagnostico.nombre == "Confirmado" 
+			@confirmacion_diagnostica = @persona_diagnostico_atencion.en_tratamiento ? "tratamiento" : "confirmacion"
+		end
+
+		@notificacion_ges = FiNotificacionesGes.new
+		@notificacion_ges.persona_diagnostico_atencion_salud_id = params[:id]
+		@notificacion_ges.persona_conocimiento = @persona 
+		@notificacion_ges.confirmacion_diagnostica = @confirmacion_diagnostica   
+		@notificacion_ges.fecha_notificacion = DateTime.current
+		@notificacion_ges.save
+
+	  @agendamiento = AgAgendamientos.find(params[:ag])
+
 		p_d = FiPersonaDiagnosticos
   	.joins(:persona_diagnosticos_atencion_salud)
   	.select("fi_persona_diagnosticos_atenciones_salud.id,
@@ -153,7 +226,8 @@ class PersonaDiagnosticoController < ApplicationController
   					fi_persona_diagnosticos.persona_id,
   					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
   					fi_persona_diagnosticos_atenciones_salud.comentario,
-  					fi_persona_diagnosticos_atenciones_salud.es_cronica")
+  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
   	.where('fi_persona_diagnosticos_atenciones_salud.id' => params[:id]).first
 
 	  @estados_diagnostico = MedDiagnosticoEstados.all
@@ -164,8 +238,10 @@ class PersonaDiagnosticoController < ApplicationController
 		respond_to do |format|
 			format.pdf do
           render :pdf => nombre,
-                 :template => "persona_diagnostico/constancia_ges.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} ,
-                 :disposition => 'attachment'                 
+                 :template => "persona_diagnostico/constancia_ges.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona } ,
+                 :disposition => 'attachment',
+                 :encoding => "utf8",
+                 :show_as_html => params[:debug]                 
  					 end               
 		end
 

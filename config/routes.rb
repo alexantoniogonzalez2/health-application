@@ -20,6 +20,8 @@ AplicacionMedica::Application.routes.draw do
   post '/reabrir_atencion', to: 'atenciones_salud#reabrirAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
   post '/cargar_diagnosticos', to: 'persona_diagnostico#cargarDiagnosticos'
+  post '/cargar_personas', to: 'persona_diagnostico#cargarPersonas'
+  post '/agregar_persona_notificacion', to: 'persona_diagnostico#agregarPersonaNotificacion'  
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 

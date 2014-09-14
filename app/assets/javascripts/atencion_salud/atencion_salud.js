@@ -1,8 +1,29 @@
-$('#icon-eno').qtip({ 
-    content: {
-        text: 'Fecha de primeros síntomas o de primera consulta.'
-    }
-})
+$('#icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.'  } })
+
+$('.ges-cancelar').click(function() {
+  var pd = $(this).attr('id').substring(13);
+  $("#per_not_"+pd).collapse('hide');
+});
+
+$('.panel-ges').on('shown.bs.collapse', function() { 
+
+  var pd = $(this).attr('id').substring(8);
+  $("#row_nombre_"+pd).hide();
+  $("#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', false);
+  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');  
+  $("#ges_div_"+pd).css( "display", "block !important");
+  $("#ges_div_"+pd).show();
+
+});
+
+$('.panel-ges').on('hidden.bs.collapse', function() { 
+  var pd = $(this).attr('id').substring(8);
+  $("#ges_div_"+pd).hide();
+  $("#row_nombre_"+pd).show();
+  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
+  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true);
+
+});
 
 $('input[type=radio][name^=radios-]').change(function() {
   var pers_diag = $(this).attr('name').substring(7);  
@@ -12,7 +33,6 @@ $('input[type=radio][name^=radios-]').change(function() {
   
   if(e_d == 1) { 
     estado_ges = (trat == 1) ? 2 : 1; 
-    //$('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]);
     $('input[name=radios-ges-'+pers_diag+'][value=' + estado_ges + ']').prop('checked', true);
   }
   else { $('input[name=radios-ges-'+pers_diag+']').prop('checked', false); }
@@ -26,11 +46,7 @@ $('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   
   estado_ges = (trat == 1) ? 2 : 1;
-  /*alert(pers_diag);
-  alert(trat);
-  alert(estado_ges);*/
-  //$('#ges_'+pers_diag).find('input[name=radios-ges-'+pers_diag+']').val([estado_ges]);
-  $('input[name=radios-ges-'+pers_diag+'][value=' + estado_ges + ']').prop('checked', true);
+    $('input[name=radios-ges-'+pers_diag+'][value=' + estado_ges + ']').prop('checked', true);
   guardarDiagnostico(pers_diag);
 
 });
@@ -110,6 +126,24 @@ $('#select_diagnostico').select2({
   }
 });
 
+$('.select_persona').select2({
+  width: '80%',
+  minimumInputLength: 3,
+  placeholder: "Seleccione una persona",
+  allowClear: true,
+  ajax: {
+    url: '/cargar_personas',
+    dataType: 'json',
+    type: 'POST',
+    data: function (term, page) {
+      return { q: term };
+    },
+    results: function (data, page) {
+      return { results: data };
+    }
+  }
+});
+
 $('#select_examen').select2({
   width: '82%',
   minimumInputLength: 3,
@@ -167,6 +201,36 @@ $("#select_diagnostico").on("change", function(e) {
  
   agregarDiagnostico(value);
 
+})
+
+$(".select_persona").on("change", function(e) { 
+
+  var pd = $(this).attr('id').substring(15); 
+  $("#ges_div_"+pd).hide();
+  $("#per_not_"+pd).collapse('hide');
+  $("#row_nombre_"+pd).show();
+  value = $("#select_persona_"+pd).select2('data') != null ? $("#select_persona_"+pd).select2('data').id : null;
+  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true)
+
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_persona_notificacion',
+    data: { 
+      persona_id: value,
+      pers_diag: pd
+    },
+    success: function(response){
+      $("#ges_nombre_"+pd).val( response.nombre );
+      $("#ges_rut_"+pd).val( response.rut );
+      $("#ges_correo_"+pd).val( response.correo );
+      $("#ges_celular_"+pd).val( response.celular );
+
+
+    },
+    error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
+  }); 
+   
+  
 })
 
 $("#select_examen").on("change", function(e) { 
@@ -474,4 +538,3 @@ function cerrarDiagnostico(pers_diag_aten_sal){
   });
 
 }
-

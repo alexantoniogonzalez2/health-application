@@ -34,7 +34,7 @@
                   <div class="form-group">
                     <div class="col-md-4">
                       <div class="checkbox" id="enf_cro_<%= p_d.id %>">
-                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica <%= p_d.en_tratamiento %> <%= p_d.es_cronica %><input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
+                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
                       </div>                
                     </div>
                   </div>
@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="row clearfix">
-                  <div class="col-md-12 column">              
+                  <div class="col-md-12 column">
                     <%= link_to 'Descargar Interconsulta', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
                   </div>
                 </div>                
@@ -118,8 +118,8 @@
                     </div>
                   </div>
                   <div class="row clearfix">
-                    <div class="col-md-12 column">              
-                      <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id,:format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
+                    <div class="col-md-12 column">         
+                      <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%>
                     </div>
                   </div>                
                 </div> 

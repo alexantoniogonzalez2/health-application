@@ -26,6 +26,15 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_conocimiento_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_conocimiento_id'
   belongs_to :user, :class_name => 'User'
 
+  def formato_personas
+
+  {
+    'id'        => id,
+    'text'      => number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador<<' '<<nombre<<' '<<apellido_paterno<<' '<<apellido_materno     
+  }
+
+  end
+
   def getGrupoEtareo(fecha_atencion_salud)
     if fecha_nacimiento
 

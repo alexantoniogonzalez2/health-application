@@ -23,8 +23,6 @@ class HomeController < ApplicationController
     	format.js   {}
     	format.json { render :json => { :success => true, :agendamientos => @agendamientos, :actualizaciones => @actualizaciones, :hora_actual => @hora_actual }	 }
     end
-
-
 	end	
 
 	def revisarActualizaciones
