@@ -218,34 +218,31 @@ div.ajuste-eno {
   font-weight: bold !important;
   font-size: 12px !important;
 }
-
 .fa-child{ float: right;}
-
 .not-ges{ 
   width: 250px !important;
   display: inline-block !important;
   height: 30px !important;
   padding: 3px 6px !important;
 }
-
 .not-ges2{ 
   width: 150px !important;
   display: inline-block !important;
   height: 30px !important;
   padding: 3px 6px !important;
 }
-
 .select-ges{ 
   width: 150px !important;
   display: inline-block !important;
 }
-
-.ges-div { display:none; }
-.panel-ges{ 
+.ges-div { 
+  display:none;
+  margin-top: 5px !important;
+}
+.panel-ges2{ 
   margin: 10px 0px;
   padding: 0px;  
 }
-
 .a-ges{ 
   display: block;
   color: #2a6496 !important;
@@ -253,6 +250,5 @@ div.ajuste-eno {
   font-size: 14px !important;
   margin-bottom: 10px !important;
 }
-
 .pers-ges{ margin: 0px;}
-div.ajuste-ges{ padding: 0px; }
+div.ajuste-ges{ padding: 0px !important; }

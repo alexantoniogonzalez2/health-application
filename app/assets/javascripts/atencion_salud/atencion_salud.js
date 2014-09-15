@@ -1,11 +1,49 @@
 $('#icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.'  } })
+$('#icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.'  } })
 
 $('.ges-cancelar').click(function() {
   var pd = $(this).attr('id').substring(13);
   $("#per_not_"+pd).collapse('hide');
 });
 
-$('.panel-ges').on('shown.bs.collapse', function() { 
+$('.ges-agregar').click(function() {
+  var pd = $(this).attr('id').substring(12);
+  if (validarNuevaPersona(pd) ){
+    var nombre = $('#ges_nom_'+pd).val();
+    var apep = $('#ges_apep_'+pd).val();
+    var apem = $('#ges_apem_'+pd).val();
+    var parent = $('#select_parent_'+pd).val();
+    var rut = $('#ges_rut_'+pd).val();
+    var correo = $('#ges_correo_'+pd).val();
+    var celular = $('#ges_celular_'+pd).val();
+
+    $.ajax({
+      type: 'POST',
+      url: '/agregar_persona_notificacion_pre',
+      data: { 
+        pers_diag: pd,
+        nombre: nombre,
+        apep: apep,
+        apem: apem,
+        parent: parent,
+        rut: rut,
+        correo: correo,
+        celular: celular
+      },
+      success: function(response){
+
+        $('.select_persona').append($('<option>', {value:"NEWVAL", text: "New Option Text"}));
+       
+
+
+      },
+      error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
+    }); 
+
+  }
+});
+
+$('.panel-ges2').on('shown.bs.collapse', function() { 
 
   var pd = $(this).attr('id').substring(8);
   $("#row_nombre_"+pd).hide();
@@ -16,7 +54,7 @@ $('.panel-ges').on('shown.bs.collapse', function() {
 
 });
 
-$('.panel-ges').on('hidden.bs.collapse', function() { 
+$('.panel-ges2').on('hidden.bs.collapse', function() { 
   var pd = $(this).attr('id').substring(8);
   $("#ges_div_"+pd).hide();
   $("#row_nombre_"+pd).show();
@@ -537,4 +575,9 @@ function cerrarDiagnostico(pers_diag_aten_sal){
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
 
+}
+
+function validarNuevaPersona(pd){
+
+  return true;
 }

@@ -26,7 +26,7 @@ class RegistrationController < Devise::RegistrationsController
 		redirect_to dashboard_path
 
 	else
-	render :action => "new"
+		render :action => "new"
 	end
 
 	end

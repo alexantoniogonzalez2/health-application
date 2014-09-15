@@ -72,6 +72,40 @@ class PersonaDiagnosticoController < ApplicationController
 				
 	end
 
+	def agregarPersonaNotificacionPre
+
+		@user = User.new
+		@user.email = params[:correo]
+		@user.password = "Random123"
+
+		@persona = PerPersonas.new
+		@persona.nombre = params[:nombre]
+		@persona.apellido_paterno = params[:apep]
+		@persona.apellido_materno = params[:apem]
+		@persona.rut = params[:rut]
+		
+		@user.save!
+		@persona.user = @user
+		@persona.save
+		
+
+		@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:pd]).first
+
+		if @notificacion_ges
+			@notificacion_ges.persona_conocimiento = @persona 
+		else	#se agrega persona temporalmente, sin fecha			
+			@notificacion_ges = FiNotificacionesGes.new
+			@notificacion_ges.persona_diagnostico_atencion_salud_id = params[:pd]
+			@notificacion_ges.persona_conocimiento = @persona 
+			@notificacion_ges.save
+		end	
+
+		respond_to do |format|
+			format.json { render :json => { :success => true, :nombre => @persona.nombre, :correo => @user.email, :celular => 'celular', :rut => @persona.rut}	}
+		end
+				
+	end
+
 	def agregarDiagnostico
 
 		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
