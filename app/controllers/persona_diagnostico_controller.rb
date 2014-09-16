@@ -83,11 +83,18 @@ class PersonaDiagnosticoController < ApplicationController
 		@persona.apellido_paterno = params[:apep]
 		@persona.apellido_materno = params[:apem]
 		@persona.rut = params[:rut]
-		
+		@persona.digito_verificador = params[:dv]
+		@telefono = TraTelefonos.new
+		@telefono.codigo = 9 #celular
+		@telefono.numero = params[:celular]
+		@telefono.save
 		@user.save!
 		@persona.user = @user
 		@persona.save
-		
+		@persona_telefono = PerPersonasTelefonos.new
+		@persona_telefono.persona = @persona
+		@persona_telefono.telefono = @telefono
+		@persona_telefono.save!		
 
 		@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:pd]).first
 
@@ -101,7 +108,7 @@ class PersonaDiagnosticoController < ApplicationController
 		end	
 
 		respond_to do |format|
-			format.json { render :json => { :success => true, :nombre => @persona.nombre, :correo => @user.email, :celular => 'celular', :rut => @persona.rut}	}
+			format.json { render :json => { :success => true, :rut => @persona.showRut, :celular => @persona.getCelular}	}
 		end
 				
 	end

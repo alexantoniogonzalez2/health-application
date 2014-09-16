@@ -13,9 +13,10 @@ $('.ges-agregar').click(function() {
     var apep = $('#ges_apep_'+pd).val();
     var apem = $('#ges_apem_'+pd).val();
     var parent = $('#select_parent_'+pd).val();
-    var rut = $('#ges_rut_'+pd).val();
-    var correo = $('#ges_correo_'+pd).val();
-    var celular = $('#ges_celular_'+pd).val();
+    var rut = $('#ges_prut_'+pd).val();
+    var dv = $('#ges_pdv_'+pd).val();
+    var correo = $('#ges_pcorreo_'+pd).val();
+    var celular = $('#ges_pcelular_'+pd).val();
 
     $.ajax({
       type: 'POST',
@@ -27,14 +28,17 @@ $('.ges-agregar').click(function() {
         apem: apem,
         parent: parent,
         rut: rut,
+        dv: dv,
         correo: correo,
         celular: celular
       },
       success: function(response){
 
-        $('.select_persona').append($('<option>', {value:"NEWVAL", text: "New Option Text"}));
-       
-
+        $("#per_not_"+pd).collapse('hide');
+        $('#ges_nombre_'+pd).val(nombre+' '+apep+' '+apem);
+        $('#ges_rut_'+pd).val(response.rut);
+        $('#ges_correo_'+pd).val(correo);
+        $('#ges_celular_'+pd).val(celular);
 
       },
       error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
@@ -46,20 +50,18 @@ $('.ges-agregar').click(function() {
 $('.panel-ges2').on('shown.bs.collapse', function() { 
 
   var pd = $(this).attr('id').substring(8);
-  $("#row_nombre_"+pd).hide();
-  $("#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', false);
-  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');  
-  $("#ges_div_"+pd).css( "display", "block !important");
-  $("#ges_div_"+pd).show();
+  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
+  $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).hide();  
+  $("#ges_div_"+pd).show(); 
+  $("#ges_div_"+pd).css( "display", "block !important");  
 
 });
 
 $('.panel-ges2').on('hidden.bs.collapse', function() { 
   var pd = $(this).attr('id').substring(8);
   $("#ges_div_"+pd).hide();
-  $("#row_nombre_"+pd).show();
-  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
-  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true);
+  $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show('');
+  //$("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
 
 });
 
@@ -262,7 +264,6 @@ $(".select_persona").on("change", function(e) {
       $("#ges_rut_"+pd).val( response.rut );
       $("#ges_correo_"+pd).val( response.correo );
       $("#ges_celular_"+pd).val( response.celular );
-
 
     },
     error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }

@@ -227,6 +227,30 @@
 						    </select>
 							</div>
 						</div>
+						<div class="row clearfix">
+							<div class="col-md-2 column ajuste-ges">
+								<label>Rut</label>
+							</div>
+							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_prut_<%= p_d.id %>">	
+							</div>
+							<div class="col-md-2 column ajuste-ges">
+								<label><p>Dígito verificador</p></label>
+							</div>
+							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_pdv_<%= p_d.id %>">
+							</div>
+						</div>
+						<div class="row clearfix">
+							<div class="col-md-2 column ajuste-ges">
+								<label>Correo electrónico</label>
+							</div>
+							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_pcorreo_<%= p_d.id %>">	
+							</div>
+							<div class="col-md-2 column ajuste-ges">
+								<label>Celular</label>
+							</div>
+							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_pcelular_<%= p_d.id %>">
+							</div>
+						</div>
 					</div>						
 				</div>			
 			</div>
@@ -237,21 +261,21 @@
 				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_nombre_<%= p_d.id %>">				
 				</div>				
 			</div>
-			<div class="row clearfix">
+			<div id="row_rut_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Rut</label>
 				</div>
 				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_rut_<%= p_d.id %>">					
 				</div>				
 			</div>
-			<div class="row clearfix">
+			<div id="row_correo_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Correo electrónico</label>
 				</div>
 				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_correo_<%= p_d.id %>">						
 				</div>				
 			</div>
-			<div class="row clearfix">
+			<div id="row_celular_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Celular</label>
 				</div>
