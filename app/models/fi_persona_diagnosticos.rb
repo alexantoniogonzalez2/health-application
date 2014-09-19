@@ -8,6 +8,12 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
 	has_many :persona_diagnosticos_atencion_salud, :class_name => 'FiPersonaDiagnosticosAtencionesSalud', :foreign_key => 'persona_diagnostico_id', dependent: :destroy 
   has_many :agendamientos_control, :class_name => 'AgAgendamientos', :foreign_key => 'persona_diagnostico_control_id'
   
+  def getPersonaNotificacion (persona_diagnostico_id)
+    notificacion = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is not null',persona_diagnostico_id).order('fecha_notificacion DESC').first;
+    return notificacion.persona_conocimiento
+  end
+
+
   def getFechaInicio
     fecha_formato = ''
     if fecha_inicio
@@ -23,7 +29,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
       return ''
     end    
   end
-
+  
   private
   def app_params
     params.require(:list).permit(:diagnostico,

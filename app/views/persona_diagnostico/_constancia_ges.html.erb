@@ -186,6 +186,7 @@
 			<div class="row clearfix">
 				<div class="col-md-4 column">
 					<label class="pers-ges">Seleccionar persona</label>
+					<% persona_notificacion = p_d.getPersonaNotificacion(p_d.id) %>					
 					<a class="panel-title collapsed a-ges" data-toggle="collapse" href="#per_not_<%= p_d.id %>">Agregar persona</a>
 				</div>
 				<div class="col-md-8 column">:
@@ -199,7 +200,7 @@
 							<div class="col-md-2 column ajuste-ges">
 								<label>Nombre</label>
 							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_nom_<%= p_d.id %>">	
+							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_nom_<%= p_d.id %>" >	
 							</div>
 							<div class="col-md-2 column ajuste-ges">
 								<label>Apellido paterno</label>
@@ -258,28 +259,28 @@
 				<div class="col-md-4 column">
 					<label>Nombre</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_nombre_<%= p_d.id %>">				
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_nombre_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.showName('%n%p%m') %>">				
 				</div>				
 			</div>
 			<div id="row_rut_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Rut</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_rut_<%= p_d.id %>">					
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_rut_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.showRut %>">					
 				</div>				
 			</div>
 			<div id="row_correo_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Correo electrónico</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_correo_<%= p_d.id %>">						
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_correo_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.user.email %>" >						
 				</div>				
 			</div>
 			<div id="row_celular_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Celular</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_celular_<%= p_d.id %>">					
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_celular_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.getCelular %>" >					
 				</div>				
 			</div>
 			<div class="row clearfix ges-div" id="ges_div_<%= p_d.id %>">

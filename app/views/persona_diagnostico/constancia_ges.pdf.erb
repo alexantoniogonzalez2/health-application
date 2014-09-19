@@ -76,6 +76,8 @@
         </div>      
       </div>
 
+      <br/><br/><br/>
+
       <div class="row clearfix">
         <div class="col-md-12 column">
           <table>
@@ -93,12 +95,12 @@
   <div class="panel-body panel-body-ajustado">
     <div class="container ajustado">
       En caso que la persona que tomó conocimiento no sea el paciente, identificar: 
-
+      <% persona_notificacion = p_d.getPersonaNotificacion(p_d.id) %>   
       <table>
-        <tr><td><label>Nombre</label></td><td>: <span id="ges_nombre_<%= p_d.id %>"></span></td></tr>
-        <tr><td><label>Rut</label></td><td>: <span id="ges_rut_<%= p_d.id %>"></span></td></tr>
-        <tr><td><label>Correo electrónico</label></td><td>: <span id="ges_correo_<%= p_d.id %>"></span></td></tr>            
-        <tr><td><label>Celular</label></td><td>: <span id="ges_celular_<%= p_d.id %>"></span></td></tr>           
+        <tr><td><label>Nombre</label></td><td>: <span id="ges_nombre_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.showName('%n%p%m') %></span></td></tr>
+        <tr><td><label>Rut</label></td><td>: <span id="ges_rut_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.showRut %></span></td></tr>
+        <tr><td><label>Correo electrónico</label></td><td>: <span id="ges_correo_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.user.email %></span></td></tr>            
+        <tr><td><label>Celular</label></td><td>: <span id="ges_celular_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.getCelular %></span></td></tr>           
       </table> 
 
     </div>

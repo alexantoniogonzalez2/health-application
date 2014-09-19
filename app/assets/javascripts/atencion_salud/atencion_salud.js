@@ -49,6 +49,8 @@ $('.ges-agregar').click(function() {
 
 $('.panel-ges2').on('shown.bs.collapse', function() { 
 
+  alert('mostrar');
+
   var pd = $(this).attr('id').substring(8);
   $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
   $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).hide();  
@@ -61,6 +63,7 @@ $('.panel-ges2').on('hidden.bs.collapse', function() {
   var pd = $(this).attr('id').substring(8);
   $("#ges_div_"+pd).hide();
   $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show('');
+  alert('ocultar');
   //$("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
 
 });
@@ -245,12 +248,14 @@ $("#select_diagnostico").on("change", function(e) {
 
 $(".select_persona").on("change", function(e) { 
 
-  var pd = $(this).attr('id').substring(15); 
-  $("#ges_div_"+pd).hide();
-  $("#per_not_"+pd).collapse('hide');
-  $("#row_nombre_"+pd).show();
+  var pd = $(this).attr('id').substring(15);   
   value = $("#select_persona_"+pd).select2('data') != null ? $("#select_persona_"+pd).select2('data').id : null;
-  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true)
+       
+  $("#ges_div_"+pd).hide(); 
+  $("#per_not_"+pd).is(":visible") ? $("#per_not_"+pd).collapse('hide') : //nothing to do  ;
+  $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show();
+  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true);
+    
 
   $.ajax({
     type: 'POST',
@@ -263,7 +268,7 @@ $(".select_persona").on("change", function(e) {
       $("#ges_nombre_"+pd).val( response.nombre );
       $("#ges_rut_"+pd).val( response.rut );
       $("#ges_correo_"+pd).val( response.correo );
-      $("#ges_celular_"+pd).val( response.celular );
+      $("#ges_celular_"+pd).val( response.celular ); 
 
     },
     error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
