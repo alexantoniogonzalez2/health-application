@@ -24,6 +24,8 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_habitos_alcohol, :class_name => 'FiHabitosAlcohol', :foreign_key => 'persona_id'
   has_many :personas_vacunas, :class_name => 'FiPersonasVacunas', :foreign_key => 'persona_id'
   has_many :personas_conocimiento_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_conocimiento_id'
+  has_many :personas_conocimiento_int, :class_name => 'FiInterconsultas', :foreign_key => 'persona_conocimiento_id'
+
   belongs_to :user, :class_name => 'User'
 
   def formato_personas
@@ -193,7 +195,9 @@ class PerPersonas < ActiveRecord::Base
                                     :personas_habitos_tabaco,
                                     :personas_habitos_drogas,
                                     :personas_habitos_alcohol,
-                                    :personas_vacunas)
+                                    :personas_vacunas,
+                                    :personas_conocimiento_ges,
+                                    :personas_conocimiento_int)
   end
 
 end

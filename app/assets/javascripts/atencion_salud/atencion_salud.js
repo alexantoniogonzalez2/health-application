@@ -6,6 +6,11 @@ $('.ges-cancelar').click(function() {
   $("#per_not_"+pd).collapse('hide');
 });
 
+$('.int-cancelar').click(function() {
+  var pd = $(this).attr('id').substring(13);
+  $("#per_int_"+pd).collapse('hide');
+});
+
 $('.ges-agregar').click(function() {
   var pd = $(this).attr('id').substring(12);
   if (validarNuevaPersona(pd) ){
@@ -33,13 +38,12 @@ $('.ges-agregar').click(function() {
         celular: celular
       },
       success: function(response){
-
         $("#per_not_"+pd).collapse('hide');
         $('#ges_nombre_'+pd).val(nombre+' '+apep+' '+apem);
         $('#ges_rut_'+pd).val(response.rut);
         $('#ges_correo_'+pd).val(correo);
         $('#ges_celular_'+pd).val(celular);
-
+        $('#select_persona_'+pd).select2('val', '');
       },
       error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
     }); 
@@ -47,49 +51,118 @@ $('.ges-agregar').click(function() {
   }
 });
 
+$('.int-agregar').click(function() {
+  var pd = $(this).attr('id').substring(12);
+  if (validarNuevaPersona(pd) ){
+    var nombre = $('#int_nom_'+pd).val();
+    var apep = $('#int_apep_'+pd).val();
+    var apem = $('#ges_apem_'+pd).val();
+    var parent = $('#select_parent_int_'+pd).val();
+    var rut = $('#int_prut_'+pd).val();
+    var dv = $('#int_pdv_'+pd).val();
+    var correo = $('#int_pcorreo_'+pd).val();
+    var celular = $('#int_pcelular_'+pd).val();
+
+    $.ajax({
+      type: 'POST',
+      url: '/agregar_persona_interconsulta_pre',
+      data: { 
+        pers_diag: pd,
+        nombre: nombre,
+        apep: apep,
+        apem: apem,
+        parent: parent,
+        rut: rut,
+        dv: dv,
+        correo: correo,
+        celular: celular
+      },
+      success: function(response){
+        $("#per_int_"+pd).collapse('hide');
+        $('#int_nombre_'+pd).val(nombre+' '+apep+' '+apem);
+        $('#int_rut_'+pd).val(response.rut);
+        $('#int_correo_'+pd).val(correo);
+        $('#int_celular_'+pd).val(celular);
+        $('#select_persona_int'+pd).select2('val', '');
+      },
+      error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
+    }); 
+
+  }
+});
+
+$('.panel-int2').on('shown.bs.collapse', function() { 
+  var pd = $(this).attr('id').substring(8);
+  $("#int_nombre_"+pd+","+"#int_rut_"+pd+","+"#int_correo_"+pd+","+"#int_celular_"+pd).val('');
+  $("#row_int_nombre_"+pd+","+"#row_int_rut_"+pd+","+"#row_int_correo_"+pd+","+"#row_int_celular_"+pd).hide();  
+  $("#int_div_"+pd).show(); 
+  $("#int_div_"+pd).css( "display", "block !important");
+});
+
+$('.panel-int2').on('hidden.bs.collapse', function() { 
+  var pd = $(this).attr('id').substring(8);
+  $("#int_div_"+pd).hide();
+  $("#row_int_nombre_"+pd+","+"#row_int_rut_"+pd+","+"#row_int_correo_"+pd+","+"#row_int_celular_"+pd).show(''); 
+});
+
 $('.panel-ges2').on('shown.bs.collapse', function() { 
-
-  alert('mostrar');
-
   var pd = $(this).attr('id').substring(8);
   $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
   $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).hide();  
   $("#ges_div_"+pd).show(); 
-  $("#ges_div_"+pd).css( "display", "block !important");  
-
+  $("#ges_div_"+pd).css( "display", "block !important");
 });
 
 $('.panel-ges2').on('hidden.bs.collapse', function() { 
   var pd = $(this).attr('id').substring(8);
   $("#ges_div_"+pd).hide();
-  $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show('');
-  alert('ocultar');
-  //$("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).val('');
-
+  $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show(''); 
 });
 
-$('input[type=radio][name^=radios-]').change(function() {
-  var pers_diag = $(this).attr('name').substring(7);  
+$('input[type=radio][name^=radios-estado-]').change(function() {
+  var pers_diag = $(this).attr('name').substring(14);  
   var e_d = $('input[name=radios-'+pers_diag+']:checked').val();
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   (e_d == 1) ? $( '#checkboxes-trat-div-'+pers_diag).show() : $( '#checkboxes-trat-div-'+pers_diag).hide();
   
   if(e_d == 1) { 
-    estado_ges = (trat == 1) ? 2 : 1; 
-    $('input[name=radios-ges-'+pers_diag+'][value=' + estado_ges + ']').prop('checked', true);
+    estado_trat = (trat == 1) ? 2 : 1; 
+    $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+    $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
   }
-  else { $('input[name=radios-ges-'+pers_diag+']').prop('checked', false); }
+  else { 
+    $('input[name=radios-ges-'+pers_diag+']').prop('checked', false);
+    $('input[name=radios-int-'+pers_diag+'][value=1]').prop('checked', false);
+    $('input[name=radios-int-'+pers_diag+'][value=2]').prop('checked', false);
+  }
 
   guardarDiagnostico(pers_diag);
 
+});
+
+$('input[type=radio][name^=radios-int-]').change(function() {
+  var pers_diag = $(this).attr('name').substring(11);
+  var value = $('input[name=radios-int-'+pers_diag+']:checked').val();
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_interconsulta',
+    data: { 
+      tipo: 'proposito',
+      valor: value,
+      pers_diag: pers_diag,
+    },
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("No se pudo agregar el prestador."); }
+  });
 });
 
 $('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
   var pers_diag = $(this).attr('id').substring(16);
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   
-  estado_ges = (trat == 1) ? 2 : 1;
-    $('input[name=radios-ges-'+pers_diag+'][value=' + estado_ges + ']').prop('checked', true);
+  estado_trat = (trat == 1) ? 2 : 1;
+  $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+  $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
   guardarDiagnostico(pers_diag);
 
 });
@@ -110,47 +183,42 @@ $('.modal-diag').on('show.bs.modal', function (e) {
 })
 
 
-$('#atencion_salud_motivo_consulta').keyup( function(e) { 
-
+$('#atencion_salud_motivo_consulta').keyup( function(e) {
   if (typeof contador_mot === 'undefined') { } 
   else { clearTimeout(contador_mot);}
-
   contador_mot = setTimeout(function(){ guardarTexto('motivo') },2000);
-
 })
 
 $('#atencion_salud_examen_fisico').keyup( function(e) { 
-
   if (typeof contador_exa === 'undefined') { } 
   else { clearTimeout(contador_exa);}
-
   contador_exa = setTimeout(function(){ guardarTexto('examen') },2000);
-
 })
 
 $('#atencion_salud_indicaciones_generales').keyup( function(e) { 
-
   if (typeof contador_ind === 'undefined') { } 
   else { clearTimeout(contador_ind);}
-
   contador_ind = setTimeout(function(){ guardarTexto('indicaciones') },2000);
-
 })
 
 $('.comentario').keyup( function(e) { 
-
   if (typeof contador_com === 'undefined') { } 
   else { clearTimeout(contador_com);}
-
   id = this.id; 
   contador_com = setTimeout(function(){ autoguardarComentario(id.substring(11)) },500);
-
 })
 
-$('#select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad' });
-$('#select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento' });
-$('#select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico' });
-$('#select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio' });
+$('.int-comment').keyup( function(e) { 
+  if (typeof contador_int_com === 'undefined') { } 
+  else { clearTimeout(contador_int_com);}
+  id = this.id.substring(12);
+  contador_int_com = setTimeout(function(){ autoguardarComentarioInt(id) },2000);
+})
+
+$('.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad' });
+$('.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento' });
+$('.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico' });
+$('.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio' });
 
 $('#select_diagnostico').select2({
   width: '80%',
@@ -178,12 +246,22 @@ $('.select_persona').select2({
     url: '/cargar_personas',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) {
-      return { q: term };
-    },
-    results: function (data, page) {
-      return { results: data };
-    }
+    data: function (term, page) { return { q: term }; },
+    results: function (data, page) { return { results: data };}
+  }
+});
+
+$('.select_persona_int').select2({
+  width: '80%',
+  minimumInputLength: 3,
+  placeholder: "Seleccione una persona",
+  allowClear: true,
+  ajax: {
+    url: '/cargar_personas',
+    dataType: 'json',
+    type: 'POST',
+    data: function (term, page) { return { q: term }; },
+    results: function (data, page) { return { results: data }; }
   }
 });
 
@@ -195,12 +273,8 @@ $('#select_examen').select2({
     url: '/cargar_prestaciones',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) {
-      return { q: term, tipo: 'examen' };
-    },
-    results: function (data, page) {
-      return { results: data };
-    }
+    data: function (term, page) { return { q: term, tipo: 'examen' }; },
+    results: function (data, page) { return { results: data }; }
   }
 });
 
@@ -212,12 +286,8 @@ $('#select_procedimiento').select2({
     url: '/cargar_prestaciones',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) {
-      return { q: term, tipo: 'procedimiento'};
-    },
-    results: function (data, page) {
-      return { results: data };
-    }
+    data: function (term, page) { return { q: term, tipo: 'procedimiento'}; },
+    results: function (data, page) { return { results: data }; }
   }
 });
 
@@ -229,33 +299,24 @@ $('#select_medicamento').select2({
     url: '/cargar_medicamentos',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) {
-      return { q: term };
-    },
-    results: function (data, page) {
-      return { results: data };
-    }
+    data: function (term, page) { return { q: term }; },
+    results: function (data, page) { return { results: data }; }
   }
 });
 
 $("#select_diagnostico").on("change", function(e) { 
-
-  var value = $("#select_diagnostico").select2('data').id;
- 
+  var value = $("#select_diagnostico").select2('data').id; 
   agregarDiagnostico(value);
-
 })
 
 $(".select_persona").on("change", function(e) { 
 
   var pd = $(this).attr('id').substring(15);   
-  value = $("#select_persona_"+pd).select2('data') != null ? $("#select_persona_"+pd).select2('data').id : null;
-       
+  value = $("#select_persona_"+pd).select2('data') != null ? $("#select_persona_"+pd).select2('data').id : null;       
   $("#ges_div_"+pd).hide(); 
   $("#per_not_"+pd).is(":visible") ? $("#per_not_"+pd).collapse('hide') : //nothing to do  ;
   $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show();
-  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true);
-    
+  $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true);    
 
   $.ajax({
     type: 'POST',
@@ -269,12 +330,70 @@ $(".select_persona").on("change", function(e) {
       $("#ges_rut_"+pd).val( response.rut );
       $("#ges_correo_"+pd).val( response.correo );
       $("#ges_celular_"+pd).val( response.celular ); 
-
     },
     error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
-  }); 
-   
+  });    
   
+})
+
+$(".select_persona_int").on("change", function(e) { 
+
+  var pd = $(this).attr('id').substring(18);   
+  value = $("#select_persona_int"+pd).select2('data') != null ? $("#select_persona_int"+pd).select2('data').id : null;       
+  $("#int_div_"+pd).hide(); 
+  $("#per_int_"+pd).is(":visible") ? $("#per_int_"+pd).collapse('hide') : //nothing to do  ;
+  $("#row_int_nombre_"+pd+","+"#row_int_rut_"+pd+","+"#row_int_correo_"+pd+","+"#row_int_celular_"+pd).show();
+  $("#int_nombre_"+pd+","+"#int_rut_"+pd+","+"#int_correo_"+pd+","+"#int_celular_"+pd).prop('disabled', true);    
+  
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_interconsulta',
+    data: { 
+      tipo: 'persona',
+      valor: value,
+      pers_diag: pd,
+    },
+    success: function(response){
+      $("#int_nombre_"+pd).val( response.nombre );
+      $("#int_rut_"+pd).val( response.rut );
+      $("#int_correo_"+pd).val( response.correo );
+      $("#int_celular_"+pd).val( response.celular ); 
+    },
+    error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
+  });    
+  
+})
+
+$(".select_prestadores").on("change", function(e) { 
+  var pd = $(this).attr('id').substring(18);   
+  value = $("#select_prestadores"+pd).select2('data') != null ? $("#select_prestadores"+pd).select2('data').id : null;    
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_interconsulta',
+    data: { 
+      tipo: 'prestador',
+      valor: value,
+      pers_diag: pd,
+    },
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("No se pudo agregar el prestador."); }
+  });   
+})
+
+$(".select_especialidad").on("change", function(e) { 
+  var pd = $(this).attr('id').substring(19);   
+  value = $("#select_especialidad"+pd).select2('data') != null ? $("#select_especialidad"+pd).select2('data').id : null;    
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_interconsulta',
+    data: { 
+      tipo: 'especialidad',
+      valor: value,
+      pers_diag: pd,
+    },
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("No se pudo agregar la especialidad."); }
+  });   
 })
 
 $("#select_examen").on("change", function(e) { 
@@ -336,10 +455,8 @@ $("#select_medicamento").on("change", function(e) {
 })
 
 function diagnosticoNoFrecuente(){
-
   var check_no_frec = $("#diag-no-frec").is(':checked');  
   return check_no_frec;
-
 }
 
 function agregarDiagnostico(diag_id){
@@ -519,9 +636,9 @@ function guardarTexto(tipo_texto) {
       texto: texto,    
   },
     success: function(response) { 
-                                  $('#auto-' + tipo_texto ).show("hide");
-                                  setTimeout(function(){ $('#auto-' + tipo_texto ).hide("hide");},2000) 
-                                },
+      $('#auto-' + tipo_texto ).show("hide");
+      setTimeout(function(){ $('#auto-' + tipo_texto ).hide("hide");},2000) 
+    },
     error: function(xhr, status, error){ alert('No se pudo guardar la información de la atención de salud.'); }
   });
 
@@ -546,6 +663,29 @@ function autoguardarComentario(pers_diag_aten_sal) {
     },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
+
+}
+
+function autoguardarComentarioInt(pers_diag_aten_sal) {
+
+  var int_comentario = $('#int-comment-'+pers_diag_aten_sal).val();
+
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_interconsulta',
+    data: { 
+      tipo: 'comentario',
+      valor: int_comentario,
+      pers_diag: pers_diag_aten_sal,
+    },
+    success: function(response){
+      $('#auto-int-'+pers_diag_aten_sal).show("hide");
+      setTimeout(function(){$('#auto-int-'+pers_diag_aten_sal).hide("hide");},2000) ;
+      pre_int_comentario = int_comentario;
+    },
+    error: function(xhr, status, error){ alert("No se guardar el comentario."); }
+  });    
+  
 
 }
 

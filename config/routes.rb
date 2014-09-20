@@ -22,7 +22,9 @@ AplicacionMedica::Application.routes.draw do
   post '/cargar_diagnosticos', to: 'persona_diagnostico#cargarDiagnosticos'
   post '/cargar_personas', to: 'persona_diagnostico#cargarPersonas'
   post '/agregar_persona_notificacion', to: 'persona_diagnostico#agregarPersonaNotificacion'
-  post '/agregar_persona_notificacion_pre', to: 'persona_diagnostico#agregarPersonaNotificacionPre'  
+  post '/agregar_persona_notificacion_pre', to: 'persona_diagnostico#agregarPersonaNotificacionPre'
+  post '/agregar_info_interconsulta', to: 'persona_diagnostico#agregarInfoInterconsulta'
+  post '/agregar_persona_interconsulta_pre', to: 'persona_diagnostico#agregarPersonaInterconsultaPre'   
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
@@ -35,6 +37,8 @@ AplicacionMedica::Application.routes.draw do
   post '/guardar_texto', to: 'atenciones_salud#guardarTexto'
   post '/autoguardar_comentario', to: 'persona_diagnostico#autoguardarComentario'
   post '/descargar_constancia_ges', to: 'persona_diagnostico#descargarConstanciaGes'
+  post '/descargar_interconsulta', to: 'persona_diagnostico#descargarInterconsulta'
+  post '/descargar_notificacion_obligatoria', to: 'persona_diagnostico#descargarNotificacionObligatoria'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

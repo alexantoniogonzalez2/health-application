@@ -5,7 +5,9 @@ class CreateFiInterconsultas < ActiveRecord::Migration
     	t.datetime :fecha_solicitud 
     	t.references :prestador_destino #prestador_destino_id
     	t.references :especialidad #especialidad_id
-      t.text :proposito
+      t.references :persona_conocimiento #persona_conocimiento_id
+      t.integer :proposito
+      t.text :proposito_otro
       t.text :comentario      
       t.timestamps
     end

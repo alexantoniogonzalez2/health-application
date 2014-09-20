@@ -4,29 +4,13 @@
 
 /* formulario de atención de salud */
 
-#submit {
-	float: right;
-}
+#submit {	float: right; }
+.panel-body{ padding: 0px !important; }
+.panel-body-ajustado{ padding: 10px !important; }
+.table { margin-bottom: 0px; }
+#examen-div, #procedimiento-div, #medicamento-div { margin-bottom: 0px; }
 
-.panel-body{
-  padding: 0px !important;
-}
-
-.panel-body-ajustado{
-  padding: 10px !important;
-}
-
-.table {
-  margin-bottom: 0px;
-}
-
-#examen-div, #procedimiento-div, #medicamento-div {
-  margin-bottom: 0px;
-}
-
-#diagnostico-div {
-  margin-bottom: 10px;
-}
+#diagnostico-div { margin-bottom: 10px; }
 div.list-group {
   margin-bottom: 0px;
   padding-top: 10px;
@@ -41,12 +25,9 @@ div.list-group {
       margin-right: 67px;
     }
   }
-
 }
 
-div.select2-container{
-  font-size: 13px;
-}
+div.select2-container{ font-size: 13px; }
 
 .boton-auge{
   position: relative;
@@ -54,7 +35,6 @@ div.select2-container{
   float: right;
   padding: 2px !important;
   margin-bottom: 0px !important; 
-  /*left: 47px;*/
 }
 .boton-eno{
   position: relative;
@@ -62,24 +42,21 @@ div.select2-container{
   float: right;
   padding: 2px !important;
   margin-bottom: 0px !important; 
-  /*left: 47px;*/
 }
 
-
 label { margin: 0px;}
-
 p { margin: 0px; }
 
 textarea.form-control {
   resize: vertical;
   font-size: 14px;
   line-height:100%;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  padding: 6px;
  }
 
-button.btn {
-  float: right;
-  /*padding-right: 5px;*/
-}
+button.btn { float: right; }
 
 input.btn {
   float: right !important;
@@ -117,38 +94,19 @@ input.datepicker, input.datepicker-disabled {
   text-align: right;
 }
 
-.nav-tabs {
-  border-bottom: none !important;
-}
+.nav-tabs { border-bottom: none !important; }
+.disabled { cursor: not-allowed !important; }
 
-.disabled{
-  cursor: not-allowed !important;
-}
-
-#auto-motivo,#auto-indicaciones,#auto-examen,.comentario{
+#auto-motivo,#auto-indicaciones,#auto-examen,.comentario,.auto-int-comment{
   float: right;
   padding: 3px !important;
   margin-bottom: 0px!important;
   display: none;
 }
 
-textarea.form-control {
-  margin-bottom: 10px;
-  margin-top: 5px;
-  padding: 6px;
-}
-
-#div_atenciones {
-  display: none;
-}
-
-#modal-dialog-metricas {
-  width: 680px;
-}
-
-div.footer{ 
-  margin-top: 20px !important;
-}
+#div_atenciones { display: none; }
+#modal-dialog-metricas { width: 680px; }
+div.footer{ margin-top: 20px !important; }
 
 label.checkbox-der {
   font-weight: bold !important;
@@ -207,7 +165,7 @@ div.panel-ges {
 div.trat{ padding-top: 26px !important; }
 label.trat{ font-weight: normal !important; }
 .form-ges { margin: 0px !important; }
-#icon-eno { color: green !important; }
+#icon-eno,#icon-ges { color: green !important; }
 
 div.ajuste-eno { 
   display: inline-block;
@@ -239,7 +197,7 @@ div.ajuste-eno {
   display:none;
   margin-top: 5px !important;
 }
-.panel-ges2{ 
+.panel-ges2,.panel-int2{ 
   margin: 10px 0px;
   padding: 0px;  
 }

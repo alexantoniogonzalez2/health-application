@@ -38,6 +38,103 @@ class PersonaDiagnosticoController < ApplicationController
 				
 	end
 
+	def agregarInfoInterconsulta
+
+		@persona = nil
+		nombre = ''
+		correo = ''
+		celular = ''
+		rut = ''
+
+		case params[:tipo]
+			when 'persona'				
+				unless params[:valor].blank? 
+					@persona = PerPersonas.find(params[:valor])
+					nombre = @persona.showName('%n%p%m')
+					correo = @persona.user.email
+					celular = @persona.getCelular
+					rut = @persona.showRut
+				end
+			when 'prestador'
+				@prestador = PrePrestadores.find(params[:valor])
+			when 'especialidad'
+				@especialidad = ProEspecialidades.find(params[:valor])
+			when 'comentario'
+			when 'proposito'			
+		end
+
+		@interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is null ',params[:pers_diag]).first
+
+		if @interconsulta
+			#params[:valor].blank? ? @interconsulta.destroy : @interconsulta.save
+
+		else	#se info persona temporalmente, sin fecha			
+			@interconsulta = FiInterconsultas.new
+			@interconsulta.persona_diagnostico_atencion_salud_id = params[:pers_diag]						
+		end	
+
+		case params[:tipo]
+			when 'persona'
+				@interconsulta.persona_conocimiento = @persona 
+			when 'prestador'
+				@interconsulta.prestador_destino = @prestador 
+			when 'especialidad'
+				@interconsulta.especialidad = @especialidad
+			when 'comentario'
+				@interconsulta.comentario = params[:valor]
+			when 'proposito'
+				@interconsulta.proposito = params[:valor]			
+		end
+
+		@interconsulta.save
+
+		respond_to do |format|
+			format.json { render :json => { :success => true, :nombre => nombre, :correo => correo, :celular => celular, :rut => rut }	}
+		end
+				
+	end
+
+	def agregarPersonaInterconsultaPre
+
+		@user = User.new
+		@user.email = params[:correo]
+		@user.password = "Random123"
+
+		@persona = PerPersonas.new
+		@persona.nombre = params[:nombre]
+		@persona.apellido_paterno = params[:apep]
+		@persona.apellido_materno = params[:apem]
+		@persona.rut = params[:rut]
+		@persona.digito_verificador = params[:dv]
+		@telefono = TraTelefonos.new
+		@telefono.codigo = 9 #celular
+		@telefono.numero = params[:celular]
+		@telefono.save
+		@user.save!
+		@persona.user = @user
+		@persona.save
+		@persona_telefono = PerPersonasTelefonos.new
+		@persona_telefono.persona = @persona
+		@persona_telefono.telefono = @telefono
+		@persona_telefono.save!		
+
+		@interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is null ',params[:pd]).first
+
+		if @interconsulta
+			@interconsulta.persona_conocimiento = @persona 
+		else	#se agrega persona temporalmente, sin fecha			
+			@interconsulta = FiInterconsultas.new
+			@interconsulta.persona_diagnostico_atencion_salud_id = params[:pd]
+			@interconsulta.persona_conocimiento = @persona 
+			@interconsulta.save
+		end	
+
+		respond_to do |format|
+			format.json { render :json => { :success => true, :rut => @persona.showRut, :celular => @persona.getCelular}	}
+		end
+				
+	end
+
 	def agregarPersonaNotificacion
 
 		@persona = nil
@@ -231,6 +328,116 @@ class PersonaDiagnosticoController < ApplicationController
 		render :json => { :success => true}	
 
 	end
+
+	def descargarNotificacionObligatoria
+
+		@notificacion_eno = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
+		
+		@persona = nil
+		if @notificacion_eno
+			@notificacion_eno.destroy
+		end	
+
+		@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("id = ?",params[:id]).first
+
+		@confirmacion_diagnostica = nil
+		if @persona_diagnostico_atencion.estado_diagnostico.nombre == "Confirmado" 
+			@confirmacion_diagnostica = @persona_diagnostico_atencion.en_tratamiento ? "tratamiento" : "confirmacion"
+		end
+
+		@notificacion_eno = FiNotificacionesEno.new
+		@notificacion_eno.persona_diagnostico_atencion_salud_id = params[:id]
+		@notificacion_eno.confirmacion_diagnostica = @confirmacion_diagnostica   
+		@notificacion_eno.fecha_notificacion = DateTime.current
+		@notificacion_eno.save
+
+	  @agendamiento = AgAgendamientos.find(params[:ag])
+
+		p_d = FiPersonaDiagnosticos
+  	.joins(:persona_diagnosticos_atencion_salud)
+  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+  					fi_persona_diagnosticos.diagnostico_id,
+  					fi_persona_diagnosticos.persona_id,
+  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+  					fi_persona_diagnosticos_atenciones_salud.comentario,
+  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
+  	.where('fi_persona_diagnosticos_atenciones_salud.id' => params[:id]).first
+
+	  @estados_diagnostico = MedDiagnosticoEstados.all
+
+	  nombre = l DateTime.current, format: :timestamp
+	  nombre.to_s << ' ' << params[:id] << ' ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+
+		respond_to do |format|
+			format.pdf do
+          render :pdf => nombre,
+                 :template => "persona_diagnostico/notificacion_obligatoria.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona } ,
+                 :disposition => 'attachment',
+                 :encoding => "utf8",
+                 :show_as_html => params[:debug]                 
+ 					 end               
+		end
+
+	end	
+
+	def descargarInterconsulta 
+
+		@interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
+		
+		@persona = nil
+		if @interconsulta
+			@persona = @interconsulta.persona_conocimiento
+			@interconsulta.destroy
+		end	
+
+		@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("id = ?",params[:id]).first
+
+		@confirmacion_diagnostica = nil
+		if @persona_diagnostico_atencion.estado_diagnostico.nombre == "Confirmado" 
+			@confirmacion_diagnostica = @persona_diagnostico_atencion.en_tratamiento ? "tratamiento" : "confirmacion"
+		end
+
+		@interconsulta = FiInterconsultas.new
+		@interconsulta.persona_diagnostico_atencion_salud_id = params[:id]
+		@interconsulta.persona_conocimiento = @persona 
+		@interconsulta.confirmacion_diagnostica = @confirmacion_diagnostica   
+		@interconsulta.fecha_solicitud = DateTime.current
+		@interconsulta.save
+
+	  @agendamiento = AgAgendamientos.find(params[:ag])
+
+		p_d = FiPersonaDiagnosticos
+  	.joins(:persona_diagnosticos_atencion_salud)
+  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+  					fi_persona_diagnosticos.diagnostico_id,
+  					fi_persona_diagnosticos.persona_id,
+  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+  					fi_persona_diagnosticos_atenciones_salud.comentario,
+  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
+  	.where('fi_persona_diagnosticos_atenciones_salud.id' => params[:id]).first
+
+	  @estados_diagnostico = MedDiagnosticoEstados.all
+
+	  nombre = l DateTime.current, format: :timestamp
+	  nombre.to_s << ' ' << params[:id] << ' ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+
+		respond_to do |format|
+			format.pdf do
+          render :pdf => nombre,
+                 :template => "persona_diagnostico/interconsulta.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona } ,
+                 :disposition => 'attachment',
+                 :encoding => "utf8",
+                 :show_as_html => params[:debug]                 
+ 					 end               
+		end
+
+	end	
 
 	def descargarConstanciaGes 
 
