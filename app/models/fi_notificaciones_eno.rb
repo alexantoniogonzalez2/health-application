@@ -2,7 +2,7 @@ class FiNotificacionesEno < ActiveRecord::Base
 
 	self.table_name = "fi_notificaciones_eno"
 	belongs_to :persona_diagnostico_atencion_salud, :class_name => 'FiPersonaDiagnosticosAtencioneSalud'
-	belongt_to :pais_contagio, :class_name => 'TraPaises'
+	belongs_to :pais_contagio, :class_name => 'TraPaises'
 
   private
   def app_params

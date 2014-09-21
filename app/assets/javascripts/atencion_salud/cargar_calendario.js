@@ -11,7 +11,11 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
   showButtonPanel: true, 
   onSelect: function(dateText) {
     var pers_diag = this.name.substring(4);
-    guardarDiagnostico(pers_diag);
+    var tipo = this.name.substring(0,4); 
+    if (tipo === 'p_s_')
+      agregarInfoEno(pers_diag,$("#p_s_"+pers_diag).datepicker("getDate"),'fecha');
+    else     
+      guardarDiagnostico(pers_diag);
   }       
 });
 

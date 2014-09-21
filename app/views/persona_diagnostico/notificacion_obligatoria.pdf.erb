@@ -1,3 +1,6 @@
+<% notificacion_eno = p_d.getNotificacionEno(p_d.id) %>	
+<%= wicked_pdf_stylesheet_link_tag 'application' %>
+
 <h1 class="enc-ges">Declaración de Enfermedad de Notificación Obligatoria</h1>
 
 <div class="panel panel-default ges">
@@ -5,36 +8,12 @@
     <h3 class="panel-title">Datos del prestador</h3>
   </div>
   <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Institución</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Dirección</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Profesional que notifica</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Rut profesional</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
-			</div>
-		</div>
-	</div>
+		<table>
+			<tr><td><label>Institución</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td></tr>
+			<tr><td><label>Dirección</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td></tr>
+			<tr><td><label>Profesional que notifica</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td></tr>
+			<tr><td><label>Rut profesional</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td></tr>			
+		</table>	
   </div>
 </div>
 
@@ -43,64 +22,15 @@
     <h3 class="panel-title">Datos del paciente</h3>
   </div>
   <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Nombre</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Rut</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Previsión de salud</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getPrevision.prevision_salud.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Domicilio</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getDomicilio %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Correo electrónico</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.user.email %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Telefono fijo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getTelefonoFijo %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Celular</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getCelular %>
-			</div>
-		</div>
-	</div>
+  	<table>
+			<tr><td><label>Nombre</label></td><td>: <%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
+			<tr><td><label>Rut</label></td><td>: <%= @agendamiento.persona.showRut %></td></tr>
+			<tr><td><label>Previsión de salud</label></td><td>: <%= @agendamiento.persona.getPrevision.prevision_salud.nombre %></td></tr>
+			<tr><td><label>Domicilio</label></td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
+			<tr><td><label>Correo electrónico</label></td><td>: <%= @agendamiento.persona.user.email %></td></tr>
+			<tr><td><label>Telefono fijo</label></td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>
+			<tr><td><label>Celular</label></td><td>: <%= @agendamiento.persona.getCelular %></td></tr>
+		</table>
   </div>
 </div>
 
@@ -109,121 +39,72 @@
     <h3 class="panel-title">Información médica</h3>
   </div>
   <div class="panel-body panel-body-ajustado">
-		<div class="container ajustado">
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Diagnóstico</label>
-				</div>
-				<div class="col-md-8 column">:
-					<%= p_d.diagnostico.nombre %>
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Código CIE10</label>
-				</div>
-				<div class="col-md-8 column">:
-					<%= p_d.diagnostico.codigo_cie10 %>
-				</div>
-			</div>
-			<div class="row clearfix">	
-				<div class="col-md-4 column">
-					<label>Fecha primeros síntomas</label> <span id='icon-eno' class="glyphicon glyphicon-info-sign"></span>
-				</div>
-				<div class="col-md-8 column">:
-					<input name="f_s_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.getFechaInicio %>" >
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Confirmación diagnóstica</label>
-				</div>
-				<div class="col-md-6 column">:
-					<select id="select-conf-diag" name="selectbasic">
-						<option></option>
-			      <option value="1">Clínica (incluye imagenología)</option>
-			      <option value="2">Epidemiológica</option>
-			      <option value="3">Frotis</option>
-			      <option value="4">Cultivo</option>
-			      <option value="5">Serología</option>
-			      <option value="6">Biopsia</option>
-			      <option value="7">Autopsia</option>
-			    </select>
-				</div>				
-			</div>
-			<div class="row clearfix">	
-				<div class="col-md-4 column">
-					<label>Antecedentes de vacunación</label>
-				</div>
-				<div class="col-md-8 column">:
-					<div class="form-group ajuste-eno">
-					  <label class="radio-inline" for="radios-0"><input type="radio" name="radios" id="radios-0" value="1" checked="checked">Sí</label> 
-					  <label class="radio-inline" for="radios-1"><input type="radio" name="radios" id="radios-1" value="2">No</label> 
-					  <label class="radio-inline" for="radios-2"><input type="radio" name="radios" id="radios-2" value="3">Ignorado</label> 
-					  <label class="radio-inline" for="radios-3"><input type="radio" name="radios" id="radios-3" value="4">No corresponde</label>
-					</div>
-				</div>
-			</div>
-			<div class="row clearfix">	
-				<div class="col-md-4 column">
-					<label>País de contagio</label>
-				</div>
-				<div class="col-md-6 column">:
-					<select id="select-pais-contagio" name="selectbasic">
-						<option></option>					
-						  <% @paises.each do |pais| %>
-						  	<option value="<%= pais.id %>"><%= pais.nombre %></option>      			
-	   					<% end %>
-			    </select>
-				</div>
-			</div>
-			<div class="row clearfix">	
-				<div class="col-md-4 column">
-					<label>Embarazo</label>
-				</div>
-				<div class="col-md-8 column">:
-					<div class="form-group ajuste-eno">
-					  <label class="radio-inline" for="radios-0"><input type="radio" name="radios" id="radios-0" value="1" checked="checked">Sí</label> 
-					  <label class="radio-inline" for="radios-1"><input type="radio" name="radios" id="radios-1" value="2">No</label> 
-					  <label class="radio-inline" for="radios-3"><input type="radio" name="radios" id="radios-3" value="4">No corresponde</label>
-					  <label>Semanas de gestación</label>
-					  <input id="semanas" type="text" class="form-control" maxlength="2" size="2" >
-					</div>
-				</div>
-			</div>
-			<div class="row clearfix">	
-				<div class="col-md-4 column">
-					<label>En caso de TBC</label>
-				</div>
-				<div class="col-md-8 column">:
-				</div>
-			</div>			
-		</div>
+  	<table>
+  		<tr><td><label>Diagnóstico</label></td><td>: <%= p_d.diagnostico.nombre %></td></tr>
+			<tr><td><label>Código CIE10</label></td><td>:	<%= p_d.diagnostico.codigo_cie10 %></td></tr>
+			<tr><td><label>Fecha primeros síntomas</label></td><td>:	<input name="p_s_<%= p_d.id%>" id="p_s_<%= p_d.id%>" class="datepicker" type="text" value="<%= if (!notificacion_eno.nil?)
+																																																																																if (!notificacion_eno.fecha_primeros_sintomas.nil?)
+																																																																																	notificacion_eno.fecha_primeros_sintomas.strftime('%Y-%m-%d')
+																																																																																else
+																																																																																	p_d.getFechaInicio 	
+																																																																																end
+																																																																															else
+																																																																															 	p_d.getFechaInicio
+																																																																															end  %>" ></td></tr>
+			<tr><td><label>Confirmación diagnóstica</label></td><td>: <% conf = 8
+																																	unless notificacion_eno.nil? 
+																																		conf = notificacion_eno.confirmacion_diagnostica
+																																	end %>
+																																<select id="select-confirmacion<%=p_d.id%>" class="select-confirmacion">
+																																	<option></option>
+																														      <option value="1" <% if conf == '1' %> selected <% end %> >Clínica (incluye imagenología)</option>
+																														      <option value="2" <% if conf == '2' %> selected <% end %> >Epidemiológica</option>
+																														      <option value="3" <% if conf == '3' %> selected <% end %> >Frotis</option>
+																														      <option value="4" <% if conf == '4' %> selected <% end %> >Cultivo</option>
+																														      <option value="5" <% if conf == '5' %> selected <% end %> >Serología</option>
+																														      <option value="6" <% if conf == '6' %> selected <% end %> >Biopsia</option>
+																														      <option value="7" <% if conf == '7' %> selected <% end %> >Autopsia</option>
+																														    </select></td></tr>
+			<tr><td><label>Antecedentes de vacunación</label></td><td>: <% ant_vac = 5
+																																	unless notificacion_eno.nil? 
+																																		ant_vac = notificacion_eno.antecedentes_vacunacion
+																																	end %>
+			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-0"><input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-0" value="1">Sí</label> 
+			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1"><input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" value="2">No</label> 
+			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2"><input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" value="3">Ignorado</label> 
+			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3"><input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" value="4">No corresponde</label></td></tr>
+			<tr><td><label>País de contagio</label></td><td>:	<% unless notificacion_eno.pais_contagio.nil?
+																													notificacion_eno.pais_contagio.nombre 
+																												end %></td></tr>
+
+			<tr><td><label class="eno">Embarazo</label></td><td><span class="eno">:</span> <% emb = 4
+																																											unless notificacion_eno.nil? 
+																																												emb = notificacion_eno.embarazo
+																																											end %>	
+			  <label class="radio-inline" for="radios-emb<%=p_d.id%>-0"><input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-0" value="1" >Sí</label> 
+			  <label class="radio-inline" for="radios-emb<%=p_d.id%>-1"><input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" value="2">No</label> 
+			  <label class="radio-inline" for="radios-emb<%=p_d.id%>-3"><input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" value="3">No corresponde</label></td></tr>	  
+			<tr><td><label class="eno">Semanas de gestación</label></td><td><span>:</span><input id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= unless notificacion_eno.nil? 
+																																																																																										notificacion_eno.semanas_gestacion
+				 																																																																																				  end %>"></td></tr>
+			<tr><td><label class="eno">En caso de TBC</label></td><td><span class="eno">:</span> <% tbc = 4
+																																														unless notificacion_eno.nil? 
+																																															tbc = notificacion_eno.tbc
+																																														end %>
+			  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-0"><input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-0" value="1" >Caso nuevo</label> 
+			  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-1"><input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="2">Recaída, igual localización</label> 
+			  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-3"><input <% if tbc == '3' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-3" value="4">Recaída, otra localización</label></td></tr>
+		</table>
   </div>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-body panel-body-ajustado">
-		<div class="container ajustado">
-			<div class="row clearfix">
-				<div class="col-md-12 column">
-
-				</div>			
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Fecha y hora de la notificación</label>
-				</div>
-				<div class="col-md-8 column">:
-					<%= l Time.now %>
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-12 column firma">
-					<label class="firma">Firma profesional</label>
-				</div>				
-			</div>
-		</div>
+		<table>
+			<tr><td><label>Fecha y hora de la notificación</label></td><td>: <%= l Time.now %></td></tr>
+			<tr><td colspan="2"><br/><br/><br/></td></tr>
+			<tr><td colspan="2"><label class="firma">Firma profesional</label></td></tr>
+		</table>
  	</div>
 </div>
 

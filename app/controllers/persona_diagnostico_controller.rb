@@ -38,6 +38,49 @@ class PersonaDiagnosticoController < ApplicationController
 				
 	end
 
+	def agregarInfoEno
+
+		fecha = ''
+		confirmacion = ''
+		vacunacion = ''
+		pais = nil
+		embarazo = ''
+		sem_emb = ''
+		tbc = ''
+
+		@notificacion_eno = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:pers_diag]).first
+
+		if @notificacion_eno.nil? 			
+			@notificacion_eno = FiNotificacionesEno.new
+			@notificacion_eno.persona_diagnostico_atencion_salud_id = params[:pers_diag]						
+		end	
+
+		case params[:tipo]
+			when 'fecha'
+				@notificacion_eno.fecha_primeros_sintomas = params[:valor] 
+			when 'confirmacion'
+				@notificacion_eno.confirmacion_diagnostica = params[:valor]  
+			when 'vacunacion'
+				@notificacion_eno.antecedentes_vacunacion = params[:valor] 
+			when 'pais'
+				@pais = TraPaises.find(params[:valor])
+				@notificacion_eno.pais_contagio = @pais 
+			when 'embarazo'
+				@notificacion_eno.embarazo = params[:valor]
+			when 'sem_emb'
+				@notificacion_eno.semanas_gestacion = params[:valor]
+			when 'tbc'
+				@notificacion_eno.tbc = params[:valor]						
+		end
+
+		@notificacion_eno.save
+
+		respond_to do |format|
+			format.json { render :json => { :success => true }	}
+		end
+				
+	end
+
 	def agregarInfoInterconsulta
 
 		@persona = nil
@@ -66,8 +109,6 @@ class PersonaDiagnosticoController < ApplicationController
 		@interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is null ',params[:pers_diag]).first
 
 		if @interconsulta
-			#params[:valor].blank? ? @interconsulta.destroy : @interconsulta.save
-
 		else	#se info persona temporalmente, sin fecha			
 			@interconsulta = FiInterconsultas.new
 			@interconsulta.persona_diagnostico_atencion_salud_id = params[:pers_diag]						
@@ -226,9 +267,7 @@ class PersonaDiagnosticoController < ApplicationController
 																						 params[:diagnostico_id]).first
 
 		if persona_diagnostico_atencion_actual
-
-			render :json => { :success => false }		
-
+			render :json => { :success => false }	
 		else 
 
 			@persona_diagnostico = FiPersonaDiagnosticos.where('diagnostico_id = ? ',params[:diagnostico_id]).first
@@ -331,25 +370,49 @@ class PersonaDiagnosticoController < ApplicationController
 
 	def descargarNotificacionObligatoria
 
-		@notificacion_eno = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
-		
-		@persona = nil
-		if @notificacion_eno
-			@notificacion_eno.destroy
-		end	
-
+		@notificacion_eno_pre = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
 		@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("id = ?",params[:id]).first
 
-		@confirmacion_diagnostica = nil
-		if @persona_diagnostico_atencion.estado_diagnostico.nombre == "Confirmado" 
-			@confirmacion_diagnostica = @persona_diagnostico_atencion.en_tratamiento ? "tratamiento" : "confirmacion"
-		end
+		@fecha = ''
+		@confirmacion = ''
+		@vacunacion = ''
+		@pais = nil
+		@embarazo = ''
+		@sem_emb = ''
+		@tbc = ''
+		borrar = false
+
+		if (!@notificacion_eno_pre)
+			@notificacion_eno_pre = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? ',params[:id]).order('fecha_notificacion DESC').first
+		else
+			borrar = true	
+		end	
+
+		if @notificacion_eno_pre
+			@fecha = @notificacion_eno_pre.fecha_primeros_sintomas
+			@confirmacion = @notificacion_eno_pre.confirmacion_diagnostica
+			@vacunacion = @notificacion_eno_pre.antecedentes_vacunacion
+			@pais = @notificacion_eno_pre.pais_contagio
+			@embarazo = @notificacion_eno_pre.embarazo
+			@sem_emb = @notificacion_eno_pre.semanas_gestacion
+			@tbc = @notificacion_eno_pre.tbc
+			if borrar
+				@notificacion_eno_pre.destroy
+			end	
+		end	
 
 		@notificacion_eno = FiNotificacionesEno.new
 		@notificacion_eno.persona_diagnostico_atencion_salud_id = params[:id]
-		@notificacion_eno.confirmacion_diagnostica = @confirmacion_diagnostica   
 		@notificacion_eno.fecha_notificacion = DateTime.current
-		@notificacion_eno.save
+		@notificacion_eno.fecha_primeros_sintomas = @fecha
+		@notificacion_eno.confirmacion_diagnostica = @confirmacion
+		@notificacion_eno.antecedentes_vacunacion = @vacunacion
+		@notificacion_eno.pais_contagio = @pais
+		@notificacion_eno.embarazo = @embarazo
+		@notificacion_eno.semanas_gestacion = @sem_emb
+		@notificacion_eno.tbc = @tbc
+
+		@notificacion_eno.save		
 
 	  @agendamiento = AgAgendamientos.find(params[:ag])
 
@@ -385,28 +448,47 @@ class PersonaDiagnosticoController < ApplicationController
 
 	def descargarInterconsulta 
 
-		@interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
-		
-		@persona = nil
-		if @interconsulta
-			@persona = @interconsulta.persona_conocimiento
-			@interconsulta.destroy
-		end	
-
+		@interconsulta_pre = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is null ',params[:id]).first
 		@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("id = ?",params[:id]).first
 
-		@confirmacion_diagnostica = nil
-		if @persona_diagnostico_atencion.estado_diagnostico.nombre == "Confirmado" 
-			@confirmacion_diagnostica = @persona_diagnostico_atencion.en_tratamiento ? "tratamiento" : "confirmacion"
-		end
+		@persona = nil
+		@proposito = nil
+		@prestador_destino = nil
+		@especialidad = nil
+		@comentario = nil
+		@proposito_otro = nil
+		borrar = false
+
+		if (!@interconsulta_pre)
+			@interconsulta_pre = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? ',params[:id]).order('fecha_solicitud DESC').first
+		else
+			borrar = true	
+		end	
+
+		if @interconsulta_pre
+			@persona = @interconsulta_pre.persona_conocimiento
+			@proposito = @interconsulta_pre.proposito
+			@prestador_destino = @interconsulta_pre.prestador_destino
+			@especialidad = @interconsulta_pre.especialidad
+			@comentario = @interconsulta_pre.comentario
+			#@proposito_otro = @interconsulta_pre.proposito_otro
+			if borrar
+				@interconsulta_pre.destroy
+			end	
+
+		end	
 
 		@interconsulta = FiInterconsultas.new
 		@interconsulta.persona_diagnostico_atencion_salud_id = params[:id]
 		@interconsulta.persona_conocimiento = @persona 
-		@interconsulta.confirmacion_diagnostica = @confirmacion_diagnostica   
+		@interconsulta.proposito = @proposito  
 		@interconsulta.fecha_solicitud = DateTime.current
+		@interconsulta.prestador_destino = @prestador_destino
+		@interconsulta.especialidad = @especialidad
+		@interconsulta.comentario = @comentario
+		#@interconsulta.proposito_otro = @proposito_otro
 		@interconsulta.save
-
+	
 	  @agendamiento = AgAgendamientos.find(params[:ag])
 
 		p_d = FiPersonaDiagnosticos
@@ -430,7 +512,7 @@ class PersonaDiagnosticoController < ApplicationController
 		respond_to do |format|
 			format.pdf do
           render :pdf => nombre,
-                 :template => "persona_diagnostico/interconsulta.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona } ,
+                 :template => "persona_diagnostico/interconsulta.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona, :interconsulta => @interconsulta } ,
                  :disposition => 'attachment',
                  :encoding => "utf8",
                  :show_as_html => params[:debug]                 
@@ -444,9 +526,20 @@ class PersonaDiagnosticoController < ApplicationController
 		@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
 		
 		@persona = nil
+		borrar = false
+
+		if (!@notificacion_ges)
+			@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? ',params[:id]).order('fecha_notificacion DESC').first
+		else
+			borrar = true	
+		end	
+
+
 		if @notificacion_ges
 			@persona = @notificacion_ges.persona_conocimiento
-			@notificacion_ges.destroy
+			if borrar
+				@notificacion_ges.destroy
+			end	
 		end	
 
 		@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where("id = ?",params[:id]).first

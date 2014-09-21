@@ -169,7 +169,7 @@ label.trat{ font-weight: normal !important; }
 
 div.ajuste-eno { 
   display: inline-block;
-  margin: 0px 0px 0px 20px !important;
+  margin: 0px 0px 0px 0px !important;
 }
 
 .fc-event-time { 
@@ -210,3 +210,9 @@ div.ajuste-eno {
 }
 .pers-ges{ margin: 0px;}
 div.ajuste-ges{ padding: 0px !important; }
+.colum-ajuste-eno { padding: 0px !important; }
+input.sem-ges{ width: 50px; display: inline; padding: 6px 3px; height: 25px; margin-top: 5px;}
+label.eno { padding-top: 7px;}
+span.eno { top: 4px; position: relative;}
+label.com-int { float: top;}
+

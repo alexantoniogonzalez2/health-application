@@ -215,10 +215,11 @@ $('.int-comment').keyup( function(e) {
   contador_int_com = setTimeout(function(){ autoguardarComentarioInt(id) },2000);
 })
 
-$('.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad' });
-$('.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento' });
-$('.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico' });
-$('.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio' });
+$('.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
+$('.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
+$('.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
+$('.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
+$('.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
 
 $('#select_diagnostico').select2({
   width: '80%',
@@ -452,6 +453,42 @@ $("#select_medicamento").on("change", function(e) {
     error: function(xhr, status, error){ alert("No se pudo agregar el medicamento del paciente."); }
   });  
 
+})
+
+$(".select-pais-contagio").on("change", function(e) {
+  var pd = $(this).attr('id').substring(20); 
+  var value = $("#select-pais-contagio"+pd).select2('data').id;
+  agregarInfoEno(pd,value,'pais');
+})
+
+$(".select-confirmacion").on("change", function(e) {
+  var pd = $(this).attr('id').substring(19); 
+  var value = $("#select-confirmacion"+pd).select2('data').id;
+  agregarInfoEno(pd,value,'confirmacion');
+})
+
+$('input[type=radio][name^=radios-ant]').change(function() {
+  var pd = $(this).attr('name').substring(10);
+  var value = $('input[name=radios-ant'+pd+']:checked').val();
+  agregarInfoEno(pd,value,'vacunacion');
+});
+
+$('input[type=radio][name^=radios-emb]').change(function() {
+  var pd = $(this).attr('name').substring(10);
+  var value = $('input[name=radios-emb'+pd+']:checked').val();
+  agregarInfoEno(pd,value,'embarazo');
+});
+
+$('input[type=radio][name^=radios-tbc]').change(function() {
+  var pd = $(this).attr('name').substring(10);
+  var value = $('input[name=radios-tbc'+pd+']:checked').val();
+  agregarInfoEno(pd,value,'tbc');
+});
+
+$('.sem-ges').keyup( function(e) {
+  var pd = $(this).attr('id').substring(8);
+  var value =$('#semanas-'+pd).val();
+  agregarInfoEno(pd,value,'sem_emb'); 
 })
 
 function diagnosticoNoFrecuente(){
@@ -699,10 +736,7 @@ function cerrarDiagnostico(pers_diag_aten_sal){
   $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']').val([pre_e_d]);
   $('#enf_cro_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_enf_cro);
   $('#trat_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_trat);
-  $('#comentario_'+id_mod).val(pre_comentario);
-
-  /*var estado = (pre_e_d == 1) ? true : false;  
-  $('#checkboxes-conf-'+pers_diag_aten_sal).prop('checked', estado);*/
+  $('#comentario_'+id_mod).val(pre_comentario); 
 
   $.ajax({
     type: 'POST',
@@ -717,13 +751,28 @@ function cerrarDiagnostico(pers_diag_aten_sal){
       enf_cro: pre_enf_cro,
       trat: pre_trat,
      },
-    success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); */},
+    success: function(response) { },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
   });
 
 }
 
 function validarNuevaPersona(pd){
-
   return true;
+}
+
+function agregarInfoEno(pd,value,tipo){
+
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_eno',
+    data: { 
+      tipo: tipo,
+      valor: value,
+      pers_diag: pd,
+    },
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
+  });   
+
 }

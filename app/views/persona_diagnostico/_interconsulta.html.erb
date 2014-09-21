@@ -1,3 +1,5 @@
+<% interconsulta = p_d.getInterconsulta(p_d.id) %>	
+
 <h1 class="enc-ges">Solicitud de Interconsulta o Derivación</h1>
 
 <div class="panel panel-default ges">
@@ -125,7 +127,14 @@
 					<select id="select_prestadores<%= p_d.id %>" class="select_prestadores">	
 						<option></option>					
 					  <% @prestadores.each do |pres| %>
-					  	<option value="<%= pres.id %>"><%= pres.nombre %></option>      			
+					  	<option value="<%= pres.id %>"
+					  		<% unless interconsulta.nil?
+					  				unless interconsulta.prestador_destino.nil?
+					  	 				if interconsulta.prestador_destino.id == pres.id 
+					  	 					%> selected <% 
+					  	 				end	
+					  	 			end
+					  	 		end %> ><%= pres.nombre %></option>      			
    					<% end %>
   				</select>					
 				</div>				
@@ -138,7 +147,14 @@
 					<select id="select_especialidad<%= p_d.id %>" class="select_especialidad">	
 						<option></option>					
 					  <% @especialidades.each do |esp| %>
-					  	<option value="<%= esp.id %>"><%= esp.nombre %></option>      			
+					  	<option value="<%= esp.id %>" 
+					  		<% unless interconsulta.nil?
+					  				unless interconsulta.especialidad.nil?
+					  					if interconsulta.especialidad.id == esp.id 
+					  						%> selected <%
+					  					end	 
+					  				end
+					  		end %> ><%= esp.nombre %></option>      			
    					<% end %>
   				</select>
 				</div>				
@@ -161,25 +177,31 @@
 			</div>
 			<div class="row clearfix">	
 				<div class="col-md-4 column">
+						<% prop = 5
+						unless interconsulta.nil? 
+							prop = interconsulta.proposito
+						end %>
 					<label>Propósito:</label>
 					<div class="form-group form-ges" id="int_<%= p_d.id %>">
 				    <div class="radio">
-				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0 %> checked <% end %>>Diagnóstico</label>
+				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %>>Diagnóstico</label>
 				    </div>					
 				    <div class="radio">
-				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %>>Paciente en tratamiento</label>
+				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %>>Paciente en tratamiento</label>
 				    </div> 						
 				    <div class="radio">
-				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3">Seguimiento</label>
+				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if prop == 3 %> checked <% end %>>Seguimiento</label>
 				    </div>				
 				    <div class="radio">
-				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4">Otro</label>
+				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if prop == 4 %> checked <% end %>>Otro</label>
 				    </div> 
 					</div>
 				</div>
 				<div class="col-md-8 column">
-					<label>Comentario:<label><span class="alert alert-info auto-int-comment" id="auto-int-<%= p_d.id%>">Autoguardado</span>
-					<textarea id="int-comment-<%= p_d.id%>" class="form-control int-comment" rows="4" cols="50"></textarea>
+					<label class="com-int">Comentario:<label><span class="alert alert-info auto-int-comment" id="auto-int-<%= p_d.id%>">Autoguardado</span>
+					<textarea id="int-comment-<%= p_d.id%>" class="form-control int-comment" rows="4" cols="50"><%= unless interconsulta.nil?
+					 interconsulta.comentario 
+					 end %></textarea>
 				</div>	
 			</div>
 		</div>
@@ -189,11 +211,6 @@
 <div class="panel panel-default">
 	<div class="panel-body panel-body-ajustado">
 		<div class="container ajustado">
-			<div class="row clearfix">
-				<div class="col-md-12 column">
-
-				</div>			
-			</div>
 			<div class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Fecha y hora de la solicitud</label>
@@ -221,8 +238,7 @@
 			</div>			  
 			<div class="row clearfix">
 				<div class="col-md-4 column">
-					<label class="pers-ges">Seleccionar persona</label>
-					<% persona_interconsulta = p_d.getPersonaInterconsulta(p_d.id) %>					
+					<label class="pers-ges">Seleccionar persona</label>									
 					<a class="panel-title collapsed a-ges" data-toggle="collapse" href="#per_int_<%= p_d.id %>">Agregar persona</a>
 				</div>
 				<div class="col-md-8 column">:
@@ -295,28 +311,41 @@
 				<div class="col-md-4 column">
 					<label>Nombre</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_nombre_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.showName('%n%p%m') %>">				
+				<%=
+					nombre = ''
+					rut = ''
+					correo = ''
+					celular = ''
+					unless interconsulta.nil? 
+						unless interconsulta.persona_conocimiento.nil? 
+							nombre = interconsulta.persona_conocimiento.showName('%n%p%m')
+							rut = interconsulta.persona_conocimiento.showRut
+							correo = interconsulta.persona_conocimiento.user.email 
+							celular = interconsulta.persona_conocimiento.getCelular
+						end
+					end	%>
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_nombre_<%= p_d.id %>" value="<%=	nombre %>">				
 				</div>				
 			</div>
 			<div id="row_int_rut_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Rut</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_rut_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.showRut %>">					
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_rut_<%= p_d.id %>" value="<%= rut %>">					
 				</div>				
 			</div>
 			<div id="row_int_correo_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Correo electrónico</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_correo_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.user.email %>" >						
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_correo_<%= p_d.id %>" value="<%= correo %>" >						
 				</div>				
 			</div>
 			<div id="row_int_celular_<%= p_d.id %>" class="row clearfix">
 				<div class="col-md-4 column">
 					<label>Celular</label>
 				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_celular_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.getCelular %>" >					
+				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_celular_<%= p_d.id %>" value="<%= celular %>" >					
 				</div>				
 			</div>
 			<div class="row clearfix ges-div" id="int_div_<%= p_d.id %>">

@@ -1,3 +1,5 @@
+<%= wicked_pdf_stylesheet_link_tag 'application' %>
+
 <h1 class="enc-ges">Solicitud de Interconsulta o Derivación</h1>
 
 <div class="panel panel-default ges">
@@ -5,43 +7,13 @@
     <h3 class="panel-title">Datos del prestador</h3>
   </div>
   <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Institución</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Dirección</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Profesional que notifica</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Rut profesional</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Especialidad</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %>
-			</div>
-		</div>
-	</div>
+		<table>
+			<tr><td><label>Institución</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td></tr>
+			<tr><td><label>Dirección</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td></tr>
+			<tr><td><label>Profesional que notifica</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td></tr>
+			<tr><td><label>Rut profesional</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td></tr>
+			<tr><td><label>Especialidad</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td></tr>
+		</table>
   </div>
 </div>
 
@@ -50,64 +22,15 @@
     <h3 class="panel-title">Datos del paciente</h3>
   </div>
   <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Nombre</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Rut</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Previsión de salud</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getPrevision.prevision_salud.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Domicilio</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getDomicilio %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Correo electrónico</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.user.email %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Telefono fijo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getTelefonoFijo %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Celular</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getCelular %>
-			</div>
-		</div>
-	</div>
+  	<table>
+  		<tr><td><label>Nombre</label></td><td>:	<%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
+			<tr><td><label>Rut</label></td><td>: <%= @agendamiento.persona.showRut %></td></tr>
+			<tr><td><label>Previsión de salud</label></td><td>:	<%= @agendamiento.persona.getPrevision.prevision_salud.nombre %></td></tr>
+			<tr><td><label>Domicilio</label></td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
+			<tr><td><label>Correo electrónico</label></td><td>:	<%= @agendamiento.persona.user.email %></td></tr>
+			<tr><td><label>Telefono fijo</label></td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>
+			<tr><td><label>Celular</label></td><td>: <%= @agendamiento.persona.getCelular %></td></tr>
+		</table>
   </div>
 </div>
 
@@ -116,213 +39,70 @@
     <h3 class="panel-title">Información médica</h3>
   </div>
   <div class="panel-body panel-body-ajustado">
-		<div class="container ajustado">
-			<div class="row clearfix">
-				<div class="col-md-5 column">
-					<label>Establecimiento al cual se deriva</label>
-				</div>
-				<div class="col-md-7 column">:
-					<select id="select_prestadores">	
-						<option></option>					
-					  <% @prestadores.each do |pres| %>
-					  	<option value="<%= pres.id %>"><%= pres.nombre %></option>      			
-   					<% end %>
-  				</select>					
-				</div>				
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-5 column">
-					<label>Especialidad</label>
-				</div>
-				<div class="col-md-7 column">:
-					<select id="select_especialidad">	
-						<option></option>					
-					  <% @especialidades.each do |esp| %>
-					  	<option value="<%= esp.id %>"><%= esp.nombre %></option>      			
-   					<% end %>
-  				</select>
-				</div>				
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-5 column">
-					<label>Confirmación Diagnóstica</label>
-				</div>
-				<div class="col-md-7 column">:
-					<%= p_d.diagnostico.nombre %>
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-5 column">
-					<label>Código CIE10</label>
-				</div>
-				<div class="col-md-7 column">:
-					<%= p_d.diagnostico.codigo_cie10 %>
-				</div>
-			</div>
-			<div class="row clearfix">	
-				<div class="col-md-12 column">
+  	<table>
+  		<tr><td><label>Establecimiento al cual se deriva</label></td><td>: <%= @interconsulta.prestador_destino.nombre %></td></tr>
+  		<tr><td><label>Especialidad</label></td><td>:	<%= @interconsulta.especialidad.nombre %></td></tr>
+			<tr><td><label>Confirmación Diagnóstica</label></td><td>:	<%= p_d.diagnostico.nombre %></td></tr>			
+			<tr><td><label>Código CIE10</label></td><td>:	<%= p_d.diagnostico.codigo_cie10 %></td></tr>
+			<tr>
+				<td>
+					<label>Propósito:</label>
 					<div class="form-group form-ges" id="int_<%= p_d.id %>">
 				    <div class="radio">
-				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0 %> checked <% end %>>Diagnóstico</label>
+				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if @interconsulta.proposito == 1 %> checked <% end %> >Diagnóstico</label>
 				    </div>					
 				    <div class="radio">
-				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %>>Paciente en tratamiento</label>
+				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if @interconsulta.proposito == 2 %> checked <% end %> >Paciente en tratamiento</label>
 				    </div> 						
 				    <div class="radio">
-				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3">Seguimiento</label>
+				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if @interconsulta.proposito == 3 %> checked <% end %> >Seguimiento</label>
 				    </div>				
 				    <div class="radio">
-				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4">Otro</label>
+				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if @interconsulta.proposito == 4 %> checked <% end %> >Otro</label>
 				    </div> 
 					</div>
-				</div>
-			</div>
-		</div>
+				</td>
+				<td>
+					<label>Comentario:<label>
+					<textarea id="int-comment-<%= p_d.id%>" class="form-control int-comment" rows="4" cols="50"><%= @interconsulta.comentario %></textarea>
+				</td>
+			</tr>				
+		</table>				
   </div>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-body panel-body-ajustado">
-		<div class="container ajustado">
-			<div class="row clearfix">
-				<div class="col-md-12 column">
-
-				</div>			
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Fecha y hora de la solicitud</label>
-				</div>
-				<div class="col-md-8 column">:
-					<%= l Time.now %>
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-12 column firma">
-					<label class="firma">Firma profesional</label>
-				</div>
-			</div>
-		</div>
- 	</div>
+		<table>
+			<tr><td><label>Fecha y hora de la solicitud</label></td><td>:	<%= l Time.now %></td></tr>
+			<tr><td colspan="2"><br/><br/><br/></td></tr>
+			<tr><td colspan="2"><label class="firma">Firma profesional</label></td></tr>
+		</table>	
+	</div>
 </div>
+
+<%=
+	nombre = ''
+	rut = ''
+	correo = ''
+	celular = ''
+	unless @interconsulta.nil? 
+		unless @interconsulta.persona_conocimiento.nil? 
+			nombre = @interconsulta.persona_conocimiento.showName('%n%p%m')
+			rut = @interconsulta.persona_conocimiento.showRut
+			correo = @interconsulta.persona_conocimiento.user.email 
+			celular = @interconsulta.persona_conocimiento.getCelular
+		end
+	end	%>
 
 <div class="panel panel-default">
 	<div class="panel-body panel-body-ajustado">
-		<div class="container ajustado">
-			<div class="row clearfix">	
-				<div class="col-md-12 column">
-				En caso que la persona que tomó conocimiento no sea el paciente, identificar:			
-				</div>
-			</div>			  
-			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label class="pers-ges">Seleccionar persona</label>
-					<% persona_interconsulta = p_d.getPersonaInterconsulta(p_d.id) %>					
-					<a class="panel-title collapsed a-ges" data-toggle="collapse" href="#per_int_<%= p_d.id %>">Agregar persona</a>
-				</div>
-				<div class="col-md-8 column">:
-					<input type='hidden' class="select_persona" id="select_persona_int_<%= p_d.id %>"></input>			 		
-				</div>				
-			</div>
-			<div class="row clearfix">
-				<div id="per_int_<%= p_d.id %>" class="panel-collapse collapse panel-ges2">
-					<div class="panel-body">
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Nombre</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="int_nom_<%= p_d.id %>" >	
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label>Apellido paterno</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="int_apep_<%= p_d.id %>">
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Apellido materno</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="int_apem_<%= p_d.id %>">
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label>Parentesco</label> <span id='icon-ges' class="glyphicon glyphicon-info-sign"></span>
-							</div>
-							<div class="col-md-4 column">:
-								<select id="select_parent_int_<%= p_d.id %>" name="selectbasic" class="form-control select-ges">
-									<option value="" selected disabled>Seleccionar</option>
-						      <option value="1">Madre</option>
-						      <option value="2">Padre</option>
-						      <option value="3">Hija</option>
-						      <option value="4">Hijo</option>
-						      <option value="5">Otro</option>
-						    </select>
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Rut</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="int_prut_<%= p_d.id %>">	
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label><p>Dígito verificador</p></label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="int_pdv_<%= p_d.id %>">
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Correo electrónico</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="int_pcorreo_<%= p_d.id %>">	
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label>Celular</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="int_pcelular_<%= p_d.id %>">
-							</div>
-						</div>
-					</div>						
-				</div>			
-			</div>
-			<div id="row_int_nombre_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Nombre</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_nombre_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.showName('%n%p%m') %>">				
-				</div>				
-			</div>
-			<div id="row_int_rut_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Rut</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_rut_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.showRut %>">					
-				</div>				
-			</div>
-			<div id="row_int_correo_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Correo electrónico</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_correo_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.user.email %>" >						
-				</div>				
-			</div>
-			<div id="row_int_celular_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Celular</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="int_celular_<%= p_d.id %>" value="<%= persona_interconsulta.nil? ? '' : persona_interconsulta.getCelular %>" >					
-				</div>				
-			</div>
-			<div class="row clearfix ges-div" id="int_div_<%= p_d.id %>">
-				<div class="col-md-8 column">
-				</div>
-				<div class="col-md-4 column">	
-					<button id="int_agregar_<%= p_d.id %>" type="button" class="btn btn-success int-agregar">Agregar persona</button>
-    			<button id="int_cancelar_<%= p_d.id %>" type="button"  class="btn btn-danger int-cancelar">Cancelar</button>	
-				</div>				
-			</div>
-
-		</div>
+		En caso que la persona que tomó conocimiento no sea el paciente, identificar:
+		<table>
+			<tr><td><label>Nombre</label></td><td>: <span id="int_nombre_<%= p_d.id %>"><%= nombre %></span></td></tr>
+			<tr><td><label>Rut</label></td><td>: <span id="int_rut_<%= p_d.id %>"><%= rut %></span></td></tr>
+			<tr><td><label>Correo electrónico</label></td><td>: <span id="int_correo_<%= p_d.id %>"><%= correo %></span></td></tr>
+			<tr><td><label>Celular</label></td><td>: <span id="int_celular_<%= p_d.id %>"><%= celular %></span></td></tr>
+		</table>	
  	</div>
 </div>

@@ -18,12 +18,21 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
     end  
   end
 
-  def getPersonaInterconsulta (persona_diagnostico_id)
+  def getInterconsulta (persona_diagnostico_id)
     interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is not null',persona_diagnostico_id).order('fecha_solicitud DESC').first;
     if interconsulta.nil?
       return nil
     else 
-      return interconsulta.persona_conocimiento
+      return interconsulta
+    end  
+  end
+
+  def getNotificacionEno (persona_diagnostico_id)
+    notificacion_eno = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is not null',persona_diagnostico_id).order('fecha_notificacion DESC').first;
+    if notificacion_eno.nil?
+      return nil
+    else 
+      return notificacion_eno
     end  
   end
 
