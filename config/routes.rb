@@ -13,6 +13,7 @@ AplicacionMedica::Application.routes.draw do
 
   #Modulo atencion salud
   resources :atenciones_salud
+  resources :habitos_alcohol
   post '/agregar_prestacion', to: 'persona_prestacion#agregarPrestacion', :as => :agregarExamen
   post '/eliminar_prestacion', to: 'persona_prestacion#eliminarPrestacion', :as => :eliminarPrestacion
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico

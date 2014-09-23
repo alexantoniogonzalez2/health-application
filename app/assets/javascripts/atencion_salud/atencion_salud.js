@@ -776,3 +776,57 @@ function agregarInfoEno(pd,value,tipo){
   });   
 
 }
+
+// Create a jGrowl
+window.createGrowl = function(persistent,message) {
+    var target = $('.qtip.jgrowl:visible:last');
+
+    $('<div/>').qtip({
+        content: {
+            text: message,
+            title: {
+                text: 'Mensaje!',
+                button: true
+            }
+        },
+        position: {
+            target: [0,0],
+            container: $('#qtip-growl-container')
+        },
+        show: {
+            event: false,
+            ready: true,
+            effect: function() {
+                $(this).stop(0, 1).animate({ height: 'toggle' }, 400, 'swing');
+            },
+            delay: 0,
+            persistent: persistent
+        },
+        hide: {
+            event: false,
+            effect: function(api) {
+                $(this).stop(0, 1).animate({ height: 'toggle' }, 400, 'swing');
+            }
+        },
+        style: {
+            width: 250,
+            classes: 'jgrowl',
+            tip: false
+        },
+        events: {
+            render: function(event, api) {
+                if(!api.options.show.persistent) {
+                    $(this).bind('mouseover mouseout', function(e) {
+                        var lifespan = 5000;
+
+                        clearTimeout(api.timer);
+                        if (e.type !== 'mouseover') {
+                            api.timer = setTimeout(function() { api.hide(e) }, lifespan);
+                        }
+                    })
+                    .triggerHandler('mouseout');
+                }
+            }
+        }
+    });
+}

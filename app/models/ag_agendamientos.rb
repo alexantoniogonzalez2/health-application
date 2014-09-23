@@ -53,6 +53,14 @@ class AgAgendamientos < ActiveRecord::Base
     end
   end
 
+  def format
+  {
+    'id' => id,
+    'hora_comienzo' => fecha_comienzo.to_s(:time),
+    'estado' => agendamiento_estado.id
+  }
+  end 
+
   def event
     description = ''
     custom = ''

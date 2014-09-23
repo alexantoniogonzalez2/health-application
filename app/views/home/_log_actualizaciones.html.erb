@@ -10,14 +10,14 @@
         <tr><th class="col-sm-2 vert-align">Paciente</th><th class="col-sm-1 vert-align">Hora</th><th class="col-sm-1 vert-align">Evento</th><th class="col-sm-2 vert-align">Modificado por</th></tr>
       </thead>
       <tbody>
-        <% if @actualizaciones %>
-          <% if @actualizaciones[0] == nil %>
+        <% if @actualizaciones[0].nil? %>
             <tr><td colspan="4" >No hay actualizaciones que mostrar.</td></tr>
-          <% end %>
         <% else %>
           <% @actualizaciones.each do |actualizacion| %>
             <tr>
-              <td>  <%= PerPersonas.find(actualizacion.persona_id).showName('%n%p%m') %>    </td>
+              <td><%= if actualizacion.persona_id 
+                        PerPersonas.find(actualizacion.persona_id).showName('%n%p%m')
+                      end   %>    </td>
               <td><% if actualizacion.fecha %>
                     <%= actualizacion.fecha.to_s(:time) %>
                   <% else %>

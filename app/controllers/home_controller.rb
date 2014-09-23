@@ -26,22 +26,27 @@ class HomeController < ApplicationController
 	end	
 
 	def revisarActualizaciones
+
+		llegadas = []
 		lapso_tiempo = DateTime.current - 30.seconds
 		especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
-		agendamientos= AgAgendamientos.where( "especialidad_prestdor_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
+		#agendamientos= AgAgendamientos.where( "especialidad_prestdor_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 
 		actualizaciones = AgAgendamientos
 			.joins(:agendamiento_log_estados)
 			.where( "fecha > ? AND especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ",
 				lapso_tiempo, especialidad_prestador_profesional,Date.today, Date.tomorrow )
-			
-  	respuesta = false
+
+	 	respuesta = false
   	actualizaciones.each do |act|
   		respuesta = true
+  		if (act.agendamiento_estado.id == 5)
+  			llegadas << act.format
+  		end
   	end	
 									
 		respond_to do |format|     
-    	format.json { render :json => { :success => true, :respuesta => respuesta} }
+    	format.json { render :json => { :success => true, :respuesta => respuesta, :llegadas => llegadas} }
     end						
 
 	end	
@@ -61,7 +66,7 @@ class HomeController < ApplicationController
 									 ag_agendamiento_log_estados.agendamiento_estado_id,
 									 ag_agendamiento_log_estados.responsable_id,
 									 ag_agendamientos.persona_id")
-					.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
+					.where( "ag_agendamiento_log_estados.agendamiento_estado_id not in (1) AND fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ?",
 						 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 					.order(fecha: :desc)
 

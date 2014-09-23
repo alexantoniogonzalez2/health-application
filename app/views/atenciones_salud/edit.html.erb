@@ -3,14 +3,13 @@
 	var atencion_salud_id=<%= @atencion_salud.id %>
   var link_loading = '<%= image_tag("loading.gif", alt: "Rails") %>'	
   var id=<%= @id %>
-
 </script>
 
 <%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"},  method: :put do |f|  %>
 
 <input type="hidden" id="persona_id" value=<%=@agendamiento.persona.id  %> >
 
-<div class="panel panel-success">
+<div id="atencion-salud" class="panel panel-success">
 <div class="panel-heading">
   <h3 class="panel-title">Atención de Salud</h3>
 </div>
@@ -167,8 +166,18 @@
 
 <% end %> 
 
+  <div class="row clearfix">
+    <div class="horas_agendadas col-md-12 column">
+      <button id="actualizar2" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button>
+    </div>
+  </div>  
 <%= render :partial => "home/log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %>
+
+<div id="qtip-growl-container"></div>
+
+<button onclick="createGrowl(false,'hola')">Create a Growl!</button>
 
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
+<%= javascript_include_tag "home" %>
 
