@@ -3,6 +3,17 @@ class FiHabitosAlcohol < ActiveRecord::Base
 	self.table_name = "fi_habitos_alcohol"
 	belongs_to :persona, :class_name => 'PerPersonas'
 
+  def getColor
+    color = 'danger'
+    case audit_puntaje
+    when 8..15
+      color = 'warning'
+    when 0..7
+      color = 'success'
+    end    
+    color
+  end  
+
 	private
   def app_params
     params.require(:list).permit(:id,

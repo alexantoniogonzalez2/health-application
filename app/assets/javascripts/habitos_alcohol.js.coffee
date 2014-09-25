@@ -7,27 +7,45 @@ $(document).ready ->
 		valid = true
 		for i in [1..10] by 1
 			hideMessage i
-			unless $("input[name=question-"+i+"]:checked").size() > 0
+			unless $('input[name=question-'+i+']:checked').size() > 0
 				valid = false
 				alertMessage i
 		if valid			
 			saveTest 1		
 
 alertMessage = (messageId) ->
-  $("#alert-"+messageId).show();
+  $('#alert-'+messageId).show();
   return
 
 hideMessage = (messageId) ->
-  $("#alert-"+messageId).hide();
+  $('#alert-'+messageId).hide();
   return  
 
 saveTest = (arg) ->
-	alert('chao')
+	param_1 = $('input[name=question-1]:checked').val()
+	param_2 = $('input[name=question-2]:checked').val()
+	param_3 = $('input[name=question-3]:checked').val()
+	param_4 = $('input[name=question-4]:checked').val()
+	param_5 = $('input[name=question-5]:checked').val()
+	param_6 = $('input[name=question-6]:checked').val()
+	param_7 = $('input[name=question-7]:checked').val()
+	param_8 = $('input[name=question-8]:checked').val()
+	param_9 = $('input[name=question-9]:checked').val()
+	param_10 = $('input[name=question-10]:checked').val()
 	$.ajax '/habitos_alcohol',
     type: 'POST'
     data:
-    	param : 'param' 
-    error: (jqXHR, textStatus, errorThrown) ->  window.location.href = "/habitos_alcohol/show"      
-    success: (data, textStatus, jqXHR) ->
+    	param_1 : param_1
+    	param_2 : param_2
+    	param_3 : param_3
+    	param_4 : param_4
+    	param_5 : param_5
+    	param_6 : param_6
+    	param_7 : param_7
+    	param_8 : param_8
+    	param_9 : param_9
+    	param_10 : param_10
+    error: (jqXHR, textStatus, errorThrown) ->       
+    success: (data, textStatus, jqXHR) -> window.location.href = '/habitos_alcohol/'+data.id 
    
-	  
+	   
