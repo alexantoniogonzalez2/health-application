@@ -188,7 +188,7 @@ es:
     formats:
       default: ! '%A, %d de %B de %Y %H:%M:%S'
       long: ! '%A %d de %B de %Y'
-      short: ! '%d de %b %H:%M'
+      short: ! '%d de %b de %Y %H:%M'
       hms: ! '%H:%M:%S'
       timestamp: ! '%Y%m%d%H%M%S'  
     pm: pm

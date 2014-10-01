@@ -1,0 +1,24 @@
+<h2>Consumo de cigarrillos realizados</h2>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-4 column">Fecha inicio
+		</div>
+		<div class="col-md-4 column">Fecha final
+		</div>
+		<div class="col-md-4 column">Cigarros por día
+		</div>
+		<div class="col-md-4 column">Paquetes año
+		</div>
+	</div>
+	<% @consumo.each do |test| %>
+		<div class="row clearfix">
+			<div class="col-md-4 column"><%= test.fecha_test_audit.to_s(:short) %>
+			</div>
+			<div class="col-md-4 column"><%= test.audit_puntaje %>
+			</div>
+			<div class="col-md-4 column"><%= link_to 'Ver consumo', {:controller => :habitos_alcohol, :action => 'show', :id => test.id }, :method => :get %>
+			</div>
+		</div>
+	<% end %>	
+</div>

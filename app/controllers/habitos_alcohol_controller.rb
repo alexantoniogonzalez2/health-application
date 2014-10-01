@@ -1,4 +1,7 @@
 class HabitosAlcoholController < ApplicationController
+	def index
+		@test_audit = FiHabitosAlcohol.where('persona_id = ?', current_user.id)
+	end	
 	def new 
 	end
 	def create

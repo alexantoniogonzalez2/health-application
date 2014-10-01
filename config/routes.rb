@@ -7,13 +7,25 @@ AplicacionMedica::Application.routes.draw do
 
   #root :to =>'home#index'
 
+  #Habitos alcohol
+  get '/habitos_alcohol/new', to: 'habitos_alcohol#new', :as => :habitos_alcohol_new
+  post '/habitos_alcohol', to: 'habitos_alcohol#create'   
+  get '/habitos_alcohol/index', to: 'habitos_alcohol#index', :as => :habitos_alcohol_index  
+  get '/habitos_alcohol/:id', to: 'habitos_alcohol#show'
+
+  #Habitos tabaco
+  get '/habitos_tabaco/new', to: 'habitos_tabaco#new', :as => :habitos_tabaco_new
+  post '/habitos_tabaco', to: 'habitos_tabaco#create'   
+  get '/habitos_tabaco/index', to: 'habitos_tabaco#index', :as => :habitos_tabaco_index  
+  get '/habitos_tabaco/:id', to: 'habitos_tabaco#show'
+
+
   #Horas agendadas
   post '/bloquear_hora', to: 'agendamiento#bloquearHora', :as => :bloquearHora
   post '/desbloquear_hora', to: 'agendamiento#desbloquearHora', :as => :desbloquearHora
 
   #Modulo atencion salud
   resources :atenciones_salud
-  resources :habitos_alcohol
   post '/agregar_prestacion', to: 'persona_prestacion#agregarPrestacion', :as => :agregarExamen
   post '/eliminar_prestacion', to: 'persona_prestacion#eliminarPrestacion', :as => :eliminarPrestacion
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
