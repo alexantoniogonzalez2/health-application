@@ -1,5 +1,3 @@
-
-
 function actualizar_atenciones(){
   $('a, button').toggleClass('active'); 
 	$.ajax({
@@ -13,36 +11,34 @@ function actualizar_atenciones(){
 	  });
 }
 
+$("#actualizar , #actualizar2 ").on("click", function(){ actualizar_atenciones();	});
 
+if ($('#horas-agendadas').length || $('#atencion-salud').length ){	
 
-  $("#actualizar , #actualizar2 ").on("click", function(){ actualizar_atenciones();	});
+	window.setInterval(function(){
 
-  if ($('#horas-agendadas').length || $('#atencion-salud').length ){	
+	 $.ajax({
+	    type: 'POST',
+	    url: '/revisar_actualizaciones',
+	    data: {  },
+	    success: function(response) { 
+	    	
+	    	if (response.respuesta){
+	    		actualizar_atenciones();
+	    		if ( $('#atencion-salud').length ){
 
-		window.setInterval(function(){
+						for (var index = 0; index < response.llegadas.length; ++index) {
+						    createGrowl(false,'Llegó paciente de las '+response.llegadas[index].hora_comienzo);
+						}
 
-		 $.ajax({
-		    type: 'POST',
-		    url: '/revisar_actualizaciones',
-		    data: {  },
-		    success: function(response) { 
-		    	
-		    	if (response.respuesta){
-		    		actualizar_atenciones();
-		    		if ( $('#atencion-salud').length ){
+	    			
+	    		}
+	    	}	
+	    },
+	    error: function(xhr, status, error){}
+	  });
+	  
+	}, 30000);
 
-							for (var index = 0; index < response.llegadas.length; ++index) {
-							    createGrowl(false,'Llegó paciente de las '+response.llegadas[index].hora_comienzo);
-							}
-
-		    			
-		    		}
-		    	}	
-		    },
-		    error: function(xhr, status, error){}
-		  });
-		  
-		}, 30000);
-
-	}
+}
   

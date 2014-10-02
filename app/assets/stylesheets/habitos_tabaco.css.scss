@@ -1,3 +1,8 @@
 // Place all the styles related to the habitos_tabaco controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+label.tabaco {margin-left: 15px;}
+div.tabaco {margin-top: 10px;}
+input.tabaco {margin-left: 5px;}
+input.form-control {z-index: -1 !important;}

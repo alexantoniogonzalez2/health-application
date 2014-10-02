@@ -11,13 +11,17 @@
 		<div class="col-md-4 column">Paquetes año
 		</div>
 	</div>
-	<% @consumo.each do |test| %>
+	<% @consumo.each do |cons| %>
 		<div class="row clearfix">
-			<div class="col-md-4 column"><%= test.fecha_test_audit.to_s(:short) %>
+			<div class="col-md-4 column"><%= cons.fecha_inicio.to_s(:date) %>
 			</div>
-			<div class="col-md-4 column"><%= test.audit_puntaje %>
+			<div class="col-md-4 column"><%= cons.fecha_final.to_s(:date)  %>
 			</div>
-			<div class="col-md-4 column"><%= link_to 'Ver consumo', {:controller => :habitos_alcohol, :action => 'show', :id => test.id }, :method => :get %>
+			<div class="col-md-4 column"><%= cons.cigarros_por_dia %>
+			</div>
+			<div class="col-md-4 column"><%= cons.paquetes_agno %>
+			</div>
+			<div class="col-md-4 column"><%= link_to 'Editar', {:controller => :habitos_alcohol, :action => 'edit', :id => cons.id }, :method => :get %>
 			</div>
 		</div>
 	<% end %>	

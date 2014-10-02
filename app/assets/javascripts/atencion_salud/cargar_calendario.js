@@ -3,7 +3,7 @@ $(".datepicker-disabled" ).attr( 'readOnly' , 'true' );
 
 $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
   showOtherMonths: true,
-  electOtherMonths: true,
+  selectOtherMonths: true,
   changeMonth: true,
   changeYear: true,
   dateFormat: 'yy-mm-dd',
