@@ -2,27 +2,32 @@
 
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-4 column">Fecha inicio
+		<div class="col-md-3 column">Fecha inicio
 		</div>
-		<div class="col-md-4 column">Fecha final
+		<div class="col-md-3 column">Fecha final
 		</div>
-		<div class="col-md-4 column">Cigarros por día
+		<div class="col-md-2 column">Cigarros por día
 		</div>
-		<div class="col-md-4 column">Paquetes año
+		<div class="col-md-2 column">Paquetes año
+		</div>
+		<div class="col-md-2 column">
 		</div>
 	</div>
 	<% @consumo.each do |cons| %>
 		<div class="row clearfix">
-			<div class="col-md-4 column"><%= cons.fecha_inicio.to_s(:date) %>
+			<div class="col-md-3 column"><%= cons.fecha_inicio.strftime('%d/%m/%Y') %>
 			</div>
-			<div class="col-md-4 column"><%= cons.fecha_final.to_s(:date)  %>
+			<div class="col-md-3 column"><%= cons.fecha_final.strftime('%d/%m/%Y') %>
 			</div>
-			<div class="col-md-4 column"><%= cons.cigarros_por_dia %>
+			<div class="col-md-2 column"><%= cons.cigarros_por_dia %>
 			</div>
-			<div class="col-md-4 column"><%= cons.paquetes_agno %>
+			<div class="col-md-2 column"><%= cons.paquetes_agno %>
 			</div>
-			<div class="col-md-4 column"><%= link_to 'Editar', {:controller => :habitos_alcohol, :action => 'edit', :id => cons.id }, :method => :get %>
+			<div class="col-md-2 column"><%= link_to 'Editar', {:controller => :habitos_tabaco, :action => 'edit', :id => cons.id }, :method => :get %>
 			</div>
 		</div>
-	<% end %>	
+	<% end %>
+
+	<div class="alert alert-success" role="alert">Total consumo: <%= @total_consumo %> </div>
+
 </div>

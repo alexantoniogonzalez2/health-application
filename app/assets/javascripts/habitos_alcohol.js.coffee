@@ -11,17 +11,15 @@ $(document).ready ->
 				valid = false
 				alertMessage i
 		if valid			
-			saveTest 1		
+			saveTest()		
 
 alertMessage = (messageId) ->
-  $('#alert-'+messageId).show();
-  return
+  $('#alert-'+messageId).show()
 
 hideMessage = (messageId) ->
-  $('#alert-'+messageId).hide();
-  return  
+  $('#alert-'+messageId).hide()
 
-saveTest = (arg) ->
+saveTest = ->
 	param_1 = $('input[name=question-1]:checked').val()
 	param_2 = $('input[name=question-2]:checked').val()
 	param_3 = $('input[name=question-3]:checked').val()

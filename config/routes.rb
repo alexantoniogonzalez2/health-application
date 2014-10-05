@@ -17,7 +17,7 @@ AplicacionMedica::Application.routes.draw do
   get '/habitos_tabaco/new', to: 'habitos_tabaco#new', :as => :habitos_tabaco_new
   post '/habitos_tabaco', to: 'habitos_tabaco#create'   
   get '/habitos_tabaco/index', to: 'habitos_tabaco#index', :as => :habitos_tabaco_index  
-  get '/habitos_tabaco/:id', to: 'habitos_tabaco#show'
+  get '/habitos_tabaco/:id', to: 'habitos_tabaco#edit'
 
 
   #Horas agendadas

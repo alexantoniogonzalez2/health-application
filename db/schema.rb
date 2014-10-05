@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20140819051337) do
     t.datetime "fecha_inicio"
     t.datetime "fecha_final"
     t.integer  "cigarros_por_dia"
-    t.integer  "paquetes_agno"
+    t.decimal  "paquetes_agno",    precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -150,7 +150,9 @@ ActiveRecord::Schema.define(version: 20140819051337) do
     t.datetime "fecha_solicitud"
     t.integer  "prestador_destino_id"
     t.integer  "especialidad_id"
-    t.text     "proposito"
+    t.integer  "persona_conocimiento_id"
+    t.integer  "proposito"
+    t.text     "proposito_otro"
     t.text     "comentario"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -592,6 +594,10 @@ ActiveRecord::Schema.define(version: 20140819051337) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

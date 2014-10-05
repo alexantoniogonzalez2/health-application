@@ -5,7 +5,7 @@ class CreateFiHabitosTabaco < ActiveRecord::Migration
     	t.datetime :fecha_inicio
     	t.datetime :fecha_final
     	t.integer :cigarros_por_dia
-    	t.integer :paquetes_agno
+    	t.decimal :paquetes_agno, :precision => 10, :scale => 2
       t.timestamps
     end
   end

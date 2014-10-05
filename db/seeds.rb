@@ -361,6 +361,15 @@ puts 'Laboratorios'
 MedLaboratorios.create! :nombre => 'Laboratorio 1'
 
 puts 'Medicamentos'
+MedMedicamentos.create! :nombre => 'BCG', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Pentavalente', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Polio oral', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Neumocócica conjugada', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Antimeningocócica', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Tres vírica', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'dTp (acelular)', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'VPH', :medicamento_tipo_id => 6, :laboratorio_id => 1
+MedMedicamentos.create! :nombre => 'Neumocócica Polivalente', :medicamento_tipo_id => 6, :laboratorio_id => 1
 MedMedicamentos.create! :nombre => 'Medicamentos en comprimidos', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 1, :cantidad => 12, :laboratorio_id => 1
 MedMedicamentos.create! :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 2, :cantidad => 20, :laboratorio_id => 1
 MedMedicamentos.create! :nombre => 'Medicamentos en jarabe', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 3, :cantidad => 100, :laboratorio_id => 1
@@ -368,6 +377,26 @@ MedMedicamentos.create! :nombre => 'Medicamentos en gotas', :descripcion => 'des
 MedMedicamentos.create! :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 5, :cantidad => 50, :laboratorio_id => 1
 MedMedicamentos.create! :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 6, :cantidad => 50, :laboratorio_id => 1
 
+puts 'Calendario Vacunas 2014'
+FiCalendarioVacunas.create! :edad => 'Recién nacido', :protege_contra => 'Tuberculosis', :agno => 2014, :vacuna_id => 1
+FiCalendarioVacunas.create! :edad => '2 meses', :protege_contra => 'Hepatitis B<br/>Difteria, Tétanos, Tos Convulsiva<br/>H. Influenza B', :agno => 2014, :vacuna_id => 2, :numero_vacuna => 1
+FiCalendarioVacunas.create! :edad => '2 meses', :protege_contra => 'Poliomelitis', :agno => 2014, :vacuna_id => 3, :numero_vacuna => 1
+FiCalendarioVacunas.create! :edad => '2 meses', :protege_contra => 'Enfermedades por Neumococo', :agno => 2014, :vacuna_id => 4, :numero_vacuna => 1
+FiCalendarioVacunas.create! :edad => '4 meses', :protege_contra => 'Hepatitis B<br/>Difteria, Tétanos, Tos Convulsiva<br/>H. Influenza B', :agno => 2014, :vacuna_id => 2, :numero_vacuna => 2
+FiCalendarioVacunas.create! :edad => '4 meses', :protege_contra => 'Poliomelitis', :agno => 2014, :vacuna_id => 3, :numero_vacuna => 2
+FiCalendarioVacunas.create! :edad => '4 meses', :protege_contra => 'Enfermedades por Neumococo', :agno => 2014, :vacuna_id => 4, :numero_vacuna => 2
+FiCalendarioVacunas.create! :edad => '6 meses', :protege_contra => 'Hepatitis B<br/>Difteria, Tétanos, Tos Convulsiva<br/>H. Influenza B', :agno => 2014, :vacuna_id => 2, :numero_vacuna => 3
+FiCalendarioVacunas.create! :edad => '6 meses', :protege_contra => 'Poliomelitis', :agno => 2014, :vacuna_id => 3, :numero_vacuna => 3
+FiCalendarioVacunas.create! :edad => '12 meses', :protege_contra => 'Enfermedad Meningocócica', :agno => 2014, :vacuna_id =>	5
+FiCalendarioVacunas.create! :edad => '12 meses', :protege_contra => 'Sarampión, Rubéola, Paperas', :agno => 2014, :vacuna_id => 6, :numero_vacuna => 1
+FiCalendarioVacunas.create! :edad => '12 meses', :protege_contra => 'Enfermedades por Neumococo', :agno => 2014, :vacuna_id =>	4, :numero_vacuna => 3
+FiCalendarioVacunas.create! :edad => '18 meses', :protege_contra => 'Hepatitis B<br/>Difteria, Tétanos, Tos Convulsiva<br/>H. Influenza B', :agno => 2014, :vacuna_id =>	2, :numero_vacuna => 4
+FiCalendarioVacunas.create! :edad => '18 meses', :protege_contra => 'Poliomelitis', :agno => 2014, :vacuna_id =>	3, :numero_vacuna => 4
+FiCalendarioVacunas.create! :edad => '1° básico', :protege_contra => 'Sarampión, Rubéola, Paperas', :agno => 2014, :vacuna_id =>	6, :numero_vacuna => 2
+FiCalendarioVacunas.create! :edad => '1° básico', :protege_contra => 'Difteria, Tétanos, Tos convulsiva', :agno => 2014, :vacuna_id =>	7, :numero_vacuna => 1
+FiCalendarioVacunas.create! :edad => '4° básico', :protege_contra => 'Infección Virus Papiloma Humano', :agno => 2014, :vacuna_id =>	8
+FiCalendarioVacunas.create! :edad => '8° básico', :protege_contra => 'Difteria, Tétanos, Tos convulsiva', :agno => 2014, :vacuna_id => 7, :numero_vacuna => 2
+FiCalendarioVacunas.create! :edad => 'Adulto de 65 años', :protege_contra => 'Enfermedades por Neumococo', :agno => 2014, :vacuna_id => 9
 
 puts 'Componente'
 C1 = MedComponentes.create! :id => 1, :nombre => 'Componente 1'
