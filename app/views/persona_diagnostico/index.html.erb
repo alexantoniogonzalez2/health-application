@@ -1,0 +1,9 @@
+  <% if @acceso %>
+
+	  <% @diagnosticos.each do |d| %>
+	    <%= d.id %>hola 
+	  <% end %>
+
+	<% else %>
+		<%= render :partial => "layouts/permiso" %>
+	<% end %>  

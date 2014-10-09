@@ -53,6 +53,8 @@ AplicacionMedica::Application.routes.draw do
   post '/descargar_constancia_ges', to: 'persona_diagnostico#descargarConstanciaGes'
   post '/descargar_interconsulta', to: 'persona_diagnostico#descargarInterconsulta'
   post '/descargar_notificacion_obligatoria', to: 'persona_diagnostico#descargarNotificacionObligatoria'
+  post '/persona_diagnostico/index', to: 'persona_diagnostico#index', :as => :persona_diagnostico_index  
+  get '/persona_diagnostico/index', to: 'persona_diagnostico#index'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

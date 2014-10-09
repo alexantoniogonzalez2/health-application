@@ -587,5 +587,18 @@ class PersonaDiagnosticoController < ApplicationController
 		end
 
 	end	
+	def index
+		@acceso = true
+		#Vista de profesional: si existe este parametro se verifica que el profesional coincida con la cuenta del usuario
+		id_usuario = current_user.id
+		if params[:p_i] and params[:a_i]
+			@agendamiento = AgAgendamientos.find(params[:a_i])
+			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
+			id_usuario = params[:p_i]
+		end
+		
+		@diagnosticos = FiPersonaDiagnosticos.where('persona_id = ? ',id_usuario) if @acceso		
+				
+	end
 
 end

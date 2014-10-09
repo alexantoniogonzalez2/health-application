@@ -58,7 +58,9 @@
   <% end %>      
 </div>
 
-<%= f.label 'Diagnósticos anteriores' %><br/>
+<%= f.label 'Diagnósticos recientes' %>
+<%= link_to 'Ver todos los diagnósticos', persona_diagnostico_index_path(:a_i => @agendamiento.id, :p_i => @agendamiento.persona.id) , :method => :post %>
+
 <div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">  
   <% @persona_diagnostico_anteriores.each do |p_d| %>
     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
@@ -174,8 +176,6 @@
 <%= render :partial => "home/log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %>
 
 <div id="qtip-growl-container"></div>
-
-<button onclick="createGrowl(false,'hola')">Create a Growl!</button>
 
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
