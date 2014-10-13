@@ -7,6 +7,9 @@ AplicacionMedica::Application.routes.draw do
 
   #root :to =>'home#index'
 
+  #Antecedentes
+  get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 
+
   #Habitos alcohol
   get '/habitos_alcohol/new', to: 'habitos_alcohol#new', :as => :habitos_alcohol_new
   post '/habitos_alcohol', to: 'habitos_alcohol#create'   

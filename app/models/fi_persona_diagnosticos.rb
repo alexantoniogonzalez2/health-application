@@ -54,17 +54,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
   
   private
   def app_params
-    params.require(:list).permit(:diagnostico,
-                   :estado_diagnostico,
-                   :fecha_inicio,
-                   :fecha_termino,
-                   :es_cronica,
-                   :gesta,
-                   :id,
-                   :persona,
-                   :persona_diagnosticos_atencion_salud,
-                   :persona_medicamentos,
-                   :agendamientos_control)
+    params.require(:list).permit(:diagnostico,:estado_diagnostico,:fecha_inicio,:fecha_termino,:es_cronica,:gesta,:id,:persona,:persona_diagnosticos_atencion_salud,:persona_medicamentos,:agendamientos_control)
   end        
 
 end

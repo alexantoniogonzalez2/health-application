@@ -46,7 +46,11 @@
     </div>
   </div>
 
-<%= f.label 'Antecedentes' %><br/>
+<%= f.label 'Antecedentes' %>
+<%= link_to 'Ver todos los antecedentes', persona_diagnostico_index_path(:a_i => @agendamiento.id, :p_i => @agendamiento.persona.id) , :method => :post %>
+<div class="list-group">
+  <a href="#" class="list-group-item">Resumen</a>
+</div>
 <div class="list-group" name="antecedentes-div" id="antecedentes-div">  
   <% @antecedentes.each do |p_d| %>
     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>

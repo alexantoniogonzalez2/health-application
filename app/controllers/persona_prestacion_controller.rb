@@ -3,6 +3,7 @@ class PersonaPrestacionController < ApplicationController
 	def agregarPrestacion		
 
 		persona_prestacion_actual = FiPersonaPrestaciones.where('atencion_salud_id = ? AND persona_id = ? AND prestacion_id = ? ', params[:atencion_salud_id], params[:persona_id], params[:examen_id]).first
+		@prestadores = PrePrestadores.all
 		
 		if persona_prestacion_actual
 

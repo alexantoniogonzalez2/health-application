@@ -5,10 +5,7 @@ class PrePrestadoresDirecciones < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(
-    															:id,
-    															:direccion,
-    															:prestador)
+    params.require(:list).permit(:id,:direccion,:prestador)
   end
 
 end

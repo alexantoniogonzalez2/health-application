@@ -5,10 +5,7 @@ class PerPrevisionesSalud < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(
-    															:id,
-    															:nombre,
-    															:personas_previsiones_salud)
+    params.require(:list).permit(:id,:nombre,:personas_previsiones_salud)
   end
 
 end

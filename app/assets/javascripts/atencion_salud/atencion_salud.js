@@ -217,6 +217,7 @@ $('.int-comment').keyup( function(e) {
 
 $('.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
 $('.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
+$('.select_prestadores_proc').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
 $('.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
 $('.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
 $('.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });

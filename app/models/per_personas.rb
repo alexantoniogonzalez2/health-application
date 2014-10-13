@@ -75,7 +75,7 @@ class PerPersonas < ActiveRecord::Base
     end    
   end
 
-  def showName(format)
+  def showName(format) #showName('%n%p%m')
     if format.length%2 != 0 or format.split("%").count != format.length/2+1
       ""
     else
@@ -117,7 +117,7 @@ class PerPersonas < ActiveRecord::Base
 
   def getPrevision
     persona_prevision = personas_previsiones_salud.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
-    nombre_prevision = persona_prevision.nil? ? "Sin información" : persona_prevision.prevision.nombre
+    nombre_prevision = persona_prevision.nil? ? "Sin información" : persona_prevision.prevision_salud.nombre
     return nombre_prevision
   end  
 

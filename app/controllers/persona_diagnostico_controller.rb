@@ -270,10 +270,9 @@ class PersonaDiagnosticoController < ApplicationController
 			render :json => { :success => false }	
 		else 
 
-			@persona_diagnostico = FiPersonaDiagnosticos.where('diagnostico_id = ? ',params[:diagnostico_id]).first
+			@persona_diagnostico = FiPersonaDiagnosticos.where('diagnostico_id = ? AND persona_id = ?',params[:diagnostico_id],params[:persona_id]).first
 
 			if !@persona_diagnostico
-
 				@persona_diagnostico = FiPersonaDiagnosticos.new
 				@persona_diagnostico.persona_id = params[:persona_id]
 				@persona_diagnostico.diagnostico_id = params[:diagnostico_id]
@@ -281,8 +280,7 @@ class PersonaDiagnosticoController < ApplicationController
 				@persona_diagnostico.estado_diagnostico_id = 1
 				@persona_diagnostico.es_cronica = 0		
 				@persona_diagnostico.save!
-				@primer_diagnostico = 1
-				
+				@primer_diagnostico = 1				
 			end	
 
 			@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.new
@@ -589,16 +587,18 @@ class PersonaDiagnosticoController < ApplicationController
 	end	
 	def index
 		@acceso = true
-		#Vista de profesional: si existe este parametro se verifica que el profesional coincida con la cuenta del usuario
+		@paciente = PerPersonas.find(current_user.id)		
 		id_usuario = current_user.id
-		if params[:p_i] and params[:a_i]
+		if params[:p_i] and params[:a_i] #Vista de profesional: si existe este parametro se verifica que el profesional coincida con la cuenta del usuario
 			@agendamiento = AgAgendamientos.find(params[:a_i])
 			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
 			id_usuario = params[:p_i]
-		end
-		
-		@diagnosticos = FiPersonaDiagnosticos.where('persona_id = ? ',id_usuario) if @acceso		
-				
+			@paciente = @agendamiento.persona 
+		end		
+		@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
+																																				JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
+																																.select('fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,fi_persona_diagnosticos_atenciones_salud.fecha_inicio,fi_persona_diagnosticos_atenciones_salud.fecha_termino,md.nombre')
+																																.where('fpd.persona_id = ?',id_usuario) if @acceso					
 	end
 
 end

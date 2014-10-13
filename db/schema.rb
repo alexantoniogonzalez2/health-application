@@ -244,6 +244,8 @@ ActiveRecord::Schema.define(version: 20140819051337) do
     t.integer  "persona_id"
     t.integer  "prestacion_id"
     t.integer  "atencion_salud_id"
+    t.integer  "prestador_id"
+    t.datetime "fecha_prestacion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
