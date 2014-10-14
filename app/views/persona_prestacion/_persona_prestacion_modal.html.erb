@@ -11,8 +11,8 @@
             <div class="col-md-4 column">
               <label>Fecha prestación</label>
             </div>
-            <div class="col-md-8 column">
-              <input name="f_prestacion_<%= p_p.id%>" class="datepicker" type="text" value="<%= p_p.getFechaPrestacion %>">
+            <div class="col-md-8 column">:
+              <input name="f_p_<%= p_p.id%>" class="datepicker" type="text" value="<%= p_p.getFechaPrestacion %>">
             </div>
           </div>
           <div class="row clearfix">
@@ -46,4 +46,5 @@
   </div>        
 </div>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
+<%= javascript_include_tag "atencion_salud/cargar_select_procedimiento" %>
 

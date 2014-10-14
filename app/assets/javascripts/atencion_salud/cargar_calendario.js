@@ -10,12 +10,18 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
   dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
   showButtonPanel: true, 
   onSelect: function(dateText) {
-    var pers_diag = this.name.substring(4);
+    var id = this.name.substring(4);
     var tipo = this.name.substring(0,4); 
     if (tipo === 'p_s_')
-      agregarInfoEno(pers_diag,$("#p_s_"+pers_diag).datepicker("getDate"),'fecha');
+      agregarInfoEno(id,$("#p_s_"+id).datepicker("getDate"),'fecha');
+    else if (tipo === 'f_p_'){
+      fecha = ''
+      if ($("#f_p_"+id))
+        fecha = $(this).datepicker("getDate")
+      agregarInfoPrestacion(id,fecha,'fecha');
+    }
     else     
-      guardarDiagnostico(pers_diag);
+      guardarDiagnostico(id);
   }       
 });
 

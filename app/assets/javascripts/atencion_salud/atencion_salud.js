@@ -215,12 +215,11 @@ $('.int-comment').keyup( function(e) {
   contador_int_com = setTimeout(function(){ autoguardarComentarioInt(id) },2000);
 })
 
-$('.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
-$('.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
-$('.select_prestadores_proc').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
-$('.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
-$('.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
-$('.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
+$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
+$('select.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
+$('select.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
+$('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
+$('select.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
 
 $('#select_diagnostico').select2({
   width: '80%',
@@ -233,9 +232,7 @@ $('#select_diagnostico').select2({
     data: function (term, page) {
       return { q: term, diag_no_frec: diagnosticoNoFrecuente };
     },
-    results: function (data, page) {
-      return { results: data };
-    }
+    results: function (data, page) { return { results: data }; }
   }
 });
 
@@ -776,6 +773,16 @@ function agregarInfoEno(pd,value,tipo){
     error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
   });   
 
+}
+
+function agregarInfoPrestacion(p_p,valor,param){
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_prestacion',
+    data: { param: param, valor: valor, p_p: p_p },
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
+  }); 
 }
 
 // Create a jGrowl

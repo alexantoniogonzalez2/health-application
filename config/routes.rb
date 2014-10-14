@@ -41,7 +41,8 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_persona_notificacion_pre', to: 'persona_diagnostico#agregarPersonaNotificacionPre'
   post '/agregar_info_interconsulta', to: 'persona_diagnostico#agregarInfoInterconsulta'
   post '/agregar_persona_interconsulta_pre', to: 'persona_diagnostico#agregarPersonaInterconsultaPre'  
-  post '/agregar_info_eno', to: 'persona_diagnostico#agregarInfoEno' 
+  post '/agregar_info_eno', to: 'persona_diagnostico#agregarInfoEno'
+  post '/agregar_info_prestacion', to: 'persona_diagnostico#agregarInfoPrestacion'  
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
