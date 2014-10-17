@@ -571,8 +571,8 @@ function guardarDiagnostico(pers_diag_aten_sal) {
       enf_cro: enf_cro,
       trat: trat
      },
-    success: function(response) { /*$( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide');*/ },
-    error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente.");   }
+    success: function(response) {  },
+    error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente."); }
   });
 
 }
@@ -613,23 +613,18 @@ function calcularTotalMedicamentos(pers_med) {
   var cantidad = $( "#cantidad-"+pers_med).val();
   var periodicidad = $( "#periodicidad-"+pers_med).val();
   var duracion = $( "#duracion-"+pers_med).val();  
-  var total = cantidad*periodicidad*duracion;
- 
+  var total = cantidad*periodicidad*duracion; 
   $("#total-"+pers_med).val(total);
 }
 
 function calcularIMC(pers_aten) {
-
   var peso = $( "#peso-"+pers_aten).val();
   var estatura = $( "#estatura-"+pers_aten).val()/100;
   var imc = peso/(estatura*estatura);
-
-  $("#imc-" + pers_aten).val(imc);
-  
+  $("#imc-" + pers_aten).val(imc);  
 }
 
 function guardarMetricas(pers_aten) {
-
   $.ajax({
     type: 'POST',
     url: '/guardar_metricas',
@@ -639,17 +634,14 @@ function guardarMetricas(pers_aten) {
       peso: $( "#peso-"+pers_aten).val(),
       estatura: $( "#estatura-"+pers_aten).val(),
       imc: $( "#imc-"+pers_aten).val(),  
-      presion: $( "#presion-"+pers_aten).val(),
-      
+      presion: $( "#presion-"+pers_aten).val(),      
     },
     success: function(response) { $( "#modal-container-metricas").modal('hide'); },
     error: function(xhr, status, error){ alert("No se pudo guardar las métricas del paciente.");   }
   });
-
 }
 
 function guardarTexto(tipo_texto) {
-
   switch (tipo_texto) {
     case 'motivo':      
       texto = $('#atencion_salud_motivo_consulta').val();
@@ -783,6 +775,14 @@ function agregarInfoPrestacion(p_p,valor,param){
     success: function(response){  },
     error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
   }); 
+}
+
+function guardarPrestacion(p_p){  
+  var value = $("#select_prestadores"+p_p).select2('data') != null ? $("#select_prestadores"+p_p).select2('data').id : null; 
+  agregarInfoPrestacion(p_p,value,'prestador');
+  var value = $('.datepicker[name=f_p_'+p_p+']').datepicker("getDate");
+  agregarInfoPrestacion(p_p,value,'fecha');
+  $( "#modal-container-pres-"+p_p).modal('hide');
 }
 
 // Create a jGrowl

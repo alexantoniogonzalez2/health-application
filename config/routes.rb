@@ -59,6 +59,10 @@ AplicacionMedica::Application.routes.draw do
   post '/descargar_notificacion_obligatoria', to: 'persona_diagnostico#descargarNotificacionObligatoria'
   post '/persona_diagnostico/index', to: 'persona_diagnostico#index', :as => :persona_diagnostico_index  
   get '/persona_diagnostico/index', to: 'persona_diagnostico#index'
+  post '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen', :as => :persona_prestacion_index_examen  
+  get '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen'
+  post '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc', :as => :persona_prestacion_index_procedimiento  
+  get '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

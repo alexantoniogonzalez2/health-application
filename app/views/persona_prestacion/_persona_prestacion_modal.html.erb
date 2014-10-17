@@ -39,7 +39,7 @@
       </div>
       <div class="modal-footer">
          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-         <!--<button type="button"  onclick="guardarDiagnostico()" class="btn btn-primary">Guardar</button>-->
+         <button type="button" onclick="guardarPrestacion(<%= p_p.id%>)" class="btn btn-primary">Guardar</button>
           <button id="bcp<%= p_p.id%>" type="button" class="btn btn-danger" onclick="eliminarPrestacion(<%= p_p.id%>)">Eliminar</button>
       </div>
     </div>            

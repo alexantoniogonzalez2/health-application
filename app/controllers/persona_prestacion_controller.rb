@@ -64,5 +64,35 @@ class PersonaPrestacionController < ApplicationController
 
   	render :json => { :success => true }	
 	end
+	def indexExamen
+		min  = 1
+		max = 56
+		@acceso = true
+		@paciente = PerPersonas.find(current_user.id)		
+		id_usuario = current_user.id
+		if params[:p_i] and params[:a_i] #Vista de profesional: si existe este parametro se verifica que el profesional coincida con la cuenta del usuario
+			@agendamiento = AgAgendamientos.find(params[:a_i])
+			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
+			id_usuario = params[:p_i]
+			@paciente = @agendamiento.persona 
+		end					
+		@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',id_usuario,min,max) if @acceso
+		render 'index'					
+	end
+	def indexProc
+		min = 57
+		max = 250
+		@acceso = true
+		@paciente = PerPersonas.find(current_user.id)		
+		id_usuario = current_user.id
+		if params[:p_i] and params[:a_i] #Vista de profesional: si existe este parametro se verifica que el profesional coincida con la cuenta del usuario
+			@agendamiento = AgAgendamientos.find(params[:a_i])
+			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
+			id_usuario = params[:p_i]
+			@paciente = @agendamiento.persona 
+		end
+		@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',id_usuario,min,max) if @acceso
+		render 'index'					
+	end	
 
 end
