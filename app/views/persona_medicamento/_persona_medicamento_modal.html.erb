@@ -1,13 +1,3 @@
-<div style="display: none;">
-<%= 
-  if persona_medicamento.medicamento.medicamento_tipo_id == 1 
-    unidad = 'comprimidos'
-  else persona_medicamento.medicamento.medicamento_tipo_id == 2
-    unidad = 'ml'
-  end 
-%>
-</div>
-
 <div class="modal fade" id="modal-container-med-<%= persona_medicamento.id %>" role="dialog" aria-spanledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -15,29 +5,40 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h4 class="modal-title" id="myModalLabel"><%= persona_medicamento.medicamento.nombre %></h4>
       </div>
-      <div class="modal-body">
-        <table>
-          <tr>
-            <td><span>Ingerir</span></td>
-            <td><input id="cantidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.cantidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
-            <td><span class="text-med"><%= unidad %></span></td>
-          </tr>
-          <tr>
-            <td><span>cada</span></td>
-            <td><input id="periodicidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.periodicidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
-            <td><span class="text-med">horas</span></td>
-          </tr>
-          <tr>
-            <td><span>por</span></td>
-            <td><input id="duracion-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.duracion %>"maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
-            <td><span class="text-med">días.</span></td>
-          </tr>
-          <tr>
-            <td><span>Total:</span></td>
-            <td><input id="total-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.total %>"maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
-            <td><span class="text-med"><%= unidad %>.</span></td>
-          </tr>
-        </table>       
+      <div class="modal-body">        
+        <% if [1,2,3,4].include? persona_medicamento.medicamento.medicamento_tipo.id %>
+          <table>
+            <tr>
+              <td><span>Ingerir</span></td>
+              <td><input id="cantidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.cantidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+              <td><span class="text-med"><%= persona_medicamento.medicamento.medicamento_tipo.unidad %></span></td>
+            </tr>
+            <tr>
+              <td><span>cada</span></td>
+              <td><input id="periodicidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.periodicidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+              <td><span class="text-med">horas</span></td>
+            </tr>
+            <tr>
+              <td><span>por</span></td>
+              <td><input id="duracion-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.duracion %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+              <td><span class="text-med">días.</span></td>
+            </tr>
+            <tr>
+              <td><span>Total:</span></td>
+              <td><input disabled id="total-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.total %>" maxlength="4" size="4"></td>
+              <td><span class="text-med"><%= persona_medicamento.medicamento.medicamento_tipo.unidad %>.</span></td>
+            </tr>
+            <% if persona_medicamento.medicamento.medicamento_tipo.id == 4 %>
+              <tr>
+                <td><span>Equivalente a:</span></td>
+                <td><input disabled id="total-ml-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.total/20 if persona_medicamento.total %>" maxlength="4" size="4"></td>
+                <td><span class="text-med">ml (20 gotas = 1 ml)</span> </td>
+              </tr>
+            <% end %>
+          </table>
+        <% else %>
+          Este tipo de medicamento no tiene posología.
+        <% end %>         
       </div>
       <div class="modal-footer">
          <button id="bpm<%= persona_medicamento.id %>" type="button" class="btn btn-danger" onclick="eliminarMedicamento(<%= persona_medicamento.id %>)">Eliminar</button>

@@ -613,8 +613,14 @@ function calcularTotalMedicamentos(pers_med) {
   var cantidad = $( "#cantidad-"+pers_med).val();
   var periodicidad = $( "#periodicidad-"+pers_med).val();
   var duracion = $( "#duracion-"+pers_med).val();  
-  var total = cantidad*periodicidad*duracion; 
-  $("#total-"+pers_med).val(total);
+  var total = cantidad*(24/periodicidad)*duracion; 
+  if (cantidad != "" && periodicidad != ""){
+    $("#total-"+pers_med).val(total);
+    $("#total-ml-"+pers_med).val(total/20);
+  } else {
+    $("#total-"+pers_med).val('');
+    $("#total-ml-"+pers_med).val('');
+  }
 }
 
 function calcularIMC(pers_aten) {

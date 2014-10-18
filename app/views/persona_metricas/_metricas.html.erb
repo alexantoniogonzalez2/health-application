@@ -41,27 +41,27 @@
                 </tr>
                 <tr>
                   <td><span>Presión</span></td>
-                  <td><input id="presion-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr %>"maxlength="4" size="4" ></td>
+                  <td><input id="presion-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr %>" maxlength="4" size="4" ></td>
                   <td><span class="text-med">mm HG</span></td>
                 </tr>
                 <tr>
                   <td><span>IMC</span></td>
-                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>"maxlength="4" size="4" ></td>
+                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>" maxlength="4" size="4" ></td>
                   <td><span class="text-med">kilos/metros2</span></td>
                 </tr>
               </table>              
             </div>
             <div class="tab-pane" id="panel-estatura">              
-              <div id="grafico_estatura" style="min-width: 400px; height: 200px; margin: 0 auto"></div>         
+              <div id="grafico_estatura" class="metricas" ></div>         
             </div>
             <div class="tab-pane" id="panel-peso">              
-              <div id="grafico_peso" style="min-width: 400px; height: 200px; margin: 0 auto"></div>            
+              <div id="grafico_peso" class="metricas"></div>            
             </div>
             <div class="tab-pane" id="panel-presion">              
-              <div id="grafico_presion" style="min-width: 400px; height: 200px; margin: 0 auto"></div>            
+              <div id="grafico_presion" class="metricas"></div>            
             </div>
             <div class="tab-pane" id="panel-IMC">              
-              <div id="grafico_IMC" style="min-width: 400px; height: 200px; margin: 0 auto"></div>            
+              <div id="grafico_IMC" class="metricas"></div>            
             </div>
           </div>
         </div>

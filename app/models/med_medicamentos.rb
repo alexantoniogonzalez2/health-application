@@ -8,14 +8,15 @@ class MedMedicamentos < ActiveRecord::Base
 	belongs_to :laboratorio, :class_name => 'MedLaboratorios'
 
 	def formato_medicamentos
-
   {
     'id'        => id,
     'text'      => nombre,
     'tipo'		  => medicamento_tipo_id     
   }
-
   end 
+  def getUnidad
+    return :medicamento_tipo.unidad
+  end  
 
   private
   def app_params

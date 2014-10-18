@@ -216,17 +216,20 @@ input.sem-ges{ width: 50px; display: inline; padding: 6px 3px; height: 25px; mar
 label.eno { padding-top: 7px;}
 span.eno { top: 4px; position: relative;}
 label.com-int { float: top;}
-
 #qtip-growl-container{
     position: fixed;
     top: 100px; right: 10px;     
 }
 #qtip-growl-container .qtip{
-    position: static;
-    min-height: 0;
-    overflow: hidden;
-    margin: 0 0 5px 0;
-
+  position: static;
+  min-height: 0;
+  overflow: hidden;
+  margin: 0 0 5px 0;
+}
+div.metricas {
+  min-width: 400px;
+  height: 200px;
+  margin: 0 auto;
 }
 
 
