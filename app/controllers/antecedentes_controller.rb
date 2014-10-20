@@ -24,6 +24,14 @@ class AntecedentesController < ApplicationController
 		@alergias = MedAlergias.joins('LEFT JOIN fi_personas_alergias as fpa ON med_alergias.id = fpa.alergia_id')
 													 .select('med_alergias.id, med_alergias.nombre, fpa.persona_id')
 													 .where('persona_id = ? or persona_id is null',current_user.id)
+		#Alcohol
+		@test_audit = FiHabitosAlcohol.where('persona_id = ?', current_user.id)
+		#Tabaco
+		@total_consumo = 0
+		@consumo = FiHabitosTabaco.where('persona_id = ?', current_user.id)
+		@consumo.each do |con|
+  		@total_consumo += con.paquetes_agno
+  	end	
 	end
 	def editarAlergia
 		persona_id = current_user.id

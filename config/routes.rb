@@ -23,6 +23,9 @@ AplicacionMedica::Application.routes.draw do
   get '/habitos_tabaco/index', to: 'habitos_tabaco#index', :as => :habitos_tabaco_index  
   get '/habitos_tabaco/:id', to: 'habitos_tabaco#edit'
 
+  #Vacunas
+  get '/vacunas/index', to: 'vacunas#index', :as => :vacunas_index
+  get '/vacunas/calendario', to: 'vacunas#calendario', :as => :vacunas_calendario    
 
   #Horas agendadas
   post '/bloquear_hora', to: 'agendamiento#bloquearHora', :as => :bloquearHora

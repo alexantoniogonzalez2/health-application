@@ -29,7 +29,6 @@ class PerPersonas < ActiveRecord::Base
   belongs_to :user, :class_name => 'User'
 
   def formato_personas
-
   {
     'id'        => id,
     'text'      => number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador<<' '<<nombre<<' '<<apellido_paterno<<' '<<apellido_materno     
