@@ -1,7 +1,7 @@
 class CreateTraProfesionesOficios < ActiveRecord::Migration
   def change
     create_table :tra_profesiones_oficios do |t|
-    	t.text :nombre
+    	t.string :nombre
 
       t.timestamps
     end

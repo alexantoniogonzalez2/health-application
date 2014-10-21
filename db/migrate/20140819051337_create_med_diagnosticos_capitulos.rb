@@ -1,9 +1,9 @@
 class CreateMedDiagnosticosCapitulos < ActiveRecord::Migration
   def change
     create_table :med_diagnosticos_capitulos do |t|    	    	
-    	t.text :nombre
-    	t.text :codigo
-    	t.text :descripcion
+    	t.string :nombre
+    	t.string :codigo
+    	t.string :descripcion
       t.timestamps
     end
   end

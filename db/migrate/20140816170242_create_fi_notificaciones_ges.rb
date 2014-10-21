@@ -3,7 +3,7 @@ class CreateFiNotificacionesGes < ActiveRecord::Migration
     create_table :fi_notificaciones_ges do |t|
     	t.references :persona_diagnostico_atencion_salud #persona_diagnostico_atencion_salud_id
     	t.references :persona_conocimiento #persona_conocimiento_id
-    	t.text :confirmacion_diagnostica
+    	t.string :confirmacion_diagnostica
     	t.datetime :fecha_notificacion
       t.timestamps
     end

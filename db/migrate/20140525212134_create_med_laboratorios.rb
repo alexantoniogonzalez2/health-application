@@ -1,8 +1,8 @@
 class CreateMedLaboratorios < ActiveRecord::Migration
   def change
     create_table :med_laboratorios do |t|
-    	t.text :nombre
-      t.text :descripcion
+    	t.string :nombre
+      t.string :descripcion
 
       t.timestamps
     end

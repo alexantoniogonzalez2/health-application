@@ -1,7 +1,7 @@
 class CreateTraDirecciones < ActiveRecord::Migration
   def change
     create_table :tra_direcciones do |t|
-    	t.text :calle 
+    	t.string :calle 
     	t.integer :numero
     	t.integer :departamento
     	t.references :comuna #comuna_id

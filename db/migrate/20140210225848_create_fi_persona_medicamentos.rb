@@ -11,6 +11,7 @@ class CreateFiPersonaMedicamentos < ActiveRecord::Migration
       t.integer :periodicidad
       t.integer :duracion
       t.integer :total
+      t.references :persona_vacuna #persona_vacuna_id
 
       t.timestamps
     end

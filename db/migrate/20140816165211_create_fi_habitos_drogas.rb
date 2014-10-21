@@ -3,7 +3,7 @@ class CreateFiHabitosDrogas < ActiveRecord::Migration
     create_table :fi_habitos_drogas do |t|
     	t.references :persona #persona_id
     	t.datetime :fecha_test_dast
-    	t.text :tipo_dast
+    	t.string :tipo_dast
     	t.integer :dast_1
     	t.integer :dast_2
     	t.integer :dast_3

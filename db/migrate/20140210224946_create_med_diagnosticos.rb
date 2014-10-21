@@ -1,9 +1,9 @@
 class CreateMedDiagnosticos < ActiveRecord::Migration
   def change
     create_table :med_diagnosticos do |t|
-      t.text :nombre
-      t.text :codigo_cie10
-      t.text :descripcion
+      t.string :nombre
+      t.string :codigo_cie10
+      t.string :descripcion
       t.references :grupo					#grupo_id
       t.integer :numero
       t.boolean :frecuente

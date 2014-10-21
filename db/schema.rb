@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819051337) do
+ActiveRecord::Schema.define(version: 20141021043243) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -56,11 +56,9 @@ ActiveRecord::Schema.define(version: 20140819051337) do
 
   create_table "fi_calendario_vacunas", force: true do |t|
     t.integer  "vacuna_id"
-    t.integer  "edad"
+    t.string   "edad"
     t.integer  "numero_vacuna"
-    t.text     "grupo_objetivo"
     t.integer  "agno"
-    t.text     "protege_contra"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -75,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "fi_ficha_tipos", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -83,7 +81,7 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   create_table "fi_gestas", force: true do |t|
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.text     "desenlace"
+    t.string   "desenlace"
     t.integer  "persona_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -110,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   create_table "fi_habitos_drogas", force: true do |t|
     t.integer  "persona_id"
     t.datetime "fecha_test_dast"
-    t.text     "tipo_dast"
+    t.string   "tipo_dast"
     t.integer  "dast_1"
     t.integer  "dast_2"
     t.integer  "dast_3"
@@ -159,8 +157,8 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "fi_metricas", force: true do |t|
-    t.text     "nombre"
-    t.text     "unidad"
+    t.string   "nombre"
+    t.string   "unidad"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -169,12 +167,12 @@ ActiveRecord::Schema.define(version: 20140819051337) do
     t.integer  "persona_diagnostico_atencion_salud_id"
     t.datetime "fecha_notificacion"
     t.datetime "fecha_primeros_sintomas"
-    t.text     "confirmacion_diagnostica"
-    t.text     "antecedentes_vacunacion"
+    t.string   "confirmacion_diagnostica"
+    t.string   "antecedentes_vacunacion"
     t.integer  "pais_contagio_id"
-    t.text     "embarazo"
+    t.string   "embarazo"
     t.integer  "semanas_gestacion"
-    t.text     "tbc"
+    t.string   "tbc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -182,7 +180,7 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   create_table "fi_notificaciones_ges", force: true do |t|
     t.integer  "persona_diagnostico_atencion_salud_id"
     t.integer  "persona_conocimiento_id"
-    t.text     "confirmacion_diagnostica"
+    t.string   "confirmacion_diagnostica"
     t.datetime "fecha_notificacion"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -226,6 +224,7 @@ ActiveRecord::Schema.define(version: 20140819051337) do
     t.integer  "periodicidad"
     t.integer  "duracion"
     t.integer  "total"
+    t.integer  "persona_vacuna_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -265,28 +264,28 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "med_alergias", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_componentes", force: true do |t|
-    t.text     "nombre"
-    t.text     "descripcion"
+    t.string   "nombre"
+    t.string   "descripcion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_diagnostico_estados", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_diagnosticos", force: true do |t|
-    t.text     "nombre"
-    t.text     "codigo_cie10"
-    t.text     "descripcion"
+    t.string   "nombre"
+    t.string   "codigo_cie10"
+    t.string   "descripcion"
     t.integer  "grupo_id"
     t.integer  "numero"
     t.boolean  "frecuente"
@@ -296,50 +295,50 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "med_diagnosticos_bloques", force: true do |t|
-    t.text     "nombre"
-    t.text     "codigo"
+    t.string   "nombre"
+    t.string   "codigo"
     t.integer  "capitulo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_diagnosticos_capitulos", force: true do |t|
-    t.text     "nombre"
-    t.text     "codigo"
-    t.text     "descripcion"
+    t.string   "nombre"
+    t.string   "codigo"
+    t.string   "descripcion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_diagnosticos_grupos", force: true do |t|
-    t.text     "nombre"
-    t.text     "codigo"
+    t.string   "nombre"
+    t.string   "codigo"
     t.integer  "bloque_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_enfermedades_notificacion_obligatoria", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.integer  "diagnostico_id"
-    t.text     "tipo_vigilancia"
-    t.text     "frecuencia_notificacion"
+    t.string   "tipo_vigilancia"
+    t.string   "frecuencia_notificacion"
     t.integer  "prioridad"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_laboratorios", force: true do |t|
-    t.text     "nombre"
-    t.text     "descripcion"
+    t.string   "nombre"
+    t.string   "descripcion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_medicamentos", force: true do |t|
-    t.text     "nombre"
-    t.text     "descripcion"
-    t.text     "codigo_isp"
+    t.string   "nombre"
+    t.string   "descripcion"
+    t.string   "codigo_isp"
     t.integer  "cantidad"
     t.integer  "medicamento_tipo_id"
     t.integer  "laboratorio_id"
@@ -356,50 +355,65 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "med_medicamentos_metatipos", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_medicamentos_tipos", force: true do |t|
-    t.text     "unidad"
+    t.string   "unidad"
     t.integer  "medicamento_metatipo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_prestaciones", force: true do |t|
-    t.text     "nombre"
-    t.text     "descripcion"
-    t.text     "codigo_fonasa"
+    t.string   "nombre"
+    t.string   "descripcion"
+    t.string   "codigo_fonasa"
     t.integer  "subgrupo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_prestaciones_grupos", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.text     "descripcion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_prestaciones_subgrupos", force: true do |t|
-    t.text     "nombre"
-    t.text     "descripcion"
+    t.string   "nombre"
+    t.string   "descripcion"
     t.integer  "grupo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "med_problemas_salud_auge", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.integer  "diagnostico_id"
     t.integer  "edad_desde"
     t.integer  "edad_hasta"
-    t.text     "genero"
+    t.string   "genero"
     t.integer  "prioridad"
     t.datetime "fecha_inicio_auge"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_vacunas", force: true do |t|
+    t.string   "nombre"
+    t.string   "protege_contra"
+    t.string   "tipo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "med_vacunas_medicamentos", force: true do |t|
+    t.integer  "vacuna_id"
+    t.integer  "medicamento_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -461,7 +475,7 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "per_previsiones_salud", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -510,13 +524,13 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "pro_especialidades", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "pro_instituciones", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -531,19 +545,19 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "tra_ciudades", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "tra_comunas", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "tra_direcciones", force: true do |t|
-    t.text     "calle"
+    t.string   "calle"
     t.integer  "numero"
     t.integer  "departamento"
     t.integer  "comuna_id"
@@ -554,19 +568,19 @@ ActiveRecord::Schema.define(version: 20140819051337) do
   end
 
   create_table "tra_paises", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "tra_profesiones_oficios", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "tra_regiones", force: true do |t|
-    t.text     "nombre"
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,7 +1,7 @@
 class CreateProEspecialidades < ActiveRecord::Migration
   def change
     create_table :pro_especialidades do |t|
-      t.text :nombre
+      t.string :nombre
 
       t.timestamps
     end

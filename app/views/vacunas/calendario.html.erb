@@ -1,8 +1,29 @@
 <h3>Calendario de vacunación</h3>
-<%  @agnos.each do |agno| %>
-		<%= @calendarios 
-		#BUSCAR forma de imprimir 
-		%>
-
-<% end %>
-
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<% @agnos.each do |agno| %>
+				<div class="panel-group" id="panel-997829">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							 <a class="panel-title" data-toggle="collapse" data-parent="#panel-997829" href="#panel-element-144641">Calendario de Vacunas <%= agno.agno %>
+							 </a>
+						</div>
+						<div id="panel-element-144641" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<table class="table table-striped table-hover table-condensed">
+								  <thead><tr><th>Edad</th><th>Vacuna</th><th>Protege contra</th></tr></thead>
+								  <tbody>
+										<% @calendarios[agno.agno].each do |vacuna| %>
+											<tr><td><%= vacuna[1]['edad'] %></td><td><%= vacuna[1]['nombre'] %></td><td><%= vacuna[1]['protege_contra'] %></td></tr>
+										<% end %>
+									</tbody>	
+								</table>									
+							</div>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
