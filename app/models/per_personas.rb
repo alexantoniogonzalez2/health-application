@@ -38,13 +38,11 @@ class PerPersonas < ActiveRecord::Base
 
   def getGrupoEtareo(fecha_atencion_salud)
     if fecha_nacimiento
-
       limite_recien_nacido = fecha_nacimiento + 28.days
       limite_lactante = fecha_nacimiento + 2.years
       limite_pediatria = fecha_nacimiento + 10.years
       limite_adolescente = fecha_nacimiento + 18.years
       limite_adulto = fecha_nacimiento + 65.years
-
       if fecha_atencion_salud < limite_recien_nacido 
         'Recién nacido'
       elsif fecha_atencion_salud < limite_lactante

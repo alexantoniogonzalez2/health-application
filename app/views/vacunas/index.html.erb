@@ -1,15 +1,21 @@
-<%=  case @grupo_etareo
-    when 'Recién nacido'
-    	render :partial => "pediatria", :locals => {}
-    when 'Lactante'   
-    	render :partial => "pediatria", :locals => {}  
-    when 'Pediatria'
-    	render :partial => "pediatria", :locals => {}  
-    when 'Adolescente'
-    	render :partial => "pediatria", :locals => {}  
-    when 'Adulto' 
-    	render :partial => "pediatria", :locals => {}     
-    when 'Adulto mayor'
-    	render :partial => "pediatria", :locals => {} 
-    end 
-%> 
+<h3>Lista de vacunas administradas</h3>
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <% if !@personas_vacunas.blank? %>
+        <table class="table table-striped table-hover table-bordered">
+          <thead><tr><th>Vacuna</th><th>Fecha</th></tr></thead>
+          <tbody>
+            <% @personas_vacunas.each do |persona_vacuna| %>
+                <tr><td><%= persona_vacuna.vacuna.nombre %></td><td><%= persona_vacuna.fecha %></td></tr>
+            <% end %>
+          </tbody>    
+        </table>
+      <% else %>
+        No hay información de vacunas administradas.  
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= render :partial => @partial_seguimiento unless @partial_seguimiento.blank? %> 
+<%= javascript_include_tag "vacunas" %>

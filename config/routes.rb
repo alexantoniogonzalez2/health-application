@@ -25,8 +25,10 @@ AplicacionMedica::Application.routes.draw do
 
   #Vacunas
   get '/vacunas/index', to: 'vacunas#index', :as => :vacunas_index
-  get '/vacunas/calendario', to: 'vacunas#calendario', :as => :vacunas_calendario    
-
+  get '/vacunas/calendario', to: 'vacunas#calendario', :as => :vacunas_calendario 
+  get '/vacunas/otras_vacunas', to: 'vacunas#otras_vacunas', :as => :otras_vacunas
+  post '/actualizar_vacunas', to: 'vacunas#actualizar'
+  
   #Horas agendadas
   post '/bloquear_hora', to: 'agendamiento#bloquearHora', :as => :bloquearHora
   post '/desbloquear_hora', to: 'agendamiento#desbloquearHora', :as => :desbloquearHora

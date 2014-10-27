@@ -11,23 +11,12 @@ class FiAtencionesSalud < ActiveRecord::Base
   has_many :certificados, :class_name => 'FiCertificados', :foreign_key => 'atencion_salud_id'
   has_many :interconsultas, :class_name => 'FiInterconsultas', :foreign_key => 'atencion_salud_id'
   has_many :persona_metricas, :class_name => 'FiPersonaMetricas', :foreign_key => 'atencion_salud_id'
+  has_many :persona_vacunas, :class_name => 'FiPersonaVacunas', :foreign_key => 'atencion_salud_id' 
 
  	private
   def app_params
-    params.require(:list).permit(:persona,
-  								:ficha_tipo,
-  								:agendamiento,
-  								:persona_examenes,
-  								:persona_medicamentos,
-  								:persona_diagnosticos_atencion_salud,
-  								:certificados,
-  								:interconsultas,
-  								:persona_metricas,
-  								:motivo_consulta,
-                  :examen_fisico,
-  								:indicaciones_generales,
-
-  								)
+    params.require(:list).permit(:persona,:ficha_tipo,:agendamiento,:persona_examenes,:persona_medicamentos,:persona_diagnosticos_atencion_salud,:certificados,:interconsultas,:persona_metricas,
+      :motivo_consulta,:examen_fisico,:persona_vacunas,:indicaciones_generales)
   end
 
 end

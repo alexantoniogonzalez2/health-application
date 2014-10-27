@@ -259,6 +259,9 @@ ActiveRecord::Schema.define(version: 20141021043243) do
   create_table "fi_personas_vacunas", force: true do |t|
     t.integer  "persona_id"
     t.integer  "vacuna_id"
+    t.datetime "fecha"
+    t.integer  "numero_vacuna"
+    t.integer  "atencion_salud_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
