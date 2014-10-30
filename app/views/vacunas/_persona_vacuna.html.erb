@@ -1,0 +1,6 @@
+<tr id="tr-pers-vac-<%= persona_vacuna.id %>" >
+  <td><%= persona_vacuna.vacuna.nombre %></td>
+  <td><%= persona_vacuna.edad %></td>
+  <td><%= persona_vacuna.fecha.strftime('%Y-%m-%d') %></td>
+  <td><%= link_to 'Ver atención', atenciones_salud_path(persona_vacuna.atencion_salud_id) unless persona_vacuna.atencion_salud_id.nil? %></td>
+</tr>

@@ -1,19 +1,21 @@
 <h3>Lista de vacunas administradas</h3>
 <div class="container">
   <div class="row clearfix">
-    <div class="col-md-12 column">
-      <% if !@personas_vacunas.blank? %>
-        <table class="table table-striped table-hover table-bordered">
-          <thead><tr><th>Vacuna</th><th>Fecha</th></tr></thead>
-          <tbody>
+    <div class="col-md-12 column">      
+      <table id="tabla-persona-vacunas" class="table table-striped table-hover table-bordered">
+        <thead><tr><th>Vacuna</th><th>Edad</th><th>Fecha</th><th>Atención de salud</th></tr></thead>
+        <tbody id='body-persona-vacuna'>
+          <% if !@personas_vacunas.blank? %>
             <% @personas_vacunas.each do |persona_vacuna| %>
-                <tr><td><%= persona_vacuna.vacuna.nombre %></td><td><%= persona_vacuna.fecha %></td></tr>
+              <%= render :partial => "persona_vacuna", :locals => {:persona_vacuna => persona_vacuna} %>
             <% end %>
-          </tbody>    
-        </table>
-      <% else %>
-        No hay información de vacunas administradas.  
-      <% end %>
+          <% else %>
+            <tr id="tr-pers-vac-sin" >
+              <td colspan="4">No hay información de vacunas administradas.</td>              
+            </tr>  
+          <% end %>  
+        </tbody>    
+      </table>
     </div>
   </div>
 </div>

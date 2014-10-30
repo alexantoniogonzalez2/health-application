@@ -260,8 +260,6 @@ PP6.profesional=D3
 PP6.especialidad=E3
 PP6.save
 
-
-
 #Estado agendamiento
 puts 'Estados Agendamientos'
 AgAgendamientoEstados.create! :nombre => "Hora disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
