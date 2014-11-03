@@ -5,8 +5,7 @@ class MedPrestacionesSubgrupos < ActiveRecord::Base
 
   private
   def app_params
-    params.require(:list).permit( :id,  
-    															:grupo_id,   															
+    params.require(:list).permit( :id,   															
     														  :nombre,
     														  :descripcion,
     														  :prestaciones,

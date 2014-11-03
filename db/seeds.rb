@@ -6,8 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
-
 puts 'Direcciones'
 TraRegiones.create! :nombre => "Región Metropolitana"
 TraCiudades.create! :nombre => "Santiago"
@@ -438,6 +436,7 @@ puts 'Alergias'
 MedAlergias.create! :nombre => 'Polvo'
 MedAlergias.create! :nombre => 'Polen'
 
+Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
 
 puts 'Fin Seed'
 

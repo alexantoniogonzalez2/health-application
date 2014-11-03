@@ -17,7 +17,6 @@ class MedPrestaciones < ActiveRecord::Base
   def app_params
     params.require(:list).permit( :id, 
     															:codigo_fonasa,
-    														  :subgrupo_id,
     														  :nombre,
     														  :descripcion,
     														  :persona_prestaciones,

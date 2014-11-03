@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021043243) do
+ActiveRecord::Schema.define(version: 20141101185418) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.string   "nombre"
@@ -421,6 +421,46 @@ ActiveRecord::Schema.define(version: 20141021043243) do
     t.datetime "updated_at"
   end
 
+  create_table "ocu_grandes_grupos", force: true do |t|
+    t.string   "nombre"
+    t.string   "codigo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ocu_grupos", force: true do |t|
+    t.string   "nombre"
+    t.string   "codigo"
+    t.integer  "gran_grupo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ocu_ocupaciones", force: true do |t|
+    t.string   "nombre"
+    t.string   "codigo"
+    t.integer  "subgrupo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ocu_personas_ocupaciones", force: true do |t|
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_termino"
+    t.integer  "persona_id"
+    t.integer  "ocupacion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ocu_subgrupos", force: true do |t|
+    t.string   "nombre"
+    t.string   "codigo"
+    t.integer  "grupo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "per_parentescos", force: true do |t|
     t.integer  "hijo_id"
     t.integer  "progenitor_id"
@@ -457,15 +497,6 @@ ActiveRecord::Schema.define(version: 20141021043243) do
     t.integer  "prevision_salud_id"
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "per_personas_profesiones_oficios", force: true do |t|
-    t.datetime "fecha_inicio"
-    t.datetime "fecha_termino"
-    t.integer  "persona_id"
-    t.integer  "profesion_oficio_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -571,12 +602,6 @@ ActiveRecord::Schema.define(version: 20141021043243) do
   end
 
   create_table "tra_paises", force: true do |t|
-    t.string   "nombre"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "tra_profesiones_oficios", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"

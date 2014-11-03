@@ -17,7 +17,7 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_direcciones, :class_name => 'PerPersonasDirecciones', :foreign_key => 'persona_id'
   has_many :personas_previsiones_salud, :class_name => 'PerPersonasPrevisionesSalud', :foreign_key => 'persona_id'
   has_many :personas_telefonos, :class_name => 'PerPersonasTelefonos', :foreign_key => 'persona_id'
-  has_many :personas_profesiones_oficios, :class_name => 'PerPersonasProfesionesOficios', :foreign_key => 'persona_id'
+  has_many :personas_ocupaciones, :class_name => 'PerPersonasOcupaciones', :foreign_key => 'persona_id'
   has_many :personas_alergias, :class_name => 'FiPersonasAlergias', :foreign_key => 'persona_id'
   has_many :personas_habitos_tabaco, :class_name => 'FiHabitosTabaco', :foreign_key => 'persona_id'
   has_many :personas_habitos_drogas, :class_name => 'FiHabitosDrogas', :foreign_key => 'persona_id'
@@ -188,7 +188,7 @@ class PerPersonas < ActiveRecord::Base
                                     :user,
                                     :personas_previsiones_salud,
                                     :personas_telefonos,
-                                    :personas_profesiones_oficios,
+                                    :personas_ocupaciones,
                                     :personas_alergias,
                                     :personas_habitos_tabaco,
                                     :personas_habitos_drogas,

@@ -11,6 +11,13 @@ AplicacionMedica::Application.routes.draw do
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 
   post '/editar_alergia', to: 'antecedentes#editarAlergia'
 
+  #Ocupaciones
+  get '/ocupaciones/new', to: 'ocupaciones#new', :as => :ocupaciones_new
+  post '/ocupaciones', to: 'ocupaciones#create'
+  get '/ocupaciones/index', to: 'ocupaciones#index', :as => :ocupaciones_index  
+  get '/ocupaciones/:id', to: 'ocupaciones#edit'
+  post '/cargar_ocupaciones', to: 'ocupaciones#cargarOcupaciones'
+
   #Habitos alcohol
   get '/habitos_alcohol/new', to: 'habitos_alcohol#new', :as => :habitos_alcohol_new
   post '/habitos_alcohol', to: 'habitos_alcohol#create'   

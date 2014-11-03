@@ -13,8 +13,7 @@ $(document).ready(function() {
       "oPaginate": {
         "sPrevious": "Página anterior",
         "sNext": "Página siguiente"
-      }
-      
+      }      
     }
 	});
    

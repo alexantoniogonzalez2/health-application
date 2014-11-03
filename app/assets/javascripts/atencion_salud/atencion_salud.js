@@ -313,7 +313,7 @@ $(".select_persona").on("change", function(e) {
   var pd = $(this).attr('id').substring(15);   
   value = $("#select_persona_"+pd).select2('data') != null ? $("#select_persona_"+pd).select2('data').id : null;       
   $("#ges_div_"+pd).hide(); 
-  $("#per_not_"+pd).is(":visible") ? $("#per_not_"+pd).collapse('hide') : //nothing to do  ;
+  $("#per_not_"+pd).is(":visible") ? $("#per_not_"+pd).collapse('hide') : /*nothing to do */true ;
   $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show();
   $("#ges_nombre_"+pd+","+"#ges_rut_"+pd+","+"#ges_correo_"+pd+","+"#ges_celular_"+pd).prop('disabled', true);    
 

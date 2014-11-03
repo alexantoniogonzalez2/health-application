@@ -1,0 +1,35 @@
+<h4>Antecedentes laborales</h4>
+<%= link_to 'Agregar antecedente laboral', ocupaciones_new_path %>
+<% unless @ocupaciones.blank? %>
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-2 column">Fecha inicio
+			</div>
+			<div class="col-md-2 column">Fecha final
+			</div>
+			<div class="col-md-4 column">Ocupación
+			</div>
+			<div class="col-md-2 column">Tiempo total
+			</div>
+			<div class="col-md-1 column">
+			</div>
+		</div>
+		<% @ocupaciones.each do |ocu| %>
+			<div class="row clearfix">
+				<div class="col-md-2 column"><%= ocu.fecha_inicio.strftime('%d/%m/%Y') unless ocu.fecha_inicio.nil? %>
+				</div>
+				<div class="col-md-2 column"><%= ocu.fecha_termino.strftime('%d/%m/%Y') unless ocu.fecha_termino.nil? %>
+				</div>
+				<div class="col-md-4 column"><%= ocu.ocupacion.nombre %>
+				</div>
+				<div class="col-md-2 column"><%= ocu.getTiempoTotal %>
+				</div>
+				<div class="col-md-1 column"><%= link_to 'Editar', {:controller => :ocupaciones, :action => 'edit', :id => ocu.id }, :method => :get %>
+				</div>
+			</div>
+		<% end %>		
+	</div>
+<% else %>
+<br>No hay información de antecedentes laborales.
+<% end %>
+
