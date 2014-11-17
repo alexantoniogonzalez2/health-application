@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
+
 puts 'Direcciones'
 TraRegiones.create! :nombre => "Región Metropolitana"
 TraCiudades.create! :nombre => "Santiago"
@@ -30,9 +32,12 @@ U9= User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :passwor
 
 #Pacientes
 puts 'Pacientes'
-P1 = PerPersonas.create! :rut => 10000000, :digito_verificador => 'K', :nombre => 'Alex', :apellido_paterno => 'González', :apellido_materno => 'Tobar', :genero=> 'Masculino', :fecha_nacimiento => '1984-10-23', :user => U1
+P1 = PerPersonas.create! :rut => 10000000, :digito_verificador => 'K', :nombre => 'Alex', :apellido_paterno => 'González', :apellido_materno => 'Tobar', :genero=> 'Masculino', :fecha_nacimiento => '1984-10-23', :fecha_muerte => '2100-10-23', :diagnostico_muerte => MedDiagnosticos.find(25) ,:user => U1
 P2 = PerPersonas.create! :rut => 20000000, :digito_verificador => '5', :nombre => 'Camila', :apellido_paterno => 'González', :apellido_materno => 'Aravena', :genero=> 'Femenino', :fecha_nacimiento => '2012-06-28', :user => U2
 P3 = PerPersonas.create! :rut => 30000000, :digito_verificador => '2', :nombre => 'Luis', :apellido_paterno => 'González', :apellido_materno => 'Salazar', :genero=> 'Masculino', :fecha_nacimiento => '1934-10-23', :user => U3
+
+puts 'Parentesco'
+PerParentescos.create! :hijo => P2, :progenitor => P1 
 
 #Profesionales
 puts 'Doctores'
@@ -314,30 +319,6 @@ TF2=FiFichaTipos.new
 TF2.nombre="Tipo ficha control infantil"
 TF2.save
 
-puts 'GruposPrestaciones'
-G1 = MedPrestacionesGrupos.create! :id => 3 , :nombre => 'EXAMENES DE LABORATORIO', :descripcion => ''
-G2 = MedPrestacionesGrupos.create! :id => 4 , :nombre => 'IMAGENOLOGIA', :descripcion => ''
-G3 = MedPrestacionesGrupos.create! :id => 5 , :nombre => 'MEDICINA NUCLEAR Y RADIOTERAPIA', :descripcion => ''
-G4 = MedPrestacionesGrupos.create! :id => 7 , :nombre => 'MEDICINA TRANSFUSIONAL', :descripcion => 'Transfusión de hemocomponentes. Cobro de acto transfusional por cada 4 unidades de glóbulos rojos o plasma, y por cada 6 unidades de crioprecipitados o plaquetas. Incluye el tratamiento de las complicaciones medicas inmediatas. No incluye preparación de hemocomponentes ni estudios previos, salvo que el procedimiento transfusional así lo explicite.'
-G5 = MedPrestacionesGrupos.create! :id => 8 , :nombre => 'ANATOMIA PATOLOGICA', :descripcion => ''
-G6 = MedPrestacionesGrupos.create! :id => 9 , :nombre => 'PSIQUIATRIA Y SALUD MENTAL', :descripcion => ''
-G7 = MedPrestacionesGrupos.create! :id => 11 , :nombre => 'NEUROLOGIA Y NEUROCIRUGIA', :descripcion => ''
-G8 = MedPrestacionesGrupos.create! :id => 12 , :nombre => 'CIRUGIA OFTALMOLOGICA', :descripcion => 'Además, véase Cirugía Plástica y Reparadora, y Cirugía de Cabeza y Cuello. Todas las intervenciones se refieren a un ojo y sus anexos, salvo que se especifique otra cosa.'
-G9 = MedPrestacionesGrupos.create! :id => 13 , :nombre => 'CIRUGIA OTORRINOLARINGOLOGICA', :descripcion => 'En los casos de realización de técnicas endoscópicas y en ausencia de códigos para ellos, se aplicarán los correspondientes a las técnicas convencionales. Para el código adicional se aplicará en estos casos, el correspondiente a la intervención convencional aumentado en dos dígitos. Véase, además, Cirugía Plástica y Reparadora y Cirugía de Cabeza y Cuello. Todas las intervenciones sobre el oído se refieren a un lado.'
-G10 = MedPrestacionesGrupos.create! :id => 14 , :nombre => 'CIRUGIA DE CABEZA Y CUELLO', :descripcion => 'Además, véase intervenciones quirúrgicas de Oftalmología, Otorrinolaringología y Cirugía Plástica y Reparadora.'
-G11 = MedPrestacionesGrupos.create! :id => 15 , :nombre => 'CIRUGIA PLASTICA Y REPARADORA', :descripcion => ''
-G12 = MedPrestacionesGrupos.create! :id => 16 , :nombre => 'DERMATOLOGIA Y TEGUMENTOS', :descripcion => 'CIRUGIAS. En sala de procedimientos o pabellón quirúrgico.'
-G13 = MedPrestacionesGrupos.create! :id => 17 , :nombre => 'CARDIOLOGIA', :descripcion => ''
-G14 = MedPrestacionesGrupos.create! :id => 18 , :nombre => 'GASTROENTEROLOGIA', :descripcion => ''
-G15 = MedPrestacionesGrupos.create! :id => 19 , :nombre => 'UROLOGIA Y NEFROLOGIA', :descripcion => ''
-G16 = MedPrestacionesGrupos.create! :id => 20 , :nombre => 'GINECOLOGIA Y OBSTETRICIA', :descripcion => ''
-G17 = MedPrestacionesGrupos.create! :id => 21 , :nombre => 'TRAUMATOLOGIA', :descripcion => ''
-G18 = MedPrestacionesGrupos.create! :id => 22 , :nombre => 'ANESTESIA', :descripcion => ''
-G19 = MedPrestacionesGrupos.create! :id => 24 , :nombre => 'RESCATES, TRASLADOS Y RONDAS RURALES', :descripcion => ''
-G20 = MedPrestacionesGrupos.create! :id => 25 , :nombre => 'PAGO ASOCIADO A DIAGNOSTICO (PAD)', :descripcion => ''
-G21 = MedPrestacionesGrupos.create! :id => 27 , :nombre => 'ATENCION ODONTOLOGICA', :descripcion => 'Incluye el valor del derecho a pabellón cuando corresponde'
-G22 = MedPrestacionesGrupos.create! :id => 30 , :nombre => 'GRUPO DE PRESTACIONES: lentes, audífonos, PNDA y TBC.', :descripcion => ''
-
 puts 'Metatipos de Medicamentos'
 MedMedicamentosMetatipos.create! :nombre => 'Comprimido'
 MedMedicamentosMetatipos.create! :nombre => 'Jarabe'
@@ -408,35 +389,11 @@ puts 'Medicamentos Componente'
 C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
 C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
 
-puts 'Capítulos'
-MedDiagnosticosCapitulos.create! :nombre => 'Ciertas enfermedades infecciosas y parasitarias'
-MedDiagnosticosCapitulos.create! :nombre => 'Neoplasias'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades de la sangre y de los organos hematopoyeticos'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades endocrinas, nutricionales y metabolicas'
-MedDiagnosticosCapitulos.create! :nombre => 'Trastornos mentales y del comportamiento'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema nervioso'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del ojo y sus anexos'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del oido y de la apofisis mastoides'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema circulatorio'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema respiratorio'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del aparato digestivo'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades de la piel y el tejido subcutaneo'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del sistema osteomuscular y del tejido conectivo'
-MedDiagnosticosCapitulos.create! :nombre => 'Enfermedades del aparato genitourinario'
-MedDiagnosticosCapitulos.create! :nombre => 'Embarazo, parto y puerperio'
-MedDiagnosticosCapitulos.create! :nombre => 'Ciertas afecciones originadas en el periodo perinatal'
-MedDiagnosticosCapitulos.create! :nombre => 'Malformaciones congenitas, deformidades y anomalias cromosomicas'
-MedDiagnosticosCapitulos.create! :nombre => 'Sintomas, signos y hallazgos anormales clinicos y de laboratorio'
-MedDiagnosticosCapitulos.create! :nombre => 'Traumatismos, envenenamientos y algunas otras consecuencias de causa externa'
-MedDiagnosticosCapitulos.create! :nombre => 'Causas extremas de morbilidad y de mortalidad'
-MedDiagnosticosCapitulos.create! :nombre => 'Factores que influyen en el estado de salud y contacto con los servicios de salud'
-MedDiagnosticosCapitulos.create! :nombre => 'Codigos para situaciones especiales'
-
 puts 'Alergias'
 MedAlergias.create! :nombre => 'Polvo'
 MedAlergias.create! :nombre => 'Polen'
 
-Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
+Rake::Task['agendamiento:crear_agendamientos'].invoke
 
 puts 'Fin Seed'
 

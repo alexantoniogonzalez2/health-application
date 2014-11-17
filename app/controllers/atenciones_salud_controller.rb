@@ -39,7 +39,7 @@ class AtencionesSaludController < ApplicationController
 							 ag_agendamiento_log_estados.agendamiento_estado_id,
 							 ag_agendamiento_log_estados.responsable_id,
 							 ag_agendamientos.persona_id")
-			.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
+			.where( "ag_agendamiento_log_estados.agendamiento_estado_id not in (1) AND fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
 				 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 			.order(fecha: :desc)
 

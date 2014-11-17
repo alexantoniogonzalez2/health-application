@@ -12,7 +12,7 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
 $('.select_ocupacion').select2({
   width: '50%',
   minimumInputLength: 3,
-  placeholder: "Seleccione una ocupacion",
+  placeholder: "Seleccione una ocupación",
   allowClear: true,
   ajax: {
     url: '/cargar_ocupaciones',
@@ -20,24 +20,42 @@ $('.select_ocupacion').select2({
     type: 'POST',
     data: function (term, page) { return { q: term }; },
     results: function (data, page) { return { results: data };}
+  },
+  initSelection: function (element, callback) {
+    var text = $(element).val();
+    var id = $(element).attr('name');
+    if (id !== "") {
+      var data = { id: id, text: text };
+      callback(data);       
+    }
   }
 });
 
 $('#agregar-ocupacion').click(function() {
-  if ( validarFecha() )
-  {
-    var f_i = $('#f_i_ocu').datepicker("getDate");
-    var f_f = $('#f_f_ocu').datepicker("getDate");
-    var value = $("#select_ocupacion").select2('data') != null ? $("#select_ocupacion").select2('data').id : null;
-    $.ajax({
-      type: 'POST',
-      url: '/ocupaciones',
-      data: { f_i: f_i, f_f: f_f, value: value },
-      success: function(response) { window.location.href = '/ocupaciones/index';  },
-      error: function(xhr, status, error){ alert("No se pudo agregar el antecedente laboral."); }
-    }); 
-  } 
+  if( validarFecha() )
+    guardarOcupacion('agregar',0);  
 });
+
+$('.editar-ocupacion').click(function() {
+  if( validarFecha() ){
+    var id = $(this).attr('id')
+    guardarOcupacion('editar',id);
+  }  
+});
+
+
+function guardarOcupacion(tipo,id){
+  var f_i = $('#f_i_ocu').datepicker("getDate");
+  var f_f = $('#f_f_ocu').datepicker("getDate");
+  var value = $("#select_ocupacion").select2('data') != null ? $("#select_ocupacion").select2('data').id : null;
+  $.ajax({
+    type: 'POST',
+    url: '/ocupaciones',
+    data: { f_i: f_i, f_f: f_f, value: value, tipo: tipo, id: id },
+    success: function(response) { window.location.href = '/ocupaciones/index';  },
+    error: function(xhr, status, error){ alert("No se pudo agregar el antecedente laboral."); }
+  }); 
+}
 
 function validarFecha(){
   valido = true;

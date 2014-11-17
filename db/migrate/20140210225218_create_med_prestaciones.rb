@@ -1,11 +1,10 @@
 class CreateMedPrestaciones < ActiveRecord::Migration
   def change
     create_table :med_prestaciones do |t|
-      t.string :nombre
-      t.string :descripcion
+      t.text :nombre
+      t.text :descripcion
       t.string :codigo_fonasa
-      t.references :subgrupo #subgrupo_id
-      
+      t.references :subgrupo #subgrupo_id      
       t.timestamps
     end
   end

@@ -32,6 +32,10 @@ class AntecedentesController < ApplicationController
 		@consumo.each do |con|
   		@total_consumo += con.paquetes_agno
   	end	
+  	#ocupaciones
+  	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',current_user.id);
+  	#antecedentes familiares
+  	@antecedentes_familiares = FiPersonaDiagnosticos.where('persona_id = ?',1000)
 	end
 	def editarAlergia
 		persona_id = current_user.id
@@ -51,5 +55,15 @@ class AntecedentesController < ApplicationController
 		respond_to do |format|
 			format.json { render :json => { :success => true } }
 		end	
+	end
+	def guardarAntecedentesSociales
+		@persona = PerPersonas.find(current_user.id)
+		@persona.numero_personas_familia = params[:grupo_familiar]
+		@persona.nivel_escolaridad = params[:nivel_escolaridad]
+		@persona.save!
+
+		respond_to do |format|
+			format.json { render :json => { :success => true } }
+		end		
 	end	
 end

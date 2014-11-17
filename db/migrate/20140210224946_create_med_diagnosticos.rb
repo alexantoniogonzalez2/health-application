@@ -4,7 +4,7 @@ class CreateMedDiagnosticos < ActiveRecord::Migration
       t.string :nombre
       t.string :codigo_cie10
       t.string :descripcion
-      t.references :grupo					#grupo_id
+      t.references :grupo	#grupo_id
       t.integer :numero
       t.boolean :frecuente
       t.boolean :nodo_terminal

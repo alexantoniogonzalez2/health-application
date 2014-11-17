@@ -1,0 +1,25 @@
+<% if @acceso %>
+<h4>Antecedentes familiares</h4>
+  <% if @antecedentes_familiares.empty? %>
+    No hay información de antecedentes familiares.
+  <% else %>
+		<table class="table table-striped table-bordered table-hover table-condensed">
+			<thead class="ajust-head">
+	      <tr><th class="col-sm-1">Persona</th><th class="col-sm-2">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-3">Descripción</th></tr>
+	    </thead>
+	    <tbody>
+	      <% @antecedentes_familiares.each do |a_f| %>
+	        <tr>
+	          <td><%= a_f %></td>
+	          <td><%= a_f %></td>
+	          <td><%= a_f %></td>                
+	          <td><%= a_f %></td>          
+	        </tr>
+	      <% end %>
+	    </tbody>    
+		</table>
+	<% end %><br/>	
+	<%= link_to 'Agregar antecedente familiar', agendamientoBuscadorHora_path %>
+<% else %>
+	<%= render :partial => "layouts/permiso" %>
+<% end %>  

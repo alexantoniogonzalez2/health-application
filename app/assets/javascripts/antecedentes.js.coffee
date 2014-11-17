@@ -13,3 +13,17 @@ $("input[type=checkbox][id^=checkboxes-aler-]").change ->
 		error: (jqXHR, textStatus, errorThrown) ->
 		success: (data, textStatus, jqXHR) ->
   return
+
+$("#guardar-ant-soc").click ->
+  grupo_familiar = $("#personas-grupo-familiar").val()
+  alert grupo_familiar
+  nivel_escolaridad = $('input[name=nivel-escolaridad]:checked').val()
+  alert nivel_escolaridad
+  $.ajax '/guardar_antecedentes_sociales',
+    type: 'POST'
+    data:
+      grupo_familiar : grupo_familiar
+      nivel_escolaridad : nivel_escolaridad
+    error: (jqXHR, textStatus, errorThrown) ->
+    success: (data, textStatus, jqXHR) ->
+  return 

@@ -10,6 +10,7 @@ AplicacionMedica::Application.routes.draw do
   #Antecedentes
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 
   post '/editar_alergia', to: 'antecedentes#editarAlergia'
+  post '/guardar_antecedentes_sociales', to: 'antecedentes#guardarAntecedentesSociales'
 
   #Ocupaciones
   get '/ocupaciones/new', to: 'ocupaciones#new', :as => :ocupaciones_new

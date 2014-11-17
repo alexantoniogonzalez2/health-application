@@ -1,0 +1,57 @@
+<h4>Antecedentes sociales</h4>
+
+<div class="container">
+	<div class="row">
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="textinput">Número de personas en el grupo familiar</label>  
+		  <div class="col-md-4">
+		  <input id="personas-grupo-familiar" name="textinput" type="number" placeholder="Ingresar número" class="form-control input-md" value="<%= @paciente.numero_personas_familia unless @paciente.numero_personas_familia.nil? %>">
+		  <span class="help-block">Ver definición</span>  
+		  </div>
+		</div>
+	</div>
+	<div class="row">	
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="radios">Nivel de escolaridad</label>
+		  <div class="col-md-4">
+			  <div class="radio">
+			    <label for="radios-0"><input type="radio" name="nivel-escolaridad" id="radios-0" value="1" <% if @paciente.nivel_escolaridad == '1' %> checked <% end %> >Ninguna</label>
+				</div>
+			  <div class="radio">
+			    <label for="radios-1"><input type="radio" name="nivel-escolaridad" id="radios-1" value="2" <% if @paciente.nivel_escolaridad == '2' %> checked <% end %> >Educación Básica Incompleta</label>
+				</div>
+				<div class="radio">
+			    <label for="radios-2"><input type="radio" name="nivel-escolaridad" id="radios-2" value="3" <% if @paciente.nivel_escolaridad == '3' %> checked <% end %> >Educación Básica Completa</label>
+				</div>
+				<div class="radio">
+			    <label for="radios-3"><input type="radio" name="nivel-escolaridad" id="radios-3" value="4" <% if @paciente.nivel_escolaridad == '4' %> checked <% end %> >Educación Media Incompleta</label>
+				</div>
+			  <div class="radio">
+			    <label for="radios-4"><input type="radio" name="nivel-escolaridad" id="radios-4" value="5" <% if @paciente.nivel_escolaridad == '5' %> checked <% end %> >Educación Media Completa</label>
+				</div>
+				<div class="radio">
+			    <label for="radios-5"><input type="radio" name="nivel-escolaridad" id="radios-5" value="6" <% if @paciente.nivel_escolaridad == '6' %> checked <% end %> >Educación Técnica o Profesional Incompleta</label>
+				</div>
+			  <div class="radio">
+			    <label for="radios-6"><input type="radio" name="nivel-escolaridad" id="radios-6" value="7" <% if @paciente.nivel_escolaridad == '7' %> checked <% end %>>Educación Técnica o Profesional Completa</label>
+				</div>
+				<div class="radio">
+			    <label for="radios-7"><input type="radio" name="nivel-escolaridad" id="radios-7" value="8" <% if @paciente.nivel_escolaridad == '8' %> checked <% end %> >Educación Superior Incompleta</label>
+				</div>
+			  <div class="radio">
+			    <label for="radios-8"><input type="radio" name="nivel-escolaridad" id="radios-8" value="9" <% if @paciente.nivel_escolaridad == '9' %> checked <% end %> >Educación Superior Completa</label>
+				</div>
+		  </div>
+		</div>
+	</div>
+	<div>
+		<div class="form-group">
+		  <div class="col-md-8">
+		  	<button id="guardar-ant-soc" name="button1id" class="btn btn-success">Guardar</button>	
+		  	<button id="button2id" name="button2id" class="btn btn-danger">Cancelar</button>		    	    
+		  </div>
+		</div>
+	</div>	
+</div>
+
+<%= javascript_include_tag "antecedentes" %>

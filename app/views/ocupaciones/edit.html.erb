@@ -9,7 +9,7 @@
       <label>Ocupación</label>
     </div>
     <div class="col-md-8 column">
-      <input type='hidden' class="select_ocupacion" id="select_ocupacion"></input>
+      <input type='hidden' class="select_ocupacion" id="select_ocupacion" value="<%= @ocupacion.ocupacion.nombre %>" name="<%= @ocupacion.ocupacion.id %>"></input>
     </div>
   </div></br>
   <div class="row clearfix">
@@ -54,7 +54,7 @@
     <div class="col-md-12 column">
       <div class="form-group">
         <div class="col-md-8">
-          <button id="agregar-ocupacion" class="btn btn-success">Editar antecedente</button>
+          <button id="<%= @ocupacion.id %>" class="btn btn-success editar-ocupacion">Editar antecedente</button>
         </div>
       </div>
     </div>

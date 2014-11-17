@@ -352,10 +352,7 @@ class AgendamientoController < ApplicationController
 	def agregarNuevaHora 	
 		
     @especialidad_prestador_profesional = PrePrestadorProfesionales.where(" prestador_id = ? AND profesional_id = ? AND especialidad_id = ?",params[:prestador_id],params[:profesional_id],params[:especialidad_id]).first
-
-
     events=[]
-
 		@EstadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
 
 		if params[:tipo]=='diario'

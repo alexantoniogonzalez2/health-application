@@ -1,7 +1,7 @@
 class MedPrestacionesSubgrupos < ActiveRecord::Base
 
 	has_many :prestaciones, :class_name => 'MedPrestaciones', :foreign_key => 'subgrupo_id' 
-	belongs_to :grupos, :class_name => 'MedPrestacionesGrupos'	
+	belongs_to :grupo, :class_name => 'MedPrestacionesGrupos'	
 
   private
   def app_params
@@ -9,7 +9,7 @@ class MedPrestacionesSubgrupos < ActiveRecord::Base
     														  :nombre,
     														  :descripcion,
     														  :prestaciones,
-    														  :grupos)
+    														  :grupo)
   end
 
 end

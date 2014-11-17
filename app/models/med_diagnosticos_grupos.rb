@@ -1,6 +1,6 @@
 class MedDiagnosticosGrupos < ActiveRecord::Base
 
-	belongs_to :bloque, :class_name => 'MedDiagnosticosBloques', 
+	belongs_to :bloque, :class_name => 'MedDiagnosticosBloques' 
 	has_many :diagnosticos, :class_name => 'MedDiagnosticos', :foreign_key => 'grupo_id' 
 
   private

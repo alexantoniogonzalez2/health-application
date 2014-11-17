@@ -27,6 +27,7 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_conocimiento_int, :class_name => 'FiInterconsultas', :foreign_key => 'persona_conocimiento_id'
 
   belongs_to :user, :class_name => 'User'
+  belongs_to :diagnostico_muerte, :class_name => 'MedDiagnosticos'
 
   def formato_personas
   {
@@ -169,6 +170,10 @@ class PerPersonas < ActiveRecord::Base
                                     :nombre, 
                                     :rut,
                                     :digito_verificador,
+                                    :nivel_escolaridad,
+                                    :numero_personas_familia,
+                                    :causa_muerte,
+                                    :diagnostico_muerte,
                                     :hijos,
                                     :progenitores,
                                     :prestador_profesionales,
