@@ -158,6 +158,18 @@ class PerPersonas < ActiveRecord::Base
     end
   end
 
+  def getAntecedentesFamiliares(persona_id,nivel)
+    @masculino = nivel == 1 ? 'Padre' : 'Abuelo'
+    @femenino = nivel == 1 ? 'Madre' : 'Abuela'
+    @antecedentes = []  
+    @parentescos = PerParentescos.where('hijo_id = ?',persona_id) 
+    @parentescos.each do |parentesco|
+      @antecedentes << { 'persona' => parentesco.progenitor.showName('%n%p%m'), 'parentesco' => parentesco.progenitor.genero == 'Masculino'? @masculino : @femenino , 'diagnostico' => parentesco.progenitor.diagnostico_muerte.nombre, 'descripcion' => 'Muerte',} unless parentesco.progenitor.diagnostico_muerte.nil?  
+      @antecedentes << parentesco.progenitor.getAntecedentesFamiliares(parentesco.progenitor.id,2)
+    end 
+    return @antecedentes
+  end 
+
   
 
   private

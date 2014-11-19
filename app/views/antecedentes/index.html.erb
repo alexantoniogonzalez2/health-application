@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-3 column">
-			<ul class="nav nav-pills nav-pills nav-stacked" role="tablist">
+			<ul class="nav nav-pills nav-pills nav-stacked nav-antecedentes" role="tablist">
 			  <li class="active"><a href="#ant_med" role="tab" data-toggle="tab">Antecedentes médicos</a></li>
 			  <li><a href="#ant_quir" role="tab" data-toggle="tab">Antecedentes quirúrgicos</a></li>
 			  <li><a href="#medicamentos" role="tab" data-toggle="tab">Medicamentos</a></li>
@@ -16,8 +16,8 @@
 			  <li><a href="#antecedentes_laborales" role="tab" data-toggle="tab">Antecedentes laborales</a></li>
 			</ul>
 		</div>
-		<div class="col-md-9 column">
-			<div class="tab-content">
+		<div class="col-md-9 column antecedentes">
+			<div class="tab-content antecedentes">
 			  <div class="tab-pane active" id="ant_med"><%= render :partial => "antecedentes_medicos" %></div>
 			  <div class="tab-pane" id="ant_quir"><%= render :partial => "antecedentes_quirurgicos" %></div>
 			  <div class="tab-pane" id="medicamentos"><%= render :partial => "medicamentos" %></div>

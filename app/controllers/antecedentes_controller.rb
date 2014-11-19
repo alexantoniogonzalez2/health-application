@@ -35,7 +35,7 @@ class AntecedentesController < ApplicationController
   	#ocupaciones
   	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',current_user.id);
   	#antecedentes familiares
-  	@antecedentes_familiares = FiPersonaDiagnosticos.where('persona_id = ?',1000)
+  	@antecedentes_familiares = @paciente.getAntecedentesFamiliares(id_usuario,1)
 	end
 	def editarAlergia
 		persona_id = current_user.id
