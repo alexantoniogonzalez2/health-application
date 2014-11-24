@@ -3,9 +3,7 @@ function actualizar_atenciones(){
 	$.ajax({
 	    type: 'POST',
 	    url: '/actualizar_atenciones',
-	    data: {
-	     
-	    },
+	    data: { },
 	    success: function(response) { $('a, button').toggleClass('active');},
 	    error: function(xhr, status, error ){}
 	  });
@@ -30,7 +28,6 @@ if ($('#horas-agendadas').length || $('#atencion-salud').length ){
 						for (var index = 0; index < response.llegadas.length; ++index) {
 						    createGrowl(false,'Llegó paciente de las '+response.llegadas[index].hora_comienzo);
 						}
-
 	    			
 	    		}
 	    	}	

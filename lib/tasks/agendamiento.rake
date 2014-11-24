@@ -41,7 +41,7 @@ namespace :agendamiento do
 					#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
 
 					@Agendamiento = AgAgendamientos.new
-					@Agendamiento.persona = PerPersonas.find(1) 
+					#@Agendamiento.persona = PerPersonas.find(1) 
 					@Agendamiento.fecha_comienzo = tmp_i
 					@Agendamiento.fecha_final = tmp_f
 					@Agendamiento.agendamiento_estado = @estadoAgendamiento

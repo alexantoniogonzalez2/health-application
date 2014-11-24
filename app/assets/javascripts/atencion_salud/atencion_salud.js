@@ -176,7 +176,7 @@ $('.modal-diag').on('show.bs.modal', function (e) {
   id_mod = this.id.substring(21);
   pre_f_i = $('.datepicker[name=f_i_'+id_mod+']').datepicker("getDate");
   pre_f_t = $('.datepicker[name=f_t_'+id_mod+']').datepicker("getDate");
-  pre_e_d = $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']:checked').val();
+  pre_e_d = $('#e_d_'+id_mod).find('input[name=radios-estado-'+id_mod+']:checked').val();
   pre_enf_cro = $('#enf_cro_'+id_mod).find('input[name=checkboxes]').is(':checked');
   pre_trat = $('#trat_'+id_mod).find('input[name=checkboxes]').is(':checked');
   pre_comentario = $('#comentario_'+id_mod).val();
@@ -552,7 +552,7 @@ function guardarDiagnostico(pers_diag_aten_sal) {
 
   var f_i = $('.datepicker[name=f_i_'+pers_diag_aten_sal+']').datepicker("getDate");
   var f_t = $('.datepicker[name=f_t_'+pers_diag_aten_sal+']').datepicker("getDate");
-  var e_d = $('#e_d_'+pers_diag_aten_sal).find('input[name=radios-'+pers_diag_aten_sal+']:checked').val();
+  var e_d = $('#e_d_'+pers_diag_aten_sal).find('input[name=radios-estado-'+pers_diag_aten_sal+']:checked').val();
   var enf_cro = $('#enf_cro_'+pers_diag_aten_sal).find('input[name=checkboxes]').is(':checked');
   var trat = $('#trat_'+pers_diag_aten_sal).find('input[name=checkboxes]').is(':checked');
   var comentario = $('#comentario_'+pers_diag_aten_sal).val();
@@ -729,7 +729,7 @@ function cerrarDiagnostico(pers_diag_aten_sal){
 
   $('.datepicker[name=f_i_'+id_mod+']').datepicker("setDate",pre_f_i);
   $('.datepicker[name=f_t_'+id_mod+']').datepicker("setDate",pre_f_t);
-  $('#e_d_'+id_mod).find('input[name=radios-'+id_mod+']').val([pre_e_d]);
+  $('#e_d_'+id_mod).find('input[name=radios-estado-'+id_mod+']').val([pre_e_d]);
   $('#enf_cro_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_enf_cro);
   $('#trat_'+id_mod).find('input[name=checkboxes]').prop('checked', pre_trat);
   $('#comentario_'+id_mod).val(pre_comentario); 

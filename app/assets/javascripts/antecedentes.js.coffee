@@ -27,3 +27,29 @@ $("#guardar-ant-soc").click ->
     error: (jqXHR, textStatus, errorThrown) ->
     success: (data, textStatus, jqXHR) ->
   return 
+
+$('input[type=radio][name^=rad-act-fis-]').change ->
+  id = $(this).attr "name"
+  pregunta_id = id.substring(12)
+  estado = $(this).val()
+  $('#preg-'+pregunta_id).show() if estado == '1'
+  $('#preg-'+pregunta_id).hide() if estado == '0'
+  guardarActividad(estado,pregunta_id) 
+  return
+
+$('input[name^=input-act-fis-]').keyup ->
+  id = $(this).attr "name"
+  pregunta_id = id.substring(14)
+  valor = $(this).val()
+  guardarActividad(valor,pregunta_id) 
+
+
+guardarActividad = (valor,pregunta) ->
+  $.ajax '/actividad_fisica',
+    type: 'POST'
+    data:
+      valor : valor
+      pregunta : pregunta     
+    error: (jqXHR, textStatus, errorThrown) ->       
+    success: (data, textStatus, jqXHR) ->   
+

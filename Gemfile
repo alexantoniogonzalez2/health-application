@@ -64,6 +64,7 @@ gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
 gem "font-awesome-rails"
 gem 'wicked_pdf', '~> 0.9.10' 
 gem 'pdfkit'
+gem 'bootstrap-validator-rails', '~> 0.5.3'
 
 #gem 'wkhtmltopdf-binary', '~> 0.9.9.1'
 #gem 'ruby-debug'

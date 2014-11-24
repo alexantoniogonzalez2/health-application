@@ -25,6 +25,8 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_vacunas, :class_name => 'FiPersonasVacunas', :foreign_key => 'persona_id'
   has_many :personas_conocimiento_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_conocimiento_id'
   has_many :personas_conocimiento_int, :class_name => 'FiInterconsultas', :foreign_key => 'persona_conocimiento_id'
+  has_one :persona_actividad_fisica, :class_name => 'FiPersonaActividadFisica', :foreign_key => 'persona_id'
+
 
   belongs_to :user, :class_name => 'User'
   belongs_to :diagnostico_muerte, :class_name => 'MedDiagnosticos'
@@ -121,17 +123,20 @@ class PerPersonas < ActiveRecord::Base
 
   def getDomicilio
     domicilio = personas_direcciones.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
-    return domicilio.direccion.calle + ' ' + domicilio.direccion.numero.to_s + ', ' + domicilio.direccion.comuna.nombre + ', '+ domicilio.direccion.ciudad.nombre
+    texto_domicilio = domicilio.nil? ? 'Sin información' : domicilio.direccion.calle + ' ' + domicilio.direccion.numero.to_s + ', ' + domicilio.direccion.comuna.nombre + ', '+ domicilio.direccion.ciudad.nombre
+    return texto_domicilio
   end 
 
   def getTelefonoFijo
     telefono_fijo = personas_telefonos.joins(:telefono).select('tra_telefonos.codigo, tra_telefonos.numero').where('tra_telefonos.codigo != 9').first
-    return telefono_fijo.codigo.to_s << ' ' << telefono_fijo.numero.to_s
+    texto_telefono_fijo = telefono_fijo.nil? ? 'Sin información' : telefono_fijo.codigo.to_s << ' ' << telefono_fijo.numero.to_s
+    return texto_telefono_fijo
   end 
 
   def getCelular
     celular = personas_telefonos.joins(:telefono).select('tra_telefonos.codigo, tra_telefonos.numero').where('tra_telefonos.codigo = 9').first
-    return celular.codigo.to_s << ' ' << celular.numero.to_s
+    texto_celular = celular.nil? ? 'Sin información' : celular.codigo.to_s << ' ' << celular.numero.to_s 
+    return texto_celular
   end 
 
   def revisarDigitoVerificador #Calculo digito verificador
@@ -158,19 +163,63 @@ class PerPersonas < ActiveRecord::Base
     end
   end
 
-  def getAntecedentesFamiliares(persona_id,nivel)
-    @masculino = nivel == 1 ? 'Padre' : 'Abuelo'
-    @femenino = nivel == 1 ? 'Madre' : 'Abuela'
-    @antecedentes = []  
-    @parentescos = PerParentescos.where('hijo_id = ?',persona_id) 
-    @parentescos.each do |parentesco|
-      @antecedentes << { 'persona' => parentesco.progenitor.showName('%n%p%m'), 'parentesco' => parentesco.progenitor.genero == 'Masculino'? @masculino : @femenino , 'diagnostico' => parentesco.progenitor.diagnostico_muerte.nombre, 'descripcion' => 'Muerte',} unless parentesco.progenitor.diagnostico_muerte.nil?  
-      @antecedentes << parentesco.progenitor.getAntecedentesFamiliares(parentesco.progenitor.id,2)
-    end 
-    return @antecedentes
+  def getAntecedentesDecesos(persona_id)
+    @familiares = getFamiliares(persona_id)
+    @decesos = []
+    @familiares.each do |familiar|
+      @decesos_familiares = PerPersonas.where('id = ? and diagnostico_muerte_id is not null',familiar[1])
+      @decesos_familiares.each do |deceso_familiar|
+        @decesos << { 
+          'persona' => deceso_familiar.showName('%n%p%m'),
+          'parentesco' => familiar[0] ,
+          'diagnostico' => deceso_familiar.diagnostico_muerte.nombre,
+          'fecha_deceso' => deceso_familiar.fecha_muerte.strftime('%d/%m/%Y')
+        }  
+      end  
+    end  
+
+    return @decesos
   end 
 
-  
+  def getAntecedentesEnfermedadesCronicas(persona_id)
+    @familiares = getFamiliares(persona_id)
+    @enfermedades_cronicas = []
+    @familiares.each do |familiar|
+      @enfermedades = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1',familiar[1])
+      @enfermedades.each do |enfermedad|
+        @enfermedades_cronicas << { 
+          'persona' => enfermedad.persona.showName('%n%p%m'),
+          'parentesco' => familiar[0] ,
+          'diagnostico' => enfermedad.diagnostico.nombre,
+          'inicio' => enfermedad.fecha_inicio.strftime('%d/%m/%Y')
+        }  
+      end  
+    end  
+
+    return @enfermedades_cronicas
+  end 
+
+  def getFamiliares(persona_id)
+    @familiares = Hash.new    
+    @hijos = PerParentescos.where('progenitor_id = ?',persona_id)
+    @hijos.each do |hijo|
+      @genero = hijo.hijo.genero == 'Masculino' ? 'Hijo' : 'Hija'
+      @familiares[@genero] = hijo.hijo.id
+    end 
+    @padres = PerParentescos.where('hijo_id = ?',persona_id)
+    @padres.each do |padre|
+      @genero = padre.progenitor.genero == 'Masculino' ? 'Padre' : 'Madre'
+      @familiares[@genero] = padre.progenitor.id
+
+      @hermanos = PerParentescos.where('progenitor_id = ? AND hijo_id != ?',padre.progenitor.id,persona_id)
+      @hermanos.each do |hermano|
+        @genero = hermano.hijo.genero == 'Masculino' ? 'Hermano' : 'Hermana'
+        @familiares[@genero] = hermano.hijo.id
+      end 
+
+    end
+    return @familiares
+  end  
 
   private
   def app_params
@@ -212,7 +261,8 @@ class PerPersonas < ActiveRecord::Base
                                     :personas_habitos_alcohol,
                                     :personas_vacunas,
                                     :personas_conocimiento_ges,
-                                    :personas_conocimiento_int)
+                                    :personas_conocimiento_int,
+                                    :persona_actividad_fisica)
   end
 
 end

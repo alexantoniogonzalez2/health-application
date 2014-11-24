@@ -5,3 +5,8 @@
 div.antecedentes { padding: 0px; } 
 .nav-antecedentes > li > a:focus, .nav-antecedentes > li > a { text-decoration: none; background-color: #cbe4f8; }
 .nav-antecedentes > li > a:hover { text-decoration: none; background-color: #eeeeee; }
+div.actividad-fisica > div {
+	> div > label { font-weight: normal } ;
+	label { font-weight: normal } ;
+}
+

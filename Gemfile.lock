@@ -29,6 +29,9 @@ GEM
     bcrypt (3.1.7-x86-mingw32)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
+    bootstrap-validator-rails (0.5.3)
+      jquery-rails (>= 3.0)
+      railties (>= 3.0)
     builder (3.1.4)
     chosen-rails (1.1.0)
       coffee-rails (>= 3.2)
@@ -158,6 +161,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
+  bootstrap-validator-rails (~> 0.5.3)
   chosen-rails
   coffee-rails (~> 4.0.0)
   datejs-rails

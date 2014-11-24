@@ -41,6 +41,10 @@ AplicacionMedica::Application.routes.draw do
   post '/bloquear_hora', to: 'agendamiento#bloquearHora', :as => :bloquearHora
   post '/desbloquear_hora', to: 'agendamiento#desbloquearHora', :as => :desbloquearHora
 
+  #Actividad física
+  post '/actividad_fisica', to: 'antecedentes#guardarActividadFisica'   
+
+
   #Modulo atencion salud
   resources :atenciones_salud
   post '/agregar_prestacion', to: 'persona_prestacion#agregarPrestacion', :as => :agregarExamen

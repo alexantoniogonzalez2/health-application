@@ -35,7 +35,10 @@ class AntecedentesController < ApplicationController
   	#ocupaciones
   	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',current_user.id);
   	#antecedentes familiares
-  	@antecedentes_familiares = @paciente.getAntecedentesFamiliares(id_usuario,1)
+  	@decesos = @paciente.getAntecedentesDecesos(id_usuario)
+  	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas(id_usuario)
+  	#Actividad física
+  	@habitos_actividad_fisica = PerPersonas.all
 	end
 	def editarAlergia
 		persona_id = current_user.id
@@ -65,5 +68,35 @@ class AntecedentesController < ApplicationController
 		respond_to do |format|
 			format.json { render :json => { :success => true } }
 		end		
+	end
+
+	def guardarActividadFisica
+		@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',current_user.id).first	
+		@persona_actividad_fisica = FiPersonaActividadFisica.new unless @persona_actividad_fisica
+		@persona = PerPersonas.find(current_user.id)
+		@persona_actividad_fisica.persona = @persona
+		case params[:pregunta]
+		when '1' then @persona_actividad_fisica.P1 = params[:valor]
+		when '2' then @persona_actividad_fisica.P2 = params[:valor]
+		when '3' then @persona_actividad_fisica.P3 = params[:valor]
+		when '4' then @persona_actividad_fisica.P4 = params[:valor]
+		when '5' then @persona_actividad_fisica.P5 = params[:valor]
+		when '6' then @persona_actividad_fisica.P6 = params[:valor]
+		when '7' then @persona_actividad_fisica.P7 = params[:valor]
+		when '8' then @persona_actividad_fisica.P8 = params[:valor]
+		when '9' then @persona_actividad_fisica.P9 = params[:valor]
+		when '10' then @persona_actividad_fisica.P10 = params[:valor]
+		when '11' then @persona_actividad_fisica.P11 = params[:valor]
+		when '12' then @persona_actividad_fisica.P12 = params[:valor]
+		when '13' then @persona_actividad_fisica.P13 = params[:valor]
+		when '14' then @persona_actividad_fisica.P14 = params[:valor]    
+		when '15' then @persona_actividad_fisica.P15	= params[:valor]		
+		end
+		@persona_actividad_fisica.save!
+
+		respond_to do |format|
+			format.json { render :json => { :success => true } }
+		end		
 	end	
+
 end

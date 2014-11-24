@@ -1,0 +1,196 @@
+<script>
+$(document).ready(function() {
+    $('#productForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            input_act_fis_2: {
+                validators: {
+                    notEmpty: {
+                        message: 'The price is required'
+                    },
+                    numeric: {
+                        message: 'The price must be a number'
+                    }
+                }
+            },
+
+        }
+    });
+});
+</script>
+
+<% if @acceso %>
+<h4>Antecedentes actividad física</h4>
+
+<div class="container actividad-fisica">
+
+	<div class="row clearfix">
+		<div class="col-md-8 column">
+			<label>1. ¿Su trabajo supone desplegar una actividad vigorosa, que aumenta mucho las frecuencias respiratoria y cardiaca (llevar o levantar objetos pesados, cavar o realizar tareas de construcción) durante al menos 10 minutos seguidos?</label>	
+			<div class="form-group">			  
+			  <div class="radio">
+			    <label for="rad-act-fis-1-1"><input type="radio" name="rad-act-fis-1" id="rad-act-fis-1-1" value="1">Sí</label>
+				</div>
+			  <div class="radio">
+			    <label for="rad-act-fis-1-2"><input type="radio" name="rad-act-fis-1" id="rad-act-fis-1-2" value="0">No</label>
+				</div>						  
+			</div>
+		</div>
+	</div>
+<form id="productForm" class="form-horizontal">
+	<div id="preg-1">
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-2">2. En una semana ordinaria, ¿cuántos días despliega usted actividades vigorosas como parte de su trabajo?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-2" name="input_act_fis_2" type="number" class="form-control input-md">
+		  <span class="help-block">Número de días</span>  
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-3">3. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades vigorosas?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-3" name="input-act-fis-3" type="number" class="form-control input-md">
+		  <span class="help-block">Minutos</span>  
+		  </div>
+		</div>
+	</div>	
+</form>
+
+	<div class="row clearfix">
+		<div class="col-md-8 column">
+			<label>4. ¿En su trabajo tiene usted que realizar actividades moderadas, que causan un pequeño aumento de las frecuencias respiratoria y cardiaca, como caminar a paso vivo (o llevar cargas ligeras) durante al menos 10 minutos seguidos?</label>
+			<div class="form-group">			  
+			  <div class="radio">
+			    <label for="rad-act-fis-4-1"><input type="radio" name="rad-act-fis-4" id="rad-act-fis-4-1" value="1">Sí</label>
+				</div>
+			  <div class="radio">
+			    <label for="rad-act-fis-4-2"><input type="radio" name="rad-act-fis-4" id="rad-act-fis-4-2" value="0">No</label>
+				</div>						  
+			</div>
+		</div>
+	</div>
+
+	<div id="preg-4">
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-5">5. En una semana corriente, ¿cuántos días despliega usted actividades de intensidad moderada como parte de su trabajo?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-5" name="input-act-fis-5" type="number" class="form-control input-md">
+		  <span class="help-block">Número de días</span>  
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-6">6. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades de intensidad moderada?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-6" name="input-act-fis-6" type="number" class="form-control input-md">
+		  <span class="help-block">Minutos</span>  
+		  </div>
+		</div>
+	</div>
+
+	<div class="row clearfix">
+		<div class="col-md-8 column">
+			<label>7. ¿Camina o monta en bicicleta (o triciclo) durante por lo menos 10 minutos seguidos para ir y volver a los distintos lugares?</label>
+			<div class="form-group">			  
+			  <div class="radio">
+			    <label for="rad-act-fis-7-1"><input type="radio" name="rad-act-fis-7" id="rad-act-fis-7-1" value="1">Sí</label>
+				</div>
+			  <div class="radio">
+			    <label for="rad-act-fis-7-2"><input type="radio" name="rad-act-fis-7" id="rad-act-fis-7-2" value="0">No</label>
+				</div>						  
+			</div>
+		</div>
+	</div>
+
+	<div id="preg-7">
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-8">8. En una semana corriente, ¿cuántos días camina o monta en bicicleta durante por lo menos 10 minutos seguidos para ir y volver a los distintos lugares?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-8" name="input-act-fis-8" type="number" class="form-control input-md">
+		  <span class="help-block">Número de días</span>  
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-9">9. En un día corriente, ¿cuánto tiempo pasa usted caminando o en bicicleta para desplazarse?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-9" name="input-act-fis-9" type="number" class="form-control input-md">
+		  <span class="help-block">Minutos</span>  
+		  </div>
+		</div>
+	</div>
+
+	<div class="row clearfix">
+		<div class="col-md-8 column">
+			<label>10. ¿Practica usted algún deporte, ejercicio físico o actividad recreativa vigorosa que aumente mucho las frecuencias respiratoria y cardiaca (correr o jugar al futbol) durante al menos 10 minutos seguidos?</label>
+			<div class="form-group">			  
+			  <div class="radio">
+			    <label for="rad-act-fis-10-1"><input type="radio" name="rad-act-fis-10" id="rad-act-fis-10-1" value="1">Sí</label>
+				</div>
+			  <div class="radio">
+			    <label for="rad-act-fis-10-2"><input type="radio" name="rad-act-fis-10" id="rad-act-fis-10-2" value="0">No</label>
+				</div>						  
+			</div>
+		</div>
+	</div>
+
+	<div id="preg-10">
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-11">11. En una semana corriente, ¿cuántos días despliega usted actividades vigorosas practicando un deporte, haciendo ejercicio físico o divirtiéndose?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-11" name="input-act-fis-11" type="number" class="form-control input-md">
+		  <span class="help-block">Número de días</span>  
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-12">12. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades vigorosas en deportes, ejercicio físico o recreación?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-12" name="input-act-fis-12" type="number" class="form-control input-md">
+		  <span class="help-block">Minutos</span>  
+		  </div>
+		</div>
+	</div>
+
+	<div class="row clearfix">
+		<div class="col-md-8 column">
+			<label>13. ¿Practica usted algún deporte, ejercicio físico o actividad recreativa con una intensidad que acelere un poco la frecuencia respiratoria y cardiaca, como caminar a paso vivo (montar en bicicleta, nadar, jugar al volibol) durante por lo menos 10 minutos seguidos?</label>
+			<div class="form-group">			  
+			  <div class="radio">
+			    <label for="rad-act-fis-13-1"><input type="radio" name="rad-act-fis-13" id="rad-act-fis-13-1" value="1">Sí</label>
+				</div>
+			  <div class="radio">
+			    <label for="rad-act-fis-13-2"><input type="radio" name="rad-act-fis-13" id="rad-act-fis-13-2" value="0">No</label>
+			  </div>						  
+			</div>
+		</div>
+	</div>
+
+	<div id="preg-13">
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-14">14. En una semana corriente, ¿cuántos días despliega usted actividades de intensidad moderada practicando un deporte, haciendo ejercicio físico o divirtiéndose?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-14" name="input-act-fis-14" type="number" class="form-control input-md">
+		  <span class="help-block">Número de días</span>  
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-6 control-label" for="input-act-fis-15">15. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades de intensidad mediana practicando deportes, ejercicio físico o divirtiéndose?</label>
+		  <div class="col-md-2">
+		  <input id="input-act-fis-15" name="input-act-fis-15" type="number" class="form-control input-md">
+		  <span class="help-block">Minutos</span>  
+		  </div>
+		</div>
+	</div>
+
+</div>	
+
+<% else %>
+	<%= render :partial => "layouts/permiso" %>
+<% end %>  

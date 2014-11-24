@@ -1,19 +1,50 @@
 <% if @acceso %>
-<h4>Antecedentes familiares</h4>
-  <% if @antecedentes_familiares.empty? %>
+	<h4>Antecedentes familiares</h4>
+	<h5>Muertes</h5>
+
+  <% if @decesos.empty? %>
     No hay información de antecedentes familiares.
   <% else %>
 		<table class="table table-striped table-hover table-condensed">
 			<thead class="ajust-head">
-	      <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Descripción</th></tr>
+	      <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha deceso</th></tr>
+	    </thead>
+	    <tbody> 
+	    	<% @decesos.each do |deceso| %>
+		    	<tr>
+		    		<td><%= deceso['persona'] %></td>
+		    		<td><%= deceso['parentesco'] %></td>
+		    		<td><%= deceso['diagnostico'] %></td>
+		    		<td><%= deceso['fecha_deceso'] %></td>
+		    	</tr>
+		    <% end %>	
+	    </tbody>    
+		</table>
+	<% end %><br/>	
+
+	<%= link_to 'Agregar antecedente familiar', agendamientoBuscadorHora_path %>
+	<h5>Enfermedades crónicas</h5>
+  <% if @ant_enf_cro.empty?  %>
+    No hay información de antecedentes familiares relacionados con enfermedades crónicas.
+  <% else %>
+		<table class="table table-striped table-hover table-condensed">
+			<thead class="ajust-head">
+	      <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha inicio</th></tr>	      
 	    </thead>
 	    <tbody>
-	    	<%= @antecedentes_familiares  %>
-
+	    	<% @ant_enf_cro.each do |ant_enf_cro| %>
+		    	<tr>
+		    		<td><%= ant_enf_cro['persona'] %></td>
+		    		<td><%= ant_enf_cro['parentesco'] %></td>
+		    		<td><%= ant_enf_cro['diagnostico'] %></td>
+		    		<td><%= ant_enf_cro['inicio']  %></td>
+		    	</tr>
+		    <% end %>		    	
 	    </tbody>    
 		</table>
 	<% end %><br/>	
 	<%= link_to 'Agregar antecedente familiar', agendamientoBuscadorHora_path %>
+
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
 <% end %>  
