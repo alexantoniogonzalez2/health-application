@@ -5,8 +5,20 @@
 div.antecedentes { padding: 0px; } 
 .nav-antecedentes > li > a:focus, .nav-antecedentes > li > a { text-decoration: none; background-color: #cbe4f8; }
 .nav-antecedentes > li > a:hover { text-decoration: none; background-color: #eeeeee; }
-div.actividad-fisica > div {
-	> div > label { font-weight: normal } ;
-	label { font-weight: normal } ;
+div.actividad-fisica > form {
+	> div > div {
+			> div > label { font-weight: normal };
+			label { font-weight: normal };
+		}	
+}
+div.actividad-fisica 
+
+.has-feedback .form-control-feedback {
+    top: 25px;
+    right: 0;
+}
+.form-validator .has-feedback .form-control-feedback {
+    top: 0;
+    right: 15px;
 }
 

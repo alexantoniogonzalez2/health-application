@@ -16,9 +16,7 @@ $("input[type=checkbox][id^=checkboxes-aler-]").change ->
 
 $("#guardar-ant-soc").click ->
   grupo_familiar = $("#personas-grupo-familiar").val()
-  alert grupo_familiar
   nivel_escolaridad = $('input[name=nivel-escolaridad]:checked').val()
-  alert nivel_escolaridad
   $.ajax '/guardar_antecedentes_sociales',
     type: 'POST'
     data:
@@ -37,12 +35,11 @@ $('input[type=radio][name^=rad-act-fis-]').change ->
   guardarActividad(estado,pregunta_id) 
   return
 
-$('input[name^=input-act-fis-]').keyup ->
-  id = $(this).attr "name"
+$('input[id^=input-act-fis-]').keyup ->
+  id = $(this).attr "id"
   pregunta_id = id.substring(14)
   valor = $(this).val()
   guardarActividad(valor,pregunta_id) 
-
 
 guardarActividad = (valor,pregunta) ->
   $.ajax '/actividad_fisica',
@@ -51,5 +48,33 @@ guardarActividad = (valor,pregunta) ->
       valor : valor
       pregunta : pregunta     
     error: (jqXHR, textStatus, errorThrown) ->       
-    success: (data, textStatus, jqXHR) ->   
+    success: (data, textStatus, jqXHR) -> 
 
+$(document).ready ->
+  $("#form_act_fis").bootstrapValidator
+    feedbackIcons:
+      valid: "glyphicon glyphicon-ok"
+      invalid: "glyphicon glyphicon-remove"
+      validating: "glyphicon glyphicon-refresh"
+    fields:
+      'dias_actividad[]':
+        validators: 
+          between:
+            message: 'Ingrese un valor positivo entre 1 y 7.'
+            min: 1
+            max: 7
+          notEmpty:
+            message: 'Ingrese un valor positivo entre 1 y 7.' 
+          integer:   
+            message: 'Ingrese un valor entero.'
+      'minutos_actividad[]':
+        validators: 
+          between:
+            message: 'Ingrese un valor positivo entre 1 y 1.440.'
+            min: 1
+            max: 1440
+          notEmpty:
+            message: 'Ingrese un valor positivo entre 1 y 1.440.' 
+          integer:   
+            message: 'Ingrese un valor entero.'  
+        

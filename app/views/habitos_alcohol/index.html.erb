@@ -1,4 +1,4 @@
-<h2>Test AUDIT realizados</h2>
+<h4>Test AUDIT realizados</h4>
 <% unless @test_audit.blank? %>
 	<div class="container">
 		<div class="row clearfix">
@@ -21,6 +21,8 @@
 		<% end %>	
 	</div>
 <% else %>
-No se han realizado test AUDIT.
+	No se han realizado test AUDIT.
 <% end %>	
+</br>
+<%= link_to 'Agregar antecedente de alcohol', habitos_alcohol_new_path %>
 <%= javascript_include_tag "habitos_alcohol" %>

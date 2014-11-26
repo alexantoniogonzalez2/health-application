@@ -1,11 +1,12 @@
-<%= link_to 'Agregar otra alergia', agendamientoBuscadorHora_path %>
 <% if @acceso %>
-	  <label class="col-md-4 control-label" for="checkboxes">Alergias</label>
-	  	<% @alergias.each do |a| %>
+	<h4>Alergias</h4>
+	 	  	<% @alergias.each do |a| %>
 			  <div class="checkbox">
 			    <label for="checkboxes-aler-<%= a.id %>"><input type="checkbox" name="checkboxes" id="checkboxes-aler-<%= a.id %>" <% if a.persona_id %> checked="checked" <% end %> ><%= a.nombre %></label>
 				</div>
 			<% end %>
+		</br>
+			<%= link_to 'Agregar otra alergia', agendamientoBuscadorHora_path %>
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
 <% end %> 

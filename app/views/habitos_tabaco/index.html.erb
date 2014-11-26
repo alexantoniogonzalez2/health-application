@@ -1,4 +1,4 @@
-<h2>Consumo de cigarrillos realizados</h2>
+<h4>Consumo de cigarrillos realizados</h4>
 <% unless @consumo.blank? %>
 	<div class="container">
 		<div class="row clearfix">
@@ -31,4 +31,6 @@
 	<div class="alert alert-success" role="alert">Total consumo: <%= @total_consumo %> </div>
 <% else %>
 No hay información de consumo de cigarrillos.
-<% end %>	
+<% end %>
+</br>
+<%= link_to 'Ingresar consumo de tabaco', habitos_tabaco_new_path %>	
