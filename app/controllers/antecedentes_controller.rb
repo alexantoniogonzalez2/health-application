@@ -39,6 +39,8 @@ class AntecedentesController < ApplicationController
   	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas(id_usuario)
   	#Actividad física
   	@habitos_actividad_fisica = PerPersonas.all
+  	@alert_actividad_fisica = 'warning'
+  	@texto_actividad_fisica = 'texto_actividad_fisica'
 	end
 	def editarAlergia
 		persona_id = current_user.id

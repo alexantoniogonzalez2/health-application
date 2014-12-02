@@ -5,6 +5,15 @@
 	<form id="form_act_fis" class="form-validator" >
 
 	<div class="row clearfix">
+		<div class="col-md-8 column">	
+			<div id="calculo-actividad-fisica" class="alert alert-<%= @alert_actividad_fisica %>" role="alert"><%= @texto_actividad_fisica %>
+				<p>Minutos actividad física vigorosa: <strong><span id="min_act_fis_vig">20</span></strong></p>
+				<p>Minutos actividad física moderada: <strong><span id="min_act_fis_mod">20</span></strong></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="row clearfix">
 		<div class="col-md-8 column">
 			<label>1. ¿Su trabajo supone desplegar una actividad vigorosa, que aumenta mucho las frecuencias respiratoria y cardiaca (llevar o levantar objetos pesados, cavar o realizar tareas de construcción) durante al menos 10 minutos seguidos?</label>	
 			<div class="form-group">			  
@@ -23,7 +32,7 @@
 			<div class="form-group">
 			  <label class="col-md-6 control-label" for="input-act-fis-2">2. En una semana ordinaria, ¿cuántos días despliega usted actividades vigorosas como parte de su trabajo?</label>
 			  <div class="col-md-2">
-			  <input id="input-act-fis-2" type="text" class="form-control input-md" name="dias_actividad[]">
+			  <input id="input-act-fis-2" type="text" class="form-control input-md" name="dias_actividad[]" >
 			  <span class="help-block">Número de días</span>  
 			  </div>
 			</div>

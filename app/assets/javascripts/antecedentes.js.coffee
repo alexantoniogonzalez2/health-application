@@ -2,30 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$("input[type=checkbox][id^=checkboxes-aler-]").change ->
-  alergia = $(this).attr("id").substring(16)
-  estado = $(this).is(":checked")
-  $.ajax '/editar_alergia',
-  	type: 'POST'
-  	data:
-  		alergia : alergia
-  		estado : estado
-		error: (jqXHR, textStatus, errorThrown) ->
-		success: (data, textStatus, jqXHR) ->
-  return
-
-$("#guardar-ant-soc").click ->
-  grupo_familiar = $("#personas-grupo-familiar").val()
-  nivel_escolaridad = $('input[name=nivel-escolaridad]:checked').val()
-  $.ajax '/guardar_antecedentes_sociales',
-    type: 'POST'
-    data:
-      grupo_familiar : grupo_familiar
-      nivel_escolaridad : nivel_escolaridad
-    error: (jqXHR, textStatus, errorThrown) ->
-    success: (data, textStatus, jqXHR) ->
-  return 
-
 $('input[type=radio][name^=rad-act-fis-]').change ->
   id = $(this).attr "name"
   pregunta_id = id.substring(12)
@@ -35,11 +11,12 @@ $('input[type=radio][name^=rad-act-fis-]').change ->
   guardarActividad(estado,pregunta_id) 
   return
 
-$('input[id^=input-act-fis-]').keyup ->
-  id = $(this).attr "id"
-  pregunta_id = id.substring(14)
-  valor = $(this).val()
-  guardarActividad(valor,pregunta_id) 
+$(document).ready -> 
+  $('input[id^=input-act-fis-]').keyup ->
+    act_vig = calculaActVig()
+    act_mod = calculaActMod() 
+    $('#min_act_fis_vig').html(act_vig)
+    $('#min_act_fis_mod').html(act_mod) 
 
 guardarActividad = (valor,pregunta) ->
   $.ajax '/actividad_fisica',
@@ -50,8 +27,8 @@ guardarActividad = (valor,pregunta) ->
     error: (jqXHR, textStatus, errorThrown) ->       
     success: (data, textStatus, jqXHR) -> 
 
-$(document).ready ->
-  $("#form_act_fis").bootstrapValidator
+$("#form_act_fis")
+  .bootstrapValidator
     feedbackIcons:
       valid: "glyphicon glyphicon-ok"
       invalid: "glyphicon glyphicon-remove"
@@ -77,4 +54,21 @@ $(document).ready ->
             message: 'Ingrese un valor positivo entre 1 y 1.440.' 
           integer:   
             message: 'Ingrese un valor entero.'  
-        
+  .on("success.field.bv", "[name=\"dias_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),$(this).attr "id".substring(14) ))
+  .on("success.field.bv", "[name=\"min_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),$(this).attr "id".substring(14) ))
+
+calculaActVig = ->
+  preg_2 = $('#input-act-fis-2').val()
+  preg_3 = $('#input-act-fis-3').val()
+  preg_11 = $('#input-act-fis-11').val()
+  preg_12 = $('#input-act-fis-12').val()
+  return preg_2*preg_3 + preg_11*preg_12
+
+calculaActMod = ->
+  preg_5 = $('#input-act-fis-5').val()
+  preg_6 = $('#input-act-fis-6').val()
+  preg_8 = $('#input-act-fis-8').val()
+  preg_9 = $('#input-act-fis-9').val()
+  preg_14 = $('#input-act-fis-14').val()
+  preg_15 = $('#input-act-fis-15').val()
+  return preg_5*preg_6 + preg_8*preg_9 + preg_14*preg_15
