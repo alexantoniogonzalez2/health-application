@@ -60,9 +60,36 @@ class PerPersonas < ActiveRecord::Base
         'Adulto mayor'
       end   
     else
-      'Sin fecha nacimiento'
+      'Sin información'
     end  
-  end  
+  end 
+
+  def getSegmentoActividadFisica
+    if fecha_nacimiento
+      edad = age
+      if edad < 5  
+        'Niño menor a 5 años'
+      elsif edad > 5 and edad < 18  
+        'Niño'
+      elsif edad > 18 and edad < 65 
+        'Adulto' 
+      elsif edad > 65
+        'Adulto mayor'
+      end    
+    else
+      'Sin información'
+    end 
+  end
+
+  def age
+    if fecha_nacimiento
+      dob = fecha_nacimiento 
+      now = Time.now.utc.to_date
+      now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+    else
+      'Sin información' 
+    end 
+  end
 
 
   def esProfesional(prestador_id)
@@ -173,7 +200,7 @@ class PerPersonas < ActiveRecord::Base
           'persona' => deceso_familiar.showName('%n%p%m'),
           'parentesco' => familiar[0] ,
           'diagnostico' => deceso_familiar.diagnostico_muerte.nombre,
-          'fecha_deceso' => deceso_familiar.fecha_muerte.strftime('%d/%m/%Y')
+          'fecha_deceso' => deceso_familiar.fecha_muerte.strftime('%Y-%m-%d')
         }  
       end  
     end  
@@ -191,7 +218,7 @@ class PerPersonas < ActiveRecord::Base
           'persona' => enfermedad.persona.showName('%n%p%m'),
           'parentesco' => familiar[0] ,
           'diagnostico' => enfermedad.diagnostico.nombre,
-          'inicio' => enfermedad.fecha_inicio.strftime('%d/%m/%Y')
+          'inicio' => enfermedad.fecha_inicio.strftime('%Y-%m-%d')
         }  
       end  
     end  

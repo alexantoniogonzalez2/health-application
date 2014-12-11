@@ -1,25 +1,19 @@
 <h4>Test AUDIT realizados</h4>
 <% unless @test_audit.blank? %>
-	<div class="container">
-		<div class="row clearfix">
-			<div class="col-md-3 column">Fecha
-			</div>
-			<div class="col-md-3 column">Puntaje
-			</div>
-			<div class="col-md-2 column">
-			</div>
-		</div>
+	<table class="table table-striped table-hover table-condensed">
+		<thead class="ajust-head">
+      <tr class="info" ><th class="col-sm-2">Fecha</th><th class="col-sm-2">Puntaje</th><th class="col-sm-2">Test</th></tr>
+    </thead>
+    <tbody> 		
 		<% @test_audit.each do |test| %>
-			<div class="row clearfix">
-				<div class="col-md-3 column"><%= test.fecha_test_audit.to_s(:short) %>
-				</div>
-				<div class="col-md-3 column"><%= test.audit_puntaje %>
-				</div>
-				<div class="col-md-2 column"><%= link_to 'Ver test', {:controller => :habitos_alcohol, :action => 'show', :id => test.id }, :method => :get %>
-				</div>
-			</div>
-		<% end %>	
-	</div>
+			<tr>
+				<td><%= test.fecha_test_audit.strftime('%Y-%m-%d') %></td>
+				<td><%= test.audit_puntaje %></td>
+				<td><%= link_to 'Ver test', {:controller => :habitos_alcohol, :action => 'show', :id => test.id }, :method => :get %>	</td>
+			</tr>
+		<% end %>
+		</tbody>    
+	</table>		
 <% else %>
 	No se han realizado test AUDIT.
 <% end %>	

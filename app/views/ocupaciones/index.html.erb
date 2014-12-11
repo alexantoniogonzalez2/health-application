@@ -7,9 +7,9 @@
 	    <tbody> 
 			<% @ocupaciones.each do |ocu| %>
 				<tr>
-					<td><%= ocu.fecha_inicio.strftime('%d/%m/%Y') unless ocu.fecha_inicio.nil? %>
+					<td><%= ocu.fecha_inicio.strftime('%Y-%m-%d') unless ocu.fecha_inicio.nil? %>
 					</td>
-					<td><%= ocu.fecha_termino.strftime('%d/%m/%Y') unless ocu.fecha_termino.nil? %>
+					<td><%= ocu.fecha_termino.strftime('%Y-%m-%d') unless ocu.fecha_termino.nil? %>
 					</td>
 					<td><%= ocu.ocupacion.nombre %>
 					</td>

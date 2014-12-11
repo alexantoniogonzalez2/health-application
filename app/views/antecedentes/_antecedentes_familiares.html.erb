@@ -3,7 +3,7 @@
 	<h5>Muertes</h5>
 
   <% if @decesos.empty? %>
-    No hay información de antecedentes familiares.
+    No hay información de antecedentes familiares.<br/>
   <% else %>
 		<table class="table table-striped table-hover table-condensed">
 			<thead class="ajust-head">
@@ -19,13 +19,13 @@
 		    	</tr>
 		    <% end %>	
 	    </tbody>    
-		</table>
-	<% end %><br/>	
-
+		</table>		
+	<% end %>
 	<%= link_to 'Agregar antecedente familiar', agendamientoBuscadorHora_path %>
+	<br/><br/>
 	<h5>Enfermedades crónicas</h5>
   <% if @ant_enf_cro.empty?  %>
-    No hay información de antecedentes familiares relacionados con enfermedades crónicas.
+    No hay información de antecedentes familiares relacionados con enfermedades crónicas.<br/>
   <% else %>
 		<table class="table table-striped table-hover table-condensed">
 			<thead class="ajust-head">
@@ -42,7 +42,7 @@
 		    <% end %>		    	
 	    </tbody>    
 		</table>
-	<% end %><br/>	
+	<% end %>	
 	<%= link_to 'Agregar antecedente familiar', agendamientoBuscadorHora_path %>
 
 <% else %>

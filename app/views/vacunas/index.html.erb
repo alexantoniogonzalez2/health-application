@@ -1,7 +1,6 @@
 <h4>Lista de vacunas administradas</h4>
-
 <% if @personas_vacunas.blank? %>
-  No hay información de vacunas administradas.
+  No hay información de vacunas administradas.<br/>
 <% else %>   
   <table id="tabla-persona-vacunas" class="table table-striped table-hover table-condensed">
     <thead>
@@ -9,14 +8,13 @@
     <tbody id='body-persona-vacuna'>
       <% if !@personas_vacunas.blank? %>
         <% @personas_vacunas.each do |persona_vacuna| %>
-          <%= render :partial => "persona_vacuna", :locals => {:persona_vacuna => persona_vacuna} %>
+          <%= render :partial => "vacunas/persona_vacuna", :locals => {:persona_vacuna => persona_vacuna} %>
         <% end %>
       <% end %>  
     </tbody>    
   </table>
-
-
 <% end %>
+<%= link_to 'Agregar información de vacunas', vacunas_index_path %>
 
 <%= render :partial => @partial_seguimiento unless @partial_seguimiento.blank? %> 
 <%= javascript_include_tag "vacunas" %>

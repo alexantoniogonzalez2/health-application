@@ -1,0 +1,19 @@
+<h4>Seguimiento adulto mayor</h4>
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-md-8 column">
+      <table class="table table-striped table-hover table-condensed">
+        <thead><tr class='info'><th>Edad</th><th>Vacuna</th><th>Estado</th></tr></thead>
+        <tbody>
+          <% @calendario_vacunas_adulto_mayor.each do |calendario_vacuna| %>
+              <tr>
+                <td><%= calendario_vacuna.edad %></td>
+                <td><%= calendario_vacuna.vacuna.nombre %></td>
+                <td><label class="calendario-vacunas" for="checkboxes-0"><input type="checkbox" id="checkboxes-vac-<%= calendario_vacuna.id %>" <%= 'checked' unless calendario_vacuna.persona_id.nil? %> ></label></td>
+              </tr>
+          <% end %>
+         </tbody>    
+      </table>      
+    </div>
+  </div>
+</div>

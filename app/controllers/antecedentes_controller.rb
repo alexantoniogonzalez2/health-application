@@ -38,9 +38,20 @@ class AntecedentesController < ApplicationController
   	@decesos = @paciente.getAntecedentesDecesos(id_usuario)
   	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas(id_usuario)
   	#Actividad física
-  	@habitos_actividad_fisica = PerPersonas.all
-  	@alert_actividad_fisica = 'warning'
-  	@texto_actividad_fisica = 'texto_actividad_fisica'
+  	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',current_user.id).first
+  	if @persona_actividad_fisica.nil?
+  		@persona_actividad_fisica = FiPersonaActividadFisica.new 
+			@persona = PerPersonas.find(current_user.id)
+			@persona_actividad_fisica.persona = @persona
+			@persona_actividad_fisica.save!
+		end
+		@segmento_actividad = @paciente.getSegmentoActividadFisica
+		@edad_act_fis = @paciente.age()
+		@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
+		#Vacunas
+		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
+																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
+																				 .where('persona_id = ?',current_user.id)
 	end
 	def editarAlergia
 		persona_id = current_user.id

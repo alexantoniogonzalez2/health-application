@@ -1,33 +1,21 @@
 <h4>Consumo de cigarrillos realizados</h4>
 <% unless @consumo.blank? %>
-	<div class="container">
-		<div class="row clearfix">
-			<div class="col-md-2 column">Fecha inicio
-			</div>
-			<div class="col-md-2 column">Fecha final
-			</div>
-			<div class="col-md-2 column">Cigarros por día
-			</div>
-			<div class="col-md-1 column">Paquetes año
-			</div>
-			<div class="col-md-1 column">
-			</div>
-		</div>
+	<table class="table table-striped table-hover table-condensed">
+		<thead class="ajust-head">
+	    <tr class="info" ><th class="col-sm-2">Fecha inicio</th><th class="col-sm-2">Fecha final</th><th class="col-sm-2">Cigarros por día</th><th class="col-sm-2">Paquetes año</th><th class="col-sm-1">Consumo</th></tr>
+	  </thead>
+	  <tbody> 
 		<% @consumo.each do |cons| %>
-			<div class="row clearfix">
-				<div class="col-md-2 column"><%= cons.fecha_inicio.strftime('%d/%m/%Y') %>
-				</div>
-				<div class="col-md-2 column"><%= cons.fecha_final.strftime('%d/%m/%Y') %>
-				</div>
-				<div class="col-md-2 column"><%= cons.cigarros_por_dia %>
-				</div>
-				<div class="col-md-1 column"><%= cons.paquetes_agno %>
-				</div>
-				<div class="col-md-1 column"><%= link_to 'Editar', {:controller => :habitos_tabaco, :action => 'edit', :id => cons.id }, :method => :get %>
-				</div>
-			</div>
+			<tr>
+				<td><%= cons.fecha_inicio.strftime('%Y-%m-%d') %></td>
+				<td><%= cons.fecha_final.strftime('%Y-%m-%d') %></td>
+				<td><%= cons.cigarros_por_dia %></td>
+				<td><%= cons.paquetes_agno %></td>
+				<td><%= link_to 'Editar', {:controller => :habitos_tabaco, :action => 'edit', :id => cons.id }, :method => :get %></td>
+			</tr>
 		<% end %>		
-	</div>
+		</tbody>
+	</table>	
 	<div class="alert alert-success" role="alert">Total consumo: <%= @total_consumo %> </div>
 <% else %>
 No hay información de consumo de cigarrillos.

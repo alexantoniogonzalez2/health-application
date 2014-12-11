@@ -2,23 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).ready -> 
-	$('#button1id').on 'click' , =>	
-		valid = true
-		for i in [1..10] by 1
-			hideMessage i
-			unless $('input[name=question-'+i+']:checked').size() > 0
-				valid = false
-				alertMessage i
-		if valid			
-			saveTest()		
-
-alertMessage = (messageId) ->
-  $('#alert-'+messageId).show()
-
-hideMessage = (messageId) ->
-  $('#alert-'+messageId).hide()
-
 saveTest = ->
 	param_1 = $('input[name=question-1]:checked').val()
 	param_2 = $('input[name=question-2]:checked').val()
@@ -45,5 +28,24 @@ saveTest = ->
     	param_10 : param_10
     error: (jqXHR, textStatus, errorThrown) ->       
     success: (data, textStatus, jqXHR) -> window.location.href = '/habitos_alcohol/'+data.id 
+
+
+alertMessage = (messageId) ->
+  $('#alert-'+messageId).show()
+
+hideMessage = (messageId) ->
+  $('#alert-'+messageId).hide()
    
+$(document).ready -> 
+	$('#button1id').on 'click' , =>	
+		valid = true
+		for i in [1..10] by 1
+			hideMessage i
+			unless $('input[name=question-'+i+']:checked').size() > 0
+				valid = false
+				alertMessage i
+		if valid			
+			saveTest()		
+
+
 	   

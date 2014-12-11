@@ -2,22 +2,29 @@ class VacunasController < ApplicationController
 	def index
 		@partial_seguimiento = ''
 		@persona = PerPersonas.find(current_user.id)
-		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna')
+		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																				 .where('persona_id = ?',current_user.id)
 		@grupo_etareo = @persona.getGrupoEtareo(DateTime.current) 
 		@agno = FiCalendarioVacunas.maximum('agno')
-		@calendario_vacunas_lactante = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna')
+		@calendario_vacunas_lactante = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
 																		.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
 																		.where('edad in ("Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,current_user.id)
 																		.order('fi_calendario_vacunas.id ASC')
+		@calendario_vacunas_pediatricas = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
+																.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
+																.where('edad in ("1° básico","4° básico","8° básico") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,current_user.id)
+																.order('fi_calendario_vacunas.id ASC')
+		@calendario_vacunas_adulto_mayor = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
+														.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
+														.where('edad in ("Adulto de 65 años") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,current_user.id)
+														.order('fi_calendario_vacunas.id ASC')
 		case @grupo_etareo
     when 'Recién nacido','Lactante'
     	@partial_seguimiento = 'lactante'
     when 'Pediatria' 
       @partial_seguimiento = 'pediatria'
     when 'Adolescente','Adulto' 
-    	@partial_seguimiento = 'lactante'     
     when 'Adulto mayor'
     	@partial_seguimiento = 'adulto_mayor'
     end
@@ -54,7 +61,7 @@ class VacunasController < ApplicationController
 			@persona_vacuna_nueva.numero_vacuna = @calendario_vacuna.numero_vacuna
 			@persona_vacuna_nueva.save!
 
-			@persona_vacuna = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna')
+			@persona_vacuna = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																		 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																		 .where('fi_personas_vacunas.id = ?',@persona_vacuna_nueva.id).first
 
@@ -63,7 +70,7 @@ class VacunasController < ApplicationController
       	format.json { render :json => { :success => true, :persona_vacuna => @persona_vacuna } }
       end	
 		else
-			@persona_vacuna_quitar = FiPersonasVacunas.where('persona_id = ? AND vacuna_id = ? AND numero_vacuna = ? ',current_user.id, @calendario_vacuna.vacuna.id, @calendario_vacuna.numero_vacuna).first
+			@persona_vacuna_quitar = FiPersonasVacunas.where('persona_id = ? AND vacuna_id = ? AND (numero_vacuna = ? or numero_vacuna is null)',current_user.id, @calendario_vacuna.vacuna.id, @calendario_vacuna.numero_vacuna).first
 			id_quitar = @persona_vacuna_quitar.id 
 			@persona_vacuna_quitar.destroy
 			respond_to do |format|

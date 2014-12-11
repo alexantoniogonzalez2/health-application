@@ -2,32 +2,31 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).ready -> 
-	$(".datepicker").attr("placeholder", "Seleccione una fecha").datepicker
-		showOtherMonths: true
-		selectOtherMonths: true
-		changeMonth: true
-		changeYear: true
-		dateFormat: 'yy-mm-dd'
-		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
-		showButtonPanel: true
-		onSelect: (dateText) -> calcularPaquetes()
+$(".datepicker").attr("placeholder", "Seleccione una fecha").datepicker
+	showOtherMonths: true
+	selectOtherMonths: true
+	changeMonth: true
+	changeYear: true
+	dateFormat: 'yy-mm-dd'
+	dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+	showButtonPanel: true
+	onSelect: (dateText) -> calcularPaquetes()
 
-	$("#cigarrosdia").keyup ->
-		calcularPaquetes()
+$("#cigarrosdia").keyup ->
+	calcularPaquetes()
 
-	$('.guardar-consumo').on 'click' , ->	
-	 	tipo = $(this).attr "name"
-	 	id = $(this).attr "id"
-	 	f_i = $('#f_i').datepicker("getDate")
-	 	f_f = $('#f_f').datepicker("getDate")
-	 	cigarrosDia = $("#cigarrosdia").val()
-	 	paquetesAgno = $("#paquetesAgno").val()
-	 	$("#alert-cigarros-dia").show() if cigarrosDia < 1
-	 	$("#alert-fecha-inicio").show() if f_i == null
-	 	$("#alert-fecha-final").show() if f_f == null
-	 	valid = if cigarrosDia < 1 or f_i == null or f_f == null then false else true
-	 	guardarConsumo(f_i,f_f,cigarrosDia,paquetesAgno,tipo,id) if valid
+$('.guardar-consumo').on 'click' , ->	
+ 	tipo = $(this).attr "name"
+ 	id = $(this).attr "id"
+ 	f_i = $('#f_i').datepicker("getDate")
+ 	f_f = $('#f_f').datepicker("getDate")
+ 	cigarrosDia = $("#cigarrosdia").val()
+ 	paquetesAgno = $("#paquetesAgno").val()
+ 	$("#alert-cigarros-dia").show() if cigarrosDia < 1
+ 	$("#alert-fecha-inicio").show() if f_i == null
+ 	$("#alert-fecha-final").show() if f_f == null
+ 	valid = if cigarrosDia < 1 or f_i == null or f_f == null then false else true
+ 	guardarConsumo(f_i,f_f,cigarrosDia,paquetesAgno,tipo,id) if valid
 			
 		
 alertMessage = ->
