@@ -1,3 +1,10 @@
+$("input.label_better").label_better({
+    position: "top",
+    animationTime: 500,
+    easing: "ease-in-out",
+    offset: 20
+  });
+
 function actualizar_atenciones(){
   $('a, button').toggleClass('active'); 
 	$.ajax({

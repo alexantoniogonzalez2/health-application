@@ -1,7 +1,16 @@
 AplicacionMedica::Application.routes.draw do
 
   devise_for :users,:controllers => { :registrations =>'registration'}
-
+=begin 
+  devise_scope :user do
+    authenticated :user do
+      root :to => 'home#index'
+    end
+    unauthenticated :user do
+      root :to => 'devise/sessions#new', as: :unauthenticated_root
+    end
+  end
+=end
   get 'about',   to: 'home#about',  as: 'about' 
   get 'dashboard' => 'home#dashboard'
 
@@ -9,6 +18,7 @@ AplicacionMedica::Application.routes.draw do
 
   #Antecedentes
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 
+  post '/antecedentes/:id', to: 'antecedentes#edit'
   post '/editar_alergia', to: 'antecedentes#editarAlergia'
   post '/guardar_antecedentes_sociales', to: 'antecedentes#guardarAntecedentesSociales'
 
@@ -75,8 +85,6 @@ AplicacionMedica::Application.routes.draw do
   post '/descargar_constancia_ges', to: 'persona_diagnostico#descargarConstanciaGes'
   post '/descargar_interconsulta', to: 'persona_diagnostico#descargarInterconsulta'
   post '/descargar_notificacion_obligatoria', to: 'persona_diagnostico#descargarNotificacionObligatoria'
-  post '/persona_diagnostico/index', to: 'persona_diagnostico#index', :as => :persona_diagnostico_index  
-  get '/persona_diagnostico/index', to: 'persona_diagnostico#index'
   post '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen', :as => :persona_prestacion_index_examen  
   get '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen'
   post '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc', :as => :persona_prestacion_index_procedimiento  
@@ -102,6 +110,7 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
 
   #Home
+  #root :controller => 'registration', :action => 'sign_in'
   root :controller => 'home', :action => :index
   post '/actualizar_atenciones', to: 'home#actualizarAtenciones'
   post '/revisar_actualizaciones', to: 'home#revisarActualizaciones'

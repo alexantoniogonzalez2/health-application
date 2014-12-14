@@ -69,21 +69,13 @@ class HomeController < ApplicationController
 					.where( "ag_agendamiento_log_estados.agendamiento_estado_id not in (1) AND fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ?",
 						 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 					.order(fecha: :desc)
-
-		#render :text => @actualizaciones.inspect
-					#logger.debug "New post: #{@persona_diagnostico_anteriores}"
-  			
   			render 'index_profesional'
-
 		  else	
 		  	render 'index_persona'
 		  end 	
 		else
-			render 'index'
+			render 'index', :layout => false
 		end 	
 		
 	end
-		
-
-
 end

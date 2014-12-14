@@ -30,9 +30,10 @@ module AplicacionMedica
     config.active_record.default_timezone = :local
     config.active_record.time_zone_aware_attributes = false 
     #Nombre del sitio
-    config.site_name = "MedRace"
+    config.site_name = "MedRacer"
 
     #config.middleware.use WickedPdf::Middleware 
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
   end
 end

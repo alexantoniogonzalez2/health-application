@@ -47,7 +47,7 @@
   </div>
 
 <%= f.label 'Antecedentes' %>
-<%= link_to 'Ver todos los antecedentes', persona_diagnostico_index_path(:a_i => @agendamiento.id, :p_i => @agendamiento.persona.id) , :method => :post %>
+<%= link_to "Ver todos los antecedentes", {:controller => :antecedentes, :action => 'edit', :id => @agendamiento.id }, :method => :post %>
 <div class="list-group">
   <a href="#" class="list-group-item">Resumen</a>
 </div>
@@ -63,7 +63,6 @@
 </div>
 
 <%= f.label 'Diagnósticos recientes' %>
-<%= link_to 'Ver todos los diagnósticos', persona_diagnostico_index_path(:a_i => @agendamiento.id, :p_i => @agendamiento.persona.id) , :method => :post %>
 
 <div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">  
   <% @persona_diagnostico_anteriores.each do |p_d| %>

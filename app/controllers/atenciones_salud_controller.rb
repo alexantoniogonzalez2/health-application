@@ -180,7 +180,7 @@ class AtencionesSaludController < ApplicationController
 			@agendamiento.agendamiento_estado = @estadoAgendamiento
 			@agendamiento.fecha_final_real = DateTime.current
 			@agendamiento.save
-		end
+		end	
 
 		redirect_to root_path
 

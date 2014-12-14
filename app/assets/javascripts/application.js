@@ -18,6 +18,7 @@
 //= require jquery.validate.additional-methods
 //= require jquery.ui.autocomplete
 //= require jquery.ui.datepicker
+//= require jquery.label_better
 //= require fullcalendar
 //= require chosen-jquery
 //= require select2
