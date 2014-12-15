@@ -12,21 +12,43 @@ $lightBlue: #019CDE;
 $lightGray: #999;
 p.contacto {
 	letter-spacing: 1px;
-	color: $lightGray;
+	color: white;
 	margin-top: 20px;
 	margin-bottom: 0px;
+	float: left;	
 }
-span.glyphicon {margin-left: 15px; margin-right:7px;}
-
+nav.encabezado { background-color: rgba(255, 255, 255, 0.3); }
+span.glyphicon { margin-left: 15px; margin-right: 7px; }
 div.intro-text {
 	form {
+		a { color: white }
+		input.btn-primary  { letter-spacing: 1px; font-weight: normal; margin: auto; width: 50%; margin-top: 10px; }
+		letter-spacing: 1px;
 		width: 600px;
 		margin: auto;
+		div.input-group { margin: auto; width: 50%; margin-top: 30px; }
+		div.checkbox { 
+			text-align: left;
+			margin-left: 180px;
+			width: 150px;
+			label { padding-left: 0px; }
+		}	
+		input.label_better { 
+			color: $lightGray; 
+			padding-top: 5px; 
+			letter-spacing: 1px; 
+			width: 100%;
+			border-bottom-left-radius: 0px;
+			border-bottom-right-radius: 4px !important;
+			border-top-left-radius: 0px;
+			border-top-right-radius: 4px !important;
+		}
+		div.lb_label { width: 150px; text-align: left; }
 	}
 }
 
 .navbar { margin: 0px !important; }
-.navbar-default { padding-top: 50px !important; }
+.navbar-default { /*padding-top: 50px !important;*/ }
 .navbar-brand { font-size: 300% !important; padding-left: 70px; }
 
 body {
@@ -235,7 +257,7 @@ fieldset[disabled] .btn-xl.active {
 
 @media(min-width:768px) {
     .navbar-default {
-        padding: 25px 0;
+       /* padding: 25px 0;*/
         border: 0;
         background-color: transparent;
         -webkit-transition: padding .3s;
@@ -299,8 +321,8 @@ header .intro-text .intro-heading {
 
 @media(min-width:768px) {
     header .intro-text {
-        padding-top: 250px;
-        padding-bottom: 410px;
+        padding-top: 150px;
+        padding-bottom: 300px;
     }
 
     header .intro-text .intro-lead-in {
@@ -823,6 +845,7 @@ ul.social-buttons li a:active {
     transform: rotate(90deg);
 }
 
+/*
 ::-moz-selection {
     text-shadow: none;
     background: #fed136;
@@ -843,4 +866,4 @@ img::-moz-selection {
 
 body {
     webkit-tap-highlight-color: #fed136;
-}
+}*/

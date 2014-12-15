@@ -23,10 +23,4 @@
  *= require bootstrapValidator.min
  *= require_self
  *= require_tree .
- @font-face {
-  font-family: 'Lucida Grande';  
-  src: url('Lucida_Grande.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
  */

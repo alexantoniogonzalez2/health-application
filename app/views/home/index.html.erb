@@ -7,12 +7,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<!-- Header -->
+<header>
 
 <!-- Navigation -->
-<nav class="navbar">
+<nav class="navbar encabezado">
 	<a class="navbar-brand page-scroll" href="#page-top">MedRacer</a><p class="contacto"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>(56 2) 23496495<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> contacto@medracer.com</p>
 </nav>	
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav id="navbar-intro" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -54,19 +56,24 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
-
-<!-- Header -->
-<header>
-    <div class="container">
+    <div class="container">    
       <div class="intro-text">
           <h1>Bienvenido a <%= AplicacionMedica::Application.config.site_name %></h1>
 					
-					<%= form_for(:user, :url => session_path(:user)) do |f| %>
-					  <%= f.text_field :email , :class => "label_better" , :placeholder => "Username", :'data-position'=> "top", :'data-new-placeholder' => "Type your username"  %><br>
-					  <%= f.password_field :password %><br>
-					  <%= f.check_box :remember_me %> 
-					  <%= f.label 'No cerrar sesión' %><br> 
-					  <%= f.submit 'Iniciar sesión' ,class: "btn btn-large btn-primary" %><br>
+					<%= form_for(:user, :html => {:class => 'form-horizontal'}, :url => session_path(:user)) do |f| %>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<%= f.text_field :email, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:"  %>
+						</div>
+					<div class="input-group">	
+						<span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+					  <%= f.password_field :password , :class => "label_better form-control" , :placeholder => "Ingresa tu contraseña", :'data-position'=> "top", :'data-new-placeholder' => "Contraseña:"%>
+					</div>
+					<div class="checkbox">
+					  <%= f.label 'No cerrar sesión', :for => "remember_me" %>
+					  <%= f.check_box :remember_me, :id => "remember_me" %> 
+					</div>
+					  <%= f.submit 'Iniciar sesión' ,class: "btn btn-large btn-primary btn-block" %><br>
 					  <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
 					  <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
 					  <br>

@@ -1,8 +1,22 @@
+$(window).scroll(function() {
+    var height = $(window).scrollTop();
+
+    if(height  > 0) {
+       $("#navbar-intro").css({"color":"black !important"});
+    }
+    else {
+    	$("#navbar-intro").css({"color":"black !important"});
+
+    }
+
+});
+
+
 $("input.label_better").label_better({
     position: "top",
     animationTime: 500,
     easing: "ease-in-out",
-    offset: 20
+    offset: 5
   });
 
 function actualizar_atenciones(){

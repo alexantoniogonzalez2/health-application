@@ -33,7 +33,6 @@ module AplicacionMedica
     config.site_name = "MedRacer"
 
     #config.middleware.use WickedPdf::Middleware 
-    config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
   end
 end
