@@ -1,14 +1,33 @@
 $(window).scroll(function() {
-    var height = $(window).scrollTop();
+  var height = $(window).scrollTop();
 
-    if(height  > 0) {
-       $("#navbar-intro").css({"color":"black !important"});
+  if(height  > 50) {
+    $(".navbar-fixed-top").removeClass( 'navbar-ajuste' );
+    $(".navbar-fixed-top").addClass( 'navbar-ajuste2' );
+    $("a").removeClass( 'active-ajuste' );
+    $("a.active").addClass( 'active-ajuste' );
+  }
+  else {
+  	$(".navbar-fixed-top").addClass( 'navbar-ajuste' );
+  	$(".navbar-fixed-top").removeClass( 'navbar-ajuste2' );
+  	$("a").removeClass( 'active-ajuste' );
+  }   
+      
+  $('.index section').each(function(i) {
+  	var position = $(this).position().top;
+    if ( position <= height + 50 ) {   	
+        $('.navbar-fixed-top a.active').removeClass('active');
+        $('.navbar-fixed-top a').eq(i+1).addClass('active');
+        
     }
-    else {
-    	$("#navbar-intro").css({"color":"black !important"});
-
+    if ( 0 < height &&  height < 930 )
+    	$('body').css("background-image", "url(../assets/header-bg1.jpg)");
+    if ( 930 <= height &&  height < 1872 )	{
+    	//alert(height);
+    	$('body').css("background-image", "url(../assets/header-bg2.jpg)");
     }
 
+  });
 });
 
 

@@ -17,7 +17,9 @@ p.contacto {
 	margin-bottom: 0px;
 	float: left;	
 }
-nav.encabezado { background-color: rgba(255, 255, 255, 0.3); }
+.navbar-ajuste { margin-top:50px !important; }
+.navbar-ajuste2 { background-color: rgba(1, 1, 1, 0.6) !important; }
+nav.encabezado { background-color: rgba(255, 255, 255, 0.3); border-radius: 0px;}
 span.glyphicon { margin-left: 15px; margin-right: 7px; }
 div.intro-text {
 	form {
@@ -47,7 +49,7 @@ div.intro-text {
 	}
 }
 
-.navbar { margin: 0px !important; }
+.navbar {  }
 .navbar-default { /*padding-top: 50px !important;*/ }
 .navbar-brand { font-size: 300% !important; padding-left: 70px; }
 
@@ -88,7 +90,11 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-    color: $lightBlue !important;
+    color: $lightBlue !important;    
+}
+
+.active-ajuste {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 h1,
@@ -106,7 +112,7 @@ h6 {
 }
 
 .bg-light-gray {
-    background-color: #f7f7f7;
+    /*background-color: #f7f7f7;*/
 }
 
 .bg-darkest-gray {
@@ -286,13 +292,12 @@ fieldset[disabled] .btn-xl.active {
     }
 }
 
-header {
+body {
     text-align: center;
     color: #fff;
-    background-attachment: scroll;
-    background-image: url(../assets/header-bg.jpg);
-    background-position: center center;
-    background-repeat: none;
+    background-attachment: fixed !important;
+    background-image: url(../assets/header-bg1.jpg);
+    background-repeat: no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -321,7 +326,7 @@ header .intro-text .intro-heading {
 
 @media(min-width:768px) {
     header .intro-text {
-        padding-top: 150px;
+        padding-top: 0px;
         padding-bottom: 300px;
     }
 
@@ -343,6 +348,7 @@ header .intro-text .intro-heading {
 
 section {
     padding: 100px 0;
+    height: 900px;
 }
 
 section h2.section-heading {
@@ -666,10 +672,8 @@ section h3.section-subheading {
     margin-top: 0;
 }
 
-aside.clients img {
-    margin: 50px auto;
-}
 
+/*
 section#contact {
     background-color: #222;
     background-image: url(../assets/map-image.png);
@@ -680,7 +684,7 @@ section#contact {
 section#contact .section-heading {
     color: #fff;
 }
-
+*/
 section#contact .form-group {
     margin-bottom: 25px;
 }
