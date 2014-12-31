@@ -21,4 +21,7 @@ class RegistrationController < Devise::RegistrationsController
 			render :action => "new"
 		end
 	end
+	def sign_in		
+
+	end
 end

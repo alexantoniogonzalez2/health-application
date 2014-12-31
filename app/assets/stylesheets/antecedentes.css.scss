@@ -1,9 +1,8 @@
+$lightBlue: #85D3F5;
 #antecedentes { background-color: white; color: #428bca; border:none;}
 #antecedentes:hover {text-decoration: underline}
 div.antecedentes { padding: 0px; } 
 div.antecedentes { padding: 0px; } 
-.nav-antecedentes > li > a:focus, .nav-antecedentes > li > a { text-decoration: none; background-color: #cbe4f8; }
-.nav-antecedentes > li > a:hover { text-decoration: none; background-color: #eeeeee; }
 div.actividad-fisica {	
 	> form { 
 		> div.clearfix > div.column { padding: 0px;}
@@ -13,6 +12,13 @@ div.actividad-fisica {
 		}
 	}
 }
+.nav-pills > li > a { border-radius: 0px !important; }
+#nav-antecedentes  > li > a, .nav-pills > li.active > a, .nav-pills > li.hover > a { background-color: white !important; }
+#nav-antecedentes  > li > a { color: #444; }
+#nav-antecedentes  > li.hover > a { color: #85D3F5; }
+#nav-antecedentes  > li.active > a { color: #444 ; font-weight: bold; right: 5px; color: #444; border-left: 5px solid #85D3F5; }
+#nav-antecedentes  > li:not(:hover)> a { color: #444 !important;  }
+
 div.alert-act { 
 	margin-bottom: 5px;
 	padding-left: 0px;
@@ -21,3 +27,4 @@ div.alert-act {
 .has-feedback .form-control-feedback { top: 45px; right: 0; }
 .form-validator .has-feedback .form-control-feedback { top: 0; right: 15px; }
 
+#nav-antecedentes  > li.hover > a { color: #85D3F5; }

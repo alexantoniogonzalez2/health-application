@@ -1,20 +1,10 @@
 AplicacionMedica::Application.routes.draw do
 
-  devise_for :users,:controllers => { :registrations =>'registration'}
-=begin 
-  devise_scope :user do
-    authenticated :user do
-      root :to => 'home#index'
-    end
-    unauthenticated :user do
-      root :to => 'devise/sessions#new', as: :unauthenticated_root
-    end
-  end
-=end
+  devise_for :users,:controllers => { :registrations =>'registration'} 
+  
+  root :controller => 'home', :action => :index
   get 'about',   to: 'home#about',  as: 'about' 
   get 'dashboard' => 'home#dashboard'
-
-  #root :to =>'home#index'
 
   #Antecedentes
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 
@@ -52,8 +42,7 @@ AplicacionMedica::Application.routes.draw do
   post '/desbloquear_hora', to: 'agendamiento#desbloquearHora', :as => :desbloquearHora
 
   #Actividad física
-  post '/actividad_fisica', to: 'antecedentes#guardarActividadFisica'   
-
+  post '/actividad_fisica', to: 'antecedentes#guardarActividadFisica' 
 
   #Modulo atencion salud
   resources :atenciones_salud
@@ -110,8 +99,6 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
 
   #Home
-  #root :controller => 'registration', :action => 'sign_in'
-  root :controller => 'home', :action => :index
   post '/actualizar_atenciones', to: 'home#actualizarAtenciones'
   post '/revisar_actualizaciones', to: 'home#revisarActualizaciones'
 

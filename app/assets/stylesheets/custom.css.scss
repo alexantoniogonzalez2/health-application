@@ -1,15 +1,20 @@
 @import "bootstrap";
 
 /* colors */
-
 $lightGray: #999;
+body > div.container { min-height: 700px; }
 
 /* universal */
+.navbar-inverse { 
+  border-radius: 0px; height: 40px !important; min-height: 0px;
+  div > div > ul > li > a { height: 40px; padding: 10px 15px; }
+ }
+.navbar-inverse .navbar-nav > li > a { color: white; letter-spacing: 1px;}
 
 .container { 
   padding-left: 0px;
   padding-right: 0px;
-  width: 1000px;
+  width: 1150px;
 }
 
 .ajustado {
@@ -21,36 +26,11 @@ $lightGray: #999;
 
 
 html { overflow-y: scroll;  }
-body { /*padding-top: 60px;*/ }
 section { overflow: auto; }
-/* typography */
-
 h1, h2, h3, h4, h5, h6 { line-height: 1;}
 h3 { font-size: 26px; }
 h4 { font-size: 22px; }
 h5 { font-size: 18px; margin-top: 0px; }
-
-/*
-h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $lightGray;;
-}*/
-
-
-
-/* header */
-
 #logo {
   float: left;
   margin-right: 10px;
@@ -69,30 +49,15 @@ h2 {
 
 /* footer */
 
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  /*color: $blue;*/
-  a {
-    color: #555;
-    &:hover {
-      color: #222;
-    }
-  }
-  small {
-    float: left;
-  }
-  ul {
-    float: right;
-    list-style: none;
-    li {
-      float: left;
-      margin-left: 10px;
-    }
-  }
+footer.footer-layout {
+  li > a { color: #444 !important; }
+  position: absolute;
+  bottom: 0px;
+  width: 1150px;
+  left: 50%;
+  margin-left: -575px; /*half the size of width*/
 }
-
+s
 .table{
   margin-bottom: 0px;  
 }
