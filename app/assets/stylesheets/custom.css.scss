@@ -1,70 +1,68 @@
 @import "bootstrap";
 
 /* colors */
-$lightGray: #999;
-body > div.container { min-height: 700px; }
+$blue: #428bca;
+$blueFooter: #B5DBFF;
+$lightBlue: #85D3F5;
+$mediumBlue: #D9EDF7;
+$lightGray: #444;
+$white: white;
 
-/* universal */
-.navbar-inverse { 
-  border-radius: 0px; height: 40px !important; min-height: 0px;
-  div > div > ul > li > a { height: 40px; padding: 10px 15px; }
- }
-.navbar-inverse .navbar-nav > li > a { color: white; letter-spacing: 1px;}
-
-.container { 
-  padding-left: 0px;
-  padding-right: 0px;
-  width: 1150px;
+html { overflow-y: scroll; }
+html.aplicacion, body.aplicacion { 
+  margin:0;
+  padding:0; 
+  height: 100% !important;
 }
 
-.ajustado {
-  width: 100% !important;
-  .column { 
-    padding-left: 0px;
-  }
+#wrapper {
+  min-height:100%;
+  position:relative;
 }
 
+body.aplicacion > div > div.container { min-height: 100% !important; width: 90%; padding-bottom: 60px; }
 
-html { overflow-y: scroll;  }
+footer.footer-layout {
+  border-top: 1px dotted #428bca !important;
+  height: 60px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  padding: 20px 0px;
+  color: $lightGray !important;
+  background-color: $mediumBlue;
+  li > a { color: $blue !important; }
+  li > a:hover { color: $lightGray !important; }
+} 
+
+nav.navbar-index { 
+  background-color: #F1F8FF !important; 
+  border-bottom: 1px dotted $blue !important;
+  border-radius: 0px; 
+  min-height: 0px;
+}
+
+nav.navbar-index > div > div > ul > li > a { color: $blue !important; letter-spacing: 1px; }
+nav.navbar-index > div > div > ul > li.active > a { background-color: $blue !important; color: white !important; }
+nav.navbar-index > div > div > ul > li:hover > a { background-color: $mediumBlue !important; color: white !important; }
+div.container { width: 100%; }
+
 section { overflow: auto; }
 h1, h2, h3, h4, h5, h6 { line-height: 1;}
 h3 { font-size: 26px; }
 h4 { font-size: 22px; }
 h5 { font-size: 18px; margin-top: 0px; }
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  line-height: 1;
-  &:hover {
-    color: #fff;
-    text-decoration: none;
-  }
+
+div.ajuste-signin {
+  text-align: center;
+  div > form > a { color: $blue !important;  }
+  div > form > a:hover { color: $lightGray !important; }
+  h2.heading { letter-spacing: 2px !important; color: $lightGray; };
 }
 
-/* footer */
-
-footer.footer-layout {
-  li > a { color: #444 !important; }
-  position: absolute;
-  bottom: 0px;
-  width: 1150px;
-  left: 50%;
-  margin-left: -575px; /*half the size of width*/
-}
-s
-.table{
-  margin-bottom: 0px;  
-}
-
-.row {
-  margin: 0px;
-}
+.table{ margin-bottom: 0px; }
+.row { margin: 0px; }
+.ajustado > .column { padding-left: 0px; }
 
 .checkbox {
   margin-top: 10px;

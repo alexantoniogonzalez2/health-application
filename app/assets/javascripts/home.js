@@ -1,6 +1,47 @@
 $(document).ready(function() {
-    $('#contactForm').bootstrapValidator();
+  $('#contactForm').bootstrapValidator();
 });
+
+$('#user_email').change(function () {
+  if ($('#user_email').val().length > 0 ){
+    if (!$('#lb_labeluser_email').length)
+      ajuste_label_better('user_email');
+    if (!$('#lb_labeluser_password').length)
+      ajuste_label_better('user_password');    
+  }
+  else {
+    if ( $('#user_password').val().length < 1 )
+     ajuste2_label_better('user_password');
+  }
+})
+
+function ajuste2_label_better (label_better_id) {
+  var settings = {
+    position: "top",
+    animationTime: 500,
+    easing: "ease-in-out",
+    offset: 5,
+    hidePlaceholderOnFocus: true
+  };
+  btn = $('#'+label_better_id); 
+  btn.parent().find(".lb_label").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ $(this).remove(); }).removeAnimate(settings, btn)
+  btn.parent().find(".lb_label").removeClass("active");
+}
+
+function ajuste_label_better (label_better_id) {
+  var settings = {
+    position: "top",
+    animationTime: 500,
+    easing: "ease-in-out",
+    offset: 5,
+    hidePlaceholderOnFocus: true
+  };
+  btn = $('#'+label_better_id); 
+  var text = btn.data("new-placeholder")  || btn.attr("placeholder"),
+  position = btn.data("position")  || settings.position;
+  $("<div id='lb_label" + btn.attr("id") + "' class='lb_label " + position + "'>"+ text + "</div>").css("opacity", "0").insertAfter(btn).animateLabel(settings, btn);      
+  btn.parent().find(".lb_label").addClass("active");
+}
 
 $(window).scroll(function() {
   var height = $(window).scrollTop();
@@ -39,8 +80,7 @@ $(window).scroll(function() {
   });
 });
 
-
-$("input.label_better").label_better({
+$(".label_better").label_better({
     position: "top",
     animationTime: 500,
     easing: "ease-in-out",

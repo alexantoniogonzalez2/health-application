@@ -2,18 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/*!
- * Start Bootstrap - Agency Bootstrap Theme (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
-
+/* colors */
+$blue: #428bca;
+$blueFooter: #B5DBFF;
 $lightBlue: #85D3F5;
-$Blue: #428bca;
 $lightGray: #999;
+
+.logo { width: 40%; padding-top: 7px; }
+.logo-top { width: 20%; float: left; }
 div.signin { width: 300px; margin: auto; }
 .div-contact { padding-left: 10%; padding-right: 10%; }
-.ajuste-hover:hover { color: $Blue !important; }
+.ajuste-hover:hover { color: $blue !important; }
 a { text-decoration: none !important; }
 .glyphicon-envelope{ margin-right: 0px !important; }
 h4.brand { margin:0px !important; padding:0px!important; }
@@ -28,6 +27,7 @@ a.contacto {
 .navbar-ajuste2 { background-color: rgba(1, 1, 1, 0.6) !important; }
 div.encabezado { background-color: rgba(1, 1, 1, 0.4);}
 nav.encabezado { border-radius: 0px; margin-bottom: 0px; width: 1200px; margin: auto;}
+#navbar-intro > div.container { margin: auto; width: 1300px; }
 span.glyphicon { margin-left: 15px; margin-right: 7px; }
 div.intro-text {
 	form {
@@ -74,8 +74,6 @@ form.contactForm {
   }
 }
 
-.navbar-brand { font-size: 300% !important; padding-left: 70px; }
-
 .text-muted {
   letter-spacing: 1px;
   color: white;
@@ -96,35 +94,17 @@ a:focus,
 a:active,
 a.active { outline: 0; }
 
-
 a:hover,
 a:focus,
 a:active,
-a.active { color: $Blue !important;
+a.active { color: $blue !important; }
 
-}
+.active-ajuste { background-color: rgba(255, 255, 255, 0.15); }
+h2.heading { letter-spacing: 2px !important; }
+.img-centered { margin: 0 auto; }
+.bg-darkest-gray { background-color: #222; }
 
-.active-ajuste {
-    background-color: rgba(255, 255, 255, 0.15);
-}
-
-h1.heading,
-h2.section-heading,
-{
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.img-centered {
-    margin: 0 auto;
-}
-
-.bg-darkest-gray {
-    background-color: #222;
-}
-
-.btn-primary {
-    
+.btn-primary {    
     text-transform: uppercase;
     font-weight: 700;
 }   
@@ -133,7 +113,6 @@ h2.section-heading,
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active,
-
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
@@ -212,14 +191,14 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .navbar-default .navbar-brand {
-		color: $Blue;
+		color: $blue;
 }
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-brand:active,
 .navbar-default .navbar-brand.active {
-    color: $Blue;   
+    color: $blue;   
 }
 
 .navbar-default .navbar-collapse {
@@ -256,7 +235,7 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-nav>.active>a {
     border-radius: 0;
     color: #fff;
-    background-color: #fed136;
+    //background-color: #fed136;
 }
 
 .navbar-default .navbar-nav>.active>a:hover,
@@ -282,9 +261,6 @@ fieldset[disabled] .btn-xl.active {
         transition: all .3s;
     }
 
-    .navbar-default .navbar-nav>.active>a {
-        border-radius: 3px;
-    }
 
     .navbar-default.navbar-shrink {
         /*padding: 10px 0;*/
@@ -398,7 +374,7 @@ section {
 }
 
 section h2.section-heading {
-    color: $Blue;
+    color: $blue;
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 40px;
@@ -422,7 +398,7 @@ section h3.section-subheading {
 }
 
 .service-heading {
-  color: $Blue;
+  color: $blue;
   margin: 15px 0;
   text-transform: none;
   letter-spacing: 1px;

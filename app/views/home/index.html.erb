@@ -16,7 +16,7 @@
 	<a class="contacto"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>(56 2) 23496495</a><a class="contacto"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> contacto@medracer.com</a>
 </nav>	
 </div>
-<nav id="navbar-intro" class="navbar navbar-default navbar-fixed-top navbar-ajuste">
+<nav id="navbar-intro" class="navbar navbar-default navbar-fixed-top navbar-center navbar-ajuste">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -34,9 +34,7 @@
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
-                <li>
-                    <a class="page-scroll" href="#page-top"><%= AplicacionMedica::Application.config.site_name %></a>
-                </li>
+                    <img class="logo-top" src="/assets/logo_medracer.gif" alt="">
                 <li>
                     <a class="page-scroll" href="#services">Pensado en las personas</a>
                 </li>
@@ -61,28 +59,26 @@
   <section id="inicio" class="bg-pattern-horizontal bg-pattern-vertical">
     <div class="container">    
       <div class="intro-text">
-          <h1 class="heading">Bienvenido a <%= AplicacionMedica::Application.config.site_name %></h1>
-      <p class="alert"><%= alert %></p>
-<%= form_for(:user, :html => {:class => 'form-horizontal'}, :url => session_path(:user)) do |f| %>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <%= f.text_field :email, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:"  %>
+          <h2 class="heading">Inicia sesión para acceder a <%= AplicacionMedica::Application.config.site_name %></h2>
+          <p class="alert"><%= alert %></p>
+          <%= form_for(:user, :html => {:class => 'form-horizontal' }, :url => session_path(:user)) do |f| %>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <%= f.text_field :email, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:" %>
+              </div>
+            <div class="input-group"> 
+              <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+              <%= f.password_field :password, :class => "label_better form-control", :placeholder => "Ingresa tu contraseña", :'data-position'=> "top", :'data-new-placeholder' => "Contraseña:"%>
             </div>
-          <div class="input-group"> 
-            <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-            <%= f.password_field :password , :class => "label_better form-control" , :placeholder => "Ingresa tu contraseña", :'data-position'=> "top", :'data-new-placeholder' => "Contraseña:"%>
-          </div>
-          <div class="checkbox">
-            <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>
-            <%= f.check_box :remember_me, :id => "remember_me" %> 
-          </div>
-            <%= f.submit 'Iniciar sesión' ,class: "btn btn-large btn-primary btn-block" %><br>
-            <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
-            <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
-            <br>
-          <% end %>
-					
-
+            <div class="checkbox">
+              <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>
+              <%= f.check_box :remember_me, :id => "remember_me" %> 
+            </div>
+              <%= f.submit 'Iniciar sesión' ,class: "btn btn-large btn-primary btn-block" %><br>
+              <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
+              <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
+              <br>
+          <% end %>	
       </div>
     </div>
   </section>

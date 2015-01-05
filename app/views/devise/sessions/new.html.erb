@@ -1,23 +1,27 @@
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
-<div class="signin">
-	<%= form_for(:user, :html => {:class => 'form-horizontal'}, :url => session_path(:user)) do |f| %>
-		<div class="input-group">
-		  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-		  <%= f.text_field :email, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:"  %>
-		  </div>
-		<div class="input-group"> 
-		  <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-		  <%= f.password_field :password , :class => "label_better form-control" , :placeholder => "Ingresa tu contraseña", :'data-position'=> "top", :'data-new-placeholder' => "Contraseña:"%>
-		</div>
-		<div class="checkbox">
-		  <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>
-		  <%= f.check_box :remember_me, :id => "remember_me" %> 
-		</div>
-		  <%= f.submit 'Iniciar sesión' ,class: "btn btn-large btn-primary btn-block" %><br>
-		  <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
-		  <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
-		  <br>
-	<% end %>
+<div class="container ajuste-signin">    
+  <div class="intro-text">
+      <h2 class="heading">Inicia sesión para acceder a <%= AplicacionMedica::Application.config.site_name %></h2>
+      <p class="alert"><%= alert %></p>
+      <%= form_for(:user, :html => {:class => 'form-horizontal' }, :url => session_path(:user)) do |f| %>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-user"></i></span>
+          <%= f.text_field :email, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:" %>
+          </div>
+        <div class="input-group"> 
+          <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+          <%= f.password_field :password, :class => "label_better form-control", :placeholder => "Ingresa tu contraseña", :'data-position'=> "top", :'data-new-placeholder' => "Contraseña:"%>
+        </div>
+        <div class="checkbox">
+          <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>
+          <%= f.check_box :remember_me, :id => "remember_me" %> 
+        </div>
+          <%= f.submit 'Iniciar sesión' ,class: "btn btn-large btn-primary btn-block" %><br>
+          <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
+          <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
+          <br>
+      <% end %>	
+  </div>
 </div>
+
+<%= javascript_include_tag "home" %>
+
