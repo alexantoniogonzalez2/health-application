@@ -74,6 +74,9 @@ form.contactForm {
   }
 }
 
+.has-feedback .form-control-feedback { top: 45px; right: 0; }
+.form-validator .has-feedback .form-control-feedback { top: 0; right: 15px; }
+
 .text-muted {
   letter-spacing: 1px;
   color: white;

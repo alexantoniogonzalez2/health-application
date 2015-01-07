@@ -1,6 +1,28 @@
-$(document).ready(function() {
-  $('#contactForm').bootstrapValidator();
-});
+$("#contactForm").submit(function (e) { return false; });
+$("#sign-in-form").submit(function (e) { return false; });
+/*
+$('#sign-in-form').bootstrapValidator({
+
+   framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                'user[email]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The name is required'
+                        }
+                    }
+                },
+            }
+
+
+});*/
+
+$('#contactForm').bootstrapValidator();
 
 $('#user_email').change(function () {
   if ($('#user_email').val().length > 0 ){
@@ -67,16 +89,14 @@ $(window).scroll(function() {
     if ( 0 < height &&  height < 930 )
     	$('.home').css("background-image", "url(../assets/bg1.jpg)");
     if ( 930 <= height &&  height < 1600 )
-    	$('.home').css("background-image", "url(../assets/bg2.jpg)");
+    	$('.home').css("background-image", "url(../assets/bg5.jpg)");
     if ( 1600 <= height &&  height < 2430 )	
     	$('.home').css("background-image", "url(../assets/bg3.jpg)");
     if ( 2430 <= height &&  height < 3630 )	
     	$('.home').css("background-image", "url(../assets/bg4.jpg)");
     if ( 3630 <= height &&  height < 4530 )	
-    	$('.home').css("background-image", "url(../assets/bg5.jpg)");
-    if ( 4530 <= height  )	
-    	$('.home').css("background-image", "url(../assets/bg6.jpg)");
-
+    	$('.home').css("background-image", "url(../assets/bg2.jpg)");
+    
   });
 });
 

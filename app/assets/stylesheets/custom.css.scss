@@ -55,10 +55,16 @@ h5 { font-size: 18px; margin-top: 0px; }
 
 div.ajuste-signin {
   text-align: center;
-  div > form > a { color: $blue !important;  }
-  div > form > a:hover { color: $lightGray !important; }
+  div > form {
+    a { color: $blue !important;  }
+    a:hover { color: $lightGray !important; }
+    div.label_div { text-align: left; font-weight: normal; width: 500px; padding-left: 190px; padding-bottom:10px; }
+    div.label_div > label { font-weight: normal; }
+    div.input-group { margin-top: 0px; margin-bottom: 20px; }
+  }
   h2.heading { letter-spacing: 2px !important; color: $lightGray; };
 }
+div.ajuste-signin > div.intro-text > div.alert-danger { width: 400px; left: 375px; position: relative; }
 
 .table{ margin-bottom: 0px; }
 .row { margin: 0px; }
