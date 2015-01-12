@@ -1,12 +1,32 @@
-<h2>Forgot your password?</h2>
+<div class="container ajuste-signin">    
+  <div class="intro-text2">
+    <h2 class="heading">Recupera tu contraseña</h2>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+      <div id="recuperar-error" class="alert alert-danger" role="alert">
+			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			  <span class="sr-only">Error:</span>
+			  <span id ="span-recuperar">
+			  <%= devise_error_messages! %> 
+			  </span>
+			</div>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+    <div class="form-group ajuste-recuperar">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <%= f.email_field :email, autofocus: true, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Tu correo electrónico es requerido" %>
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
+  	<%= f.submit "Recuperar contraseña", class: "btn btn-large btn-primary btn-block" %><br>
+    <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
+    <%= link_to "Iniciar sesión", new_session_path(:user) %> 
+    <br>
 <% end %>
 
-<%= render "devise/shared/links" %>
+
+  </div>
+</div>
+
+<%= javascript_include_tag "home" %>

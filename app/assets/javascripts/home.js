@@ -1,30 +1,68 @@
+if (!($('#span-sign-in').text()).trim() ){
+  $('#sign-in-error').hide(); 
+}
+
+if (!($('#span-recuperar').text()).trim() ){
+  $('#recuperar-error').hide(); 
+}
+
+if (!($('#span-cuenta').text()).trim() ){
+  $('#cuenta-error').hide(); 
+}
+
+$("#sign-in-form").submit(function (e) { 
+  var respuesta = false;
+  if ( $('#user_email').val().length > 0 && $('#user_password').val().length  )
+    respuesta = true;
+  return respuesta;
+});
+
 $("#contactForm").submit(function (e) { return false; });
-$("#sign-in-form").submit(function (e) { return false; });
-/*
+
 $('#sign-in-form').bootstrapValidator({
+  fields: {
+    'user[email]': {
+        validators: {
+            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
+        }
+    }
+  },
+  onError: function(e) {
+    $('#inicia_sesion').prop("disabled", false);
+  }
+})
 
-   framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                'user[email]': {
-                    validators: {
-                        notEmpty: {
-                            message: 'The name is required'
-                        }
-                    }
-                },
-            }
+$('#sign-in-form2').bootstrapValidator({
+  fields: {
+    'user[email]': {
+        validators: {
+            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
+        }
+    }
+  }
+})
 
+$('#new_user').bootstrapValidator({
+  fields: {
+    'user[email]': {
+        validators: {
+            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
+        }
+    }
+  }
+})
 
-});*/
+$('#contactForm').bootstrapValidator({
+  fields: {
+    'email': {
+        validators: {
+            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
+        }
+    }
+  }
+});
 
-$('#contactForm').bootstrapValidator();
-
-$('#user_email').change(function () {
+$('#sign-in-form').find('#user_email').change(function () {
   if ($('#user_email').val().length > 0 ){
     if (!$('#lb_labeluser_email').length)
       ajuste_label_better('user_email');

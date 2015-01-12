@@ -1,21 +1,29 @@
 <div class="container ajuste-signin">    
-  <div class="intro-text">
+  <div class="intro-text2">
       <h2 class="heading">Inicia sesión para acceder a <%= AplicacionMedica::Application.config.site_name %></h2>
-      <div class="alert alert-danger" role="alert">
+      <div id="sign-in-error" class="alert alert-danger" role="alert">
 			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 			  <span class="sr-only">Error:</span>
+			  <span id ="span-sign-in">
 			  <%= alert %>
+			  </span>
 			</div>
-      <%= form_for(:user, :html => {:class => 'form-horizontal' }, :url => session_path(:user)) do |f| %>
+      <%= form_for(:user, :html => {:id => 'sign-in-form2', :class => 'form-validator form-horizontal' }, :url => session_path(:user)) do |f| %>
       	<div class="label_div" ><label>Correo electrónico:</label></div>
-        <div class="input-group">
-          <span class="input-group-addon"><i class="fa fa-user"></i></span>
-          <%= f.text_field :email, :class => "form-control" %>
+      	<div class="form-group">
+	        <div class="input-group">
+	          <span class="input-group-addon"><i class="fa fa-user"></i></span>
+	          <%= f.email_field :email, :class => "form-control", :placeholder => "Ingresa tu correo electrónico", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Tu correo electrónico es requerido" %>
+	          <p class="help-block text-danger"></p>
+	        </div>
         </div>
         <div class="label_div" ><label>Contraseña:</label></div>
-        <div class="input-group"> 
-          <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-          <%= f.password_field :password, :class => "form-control" %>
+        <div class="form-group">
+	        <div class="input-group"> 
+	          <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+	          <%= f.password_field :password, :class => "form-control", :placeholder => "Ingresa tu contraseña", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Tu contraseña es requerida"%>
+              <p class="help-block text-danger"></p>
+	        </div>
         </div>
         <div class="checkbox">
           <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>

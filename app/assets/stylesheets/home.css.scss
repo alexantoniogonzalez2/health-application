@@ -29,7 +29,7 @@ div.encabezado { background-color: rgba(1, 1, 1, 0.4);}
 nav.encabezado { border-radius: 0px; margin-bottom: 0px; width: 1200px; margin: auto;}
 #navbar-intro > div.container { margin: auto; width: 1300px; }
 span.glyphicon { margin-left: 15px; margin-right: 7px; }
-div.intro-text {
+div.intro-text, div.intro-text2 {
 	form {
 		a { color: white }
 		input.btn-primary  { letter-spacing: 1px; font-weight: normal; margin: auto; width: 50%; margin-top: 10px; }
@@ -74,8 +74,18 @@ form.contactForm {
   }
 }
 
-.has-feedback .form-control-feedback { top: 45px; right: 0; }
-.form-validator .has-feedback .form-control-feedback { top: 0; right: 15px; }
+.has-feedback .form-control-feedback { top: 45px; right: 0; padding-right: 12px; }
+.form-validator .has-feedback .form-control-feedback { top: 0; right: 15px; padding-right: 12px; }
+
+.intro-text {
+  .has-feedback .form-control-feedback { top: 30px !important; right: 160px !important; padding-right: 12px; }
+  .form-validator .has-feedback .form-control-feedback { top: 30px !important; right: 160px !important; padding-right: 12px; }
+}
+
+.intro-text2 {
+  .has-feedback .form-control-feedback { top: 45px; right: 160px; padding-right: 12px; }
+  .form-validator .has-feedback .form-control-feedback { top: 0; right: 160px; padding-right: 12px; }
+}
 
 .text-muted {
   letter-spacing: 1px;
@@ -83,6 +93,16 @@ form.contactForm {
 }
 
 .text-primary { color: #fed136; }
+
+/* Se cambian los bordes verdes y rojos de bootstrap validation por los bordes originales*/
+.input-group-addon { color: #555555 !important; border: 1px solid #cccccc !important; border-right:none !important;}
+.form-control:focus {
+  border-color: #66afe9 !important;
+  outline: 0 !important;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6) !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6) !important;
+}
+.form-control{ border: 1px solid #cccccc !important; } 
 
 p {
     font-size: 14px;
@@ -120,32 +140,6 @@ h2.heading { letter-spacing: 2px !important; }
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
     background-image: none;
-}
-
-.btn-primary.disabled,
-.btn-primary[disabled],
-fieldset[disabled] .btn-primary,
-.btn-primary.disabled:hover,
-.btn-primary[disabled]:hover,
-fieldset[disabled] .btn-primary:hover,
-.btn-primary.disabled:focus,
-.btn-primary[disabled]:focus,
-fieldset[disabled] .btn-primary:focus,
-.btn-primary.disabled:active,
-.btn-primary[disabled]:active,
-fieldset[disabled] .btn-primary:active,
-.btn-primary.disabled.active,
-.btn-primary[disabled].active,
-
-.btn-xl {
-    padding: 20px 40px;
-    border-color: #fed136;
-    border-radius: 3px;
-    text-transform: uppercase;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    background-color: #fed136;
 }
 
 .btn-xl:hover,
@@ -329,6 +323,7 @@ body.home {
   -o-background-size: cover;
 }
 
+/*
 header .intro-text {
     padding-top: 100px;
     padding-bottom: 50px;
@@ -371,6 +366,7 @@ header .intro-text .intro-heading {
     }
 }
 
+*/
 section {
     padding: 100px 0;
     height: 900px;

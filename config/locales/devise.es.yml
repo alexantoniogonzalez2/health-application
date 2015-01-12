@@ -13,7 +13,7 @@ es:
       invalid: "Correo o contraseña inválidos."
       invalid_token: "Cadena de autenticación invalida."
       locked: "Su cuenta ha sido bloqueada."
-      not_found_in_database: "Correo o contraseña inválidos."
+      not_found_in_database: "Correo electrónico o contraseña inválidos."
       timeout: "su sesión ha expirado, por favor identifíquese de nuevo para continuar."
       unauthenticated: "Necesita iniciar sesión o registrarse para continuar."
       unconfirmed: "Debe confirmar su cuenta para continuar."
@@ -54,7 +54,7 @@ es:
       already_confirmed: "ya ha sido confirmado, por favor intente iniciar sesión."
       confirmation_period_expired: "necesita ser confirmado en %{period}, por favor vuelva a solicitarla."
       expired: "ha expirado, por favor vuelva a solicitarla."
-      not_found: "no se ha encontró."
+      not_found: "Su correo electrónico no se ha encontrado en nuestros registros."
       not_locked: "no estaba bloqueado."
       not_saved:
         one: "1 error impidió que este %{resource} fuese guardado:"

@@ -61,21 +61,26 @@
       <div class="intro-text">
           <h2 class="heading">Inicia sesión para acceder a <%= AplicacionMedica::Application.config.site_name %></h2>
           <p class="alert"><%= alert %></p>
-          <%= form_for(:user, :html => {:id => 'sign-in-form',:class => 'form-validator form-horizontal' }, :url => session_path(:user)) do |f| %>
+          <%= form_for(:user, :html => {:id => 'sign-in-form', :class => 'form-validator form-horizontal' }, :url => session_path(:user) ) do |f| %>
+          <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <%= f.text_field :email, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:" %>
+              <%= f.email_field :email,  autocomplete: "off", :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Tu correo electrónico es requerido" %>
               <p class="help-block text-danger"></p>
-              </div>
+            </div>
+          </div>
+          <div class="form-group">  
             <div class="input-group"> 
               <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-              <%= f.password_field :password, :class => "label_better form-control", :placeholder => "Ingresa tu contraseña", :'data-position'=> "top", :'data-new-placeholder' => "Contraseña:"%>
+              <%= f.password_field :password, :class => "label_better form-control", :placeholder => "Ingresa tu contraseña", :'data-position'=> "top", :'data-new-placeholder' => "Contraseña:", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Tu contraseña es requerida"%>
+              <p class="help-block text-danger"></p>
             </div>
+          </div>  
             <div class="checkbox">
               <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>
               <%= f.check_box :remember_me, :id => "remember_me" %> 
             </div>
-              <%= f.submit 'Iniciar sesión' ,class: "btn btn-large btn-primary btn-block" %><br>
+              <%= f.submit 'Iniciar sesión' ,id: 'inicia_sesion', class: "btn btn-large btn-primary btn-block" %><br>
               <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
               <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
               <br>
@@ -268,7 +273,7 @@
                     data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" >
           <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group ajuste5">
                   <input type="text" class="label_better2 form-control" placeholder="Ingresa tu nombre" data-new-placeholder="Nombre:" id="name" name="name" data-bv-notempty="true" data-bv-notempty-message="Tu nombre es requerido">
                   <p class="help-block text-danger"></p>
                 </div>
