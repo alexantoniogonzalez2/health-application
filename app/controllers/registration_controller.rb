@@ -7,16 +7,19 @@ class RegistrationController < Devise::RegistrationsController
 		@user = User.new
 		@user.email = params[:user][:email]
 		@user.password = params[:user][:password]
-		@user.password_confirmation =params[:user][:password_confirmation]
+		@user.password_confirmation = params[:user][:password_confirmation]
 		@persona = PerPersonas.new
-		@persona.nombre = params[:persona][:nombre]
-		@persona.apellido_paterno = params[:persona][:apellido_paterno]
+		@persona.nombre = params[:nombre]
+		@persona.apellido_paterno = params[:apellido_paterno]
+		@persona.apellido_materno = params[:apellido_materno]
+		@persona.rut = params[:rut]
+		@persona.genero = params[:sexo] == 1 ? 'Masculino' : 'Femenino'
 		@user.valid?
 		if @user.errors.blank?
 			@user.save
 			@persona.user = @user
 			@persona.save
-			redirect_to dashboard_path
+			redirect_to account_created_path
 		else
 			render :action => "new"
 		end

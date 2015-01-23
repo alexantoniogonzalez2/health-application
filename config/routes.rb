@@ -4,7 +4,7 @@ AplicacionMedica::Application.routes.draw do
   
   root :controller => 'home', :action => :index
   get 'about',   to: 'home#about',  as: 'about' 
-  get 'dashboard' => 'home#dashboard'
+  get 'account_created' => 'home#account_created'
 
   #Antecedentes
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 

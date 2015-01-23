@@ -10,12 +10,21 @@ $lightGray: #999;
 
 .logo { width: 40%; padding-top: 7px; }
 .logo-top { width: 20%; float: left; }
-div.signin { width: 300px; margin: auto; }
 .div-contact { padding-left: 10%; padding-right: 10%; }
 .ajuste-hover:hover { color: $blue !important; }
-a { text-decoration: none !important; }
 .glyphicon-envelope{ margin-right: 0px !important; }
+.text-primary { color: #fed136; }
+.navbar-ajuste { margin-top:50px !important; }
+.navbar-ajuste2 { background-color: rgba(1, 1, 1, 0.6) !important; }
+#navbar-intro > div.container { margin: auto; width: 1300px; }
+
+div.signin { width: 300px; margin: auto; }
+a { text-decoration: none !important; }
 h4.brand { margin:0px !important; padding:0px!important; }
+div.encabezado { background-color: rgba(1, 1, 1, 0.4);}
+nav.encabezado { border-radius: 0px; margin-bottom: 0px; width: 1200px; margin: auto;}
+span.glyphicon { margin-left: 15px; margin-right: 7px; }
+
 a.contacto {
 	letter-spacing: 1px;
 	color: white;
@@ -23,20 +32,15 @@ a.contacto {
 	margin-bottom: 0px;
 	float: left;	
 }
-.navbar-ajuste { margin-top:50px !important; }
-.navbar-ajuste2 { background-color: rgba(1, 1, 1, 0.6) !important; }
-div.encabezado { background-color: rgba(1, 1, 1, 0.4);}
-nav.encabezado { border-radius: 0px; margin-bottom: 0px; width: 1200px; margin: auto;}
-#navbar-intro > div.container { margin: auto; width: 1300px; }
-span.glyphicon { margin-left: 15px; margin-right: 7px; }
-div.intro-text, div.intro-text2 {
+
+div.intro-text, div.intro-text2, div.intro-text3 {
 	form {
 		a { color: white }
+    input { letter-spacing: 1px; }
 		input.btn-primary  { letter-spacing: 1px; font-weight: normal; margin: auto; width: 50%; margin-top: 10px; }
 		letter-spacing: 1px;
 		width: 600px;
 		margin: auto;
-		div.input-group { margin: auto; width: 50%; margin-top: 30px; }
 		div.checkbox { 
 			text-align: left;
 			margin-left: 180px;
@@ -45,6 +49,7 @@ div.intro-text, div.intro-text2 {
 		}	
 		input.label_better { 
 			color: $lightGray; 
+      background-color: white !important;
 			padding-top: 5px; 
 			letter-spacing: 1px; 
 			width: 100%;
@@ -56,7 +61,19 @@ div.intro-text, div.intro-text2 {
 	}
 }
 
-div.lb_label { width: 150px; text-align: left; }
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+background-color: white !important;
+
+}
+
+div.intro-text { form { div.input-group { margin: auto; width: 50%; margin-top: 30px; } } }
+div.intro-text2 { form { div.input-group { margin: auto; width: 50%; margin-top: 0px; } } }
+div.intro-text3 { form { margin-top: 50px; div.input-group { margin: auto; width: 80%; margin-top: 20px; } } }
+
+
+#contactForm { width: 1000px; margin: auto;}
+
+div.lb_label { width: 150px; text-align: left; top: auto !important;}
 
 form.contactForm {
   letter-spacing: 1px;
@@ -74,17 +91,20 @@ form.contactForm {
   }
 }
 
-.has-feedback .form-control-feedback { top: 45px; right: 0; padding-right: 12px; }
-.form-validator .has-feedback .form-control-feedback { top: 0; right: 15px; padding-right: 12px; }
+i.form-control-feedback { display: none !important;}
+.has-feedback .form-control { padding-right: 12px !important; }
 
-.intro-text {
-  .has-feedback .form-control-feedback { top: 30px !important; right: 160px !important; padding-right: 12px; }
-  .form-validator .has-feedback .form-control-feedback { top: 30px !important; right: 160px !important; padding-right: 12px; }
+div.ajuste-rut { margin-left: 40px !important; }
+label.ajuste-fecha { font-weight: normal !important; float: left; margin-left: 80px;}
+
+span.digito_verificador { 
+  position: relative;
+  right: 33px;
+  top: 25px;
 }
-
-.intro-text2 {
-  .has-feedback .form-control-feedback { top: 45px; right: 160px; padding-right: 12px; }
-  .form-validator .has-feedback .form-control-feedback { top: 0; right: 160px; padding-right: 12px; }
+span.ajuste-sexo {
+  float: left;
+  margin-left: 80px;
 }
 
 .text-muted {
@@ -92,7 +112,7 @@ form.contactForm {
   color: white;
 }
 
-.text-primary { color: #fed136; }
+.fecha-nacimiento { width: 300px !important; float: right; margin-right: 40px; }
 
 /* Se cambian los bordes verdes y rojos de bootstrap validation por los bordes originales*/
 .input-group-addon { color: #555555 !important; border: 1px solid #cccccc !important; border-right:none !important;}
@@ -323,50 +343,6 @@ body.home {
   -o-background-size: cover;
 }
 
-/*
-header .intro-text {
-    padding-top: 100px;
-    padding-bottom: 50px;
-}
-
-header .intro-text .intro-lead-in {
-    margin-bottom: 25px;
-    font-size: 22px;
-    font-style: italic;
-    line-height: 22px;
-}
-
-header .intro-text .intro-heading {
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    font-size: 50px;
-    font-weight: 700;
-    line-height: 50px;
-}
-
-@media(min-width:768px) {
-    header .intro-text {
-        padding-top: 0px;
-        padding-bottom: 300px;
-    }
-
-    header .intro-text .intro-lead-in {
-        margin-bottom: 25px;
-        font-size: 40px;
-        font-style: italic;
-        line-height: 40px;
-    }
-
-    header .intro-text .intro-heading {
-        margin-bottom: 50px;
-        text-transform: uppercase;
-        font-size: 75px;
-        font-weight: 700;
-        line-height: 75px;
-    }
-}
-
-*/
 section {
     padding: 100px 0;
     height: 900px;
@@ -428,3 +404,5 @@ footer {
 .btn:active:focus {
     outline: 0;
 }
+
+div.feedback { display: none; }

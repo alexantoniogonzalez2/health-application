@@ -1,13 +1,17 @@
-if (!($('#span-sign-in').text()).trim() ){
-  $('#sign-in-error').hide(); 
+if (($('#span-sign-in').text()).trim() ){
+  $('#sign-in-error').css( "display", "block !important");
+  $('#sign-in-error').show(); 
 }
 
-if (!($('#span-recuperar').text()).trim() ){
-  $('#recuperar-error').hide(); 
+if (($('#span-recuperar').text()).trim() ){
+  $('#recuperar-error').css( "display", "block !important");
+  $('#recuperar-error').show(); 
 }
 
-if (!($('#span-cuenta').text()).trim() ){
-  $('#cuenta-error').hide(); 
+if (($('#span-cuenta').text()).trim() ){
+  alert('hh');
+  $('#cuenta-error').css( "display", "block !important");
+  $('#cuenta-error').show(); 
 }
 
 $("#sign-in-form").submit(function (e) { 
@@ -16,6 +20,21 @@ $("#sign-in-form").submit(function (e) {
     respuesta = true;
   return respuesta;
 });
+
+$("#new_user").submit(function (e) { 
+  
+  var respuesta = false;
+  rut = $('#rut').val();
+  dv = $('#dv').val();
+  verificacion = jQuery.calculaDigitoVerificador(rut);
+  if (dv === verificacion)
+    respuesta = true
+  else
+    alert('rut invalido');
+  
+  return respuesta;
+});
+
 
 $("#contactForm").submit(function (e) { return false; });
 
@@ -33,34 +52,25 @@ $('#sign-in-form').bootstrapValidator({
 })
 
 $('#sign-in-form2').bootstrapValidator({
-  fields: {
-    'user[email]': {
-        validators: {
-            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
-        }
-    }
-  }
+  fields: { 'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } }
 })
 
+
 $('#new_user').bootstrapValidator({
-  fields: {
-    'user[email]': {
-        validators: {
-            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
-        }
-    }
+  fields: { 
+    'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
+    'sexo': { validators: { notEmpty: { message: 'Este campo es requerido' } } },
+    'rut': { validators: { digits: { message: 'Ingresa solo números' } } }
   }
 })
 
 $('#contactForm').bootstrapValidator({
-  fields: {
-    'email': {
-        validators: {
-            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
-        }
-    }
-  }
+  fields: { 'email': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } }
 });
+
+$('#recuperar').bootstrapValidator({
+  fields: { 'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } }
+})
 
 $('#sign-in-form').find('#user_email').change(function () {
   if ($('#user_email').val().length > 0 ){
@@ -200,4 +210,57 @@ if ($('#horas-agendadas').length || $('#atencion-salud').length ){
 	}, 30000);
 
 }
+
+$( ".datepicker" ).attr("placeholder", "Ingresa tu fecha de nacimiento").datepicker({
+  yearRange: '1910:2015',
+  showOtherMonths: true,
+  selectOtherMonths: true,
+  changeMonth: true,
+  changeYear: true,
+  dateFormat: 'yy-mm-dd',
+  dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+  showButtonPanel: true, 
   
+});
+  
+
+$.datepicker.regional['es'] = {
+  closeText: 'Cerrar',
+  prevText: 'Anterior',
+  nextText: 'Siguiente',
+  currentText: 'Hoy',
+  monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+  dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+  weekHeader: 'Sm',
+  dateFormat: 'yy-mm-dd',
+  firstDay: 1,
+  isRTL: false,
+  showMonthAfterYear: false,
+  yearSuffix: ''
+};
+$.datepicker.setDefaults($.datepicker.regional['es']);
+
+/*
+ * Calcula digito verificador
+ */
+$.calculaDigitoVerificador = function (rut) {
+  // type check
+  if (!rut || !rut.length || typeof rut !== 'string') {
+    return -1;
+  }
+  // serie numerica
+  var secuencia = [2,3,4,5,6,7,2,3];
+  var sum = 0;
+  //
+  for (var i=rut.length - 1; i >=0; i--) {
+    var d = rut.charAt(i)
+    sum += new Number(d)*secuencia[rut.length - (i + 1)];
+  };
+  // sum mod 11
+  var rest = 11 - (sum % 11);
+  // si es 11, retorna 0, sino si es 10 retorna K,
+  // en caso contrario retorna el numero
+  return rest === 11 ? 0 : rest === 10 ? "K" : rest;
+};

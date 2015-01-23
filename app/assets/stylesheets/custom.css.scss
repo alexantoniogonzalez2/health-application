@@ -9,7 +9,7 @@ $lightGray: #444;
 $white: white;
 
 html { overflow-y: scroll; }
-html.aplicacion, body.aplicacion { 
+html, body.aplicacion { 
   margin:0;
   padding:0; 
   height: 100% !important;
@@ -60,7 +60,6 @@ div.ajuste-signin {
     a:hover { color: $lightGray !important; }
     div.label_div { text-align: left; font-weight: normal; width: 500px; padding-left: 190px; }
     div.label_div > label { font-weight: normal; }
-    div.input-group { margin-top: 0px; /*margin-bottom: 20px;*/ }
   }
   h2.heading { letter-spacing: 2px !important; color: $lightGray; };
 }
@@ -125,39 +124,21 @@ span.head-text{
   transition: opacity 0.25s, width 0.25s;
 }
 
-.has-spinner.active {
-  cursor:progress;
-}
+.has-spinner.active { cursor:progress; }
 
 .has-spinner.active .spinner {
   opacity: 1;
   width: auto; /* This doesn't work, just fix for unkown width elements */
 }
 
-.has-spinner.btn-mini.active .spinner {
-  width: 10px;
-}
+.has-spinner.btn-mini.active .spinner { width: 10px; }
+.has-spinner.btn-small.active .spinner { width: 13px; }
+.has-spinner.btn.active .spinner { width: 16px; }
+.has-spinner.btn-large.active .spinner { width: 19px; }
+.modal-dialog { width: 800px !important; }
+.row-ajustado { margin-left: 20px; }
+.table thead.ajust-head > tr > th { font-weight: normal; }
 
-.has-spinner.btn-small.active .spinner {
-  width: 13px;
-}
+#new_user { width: 900px; }
 
-.has-spinner.btn.active .spinner {
-  width: 16px;
-}
-
-.has-spinner.btn-large.active .spinner {
-  width: 19px;
-}
-
-.modal-dialog {
-  width: 800px !important;
-}
-
-.row-ajustado {
-  margin-left: 20px;
-}
-
-.table thead.ajust-head > tr > th {
-  font-weight: normal;
-}
+div.ajuste-sexo { margin-top: 15px; float: left; }
