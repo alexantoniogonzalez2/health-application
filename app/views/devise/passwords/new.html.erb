@@ -2,7 +2,7 @@
   <div class="intro-text2">
     <h2 class="heading">Recupera tu contraseña</h2>
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {:id => 'recuperar', :class => 'form-validator form-horizontal', method: :post }) do |f| %>
-      <div id="recuperar-error" class="alert alert-danger" role="alert">
+      <div id="recuperar-error" class="alert alert-danger feedback" role="alert">
 			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 			  <span class="sr-only">Error:</span>
 			  <span id ="span-recuperar">

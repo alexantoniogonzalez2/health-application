@@ -24,9 +24,9 @@
       <div class="input-group ajuste-rut"> 
         <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
         	<input id="rut" name="rut" class="label_better form-control" placeholder="Ingresa tu RUT sin puntos " data-new-placeholder="RUT:" data-bv-notempty="true" data-bv-notempty-message="Tu RUT es requerido" data-bv-digits='true' data-fv-digits-message="Número">  
-          <p class="help-block text-danger"></p>
+          <p class="help-block text-danger"></p>          
       </div>
-      
+      <small class="error-rut">El RUT ingresado no es válido</small>      
     </div>
     <div class="form-group col-md-1 column"><span class="digito_verificador">-</span><input id="dv" name="dv" class="form-control" maxlength="1">
     </div>
@@ -36,14 +36,15 @@
     <div class="form-group col-md-6 column">
       <div class="input-group"> 
         <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-        <%= f.password_field :password, autocomplete: "off", :class => "label_better form-control", :placeholder => "Ingresa tu contraseña", :'data-new-placeholder' => "Contraseña:", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Ingresa una contraseña de al menos 6 carácteres" %>
+        <%= f.password_field :password, autocomplete: "off", :class => "label_better form-control", :placeholder => "Ingresa tu contraseña", :'data-new-placeholder' => "Contraseña:", :minlength => 6 %>
           <p class="help-block text-danger"></p>
       </div>
+      <small class="error-password">Las contraseñas no coinciden</small> 
     </div>
     <div class="form-group col-md-6 column">
       <div class="input-group"> 
         <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-        <%= f.password_field :password_confirmation, autocomplete: "off", :class => "label_better form-control", :placeholder => "Confirma tu contraseña", :'data-new-placeholder' => "Contraseña:", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Ingresa una contraseña de al menos 6 carácteres" %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", :class => "label_better form-control", :placeholder => "Confirma tu contraseña", :'data-new-placeholder' => "Contraseña:", :minlength => 6 %>
           <p class="help-block text-danger"></p>
       </div>
     </div>
@@ -91,6 +92,7 @@
   <div class="row">
     <div class="form-group col-md-6 column">
       <label class="ajuste-fecha">Fecha de nacimiento:</label><br/>
+      <small class="error-fecha">Ingresa tu fecha de nacimiento</small><br/> 
       <input id="f_n" class="datepicker fecha-nacimiento" type="text" >
     </div>
     <div class="form-group col-md-6 column">
@@ -103,15 +105,9 @@
     <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
   	</div>
   </div>
-
-
-
- </div>  
-
- 
+ </div>
     
 <% end %>
-
 
   </div>
 </div>

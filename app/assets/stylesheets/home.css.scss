@@ -102,17 +102,21 @@ span.digito_verificador {
   right: 33px;
   top: 25px;
 }
+
 span.ajuste-sexo {
   float: left;
   margin-left: 80px;
 }
-
+div.ajuste-sexo { /*margin-top: 15px;*/ float: left; width: 100%; }
 .text-muted {
   letter-spacing: 1px;
   color: white;
 }
 
 .fecha-nacimiento { width: 300px !important; float: right; margin-right: 40px; }
+input.datepicker, input.datepicker-disabled , .ui-datepicker { z-index: 3 !important; }
+small.error-rut, small.error-password, small.error-fecha  { color: #a94442; display: none; } 
+
 
 /* Se cambian los bordes verdes y rojos de bootstrap validation por los bordes originales*/
 .input-group-addon { color: #555555 !important; border: 1px solid #cccccc !important; border-right:none !important;}

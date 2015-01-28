@@ -43,8 +43,8 @@ es:
       update_needs_confirmation: "Ha actualizado su cuenta correctamente, sin embargo necesitamos verificar su nueva cuenta de correo. Por favor revise su correo electrónico y visite el enlace para finalizar la confirmación de su nueva dirección de correo electrónico."
       updated: "Ha actualizado tu cuenta correctamente."
     sessions:
-      signed_in: "Ha iniciado sesión satisfactoriamente."
-      signed_out: "Ha cerrado la sesión satisfactoriamente."
+      signed_in: "Has iniciado sesión satisfactoriamente."
+      signed_out: "Has cerrado la sesión satisfactoriamente."
     unlocks:
       send_instructions: "Recibira un correo electrónico en unos minutos con instrucciones sobre cómo desbloquear su cuenta."
       send_paranoid_instructions: "Si su cuenta existe, recibira un correo electrónico en unos minutos con instrucciones sobre cómo desbloquear su cuenta."
@@ -54,7 +54,7 @@ es:
       already_confirmed: "ya ha sido confirmado, por favor intente iniciar sesión."
       confirmation_period_expired: "necesita ser confirmado en %{period}, por favor vuelva a solicitarla."
       expired: "ha expirado, por favor vuelva a solicitarla."
-      not_found: "Su correo electrónico no se ha encontrado en nuestros registros."
+      not_found: "no está en nuestros registros"
       not_locked: "no estaba bloqueado."
       not_saved:
         one: "1 error impidió que este %{resource} fuese guardado:"

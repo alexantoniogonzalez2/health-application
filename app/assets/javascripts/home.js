@@ -1,3 +1,6 @@
+ $('#rut').keyup( function(e) { $('.error-rut').hide(); })
+ $('#user_password,#user_password_confirmation').keyup( function(e) { $('.error-password').hide(); })
+
 if (($('#span-sign-in').text()).trim() ){
   $('#sign-in-error').css( "display", "block !important");
   $('#sign-in-error').show(); 
@@ -9,7 +12,6 @@ if (($('#span-recuperar').text()).trim() ){
 }
 
 if (($('#span-cuenta').text()).trim() ){
-  alert('hh');
   $('#cuenta-error').css( "display", "block !important");
   $('#cuenta-error').show(); 
 }
@@ -25,12 +27,22 @@ $("#new_user").submit(function (e) {
   
   var respuesta = false;
   rut = $('#rut').val();
-  dv = $('#dv').val();
-  verificacion = jQuery.calculaDigitoVerificador(rut);
-  if (dv === verificacion)
-    respuesta = true
-  else
-    alert('rut invalido');
+  if (rut != '' ){
+    dv = $('#dv').val();
+    if (dv === 'k')
+      dv = 'K';
+    verificacion = jQuery.calculaDigitoVerificador(rut);
+    if (dv === verificacion)
+      respuesta = true
+    else 
+      $('.error-rut').show();
+  } 
+  password = $('#user_password').val();
+  password_confirmation = $('#user_password_confirmation').val();
+  if ( password != password_confirmation ){
+    respuesta = false; 
+     $('.error-password').show();
+  }
   
   return respuesta;
 });
@@ -59,8 +71,10 @@ $('#sign-in-form2').bootstrapValidator({
 $('#new_user').bootstrapValidator({
   fields: { 
     'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
-    'sexo': { validators: { notEmpty: { message: 'Este campo es requerido' } } },
-    'rut': { validators: { digits: { message: 'Ingresa solo números' } } }
+    sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
+    rut: { validators: { digits: { message: 'Ingresa solo números' } } },
+    'user[password]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' } } },
+    'user[password_confirmation]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' } } }
   }
 })
 
