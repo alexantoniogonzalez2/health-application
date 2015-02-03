@@ -1,5 +1,5 @@
-<p>Welcome <%= @email %>!</p>
+<p>¡Bienvenido <%= AplicacionMedica::Application.config.site_name %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>Confirma la creación de tu cuenta haciendo clic en el siguiente link:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p><%= link_to 'Confirmar mi cuenta', confirmation_url(@resource, confirmation_token: @token) %></p>

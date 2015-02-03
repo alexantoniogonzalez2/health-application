@@ -1,16 +1,50 @@
-<h2>Change your password</h2>
+<div class="container ajuste-signin">    
+  <div class="intro-text4">
+    <h2 class="heading">Ingresa tu contraseña</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { :id => 'new_password', :class => 'form-validator form-horizontal', method: :put }) do |f| %>
+  
   <%= f.hidden_field :reset_password_token %>
+  <div id="password-error" class="alert alert-danger feedback" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  <span id ="span-password">
+	  <%= devise_error_messages! %> 
+	  </span>
+  </div>
 
-  <div><%= f.label :password, "New password" %><br />
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %></div>
+	<div class="container">
+	  <div class="row">
+	    <div class="form-group col-md-6 column">
+	      <div class="input-group"> 
+	        <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+	        <%= f.password_field :password, autocomplete: "off", :class => "label_better form-control", :placeholder => "Ingresa tu nueva contraseña", :'data-new-placeholder' => "Nueva contraseña:", :minlength => 6 %>
+	          <p class="help-block text-danger"></p>
+	      </div>
+	      <small class="error-password">Las contraseñas no coinciden</small> 
+	    </div>
+	    <div class="form-group col-md-6 column">
+	      <div class="input-group"> 
+	        <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+	        <%= f.password_field :password_confirmation, autocomplete: "off", :class => "label_better form-control", :placeholder => "Confirma tu nueva contraseña", :'data-new-placeholder' => "Nueva contraseña:", :minlength => 6 %>
+	          <p class="help-block text-danger"></p>
+	      </div>
+	    </div>
+	  </div>
+		<div class='row'>
+	  	<div class="col-md-12 column">
+	  	  <%= f.submit "Crear nueva contraseña", class: "btn btn-large btn-primary btn-block" %><br>
+	    	<%= link_to "Iniciar sesión", new_session_path(:user) %> |
+	    	<%= link_to "Crear una cuenta", new_registration_path(:user) %>
+	  	</div>
+	  </div>
+	</div>
 
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
-
-  <div><%= f.submit "Change my password" %></div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+  </div>
+</div>
+
+<%= javascript_include_tag "home" %>
+
+

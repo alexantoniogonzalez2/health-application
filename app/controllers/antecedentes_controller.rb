@@ -2,7 +2,7 @@ class AntecedentesController < ApplicationController
 	def index
 		@acceso_especialista = false		
 		@acceso = true
-		@paciente = PerPersonas.find(current_user.id)		
+		@paciente = PerPersonas.where('user_id = ?',current_user.id).first		
 		#Antecedentes médicos		
 		@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
 																																				JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')

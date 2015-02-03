@@ -31,4 +31,7 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require bootstrapValidator.min
+//= require moment
+//= require bootstrap-datetimepicker
+//= require moment/es
 //= require_tree .

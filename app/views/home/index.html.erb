@@ -82,7 +82,7 @@
             </div>
               <%= f.submit 'Iniciar sesión' ,id: 'inicia_sesion', class: "btn btn-large btn-primary btn-block" %><br>
               <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
-              <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
+              <%= link_to "Recuperar contraseña", new_user_password_path(:user) %> 
               <br>
           <% end %>	
       </div>

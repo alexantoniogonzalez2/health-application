@@ -9,7 +9,7 @@
 	  <span id ="span-cuenta">
 	  <%= devise_error_messages! %> 
 	  </span>
-	</div>
+  </div>
 
 <div class="container">
 	<div class="row">
@@ -91,9 +91,14 @@
   </div>
   <div class="row">
     <div class="form-group col-md-6 column">
-      <label class="ajuste-fecha">Fecha de nacimiento:</label><br/>
-      <small class="error-fecha">Ingresa tu fecha de nacimiento</small><br/> 
-      <input id="f_n" class="datepicker fecha-nacimiento" type="text" >
+      <label class="ajuste-fecha">Fecha de nacimiento:</label>
+      
+        <div class='input-group date'>
+          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          <input type='text' class="form-control" id='datetimepicker1' name='date' placeholder='Ingresa tu fecha de nacimiento' />              
+        </div>
+     
+      
     </div>
     <div class="form-group col-md-6 column">
     </div>
@@ -105,7 +110,7 @@
     <%= link_to "Recuperar contraseña", new_password_path(:user) %> 
   	</div>
   </div>
- </div>
+</div>
     
 <% end %>
 

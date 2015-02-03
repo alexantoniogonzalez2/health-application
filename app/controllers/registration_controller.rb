@@ -12,7 +12,9 @@ class RegistrationController < Devise::RegistrationsController
 		@persona.nombre = params[:nombre]
 		@persona.apellido_paterno = params[:apellido_paterno]
 		@persona.apellido_materno = params[:apellido_materno]
+		@persona.fecha_nacimiento = params[:date]
 		@persona.rut = params[:rut]
+		@persona.digito_verificador = params[:dv]
 		@persona.genero = params[:sexo] == 1 ? 'Masculino' : 'Femenino'
 		@user.valid?
 		if @user.errors.blank?
@@ -24,7 +26,5 @@ class RegistrationController < Devise::RegistrationsController
 			render :action => "new"
 		end
 	end
-	def sign_in		
-
-	end
+	
 end

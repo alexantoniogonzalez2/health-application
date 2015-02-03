@@ -20,11 +20,11 @@ es:
       last_attempt: "Tiene un intento más antes de que su cuenta sea bloqueada."
     mailer:
       confirmation_instructions:
-        subject: "Instrucciones de confirmación"
+        subject: "Instrucciones de confirmación - MedRacer"
       reset_password_instructions:
-        subject: "Instrucciones para restablecer su contraseña"
+        subject: "Instrucciones para restablecer su contraseña - MedRacer"
       unlock_instructions:
-        subject: "Instrucciones de desbloqueo"
+        subject: "Instrucciones de desbloqueo - MedRacer"
     omniauth_callbacks:
       failure: "No se le ha podido autorizar de %{kind} debido a \"%{reason}\"."
       success: "Identificado correctamente de %{kind}."

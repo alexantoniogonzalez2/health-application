@@ -26,13 +26,14 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.2)
-    bcrypt (3.1.7)
     bcrypt (3.1.7-x86-mingw32)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bootstrap-validator-rails (0.5.3)
       jquery-rails (>= 3.0)
       railties (>= 3.0)
+    bootstrap3-datetimepicker-rails (4.0.0)
+      momentjs-rails (>= 2.8.1)
     builder (3.1.4)
     chosen-rails (1.1.0)
       coffee-rails (>= 3.2)
@@ -94,6 +95,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
+    momentjs-rails (2.9.0)
+      railties (>= 3.1)
     multi_json (1.10.1)
     mysql2 (0.3.16)
     orm_adapter (0.5.0)
@@ -164,6 +167,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   bootstrap-validator-rails (~> 0.5.3)
+  bootstrap3-datetimepicker-rails
   chosen-rails
   coffee-rails (~> 4.0.0)
   datejs-rails
@@ -178,6 +182,7 @@ DEPENDENCIES
   jquery-ui-rails (~> 4.2.0)
   jquery-validation-rails
   label_better_rails (~> 1.0.0)
+  momentjs-rails
   mysql2
   pdfkit
   r18n-core

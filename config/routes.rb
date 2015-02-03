@@ -1,10 +1,12 @@
 AplicacionMedica::Application.routes.draw do
 
-  devise_for :users,:controllers => { :registrations =>'registration'} 
+  devise_for :users,:controllers => { :registrations =>'registration', :passwords => "password"} 
   
   root :controller => 'home', :action => :index
   get 'about',   to: 'home#about',  as: 'about' 
   get 'account_created' => 'home#account_created'
+  get 'password_reset' => 'home#password_reset'
+  get 'password_reseted' => 'home#password_reseted'
 
   #Antecedentes
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 

@@ -21,6 +21,8 @@
  *= require dataTables/jquery.dataTables
  *= require font-awesome
  *= require bootstrapValidator.min
+ *= require bootstrap
+ *= require bootstrap-datetimepicker
  *= require_self
  *= require_tree .
  */

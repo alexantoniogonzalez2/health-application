@@ -66,6 +66,8 @@ gem 'wicked_pdf', '~> 0.9.10'
 gem 'pdfkit'
 gem 'bootstrap-validator-rails', '~> 0.5.3'
 gem 'label_better_rails', '~> 1.0.0'
+gem 'momentjs-rails'
+gem 'bootstrap3-datetimepicker-rails'
 
 #gem 'wkhtmltopdf-binary', '~> 0.9.9.1'
 #gem 'ruby-debug'

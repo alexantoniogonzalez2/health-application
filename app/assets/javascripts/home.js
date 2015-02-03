@@ -1,5 +1,16 @@
- $('#rut').keyup( function(e) { $('.error-rut').hide(); })
- $('#user_password,#user_password_confirmation').keyup( function(e) { $('.error-password').hide(); })
+var current = $('#datetimepicker1').val();
+function keep_checking() {
+
+    if (current != $('#datetimepicker1').val()) {
+        $('#new_user').bootstrapValidator('revalidateField', 'date');
+        current = $('#datetimepicker1').val();
+    }
+    setTimeout(keep_checking, 2000);
+}
+keep_checking();
+
+$('#rut').keyup( function(e) { $('.error-rut').hide(); })
+$('#user_password,#user_password_confirmation').keyup( function(e) { $('.error-password').hide(); })
 
 if (($('#span-sign-in').text()).trim() ){
   $('#sign-in-error').css( "display", "block !important");
@@ -16,6 +27,11 @@ if (($('#span-cuenta').text()).trim() ){
   $('#cuenta-error').show(); 
 }
 
+if (($('#span-password').text()).trim() ){
+  $('#password-error').css( "display", "block !important");
+  $('#password-error').show(); 
+}
+
 $("#sign-in-form").submit(function (e) { 
   var respuesta = false;
   if ( $('#user_email').val().length > 0 && $('#user_password').val().length  )
@@ -25,18 +41,35 @@ $("#sign-in-form").submit(function (e) {
 
 $("#new_user").submit(function (e) { 
   
-  var respuesta = false;
+  var respuesta = true;
+
   rut = $('#rut').val();
   if (rut != '' ){
     dv = $('#dv').val();
     if (dv === 'k')
       dv = 'K';
     verificacion = jQuery.calculaDigitoVerificador(rut);
-    if (dv === verificacion)
-      respuesta = true
-    else 
+    if (dv != verificacion){
+      respuesta = false;
       $('.error-rut').show();
+    }      
   } 
+  else
+    respuesta = false;
+
+  password = $('#user_password').val();
+  password_confirmation = $('#user_password_confirmation').val();
+  if ( password != password_confirmation ){
+    respuesta = false; 
+     $('.error-password').show();
+  }
+  
+  return respuesta;
+});
+
+$("#new_password").submit(function (e) { 
+  
+  var respuesta = true;
   password = $('#user_password').val();
   password_confirmation = $('#user_password_confirmation').val();
   if ( password != password_confirmation ){
@@ -54,7 +87,7 @@ $('#sign-in-form').bootstrapValidator({
   fields: {
     'user[email]': {
         validators: {
-            emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
+          emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
         }
     }
   },
@@ -67,14 +100,27 @@ $('#sign-in-form2').bootstrapValidator({
   fields: { 'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } }
 })
 
+$('#datetimepicker1').datetimepicker({
+    locale: 'es',
+    format: 'DD/MM/YYYY',
+    viewMode: 'years',
+});
 
 $('#new_user').bootstrapValidator({
   fields: { 
     'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
     sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
     rut: { validators: { digits: { message: 'Ingresa solo números' } } },
-    'user[password]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' } } },
-    'user[password_confirmation]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' } } }
+    'user[password]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' }, notEmpty: { message: 'La contraseña es requerida' } } },
+    'user[password_confirmation]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres', notEmpty: { message: 'La contraseña es requerida' } } } },
+    date: { validators: { notEmpty: { message: 'La fecha de nacimiento es requerida' }, date: { format: 'DD/MM/YYYY', min: '01/01/1900', max: '01/01/2016',  message: 'Formato no válido o fecha incorrecta' } } }
+  }
+})
+
+$('#new_password').bootstrapValidator({
+  fields: { 
+    'user[password]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' }, notEmpty: { message: 'La contraseña es requerida' } } },
+    'user[password_confirmation]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres', notEmpty: { message: 'La contraseña es requerida' } } } },
   }
 })
 
