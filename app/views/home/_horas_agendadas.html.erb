@@ -1,60 +1,56 @@
 <div id="horas-agendadas">
-  <div class="panel panel-danger">
-    <div class="panel-heading">
-      <h3 class="panel-title">Horas agendadas para el día
-        <span id="texto-actualizar" class="head-text">Actualizado a: <%= l @hora_actual %></span></h3>    
-    </div>
-    <div class="panel-body panel-home">
-      <table class="table table-striped table-bordered table-hover table-condensed">
-        <thead class="ajust-head">
-          <tr><th class="col-sm-1">Hora</th><th class="col-sm-3">Paciente</th><th class="col-sm-1">Rut</th><th class="col-sm-2">Estado</th><th class="col-sm-1">Llegada</th><th class="col-sm-2">Acción</th></tr>
-        </thead>
-        <tbody>
-        <% if @agendamientos.empty? %>
-          <tr><td colspan="5" >No hay horas agendadas para hoy.</td></tr>
-        <% end %>
-        <% @agendamientos.each do |agendamiento| %>
-          <tr>
-            <td><%= agendamiento.fecha_comienzo.to_s(:time) %></td> 
-            <% if agendamiento.persona %>
-              <td>
-                <%= agendamiento.persona.showName('%n%p%m') %>
-              </td>
-              <td>
-                <%= agendamiento.persona.showRut %>
-              </td>   
-              <% else %>
-              <td colspan='2'>
-                No agendada.
-              </td>  
-            <% end %>                 
-            <td><%= agendamiento.agendamiento_estado.nombre %></td>
-            <td>
-              <% if  agendamiento.fecha_llegada_paciente %>
-                <%= agendamiento.fecha_llegada_paciente.to_s(:time) %>
-              <% else %>
-                - 
-              <% end %>
-            </td>                
-            <td>
-              <% if agendamiento.agendamiento_estado_id == 7 %> 
-                <%= button_to "Reabrir atención", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => getIdAtencion(agendamiento.id)}, :method => :post,class: "btn btn-xs btn-info" %>
-              <% elsif existeAtencion(agendamiento.id) %>
-                <%= button_to "Continuar atención", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => getIdAtencion(agendamiento.id) }, :method => :post,class: "btn btn-xs btn-success" %>
-              <% elsif agendamiento.persona_id %>    
-                <%= button_to "Atender paciente", {:controller => :atenciones_salud,
-                :action => 'crearAtencion', :id => agendamiento.id }, :method => :post,class: "btn btn-xs btn-success" %>
-              <% elsif agendamiento.agendamiento_estado_id == 2 %> 
-                <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="desbloquearHora(<%= agendamiento.id%>)">Desbloquear Hora</button>  
-              <% elsif %>  
-                <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="bloquearHora(<%= agendamiento.id%>)">Bloquear Hora</button>     
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>   
-    </div>
-  </div>
+  <h4>Horas agendadas para el día</h4>
+  <% if @agendamientos.empty? %>
+    No hay horas agendadas para hoy.
+  <% else %>
+
+  <table class="table table-striped table-hover table-condensed">
+    <thead class="ajust-head">
+      <tr class="info" ><th class="col-sm-1">Hora</th><th class="col-sm-3">Paciente</th><th class="col-sm-1">Rut</th><th class="col-sm-2">Estado</th><th class="col-sm-1">Llegada</th><th class="col-sm-2">Acción</th></tr>
+    </thead>
+    <tbody>
+    <% @agendamientos.each do |agendamiento| %>
+      <tr>
+        <td><%= agendamiento.fecha_comienzo.to_s(:time) %></td> 
+        <% if agendamiento.persona %>
+          <td>
+            <%= agendamiento.persona.showName('%n%p%m') %>
+          </td>
+          <td>
+            <%= agendamiento.persona.showRut %>
+          </td>   
+          <% else %>
+          <td colspan='2'>
+            No agendada.
+          </td>  
+        <% end %>                 
+        <td><%= agendamiento.agendamiento_estado.nombre %></td>
+        <td>
+          <% if  agendamiento.fecha_llegada_paciente %>
+            <%= agendamiento.fecha_llegada_paciente.to_s(:time) %>
+          <% else %>
+            - 
+          <% end %>
+        </td>                
+        <td>
+          <% if agendamiento.agendamiento_estado_id == 7 %> 
+            <%= button_to "Reabrir atención", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => getIdAtencion(agendamiento.id)}, :method => :post,class: "btn btn-xs btn-info" %>
+          <% elsif existeAtencion(agendamiento.id) %>
+            <%= button_to "Continuar atención", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => getIdAtencion(agendamiento.id) }, :method => :post,class: "btn btn-xs btn-success" %>
+          <% elsif agendamiento.persona_id %>    
+            <%= button_to "Atender paciente", {:controller => :atenciones_salud,
+            :action => 'crearAtencion', :id => agendamiento.id }, :method => :post,class: "btn btn-xs btn-success" %>
+          <% elsif agendamiento.agendamiento_estado_id == 2 %> 
+            <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="desbloquearHora(<%= agendamiento.id%>)">Desbloquear Hora</button>  
+          <% elsif %>  
+            <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="bloquearHora(<%= agendamiento.id%>)">Bloquear Hora</button>     
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>   
+    
+  <% end %> 
 </div>
 

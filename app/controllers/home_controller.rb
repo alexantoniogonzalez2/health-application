@@ -8,7 +8,8 @@ class HomeController < ApplicationController
 		@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 		@actualizaciones = AgAgendamientoLogEstados
 			.joins(:agendamiento)
-			.select("ag_agendamiento_log_estados.fecha,
+			.select("ag_agendamientos.fecha_comienzo,
+							 ag_agendamiento_log_estados.fecha,
 							 ag_agendamiento_log_estados.agendamiento_estado_id,
 							 ag_agendamiento_log_estados.responsable_id,
 							 ag_agendamientos.persona_id")
@@ -62,11 +63,12 @@ class HomeController < ApplicationController
 				@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
   			@actualizaciones = AgAgendamientoLogEstados
 					.joins(:agendamiento)
-					.select("ag_agendamiento_log_estados.fecha,
+					.select("ag_agendamientos.fecha_comienzo,
+									 ag_agendamiento_log_estados.fecha,
 									 ag_agendamiento_log_estados.agendamiento_estado_id,
 									 ag_agendamiento_log_estados.responsable_id,
 									 ag_agendamientos.persona_id")
-					.where( "ag_agendamiento_log_estados.agendamiento_estado_id not in (1) AND fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ?",
+					.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
 						 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 					.order(fecha: :desc)
   			render 'index_profesional'

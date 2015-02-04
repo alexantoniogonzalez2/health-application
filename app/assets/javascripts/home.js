@@ -231,12 +231,14 @@ $("textarea.label_better2").label_better({
 
 
 function actualizar_atenciones(){
+
   $('a, button').toggleClass('active'); 
+  
 	$.ajax({
 	    type: 'POST',
 	    url: '/actualizar_atenciones',
 	    data: { },
-	    success: function(response) { $('a, button').toggleClass('active');},
+	    success: function(response) { $('a, button').toggleClass('active');  },
 	    error: function(xhr, status, error ){}
 	  });
 }
