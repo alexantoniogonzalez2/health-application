@@ -10,19 +10,18 @@
 .table { margin-bottom: 0px; }
 #examen-div, #procedimiento-div, #medicamento-div { margin-bottom: 0px; }
 
-#diagnostico-div { margin-bottom: 10px; }
+//#diagnostico-div { margin-bottom: 10px; }
 div.list-group {
   margin-bottom: 0px;
   padding-top: 10px;
   padding-bottom: 20px;
-  padding-left: 5px;
-
+ 
   a.list-group-item {
-    padding: 5px;
+    padding: 5px 1px 5px 5px;
     font-size: 13px;
 
     p.ajuste{
-      margin-right: 67px;
+      margin-right: 72px;
     }
   }
 }
@@ -35,6 +34,7 @@ div.select2-container{ font-size: 13px; }
   float: right;
   padding: 2px !important;
   margin-bottom: 0px !important; 
+  margin-left: 1px;
 }
 .boton-eno{
   position: relative;
@@ -57,16 +57,7 @@ textarea.form-control {
   font-weight: normal;
  }
 
-button.btn { /*float: right; */}
-
-input.btn {
-  /*float: right !important;
-  margin-left: 5px !important;*/
-}
-
-.div-form-atencion{
-  padding-top: 10px;
-}
+.div-form-atencion{ padding-top: 10px; }
 
 div.tab-content {
   padding: 10px 10px 10px 20px;
@@ -75,9 +66,7 @@ div.tab-content {
   border-radius: 0px 4px 4px 4px;
 }
 
-a.panel_tab {
-  border-color: #dddddd !important;
-} 
+a.panel_tab { border-color: #dddddd !important; } 
 
 .form-estado {
   margin-right: 0px !important;
@@ -166,7 +155,7 @@ div.panel-ges {
 div.trat{ padding-top: 26px !important; }
 label.trat{ font-weight: normal !important; }
 .form-ges { margin: 0px !important; }
-#icon-eno,#icon-ges { color: green !important; }
+.icon-eno, .icon-ges, .icon-con { color: green !important; }
 
 div.ajuste-eno { 
   display: inline-block;
@@ -231,5 +220,10 @@ div.metricas {
   height: 200px;
   margin: 0 auto;
 }
-
+.ajus-pos-right { float: right; margin-left: 5px !important; }
+.ajus-padd-bott { padding-bottom: 10px; }
+input.ajuste-select { width: 400px !important; }
+.select2-container { float: right; }
+a.select2-choice, a.select2-default { height: 30px !important; }
+.ajuste-margin-top { margin-top: 25px !important; }
 

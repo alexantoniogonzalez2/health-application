@@ -1,3 +1,9 @@
 $("<%= escape_javascript( render :partial => "persona_medicamento", :locals => {:persona_medicamento => @persona_medicamento} ) %>").appendTo("#medicamento-div");
 $("<%= escape_javascript( render :partial => "persona_medicamento_modal", :locals => {:persona_medicamento => @persona_medicamento} ) %>").appendTo("#med_modal-div");
-
+$.ajax({
+  type: 'POST',
+  url: '/agregar_diag_med',
+  data: { id: atencion_salud_id, med: <%= @persona_medicamento.id %> },
+  success: function(response) { },
+  error: function(xhr, status, error){ }
+});

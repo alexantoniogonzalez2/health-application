@@ -134,3 +134,16 @@ $("#form_act_fis")
             message: 'Ingrese un valor entero.'  
   .on("success.field.bv", "[name=\"dias_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),($(this).attr "id").substring(14) ))
   .on("success.field.bv", "[name=\"minutos_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),($(this).attr "id").substring(14) ))
+
+$('#select_medicamento').select2
+  width: '380px'
+  minimumInputLength: 3
+  placeholder: 'Seleccione un medicamento'
+  ajax:
+    url: '/cargar_medicamentos'
+    dataType: 'json'
+    type: 'POST'
+    data: (term, page) ->
+      { q: term }
+    results: (data, page) ->
+      { results: data }

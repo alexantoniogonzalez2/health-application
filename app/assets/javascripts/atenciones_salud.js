@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  $("#lista_atenciones").dataTable().fnDestroy();
+
   $('#lista_atenciones').dataTable({
   	"sPaginationType": "bootstrap",
   	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],

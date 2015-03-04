@@ -116,7 +116,7 @@ div.ajuste-sexo { /*margin-top: 15px;*/ float: left; width: 100%; }
 }
 
 .fecha-nacimiento { width: 300px !important; float: right; margin-right: 40px; }
-input.datepicker, input.datepicker-disabled , .ui-datepicker { z-index: 3 !important; }
+input.datepicker, input.datepicker-disabled , .ui-datepicker { /*z-index: 3 !important;*/ }
 small.error-rut, small.error-password, small.error-fecha  { color: #a94442; display: none; }
 span.glyphicon-calendar { margin: 0px; } 
 

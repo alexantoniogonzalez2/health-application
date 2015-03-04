@@ -1,3 +1,4 @@
+// este código es para seguir validando la fecha después de cambios en el cuestionario
 var current = $('#datetimepicker1').val();
 function keep_checking() {
 
@@ -8,6 +9,7 @@ function keep_checking() {
     setTimeout(keep_checking, 2000);
 }
 keep_checking();
+//
 
 $('#rut').keyup( function(e) { $('.error-rut').hide(); })
 $('#user_password,#user_password_confirmation').keyup( function(e) { $('.error-password').hide(); })

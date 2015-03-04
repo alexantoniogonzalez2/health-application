@@ -691,7 +691,7 @@ $(function(){
 
 
 	});	
-
+/*
 	$.ajax({
 		type: 'POST',
 		url: '/aux/mostrarEventos',
@@ -706,7 +706,7 @@ $(function(){
 		error: function(xhr, status, error){
 			alert("No se pudieron cargar las horas de atención");
 		}
-	});
+	});*/
 
 	function Mostrar(){
 		$('#action button').unbind('click');

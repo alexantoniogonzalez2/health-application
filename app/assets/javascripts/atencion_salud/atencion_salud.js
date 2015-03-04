@@ -1,5 +1,28 @@
-$('#icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.'  } })
-$('#icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.'  } })
+$('.icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.' }})
+$('.icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
+$('.icon-int').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
+$('#med').qtip({ content: { text: 'Medicamentos' }})
+$('#ale').qtip({ content: { text: 'Alergias' }})
+$('#vac').qtip({ content: { text: 'Vacunas' }})
+$('#act_fis').qtip({ content: { text: 'Actividad física' }})
+$('#hab_alc').qtip({ content: { text: 'Hábitos de alcohol' }})
+$('#hab_tab').qtip({ content: { text: 'Hábitos de tabaco' }})
+$('#ant_fam').qtip({ content: { text: 'Antecedentes familiares' }})
+$('#ant_soc').qtip({ content: { text: 'Antecedentes sociales' }})
+$('#ant_lab').qtip({ content: { text: 'Antecedentes laborales' }})
+
+$('.medicamento').on('shown.bs.modal', function() {
+
+  var med = $(this).attr('id').substring(20);
+  $('#div-diagnosticos-'+med).empty();
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_diag_med',
+    data: { id: atencion_salud_id, med: med },
+    success: function(response) { },
+    error: function(xhr, status, error){ }
+  });
+})
 
 $('.ges-cancelar').click(function() {
   var pd = $(this).attr('id').substring(13);
@@ -222,7 +245,7 @@ $('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccion
 $('select.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
 
 $('#select_diagnostico').select2({
-  width: '80%',
+  width: '380px',
   minimumInputLength: 3,
   placeholder: "Seleccione un diagnóstico",
   ajax: {
@@ -265,7 +288,7 @@ $('.select_persona_int').select2({
 });
 
 $('#select_examen').select2({
-  width: '82%',
+  width: '380px',
   minimumInputLength: 3,
   placeholder: "Seleccione un examen",
   ajax: {
@@ -278,7 +301,7 @@ $('#select_examen').select2({
 });
 
 $('#select_procedimiento').select2({
-  width: '61%',
+  width: '380px',
   minimumInputLength: 3,
   placeholder: "Seleccione un procedimiento",
   ajax: {
@@ -291,7 +314,7 @@ $('#select_procedimiento').select2({
 });
 
 $('#select_medicamento').select2({
-  width: '75%',
+  width: '380px',
   minimumInputLength: 3,
   placeholder: "Seleccione un medicamento",
   ajax: {
@@ -521,7 +544,7 @@ function eliminarDiagnostico(pers_diag_aten_sal) {
       atencion_salud_id: atencion_salud_id
     },
 
-    success: function(response) { $("#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); $("#pd"+pers_diag_aten_sal).remove();  },
+    success: function(response) { $("#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); $("#pd"+pers_diag_aten_sal).remove(); },
     error: function(xhr, status, error){ alert("No se pudo eliminar el diagnóstico del paciente.");   }
   });
    
@@ -571,13 +594,13 @@ function guardarDiagnostico(pers_diag_aten_sal) {
       enf_cro: enf_cro,
       trat: trat
      },
-    success: function(response) {  },
+    success: function(response) { },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente."); }
   });
 
 }
 
-function guardarMedicamento(pers_med) {
+function guardarMedicamento(pers_med, cerrar) {
 
   $.ajax({
     type: 'POST',
@@ -589,7 +612,10 @@ function guardarMedicamento(pers_med) {
       duracion: $( "#duracion-"+pers_med).val(),  
       total: $( "#total-"+pers_med).val(),      
     },
-    success: function(response) { $( "#modal-container-med-"+pers_med).modal('hide'); },
+    success: function(response) {
+      if (cerrar) 
+        $( "#modal-container-med-"+pers_med).modal('hide');
+    },
     error: function(xhr, status, error){ alert("No se pudo guardar el medicamento del paciente.");   }
   });
 
@@ -612,8 +638,12 @@ function eliminarPrestacion(pers_pre) {
 function calcularTotalMedicamentos(pers_med) {
   var cantidad = $( "#cantidad-"+pers_med).val();
   var periodicidad = $( "#periodicidad-"+pers_med).val();
-  var duracion = $( "#duracion-"+pers_med).val();  
-  var total = cantidad*(24/periodicidad)*duracion; 
+  var duracion = $( "#duracion-"+pers_med).val();
+  if (duracion != '')  
+    var total = cantidad*(24/periodicidad)*duracion;
+  else
+    var total = cantidad*(24/periodicidad);
+
   if (cantidad != "" && periodicidad != ""){
     $("#total-"+pers_med).val(total);
     $("#total-ml-"+pers_med).val(total/20);
@@ -621,6 +651,16 @@ function calcularTotalMedicamentos(pers_med) {
     $("#total-"+pers_med).val('');
     $("#total-ml-"+pers_med).val('');
   }
+  if (duracion != ''){
+    var myDate = new Date();
+    myDate.setDate(myDate.getDate() + parseInt(duracion) );
+    $('#fec-med-est-'+pers_med).html(formatDate(myDate));
+  }
+  else
+    $('#fec-med-est-'+pers_med).html('');
+
+  guardarMedicamento(pers_med,false);
+
 }
 
 function calcularIMC(pers_aten) {
@@ -824,3 +864,30 @@ window.createGrowl = function(persistent,message) {
       }
   });
 }
+
+function act_med_diag(med){
+  var diag = $('input[name=rad-med-'+med+']:checked').val();
+  $.ajax({
+    type: 'POST',
+    url: '/actualizar_diag_med',
+    data: { med: med, diag: diag},
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
+  }); 
+}
+
+function formatDate(date){
+
+  var dd = date.getDate();
+  var mm = date.getMonth()+1; //January is 0!
+  var yyyy = date.getFullYear();
+  if(dd<10)
+    dd='0'+dd
+   
+  if(mm<10)
+      mm='0'+mm
+   
+  var format_date = yyyy+'-'+mm+'-'+dd;
+  return format_date
+}
+

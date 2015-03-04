@@ -4,16 +4,16 @@
 			<ul id="nav-antecedentes" class="nav nav-pills nav-pills nav-stacked nav-antecedentes" role="tablist">
 			  <li class="active"><a href="#ant_med" role="tab" data-toggle="tab">Horas agendadas para el día</a></li>
 			  <li><a href="#ant_quir" role="tab" data-toggle="tab">Últimas actualizaciones</a></li>
-			  <li><%= link_to 'Ver agenda', agendamientoBuscadorHora_path %></li>
-			  <li><%= link_to 'Ver atenciones', atenciones_salud_index_path %></li>
+			  <li><a href="#agenda" role="tab" data-toggle="tab">Ver agenda</a></li>
+			  <li><a href="#atenciones" role="tab" data-toggle="tab">Ver atenciones</a></li>
 			</ul>
 		</div>
 		<div class="col-md-9 column antecedentes">
 			<div class="tab-content antecedentes">
 			  <div class="tab-pane active" id="ant_med"><%= render :partial => "horas_agendadas", :locals => {:agendamientos => @agendamientos} %></div>
-			  <div class="tab-pane" id="ant_quir"><%= render :partial => "log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %>  <button id="actualizar" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button></div>
-			  <div class="tab-pane"></div>
-			  <div class="tab-pane"></div>	
+			  <div class="tab-pane" id="ant_quir"><%= render :partial => "log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %> <button id="actualizar" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button></div>
+			  <div class="tab-pane" id="agenda"><%= render :partial => "agendamiento/buscador_hora" %></div>
+			  <div class="tab-pane" id="atenciones"><%= render :partial => "atenciones_salud/index" %></div>	
 			</div>
 		</div>
 	</div>

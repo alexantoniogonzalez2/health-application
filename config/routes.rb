@@ -80,6 +80,8 @@ AplicacionMedica::Application.routes.draw do
   get '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen'
   post '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc', :as => :persona_prestacion_index_procedimiento  
   get '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc'
+  post '/agregar_diag_med', to: 'persona_medicamento#agregarDiagMed'
+  post '/actualizar_diag_med', to: 'persona_medicamento#actualizarDiagMed'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

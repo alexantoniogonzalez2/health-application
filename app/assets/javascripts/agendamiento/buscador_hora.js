@@ -419,16 +419,9 @@ function actualizarCentro(){
 		    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
 		  }); 		
 		}
-		else{
-			alert('Seleccione una especialidad o un especialista.');
-		}
+		else{	alert('Seleccione una especialidad o un especialista.'); }
 	}
-	else{
-		
-	}  
-
-
-
+	else { }  
 }
 
 function actualizarTodosLosCentros(){
@@ -505,3 +498,10 @@ $(document).ready(
 	  );
 	}
 ); 
+
+//Muestra la agenda que no se renderiza al estar oculta
+$('#nav-antecedentes').on('shown.bs.tab', function (e) {
+  var target = $(e.target).attr("href") // activated tab
+  if (target == "#agenda")
+  	jQuery('#buscadorHora').fullCalendar('render');
+});

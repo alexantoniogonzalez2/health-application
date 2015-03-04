@@ -1,0 +1,4 @@
+<% @persona_diagnostico.each do |p_d| %> 
+	$("<%= escape_javascript( render :partial => "persona_medicamento/persona_diagnostico", :locals => {:p_d => p_d, :med => @med, :pe_di => @pe_di } ) %>").appendTo("#div-diagnosticos-"+<%= escape_javascript(@med) %> ) ;    
+<% end %>
+

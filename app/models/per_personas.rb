@@ -91,6 +91,11 @@ class PerPersonas < ActiveRecord::Base
     end 
   end
 
+  def age_text
+    edad = age
+    edad.to_s << ' años'
+  end
+
 
   def esProfesional(prestador_id)
     #Tomará sentido siempre que no exista un "deleted"

@@ -71,6 +71,14 @@ class HomeController < ApplicationController
 					.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
 						 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 					.order(fecha: :desc)
+
+				@atenciones_salud = FiAtencionesSalud
+					.joins('JOIN ag_agendamientos AS ag
+								  ON fi_atenciones_salud.agendamiento_id = ag.id
+								  JOIN pre_prestador_profesionales as ppp
+								  ON ag.especialidad_prestador_profesional_id = ppp.id')
+					.where('ppp.profesional_id = ?',current_user.id)
+					
   			render 'index_profesional'
 		  else	
 		  	render 'index_persona'

@@ -86,9 +86,9 @@
                 </div>
                 <div class="row clearfix footer">
                   <div class="col-md-12 column">
-                    <button type="button" onclick="cerrarDiagnostico(<%= p_d.id%>)" class="btn btn-default" >Cancelar</button>
-                    <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-primary">Guardar</button>
-                    <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger" id="bc<%= p_d.id%>" >Eliminar diagnóstico</button> 
+                    <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-success ajus-pos-right">Guardar</button>                                       
+                    <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger ajus-pos-right" id="bc<%= p_d.id%>"> Eliminar diagnóstico</button>
+                    <button type="button" onclick="cerrarDiagnostico(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
                   </div>                  
                 </div>
               </div> <!--Cierre container -->
@@ -146,10 +146,8 @@
           </div>
         </div> 
 
-
       </div>
-      <div class="modal-footer">
-      </div>
+      
     </div>            
   </div>        
 </div>

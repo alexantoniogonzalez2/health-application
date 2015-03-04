@@ -1,0 +1,93 @@
+<% if esProfesionalSalud %>
+	<h4>Agenda</h3>
+	<div id="profesional"></div>
+
+
+<% else %>
+
+
+<div class="panel panel-success">
+<div class="panel-heading">
+  <h3 class="panel-title">Buscador de horas</h3>
+</div>
+<div class="panel-body">
+<div class="row">
+	<div class="col-md-4 div-form-buscar-hora">	
+		<div class="div-centros">
+			<label>Centros médicos</label>
+	  	<fieldset id="checkbox_centros">
+	  		 <div class="checkbox"><label for="parentCheckBox" ><input type="checkbox" class="parentCheckBox" id="parentCheckBox" checked onchange="actualizarTodosLosCentros();">Todos los centros</label></div>				    
+				<div class="div_checkbox_centros">
+	  		<% @prestadores.each do |p| %>  				  
+	     		<div class="checkbox"><label><input type="checkbox" name="centros_option[]" class="childCheckBox" checked value="<%= p.id%>" onchange="actualizarCentro();" > <%= p.nombre %></label></div>					
+	  		<% end %>
+	  		</div>
+	  	</fieldset>
+		</div>
+	</div>
+
+	<div class="col-md-8 div-form-buscar-hora">
+
+			<div class="row clearfix row-buscar-hora">
+				<div class="col-md-3 column">
+					<label>Especialidad</label> 
+				</div>
+				<div class="col-md-9 column">	 
+			    <select id="select_especialidad" name="select_especialidad" data-placeholder="Seleccione una especialidad" class="chosen-select"  >
+			      <option></option>
+			      <% @especialidades.each do |e| %>
+		          <option value="<%= e.id%>"><%= e.nombre %></option>
+		        <% end %>
+			    </select>			    
+		    </div>
+	    </div>
+
+	    <div class="row clearfix row-buscar-hora">
+	    	<div class="col-md-3 column">
+		  		<label>Especialista</label>
+		  	</div>	
+		  	<div class="col-md-9 column">	
+			    <select id="select_especialista" name="select_especialista" data-placeholder="Seleccione un especialista" class="chosen-select" >
+			      <option></option>
+			       <% @profesionales.each do |pro| %>
+		          <option value="<%= pro.id%>"><%= pro.showName('%n%p%m') %></option>
+		        <% end %>
+			    </select>
+		    </div>
+	    </div>
+	</div>
+
+</div> <!--Cierre div row -->
+</div> <!--Cierre div panel-body -->
+</div> <!--Cierre div panel -->
+
+<% end %>
+
+<div id='buscadorHora'></div>
+
+<% if esProfesionalSalud %>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Recién nacido</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Lactante</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Pediatría</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Adolescente</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Adulto</div>
+		<div class="col-md-2 column"><i class='fa fa-child'></i> Adulto mayor</div>		
+	</div>
+</div>
+
+
+
+<% end %>
+
+<div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" id="modal-content">        
+    </div>          
+  </div>        
+</div> 
+
+<%= javascript_include_tag "agendamiento/buscador_hora" %>
+

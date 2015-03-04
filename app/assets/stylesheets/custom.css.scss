@@ -69,7 +69,10 @@ div.ajuste-signin > div.intro-text2 > div.alert-danger { width: 600px; margin: a
 
 .table{ margin-bottom: 0px; }
 .row { margin: 0px; }
-.ajustado > .column { padding-left: 0px; }
+.ajustado {
+  padding-left: 0px !important;
+  div.row > .column { padding-left: 0px; padding-right: 0px; }
+}
 
 .checkbox {
   margin-top: 10px;
@@ -104,7 +107,7 @@ div.panel-home { padding: 0px; }
 table.table { }
 table.table-log { font-size: 11px; }
 .table thead.ajust-head>tr>th{ vertical-align: middle; font-weight: bold; text-align: left}
-.table tbody>tr>td{ padding: 2px 4px; vertical-align: middle; font-size: 12px; }
+.table tbody>tr>td{ padding: 2px; vertical-align: middle; font-size: 12px; }
 
 span.head-text{
   float:right;  
@@ -141,3 +144,9 @@ span.head-text{
 
 #new_user, #new_password { width: 900px; }
 
+div.ajuste-ant { padding: 0px 5px 0px 0px; }
+div.ajuste-ant2 { padding: 0px 0px 0px 0px; }
+#antecedentes-div { padding: 5px 0px 10px 0px; } 
+#diagnostico-anterior-div { padding: 0px 0px 20px 0px; } 
+
+span.nota { font-size: 12px; }
