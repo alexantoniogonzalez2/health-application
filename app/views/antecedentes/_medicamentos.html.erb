@@ -5,51 +5,40 @@
     <% else %>
 			<table class="table table-striped table-hover table-condensed">
 				<thead class="ajust-head">
-		      <tr class='info'><th class="col-sm-1">Fecha indicación</th><th class="col-sm-3">Diagnóstico</th><th class="col-sm-2">Medicamento</th><th class="col-sm-2">Posología</th><th class="col-sm-1">Fecha inicio (*)</th><th class="col-sm-1">Fecha final (*)</th><th class="col-sm-1">Atención</th></tr>
+		      <tr class='info'><th class="col-sm-1">Fecha indicación</th><th class="col-sm-3">Diagnóstico</th><th class="col-sm-2">Medicamento</th><th class="col-sm-2">Posología</th><th class="col-sm-1">Fecha inicio (*)</th><th class="col-sm-1">Fecha final (*)</th><th class="col-sm-1">Acción</th></tr>
 		    </thead>
-		    <tbody>
+		    <tbody id='lista-medicamentos'>
 		      <% @persona_medicamentos.each do |p_m| %>
-		        <tr>
-		          <td><%= p_m.atencion_salud.agendamiento.fecha_comienzo.strftime('%Y-%m-%d') %></td> 
-		          <td><%= p_m.persona_diagnostico.nil? ? '-' : p_m.persona_diagnostico.diagnostico.nombre %></td>              
-		          <td><%= p_m.medicamento.nombre %></td>
-		          <td><%= p_m.getPosologia %></td>
-		          <td><%= p_m.fecha_inicio.nil? ? '-' : p_m.fecha_inicio.strftime('%Y-%m-%d') %></td>
-		          <td><%= p_m.fecha_final.nil? ? '-' : p_m.fecha_final.strftime('%Y-%m-%d')  %></td> 
-		          <td><%= link_to 'Ver', atenciones_salud_path(p_m.atencion_salud.id) %></td>
-		        </tr>
+		      	<%= render :partial => "persona_medicamento/medicamento_row", :locals => {:p_m => p_m } %>
 		      <% end %>
 		    </tbody>
 			</table>
 		<% end %>
-		<a href="#modal-agregar-medicamento" role="button" class="btn" data-toggle="modal">Agregar medicamento</a><br/><br/>		
 		<span class='nota'>(*) Las fechas de inicio y término son estimadas.</span>
+
+		<div class='container agregar-med'>
+			<div class='row'>
+				<div class='col-md-7 column ajuste-padding'>
+					<p>Agregar información de otro medicamento administrado:</p>
+				</div>
+				<div class='col-md-5 column'>
+					<input type='hidden' id="select_medicamento_ant">				
+				</div>
+			</div>
+		</div>			
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
 <% end %>  
 
-
-
-			 
-			
-<div class="modal fade" id="modal-agregar-medicamento" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">
-					Agregar medicamento
-				</h4>
-			</div>
-			<div class="modal-body">
-				<input type='hidden' id="select_medicamento"></input>
-			</div>
-			<div class="modal-footer">
-				 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button> <button type="button" class="btn btn-success">Guardar</button>
-			</div>
-		</div>
-		
-	</div>
 	
-</div>
-			
+
+<div id='med_ant_modal-div'></div>
+
+<% if @persona_medicamentos.empty? %>
+<% else %>
+	<% @persona_medicamentos.each do |p_m| %>
+		<%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m } if p_m.es_antecedente == true %>
+	<% end %>
+<% end %>	
+
+<%= javascript_include_tag "antecedentes" %>

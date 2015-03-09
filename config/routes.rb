@@ -13,6 +13,7 @@ AplicacionMedica::Application.routes.draw do
   post '/antecedentes/:id', to: 'antecedentes#edit'
   post '/editar_alergia', to: 'antecedentes#editarAlergia'
   post '/guardar_antecedentes_sociales', to: 'antecedentes#guardarAntecedentesSociales'
+  post '/cargar_antecedentes', to: 'antecedentes#cargarAntecedentes'
 
   #Ocupaciones
   get '/ocupaciones/new', to: 'ocupaciones#new', :as => :ocupaciones_new
@@ -67,6 +68,7 @@ AplicacionMedica::Application.routes.draw do
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
   post '/cargar_medicamentos', to: 'persona_medicamento#cargarMedicamentos'
   post '/agregar_medicamento', to: 'persona_medicamento#agregarMedicamento'
+   post '/agregar_medicamento_ant', to: 'persona_medicamento#agregarMedicamentoAntecedentes'
   post '/eliminar_medicamento', to: 'persona_medicamento#eliminarMedicamento'
   post '/guardar_medicamento', to: 'persona_medicamento#guardarMedicamento'
   post '/guardar_metricas', to: 'persona_metricas#guardarMetricas'

@@ -47,6 +47,8 @@ class AntecedentesController < ApplicationController
 																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																				 .where('persona_id = ?',@paciente.id)
 	end
+
+=begin
 	def edit
 		@acceso_especialista = true
 		@acceso = true
@@ -97,6 +99,7 @@ class AntecedentesController < ApplicationController
 																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																				 .where('persona_id = ?',@paciente.id)
 	end	
+=end
 	def editarAlergia
 		@paciente = PerPersonas.find(current_user.id)
 		case params[:estado]
@@ -115,6 +118,7 @@ class AntecedentesController < ApplicationController
 			format.json { render :json => { :success => true } }
 		end	
 	end
+
 	def guardarAntecedentesSociales
 		@persona = PerPersonas.find(current_user.id)
 		@persona.numero_personas_familia = params[:grupo_familiar]
@@ -153,6 +157,23 @@ class AntecedentesController < ApplicationController
 		respond_to do |format|
 			format.json { render :json => { :success => true } }
 		end		
+	end
+
+	def cargarAntecedentes
+
+		@acceso = true
+		@atencion_salud = FiAtencionesSalud.find(params[:at_sal])
+		@acceso = false if @atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
+
+		case params[:ant]
+		when 'med'
+			@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? AND atencion_salud_id != ? OR atencion_salud_id is null',params[:persona_id], params[:at_sal]).order('created_at')			
+		end
+
+		respond_to do |format|     
+    		format.js   {}
+    end	
+
 	end	
 
 end

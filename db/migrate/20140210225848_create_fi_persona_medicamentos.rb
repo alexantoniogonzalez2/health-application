@@ -12,6 +12,7 @@ class CreateFiPersonaMedicamentos < ActiveRecord::Migration
       t.integer :duracion
       t.integer :total
       t.references :persona_vacuna #persona_vacuna_id
+      t.boolean :es_antecedente 
 
       t.timestamps
     end

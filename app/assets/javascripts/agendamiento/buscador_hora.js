@@ -502,6 +502,6 @@ $(document).ready(
 //Muestra la agenda que no se renderiza al estar oculta
 $('#nav-antecedentes').on('shown.bs.tab', function (e) {
   var target = $(e.target).attr("href") // activated tab
-  if (target == "#agenda")
+  if (target == "#agenda" || target == "#horas" )
   	jQuery('#buscadorHora').fullCalendar('render');
 });

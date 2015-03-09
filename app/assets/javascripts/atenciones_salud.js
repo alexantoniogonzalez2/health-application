@@ -21,4 +21,18 @@ $(document).ready(function() {
    
   $('#div_atenciones').show();
 
+  $('.load_ant').click(function() {
+    var ant = $(this).attr('id');
+    $.ajax({
+      type: 'POST',
+      url: '/cargar_antecedentes',
+      data: { ant: ant, persona_id: persona_id, at_sal: atencion_salud_id},
+      success: function(response){  },
+      error: function(xhr, status, error){ alert("Se produjo un error al leer los antecedentes."); }
+    });
+  });
+
+
+
 });
+

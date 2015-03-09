@@ -558,7 +558,7 @@ function eliminarMedicamento(pers_med) {
     url: '/eliminar_medicamento',
     data: { persona_medicamento_id: pers_med},
 
-    success: function(response) { $("#modal-container-med-"+pers_med).modal('hide'); $("#pm"+pers_med).remove(); },
+    success: function(response) { $("#modal-container-med-"+pers_med).modal('hide'); $("#pm"+pers_med).remove(); $("#tr-med-"+pers_med).remove();},
     error: function(xhr, status, error){ alert("No se pudo eliminar el medicamento del paciente.");   }
   });
    
@@ -890,4 +890,5 @@ function formatDate(date){
   var format_date = yyyy+'-'+mm+'-'+dd;
   return format_date
 }
+
 

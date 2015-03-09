@@ -1,0 +1,2 @@
+$("<%= escape_javascript( render :partial => "medicamento_row", :locals => {:p_m => @persona_medicamento} ) %>").appendTo("#lista-medicamentos");
+$("<%= escape_javascript( render :partial => "persona_medicamento_modal", :locals => {:persona_medicamento => @persona_medicamento} ) %>").appendTo("#med_ant_modal-div");

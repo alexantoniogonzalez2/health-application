@@ -11,7 +11,7 @@
 
 <div id="atencion-salud" class="panel panel-success">
 <div class="panel-heading">
-  <h3 class="panel-title"><span>Atención de Salud</span><span>Hora</span></h3>
+  <h3 class="panel-title"><span>Atención de Salud</span><span class='right'>Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %> </span></h3>
 </div>
 <div class="panel-body">	
 
@@ -44,8 +44,8 @@
 <div class"container"  >
   <div class="row clearfix">
     <div class="list-group col-md-4 column ajuste-ant">
-      <a id="med" href="#" data-toggle="modal" data-target="#myModal" class="list-group-item"><i class="fa fa-archive fa-fw fa-lg"></i>Medicamentos</a>
-      <a id="ale" href="#" class="list-group-item"><i class="fa fa-shield fa-fw fa-lg"></i>Alergias</a>
+      <a id="med" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-archive fa-fw fa-lg"></i><%= @texto_ant_med %></a>
+      <a id="ale" href="#" class="list-group-item load_ant"><i class="fa fa-shield fa-fw fa-lg"></i>Alergias</a>
       <a id="vac" href="#" class="list-group-item"><i class="fa fa-magic fa-fw fa-lg"></i>Vacunas</a>
     </div>
     <div class="list-group col-md-4 column ajuste-ant">
@@ -65,16 +65,15 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      <div class="modal-header ajuste-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4>Antecedentes del paciente</h4>
       </div>
       <div class="modal-body">
-        ...
+        <div id='contenido-ant'></div>        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
       </div>
     </div>
   </div>
@@ -212,4 +211,5 @@
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
 <%= javascript_include_tag "home" %>
+
 

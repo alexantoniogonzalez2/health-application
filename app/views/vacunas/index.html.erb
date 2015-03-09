@@ -18,3 +18,7 @@
 
 <%= render :partial => @partial_seguimiento unless @partial_seguimiento.blank? %> 
 <%= javascript_include_tag "vacunas" %>
+
+
+<%= link_to 'Calendario de vacunas', vacunas_calendario_path %><br/>
+<%= link_to 'Otras vacunas', otras_vacunas_path %><br/>

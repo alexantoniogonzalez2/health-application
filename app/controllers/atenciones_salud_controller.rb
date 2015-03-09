@@ -119,6 +119,17 @@ class AtencionesSaludController < ApplicationController
 	  @presion = @persona_presion ? @persona_presion.valor : ''
 	  @imc = @persona_imc ? @persona_imc.valor : ''
 
+	  @array_medicamentos = []
+	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND atencion_salud_id != ? OR atencion_salud_id is null',params[:persona_id], params[:at_sal]).order('created_at')
+	  @persona_medicamentos_ant.each do |p_m_a|
+	  	@array_medicamentos.push(p_m_a.medicamento.nombre)
+  	end
+  	if @persona_medicamentos_ant.empty?
+  		@texto_ant_med = 'Sin información'
+  	else
+  		@texto_ant_med = @array_medicamentos.join(' | ')	
+  	end	
+
 	end
 
 	def crearAtencion	

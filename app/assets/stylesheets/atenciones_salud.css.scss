@@ -226,4 +226,13 @@ input.ajuste-select { width: 400px !important; }
 .select2-container { float: right; }
 a.select2-choice, a.select2-default { height: 30px !important; }
 .ajuste-margin-top { margin-top: 25px !important; }
+.right { float: right; }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
+.ajuste-padding { padding-left: 0px !important; padding-right: 0px !important; }
+.ajuste-modal-header { padding: 15px 15px 5px 15px !important;}

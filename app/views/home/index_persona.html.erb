@@ -1,14 +1,45 @@
-<%= link_to 'Vacunas de la persona', vacunas_index_path %><br/>
-<%= link_to 'Calendario de vacunas', vacunas_calendario_path %><br/>
-<%= link_to 'Otras vacunas', otras_vacunas_path %><br/>
-<%= link_to 'Antecedentes', antecedentes_index_path %><br/>
-<br/><br/>
-<%= link_to 'Buscador de horas', agendamientoBuscadorHora_path %><br/>
-<%= link_to 'Agregar antecedentes', antecedentes_index_path  %><br/>
-<%= link_to 'Test AUDIT', habitos_alcohol_new_path %><br/>
-<%= link_to 'Ver Test AUDIT realizados', habitos_alcohol_index_path  %><br/>
-<%= link_to 'Ingresar consumo de tabaco', habitos_tabaco_new_path %><br/>
-<%= link_to 'Ver consumo de tabaco', habitos_tabaco_index_path  %><br/>
-<%= link_to 'Ingresar antecedente laboral', ocupaciones_new_path %><br/>
-<%= link_to 'Ver antecedentes laborales', ocupaciones_index_path  %><br/>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-3 column">
+			<ul id="nav-antecedentes" class="nav nav-pills nav-pills nav-stacked nav-antecedentes" role="tablist">
+				<li class="active"><a href="#inicio" role="tab" data-toggle="tab">Inicio</a></li>
+				<li><a href="#horas" role="tab" data-toggle="tab">Buscador de horas</a></li>
+			  <li><a href="#ant_med" role="tab" data-toggle="tab">Antecedentes médicos</a></li>
+			  <li><a href="#ant_quir" role="tab" data-toggle="tab">Antecedentes quirúrgicos</a></li>
+			  <li><a href="#medicamentos" role="tab" data-toggle="tab">Medicamentos</a></li>
+			  <li><a href="#alergias" role="tab" data-toggle="tab">Alergias</a></li>
+			  <li><a href="#vacunas" role="tab" data-toggle="tab">Vacunas</a></li>
+			  <li><a href="#actividad_fisica" role="tab" data-toggle="tab">Actividad física</a></li>
+			  <li><a href="#habitos_alcohol" role="tab" data-toggle="tab">Hábitos de alcohol</a></li>
+			  <li><a href="#habitos_tabaco" role="tab" data-toggle="tab">Hábitos de tabaco</a></li>
+			  <li><a href="#antecedentes_familiares" role="tab" data-toggle="tab">Antecedentes familiares</a></li>
+			  <li><a href="#antecedentes_sociales" role="tab" data-toggle="tab">Antecedentes sociales</a></li>
+			  <li><a href="#antecedentes_laborales" role="tab" data-toggle="tab">Antecedentes laborales</a></li>
+			</ul>
+		</div>
+		<div class="col-md-9 column antecedentes">
+			<div class="tab-content antecedentes">
+				<div class="tab-pane active" id="inicio"><%= render :partial => "inicio" %></div>
+				<div class="tab-pane" id="horas"><%= render :partial => "agendamiento/buscador_hora" %></div>
+			  <div class="tab-pane" id="ant_med"><%= render :partial => "antecedentes/antecedentes_medicos" %></div>
+			  <div class="tab-pane" id="ant_quir"><%= render :partial => "antecedentes/antecedentes_quirurgicos" %></div>
+			  <div class="tab-pane" id="medicamentos"><%= render :partial => "antecedentes/medicamentos" %></div>
+			  <div class="tab-pane" id="alergias"><%= render :partial => "antecedentes/alergias" %></div>
+			  <div class="tab-pane" id="vacunas"><%= render :template => "vacunas/index" %></div>
+			  <div class="tab-pane" id="actividad_fisica"><%= render :partial => "antecedentes/actividad_fisica" %></div>
+			  <div class="tab-pane" id="habitos_alcohol"><%= render :template => "habitos_alcohol/index" %></div>
+			  <div class="tab-pane" id="habitos_tabaco"><%= render :template => "habitos_tabaco/index" %></div>
+			  <div class="tab-pane" id="antecedentes_familiares"><%= render :partial => "antecedentes/antecedentes_familiares" %></div>
+			  <div class="tab-pane" id="antecedentes_sociales"><%= render :partial => "antecedentes/antecedentes_sociales" %></div>
+			  <div class="tab-pane" id="antecedentes_laborales"><%= render :template => "ocupaciones/index" %></div>		
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
 

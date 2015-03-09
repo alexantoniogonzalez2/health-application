@@ -17,6 +17,6 @@ class FiPersonaMedicamentos < ActiveRecord::Base
   end  
   private
   def app_params
-    params.require(:list).permit(:id,:persona,:medicamento,:persona_diagnostico,:persona_vacuna,:fecha_final,:fecha_inicio,:atencion_salud,:cantidad,:periodicidad,:duracion,:total)
+    params.require(:list).permit(:id,:persona,:medicamento,:persona_diagnostico,:persona_vacuna,:fecha_final,:fecha_inicio,:atencion_salud,:cantidad,:periodicidad,:duracion,:total,:es_antecedente)
   end
 end

@@ -49,6 +49,32 @@ class PersonaMedicamentoController < ApplicationController
 		end  	
 	end
 
+	def agregarMedicamentoAntecedentes
+
+		
+		@persona = PerPersonas.find(current_user.id) if params[:persona_id] == 'persona'
+		@persona_medicamento = FiPersonaMedicamentos.new
+		@persona_medicamento.persona = @persona
+		@persona_medicamento.medicamento_id = params[:medicamento_id]
+		@persona_medicamento.es_antecedente = true
+		@persona_medicamento.save!
+
+		tipo = @persona_medicamento.medicamento.medicamento_tipo_id;
+
+	  if tipo == 1 
+	    @unidad = 'comprimidos'
+	  else tipo == 2
+	    @unidad = 'ml'
+	  end
+
+		respond_to do |format|     
+    	format.js   {}
+    	format.json { render :json => { :success => true } }
+    end	
+
+		 	
+	end
+
 	def eliminarMedicamento		
 		@persona_medicamento = FiPersonaMedicamentos.find(params[:persona_medicamento_id])
   	@persona_medicamento.destroy 
@@ -65,8 +91,18 @@ class PersonaMedicamentoController < ApplicationController
 		else	
   		@persona_medicamento.update( cantidad: params[:cantidad], periodicidad: params[:periodicidad], duracion: params[:duracion], total: params[:total] )
   	end	
-  	
-  	render :json => { :success => true }	
+
+  	if @persona_medicamento.es_antecedente
+  		respond_to do |format|     
+    		format.js   {}
+    	end	  		
+  	else  
+  		render :json => { :success => true }	  		
+  	end	
+	end
+
+	def guardarMedicamentoNor
+		render :json => { :success => true }				
 	end
 
 	def agregarDiagMed
