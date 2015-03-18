@@ -1,4 +1,8 @@
+function addSpinner(element_id){ $('#'+element_id).append("<div class='div-spinner'><i class='fa fa-cog fa-spin fa-5x'></i></div>"); }
+//function removeSpinner(element_id){ $('#'+element_id).remove(); }
+
 $(document).ready(function() {
+
 
   $("#lista_atenciones").dataTable().fnDestroy();
 
@@ -22,17 +26,22 @@ $(document).ready(function() {
   $('#div_atenciones').show();
 
   $('.load_ant').click(function() {
+    addSpinner('contenido-ant');
     var ant = $(this).attr('id');
     $.ajax({
       type: 'POST',
       url: '/cargar_antecedentes',
       data: { ant: ant, persona_id: persona_id, at_sal: atencion_salud_id},
-      success: function(response){  },
-      error: function(xhr, status, error){ alert("Se produjo un error al leer los antecedentes."); }
+      success: function(response){ },
+      error: function(xhr, status, error){ alert("Se produjo un error al cargar los antecedentes."); }
     });
   });
 
-
-
 });
+
+function cerrarModalAnt(modalid){
+  $('#modal-container-med-'+modalid).modal('hide');
+}
+
+
 

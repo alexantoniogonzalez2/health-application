@@ -1,1 +1,14 @@
-$( "#contenido-ant" ).replaceWith("<%= escape_javascript( render :partial => "antecedentes/medicamentos", :locals => {:persona_medicamentos => @persona_medicamentos} ) %>")
+<%	case @ant %>
+<%	when 'med' %>
+			$( "#contenido-ant" ).replaceWith("<%= escape_javascript( render :partial => @partial, :locals => {:persona_medicamentos => @persona_medicamentos, :atencion_salud => @atencion_salud } ) %>")			
+<%	when 'ale' %>
+<%	when 'vac' %>
+<%	when 'ant_qui' %>
+<%	when 'act_fis' %>
+<%	when 'hab_alc' %>
+<%	when 'hab_tab' %>
+<%	when 'ant_gin' %>
+<%	when 'ant_fam' %>
+<%	when 'ant_soc' %>
+<%	when 'ant_lab' %>	
+<%	end %>

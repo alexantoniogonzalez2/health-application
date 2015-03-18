@@ -161,13 +161,25 @@ class AntecedentesController < ApplicationController
 
 	def cargarAntecedentes
 
+		@ant = params[:ant]
 		@acceso = true
 		@atencion_salud = FiAtencionesSalud.find(params[:at_sal])
 		@acceso = false if @atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
 
 		case params[:ant]
 		when 'med'
-			@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? AND atencion_salud_id != ? OR atencion_salud_id is null',params[:persona_id], params[:at_sal]).order('created_at')			
+			@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? AND atencion_salud_id != ? OR atencion_salud_id is null',params[:persona_id], params[:at_sal]).order('created_at')
+			@partial = 'antecedentes/medicamentos'			
+		when 'ale'
+		when 'vac'
+		when 'ant_qui'
+		when 'act_fis'
+		when 'hab_alc'
+		when 'hab_tab'
+		when 'ant_gin'
+		when 'ant_fam'
+		when 'ant_soc'
+		when 'ant_lab'	
 		end
 
 		respond_to do |format|     

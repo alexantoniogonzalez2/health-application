@@ -10,6 +10,8 @@ $('#hab_tab').qtip({ content: { text: 'Hábitos de tabaco' }})
 $('#ant_fam').qtip({ content: { text: 'Antecedentes familiares' }})
 $('#ant_soc').qtip({ content: { text: 'Antecedentes sociales' }})
 $('#ant_lab').qtip({ content: { text: 'Antecedentes laborales' }})
+$('#ant_qui').qtip({ content: { text: 'Antecedentes quirúrgicos' }})
+$('#ant_gin').qtip({ content: { text: 'Antecedentes ginecológicos' }})
 
 $('.medicamento').on('shown.bs.modal', function() {
 

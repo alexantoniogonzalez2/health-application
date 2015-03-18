@@ -50,7 +50,6 @@ class PersonaMedicamentoController < ApplicationController
 	end
 
 	def agregarMedicamentoAntecedentes
-
 		
 		@persona = PerPersonas.find(current_user.id) if params[:persona_id] == 'persona'
 		@persona_medicamento = FiPersonaMedicamentos.new
@@ -71,7 +70,6 @@ class PersonaMedicamentoController < ApplicationController
     	format.js   {}
     	format.json { render :json => { :success => true } }
     end	
-
 		 	
 	end
 
@@ -99,10 +97,6 @@ class PersonaMedicamentoController < ApplicationController
   	else  
   		render :json => { :success => true }	  		
   	end	
-	end
-
-	def guardarMedicamentoNor
-		render :json => { :success => true }				
 	end
 
 	def agregarDiagMed

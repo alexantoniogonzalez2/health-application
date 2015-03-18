@@ -32,7 +32,7 @@ class AtencionesSaludController < ApplicationController
 	def edit
 
 		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
-		@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
+		@agendamientos = AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 		@actualizaciones = AgAgendamientoLogEstados
 			.joins(:agendamiento)
 			.select("ag_agendamiento_log_estados.fecha,
@@ -49,6 +49,7 @@ class AtencionesSaludController < ApplicationController
 		@id = params[:id]
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
 	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
 
 	  @persona_diagnostico = FiPersonaDiagnosticos
@@ -120,11 +121,11 @@ class AtencionesSaludController < ApplicationController
 	  @imc = @persona_imc ? @persona_imc.valor : ''
 
 	  @array_medicamentos = []
-	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND atencion_salud_id != ? OR atencion_salud_id is null',params[:persona_id], params[:at_sal]).order('created_at')
+	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND atencion_salud_id != ? OR atencion_salud_id is null',@persona.id,params[:id]).order('created_at')
 	  @persona_medicamentos_ant.each do |p_m_a|
 	  	@array_medicamentos.push(p_m_a.medicamento.nombre)
   	end
-  	if @persona_medicamentos_ant.empty?
+  	if @array_medicamentos.blank?
   		@texto_ant_med = 'Sin información'
   	else
   		@texto_ant_med = @array_medicamentos.join(' | ')	

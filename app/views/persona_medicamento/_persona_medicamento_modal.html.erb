@@ -1,8 +1,8 @@
 <div class="modal fade medicamento" id="modal-container-med-<%= persona_medicamento.id %>" role="dialog" aria-spanledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-ajus">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <button type="button" class="close" onclick="cerrarModalAnt(<%= persona_medicamento.id %>)" aria-hidden="true">×</button>
         <h4 class="modal-title"><%= persona_medicamento.medicamento.nombre %></h4>
       </div>
       <div class="modal-body">
@@ -59,7 +59,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        <button type="button" class="btn btn-default" onclick="cerrarModalAnt(<%= persona_medicamento.id %>)">Cerrar ventana</button>
         <button id="bpm<%= persona_medicamento.id %>" type="button" class="btn btn-danger" onclick="eliminarMedicamento(<%= persona_medicamento.id %>)">Eliminar medicamento</button>
         <button type="button" onclick="guardarMedicamento(<%= persona_medicamento.id %>, true)" class="btn btn-success">Guardar</button>
       </div>

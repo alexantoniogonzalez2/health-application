@@ -9,7 +9,7 @@
 		    </thead>
 		    <tbody id='lista-medicamentos'>
 		      <% @persona_medicamentos.each do |p_m| %>
-		      	<%= render :partial => "persona_medicamento/medicamento_row", :locals => {:p_m => p_m } %>
+		      	<%= render :partial => "persona_medicamento/medicamento_row", :locals => {:p_m => p_m, :atencion_salud => @atencion_salud } %>
 		      <% end %>
 		    </tbody>
 			</table>
@@ -41,4 +41,4 @@
 	<% end %>
 <% end %>	
 
-<%= javascript_include_tag "antecedentes" %>
+<%= javascript_include_tag "antec_select2" %>
