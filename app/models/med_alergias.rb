@@ -4,7 +4,7 @@ class MedAlergias < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(:id,:nombre,:personas_alergias)
+    params.require(:list).permit(:id,:nombre,:personas_alergias, :comun)
   end
 
 end

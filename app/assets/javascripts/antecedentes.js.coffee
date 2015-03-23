@@ -134,4 +134,3 @@ $("#form_act_fis")
             message: 'Ingrese un valor entero.'  
   .on("success.field.bv", "[name=\"dias_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),($(this).attr "id").substring(14) ))
   .on("success.field.bv", "[name=\"minutos_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),($(this).attr "id").substring(14) ))
-

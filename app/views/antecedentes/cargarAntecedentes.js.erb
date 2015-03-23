@@ -2,9 +2,13 @@
 <%	when 'med' %>
 			$( "#contenido-ant" ).replaceWith("<%= escape_javascript( render :partial => @partial, :locals => {:persona_medicamentos => @persona_medicamentos, :atencion_salud => @atencion_salud } ) %>")			
 <%	when 'ale' %>
+			$( "#contenido-ant" ).replaceWith("<%= escape_javascript( render :partial => @partial, :locals => {:persona_prestacion => @persona_prestacion, :atencion_salud => @atencion_salud, :prestadores => @prestadores } ) %>")
 <%	when 'vac' %>
+			$( "#contenido-ant" ).replaceWith("<%= escape_javascript( render :template => @partial, :locals => {:personas_vacunas => @personas_vacunas, :agno => @agno, :partial_seguimiento => @partial_seguimiento, :calendario_vacunas_persona => @calendario_vacunas_persona , :agnos => @agnos, :calendario_vacunas => @calendario_vacunas, :otras_vacunas => @otras_vacunas } ) %>")
 <%	when 'ant_qui' %>
+			$( "#contenido-ant" ).replaceWith("<%= escape_javascript( render :partial => @partial, :locals => {:alergias => @alergias } ) %>")			
 <%	when 'act_fis' %>
+			$( "#contenido-ant" ).replaceWith("<%= escape_javascript( render :partial => @partial, :locals => {:persona_actividad_fisica => @persona_actividad_fisica, :segmento_actividad => @segmento_actividad, :edad_act_fis => @edad_act_fis } ) %>")	
 <%	when 'hab_alc' %>
 <%	when 'hab_tab' %>
 <%	when 'ant_gin' %>

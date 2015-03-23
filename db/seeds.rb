@@ -401,8 +401,22 @@ C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :compone
 C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
 
 puts 'Alergias'
-MedAlergias.create! :nombre => 'Polvo'
-MedAlergias.create! :nombre => 'Polen'
+MedAlergias.create! :nombre => 'Polvo', :comun => 1
+MedAlergias.create! :nombre => 'Polen', :comun => 1
+MedAlergias.create! :nombre => 'Latex', :comun => 1
+MedAlergias.create! :nombre => 'Picadura de insecto', :comun => 1
+MedAlergias.create! :nombre => 'Leche', :comun => 1
+MedAlergias.create! :nombre => 'Huevo', :comun => 1
+MedAlergias.create! :nombre => 'Pescado', :comun => 1
+MedAlergias.create! :nombre => 'Marisco', :comun => 1
+MedAlergias.create! :nombre => 'Alimento: maní', :comun => 1
+MedAlergias.create! :nombre => 'Alimento: soja', :comun => 1
+MedAlergias.create! :nombre => 'Alimento: nueces', :comun => 1
+MedAlergias.create! :nombre => 'Alimento: trigo', :comun => 1
+MedAlergias.create! :nombre => 'Medicamento: penicilina', :comun => 1
+MedAlergias.create! :nombre => 'Medicamento: aspirina', :comun => 1
+MedAlergias.create! :nombre => 'Medicamento: ibuprofeno', :comun => 1
+MedAlergias.create! :nombre => 'Medicamento: anestesia', :comun => 1
 
 Rake::Task['agendamiento:crear_agendamientos'].invoke
 

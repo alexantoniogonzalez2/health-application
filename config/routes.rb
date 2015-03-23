@@ -12,6 +12,7 @@ AplicacionMedica::Application.routes.draw do
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 
   post '/antecedentes/:id', to: 'antecedentes#edit'
   post '/editar_alergia', to: 'antecedentes#editarAlergia'
+  post '/agregar_alergia', to: 'antecedentes#agregarAlergia'
   post '/guardar_antecedentes_sociales', to: 'antecedentes#guardarAntecedentesSociales'
   post '/cargar_antecedentes', to: 'antecedentes#cargarAntecedentes'
 
@@ -50,6 +51,7 @@ AplicacionMedica::Application.routes.draw do
   #Modulo atencion salud
   resources :atenciones_salud
   post '/agregar_prestacion', to: 'persona_prestacion#agregarPrestacion', :as => :agregarExamen
+  post '/agregar_prestacion_ant', to: 'persona_prestacion#agregarPrestacionAntecedentes'
   post '/eliminar_prestacion', to: 'persona_prestacion#eliminarPrestacion', :as => :eliminarPrestacion
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
@@ -62,13 +64,13 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_info_interconsulta', to: 'persona_diagnostico#agregarInfoInterconsulta'
   post '/agregar_persona_interconsulta_pre', to: 'persona_diagnostico#agregarPersonaInterconsultaPre'  
   post '/agregar_info_eno', to: 'persona_diagnostico#agregarInfoEno'
-  post '/agregar_info_prestacion', to: 'persona_diagnostico#agregarInfoPrestacion'  
+  post '/agregar_info_prestacion', to: 'persona_prestacion#agregarInfoPrestacion'  
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
   post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
   post '/cargar_medicamentos', to: 'persona_medicamento#cargarMedicamentos'
   post '/agregar_medicamento', to: 'persona_medicamento#agregarMedicamento'
-   post '/agregar_medicamento_ant', to: 'persona_medicamento#agregarMedicamentoAntecedentes'
+  post '/agregar_medicamento_ant', to: 'persona_medicamento#agregarMedicamentoAntecedentes'
   post '/eliminar_medicamento', to: 'persona_medicamento#eliminarMedicamento'
   post '/guardar_medicamento', to: 'persona_medicamento#guardarMedicamento'
   post '/guardar_metricas', to: 'persona_metricas#guardarMetricas'

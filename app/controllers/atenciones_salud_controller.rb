@@ -35,11 +35,12 @@ class AtencionesSaludController < ApplicationController
 		@agendamientos = AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 		@actualizaciones = AgAgendamientoLogEstados
 			.joins(:agendamiento)
-			.select("ag_agendamiento_log_estados.fecha,
+			.select("ag_agendamientos.fecha_comienzo,
+							 ag_agendamiento_log_estados.fecha,
 							 ag_agendamiento_log_estados.agendamiento_estado_id,
 							 ag_agendamiento_log_estados.responsable_id,
 							 ag_agendamientos.persona_id")
-			.where( "ag_agendamiento_log_estados.agendamiento_estado_id not in (1) AND fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
+			.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
 				 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 			.order(fecha: :desc)
 
@@ -108,7 +109,7 @@ class AtencionesSaludController < ApplicationController
 	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
 	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
 	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
-	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ?', params[:id])
+	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
 
 	  @persona_estatura = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],1).first
 	  @persona_peso = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],2).first
@@ -121,15 +122,48 @@ class AtencionesSaludController < ApplicationController
 	  @imc = @persona_imc ? @persona_imc.valor : ''
 
 	  @array_medicamentos = []
-	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND atencion_salud_id != ? OR atencion_salud_id is null',@persona.id,params[:id]).order('created_at')
+	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id,params[:id]).order('created_at')
 	  @persona_medicamentos_ant.each do |p_m_a|
 	  	@array_medicamentos.push(p_m_a.medicamento.nombre)
   	end
   	if @array_medicamentos.blank?
   		@texto_ant_med = 'Sin información'
   	else
-  		@texto_ant_med = @array_medicamentos.join(' | ')	
+  		@texto_ant_med = @array_medicamentos.join('|')	
   	end	
+
+  	@array_procedimiento = []
+	  @persona_procedimiento_ant = FiPersonaPrestaciones.where(' prestacion_id >= ? AND persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',572,@persona.id,params[:id]).order('created_at')
+	  @persona_procedimiento_ant.each do |p_p_a|
+	  	@array_procedimiento.push(p_p_a.prestacion.nombre)
+  	end
+  	if @array_procedimiento.blank?
+  		@texto_ant_pro = 'Sin información'
+  	else
+  		@texto_ant_pro = @array_procedimiento.join('|')	
+  	end
+
+  	@array_alergias = []
+	  @persona_alergias = FiPersonasAlergias.where('persona_id = ? ',@persona.id).order('created_at')
+	  @persona_alergias.each do |p_a|
+	  	@array_alergias.push(p_a.alergia.nombre)
+  	end
+  	if @array_alergias.blank?
+  		@texto_alergias = 'Sin información'
+  	else
+  		@texto_alergias = @array_alergias.join('|')	
+  	end
+
+  	@array_vacunas = []
+	  @persona_vacunas = FiPersonasVacunas.where('persona_id = ? ',@persona.id).order('created_at')
+	  @persona_vacunas.each do |p_v|
+	  	@array_vacunas.push(p_v.vacuna.nombre)
+  	end
+  	if @array_vacunas.blank?
+  		@texto_vacunas = 'Sin información'
+  	else
+  		@texto_vacunas = @array_vacunas.join('|')	
+  	end
 
 	end
 

@@ -241,7 +241,7 @@ $('.int-comment').keyup( function(e) {
 })
 
 $('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
-$('select.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
+$('select.select_prestadores').select2({ placeholder: 'Seleccione un establecimiento', allowClear: true });
 $('select.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
 $('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
 $('select.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
@@ -603,11 +603,14 @@ function guardarDiagnostico(pers_diag_aten_sal) {
 }
 
 function guardarMedicamento(pers_med, cerrar) {
+  if (typeof atencion_salud_id !== 'undefined') { }
+  else { atencion_salud_id = 'persona'; } 
 
   $.ajax({
     type: 'POST',
     url: '/guardar_medicamento',
     data: {
+      atencion_salud_id: atencion_salud_id,
       persona_medicamento_id: pers_med,
       cantidad: $( "#cantidad-"+pers_med).val(),
       periodicidad: $( "#periodicidad-"+pers_med).val(),
@@ -807,7 +810,7 @@ function agregarInfoEno(pd,value,tipo){
     data: { 
       tipo: tipo,
       valor: value,
-      pers_diag: pd,
+      pers_diag: pd
     },
     success: function(response){  },
     error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
@@ -816,10 +819,14 @@ function agregarInfoEno(pd,value,tipo){
 }
 
 function agregarInfoPrestacion(p_p,valor,param){
+
+
+  if (typeof atencion_salud_id !== 'undefined') { }
+  else { atencion_salud_id = 'persona'; } 
   $.ajax({
     type: 'POST',
     url: '/agregar_info_prestacion',
-    data: { param: param, valor: valor, p_p: p_p },
+    data: { param: param, valor: valor, p_p: p_p, atencion_salud_id: atencion_salud_id },
     success: function(response){  },
     error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
   }); 
@@ -893,4 +900,4 @@ function formatDate(date){
   return format_date
 }
 
-
+$("#alergias").submit(function (e) { return false; });

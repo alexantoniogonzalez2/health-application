@@ -5,7 +5,7 @@ class VacunasController < ApplicationController
 		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																				 .where('persona_id = ?',current_user.id)
-		@grupo_etareo = @persona.getGrupoEtareo(DateTime.current) 
+		 
 		@agno = FiCalendarioVacunas.maximum('agno')
 		@calendario_vacunas_lactante = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
 																		.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
@@ -19,6 +19,8 @@ class VacunasController < ApplicationController
 														.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
 														.where('edad in ("Adulto de 65 años") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,current_user.id)
 														.order('fi_calendario_vacunas.id ASC')
+														
+		@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)												
 		case @grupo_etareo
     when 'Recién nacido','Lactante'
     	@partial_seguimiento = 'lactante'

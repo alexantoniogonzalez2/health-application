@@ -6,6 +6,8 @@ class CreateFiPersonaPrestaciones < ActiveRecord::Migration
       t.references :atencion_salud	#atencion_salud_id
       t.references :prestador #prestador_id
       t.datetime :fecha_prestacion
+      t.boolean :es_antecedente 
+      
       t.timestamps
     end
   end

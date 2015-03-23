@@ -39,9 +39,9 @@ $(document).ready(function() {
 
 });
 
-function cerrarModalAnt(modalid){
+function cerrarModalAntMed(modalid){
   $('#modal-container-med-'+modalid).modal('hide');
 }
-
-
-
+function cerrarModalAntPres(modalid){
+  $('#modal-container-pres-'+modalid).modal('hide');
+}

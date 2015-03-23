@@ -138,19 +138,18 @@ span.head-text{
 .has-spinner.btn-small.active .spinner { width: 13px; }
 .has-spinner.btn.active .spinner { width: 16px; }
 .has-spinner.btn-large.active .spinner { width: 19px; }
-//.modal-dialog { width: 900px !important; }
-//div.modal-dialog-ajus { width: 800px !important; }
 .row-ajustado { margin-left: 20px; }
 .table thead.ajust-head > tr > th { font-weight: normal; }
-
 #new_user, #new_password { width: 900px; }
-
 div.ajuste-ant { padding: 0px 5px 0px 0px; }
 div.ajuste-ant2 { padding: 0px 0px 0px 0px; }
 #antecedentes-div { padding: 5px 0px 10px 0px; } 
 #diagnostico-anterior-div { padding: 0px 0px 20px 0px; } 
-
 span.nota { font-size: 12px; }
-
 div.div-spinner{ margin: 0 auto; width: 10%; display: block; }
+
+.form-horizontal .form-group {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
 

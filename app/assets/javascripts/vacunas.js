@@ -20,6 +20,8 @@ function actualizarVacunas(vac,estado){
 $('input[type=checkbox][id^=checkboxes-vac-]').change(function() {
   var vac = $(this).attr('id').substring(15);
   var estado = $(this).is(':checked');
+  actualizarVacunas(vac,estado); 
+  /*
   var message = $('<p />', { text: 'Se modificará información sobre las vacunas asociadas a la persona.' }),
   ok = $('<button />', { text: 'Modificar', id: 'ok', class: 'btn btn-sm btn-primary' }),
   cancel = $('<button />', { id: 'cancel', text: 'Cancelar', class: 'btn btn-sm btn-danger'  });
@@ -37,6 +39,6 @@ $('input[type=checkbox][id^=checkboxes-vac-]').change(function() {
       },
       hide: function(event, api) { api.destroy(); }
     }
-  });
+  });*/
 });
 

@@ -12,6 +12,6 @@ class FiPersonaPrestaciones < ActiveRecord::Base
   end
   private
   def app_params
-    params.require(:list).permit(:id,:persona,:prestacion,:atencion_salud,:fecha_prestacion,:prestador)
+    params.require(:list).permit(:id,:persona,:prestacion,:atencion_salud,:fecha_prestacion,:prestador,:es_antecedente)
   end
 end

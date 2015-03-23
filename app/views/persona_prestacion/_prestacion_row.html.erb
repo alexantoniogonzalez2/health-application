@@ -1,0 +1,24 @@
+<tr id='tr-pre-<%= p_p.id %>'>
+  <td><%= p_p.atencion_salud.nil? ? p_p.created_at.strftime('%Y-%m-%d') : p_p.atencion_salud.agendamiento.fecha_comienzo.strftime('%Y-%m-%d') %></td> 
+  <td><%= p_p.atencion_salud.nil? ? '-' : p_p.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td>                
+  <td><%= p_p.prestacion.nombre %></td>  
+  <td><%= p_p.fecha_prestacion.nil? ? '-' : p_p.fecha_prestacion.strftime('%Y-%m-%d') %></td>
+  <td><%= p_p.prestador.nil? ? '-' : p_p.prestador.nombre %></td>
+  <td>
+  <% if p_p.es_antecedente and p_p.atencion_salud.nil? %>
+    <% if p_p.persona_id.eql? current_user.id %>  
+      <a href="#modal-container-pres-<%= p_p.id %>" data-toggle="modal" id="pp<%= p_p.id %>" >Editar</a>
+    <% else %>
+      Añadido por paciente.
+    <% end %>
+  <% elsif @atencion_salud %> 
+    <% if p_p.es_antecedente and p_p.atencion_salud_id.equal? @atencion_salud.id %> 
+  	  <a href="#modal-container-pres-<%= p_p.id %>" data-toggle="modal" id="pp<%= p_p.id %>" >Editar</a>
+    <% else %>  
+      <%= link_to 'Ver atención', atenciones_salud_path(p_p.atencion_salud.id) %>
+    <% end %>
+  <% else %>
+  	<%= link_to 'Ver atención', atenciones_salud_path(p_p.atencion_salud.id) %>
+  <% end %>
+  </td>
+</tr>

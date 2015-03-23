@@ -1,8 +1,8 @@
-<div class="modal fade" id="modal-container-pres-<%= p_p.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-container-pres-<%= p_p.id %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <button type="button" class="close" onclick="cerrarModalAntPres(<%= p_p.id %>)" >×</button>
         <h4 class="modal-title" id="myModalLabel"><%= p_p.prestacion.nombre %></h4>
       </div>
       <div class="modal-body">
@@ -12,7 +12,7 @@
               <label>Fecha prestación</label>
             </div>
             <div class="col-md-8 column">:
-              <input name="f_p_<%= p_p.id%>" class="datepicker" type="text" value="<%= p_p.getFechaPrestacion %>">
+              <input name="f_p_<%= p_p.id%>" class="datepicker datepicker_prestacion" type="text" value="<%= p_p.getFechaPrestacion %>">
             </div>
           </div>
           <div class="row clearfix">
@@ -38,9 +38,9 @@
         </div>         
       </div>
       <div class="modal-footer">
-         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-         <button type="button" onclick="guardarPrestacion(<%= p_p.id%>)" class="btn btn-primary">Guardar</button>
-          <button id="bcp<%= p_p.id%>" type="button" class="btn btn-danger" onclick="eliminarPrestacion(<%= p_p.id%>)">Eliminar</button>
+        <button type="button" class="btn btn-default" onclick="cerrarModalAntPres(<%= p_p.id %>)">Cerrar ventana</button>
+        <button id="bcp<%= p_p.id%>" type="button" class="btn btn-danger" onclick="eliminarPrestacion(<%= p_p.id%>)">Eliminar</button>
+        <button type="button" onclick="guardarPrestacion(<%= p_p.id%>)" class="btn btn-success">Guardar</button>
       </div>
     </div>            
   </div>        

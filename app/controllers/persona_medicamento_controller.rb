@@ -20,7 +20,7 @@ class PersonaMedicamentoController < ApplicationController
 
 	def agregarMedicamento		
 
-		persona_examen_actual = FiPersonaMedicamentos.where('atencion_salud_id = ? AND persona_id = ? AND medicamento_id = ? ', params[:atencion_salud_id], params[:persona_id], params[:medicamento_id]).first
+		persona_examen_actual = FiPersonaMedicamentos.where('atencion_salud_id = ? AND persona_id = ? AND medicamento_id = ? AND es_antecedente is null ', params[:atencion_salud_id], params[:persona_id], params[:medicamento_id]).first
 
 		if persona_examen_actual
 
@@ -51,8 +51,16 @@ class PersonaMedicamentoController < ApplicationController
 
 	def agregarMedicamentoAntecedentes
 		
-		@persona = PerPersonas.find(current_user.id) if params[:persona_id] == 'persona'
 		@persona_medicamento = FiPersonaMedicamentos.new
+
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.find(current_user.id) 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+			@persona_medicamento.atencion_salud = @atencion_salud
+		end	
+				
 		@persona_medicamento.persona = @persona
 		@persona_medicamento.medicamento_id = params[:medicamento_id]
 		@persona_medicamento.es_antecedente = true
@@ -82,6 +90,7 @@ class PersonaMedicamentoController < ApplicationController
 
 	def guardarMedicamento		
 		@persona_medicamento = FiPersonaMedicamentos.find(params[:persona_medicamento_id])
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id]) if params[:atencion_salud_id] != 'persona'
 		if params[:duracion] != ''
 			@fecha_inicio = DateTime.current
 			@fecha_final = DateTime.current + params[:duracion].to_i.days

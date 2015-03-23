@@ -274,7 +274,7 @@ if ($('#horas-agendadas').length || $('#atencion-salud').length ){
 	}, 30000);
 
 }
-
+/*
 $( ".datepicker" ).attr("placeholder", "Ingresa tu fecha de nacimiento").datepicker({
   yearRange: '1910:2015',
   showOtherMonths: true,
@@ -304,7 +304,7 @@ $.datepicker.regional['es'] = {
   showMonthAfterYear: false,
   yearSuffix: ''
 };
-$.datepicker.setDefaults($.datepicker.regional['es']);
+$.datepicker.setDefaults($.datepicker.regional['es']);*/
 
 /*
  * Calcula digito verificador

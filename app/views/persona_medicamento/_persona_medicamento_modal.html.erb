@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-ajus">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" onclick="cerrarModalAnt(<%= persona_medicamento.id %>)" aria-hidden="true">×</button>
+        <button type="button" class="close" onclick="cerrarModalAntMed(<%= persona_medicamento.id %>)" aria-hidden="true">×</button>
         <h4 class="modal-title"><%= persona_medicamento.medicamento.nombre %></h4>
       </div>
       <div class="modal-body">
@@ -51,7 +51,9 @@
           </div>
           <div class="row ajuste-margin-top">
             <div class='col-med-12 column'>
-              <label>Asociar a diagnóstico:</label>
+              <% if !persona_medicamento.es_antecedente %>
+                <label>Asociar a diagnóstico:</label>
+              <% end %>
               <div id="div-diagnosticos-<%= persona_medicamento.id %>"></div>
             </div>  
           </div>
@@ -59,7 +61,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick="cerrarModalAnt(<%= persona_medicamento.id %>)">Cerrar ventana</button>
+        <button type="button" class="btn btn-default" onclick="cerrarModalAntMed(<%= persona_medicamento.id %>)">Cerrar ventana</button>
         <button id="bpm<%= persona_medicamento.id %>" type="button" class="btn btn-danger" onclick="eliminarMedicamento(<%= persona_medicamento.id %>)">Eliminar medicamento</button>
         <button type="button" onclick="guardarMedicamento(<%= persona_medicamento.id %>, true)" class="btn btn-success">Guardar</button>
       </div>

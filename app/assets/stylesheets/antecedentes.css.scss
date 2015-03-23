@@ -4,11 +4,13 @@ $Blue: #428bca;
 #antecedentes:hover {text-decoration: underline}
 div.antecedentes { padding: 0px; } 
 div.antecedentes { padding: 0px; } 
-div.actividad-fisica {	
+div.actividad-fisica {
+	margin-left: 0px !important;
+	margin-right: 0px !important;	
 	> form { 
 		> div.clearfix > div.column { padding: 0px;}
 		> div > div {
-			> div > label { font-weight: normal; padding: 0px };
+			> div > label { font-weight: normal; padding: 0px; text-align: left; };
 			label { font-weight: normal };		
 		}
 	}
@@ -31,3 +33,4 @@ div.alert-act {
 #nav-antecedentes  > li.hover > a { color: #85D3F5; }
 div.agregar-med { /*min-height: 170px;*/  margin-top: 20px; padding-left: 0px; padding-right: 0px; }
 div.ajuste-med { padding-left: 0px; padding-right: 0px;}
+div.ajuste-alergia { padding-top: 100px; }

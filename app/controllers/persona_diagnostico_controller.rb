@@ -81,20 +81,6 @@ class PersonaDiagnosticoController < ApplicationController
 				
 	end
 
-	def agregarInfoPrestacion
-		@prestacion = FiPersonaPrestaciones.find(params[:p_p])
-		case params[:param]
-			when 'fecha'
-				@prestacion.fecha_prestacion = params[:valor] 
-			when 'prestador'
-				@prestacion.prestador = PrePrestadores.find(params[:valor])  
-		end
-		@prestacion.save
-		respond_to do |format|
-			format.json { render :json => { :success => true }	}
-		end				
-	end
-
 	def agregarInfoInterconsulta
 
 		@persona = nil

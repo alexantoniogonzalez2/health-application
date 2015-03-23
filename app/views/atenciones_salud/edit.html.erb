@@ -7,7 +7,7 @@
 
 <%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"},  method: :put do |f|  %>
 
-<input type="hidden" id="persona_id" value=<%=@agendamiento.persona.id  %> >
+<input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
 
 <div id="atencion-salud" class="panel panel-success">
 <div class="panel-heading">
@@ -45,22 +45,22 @@
   <div class="row clearfix">
     <div class="list-group col-md-4 column ajuste-ant">
       <a id="med" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-archive fa-fw fa-lg"></i><%= @texto_ant_med %></a>
-      <a id="ale" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-shield fa-fw fa-lg"></i>Alergias</a>
-      <a id="vac" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Vacunas</a>
-      <a id="ant_qui" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Ant. quirúrgicos</a>
+      <a id="ale" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-shield fa-fw fa-lg"></i><%= @texto_alergias %></a>
+      <a id="vac" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_vacunas %></a>
+      <a id="ant_qui" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_ant_pro %></a>
     </div>
     <div class="list-group col-md-4 column ajuste-ant">
-      <a id="act_fis" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-soccer-ball-o fa-fw fa-lg"></i>Actividad física</a>
-      <a id="hab_alc" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-beer fa-fw fa-lg"></i>Hábitos de alcohol</a>
-      <a id="hab_tab" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Hábitos de tabaco</a>
+      <a id="act_fis" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-soccer-ball-o fa-fw fa-lg"></i>Actividad física</a>
+      <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-beer fa-fw fa-lg"></i>Hábitos de alcohol</a>
+      <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Hábitos de tabaco</a>
       <% if @agendamiento.persona.genero == 'Femenino' %>
         <a id="ant_gin" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Ant. ginecológicos</a>
       <% end%>
     </div> 
     <div class="list-group col-md-4 column ajuste-ant2">
-      <a id="ant_fam" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Ant. familiares</a>
-      <a id="ant_soc" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Ant. sociales</a>
-      <a id="ant_lab" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-money fa-fw fa-lg"></i>Ant. laborales</a>
+      <a id="ant_fam" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Ant. familiares</a>
+      <a id="ant_soc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Ant. sociales</a>
+      <a id="ant_lab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-money fa-fw fa-lg"></i>Ant. laborales</a>
     </div>
   </div>  
 </div>
@@ -153,7 +153,7 @@
   </div>
 
   <%= f.label :"Procedimientos/Cirugías" %>
-  <input type='hidden' id="select_procedimiento" class="ajuste-select" width="600px" ></input>
+  <input type='hidden' id="select_procedimiento" class="ajuste-select" ></input>
   <div class="list-group" name="procedimiento-div" id="procedimiento-div">  
     <% @persona_procedimiento.each do |p_p| %>
       <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_p} %>  

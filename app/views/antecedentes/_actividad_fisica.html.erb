@@ -1,15 +1,19 @@
 <% if @acceso %>
 <h4>Antecedentes actividad física</h4>
 
+<%=	case @segmento_actividad
+		when 'Niño menor a 5 años' then render :template => "antecedentes/recomendaciones_actividad_fisica/0_5"
+		when 'Niño' then render :template => "antecedentes/recomendaciones_actividad_fisica/5_17"
+		when 'Adulto' then render :template => "antecedentes/recomendaciones_actividad_fisica/18_65"
+		when 'Adulto mayor' then render :template => "antecedentes/recomendaciones_actividad_fisica/65"		
+		end	
+%>
+
+<% if @segmento_actividad == 'Niño menor a 5 años' %>
+<% else %>
+
 <div class="container actividad-fisica">
 	<form id="form_act_fis" class="form-validator" >
-		<%=	case @segmento_actividad
-				when 'Niño menor a 5 años' then render :template => "antecedentes/recomendaciones_actividad_fisica/0_5"
-				when 'Niño' then render :template => "antecedentes/recomendaciones_actividad_fisica/5_17"
-				when 'Adulto' then render :template => "antecedentes/recomendaciones_actividad_fisica/18_65"
-				when 'Adulto mayor' then render :template => "antecedentes/recomendaciones_actividad_fisica/65"		
-				end	
-		%>
 
 	<div class="row clearfix">
 		<div class="col-md-12 column">	
@@ -37,22 +41,17 @@
 	
 	<div id="preg-1">
 		<div class="row clearfix">
-			<div class="form-group">
-			  <label class="col-md-8 control-label" for="input-act-fis-2">2. En una semana ordinaria, ¿cuántos días despliega usted actividades vigorosas como parte de su trabajo?</label>
-			  <div class="col-md-4">
+			  <label class="col-md-5 control-label" for="input-act-fis-2">2. En una semana ordinaria, ¿cuántos días despliega usted actividades vigorosas como parte de su trabajo?</label>
+			  <div class="col-md-1">
 			  <input id="input-act-fis-2" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P2 %>' >
-			  <span class="help-block">Número de días</span>  
+			  <span class="help-block">Días</span>  
 			  </div>
-			</div>
-		</div>	
-		<div class="row clearfix">
-			<div class="form-group">
-			  <label class="col-md-8 control-label" for="input-act-fis-3">3. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades vigorosas?</label>
-			  <div class="col-md-4">
+			  <label class="col-md-5 control-label" for="input-act-fis-3">3. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades vigorosas?</label>
+			  <div class="col-md-1">
 			  <input id="input-act-fis-3" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P3 %>'>
 			  <span class="help-block">Minutos</span>  
 			  </div>
-			</div>
+		
 		</div>	
 	</div>	
 
@@ -76,7 +75,7 @@
 			  <label class="col-md-8 control-label" for="input-act-fis-5">5. En una semana corriente, ¿cuántos días despliega usted actividades de intensidad moderada como parte de su trabajo?</label>
 			  <div class="col-md-4">
 			  <input id="input-act-fis-5" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P5 %>'>
-			  <span class="help-block">Número de días</span>  
+			  <span class="help-block">Días</span>  
 			  </div>
 			</div>
 		</div>	
@@ -111,7 +110,7 @@
 			  <label class="col-md-8 control-label" for="input-act-fis-8">8. En una semana corriente, ¿cuántos días camina o monta en bicicleta durante por lo menos 10 minutos seguidos para ir y volver a los distintos lugares?</label>
 			  <div class="col-md-4">
 			  <input id="input-act-fis-8" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P8 %>'>
-			  <span class="help-block">Número de días</span>  
+			  <span class="help-block">Días</span>  
 			  </div>
 			</div>
 		</div>
@@ -146,7 +145,7 @@
 			  <label class="col-md-8 control-label" for="input-act-fis-11">11. En una semana corriente, ¿cuántos días despliega usted actividades vigorosas practicando un deporte, haciendo ejercicio físico o divirtiéndose?</label>
 			  <div class="col-md-4">
 			  <input id="input-act-fis-11" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P11 %>'>
-			  <span class="help-block">Número de días</span>  
+			  <span class="help-block">Días</span>  
 			  </div>
 			</div>
 		</div>	
@@ -181,7 +180,7 @@
 			  <label class="col-md-8 control-label" for="input-act-fis-14">14. En una semana corriente, ¿cuántos días despliega usted actividades de intensidad moderada practicando un deporte, haciendo ejercicio físico o divirtiéndose?</label>
 			  <div class="col-md-4">
 			  <input id="input-act-fis-14" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P14 %>'>
-			  <span class="help-block">Número de días</span>  
+			  <span class="help-block">Días</span>  
 			  </div>
 			</div>
 		</div>	
@@ -198,6 +197,9 @@
 
 	</form>
 </div>	
+
+<% end %>
+
 
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
