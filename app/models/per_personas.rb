@@ -81,6 +81,31 @@ class PerPersonas < ActiveRecord::Base
     end 
   end
 
+  def getNivelEscolaridad
+    texto_niv_esc = 'Sin información'
+    case nivel_escolaridad
+      when '1' 
+        texto_niv_esc = 'Sin información'
+      when '2'
+        texto_niv_esc = 'Educación Básica Incompleta' 
+      when '3'
+        texto_niv_esc = 'Educación Básica Completa'
+      when '4'
+        texto_niv_esc = 'Educación Media Incompleta'
+      when '5' 
+        texto_niv_esc = 'Educación Media Completa' 
+      when '6' 
+        texto_niv_esc = 'Educación Técnica o Profesional Incompleta' 
+      when '7' 
+        texto_niv_esc = 'Educación Técnica o Profesional Completa' 
+      when '8' 
+        texto_niv_esc = 'Educación Superior Incompleta' 
+      when '9' 
+        texto_niv_esc = 'Educación Superior Completa'      
+    end
+    return texto_niv_esc
+  end  
+
   def age
     if fecha_nacimiento
       dob = fecha_nacimiento 

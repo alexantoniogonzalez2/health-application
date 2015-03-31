@@ -1,7 +1,6 @@
-<h4>Editar antecedente laboral</h4>
-<div class="container">	
+<div class="container ajuste-dismissible">	
   <div class="row clearfix">
-    <div id="alert-ocu" class="alert alert-warning alert-dismissible" role="alert">
+    <div id="alert-ocu-new" class="alert alert-warning alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       Debe seleccionar una ocupación. 
     </div>
@@ -9,15 +8,15 @@
       <label>Ocupación</label>
     </div>
     <div class="col-md-8 column">
-      <input type='hidden' class="select_ocupacion" id="select_ocupacion" value="<%= @ocupacion.ocupacion.nombre %>" name="<%= @ocupacion.ocupacion.id %>"></input>
+      <input type='hidden' class="select_ocupacion" id="select_ocupacion-new"></input>
     </div>
   </div></br>
   <div class="row clearfix">
-		<div id="alert-fecha-ocu" class="alert alert-warning alert-dismissible" role="alert">
+		<div id="alert-fecha-ocu-new" class="alert alert-warning alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		 	La fecha de inicio debe ser menor que la fecha final.	
 		</div>
-		<div id="alert-fecha-inicio-ocu" class="alert alert-warning alert-dismissible" role="alert">
+		<div id="alert-fecha-inicio-ocu-new" class="alert alert-warning alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		 	Ingrese una fecha de inicio.
 		</div>
@@ -25,21 +24,21 @@
       <label>Fecha inicio</label>
     </div>
     <div class="col-md-8 column">
-      <input id="f_i_ocu" class="datepicker" type="text" value="<%= @ocupacion.fecha_inicio.strftime('%Y-%m-%d') %>">
+      <input id="f_i_ocu-new" class="datepicker" type="text" >
     </div>
   </div>
   <div class="row clearfix">
     <div class="col-md-12 column">
       <div class="checkbox">
-        <label for="ocupacion-actual">
-          <input type="checkbox" name="checkboxes" id="ocupacion-actual" value="1">
+        <label for="ocupacion-actual-new">
+          <input type="checkbox" name="checkboxes" id="ocupacion-actual-new" value="1" class='ocupacion-actual'>
           <strong>Esta es mi ocupación actual</strong>
         </label>
       </div>
     </div>  
   </div> 
-  <div id="div-fecha-final" class="row clearfix">
-  	<div id="alert-fecha-final-ocu" class="alert alert-warning alert-dismissible" role="alert">
+  <div id="div-fecha-final-new" class="row clearfix">
+  	<div id="alert-fecha-final-ocu-new" class="alert alert-warning alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		 	Ingrese una fecha final.
 		</div>    
@@ -47,18 +46,8 @@
       <label>Fecha final</label>
     </div>
     <div class="col-md-8 column">
-      <input id="f_f_ocu" class="datepicker" type="text" value="<%= @ocupacion.fecha_termino.strftime('%Y-%m-%d') unless @ocupacion.fecha_termino.nil?  %>" >
-    </div>
-  </div></br>
-  <div class="row clearfix">
-    <div class="col-md-12 column">
-      <div class="form-group">
-        <div class="col-md-8">
-          <button id="<%= @ocupacion.id %>" class="btn btn-success editar-ocupacion">Editar antecedente</button>
-        </div>
-      </div>
+      <input id="f_f_ocu-new" class="datepicker" type="text" >
     </div>
   </div>
-</div>
 
-<%= javascript_include_tag "ocupaciones" %>			
+</div>

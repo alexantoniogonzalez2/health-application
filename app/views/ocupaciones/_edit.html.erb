@@ -1,0 +1,73 @@
+<div class="modal fade" id="modal-container-ocu-<%= ocu.id %>" role="dialog" aria-spanledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ajuste-ancho">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cerrarModalOcu(<%= ocu.id %>)" aria-hidden="true">×</button>
+        <h4 class="modal-title">Editar antecedente laboral</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="container ajuste-dismissible">	
+          <div class="row clearfix">
+            <div id="alert-ocu-<%= ocu.id %>" class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              Debe seleccionar una ocupación. 
+            </div>
+            <div class="col-md-4 column">
+              <label>Ocupación</label>
+            </div>
+            <div class="col-md-8 column">
+              <input type='hidden' class="select_ocupacion" id="select_ocupacion-<%= ocu.id %>" value="<%= ocu.ocupacion.nombre %>" name="<%= ocu.ocupacion.id %>" />
+            </div>
+          </div>
+          <div class="row clearfix">
+        		<div id="alert-fecha-ocu-<%= ocu.id %>" class="alert alert-warning alert-dismissible" role="alert">
+        		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        		 	La fecha de inicio debe ser menor que la fecha final.	
+        		</div>
+        		<div id="alert-fecha-inicio-ocu-<%= ocu.id %>" class="alert alert-warning alert-dismissible" role="alert">
+        		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        		 	Ingrese una fecha de inicio.
+        		</div>
+            <div class="col-md-4 column">
+              <label>Fecha inicio</label>
+            </div>
+            <div class="col-md-8 column">
+              <input id="f_i_ocu-<%= ocu.id %>" class="datepicker" type="text" value="<%= ocu.fecha_inicio.strftime('%Y-%m-%d') %>">
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12 column">
+              <div class="checkbox">
+                <label for="ocupacion-actual-<%= ocu.id %>">
+                  <input type="checkbox" name="checkboxes" id="ocupacion-actual-<%= ocu.id %>" <% if ocu.es_actual %> checked="checked" <% end %> class='ocupacion-actual'>
+                  <strong>Esta es mi ocupación actual</strong>
+                </label>
+              </div>
+            </div>  
+          </div> 
+          <div id="div-fecha-final-<%= ocu.id %>" class="row clearfix">
+          	<div id="alert-fecha-final-ocu-<%= ocu.id %>" class="alert alert-warning alert-dismissible" role="alert">
+        		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        		 	Ingrese una fecha final.
+        		</div>    
+            <div class="col-md-4 column">
+              <label>Fecha final</label>
+            </div>
+            <div class="col-md-8 column">
+              <input id="f_f_ocu-<%= ocu.id %>" class="datepicker" type="text" value="<%= ocu.fecha_termino.strftime('%Y-%m-%d') unless ocu.fecha_termino.nil?  %>" >
+            </div>
+          </div>
+        
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="cerrarModalOcu(<%= ocu.id %>)">Cerrar ventana</button>
+        <button type="button" id="guardar-ocupacion-<%= ocu.id %>" name="editar" class="btn btn-success" onclick="guardarAntOcupacion(<%= ocu.id %>)">Editar antecendente</button>
+      </div>
+    </div>            
+  </div>        
+</div>
+
+<%= javascript_include_tag 'ant_ocu' %>

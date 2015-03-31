@@ -8,27 +8,29 @@ class OcupacionesController < ApplicationController
 		@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',current_user.id);
 	end	
 	def create
+		@tipo = params[:tipo]	
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.find(current_user.id) 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end	
 
 		case params[:tipo]
 		when 'agregar'
-			@persona_ocupacion = OcuPersonasOcupaciones.new
-			@persona_ocupacion.persona = PerPersonas.find(current_user.id)
-			@persona_ocupacion.ocupacion = OcuOcupaciones.find(params[:value])
-			@persona_ocupacion.fecha_inicio = params[:f_i]
-			@persona_ocupacion.fecha_termino = params[:f_f]
-			@persona_ocupacion.save!
+		  @ocu = OcuPersonasOcupaciones.new
+		  @ocu.persona = @persona
 		when 'editar'
-			@persona_ocupacion = OcuPersonasOcupaciones.find(params[:id])
-			@persona_id = @persona_ocupacion.persona.id 
-			if @persona_id == current_user.id
-				@persona_ocupacion.ocupacion = OcuOcupaciones.find(params[:value])
-				@persona_ocupacion.fecha_inicio = params[:f_i]
-				@persona_ocupacion.fecha_termino = params[:f_f]
-				@persona_ocupacion.save!
-			end					
+		  @ocu = OcuPersonasOcupaciones.find(params[:id])		  			
 		end
+		@ocu.ocupacion = OcuOcupaciones.find(params[:value])
+		@ocu.es_actual = params[:ocu_act]
+		@ocu.fecha_inicio = params[:f_i]
+		@ocu.fecha_termino = params[:f_f]
+	  @ocu.save!
 
 		respond_to do |format|
+			format.js   {}
 			format.json { render :json => { :success => true }	}
 		end		
 	end	

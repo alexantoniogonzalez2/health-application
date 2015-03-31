@@ -1,0 +1,8 @@
+<%	case @tipo %>
+<%	when 'editar' %>
+			$('#tr-ocu-<%= @ocu.id %>').replaceWith("<%= escape_javascript( render :partial => "ocupaciones_row", :locals => { :ocu => @ocu } ) %>");			
+<%	when 'agregar' %>	
+			$("<%= escape_javascript( render :partial => "ocupaciones_row", :locals => { :ocu => @ocu } ) %>").appendTo("#lista-ocu");
+			$("<%= escape_javascript( render :partial => "edit", :locals => { :ocu => @ocu} ) %>").appendTo("#ocu_modal-div");
+			$('#tr-vacio-ocu').replaceWith('');		
+<%	end %>

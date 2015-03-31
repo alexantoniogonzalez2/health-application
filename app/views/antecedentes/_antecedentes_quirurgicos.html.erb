@@ -1,30 +1,32 @@
 <% if @acceso %>
 	<h4>Antecedentes quirúrgicos</h4>
-		<% if @persona_prestaciones.empty? %>
-			No hay información de antecedentes quirúrgicos.<br/>
-		<% else %>	  
-			<table class="table table-striped table-hover table-condensed">
-				<thead class="ajust-head">
-		      <tr class="info" ><th class="col-sm-2">Fecha atención</th><th class="col-sm-2">Profesional que indicó atención</th><th class="col-sm-3">Prestación</th><th class="col-sm-1">Fecha</th><th class="col-sm-2">Recinto</th><th class="col-sm-1">Atención</th></tr>
-		    </thead>
-		    <tbody id='lista-procedimientos'>
-		    	<% @persona_prestaciones.each do |p_p| %>
-		      	<%= render :partial => "persona_prestacion/prestacion_row", :locals => {:p_p => p_p, :atencion_salud => @atencion_salud } %>
-		      <% end %>
-		    </tbody>
-			</table>
-		<% end %>
+  
+	<table class="table table-striped table-hover table-condensed">
+		<thead class="ajust-head">
+      <tr class="info" ><th class="col-sm-2">Fecha atención</th><th class="col-sm-2">Profesional que indicó atención</th><th class="col-sm-3">Prestación</th><th class="col-sm-1">Fecha</th><th class="col-sm-2">Recinto</th><th class="col-sm-1">Atención</th></tr>
+    </thead>
+    <tbody id='lista-procedimientos'>
+  		<% if @persona_prestaciones.empty? %>
+				<tr id='tr-vacio-pro'><td colspan='5' >No hay información de antecedentes quirúrgicos.</td></tr>
+			<% else %>	
+	    	<% @persona_prestaciones.each do |p_p| %>
+	      	<%= render :partial => "persona_prestacion/prestacion_row", :locals => {:p_p => p_p, :atencion_salud => @atencion_salud } %>
+	      <% end %>
+	    <% end %>  
+    </tbody>
+	</table>
 
-		<div class='container agregar-med'>
-			<div class='row'>
-				<div class='col-md-7 column ajuste-padding'>
-					<p>Agregar información de otro antecedente quirúrgico:</p>
-				</div>
-				<div class='col-md-5 column'>
-					<input type='hidden' id="select_procedimiento_ant" class="ajuste-select" ></input>			
-				</div>
+
+	<div class='container agregar-med'>
+		<div class='row'>
+			<div class='col-md-7 column ajuste-padding'>
+				<p>Agregar información de otro antecedente quirúrgico:</p>
 			</div>
-		</div>		
+			<div class='col-md-5 column'>
+				<input type='hidden' id="select_procedimiento_ant" class="ajuste-select" ></input>			
+			</div>
+		</div>
+	</div>		
 		
 <% else %>
 	<%= render :partial => "layouts/permiso" %>

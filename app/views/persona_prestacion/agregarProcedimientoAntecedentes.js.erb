@@ -1,2 +1,3 @@
 $("<%= escape_javascript( render :partial => "prestacion_row", :locals => {:p_p => @persona_prestacion} ) %>").appendTo("#lista-procedimientos");
 $("<%= escape_javascript( render :partial => "persona_prestacion_modal", :locals => {:p_p => @persona_prestacion} ) %>").appendTo("#pro_ant_modal-div");
+$('#tr-vacio-pro').replaceWith('');	

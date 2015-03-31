@@ -129,7 +129,12 @@ class AntecedentesController < ApplicationController
 	end
 
 	def guardarAntecedentesSociales
-		@persona = PerPersonas.find(current_user.id)
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.find(current_user.id) 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end
 		@persona.numero_personas_familia = params[:grupo_familiar]
 		@persona.nivel_escolaridad = params[:nivel_escolaridad]
 		@persona.save!
@@ -140,9 +145,14 @@ class AntecedentesController < ApplicationController
 	end
 
 	def guardarActividadFisica
-		@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',current_user.id).first	
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.find(current_user.id) 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end
+		@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@persona.id).first	
 		@persona_actividad_fisica = FiPersonaActividadFisica.new unless @persona_actividad_fisica
-		@persona = PerPersonas.find(current_user.id)
 		@persona_actividad_fisica.persona = @persona
 		case params[:pregunta]
 		when '1' then @persona_actividad_fisica.P1 = params[:valor]
@@ -159,7 +169,8 @@ class AntecedentesController < ApplicationController
 		when '12' then @persona_actividad_fisica.P12 = params[:valor]
 		when '13' then @persona_actividad_fisica.P13 = params[:valor]
 		when '14' then @persona_actividad_fisica.P14 = params[:valor]    
-		when '15' then @persona_actividad_fisica.P15	= params[:valor]		
+		when '15' then @persona_actividad_fisica.P15	= params[:valor]
+		when 'nivel_actividad' then @persona_actividad_fisica.nivel_actividad	= params[:valor]		
 		end
 		@persona_actividad_fisica.save!
 
@@ -191,31 +202,29 @@ class AntecedentesController < ApplicationController
 																					 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																					 .where('persona_id = ?',params[:persona_id])
 			@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)
-			@agno = FiCalendarioVacunas.maximum('agno')												
+			@agno = FiCalendarioVacunas.maximum('agno')
+			@array_grupo = []												
 			case @grupo_etareo
 	    when 'Recién nacido','Lactante'
 	    	@partial_seguimiento = 'vacunas/lactante'
-  			@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-															.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-															.where('edad in ("Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,params[:persona_id])
-															.order('fi_calendario_vacunas.id ASC')
+  			@array_grupo = [ "Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses" ]
 	    when 'Pediatria' 
 	      @partial_seguimiento = 'vacunas/pediatria'
-    		@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-													.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-													.where('edad in ("1° básico","4° básico","8° básico") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,params[:persona_id])
-													.order('fi_calendario_vacunas.id ASC')
+    		@array_grupo = [ "1° básico","4° básico","8° básico" ]
 	    when 'Adolescente','Adulto' 
 	    when 'Adulto mayor'
 	    	@partial_seguimiento = 'vacunas/adulto_mayor'
-  			@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-											.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-											.where('edad in ("Adulto de 65 años") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,params[:persona_id])
-											.order('fi_calendario_vacunas.id ASC')
+  			@array_grupo = [ "Adulto de 65 años" ]
 	    end	
-			@calendarios = {}
+
+  		@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
+									.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
+									.where('edad in (?) AND agno = ? AND (persona_id = ? OR persona_id is null)',@array_grupo,@agno,params[:persona_id])
+									.order('fi_calendario_vacunas.id ASC')			
+
 			#Calendario - Vacunas														 		
 			@agnos = FiCalendarioVacunas.select('DISTINCT agno as agno')		
+			@calendarios = {}
 			@agnos.each do |agno|
 				@calendarios[agno.agno] = {} 
 				@calendario_vacunas = FiCalendarioVacunas.where('agno = ?',agno.agno)
@@ -249,11 +258,22 @@ class AntecedentesController < ApplicationController
 			@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
 			@partial = 'antecedentes/actividad_fisica'
 		when 'hab_alc'
+			@test_audit = FiHabitosAlcohol.where('persona_id = ?', params[:persona_id] )
+			@partial = 'habitos_alcohol/index'
 		when 'hab_tab'
+  		@total_consumo = 0
+			@consumo = FiHabitosTabaco.where('persona_id = ?', params[:persona_id] )
+			@consumo.each do |con|
+	  		@total_consumo += con.paquetes_agno
+	  	end		
+			@partial = 'habitos_tabaco/index'
 		when 'ant_gin'
 		when 'ant_fam'
 		when 'ant_soc'
-		when 'ant_lab'	
+			@partial = 'antecedentes/antecedentes_sociales'
+		when 'ant_lab'
+			@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',params[:persona_id] );
+			@partial = 'ocupaciones/index'	
 		end
 
 		respond_to do |format|     

@@ -239,14 +239,12 @@ a.select2-choice, a.select2-default { height: 30px !important; }
 
 .datepicker_prestacion { float: right !important; width: 230px !important; }
 
-div.actividad-fisica {
+.form-horizontal .form-group {
   margin-left: 0px !important;
-  margin-right: 0px !important; 
-  > form { 
-    > div.clearfix > div.column { padding: 0px;}
-    > div > div {
-      > div > label { font-weight: normal; padding: 0px; text-align: left !important; };
-      label { font-weight: normal };    
-    }
-  }
+  margin-right: 0px !important;
+  margin-bottom: 5px;
 }
+
+small.help-block { min-width: 200px; position: relative !important; left: -120px !important; }
+div.ajuste-height {  min-height: 450px !important; }
+.select_ocupacion { float: left !important; margin-bottom: 20px !important;}

@@ -13,7 +13,7 @@ class OcuPersonasOcupaciones < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(:id,:fecha_inicio,:fecha_termino,:persona,:ocupacion)
+    params.require(:list).permit(:id,:fecha_inicio,:fecha_termino,:persona,:ocupacion,:es_actual)
   end
   
 end

@@ -1,10 +1,9 @@
-<h2>Consumo de tabaco</h2>
-<div class="container">
+<div class="container ajuste-dismissible">
 
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 
-			<div id="alert-cigarros-dia" class="alert alert-warning alert-dismissible" role="alert">
+			<div id="alert-cigarros-dia-new" class="alert alert-warning alert-dismissible" role="alert">
 			  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 			 	Ingrese un número positivo.
 			</div>
@@ -13,7 +12,7 @@
 			  <label class="col-md-4 control-label" for="appendedtext">Cigarros por día</label>
 			  <div class="col-md-4">
 			    <div class="input-group">
-			      <input id="cigarrosdia" value="<%= @consumo.cigarros_por_dia %>" name="appendedtext" class="form-control" placeholder="Ingrese cantidad de..." type="text">
+			      <input id="cigarros-dia-new" name="appendedtext" class="form-control" placeholder="Ingrese " type="text">
 			      <span class="input-group-addon">cigarros por día</span>
 			    </div>			   
 			  </div>
@@ -24,12 +23,12 @@
 
 	<div class="row clearfix tabaco">
 
-		<div id="alert-fecha" class="alert alert-warning alert-dismissible" role="alert">
+		<div id="alert-fecha-new" class="alert alert-warning alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		 	La fecha de inicio debe ser menor que la fecha final.	
 		</div>
 
-		<div id="alert-fecha-inicio" class="alert alert-warning alert-dismissible" role="alert">
+		<div id="alert-fecha-inicio-new" class="alert alert-warning alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		 	Ingrese una fecha de inicio.
 		</div>
@@ -38,13 +37,13 @@
       <label class="tabaco">Fecha inicio</label>
     </div>
     <div class="col-md-8 column">
-      <input id="f_i" class="datepicker tabaco" type="text" value="<%= @consumo.fecha_inicio.strftime('%Y-%m-%d') %>" >
+      <input id="f_i-new" class="datepicker tabaco" type="text" >
     </div>
   </div>
 
   <div class="row clearfix">
 
-  	<div id="alert-fecha-final" class="alert alert-warning alert-dismissible" role="alert">
+  	<div id="alert-fecha-final-new" class="alert alert-warning alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		 	Ingrese una fecha final.
 		</div>
@@ -53,7 +52,7 @@
       <label class="tabaco">Fecha final</label>
     </div>
     <div class="col-md-8 column">
-      <input id="f_f" class="datepicker tabaco" type="text" value="<%= @consumo.fecha_final.strftime('%Y-%m-%d') %>" >
+      <input id="f_f-new" class="datepicker tabaco" type="text" >
     </div>
   </div>
 
@@ -64,7 +63,7 @@
 			  <label class="col-md-4 control-label" for="appendedtext">Paquetes año</label>
 			  <div class="col-md-4">
 			    <div class="input-group">
-			      <input id="paquetesAgno" value="<%= @consumo.paquetes_agno %>" name="appendedtext" class="form-control ajuste" placeholder="Cantidad de " disabled type="text">
+			      <input id="paquetes-agno-new" name="appendedtext" class="form-control ajuste" placeholder="Cantidad de " disabled type="text">
 			      <span class="input-group-addon">paquetes año</span>
 			    </div>			   
 			  </div>
@@ -73,19 +72,4 @@
 		</div>
 	</div>
 
-	<div class="row clearfix tabaco">
-		<div class="col-md-12 column">
-
-			<div class="form-group">
-			  <div class="col-md-8">
-			    <button id="<%= @consumo.id %>" name="editar" class="guardar-consumo btn btn-success">Actualizar consumo</button>
-			    <button id="button2id" name="button2id" class="btn btn-danger">Cancelar</button>
-			  </div>
-			</div>
-
-		</div>
-	</div>	
-
 </div>
-
-<%= javascript_include_tag "habitos_tabaco" %>

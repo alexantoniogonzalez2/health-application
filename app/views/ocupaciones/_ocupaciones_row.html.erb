@@ -1,0 +1,11 @@
+<tr id='tr-ocu-<%= ocu.id %>'>
+	<td><%= ocu.fecha_inicio.strftime('%Y-%m-%d') unless ocu.fecha_inicio.nil? %>
+	</td>
+	<td><%= ocu.fecha_termino.strftime('%Y-%m-%d') unless ocu.fecha_termino.nil? %>
+	</td>
+	<td><%= ocu.ocupacion.nombre %>
+	</td>
+	<td><%= ocu.getTiempoTotal %>
+	</td>
+	<td><a href="#modal-container-ocu-<%= ocu.id %>" data-toggle="modal" id="ocu-<%= ocu.id %>" >Editar</a></td>
+</tr>

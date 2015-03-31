@@ -3,6 +3,11 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 saveTest = ->
+	if typeof atencion_salud_id != 'undefined'
+    at_salud_id = atencion_salud_id
+  else
+    at_salud_id = 'persona'
+
 	param_1 = $('input[name=question-1]:checked').val()
 	param_2 = $('input[name=question-2]:checked').val()
 	param_3 = $('input[name=question-3]:checked').val()
@@ -16,6 +21,7 @@ saveTest = ->
 	$.ajax '/habitos_alcohol',
     type: 'POST'
     data:
+    	atencion_salud_id: at_salud_id
     	param_1 : param_1
     	param_2 : param_2
     	param_3 : param_3
@@ -27,8 +33,7 @@ saveTest = ->
     	param_9 : param_9
     	param_10 : param_10
     error: (jqXHR, textStatus, errorThrown) ->       
-    success: (data, textStatus, jqXHR) -> window.location.href = '/habitos_alcohol/'+data.id 
-
+    success: (data, textStatus, jqXHR) -> cerrarModalHabAlc 'new'
 
 alertMessage = (messageId) ->
   $('#alert-'+messageId).show()
@@ -36,16 +41,12 @@ alertMessage = (messageId) ->
 hideMessage = (messageId) ->
   $('#alert-'+messageId).hide()
    
-$(document).ready -> 
-	$('#button1id').on 'click' , =>	
-		valid = true
-		for i in [1..10] by 1
-			hideMessage i
-			unless $('input[name=question-'+i+']:checked').size() > 0
-				valid = false
-				alertMessage i
-		if valid			
-			saveTest()		
-
-
-	   
+$('#button1id').on 'click' , =>	
+	valid = true
+	for i in [1..10] by 1
+		hideMessage i
+		unless $('input[name=question-'+i+']:checked').size() > 0
+			valid = false
+			alertMessage i
+	if valid			
+		saveTest()

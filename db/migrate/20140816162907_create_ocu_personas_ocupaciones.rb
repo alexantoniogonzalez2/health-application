@@ -5,6 +5,7 @@ class CreateOcuPersonasOcupaciones < ActiveRecord::Migration
     	t.datetime :fecha_termino
     	t.references :persona #persona_id
     	t.references :ocupacion #ocupacion_id
+    	t.boolean :es_actual
       t.timestamps
     end
   end

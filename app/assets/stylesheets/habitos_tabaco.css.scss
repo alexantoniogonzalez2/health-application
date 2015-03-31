@@ -5,8 +5,9 @@
 label.tabaco { margin-left: 15px; }
 div.tabaco { margin-top: 10px; }
 input.tabaco { margin-left: 5px; }
-input.ajuste { z-index: -1 !important; }
-div.container-tabaco > div > {
-	div.alert-dismissible { display: none } 
-	div > div.alert-dismissible { display: none } 
+//input.ajuste { z-index: -1 !important; }
+div.ajuste-dismissible > div > {
+	div.alert-dismissible { display: none; } 
+	div > div.alert-dismissible { display: none; } 
 }
+.form-horizontal .control-label {  text-align: left; }

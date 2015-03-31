@@ -1,5 +1,7 @@
 class AtencionesSaludController < ApplicationController
 
+	include ActionView::Helpers::NumberHelper
+	
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
 	end
@@ -165,6 +167,54 @@ class AtencionesSaludController < ApplicationController
   		@texto_vacunas = @array_vacunas.join('|')	
   	end
 
+		#Actividad física
+  	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@persona.id).first
+  	if @persona_actividad_fisica.nil?
+  		@persona_actividad_fisica = FiPersonaActividadFisica.new 
+			@persona_actividad_fisica.persona = @persona
+			@persona_actividad_fisica.nivel_actividad = "Sin información"
+			@persona_actividad_fisica.save!
+		end
+		@segmento_actividad = @persona.getSegmentoActividadFisica
+		@edad_act_fis = @persona.age()
+		@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
+
+		#Hábitos de alcohol
+		@ultimo_test = FiHabitosAlcohol
+			.select('MAX(fecha_test_audit),audit_puntaje')
+			.where('persona_id = ?', @persona.id ).first
+
+		@texto_alcohol = 'Sin información'	
+		if @ultimo_test
+			case @ultimo_test.audit_puntaje				      
+	    when 8..15
+	      @texto_alcohol = 'Consumo de riesgo'
+	    when 0..7
+	      @texto_alcohol = 'Consumo de bajo riesgo'
+	    else
+	    	@texto_alcohol = 'Consumo perjudicial o dependencia'	 
+	    end 
+		end
+
+		#Hábitos de tabaco
+		@texto_tabaco = 'Sin información'
+		@total_consumo = 0
+		@consumo = FiHabitosTabaco.where('persona_id = ?', @persona.id )
+		@consumo.each do |con|
+  		@total_consumo += con.paquetes_agno
+  	end	
+  	@texto_tabaco = 'Paquetes-año: ' <<  number_to_human(@total_consumo, precision: 2, separator: ',') if @consumo
+
+  	#Antecedentes laborales
+  	@texto_ocupaciones = 'Sin información'
+  	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@persona.id );
+  	@array_ocupaciones = []
+	  @ocupaciones.each do |ocu|
+	  	@array_ocupaciones.push(ocu.ocupacion.nombre)
+	  end	
+ 		@texto_ocupaciones = @array_ocupaciones.join('|') unless @array_ocupaciones.blank?
+
+  	
 	end
 
 	def crearAtencion	

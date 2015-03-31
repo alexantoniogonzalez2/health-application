@@ -1,9 +1,14 @@
 guardarActividad = (valor,pregunta) ->
+  if typeof atencion_salud_id != 'undefined'
+    at_salud_id = atencion_salud_id
+  else
+    at_salud_id = 'persona'
   $.ajax '/actividad_fisica',
     type: 'POST'
     data:
       valor : valor
-      pregunta : pregunta     
+      pregunta : pregunta
+      atencion_salud_id: at_salud_id
     error: (jqXHR, textStatus, errorThrown) ->       
     success: (data, textStatus, jqXHR) ->
 
@@ -45,17 +50,21 @@ actualizarDiagnostico = (edad) ->
    
   switch diagnostico
     when 'sin_recomendacion'
-      $('#calculo-actividad-fisica').attr 'class', 'alert alert-warning'
-      $('span[name=diag_act_fis]').html('sin recomendaciones') 
+      clase = 'alert alert-warning'
+      nivel_actividad = 'Sin recomendaciones'
     when 'insuficiente'
-      $('#calculo-actividad-fisica').attr 'class', 'alert alert-danger'
-      $('span[name=diag_act_fis]').html('insuficiente') 
+      clase = 'alert alert-danger'
+      nivel_actividad = 'Insuficiente'
     when 'recomendado'
-      $('#calculo-actividad-fisica').attr 'class', 'alert alert-warning'
-      $('span[name=diag_act_fis]').html('cumple con las recomendaciones') 
+      clase = 'alert alert-warning'
+      nivel_actividad = 'Cumple con las recomendaciones'
     when 'ideal' 
-      $('#calculo-actividad-fisica').attr 'class', 'alert alert-success'
-      $('span[name=diag_act_fis]').html('ideal')  
+      clase = 'alert alert-success'
+      nivel_actividad = 'Ideal'
+    
+  $('#calculo-actividad-fisica').attr 'class', clase
+  $('span[name=diag_act_fis]').html(nivel_actividad)
+  guardarActividad( nivel_actividad, 'nivel_actividad' )  
 
 ocultarPreguntas = (valor,pregunta) ->
   $('#preg-'+pregunta).show() if valor == 1 or valor == '1'

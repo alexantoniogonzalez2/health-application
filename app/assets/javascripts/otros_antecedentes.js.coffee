@@ -3,6 +3,10 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $("#guardar-ant-soc").click ->
+  if typeof atencion_salud_id != 'undefined'
+    at_salud_id = atencion_salud_id
+  else
+    at_salud_id = 'persona'
   grupo_familiar = $("#personas-grupo-familiar").val()
   nivel_escolaridad = $('input[name=nivel-escolaridad]:checked').val()
   $.ajax '/guardar_antecedentes_sociales',
@@ -10,6 +14,7 @@ $("#guardar-ant-soc").click ->
     data:
       grupo_familiar : grupo_familiar
       nivel_escolaridad : nivel_escolaridad
+      atencion_salud_id : at_salud_id
     error: (jqXHR, textStatus, errorThrown) ->
     success: (data, textStatus, jqXHR) ->
   return 

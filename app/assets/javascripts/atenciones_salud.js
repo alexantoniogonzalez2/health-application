@@ -39,9 +39,8 @@ $(document).ready(function() {
 
 });
 
-function cerrarModalAntMed(modalid){
-  $('#modal-container-med-'+modalid).modal('hide');
-}
-function cerrarModalAntPres(modalid){
-  $('#modal-container-pres-'+modalid).modal('hide');
-}
+function cerrarModalAntMed(modal_id){ $('#modal-container-med-' + modal_id ).modal('hide'); }
+function cerrarModalAntPres(modal_id){ $('#modal-container-pres-' + modal_id ).modal('hide'); }
+function cerrarModalHabAlc(modal_id){ $('#modal-container-hab-alc-' + modal_id ).modal('hide'); }
+function cerrarModalHabTab(modal_id){ $('#modal-container-hab-tab-' + modal_id ).modal('hide'); }
+function cerrarModalOcu(modal_id){ $('#modal-container-ocu-' + modal_id ).modal('hide'); }

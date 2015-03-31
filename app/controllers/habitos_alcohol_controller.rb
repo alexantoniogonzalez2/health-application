@@ -5,24 +5,33 @@ class HabitosAlcoholController < ApplicationController
 	def new 
 	end
 	def create
-		@test_audit = FiHabitosAlcohol.new
-		@test_audit.audit_1 = params[:param_1]
-		@test_audit.audit_2 = params[:param_2]
-		@test_audit.audit_3 = params[:param_3]
-		@test_audit.audit_4 = params[:param_4]
-		@test_audit.audit_5 = params[:param_5]
-		@test_audit.audit_6 = params[:param_6]
-		@test_audit.audit_7 = params[:param_7]
-		@test_audit.audit_8 = params[:param_8] 
-		@test_audit.audit_9 = params[:param_9]
-		@test_audit.audit_10 = params[:param_10]
-		@test_audit.audit_puntaje = params[:param_1].to_i+params[:param_2].to_i+params[:param_3].to_i+params[:param_4].to_i+params[:param_5].to_i+params[:param_6].to_i+params[:param_7].to_i+params[:param_8].to_i+params[:param_9].to_i+params[:param_10].to_i
-		@test_audit.fecha_test_audit = DateTime.current
-		@test_audit.persona_id = params[:atencion_salud_id].nil? ? current_user.id : 999 
-		@test_audit.save!
+
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.find(current_user.id) 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end	
+
+		@test = FiHabitosAlcohol.new
+		@test.audit_1 = params[:param_1]
+		@test.audit_2 = params[:param_2]
+		@test.audit_3 = params[:param_3]
+		@test.audit_4 = params[:param_4]
+		@test.audit_5 = params[:param_5]
+		@test.audit_6 = params[:param_6]
+		@test.audit_7 = params[:param_7]
+		@test.audit_8 = params[:param_8] 
+		@test.audit_9 = params[:param_9]
+		@test.audit_10 = params[:param_10]
+		@test.audit_puntaje = params[:param_1].to_i+params[:param_2].to_i+params[:param_3].to_i+params[:param_4].to_i+params[:param_5].to_i+params[:param_6].to_i+params[:param_7].to_i+params[:param_8].to_i+params[:param_9].to_i+params[:param_10].to_i
+		@test.fecha_test_audit = DateTime.current
+		@test.persona = @persona
+		@test.save!
 
 		respond_to do |format|
-			format.json { render :json => { :success => true, :id => @test_audit.id }	}
+			format.js   {}
+    	format.json { render :json => { :success => true } }
 		end		
 	end
 	def show

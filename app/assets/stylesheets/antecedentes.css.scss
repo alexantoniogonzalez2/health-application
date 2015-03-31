@@ -2,16 +2,22 @@ $lightBlue: #85D3F5;
 $Blue: #428bca;
 #antecedentes { background-color: white; color: #428bca; border:none;}
 #antecedentes:hover {text-decoration: underline}
-div.antecedentes { padding: 0px; } 
-div.antecedentes { padding: 0px; } 
 div.actividad-fisica {
 	margin-left: 0px !important;
 	margin-right: 0px !important;	
 	> form { 
+		> div { padding-bottom: 5px !important; }
 		> div.clearfix > div.column { padding: 0px;}
 		> div > div {
-			> div > label { font-weight: normal; padding: 0px; text-align: left; };
-			label { font-weight: normal };		
+			> div {
+				> label { font-weight: normal; padding: 0px; };
+				> input { padding: 6px 5px; };
+			}
+			label { 
+				> input { margin-left: 0px !important; margin-right: 5px !important; }
+				font-weight: normal; text-align: left !important; padding: 0px !important; 
+			};
+
 		}
 	}
 }

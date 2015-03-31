@@ -1,0 +1,51 @@
+<h4>Consumo de cigarrillos realizados</h4>
+
+<table class="table table-striped table-hover table-condensed">
+	<thead class="ajust-head">
+    <tr class="info" ><th class="col-sm-2">Fecha inicio</th><th class="col-sm-2">Fecha final</th><th class="col-sm-2">Cigarros por día</th><th class="col-sm-2">Paquetes año</th><th class="col-sm-1">Consumo</th></tr>
+  </thead>
+  <tbody id='lista-hab-tab'> 
+	  <% unless @consumo.blank? %>
+			<% @consumo.each do |consumo| %>
+				<%= render :partial => "habitos_tabaco/habitos_tabaco_row", :locals => {:cons => consumo } %>
+			<% end %>
+		<% else %>
+			<tr id='tr-vacio-tab'><td colspan='5' >No hay información de consumo de cigarrillos.</td></tr>
+		<% end %>		
+	</tbody>
+</table>	
+<div class="alert alert-success" role="alert">Total consumo: <span id="total-consumo"><%= number_to_human(@total_consumo, precision: 2, separator: ',') %></span> </div>
+
+<a href="#modal-container-hab-tab-new" role="button" class="btn" data-toggle="modal">Ingresar consumo de tabaco</a>
+
+<div id='ant_tab_modal-div'></div>
+
+<% unless @consumo.blank? %>
+	<% @consumo.each do |consumo| %>
+		<%= render :partial => "habitos_tabaco/edit", :locals => { :cons => consumo } %>
+	<% end %>
+<% end %>	
+
+
+
+<div class="modal fade" id="modal-container-hab-tab-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog ajuste-ancho">
+		<div class="modal-content">
+			<div class="modal-header">
+				 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cerrarModalHabTab('new')">×</button>
+				<h4 class="modal-title" id="myModalLabel">
+					Consumo de tabaco
+				</h4>
+			</div>
+			<div class="modal-body">
+				<%= render :partial => "habitos_tabaco/new" %>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" onclick="cerrarModalHabTab('new')">Cerrar ventana</button>
+				<button type="button" id="guardar-consumo-new" name="ingresar" class="btn btn-success" onclick="guardarConsumoTabaco('new')">Guardar consumo</button>			  
+			</div>
+		</div>		
+	</div>	
+</div>
+
+<%= javascript_include_tag "habitos_tabaco" %>

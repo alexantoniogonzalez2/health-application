@@ -1,0 +1,95 @@
+<div class="modal fade" id="modal-container-hab-tab-<%= cons.id %>" role="dialog" aria-spanledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ajuste-ancho">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cerrarModalHabTab(<%= cons.id %>)" aria-hidden="true">×</button>
+        <h4 class="modal-title">Consumo de tabaco</h4>
+      </div>
+      <div class="modal-body">
+
+				<div class="container ajuste-dismissible">
+
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+
+							<div id="alert-cigarros-dia-<%= cons.id %>" class="alert alert-warning alert-dismissible" role="alert">
+							  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							 	Ingrese un número positivo.
+							</div>
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="appendedtext">Cigarros por día</label>
+							  <div class="col-md-4">
+							    <div class="input-group">
+							      <input id="cigarros-dia-<%= cons.id %>" value="<%= cons.cigarros_por_dia %>" name="appendedtext" class="form-control" placeholder="Ingrese " type="text">
+							      <span class="input-group-addon">cigarros por día</span>
+							    </div>			   
+							  </div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row clearfix tabaco">
+
+						<div id="alert-fecha-<%= cons.id %>" class="alert alert-warning alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						 	La fecha de inicio debe ser menor que la fecha final.	
+						</div>
+
+						<div id="alert-fecha-inicio-<%= cons.id %>" class="alert alert-warning alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						 	Ingrese una fecha de inicio.
+						</div>
+
+				    <div class="col-md-4 column">
+				      <label class="tabaco">Fecha inicio</label>
+				    </div>
+				    <div class="col-md-8 column">
+				      <input id="f_i-<%= cons.id %>" class="datepicker tabaco" type="text" value="<%= cons.fecha_inicio.strftime('%Y-%m-%d') %>" >
+				    </div>
+				  </div>
+
+				  <div class="row clearfix">
+
+				  	<div id="alert-fecha-final-<%= cons.id %>" class="alert alert-warning alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						 	Ingrese una fecha final.
+						</div>
+				    
+				    <div class="col-md-4 column">
+				      <label class="tabaco">Fecha final</label>
+				    </div>
+				    <div class="col-md-8 column">
+				      <input id="f_f-<%= cons.id %>" class="datepicker tabaco" type="text" value="<%= cons.fecha_final.strftime('%Y-%m-%d') %>" >
+				    </div>
+				  </div>
+
+				  <div class="row clearfix">
+						<div class="col-md-12 column">
+
+							<div class="form-group">
+							  <label class="col-md-4 control-label" for="appendedtext">Paquetes año</label>
+							  <div class="col-md-4">
+							    <div class="input-group">
+							      <input id="paquetes-agno-<%= cons.id %>" value="<%= number_to_human(cons.paquetes_agno, precision: 2, separator: ',') %>" name="appendedtext" class="form-control ajuste" placeholder="Cantidad de " disabled type="text">
+							      <span class="input-group-addon">paquetes año</span>
+							    </div>			   
+							  </div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="cerrarModalHabTab(<%= cons.id %>)">Cerrar ventana</button>
+        <button type="button" id="guardar-consumo-<%= cons.id %>" name="editar" class="btn btn-success" onclick="guardarConsumoTabaco(<%= cons.id %>)">Actualizar consumo</button>
+      </div>
+    </div>            
+  </div>        
+</div>
+
+<%= javascript_include_tag "ant_tab" %>

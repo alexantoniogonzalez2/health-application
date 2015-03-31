@@ -50,17 +50,17 @@
       <a id="ant_qui" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_ant_pro %></a>
     </div>
     <div class="list-group col-md-4 column ajuste-ant">
-      <a id="act_fis" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-soccer-ball-o fa-fw fa-lg"></i>Actividad física</a>
-      <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-beer fa-fw fa-lg"></i>Hábitos de alcohol</a>
-      <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Hábitos de tabaco</a>
+      <a id="act_fis" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-soccer-ball-o fa-fw fa-lg"></i><%= @persona_actividad_fisica.nivel_actividad %></a>
+      <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-beer fa-fw fa-lg"></i><%= @texto_alcohol %></a>
+      <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_tabaco %></a>
       <% if @agendamiento.persona.genero == 'Femenino' %>
         <a id="ant_gin" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Ant. ginecológicos</a>
       <% end%>
     </div> 
     <div class="list-group col-md-4 column ajuste-ant2">
       <a id="ant_fam" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Ant. familiares</a>
-      <a id="ant_soc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Ant. sociales</a>
-      <a id="ant_lab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-money fa-fw fa-lg"></i>Ant. laborales</a>
+      <a id="ant_soc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i><%= @persona.getNivelEscolaridad %></a>
+      <a id="ant_lab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-money fa-fw fa-lg"></i><%= @texto_ocupaciones %></a>
     </div>
   </div>  
 </div>
@@ -73,7 +73,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h4>Antecedentes del paciente</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body ajuste-height">
         <div id='contenido-ant'></div>        
       </div>
       <div class="modal-footer">
@@ -216,5 +216,3 @@
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
 <%= javascript_include_tag "home" %>
 <%= javascript_include_tag "antecedentes" %>
-
-
