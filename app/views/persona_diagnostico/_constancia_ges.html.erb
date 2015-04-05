@@ -1,3 +1,20 @@
+<%  persona_notificacion = p_d.getPersonaNotificacion(p_d.id)
+		nombre = ''
+		rut = ''
+		correo = ''
+		celular = ''
+		telefono_fijo = ''
+		unless persona_notificacion.nil? 			
+			nombre = persona_notificacion.showName('%n%p%m')
+			rut = persona_notificacion.showRut
+			correo = persona_notificacion.user.email 
+			celular = persona_notificacion.getCelular 
+			telefono_fijo = persona_notificacion.getTelefonoFijo
+			id_pre = persona_notificacion.id			 				 		
+		end
+	
+%>	
+
 <h1 class="enc-ges">Formulario de constancia de información al paciente GES (Artículo 24°, Ley 19.996)</h1>
 
 <div class="panel panel-default ges">
@@ -178,123 +195,63 @@
 <div class="panel panel-default">
 	<div class="panel-body panel-body-ajustado">
 		<div class="container ajustado">
+
 			<div class="row clearfix">	
 				<div class="col-md-12 column">
 				En caso que la persona que tomó conocimiento no sea el paciente, identificar:			
 				</div>
 			</div>			  
 			<div class="row clearfix">
-				<div class="col-md-4 column">
-					<label class="pers-ges">Seleccionar persona</label>
-					<% persona_notificacion = p_d.getPersonaNotificacion(p_d.id) %>					
-					<a class="panel-title collapsed a-ges" data-toggle="collapse" href="#per_not_<%= p_d.id %>">Agregar persona</a>
+				<div class="col-md-8 column">
+					<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'not_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_notificacion'  } %>
 				</div>
-				<div class="col-md-8 column">:
-					<input type='hidden' class="select_persona" id="select_persona_<%= p_d.id %>"></input>			 		
+				<div class="col-md-4 column">
+					<a id="modal-agregar-persona" href="#modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>			 		
+				</div>				
+			</div>
+			<div class="row clearfix ajus-mar-top">
+				<div class="col-md-6 column">
+					<label>Nombre</label>: <span id="not_nombre_<%= p_d.id %>" ><%= nombre %></span>				
+				</div>				
+				<div class="col-md-6 column">
+					<label>Rut</label>: <span id="not_rut_<%= p_d.id %>" ><%= rut %></span>			
 				</div>				
 			</div>
 			<div class="row clearfix">
-				<div id="per_not_<%= p_d.id %>" class="panel-collapse collapse panel-ges2">
-					<div class="panel-body">
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Nombre</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_nom_<%= p_d.id %>" >	
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label>Apellido paterno</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_apep_<%= p_d.id %>">
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Apellido materno</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_apem_<%= p_d.id %>">
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label>Parentesco</label> <span class="glyphicon glyphicon-info-sign icon-ges"></span>
-							</div>
-							<div class="col-md-4 column">:
-								<select id="select_parent_<%= p_d.id %>" name="selectbasic" class="form-control select-ges">
-									<option value="" selected disabled>Seleccionar</option>
-						      <option value="1">Madre</option>
-						      <option value="2">Padre</option>
-						      <option value="3">Hija</option>
-						      <option value="4">Hijo</option>
-						      <option value="5">Otro</option>
-						    </select>
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Rut</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_prut_<%= p_d.id %>">	
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label><p>Dígito verificador</p></label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_pdv_<%= p_d.id %>">
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-2 column ajuste-ges">
-								<label>Correo electrónico</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_pcorreo_<%= p_d.id %>">	
-							</div>
-							<div class="col-md-2 column ajuste-ges">
-								<label>Celular</label>
-							</div>
-							<div class="col-md-4 column">: <input class="form-control input-md not-ges2" id="ges_pcelular_<%= p_d.id %>">
-							</div>
-						</div>
-					</div>						
+				<div class="col-md-6 column">
+					<label>Correo electrónico</label>: <span id="not_correo_<%= p_d.id %>" ><%= correo %></span>					
+				</div>
+				<div class="col-md-6 column">
+					<label>Celular</label>: <span id="not_celular_<%= p_d.id %>" ><%= celular %></span>	
+				</div>				
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-6 column">
+					<label>Telefono fijo</label>: <span id="not_telefono_<%= p_d.id %>" ><%= telefono_fijo %></span>
 				</div>			
-			</div>
-			<div id="row_nombre_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Nombre</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_nombre_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.showName('%n%p%m') %>">				
-				</div>				
-			</div>
-			<div id="row_rut_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Rut</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_rut_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.showRut %>">					
-				</div>				
-			</div>
-			<div id="row_correo_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Correo electrónico</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_correo_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.user.email %>" >						
-				</div>				
-			</div>
-			<div id="row_celular_<%= p_d.id %>" class="row clearfix">
-				<div class="col-md-4 column">
-					<label>Celular</label>
-				</div>
-				<div class="col-md-8 column">: <input class="form-control input-md not-ges" disabled id="ges_celular_<%= p_d.id %>" value="<%= persona_notificacion.nil? ? '' : persona_notificacion.getCelular %>" >					
-				</div>				
-			</div>
-			<div class="row clearfix ges-div" id="ges_div_<%= p_d.id %>">
-				<div class="col-md-8 column">
-				</div>
-				<div class="col-md-4 column">	
-					<button id="ges_agregar_<%= p_d.id %>" type="button" class="btn btn-success ges-agregar">Agregar persona</button>
-    			<button id="ges_cancelar_<%= p_d.id %>" type="button"  class="btn btn-danger ges-cancelar">Cancelar</button>	
+				<div class="col-md-6 column">
 				</div>				
 			</div>
 
 		</div>
  	</div>
 </div>
+
+<div class="modal fade" id="modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog ajuste-top">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" onclick="cerrarModalAgregarPersona('not_'+<%= p_d.id.to_s %>)" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
+			</div>
+			<div class="modal-body">
+				<%= render :partial => "persona/agregar_persona", :locals => {:p_d => p_d, :id => 'not_'+p_d.id.to_s } %>
+			</div>
+			<div class="modal-footer"></div>
+		</div>		
+	</div>	
+</div>
+
 
 <div class="panel-group" id="panel-GES">
 	<div class="panel panel-default">

@@ -33,7 +33,8 @@ class AtencionesSaludController < ApplicationController
 
 	def edit
 
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
 		@agendamientos = AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 		@actualizaciones = AgAgendamientoLogEstados
 			.joins(:agendamiento)
@@ -61,6 +62,7 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
 	  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
 	  					fi_persona_diagnosticos.diagnostico_id,
+	  					fi_persona_diagnosticos.persona_id,
 	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
 	  					fi_persona_diagnosticos_atenciones_salud.comentario,
 	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
@@ -191,7 +193,7 @@ class AtencionesSaludController < ApplicationController
 	      @texto_alcohol = 'Consumo de riesgo'
 	    when 0..7
 	      @texto_alcohol = 'Consumo de bajo riesgo'
-	    else
+	    when 16..40
 	    	@texto_alcohol = 'Consumo perjudicial o dependencia'	 
 	    end 
 		end
@@ -203,7 +205,7 @@ class AtencionesSaludController < ApplicationController
 		@consumo.each do |con|
   		@total_consumo += con.paquetes_agno
   	end	
-  	@texto_tabaco = 'Paquetes-año: ' <<  number_to_human(@total_consumo, precision: 2, separator: ',') if @consumo
+  	@texto_tabaco = 'Paquetes-año: ' <<  number_to_human(@total_consumo, precision: 2, separator: ',') unless @consumo.first.nil?
 
   	#Antecedentes laborales
   	@texto_ocupaciones = 'Sin información'

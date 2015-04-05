@@ -5,13 +5,7 @@ class FiGestas < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(:desenlace, 
-									:fecha_inicio, 
-									:fecha_termino, 
-									:id,
-									:parentesco,
-									:persona
-									:persona_diagnosticos)
+    params.require(:list).permit(:desenlace, :fecha_inicio, :fecha_termino, :id, :parentesco,	:persona,	:persona_diagnosticos)
   end
 								
 end

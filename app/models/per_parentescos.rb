@@ -6,10 +6,7 @@ class PerParentescos < ActiveRecord::Base
  	
 	private
   def app_params
-    params.require(:list).permit(:id,
-				  					:gesta,
-				  					:hijo,
-				  					:progenitor)
+    params.require(:list).permit(:id,:gesta,:hijo,:progenitor)
   end
 			  					
 end

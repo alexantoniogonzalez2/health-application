@@ -186,11 +186,11 @@ class AgAgendamientos < ActiveRecord::Base
 
     detalle<<"<h4 class='modal-title' id='myModalLabel'>"<<estado<<"</h4> </div>
               <div class='modal-body'><table>
-              <tr><td><h5>Recinto de salud</h5></td><td>: #{especialidad_prestador_profesional.prestador.nombre}</td></tr>
-              <tr><td><h5>Especialidad</h5></td><td>: #{especialidad_prestador_profesional.especialidad.nombre}</td></tr>
-              <tr><td><h5>Especialista</h5></td><td>: #{especialidad_prestador_profesional.profesional.showName('%d%n%p%m')}</td></tr>
-              <tr><td><h5>Fecha y hora de inicio</h5></td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
-              <tr><td><h5>Fecha y hora de término</h5></td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
+              <tr><td>Recinto de salud</td><td>: #{especialidad_prestador_profesional.prestador.nombre}</td></tr>
+              <tr><td>Especialidad</td><td>: #{especialidad_prestador_profesional.especialidad.nombre}</td></tr>
+              <tr><td>Especialista</td><td>: #{especialidad_prestador_profesional.profesional.showName('%d%n%p%m')}</td></tr>
+              <tr><td>Fecha y hora de inicio</td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
+              <tr><td>Fecha y hora de término</td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
     if (perm_tomar_horas and estado == 'Hora disponible')
       elegir_paciente = '<tr><td>Paciente</td><td>:<select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="chosen-select" ><option value="" selected disabled>Seleccione un paciente</option>' 
@@ -225,7 +225,7 @@ class AgAgendamientos < ActiveRecord::Base
     
     if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and ((estado == 'Hora disponible' and !perm_profesional )  or perm_paciente  or (perm_profesional and estado != 'Hora disponible')) or perm_tomar_horas
       motivo<<'<tr>
-                <td><h5>El motivo de consulta:</h5></td>
+                <td>El motivo de consulta:</td>
                 <td>
                   <div id="m_c_'<<id.to_s<<'">
                     <div class="radio">
@@ -254,7 +254,7 @@ class AgAgendamientos < ActiveRecord::Base
     end   
     if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional 
       if estado != 'Hora disponible' and estado != 'Hora bloqueada'     
-      paciente<<"<tr><td><h5>Paciente</h5></td><td>: #{persona.showName('%n%p%m')}</td></tr>"
+      paciente<<"<tr><td>Paciente</td><td>: #{persona.showName('%n%p%m')}</td></tr>"
       end
     end 
     if perm_admin_recibe 
@@ -268,13 +268,13 @@ class AgAgendamientos < ActiveRecord::Base
     end
     if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional
       if estado == 'Paciente en espera' or estado == 'Paciente atendido'            
-        hora_llegada = "<tr><td><h5>Fecha y hora de llegada paciente</h5></td><td>:  #{dateTimeFormat(fecha_llegada_paciente,'extendido')}</td></tr>"
+        hora_llegada = "<tr><td>Fecha y hora de llegada paciente</td><td>:  #{dateTimeFormat(fecha_llegada_paciente,'extendido')}</td></tr>"
       end         
     end
     if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional 
       if estado == 'Paciente atendido'         
-        hora_inicio_atencion = "<tr><td><h5>Fecha y hora de inicio atención</h5></td><td>: #{dateTimeFormat(fecha_comienzo_real,'extendido')}</td></tr>"
-        hora_termino_atencion = "<tr><td><h5>Fecha y hora de término atención</h5></td><td>: #{dateTimeFormat(fecha_final_real,'extendido')}</td></tr>" 
+        hora_inicio_atencion = "<tr><td>Fecha y hora de inicio atención</td><td>: #{dateTimeFormat(fecha_comienzo_real,'extendido')}</td></tr>"
+        hora_termino_atencion = "<tr><td>Fecha y hora de término atención</td><td>: #{dateTimeFormat(fecha_final_real,'extendido')}</td></tr>" 
       end  
     end      
       

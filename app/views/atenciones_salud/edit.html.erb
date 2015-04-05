@@ -5,8 +5,6 @@
   var id=<%= @id %>
 </script>
 
-<%= form_for :atencion_salud, :html => {:class => 'form-horizontal'} , url: {action: "update"},  method: :put do |f|  %>
-
 <input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
 
 <div id="atencion-salud" class="panel panel-success">
@@ -22,23 +20,23 @@
   <div class="container ajustado">
     <div class="row clearfix">
       <div class="col-md-7 column">
-        <%= f.label 'Paciente' %>: <%= @agendamiento.persona.showName('%n%p%m') %>
+        <label>Paciente</label>: <%= @agendamiento.persona.showName('%n%p%m') %>
       </div>
       <div class="col-md-5 column">
-        <%= f.label 'Edad' %>: <%= @agendamiento.persona.age_text %>  
+        <label>Edad</label>: <%= @agendamiento.persona.age_text %>  
       </div>
     </div>
     <div class="row clearfix">
       <div class="col-md-7 column">
-        <%= f.label 'Rut' %>: <%= @agendamiento.persona.showRut %>  
+       <label>Rut</label>: <%= @agendamiento.persona.showRut %>  
       </div>
       <div class="col-md-5 column">
-        <%= f.label 'Sexo' %>: <%= @agendamiento.persona.showSexo %>  
+       <label>Sexo</label>: <%= @agendamiento.persona.showSexo %>  
       </div>
     </div>
   </div>
 
-<%= f.label 'Antecedentes' %>
+<label>Antecedentes</label>
 <%= link_to "Ver todos los antecedentes", {:controller => :antecedentes, :action => 'edit', :id => @agendamiento.id }, :method => :post %>
 
 <div class"container">
@@ -94,7 +92,7 @@
   <% end %>      
 </div>
 
-<%= f.label 'Diagnósticos recientes' %>
+<label>Diagnósticos recientes</label>
 
 <div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">  
   <% @persona_diagnostico_anteriores.each do |p_d| %>
@@ -107,10 +105,10 @@
   <% end %>      
 </div>
 
-<%= f.label :"Motivo de consulta" %><span class="alert alert-info" id="auto-motivo" >Autoguardado</span>
-<%= f.text_area :motivo_consulta , :class => "form-control", :size => "50x3" %>
-<%= f.label :"Examen físico" %><span class="alert alert-info" id="auto-examen" >Autoguardado</span>
-<%= f.text_area :examen_fisico , :class => "form-control", :size => "50x3" %>
+<label>Motivo de consulta</label><span class="alert alert-info" id="auto-motivo" >Autoguardado</span>
+<textarea id='motivo_consulta' class = "form-control" rows='3' cols='50'></textarea>
+<label>Examen físico</label><span class="alert alert-info" id="auto-examen" >Autoguardado</span>
+<textarea id='examen_fisic' class = "form-control" rows='3' cols='50'></textarea>
  
 <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>
 <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :p_pr => @presion} %>
@@ -119,7 +117,7 @@
 
 <div class="col-md-6 div-form-atencion">
 
-  <%= f.label :"Diagnóstico" %>
+  <label>Diagnóstico</label>
   <input type='hidden' id="select_diagnostico"></input>
   <div class="checkbox">
     <label for="diag-no-frec">
@@ -138,7 +136,7 @@
     <% end %>      
   </div>
 	
-	<%= f.label :"Exámenes" %>
+	<label>Exámenes</label>
 
   <input type='hidden' id="select_examen" class="ajuste-select" width="600px" ></input>
   <div class="list-group" name="examen-div" id="examen-div">  
@@ -152,7 +150,7 @@
     <% end %>      
   </div>
 
-  <%= f.label :"Procedimientos/Cirugías" %>
+  <label>Procedimientos/Cirugías</label>
   <input type='hidden' id="select_procedimiento" class="ajuste-select" ></input>
   <div class="list-group" name="procedimiento-div" id="procedimiento-div">  
     <% @persona_procedimiento.each do |p_p| %>
@@ -165,7 +163,7 @@
     <% end %>      
   </div> 
 
-  <%= f.label :"Medicamentos" %>
+  <label>Medicamentos</label>
   <input type='hidden' id="select_medicamento"></input>
   <div class="list-group" name="medicamento-div" id="medicamento-div">  
     <% @persona_medicamento.each do |p_m| %>
@@ -178,8 +176,8 @@
     <% end %>      
   </div>
 
-  <%= f.label :"Indicaciones"  %><span id="auto-indicaciones" class="alert alert-info">Autoguardado</span>
-  <%= f.text_area :indicaciones_generales , :class => 'form-control',:size => "50x4" %>
+  <label>Indicaciones</label><span id="auto-indicaciones" class="alert alert-info">Autoguardado</span>
+  <textarea id='indicaciones_generales' class='form-control' rows='4' cols='50'></textarea>
 
   <a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Emitir certificado</a>
   <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id} %><br>
@@ -191,23 +189,20 @@
 
 <div class="row ajus-padd-bott">
   <div class="col-md-12 column">
-
-    <%= f.submit :"Finalizar atención", :id => "finalizar", :name =>"finalizar", :class=>"btn btn-primary ajus-pos-right" %>
-    <%= f.submit :"Guardar atención", :id => "guardar", :class=>"btn btn-success ajus-pos-right" %>
-        
+    <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
+    <button id='guardar' class='btn btn-success ajus-pos-right'>Guardar atención</button>
   </div>
 </div>  
 
 </div> <!--Cierre div panel-body -->
 </div> <!--Cierre div panel -->
 
-<% end %> 
 
-  <div class="row clearfix">
-    <div class="horas_agendadas col-md-12 column">
-      <button id="actualizar2" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button>
-    </div>
-  </div>  
+<div class="row clearfix">
+  <div class="horas_agendadas col-md-12 column">
+    <button id="actualizar2" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button>
+  </div>
+</div>  
 <%= render :partial => "home/log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %>
 
 <div id="qtip-growl-container"></div>

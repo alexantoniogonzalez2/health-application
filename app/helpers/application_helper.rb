@@ -14,8 +14,8 @@ module ApplicationHelper
 	def tieneRol(nombre_rol)
 
 		@rol = PreRolAdministrativos.find_by nombre: nombre_rol
-	
-		@prestador_administrativo = PrePrestadorAdministrativos.find_by administrativo_id: current_user.id, rol_administrativo_id: @rol.id
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
+		@prestador_administrativo = PrePrestadorAdministrativos.find_by administrativo_id: @usuario.id, rol_administrativo_id: @rol.id
 	
 		if @prestador_administrativo
 			return true
@@ -27,11 +27,12 @@ module ApplicationHelper
 
 	def getIdPrestador(perfil)
 
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
 		case perfil
 		when 'administrativo'
-			@prestador = PrePrestadorAdministrativos.find_by administrativo_id: current_user.id
+			@prestador = PrePrestadorAdministrativos.find_by administrativo_id: @usuario.id
 		when 'profesional'	
-			@prestador = PrePrestadorProfesionales.find_by profesional_id: current_user.id
+			@prestador = PrePrestadorProfesionales.find_by profesional_id: @usuario.id
 		end 		
 	
 		return @prestador.prestador_id
@@ -40,7 +41,8 @@ module ApplicationHelper
 
 	def esProfesionalSalud
 	
-		@prestador_profesional = PrePrestadorProfesionales.find_by profesional_id: current_user.id
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
+		@prestador_profesional = PrePrestadorProfesionales.find_by profesional_id: @usuario.id
 	
 		if @prestador_profesional
 			return true
@@ -51,21 +53,24 @@ module ApplicationHelper
 	end
 
 	def getPacientesEnEspera
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@usuario.id).first
 		@agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id => [5,6], especialidad_prestador_profesional_id: @especialidad_prestador_profesional })
 		
 		return @agendamientos
 	end
 
 	def getProximosPacientes
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@usuario.id).first
 		@agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id => [1], especialidad_prestador_profesional_id: @especialidad_prestador_profesional })
 		
 		return @agendamientos
 	end
 
 	def getPacientesAtendidos
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@usuario.id).first
 		@agendamientos= AgAgendamientos.find(:all, :conditions => { :agendamiento_estado_id => [7], especialidad_prestador_profesional_id: @especialidad_prestador_profesional })
 		
 		return @agendamientos

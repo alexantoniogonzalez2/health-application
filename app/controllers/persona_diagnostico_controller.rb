@@ -87,6 +87,7 @@ class PersonaDiagnosticoController < ApplicationController
 		nombre = ''
 		correo = ''
 		celular = ''
+		telefono = ''
 		rut = ''
 
 		case params[:tipo]
@@ -96,6 +97,7 @@ class PersonaDiagnosticoController < ApplicationController
 					nombre = @persona.showName('%n%p%m')
 					correo = @persona.user.email
 					celular = @persona.getCelular
+					telefono = @persona.getTelefonoFijo
 					rut = @persona.showRut
 				end
 			when 'prestador'
@@ -130,48 +132,7 @@ class PersonaDiagnosticoController < ApplicationController
 		@interconsulta.save
 
 		respond_to do |format|
-			format.json { render :json => { :success => true, :nombre => nombre, :correo => correo, :celular => celular, :rut => rut }	}
-		end
-				
-	end
-
-	def agregarPersonaInterconsultaPre
-
-		@user = User.new
-		@user.email = params[:correo]
-		@user.password = "Random123"
-
-		@persona = PerPersonas.new
-		@persona.nombre = params[:nombre]
-		@persona.apellido_paterno = params[:apep]
-		@persona.apellido_materno = params[:apem]
-		@persona.rut = params[:rut]
-		@persona.digito_verificador = params[:dv]
-		@telefono = TraTelefonos.new
-		@telefono.codigo = 9 #celular
-		@telefono.numero = params[:celular]
-		@telefono.save
-		@user.save!
-		@persona.user = @user
-		@persona.save
-		@persona_telefono = PerPersonasTelefonos.new
-		@persona_telefono.persona = @persona
-		@persona_telefono.telefono = @telefono
-		@persona_telefono.save!		
-
-		@interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is null ',params[:pd]).first
-
-		if @interconsulta
-			@interconsulta.persona_conocimiento = @persona 
-		else	#se agrega persona temporalmente, sin fecha			
-			@interconsulta = FiInterconsultas.new
-			@interconsulta.persona_diagnostico_atencion_salud_id = params[:pd]
-			@interconsulta.persona_conocimiento = @persona 
-			@interconsulta.save
-		end	
-
-		respond_to do |format|
-			format.json { render :json => { :success => true, :rut => @persona.showRut, :celular => @persona.getCelular}	}
+			format.json { render :json => { :success => true, :nombre => nombre, :correo => correo, :celular => celular, :rut => rut, :telefono => telefono }	}
 		end
 				
 	end
@@ -183,6 +144,7 @@ class PersonaDiagnosticoController < ApplicationController
 		correo = ''
 		celular = ''
 		rut = ''
+		telefono = ''
 
 		unless params[:persona_id].blank? 
 			@persona = PerPersonas.find(params[:persona_id])
@@ -205,48 +167,7 @@ class PersonaDiagnosticoController < ApplicationController
 		end	
 
 		respond_to do |format|
-			format.json { render :json => { :success => true, :nombre => nombre, :correo => correo, :celular => celular, :rut => rut }	}
-		end
-				
-	end
-
-	def agregarPersonaNotificacionPre
-
-		@user = User.new
-		@user.email = params[:correo]
-		@user.password = "Random123"
-
-		@persona = PerPersonas.new
-		@persona.nombre = params[:nombre]
-		@persona.apellido_paterno = params[:apep]
-		@persona.apellido_materno = params[:apem]
-		@persona.rut = params[:rut]
-		@persona.digito_verificador = params[:dv]
-		@telefono = TraTelefonos.new
-		@telefono.codigo = 9 #celular
-		@telefono.numero = params[:celular]
-		@telefono.save
-		@user.save!
-		@persona.user = @user
-		@persona.save
-		@persona_telefono = PerPersonasTelefonos.new
-		@persona_telefono.persona = @persona
-		@persona_telefono.telefono = @telefono
-		@persona_telefono.save!		
-
-		@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:pd]).first
-
-		if @notificacion_ges
-			@notificacion_ges.persona_conocimiento = @persona 
-		else	#se agrega persona temporalmente, sin fecha			
-			@notificacion_ges = FiNotificacionesGes.new
-			@notificacion_ges.persona_diagnostico_atencion_salud_id = params[:pd]
-			@notificacion_ges.persona_conocimiento = @persona 
-			@notificacion_ges.save
-		end	
-
-		respond_to do |format|
-			format.json { render :json => { :success => true, :rut => @persona.showRut, :celular => @persona.getCelular}	}
+			format.json { render :json => { :success => true, :nombre => nombre, :correo => correo, :celular => celular, :rut => rut, :telefono => telefono }	}
 		end
 				
 	end
@@ -302,6 +223,7 @@ class PersonaDiagnosticoController < ApplicationController
 		  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
 		  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
 		  					fi_persona_diagnosticos.diagnostico_id,
+		  					fi_persona_diagnosticos.persona_id,
 		  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
 		  					fi_persona_diagnosticos_atenciones_salud.comentario,
 		  					fi_persona_diagnosticos_atenciones_salud.es_cronica,

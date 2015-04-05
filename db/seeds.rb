@@ -20,17 +20,17 @@ TraDirecciones.create! :calle => "Calle2", :numero => 3333, :comuna_id => 1, :ci
 
 #Users
 puts 'Users'
-U1 = User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U2 = User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U3 = User.create! :email => 'paciente3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U4 = User.create! :email => 'doctor1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U5 = User.create! :email => 'doctor2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U6 = User.create! :email => 'doctor3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U7 = User.create! :email => 'doctor4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U8 = User.create! :email => 'secre1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U9 = User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U10 = User.create! :email => 'paciente4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
-U11 = User.create! :email => 'paciente5@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234'
+U1 = User.create! :email => 'paciente1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U2 = User.create! :email => 'paciente2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U3 = User.create! :email => 'paciente3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U4 = User.create! :email => 'doctor1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U5 = User.create! :email => 'doctor2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U6 = User.create! :email => 'doctor3@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U7 = User.create! :email => 'doctor4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U8 = User.create! :email => 'secre1@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U9 = User.create! :email => 'secre2@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U10 = User.create! :email => 'paciente4@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
+U11 = User.create! :email => 'paciente5@gmail.com', :password => 'alex1234', :password_confirmation => 'alex1234' , :confirmed_at => '2015-03-31'
 
 #Pacientes
 puts 'Pacientes'

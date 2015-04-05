@@ -14,6 +14,7 @@ class CreatePerPersonas < ActiveRecord::Migration
       t.datetime :fecha_muerte
       t.references :diagnostico_muerte #diagnostico_muerte_id
       t.string :causa_muerte
+      t.references :pais_nacionalidad
       t.timestamps
     end
   end

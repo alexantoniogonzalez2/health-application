@@ -64,7 +64,7 @@ actualizarDiagnostico = (edad) ->
     
   $('#calculo-actividad-fisica').attr 'class', clase
   $('span[name=diag_act_fis]').html(nivel_actividad)
-  guardarActividad( nivel_actividad, 'nivel_actividad' )  
+  guardarActividad( nivel_actividad, 'nivel_actividad' ) unless !atLeastOne()  
 
 ocultarPreguntas = (valor,pregunta) ->
   $('#preg-'+pregunta).show() if valor == 1 or valor == '1'
@@ -88,6 +88,15 @@ calculaAct = ->
   $('#min_act_fis_mod').html(act_mod)
   return 
 
+atLeastOne = ->
+  respuesta = false
+  respuesta = true if $('input[name=rad-act-fis-1]:checked').size() > 0
+  respuesta = true if $('input[name=rad-act-fis-4]:checked').size() > 0
+  respuesta = true if $('input[name=rad-act-fis-7]:checked').size() > 0
+  respuesta = true if $('input[name=rad-act-fis-10]:checked').size() > 0
+  respuesta = true if $('input[name=rad-act-fis-13]:checked').size() > 0
+  return respuesta
+
 $(document).ready ->
   ocultarPreguntas($('input[name=rad-act-fis-1]:checked').val(),'1')
   ocultarPreguntas($('input[name=rad-act-fis-4]:checked').val(),'4')
@@ -104,7 +113,6 @@ $(document).ready ->
     id_diag = $('span[name=diag_act_fis]').attr "id"
     edad = id_diag.substring(13)
     actualizarDiagnostico(edad) unless edad == 'sin_info'
-    actualizarDiagnostico    
     return 
   $('input[type=radio][name^=rad-act-fis-]').change ->
     id = $(this).attr "name"

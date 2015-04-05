@@ -1,0 +1,37 @@
+<div class="modal fade" id="modal-container-ant-fam-mue<%= deceso['id'] %>" role="dialog" aria-spanledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ajuste-ancho">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cerrarModalAntFamMue(<%= deceso['id'] %>)" aria-hidden="true">×</button>
+        <h4 class="modal-title">Antecedentes familiares</h4>
+      </div>
+      <div class="modal-body">
+				<div class="container">
+          <div class='row'>
+            <div class='column col-md-4'>
+              <label>Nombre</label>: <%= deceso['nombre'] %>
+              <label>Parentesco</label>: <%= deceso['parentesco'] %>
+            </div>
+            <div class='column col-md-4'>
+              <input type='hidden' id="select_diag-afm-<%= deceso['id'] %>"></input>
+              <div class="checkbox">
+                <label for="diag-no-frec">
+                  <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-<%= deceso['id'] %>" value="1">
+                  Incluir diagnósticos no frecuentes
+                </label>
+              </div>
+            </div>
+            <div class='column col-md-4'>
+              <label>Fecha de nacimiento:</label>      
+              <input type='text' class="form-control" id='fecha-afm-<%= deceso['id'] %>' placeholder='Ingresar fecha de nacimiento' /> 
+            </div>
+          </div>
+				</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="cerrarModalAntFamMue(<%= deceso['id'] %>)">Cerrar ventana</button>
+        <button type="button" id="agregar-ant-fam-mue-<%= deceso['id'] %>" class="btn btn-success">Agregar antecedente</button>
+      </div>
+    </div>            
+  </div>        
+</div>

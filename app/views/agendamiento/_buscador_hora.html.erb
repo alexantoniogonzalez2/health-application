@@ -13,6 +13,9 @@
 </div>
 <div class="panel-body">
 <div class="row">
+
+<% if !tieneRol('Generar agendamientos') %>
+
 	<div class="col-md-4 div-form-buscar-hora">	
 		<div class="div-centros">
 			<label>Centros médicos</label>
@@ -27,6 +30,7 @@
 		</div>
 	</div>
 
+<% end %>
 	<div class="col-md-8 div-form-buscar-hora">
 
 			<div class="row clearfix row-buscar-hora">

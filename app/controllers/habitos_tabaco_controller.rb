@@ -1,7 +1,8 @@
 class HabitosTabacoController < ApplicationController
 	def index
 		@total_consumo = 0
-		@consumo = FiHabitosTabaco.where('persona_id = ?', current_user.id)
+		@persona = PerPersonas.where('user_id = ?',current_user.id).first	
+		@consumo = FiHabitosTabaco.where('persona_id = ?', @persona.id)
 		@consumo.each do |con|
   		@total_consumo += con.paquetes_agno
   	end	
@@ -11,7 +12,7 @@ class HabitosTabacoController < ApplicationController
 	def create
 		@tipo = params[:tipo]	
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona

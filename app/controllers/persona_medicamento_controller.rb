@@ -54,7 +54,7 @@ class PersonaMedicamentoController < ApplicationController
 		@persona_medicamento = FiPersonaMedicamentos.new
 
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona

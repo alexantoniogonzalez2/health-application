@@ -390,38 +390,39 @@ function actualizarCentro(){
 
 	var centros_seleccionados = new Array();
 	var fieldset = document.getElementById("checkbox_centros")
-  var cent_sel = fieldset.getElementsByTagName("input");	
+  
+  if (fieldset != null){
+	  var cent_sel = fieldset.getElementsByTagName("input");	
 
-	for (var i=1;i<cent_sel.length;i++){ 
+		for (var i=1;i<cent_sel.length;i++){ 
 
-		if( cent_sel[i].checked )			
-			centros_seleccionados.push(cent_sel[i].value); 	
+			if( cent_sel[i].checked )			
+				centros_seleccionados.push(cent_sel[i].value); 	
 
+		}
 	}
 
 	var especialidad = $("#select_especialidad").val();
 	var especialista = $("#select_especialista").val();
 	
-	if (centros_seleccionados.length > 0 ){
-		if(especialidad != '' || especialista != ''){
+	if(especialidad != '' || especialista != ''){
 
-		  $.ajax({
-		    type: 'POST',
-		    url: '/buscar_horas',
-		    data: {
-		      centros: centros_seleccionados, 
-		      especialidad: especialidad,
-		      especialista: especialista,    
-		    },
-		    success: function(response) {
-		    	  $('#buscadorHora').fullCalendar('addEventSource',response);
-		    },
-		    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
-		  }); 		
-		}
-		else{	alert('Seleccione una especialidad o un especialista.'); }
+	  $.ajax({
+	    type: 'POST',
+	    url: '/buscar_horas',
+	    data: {
+	      centros: centros_seleccionados, 
+	      especialidad: especialidad,
+	      especialista: especialista,    
+	    },
+	    success: function(response) {
+	    	  $('#buscadorHora').fullCalendar('addEventSource',response);
+	    },
+	    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+	  }); 		
 	}
-	else { }  
+	else{	alert('Seleccione una especialidad o un especialista.'); }
+	 
 }
 
 function actualizarTodosLosCentros(){

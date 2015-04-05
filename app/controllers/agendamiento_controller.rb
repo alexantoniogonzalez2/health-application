@@ -27,12 +27,22 @@ class AgendamientoController < ApplicationController
 		
 		events=[]
 
-		if params[:especialidad] != '' and params[:especialista] != ''
-			@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:especialista],params[:centros] )
-		elsif params[:especialidad] != ''
-			@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:centros] )
-		elsif params[:especialista] != '' 	
-			@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialista],params[:centros] )
+		if params[:centros] != ''
+			if params[:especialidad] != '' and params[:especialista] != ''
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND agendamiento_estado_id != 2 ",params[:especialidad],params[:especialista])
+			elsif params[:especialidad] != ''
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND agendamiento_estado_id != 2 ",params[:especialidad] )
+			elsif params[:especialista] != '' 	
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND agendamiento_estado_id != 2 ",params[:especialista] )
+			end
+		else	
+			if params[:especialidad] != '' and params[:especialista] != ''
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:especialista],params[:centros] )
+			elsif params[:especialidad] != ''
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:centros] )
+			elsif params[:especialista] != '' 	
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialista],params[:centros] )
+			end
 		end
 
 		@Fechas.each do |f|
@@ -48,8 +58,8 @@ class AgendamientoController < ApplicationController
 	def buscarHorasProfesional
 		
 		events=[]
-
-		@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ?",current_user.id)
+		@profesional = PerPersonas.where('user_id = ?',current_user.id).first
+		@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ?",@profesional.id)
 		
 		@Fechas.each do |f|
 			events << f.event				
@@ -157,7 +167,8 @@ class AgendamientoController < ApplicationController
 
 		#Posible problema por transacciones
 		respuesta="0"
-		@persona = PerPersonas.find_by id: current_user.id
+		@persona = params[:paciente].blank? ? PerPersonas.where('user_id = ?',current_user.id).first : PerPersonas.find(params[:paciente])
+		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora reservada").first
 		@Agendamiento.transaction do
@@ -165,20 +176,13 @@ class AgendamientoController < ApplicationController
 				respuesta="1"
 				@Agendamiento.persona= @persona
 				@Agendamiento.agendamiento_estado= @EstadoAgendamiento
-				@Agendamiento.motivo_consulta_nuevo = params[:motivo]
-				unless params[:paciente].blank?
-					@Agendamiento.persona = PerPersonas.find_by id: params[:paciente]
-				end
-				unless params[:antecedente].blank?
-					@Agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(params[:antecedente]) 
-				end
-				unless params[:capitulo_cie_10].blank?
-					@Agendamiento.capitulo_cie10_control = MedDiagnosticosCapitulos.find(params[:capitulo_cie_10])
-				end			
+				@Agendamiento.motivo_consulta_nuevo = params[:motivo]		
+				@Agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(params[:antecedente]) unless params[:antecedente].blank?
+				@Agendamiento.capitulo_cie10_control = MedDiagnosticosCapitulos.find(params[:capitulo_cie_10]) unless params[:capitulo_cie_10].blank?
 				@Agendamiento.save
 
 				@agendamiento_log = AgAgendamientoLogEstados.new
-				@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+				@agendamiento_log.responsable = @responsable
 				@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
 				@agendamiento_log.agendamiento = @Agendamiento
 				@agendamiento_log.fecha = DateTime.current
@@ -199,13 +203,12 @@ class AgendamientoController < ApplicationController
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamientoLog=AgAgendamientoEstados.where("nombre = ?","Hora cancelada").first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora bloqueada").first
-
-
-		if (@Agendamiento.persona)
-			perm_paciente = (current_user.id == @Agendamiento.persona.id)? true : false 	
-		end 
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
 
 		#Si fue cancelada por el mismo paciente queda inmediatamente disponible
+		if (@Agendamiento.persona)
+			perm_paciente = (@usuario.id == @Agendamiento.persona.id)? true : false 	
+		end 		
 		if perm_paciente
 			@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
 		end	
@@ -218,7 +221,7 @@ class AgendamientoController < ApplicationController
 		end
 
 		@agendamiento_log = AgAgendamientoLogEstados.new
-		@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+		@agendamiento_log.responsable = @usuario
 		@agendamiento_log.agendamiento_estado = @EstadoAgendamientoLog
 		@agendamiento_log.agendamiento = @Agendamiento
 		@agendamiento_log.fecha = DateTime.current
@@ -232,6 +235,8 @@ class AgendamientoController < ApplicationController
 		respuesta="0"
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora confirmada").first
+		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
+		
 		@Agendamiento.transaction do
 			respuesta="1"
 			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
@@ -239,7 +244,7 @@ class AgendamientoController < ApplicationController
 		end
 
 		@agendamiento_log = AgAgendamientoLogEstados.new
-		@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+		@agendamiento_log.responsable = @responsable 
 		@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
 		@agendamiento_log.agendamiento = @Agendamiento
 		@agendamiento_log.fecha = DateTime.current
@@ -253,6 +258,8 @@ class AgendamientoController < ApplicationController
 		respuesta="0"
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Paciente en espera").first
+		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
+
 		@Agendamiento.transaction do
 			respuesta="1"
 			@Agendamiento.fecha_llegada_paciente = DateTime.current 
@@ -261,7 +268,7 @@ class AgendamientoController < ApplicationController
 		end
 
 		@agendamiento_log = AgAgendamientoLogEstados.new
-		@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+		@agendamiento_log.responsable = @responsable
 		@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
 		@agendamiento_log.agendamiento = @Agendamiento
 		@agendamiento_log.fecha = DateTime.current
@@ -275,6 +282,8 @@ class AgendamientoController < ApplicationController
 		respuesta="0"
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora bloqueada").first
+		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
+
 		@Agendamiento.transaction do
 			respuesta="1"
 			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
@@ -283,7 +292,7 @@ class AgendamientoController < ApplicationController
 		end
 
 		@agendamiento_log = AgAgendamientoLogEstados.new
-		@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+		@agendamiento_log.responsable = @responsable 
 		@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
 		@agendamiento_log.agendamiento = @Agendamiento
 		@agendamiento_log.fecha = DateTime.current
@@ -297,6 +306,8 @@ class AgendamientoController < ApplicationController
 		respuesta="0"
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
+		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
+
 		@Agendamiento.transaction do
 			respuesta="1"
 			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
@@ -305,7 +316,7 @@ class AgendamientoController < ApplicationController
 		end
 
 		@agendamiento_log = AgAgendamientoLogEstados.new
-		@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+		@agendamiento_log.responsable = PerPersonas.find(@responsable) 
 		@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
 		@agendamiento_log.agendamiento = @Agendamiento
 		@agendamiento_log.fecha = DateTime.current
@@ -323,18 +334,19 @@ class AgendamientoController < ApplicationController
 		perm_admin_confirma = tieneRol('Confirmar agendamientos')
 		perm_admin_recibe = tieneRol('Recibir pacientes')
 		perm_admin_bloquea = tieneRol('Bloquear horas')
-		perm_tomar_horas = tieneRol('Tomar horas')	
+		perm_tomar_horas = tieneRol('Tomar horas')
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 		
 		@Agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
 
 		if (@Agendamiento.persona)
-			perm_paciente = (current_user.id == @Agendamiento.persona.id)? true : false 	
+			perm_paciente = (@usuario.id == @Agendamiento.persona.id)? true : false 	
 		end 
 		if (@Agendamiento.especialidad_prestador_profesional)
-			perm_profesional = (current_user.id == @Agendamiento.especialidad_prestador_profesional.profesional_id)? true : false 	
+			perm_profesional = (@usuario.id == @Agendamiento.especialidad_prestador_profesional.profesional_id)? true : false 	
 		end 
 			
-		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_tomar_horas,perm_paciente,perm_profesional,current_user.id)
+		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_tomar_horas,perm_paciente,perm_profesional,@usuario.id)
 		
 		if tmp.length >0 
 			render :text=> tmp
@@ -354,6 +366,7 @@ class AgendamientoController < ApplicationController
     @especialidad_prestador_profesional = PrePrestadorProfesionales.where(" prestador_id = ? AND profesional_id = ? AND especialidad_id = ?",params[:prestador_id],params[:profesional_id],params[:especialidad_id]).first
     events=[]
 		@EstadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
+		@responsable= PerPersonas.where('user_id = ?',current_user.id).first
 
 		if params[:tipo]=='diario'
 			
@@ -376,7 +389,7 @@ class AgendamientoController < ApplicationController
 					@Agendamiento.save
 
 					@agendamiento_log = AgAgendamientoLogEstados.new
-					@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+					@agendamiento_log.responsable = @responsable 
 					@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
 					@agendamiento_log.agendamiento = @Agendamiento
 					@agendamiento_log.fecha = DateTime.current
@@ -396,6 +409,7 @@ class AgendamientoController < ApplicationController
 			daysOfWeek=JSON.parse(params[:days])
 			hora_inicio=params[:hora_i]
 			hora_termino=params[:hora_t]
+			@responsable= PerPersonas.where('user_id = ?',current_user.id).first
 
 			days=[]
 			d_i=fecha_inicio
@@ -441,7 +455,7 @@ class AgendamientoController < ApplicationController
 						@Agendamiento.save
 						
 						@agendamiento_log = AgAgendamientoLogEstados.new
-						@agendamiento_log.responsable=PerPersonas.find(current_user.id) 
+						@agendamiento_log.responsable = @responsable
 						@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
 						@agendamiento_log.agendamiento = @Agendamiento
 						@agendamiento_log.fecha = DateTime.current

@@ -1,13 +1,14 @@
 class HabitosAlcoholController < ApplicationController
 	def index
-		@test_audit = FiHabitosAlcohol.where('persona_id = ?', current_user.id)
+		@persona = PerPersonas.where('user_id = ?',current_user.id).first	
+		@test_audit = FiHabitosAlcohol.where('persona_id = ?', @persona.id)
 	end	
 	def new 
 	end
 	def create
 
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona
@@ -36,7 +37,8 @@ class HabitosAlcoholController < ApplicationController
 	end
 	def show
 		@test_audit = FiHabitosAlcohol.find(params[:id])
-		unless @test_audit.persona.id == current_user.id 
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		unless @test_audit.persona.id == usuario.id 
 			render :text => 'No tiene permisos para ver esta página.'<<params[:id]
 		end	
 	end	

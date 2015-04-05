@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123062910) do
+ActiveRecord::Schema.define(version: 20150331160751) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.string   "nombre"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 20141123062910) do
     t.integer  "duracion"
     t.integer  "total"
     t.integer  "persona_vacuna_id"
+    t.boolean  "es_antecedente"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -267,6 +268,7 @@ ActiveRecord::Schema.define(version: 20141123062910) do
     t.integer  "atencion_salud_id"
     t.integer  "prestador_id"
     t.datetime "fecha_prestacion"
+    t.boolean  "es_antecedente"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -290,6 +292,7 @@ ActiveRecord::Schema.define(version: 20141123062910) do
 
   create_table "med_alergias", force: true do |t|
     t.string   "nombre"
+    t.boolean  "comun"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -471,6 +474,7 @@ ActiveRecord::Schema.define(version: 20141123062910) do
     t.datetime "fecha_termino"
     t.integer  "persona_id"
     t.integer  "ocupacion_id"
+    t.boolean  "es_actual"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -479,6 +483,14 @@ ActiveRecord::Schema.define(version: 20141123062910) do
     t.string   "nombre"
     t.string   "codigo"
     t.integer  "grupo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "per_otras_relaciones", force: true do |t|
+    t.integer  "persona_id"
+    t.integer  "persona_relacion_id"
+    t.string   "relacion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -505,6 +517,7 @@ ActiveRecord::Schema.define(version: 20141123062910) do
     t.datetime "fecha_muerte"
     t.integer  "diagnostico_muerte_id"
     t.string   "causa_muerte"
+    t.integer  "pais_nacionalidad_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

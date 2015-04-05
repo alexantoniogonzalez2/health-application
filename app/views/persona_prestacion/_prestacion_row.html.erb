@@ -6,7 +6,7 @@
   <td><%= p_p.prestador.nil? ? '-' : p_p.prestador.nombre %></td>
   <td>
   <% if p_p.es_antecedente and p_p.atencion_salud.nil? %>
-    <% if p_p.persona_id.eql? current_user.id %>  
+    <% if p_p.persona_id.eql? PerPersonas.where('user_id = ?',current_user.id).first.id %>  
       <a href="#modal-container-pres-<%= p_p.id %>" data-toggle="modal" id="pp<%= p_p.id %>" >Editar</a>
     <% else %>
       Añadido por paciente.

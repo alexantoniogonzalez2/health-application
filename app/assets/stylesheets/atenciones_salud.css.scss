@@ -209,7 +209,7 @@ label.com-int { float: top;}
     position: fixed;
     top: 100px; right: 10px;     
 }
-#qtip-growl-container .qtip{
+#qtip-growl-container .qtip {
   position: static;
   min-height: 0;
   overflow: hidden;
@@ -245,6 +245,51 @@ a.select2-choice, a.select2-default { height: 30px !important; }
   margin-bottom: 5px;
 }
 
-small.help-block { min-width: 200px; position: relative !important; left: -120px !important; }
-div.ajuste-height {  min-height: 450px !important; }
-.select_ocupacion { float: left !important; margin-bottom: 20px !important;}
+small.help-block { min-width: 200px; position: relative !important; }
+div.ajuste-height { min-height: 450px !important; }
+.select_ocupacion { float: left !important; margin-bottom: 20px !important; }
+div.ajuste-margin { margin-top: 5px !important; }
+#modal-agregar-persona {  margin-left: 10px;}
+div.ajuste-top { top: 600px !important; width: 800px; } 
+div.agregar-persona {
+  div {
+    
+    div {       
+      div.input-group { 
+        margin-top: 25px !important;
+        div { display: block !important; }
+        input { 
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 4px !important;
+          border-top-left-radius: 0px;
+          border-top-right-radius: 4px !important;
+        }
+      } 
+      div.date { margin-top: 5px !important;}
+    }
+  }
+}
+div.ajuste-padding { padding-left: 10px !important; }
+div.ajuste-left { padding-left: 100px !important; }
+span.ajuste-bottom { padding-left: 20px !important; position: relative !important; top: 26px !important; }
+span.pad-fecha { padding-left: 40px }
+span.ajuste-guion { padding-right: 5px; padding-left: 5px; position: relative; float: left; top: 5px; }
+input.dv {
+  width: 65% !important;
+  border-bottom-left-radius: 4px !important;
+  border-top-left-radius: 4px !important;
+}
+select.codigo, input.telefono, input.otra-relacion {
+  border-bottom-left-radius: 4px !important;
+  border-top-left-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
+.ajuste-row { padding-top: 15px !important; }
+div.otra-relacion-div { display: none; }
+div.ajuste-parentesco { margin-top: 25px !important; }
+input.fecha { margin-left: 40px; width: 89%; }
+.ajuste-top-fecha { margin-top: 7px; }
+div.footer { float: right; }
+select.select_persona{  width: 270px !important; }
+div.ajus-mar-top { margin-top: 15px; }

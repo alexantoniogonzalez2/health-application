@@ -1,5 +1,19 @@
 <%= wicked_pdf_stylesheet_link_tag 'application' %>
 
+<%  nombre = ''
+		rut = ''
+		correo = ''
+		celular = ''
+		unless @interconsulta.nil? 
+			unless @interconsulta.persona_conocimiento.nil? 
+				nombre = @interconsulta.persona_conocimiento.showName('%n%p%m')
+				rut = @interconsulta.persona_conocimiento.showRut
+				correo = @interconsulta.persona_conocimiento.user.email 
+				celular = @interconsulta.persona_conocimiento.getCelular
+			end
+	
+end	%>
+
 <h1 class="enc-ges">Solicitud de Interconsulta o Derivación</h1>
 
 <div class="panel panel-default ges">
@@ -25,7 +39,7 @@
   	<table>
   		<tr><td><label>Nombre</label></td><td>:	<%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
 			<tr><td><label>Rut</label></td><td>: <%= @agendamiento.persona.showRut %></td></tr>
-			<tr><td><label>Previsión de salud</label></td><td>:	<%= @agendamiento.persona.getPrevision.prevision_salud.nombre %></td></tr>
+			<tr><td><label>Previsión de salud</label></td><td>:	<%= @agendamiento.persona.getPrevision %></td></tr>
 			<tr><td><label>Domicilio</label></td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
 			<tr><td><label>Correo electrónico</label></td><td>:	<%= @agendamiento.persona.user.email %></td></tr>
 			<tr><td><label>Telefono fijo</label></td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>
@@ -40,8 +54,8 @@
   </div>
   <div class="panel-body panel-body-ajustado">
   	<table>
-  		<tr><td><label>Establecimiento al cual se deriva</label></td><td>: <%= @interconsulta.prestador_destino.nombre %></td></tr>
-  		<tr><td><label>Especialidad</label></td><td>:	<%= @interconsulta.especialidad.nombre %></td></tr>
+  		<tr><td><label>Establecimiento al cual se deriva</label></td><td>: <%= @interconsulta.prestador_destino.nombre unless @interconsulta.prestador_destino.nil? %></td></tr>
+  		<tr><td><label>Especialidad</label></td><td>:	<%= @interconsulta.especialidad.nombre unless @interconsulta.especialidad.nil? %></td></tr>
 			<tr><td><label>Confirmación Diagnóstica</label></td><td>:	<%= p_d.diagnostico.nombre %></td></tr>			
 			<tr><td><label>Código CIE10</label></td><td>:	<%= p_d.diagnostico.codigo_cie10 %></td></tr>
 			<tr>
@@ -80,20 +94,6 @@
 		</table>	
 	</div>
 </div>
-
-<%=
-	nombre = ''
-	rut = ''
-	correo = ''
-	celular = ''
-	unless @interconsulta.nil? 
-		unless @interconsulta.persona_conocimiento.nil? 
-			nombre = @interconsulta.persona_conocimiento.showName('%n%p%m')
-			rut = @interconsulta.persona_conocimiento.showRut
-			correo = @interconsulta.persona_conocimiento.user.email 
-			celular = @interconsulta.persona_conocimiento.getCelular
-		end
-	end	%>
 
 <div class="panel panel-default">
 	<div class="panel-body panel-body-ajustado">

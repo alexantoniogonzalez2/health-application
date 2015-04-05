@@ -38,7 +38,7 @@ class PersonaPrestacionController < ApplicationController
 		@persona_prestacion = FiPersonaPrestaciones.new
 
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
 		else
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona
@@ -103,15 +103,15 @@ class PersonaPrestacionController < ApplicationController
 		min  = 1
 		max = 56
 		@acceso = true
-		@paciente = PerPersonas.find(current_user.id)		
-		id_usuario = current_user.id
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first		
 		if params[:p_i] and params[:a_i] #Vista de profesional: si existe este parametro se verifica que el profesional coincida con la cuenta del usuario
 			@agendamiento = AgAgendamientos.find(params[:a_i])
-			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
-			id_usuario = params[:p_i]
+			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != @usuario.id
 			@paciente = @agendamiento.persona 
-		end					
-		@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',id_usuario,min,max) if @acceso
+		else
+			@paciente = @usuario
+		end				
+		@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',@paciente.id,min,max) if @acceso
 		render 'index'					
 	end
 
@@ -119,15 +119,16 @@ class PersonaPrestacionController < ApplicationController
 		min = 57
 		max = 250
 		@acceso = true
-		@paciente = PerPersonas.find(current_user.id)		
-		id_usuario = current_user.id
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 		if params[:p_i] and params[:a_i] #Vista de profesional: si existe este parametro se verifica que el profesional coincida con la cuenta del usuario
 			@agendamiento = AgAgendamientos.find(params[:a_i])
-			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
+			@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != @usuario.id
 			id_usuario = params[:p_i]
-			@paciente = @agendamiento.persona 
+			@paciente = @agendamiento.persona
+		else
+			@paciente = @usuario	 
 		end
-		@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',id_usuario,min,max) if @acceso
+		@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',@paciente.id,min,max) if @acceso
 		render 'index'					
 	end
 

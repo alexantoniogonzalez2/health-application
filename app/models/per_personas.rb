@@ -26,10 +26,12 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_conocimiento_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_conocimiento_id'
   has_many :personas_conocimiento_int, :class_name => 'FiInterconsultas', :foreign_key => 'persona_conocimiento_id'
   has_one :persona_actividad_fisica, :class_name => 'FiPersonaActividadFisica', :foreign_key => 'persona_id'
-
+  has_many :personas, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_id'
+  has_many :personas_relaciones, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_relacion_id'  
 
   belongs_to :user, :class_name => 'User'
   belongs_to :diagnostico_muerte, :class_name => 'MedDiagnosticos'
+  belongs_to :pais_nacionalidad, :class_name => 'TraPaises'
 
   def formato_personas
   {
@@ -220,13 +222,14 @@ class PerPersonas < ActiveRecord::Base
     end
   end
 
-  def getAntecedentesDecesos(persona_id)
-    @familiares = getFamiliares(persona_id)
+  def getAntecedentesDecesos
+    @familiares = getFamiliares
     @decesos = []
     @familiares.each do |familiar|
       @decesos_familiares = PerPersonas.where('id = ? and diagnostico_muerte_id is not null',familiar[1])
       @decesos_familiares.each do |deceso_familiar|
         @decesos << { 
+          'id' => familiar[1],
           'persona' => deceso_familiar.showName('%n%p%m'),
           'parentesco' => familiar[0] ,
           'diagnostico' => deceso_familiar.diagnostico_muerte.nombre,
@@ -238,8 +241,8 @@ class PerPersonas < ActiveRecord::Base
     return @decesos
   end 
 
-  def getAntecedentesEnfermedadesCronicas(persona_id)
-    @familiares = getFamiliares(persona_id)
+  def getAntecedentesEnfermedadesCronicas
+    @familiares = getFamiliares
     @enfermedades_cronicas = []
     @familiares.each do |familiar|
       @enfermedades = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1',familiar[1])
@@ -256,19 +259,19 @@ class PerPersonas < ActiveRecord::Base
     return @enfermedades_cronicas
   end 
 
-  def getFamiliares(persona_id)
+  def getFamiliares
     @familiares = Hash.new    
-    @hijos = PerParentescos.where('progenitor_id = ?',persona_id)
+    @hijos = PerParentescos.where('progenitor_id = ?',id)
     @hijos.each do |hijo|
       @genero = hijo.hijo.genero == 'Masculino' ? 'Hijo' : 'Hija'
       @familiares[@genero] = hijo.hijo.id
     end 
-    @padres = PerParentescos.where('hijo_id = ?',persona_id)
+    @padres = PerParentescos.where('hijo_id = ?',id)
     @padres.each do |padre|
       @genero = padre.progenitor.genero == 'Masculino' ? 'Padre' : 'Madre'
       @familiares[@genero] = padre.progenitor.id
 
-      @hermanos = PerParentescos.where('progenitor_id = ? AND hijo_id != ?',padre.progenitor.id,persona_id)
+      @hermanos = PerParentescos.where('progenitor_id = ? AND hijo_id != ?',padre.progenitor.id,id)
       @hermanos.each do |hermano|
         @genero = hermano.hijo.genero == 'Masculino' ? 'Hermano' : 'Hermana'
         @familiares[@genero] = hermano.hijo.id
@@ -276,11 +279,21 @@ class PerPersonas < ActiveRecord::Base
 
     end
     return @familiares
-  end  
+  end 
+
+  def getCercanos
+    @cercanos = getFamiliares
+    @otras_relaciones = PerOtrasRelaciones.where('persona_id = ?',id)
+    @otras_relaciones.each do |otra_relacion|
+      @cercanos[otra_relacion.relacion] = otra_relacion.persona_relacion.id
+    end
+    return @cercanos
+  end 
 
   private
   def app_params
-    params.require(:persona).permit(:apellido_materno,
+    params.require(:persona).permit(:id,
+                                    :apellido_materno,
                                     :apellido_paterno, 
                                     :fecha_muerte, 
                                     :fecha_nacimiento, 
@@ -319,7 +332,10 @@ class PerPersonas < ActiveRecord::Base
                                     :personas_vacunas,
                                     :personas_conocimiento_ges,
                                     :personas_conocimiento_int,
-                                    :persona_actividad_fisica)
+                                    :persona_actividad_fisica,
+                                    :personas,
+                                    :personas_relaciones,
+                                    :pais_nacionalidad)
   end
 
 end

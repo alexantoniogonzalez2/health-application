@@ -2,14 +2,13 @@
 var current = $('#datetimepicker1').val();
 function keep_checking() {
 
-    if (current != $('#datetimepicker1').val()) {
-        $('#new_user').bootstrapValidator('revalidateField', 'date');
-        current = $('#datetimepicker1').val();
-    }
-    setTimeout(keep_checking, 2000);
+  if (current != $('#datetimepicker1').val()) {
+      $('#new_user').bootstrapValidator('revalidateField', 'date');
+      current = $('#datetimepicker1').val();
+  }
+  setTimeout(keep_checking, 2000);
 }
 keep_checking();
-//
 
 $('#rut').keyup( function(e) { $('.error-rut').hide(); })
 $('#user_password,#user_password_confirmation').keyup( function(e) { $('.error-password').hide(); })
@@ -86,16 +85,8 @@ $("#new_password").submit(function (e) {
 $("#contactForm").submit(function (e) { return false; });
 
 $('#sign-in-form').bootstrapValidator({
-  fields: {
-    'user[email]': {
-        validators: {
-          emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' }
-        }
-    }
-  },
-  onError: function(e) {
-    $('#inicia_sesion').prop("disabled", false);
-  }
+  fields: { 'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } },
+  onError: function(e) { $('#inicia_sesion').prop("disabled", false); }
 })
 
 $('#sign-in-form2').bootstrapValidator({
@@ -104,7 +95,7 @@ $('#sign-in-form2').bootstrapValidator({
 
 $('#datetimepicker1').datetimepicker({
     locale: 'es',
-    format: 'DD/MM/YYYY',
+    format: 'YYYY-MM-DD',
     viewMode: 'years',
 });
 
@@ -274,38 +265,6 @@ if ($('#horas-agendadas').length || $('#atencion-salud').length ){
 	}, 30000);
 
 }
-/*
-$( ".datepicker" ).attr("placeholder", "Ingresa tu fecha de nacimiento").datepicker({
-  yearRange: '1910:2015',
-  showOtherMonths: true,
-  selectOtherMonths: true,
-  changeMonth: true,
-  changeYear: true,
-  dateFormat: 'yy-mm-dd',
-  dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-  showButtonPanel: true, 
-  
-});
-  
-
-$.datepicker.regional['es'] = {
-  closeText: 'Cerrar',
-  prevText: 'Anterior',
-  nextText: 'Siguiente',
-  currentText: 'Hoy',
-  monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-  monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-  dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-  weekHeader: 'Sm',
-  dateFormat: 'yy-mm-dd',
-  firstDay: 1,
-  isRTL: false,
-  showMonthAfterYear: false,
-  yearSuffix: ''
-};
-$.datepicker.setDefaults($.datepicker.regional['es']);*/
-
 /*
  * Calcula digito verificador
  */

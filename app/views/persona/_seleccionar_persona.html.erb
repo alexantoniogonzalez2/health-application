@@ -1,0 +1,12 @@
+
+	<label class="pers-ges col-md-4 ">Seleccionar persona</label>	
+	<% @cercanos = persona.getCercanos %>
+	<select id='select_<%= id %>' class="select_persona form-control <%= clase %>" >
+		<option value="" selected disabled>Seleccionar</option>
+	  <% @cercanos.each do |cercano| %>  	
+	  	<option value="<%= cercano[1] %>" 
+	  		<% if cercano[1] == id_pre %> 
+	  			selected 
+	  		<% end %> > <%= cercano[0].dup << ' - ' << PerPersonas.find(cercano[1]).showName('%n%p%m') %></option>      			
+		<% end %>
+	</select>

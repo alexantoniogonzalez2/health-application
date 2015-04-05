@@ -50,7 +50,7 @@ namespace :agendamiento do
 					
 					@agendamiento_log = AgAgendamientoLogEstados.new
 					@agendamiento_log.responsable = PerPersonas.find(8) 
-					@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
+					@agendamiento_log.agendamiento_estado = @estadoAgendamiento
 					@agendamiento_log.agendamiento = @Agendamiento
 					@agendamiento_log.fecha = DateTime.current
 					@agendamiento_log.save

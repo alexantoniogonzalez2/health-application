@@ -29,8 +29,8 @@ class AntecedentesController < ApplicationController
   	#ocupaciones
   	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@paciente.id);
   	#antecedentes familiares
-  	@decesos = @paciente.getAntecedentesDecesos(@paciente.id)
-  	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas(@paciente.id)
+  	@decesos = @paciente.getAntecedentesDecesos
+  	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas
   	#Actividad física
   	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@paciente.id).first
   	if @persona_actividad_fisica.nil?
@@ -54,7 +54,8 @@ class AntecedentesController < ApplicationController
 		@acceso_especialista = true
 		@acceso = true
 		@agendamiento = AgAgendamientos.find(params[:id])
-		@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
+		@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != @usuario.id
 		@paciente = @agendamiento.persona 
 		#Antecedentes médicos		
 		@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
@@ -82,8 +83,8 @@ class AntecedentesController < ApplicationController
   	#ocupaciones
   	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@paciente.id);
   	#antecedentes familiares
-  	@decesos = @paciente.getAntecedentesDecesos(@paciente.id)
-  	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas(@paciente.id)
+  	@decesos = @paciente.getAntecedentesDecesos
+  	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas
   	#Actividad física
   	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@paciente.id).first
   	if @persona_actividad_fisica.nil?
@@ -103,23 +104,22 @@ class AntecedentesController < ApplicationController
 =end
 	def editarAlergia
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona
 			@persona_medicamento.atencion_salud = @atencion_salud
 		end	
 
-		@paciente = PerPersonas.find(current_user.id)
 		case params[:estado]
 		when 'true'			
 			@alergia = MedAlergias.find(params[:alergia])
 			@persona_alergia = FiPersonasAlergias.new
-			@persona_alergia.persona = @paciente
+			@persona_alergia.persona = @persona
 			@persona_alergia.alergia = @alergia
 			@persona_alergia.save!
 		when 'false'	
-			@persona_alergia = FiPersonasAlergias.where('persona_id = ? and alergia_id = ?',@paciente.id,params[:alergia]).first
+			@persona_alergia = FiPersonasAlergias.where('persona_id = ? and alergia_id = ?',@persona.id,params[:alergia]).first
 			@persona_alergia.destroy
 		end	
 			
@@ -130,7 +130,7 @@ class AntecedentesController < ApplicationController
 
 	def guardarAntecedentesSociales
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona
@@ -146,7 +146,7 @@ class AntecedentesController < ApplicationController
 
 	def guardarActividadFisica
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona
@@ -184,23 +184,25 @@ class AntecedentesController < ApplicationController
 		@ant = params[:ant]
 		@acceso = true
 		@atencion_salud = FiAtencionesSalud.find(params[:at_sal])
-		@acceso = false if @atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.id != current_user.id
 		@persona = PerPersonas.find(params[:persona_id])
+		@profesional = PerPersonas.where('user_id = ?',current_user.id).first
+		@acceso = false if @atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.id != @profesional.id
+
 
 		case params[:ant]
 		when 'med'
-			@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',params[:persona_id], params[:at_sal]).order('created_at')
+			@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id, params[:at_sal]).order('created_at')
 			@partial = 'antecedentes/medicamentos'			
 		when 'ale'
 			@alergias = MedAlergias.joins('LEFT JOIN fi_personas_alergias as fpa ON med_alergias.id = fpa.alergia_id')
 														 .select('med_alergias.id, med_alergias.nombre, fpa.persona_id')
-														 .where('persona_id = ? or ( persona_id is null AND med_alergias.comun is true )',params[:persona_id])
+														 .where('persona_id = ? or ( persona_id is null AND med_alergias.comun is true )',@persona.id)
 														 .order('med_alergias.nombre ASC')
 			@partial = 'antecedentes/alergias'
 		when 'vac'				
 			@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																					 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
-																					 .where('persona_id = ?',params[:persona_id])
+																					 .where('persona_id = ?',@persona.id)
 			@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)
 			@agno = FiCalendarioVacunas.maximum('agno')
 			@array_grupo = []												
@@ -219,7 +221,7 @@ class AntecedentesController < ApplicationController
 
   		@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
 									.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-									.where('edad in (?) AND agno = ? AND (persona_id = ? OR persona_id is null)',@array_grupo,@agno,params[:persona_id])
+									.where('edad in (?) AND agno = ? AND (persona_id = ? OR persona_id is null)',@array_grupo,@agno,@persona.id)
 									.order('fi_calendario_vacunas.id ASC')			
 
 			#Calendario - Vacunas														 		
@@ -243,11 +245,11 @@ class AntecedentesController < ApplicationController
 			@partial = 'vacunas/index'
 		when 'ant_qui'
 			@prestadores = PrePrestadores.all		
-			@persona_prestaciones = FiPersonaPrestaciones.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',params[:persona_id], params[:at_sal]).order('created_at')
+			@persona_prestaciones = FiPersonaPrestaciones.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id, params[:at_sal]).order('created_at')
 			@partial = 'antecedentes/antecedentes_quirurgicos'
 		when 'act_fis'
 			#Actividad física
-	  	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',params[:persona_id]).first
+	  	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@persona.id).first
 	  	if @persona_actividad_fisica.nil?
 	  		@persona_actividad_fisica = FiPersonaActividadFisica.new 
 				@persona_actividad_fisica.persona = @persona
@@ -258,11 +260,11 @@ class AntecedentesController < ApplicationController
 			@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
 			@partial = 'antecedentes/actividad_fisica'
 		when 'hab_alc'
-			@test_audit = FiHabitosAlcohol.where('persona_id = ?', params[:persona_id] )
+			@test_audit = FiHabitosAlcohol.where('persona_id = ?', @persona.id )
 			@partial = 'habitos_alcohol/index'
 		when 'hab_tab'
   		@total_consumo = 0
-			@consumo = FiHabitosTabaco.where('persona_id = ?', params[:persona_id] )
+			@consumo = FiHabitosTabaco.where('persona_id = ?', @persona.id )
 			@consumo.each do |con|
 	  		@total_consumo += con.paquetes_agno
 	  	end		
@@ -272,7 +274,7 @@ class AntecedentesController < ApplicationController
 		when 'ant_soc'
 			@partial = 'antecedentes/antecedentes_sociales'
 		when 'ant_lab'
-			@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',params[:persona_id] );
+			@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@persona.id );
 			@partial = 'ocupaciones/index'	
 		end
 
@@ -293,7 +295,7 @@ class AntecedentesController < ApplicationController
 		end
 
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona

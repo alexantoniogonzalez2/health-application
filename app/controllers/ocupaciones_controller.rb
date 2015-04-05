@@ -5,12 +5,13 @@ class OcupacionesController < ApplicationController
 		@ocupacion = OcuPersonasOcupaciones.where('id = ?',params[:id]).first			
 	end
 	def index
-		@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',current_user.id);
+		@persona = PerPersonas.where('user_id = ?',current_user.id).first	
+		@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@persona.id);
 	end	
 	def create
 		@tipo = params[:tipo]	
 		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.find(current_user.id) 
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	 
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona

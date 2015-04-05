@@ -4,7 +4,8 @@ class HomeController < ApplicationController
 
 	def actualizarAtenciones
 
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
 		@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 		@actualizaciones = AgAgendamientoLogEstados
 			.joins(:agendamiento)
@@ -30,7 +31,8 @@ class HomeController < ApplicationController
 
 		llegadas = []
 		lapso_tiempo = DateTime.current - 30.seconds
-		especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
+		especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
 		#agendamientos= AgAgendamientos.where( "especialidad_prestdor_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
 
 		actualizaciones = AgAgendamientos
@@ -54,12 +56,16 @@ class HomeController < ApplicationController
 
 	def index
 
+		
 		if user_signed_in?
 			if tieneRol('Generar agendamientos')
+				@profesionales = PerPersonas.where("id IN (SELECT profesional_id FROM pre_prestador_profesionales WHERE prestador_id = ? )",getIdPrestador('administrativo'))
+		  	@especialidades= ProEspecialidades.where("id IN (SELECT especialidad_id FROM pre_prestador_profesionales WHERE prestador_id= ? )",getIdPrestador('administrativo'))		    
 				render 'index_agendamiento'
 		  elsif esProfesionalSalud 
+		  	@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
 		  	@hora_actual = DateTime.current
-				@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",current_user.id).first
+				@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
 				@agendamientos= AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
   			@actualizaciones = AgAgendamientoLogEstados
 					.joins(:agendamiento)
@@ -77,7 +83,7 @@ class HomeController < ApplicationController
 								  ON fi_atenciones_salud.agendamiento_id = ag.id
 								  JOIN pre_prestador_profesionales as ppp
 								  ON ag.especialidad_prestador_profesional_id = ppp.id')
-					.where('ppp.profesional_id = ?',current_user.id)
+					.where('ppp.profesional_id = ?',@profesional.id)
 					
   			render 'index_profesional'
 		  else
@@ -111,8 +117,8 @@ class HomeController < ApplicationController
 		  	#ocupaciones
 		  	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@persona.id);
 		  	#antecedentes familiares
-		  	@decesos = @persona.getAntecedentesDecesos(@persona.id)
-		  	@ant_enf_cro = @persona.getAntecedentesEnfermedadesCronicas(@persona.id)
+		  	@decesos = @persona.getAntecedentesDecesos
+		  	@ant_enf_cro = @persona.getAntecedentesEnfermedadesCronicas
 		  	#Actividad física
 		  	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@persona.id).first
 		  	if @persona_actividad_fisica.nil?
