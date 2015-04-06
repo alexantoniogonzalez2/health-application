@@ -247,7 +247,7 @@ $('select.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un
 $('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
 $('select.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
 
-$('#select_diagnostico','select[id^=select_diag-]').select2({
+$('#select_diagnostico').select2({
   width: '380px',
   minimumInputLength: 3,
   placeholder: "Seleccione un diagnóstico",
@@ -256,7 +256,23 @@ $('#select_diagnostico','select[id^=select_diag-]').select2({
     dataType: 'json',
     type: 'POST',
     data: function (term, page) {
-      return { q: term, diag_no_frec: diagnosticoNoFrecuente };
+      return { q: term, diag_no_frec: diagnosticoNoFrecuente('#diag-no-frec') };
+    },
+    results: function (data, page) { return { results: data }; }
+  }
+});
+
+$('.select_diag').select2({
+  allowClear: true,
+  width: '380px',
+  minimumInputLength: 3,
+  placeholder: "Seleccione un diagnóstico",
+  ajax: {
+    url: '/cargar_diagnosticos',
+    dataType: 'json',
+    type: 'POST',
+    data: function (term, page) {
+      return { q: term, diag_no_frec: diagnosticoNoFrecuente('#diag-no-frec-' + $(this).attr('id').substring(12)) };
     },
     results: function (data, page) { return { results: data }; }
   }
@@ -330,10 +346,39 @@ $("#select_diagnostico").on("change", function(e) {
   agregarDiagnostico(value);
 })
 
+$('.select_diag').on("change", function(e) { 
+  var id = $(this).attr('id').substring(16); 
+  guardarAntecedenteFamiliarMuerte(id);  
+})
+
+$('.cambiar_antecedente').click(function() {
+  var id = $(this).attr('id').substring(20); 
+  guardarAntecedenteFamiliarMuerte(id);  
+});
+
+function guardarAntecedenteFamiliarMuerte(id){
+  var diag = $("#select_diag-afm-"+id).select2('data') != null ? $("#select_diag-afm-"+id).select2('data').id : null; 
+  var fecha = $('#fecha-afm-'+id).val();
+  var at_salud_id;
+  if (typeof atencion_salud_id !== 'undefined') {
+    at_salud_id = atencion_salud_id;
+  } else {
+    at_salud_id = 'persona';
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_antecedente_familiar_muerte',
+    data: { diag: diag, fecha: fecha, persona_ant: id, atencion_salud_id: at_salud_id },
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
+  });
+}
+
 $(".select_notificacion").on("change", function(e) { 
 
   var pd = $(this).attr('id').substring(11);   
-  value = $(this).val() != null ? $(this).val() : null;        
+  var value = $(this).val() != null ? $(this).val() : null;        
   $.ajax({
     type: 'POST',
     url: '/agregar_persona_notificacion',
@@ -511,8 +556,8 @@ $('.sem-ges').keyup( function(e) {
   agregarInfoEno(pd,value,'sem_emb'); 
 })
 
-function diagnosticoNoFrecuente(){
-  var check_no_frec = $("#diag-no-frec").is(':checked');  
+function diagnosticoNoFrecuente(id){
+  var check_no_frec = $(id).is(':checked');  
   return check_no_frec;
 }
 
@@ -903,4 +948,9 @@ $('input[id^=fecha]').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD',
     viewMode: 'years',
+});
+
+$('input[id^=fecha]').on("dp.change", function (e) {
+  var id = $(this).attr('id').substring(10); 
+  guardarAntecedenteFamiliarMuerte(id);
 });

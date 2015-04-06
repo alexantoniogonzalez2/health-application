@@ -231,7 +231,7 @@ class PerPersonas < ActiveRecord::Base
         @decesos << { 
           'id' => familiar[1],
           'persona' => deceso_familiar.showName('%n%p%m'),
-          'parentesco' => familiar[0] ,
+          'parentesco' => familiar[0],
           'diagnostico' => deceso_familiar.diagnostico_muerte.nombre,
           'fecha_deceso' => deceso_familiar.fecha_muerte.strftime('%Y-%m-%d')
         }  
@@ -289,6 +289,10 @@ class PerPersonas < ActiveRecord::Base
     end
     return @cercanos
   end 
+
+  def getParentesco(pariente_id)
+    return 'get parentesco'
+  end  
 
   private
   def app_params

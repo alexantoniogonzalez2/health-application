@@ -45,3 +45,4 @@ function cerrarModalHabAlc(modal_id){ $('#modal-container-hab-alc-' + modal_id )
 function cerrarModalHabTab(modal_id){ $('#modal-container-hab-tab-' + modal_id ).modal('hide'); }
 function cerrarModalOcu(modal_id){ $('#modal-container-ocu-' + modal_id ).modal('hide'); }
 function cerrarModalAgregarPersona(modal_id){ $('#modal-container-agregar-persona-' + modal_id ).modal('hide'); }
+function cerrarModalAntFamMue(modal_id){ $('#modal-container-ant-fam-mue-' + modal_id ).modal('hide'); }

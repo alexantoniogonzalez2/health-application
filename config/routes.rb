@@ -15,6 +15,7 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_alergia', to: 'antecedentes#agregarAlergia'
   post '/guardar_antecedentes_sociales', to: 'antecedentes#guardarAntecedentesSociales'
   post '/cargar_antecedentes', to: 'antecedentes#cargarAntecedentes'
+  post '/guardar_antecedente_familiar_muerte', to: 'antecedentes#guardarAntecedenteFamiliarMuerte'
 
   #Ocupaciones
   get '/ocupaciones/new', to: 'ocupaciones#new', :as => :ocupaciones_new

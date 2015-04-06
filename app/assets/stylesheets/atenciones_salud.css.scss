@@ -223,7 +223,7 @@ div.metricas {
 .ajus-pos-right { float: right; margin-left: 5px !important; }
 .ajus-padd-bott { padding-bottom: 10px; }
 input.ajuste-select { width: 400px !important; }
-.select2-container { float: right; }
+//.select2-container { float: right; }
 a.select2-choice, a.select2-default { height: 30px !important; }
 .ajuste-margin-top { margin-top: 25px !important; }
 .right { float: right; }
@@ -252,8 +252,7 @@ div.ajuste-margin { margin-top: 5px !important; }
 #modal-agregar-persona {  margin-left: 10px;}
 div.ajuste-top { top: 600px !important; width: 800px; } 
 div.agregar-persona {
-  div {
-    
+  div {    
     div {       
       div.input-group { 
         margin-top: 25px !important;
@@ -293,3 +292,4 @@ input.fecha { margin-left: 40px; width: 89%; }
 div.footer { float: right; }
 select.select_persona{  width: 270px !important; }
 div.ajus-mar-top { margin-top: 15px; }
+input.ajuste-posicion { display: inline-block !important; width: 220px !important; float: left !important ;}

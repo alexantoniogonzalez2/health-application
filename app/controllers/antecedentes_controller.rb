@@ -320,4 +320,32 @@ class AntecedentesController < ApplicationController
 
 	end	
 
+	def guardarAntecedenteFamiliarMuerte
+		@deceso = Hash.new
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end
+
+		@persona_antecedente = PerPersonas.find(params[:persona_ant])
+		@persona_antecedente.diagnostico_muerte = MedDiagnosticos.find(params[:diag]) unless params[:diag] == ''
+		@persona_antecedente.fecha_muerte = params[:fecha] unless params[:fecha] == ''	
+		@persona_antecedente.save!
+		@deceso = { 
+          'id' => params[:persona_ant],
+          'persona' => @persona_antecedente.showName('%n%p%m'),
+          'parentesco' => @persona.getParentesco(params[:persona_ant]),
+          'diagnostico' => @persona_antecedente.diagnostico_muerte.nombre,
+          'fecha_deceso' => @persona_antecedente.fecha_muerte.strftime('%Y-%m-%d')
+    } 
+
+    respond_to do |format|
+			format.js   {}
+			format.json { render :json => { :success => true }	}
+		end	
+
+	end	
+
 end
