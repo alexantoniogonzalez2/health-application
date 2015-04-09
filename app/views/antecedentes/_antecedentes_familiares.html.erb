@@ -6,7 +6,7 @@
 		<thead class="ajust-head">
       <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha deceso</th><th class="col-sm-1">Editar</th</tr>
     </thead>
-    <tbody> 
+    <tbody id='body-ant-muertes'> 
     	<% unless @decesos.empty? %>
 	    	<% @decesos.each do |deceso| %>
 		   		<%= render :partial => "antecedentes/antecedentes_familiares_muertes_row", :locals => {:deceso => deceso } %>
@@ -15,10 +15,8 @@
 				<tr id='tr-vacio-ant-fam-mue'><td colspan='5' >No hay información de antecedentes familiares.</td></tr>
 			<% end %>
     </tbody>    
-	</table>		
-
-	
-	<a href="#modal-container-ant-fam-mue-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar</a>
+	</table>	
+	<a href="#modal-container-ant-fam-mue-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (muerte)</a>
 	<div id='ant_alc_modal-div'></div>
 
 	<% unless @decesos.empty?  %>
@@ -27,9 +25,8 @@
 		<% end %>
 	<% end %>	
 
-
 	<div class="modal fade" id="modal-container-ant-fam-mue-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog ajuste-ancho">
 			<div class="modal-content">
 				<div class="modal-header">
 					 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamMue('new')">×</button>
@@ -38,11 +35,11 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					...
+					<%= render :partial => "antecedentes/antecedentes_familiares_muertes_new", :locals => { :persona => @persona } %>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" onclick="cerrarModalAntFamMue('new')">Cerrar ventana</button>
-					<button type="button" id="agregar-ant-fam-mue-new" class="btn btn-success">Agregar antecedente</button>
+					<button type="button" id="agregar-ant-fam-mue-new" class="btn btn-success cambiar_antecedente">Agregar antecedente</button>
 				</div>
 			</div>
 			
@@ -50,6 +47,7 @@
 		
 	</div>
 
+	<br>
 	<h5>Enfermedades crónicas</h5>
   <% if @ant_enf_cro.empty?  %>
     No hay información de antecedentes familiares relacionados con enfermedades crónicas.<br/>

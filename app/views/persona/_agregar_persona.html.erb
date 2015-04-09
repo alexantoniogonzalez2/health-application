@@ -93,7 +93,9 @@
           <option value="2">Madre</option>
           <option value="3">Hijo</option>
           <option value="4">Hija</option>
-          <option value="5">Otro</option>
+          <% if subgrupo == 'todos' %>
+            <option value="5">Otro</option>
+          <% end %>
         </select>
       </div>
     </div>
@@ -104,7 +106,7 @@
     </div>
   </div>
   <div class='footer'>
-    <button type="button" class="btn btn-default" onclick="cerrarModalAgregarPersona(<%= id %>)" >Cerrar ventana</button>
+    <button type="button" class="btn btn-default" onclick="cerrarModalAgregarPersona('<%= id %>')" >Cerrar ventana</button>
     <button id="int_agregar_<%= p_d.id %>" type="submit" class="btn btn-success" value="Agregar persona">Agregar persona</button>
   </div>
 

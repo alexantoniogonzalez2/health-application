@@ -334,17 +334,25 @@ class AntecedentesController < ApplicationController
 		@persona_antecedente.fecha_muerte = params[:fecha] unless params[:fecha] == ''	
 		@persona_antecedente.save!
 		@deceso = { 
-          'id' => params[:persona_ant],
-          'persona' => @persona_antecedente.showName('%n%p%m'),
-          'parentesco' => @persona.getParentesco(params[:persona_ant]),
-          'diagnostico' => @persona_antecedente.diagnostico_muerte.nombre,
-          'fecha_deceso' => @persona_antecedente.fecha_muerte.strftime('%Y-%m-%d')
+	    'id' => params[:persona_ant],
+	    'persona' => @persona_antecedente.showName('%n%p%m'),
+	    'parentesco' => params[:parentesco],
+	    'diagnostico' => @persona_antecedente.diagnostico_muerte.nombre,
+	    'fecha_deceso' => @persona_antecedente.fecha_muerte.strftime('%Y-%m-%d')
     } 
 
-    respond_to do |format|
-			format.js   {}
-			format.json { render :json => { :success => true }	}
+    if params[:tipo] == 'guardar'
+	    respond_to do |format|
+				format.js   {}
+				format.json { render :json => { :success => true }	}
+			end
+		else
+			respond_to do |format|
+				format.js   { render 'agregarAntecedenteFamiliarMuerte'}
+				format.json { render :json => { :success => true }	}
+			end	
 		end	
+				
 
 	end	
 

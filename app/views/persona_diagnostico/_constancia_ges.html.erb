@@ -203,7 +203,7 @@
 			</div>			  
 			<div class="row clearfix">
 				<div class="col-md-8 column">
-					<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'not_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_notificacion'  } %>
+					<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'not_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_notificacion', :subgrupo => 'todos'  } %>
 				</div>
 				<div class="col-md-4 column">
 					<a id="modal-agregar-persona" href="#modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>			 		
@@ -245,7 +245,7 @@
 				<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
 			</div>
 			<div class="modal-body">
-				<%= render :partial => "persona/agregar_persona", :locals => {:p_d => p_d, :id => 'not_'+p_d.id.to_s } %>
+				<%= render :partial => "persona/agregar_persona", :locals => {:p_d => p_d, :id => 'not_'+p_d.id.to_s, :subgrupo => 'todos' } %>
 			</div>
 			<div class="modal-footer"></div>
 		</div>		

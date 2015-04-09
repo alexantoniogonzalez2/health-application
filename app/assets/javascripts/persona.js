@@ -18,8 +18,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
   	var dv = $('#dv'+id).val();
   	var correo = $('#email'+id).val();
   	var celular =  $('#telefono'+id).val();
-    alert(celular);
-  	var codigo = $('#codigo'+id).val();
+    var codigo = $('#codigo'+id).val();
   	var fecha_nacimiento = $('#fecha'+id).val();
   	var otro = $('#otro'+id).val();
   	$.ajax({
@@ -40,12 +39,16 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
         otro: otro,
       },
       success: function(response){
-       
-      	$("#select_"+id).append('<option value='+response.id+'>'+response.text+'</option>');
-        $("#select_"+id).val(response.id);
-       	cerrarModalAgregarPersona(id); 
-        $("#select_"+id).trigger("change");
-        $(e.target).data('bootstrapValidator').resetForm();
+        if (response.success){       
+        	$("#select_"+id).append('<option value='+response.id+'>'+response.text+'</option>');
+          $("#select_"+id).val(response.id);
+         	cerrarModalAgregarPersona(id); 
+          $("#select_"+id).trigger("change");
+          $(e.target).data('bootstrapValidator').resetForm();
+        }
+        else
+           alert("Ya existe ese correo electrónico en la base de datos."); 
+
       },
       error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
     }); 

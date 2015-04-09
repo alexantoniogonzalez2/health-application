@@ -290,10 +290,6 @@ class PerPersonas < ActiveRecord::Base
     return @cercanos
   end 
 
-  def getParentesco(pariente_id)
-    return 'get parentesco'
-  end  
-
   private
   def app_params
     params.require(:persona).permit(:id,

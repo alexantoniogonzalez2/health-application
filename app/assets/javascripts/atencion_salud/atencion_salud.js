@@ -347,33 +347,15 @@ $("#select_diagnostico").on("change", function(e) {
 })
 
 $('.select_diag').on("change", function(e) { 
-  var id = $(this).attr('id').substring(16); 
-  guardarAntecedenteFamiliarMuerte(id);  
+  var id = $(this).attr('id').substring(16);
+  if (id != 'new') 
+    guardarAntecedenteFamiliarMuerte(id,false);  
 })
 
 $('.cambiar_antecedente').click(function() {
   var id = $(this).attr('id').substring(20); 
-  guardarAntecedenteFamiliarMuerte(id);  
+  guardarAntecedenteFamiliarMuerte(id,true);  
 });
-
-function guardarAntecedenteFamiliarMuerte(id){
-  var diag = $("#select_diag-afm-"+id).select2('data') != null ? $("#select_diag-afm-"+id).select2('data').id : null; 
-  var fecha = $('#fecha-afm-'+id).val();
-  var at_salud_id;
-  if (typeof atencion_salud_id !== 'undefined') {
-    at_salud_id = atencion_salud_id;
-  } else {
-    at_salud_id = 'persona';
-  }
-
-  $.ajax({
-    type: 'POST',
-    url: '/guardar_antecedente_familiar_muerte',
-    data: { diag: diag, fecha: fecha, persona_ant: id, atencion_salud_id: at_salud_id },
-    success: function(response){  },
-    error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
-  });
-}
 
 $(".select_notificacion").on("change", function(e) { 
 
@@ -555,6 +537,20 @@ $('.sem-ges').keyup( function(e) {
   var value =$('#semanas-'+pd).val();
   agregarInfoEno(pd,value,'sem_emb'); 
 })
+
+$("#alergias").submit(function (e) { return false; });
+
+$('input[id^=fecha]').datetimepicker({
+    locale: 'es',
+    format: 'YYYY-MM-DD',
+    viewMode: 'years',
+});
+
+$('input[id^=fecha-afm]').on("dp.change", function (e) {
+  var id = $(this).attr('id').substring(10);
+  if ( id != 'new') 
+    guardarAntecedenteFamiliarMuerte(id,false);
+});
 
 function diagnosticoNoFrecuente(id){
   var check_no_frec = $(id).is(':checked');  
@@ -942,15 +938,34 @@ function formatDate(date){
   return format_date
 }
 
-$("#alergias").submit(function (e) { return false; });
+function guardarAntecedenteFamiliarMuerte(id,cerrar){
+  var diag = $("#select_diag-afm-"+id).select2('data') != null ? $("#select_diag-afm-"+id).select2('data').id : null; 
+  var fecha = $('#fecha-afm-'+id).val();
+  var parentesco = $('#par-afm-'+id).text();
+  var at_salud_id;
+  var tipo = 'guardar;'
 
-$('input[id^=fecha]').datetimepicker({
-    locale: 'es',
-    format: 'YYYY-MM-DD',
-    viewMode: 'years',
-});
+  if (typeof atencion_salud_id !== 'undefined') 
+    at_salud_id = atencion_salud_id;
+  else
+    at_salud_id = 'persona';
 
-$('input[id^=fecha]').on("dp.change", function (e) {
-  var id = $(this).attr('id').substring(10); 
-  guardarAntecedenteFamiliarMuerte(id);
-});
+  if (id == 'new'){  
+    tipo = 'agregar'  
+    id = $("#select_afm option:selected").val();
+    var texto = $("#select_afm  option:selected").text();
+    var pos_final = texto.indexOf("-");
+    parentesco = texto.substring(0,pos_final-1);  
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_antecedente_familiar_muerte',
+    data: { diag: diag, fecha: fecha, persona_ant: id, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo },
+    success: function(response){ 
+      if (cerrar)
+        cerrarModalAntFamMue(id);
+    },
+    error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
+  });
+}
