@@ -1,0 +1,74 @@
+<div class="modal fade modal-diag" id="modal-container-diag-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cerrarModalDiag(<%= p_d.id%>)" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel"><%= p_d.nombre %></h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="container">                
+          <div class="row clearfix">
+
+            <div class="form-group">
+              <div class="col-md-4">
+                <div class="checkbox" id="enf_cro_<%= p_d.id %>">
+                  <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
+                </div>                
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row clearfix">
+            <div class="col-md-4 column">
+              <label>Fecha inicio</label>
+            </div>
+            <div class="col-md-8 column">
+              <input name="f_i_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.fecha_inicio.strftime('%Y-%m-%d') %>">
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-4 column">
+              <label>Fecha término</label>
+            </div>
+            <div class="col-md-8 column">
+              <input name="f_t_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.fecha_termino.strftime('%Y-%m-%d') unless p_d.fecha_termino.nil? %>">
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-3 column">
+              <div class="form-group form-estado" id="e_d_<%= p_d.id %>">
+                <label class="control-label" for="radios">Estado de diagnóstico</label>                      
+                <% @estados_diagnostico.each do |e_d| %>  
+                  <div class="radio">
+                    <label for="radios-<%= p_d.id%>-<%= e_d.id %>"><input type="radio" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
+                  </div> 
+                <% end %>                    
+              </div>
+            </div>
+  
+          </div>
+          <div class="row clearfix">  
+            <div class="col-md-12 column">  
+              <label>Comentario</label><span id="comentario-<%= p_d.id %>" class="alert alert-info comentario">Autoguardado</span>
+              <textarea class="form-control comentario" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
+            </div>                  
+          </div>
+          <div class="row clearfix footer">
+            <div class="col-md-12 column">
+              <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-success ajus-pos-right">Guardar</button>                                       
+              <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger ajus-pos-right" id="bc<%= p_d.id%>"> Eliminar diagnóstico</button>
+              <button type="button" onclick="cerrarModalDiag(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
+            </div>                  
+          </div>
+        </div> <!--Cierre container -->           
+
+      </div>
+      
+    </div>            
+  </div>        
+</div>
+
+<%= javascript_include_tag "atencion_salud/cargar_calendario" %>
+<%= javascript_include_tag "atencion_salud/atencion_salud" %>

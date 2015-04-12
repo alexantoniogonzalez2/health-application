@@ -1,11 +1,11 @@
 <form id="form-agregar-persona-<%= id %>" class="form-validator">
 
-<div class="container agregar-persona">
+<div class="container agregar-persona ajustado">
   <div class="row">
     <div class="form-group col-md-6 column ajuste-padding">
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input id='nombre<%= id %>' name='nombre' class="label_better form-control" placeholder="Ingresar nombre" data-position="top" data-new-placeholder="Nombre:" data-bv-notempty="true" data-bv-notempty-message="El nombre es requerido" >
+        <input id='nombre<%= id %>' name='nombre' class="label_better form-control" placeholder="Ingresar nombre:" data-new-placeholder="Nombre:"  data-position="top" data-bv-notempty="true" data-bv-notempty-message="El nombre es requerido" >
         <p class="help-block text-danger"></p>
       </div>
     </div>
@@ -107,7 +107,7 @@
   </div>
   <div class='footer'>
     <button type="button" class="btn btn-default" onclick="cerrarModalAgregarPersona('<%= id %>')" >Cerrar ventana</button>
-    <button id="int_agregar_<%= p_d.id %>" type="submit" class="btn btn-success" value="Agregar persona">Agregar persona</button>
+    <button id="int_agregar_<%= origen %>" type="submit" class="btn btn-success" value="Agregar persona">Agregar persona</button>
   </div>
 
 </div>

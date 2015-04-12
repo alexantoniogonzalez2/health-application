@@ -55,6 +55,7 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_prestacion_ant', to: 'persona_prestacion#agregarPrestacionAntecedentes'
   post '/eliminar_prestacion', to: 'persona_prestacion#eliminarPrestacion', :as => :eliminarPrestacion
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
+  post '/agregar_diagnostico_ant', to: 'persona_diagnostico#agregarDiagnosticoAntecedentes'
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
   post '/reabrir_atencion', to: 'atenciones_salud#reabrirAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'

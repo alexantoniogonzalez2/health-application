@@ -1,0 +1,1 @@
+$("#tr-diag-<%= @persona_diagnostico.id %>").replaceWith("<%= escape_javascript( render :partial => 'antecedentes/antecedentes_medicos_row', :locals => {:p_d => @persona_diagnostico } ) %>");

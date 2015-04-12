@@ -20,7 +20,14 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
   	var celular =  $('#telefono'+id).val();
     var codigo = $('#codigo'+id).val();
   	var fecha_nacimiento = $('#fecha'+id).val();
+    var sexo = $('#sexo'+id).val();
   	var otro = $('#otro'+id).val();
+
+    if (typeof atencion_salud_id !== 'undefined') 
+      at_salud_id = atencion_salud_id;
+    else
+      at_salud_id = 'persona';
+
   	$.ajax({
       type: 'POST',
       url: '/agregar_persona',
@@ -35,7 +42,8 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
         celular: celular,
         codigo: codigo,
         fecha_nacimiento: fecha_nacimiento,
-        persona_id: persona_id,
+        atencion_salud_id: at_salud_id,
+        sexo: sexo,
         otro: otro,
       },
       success: function(response){
@@ -76,3 +84,10 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
 
     }
   }
+
+$(".label_better").label_better({
+    position: "top",
+    animationTime: 500,
+    easing: "ease-in-out",
+    offset: 5
+});

@@ -36,87 +36,6 @@ $('.int-cancelar').click(function() {
   $("#per_int_"+pd).collapse('hide');
 });
 
-/*
-$('.ges-agregar').click(function() {
-  var pd = $(this).attr('id').substring(12);
-  if (validarNuevaPersona(pd) ){
-    var nombre = $('#ges_nom_'+pd).val();
-    var apep = $('#ges_apep_'+pd).val();
-    var apem = $('#ges_apem_'+pd).val();
-    var parent = $('#select_parent_'+pd).val();
-    var rut = $('#ges_prut_'+pd).val();
-    var dv = $('#ges_pdv_'+pd).val();
-    var correo = $('#ges_pcorreo_'+pd).val();
-    var celular = $('#ges_pcelular_'+pd).val();
-
-    $.ajax({
-      type: 'POST',
-      url: '/agregar_persona_notificacion_pre',
-      data: { 
-        pers_diag: pd,
-        nombre: nombre,
-        apep: apep,
-        apem: apem,
-        parent: parent,
-        rut: rut,
-        dv: dv,
-        correo: correo,
-        celular: celular
-      },
-      success: function(response){
-        $("#per_not_"+pd).collapse('hide');
-        $('#ges_nombre_'+pd).val(nombre+' '+apep+' '+apem);
-        $('#ges_rut_'+pd).val(response.rut);
-        $('#ges_correo_'+pd).val(correo);
-        $('#ges_celular_'+pd).val(celular);
-        $('#select_persona_'+pd).select2('val', '');
-      },
-      error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
-    }); 
-
-  }
-});
-
-$('.int-agregar').click(function() {
-  var pd = $(this).attr('id').substring(12);
-  if (validarNuevaPersona(pd) ){
-    var nombre = $('#int_nom_'+pd).val();
-    var apep = $('#int_apep_'+pd).val();
-    var apem = $('#ges_apem_'+pd).val();
-    var parent = $('#select_parent_int_'+pd).val();
-    var rut = $('#int_prut_'+pd).val();
-    var dv = $('#int_pdv_'+pd).val();
-    var correo = $('#int_pcorreo_'+pd).val();
-    var celular = $('#int_pcelular_'+pd).val();
-
-    $.ajax({
-      type: 'POST',
-      url: '/agregar_persona_interconsulta_pre',
-      data: { 
-        pers_diag: pd,
-        nombre: nombre,
-        apep: apep,
-        apem: apem,
-        parent: parent,
-        rut: rut,
-        dv: dv,
-        correo: correo,
-        celular: celular
-      },
-      success: function(response){
-        $("#per_int_"+pd).collapse('hide');
-        $('#int_nombre_'+pd).val(nombre+' '+apep+' '+apem);
-        $('#int_rut_'+pd).val(response.rut);
-        $('#int_correo_'+pd).val(correo);
-        $('#int_celular_'+pd).val(celular);
-        $('#select_persona_int'+pd).select2('val', '');
-      },
-      error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
-    }); 
-
-  }
-});*/
-
 $('.panel-int2').on('shown.bs.collapse', function() { 
   var pd = $(this).attr('id').substring(8);
   $("#int_nombre_"+pd+","+"#int_rut_"+pd+","+"#int_correo_"+pd+","+"#int_celular_"+pd).val('');
@@ -277,30 +196,6 @@ $('.select_diag').select2({
     results: function (data, page) { return { results: data }; }
   }
 });
-
-/*
-$('.select_persona').select2({
-  width: '80%',
-  minimumInputLength: 3,
-  placeholder: "Seleccione una persona",
-  allowClear: true,
-  
-});
-
-
-$('.select_persona_int').select2({
-  width: '80%',
-  minimumInputLength: 3,
-  placeholder: "Seleccione una persona",
-  allowClear: true,
-  ajax: {
-    url: '/cargar_personas',
-    dataType: 'json',
-    type: 'POST',
-    data: function (term, page) { return { q: term }; },
-    results: function (data, page) { return { results: data }; }
-  }
-});*/
 
 $('#select_examen').select2({
   width: '380px',
@@ -613,6 +508,11 @@ function actualizarDiagnostico(diag,pers_diag){
 
 function guardarDiagnostico(pers_diag_aten_sal) {
 
+  if (typeof atencion_salud_id !== 'undefined') 
+    at_salud_id = atencion_salud_id;
+  else
+    at_salud_id = 'persona';
+
   var f_i = $('.datepicker[name=f_i_'+pers_diag_aten_sal+']').datepicker("getDate");
   var f_t = $('.datepicker[name=f_t_'+pers_diag_aten_sal+']').datepicker("getDate");
   var e_d = $('#e_d_'+pers_diag_aten_sal).find('input[name=radios-estado-'+pers_diag_aten_sal+']:checked').val();
@@ -626,7 +526,7 @@ function guardarDiagnostico(pers_diag_aten_sal) {
     url: '/guardar_diagnostico',
     data: {
       persona_diagnostico_atencion_salud_id: pers_diag_aten_sal,
-      atencion_salud_id: atencion_salud_id,
+      atencion_salud_id: at_salud_id,
       fecha_inicio: f_i,
       fecha_termino: f_t,
       estado_diagnostico: e_d,
@@ -943,7 +843,8 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
   var fecha = $('#fecha-afm-'+id).val();
   var parentesco = $('#par-afm-'+id).text();
   var at_salud_id;
-  var tipo = 'guardar;'
+  var tipo = 'guardar'
+  var per_ant = id;
 
   if (typeof atencion_salud_id !== 'undefined') 
     at_salud_id = atencion_salud_id;
@@ -952,7 +853,7 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
 
   if (id == 'new'){  
     tipo = 'agregar'  
-    id = $("#select_afm option:selected").val();
+    per_ant = $("#select_afm option:selected").val();
     var texto = $("#select_afm  option:selected").text();
     var pos_final = texto.indexOf("-");
     parentesco = texto.substring(0,pos_final-1);  
@@ -961,7 +862,7 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
   $.ajax({
     type: 'POST',
     url: '/guardar_antecedente_familiar_muerte',
-    data: { diag: diag, fecha: fecha, persona_ant: id, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo },
+    data: { diag: diag, fecha: fecha, persona_ant: per_ant, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo },
     success: function(response){ 
       if (cerrar)
         cerrarModalAntFamMue(id);

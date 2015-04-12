@@ -241,6 +241,55 @@ class PersonaDiagnosticoController < ApplicationController
 		end  	
 	end
 
+	def agregarDiagnosticoAntecedentes
+
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
+		else
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end
+
+		persona_diagnostico_anterior = FiPersonaDiagnosticos.where('diagnostico_id = ? and persona_id = ?', params[:diagnostico_id], @persona.id).first
+
+		if persona_diagnostico_anterior
+			render :json => { :success => false }	
+		else 			
+			@persona_diagnostico_new = FiPersonaDiagnosticos.new
+			@persona_diagnostico_new.persona = @persona
+			@persona_diagnostico_new.diagnostico_id = params[:diagnostico_id]
+			@persona_diagnostico_new.fecha_inicio = DateTime.current
+			@persona_diagnostico_new.estado_diagnostico_id = 1
+			@persona_diagnostico_new.es_cronica = 0	
+			@persona_diagnostico_new.es_antecedente = true
+			@persona_diagnostico_new.save!	
+
+			@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.new
+			@persona_diagnostico_atencion.persona_diagnostico = @persona_diagnostico_new
+			@persona_diagnostico_atencion.atencion_salud = @atencion_salud unless params[:atencion_salud_id] == 'persona'
+			@persona_diagnostico_atencion.estado_diagnostico_id = 1
+			@persona_diagnostico_atencion.fecha_inicio = DateTime.current
+			@persona_diagnostico_atencion.es_cronica = 0			
+			@persona_diagnostico_atencion.save!
+
+			@estados_diagnostico = MedDiagnosticoEstados.all
+
+			@persona_diagnostico = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
+																																						JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
+																																		.select('fi_persona_diagnosticos_atenciones_salud.id,fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,fi_persona_diagnosticos_atenciones_salud.fecha_inicio,fi_persona_diagnosticos_atenciones_salud.fecha_termino,md.nombre,fpd.persona_id,fpd.es_antecedente,fpd.es_cronica,fi_persona_diagnosticos_atenciones_salud.comentario,fpd.created_at')
+																																		.where('fpd.id = ?',@persona_diagnostico_new.id).first
+			
+
+			@estados_diagnostico = MedDiagnosticoEstados.all
+
+			respond_to do |format|     
+      	format.js { }
+      	format.json { render :json => { :success => true} }
+      end		
+		
+		end  	
+	end
+
 	def eliminarDiagnostico	
 
   	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where(" id = ? ",params[:persona_diagnostico_atencion_salud_id]).first
@@ -275,7 +324,19 @@ class PersonaDiagnosticoController < ApplicationController
 		@persona_diagnostico = FiPersonaDiagnosticos.find(@persona_diagnostico_id)		
   	@persona_diagnostico.update( estado_diagnostico: @estado, fecha_inicio: params[:fecha_inicio], fecha_termino: params[:fecha_termino], es_cronica: params[:enf_cro] )
 
-  	render :json => { :success => true, :pers_diag => @persona_diagnostico_id}	
+  	if @persona_diagnostico.es_antecedente
+			@persona_diagnostico = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
+																																			JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
+																															.select('fi_persona_diagnosticos_atenciones_salud.id,fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,fi_persona_diagnosticos_atenciones_salud.fecha_inicio,fi_persona_diagnosticos_atenciones_salud.fecha_termino,md.nombre,fpd.persona_id,fpd.es_antecedente,fpd.es_cronica,fi_persona_diagnosticos_atenciones_salud.comentario,fpd.created_at')
+																															.where('fpd.id = ?',@persona_diagnostico_id).first
+  		respond_to do |format|     
+      	format.js { }
+      end
+  	else
+  		respond_to do |format| 	
+  			render :json => { :success => true, :pers_diag => @persona_diagnostico_id }
+  		end		
+  	end	
 
 	end
 

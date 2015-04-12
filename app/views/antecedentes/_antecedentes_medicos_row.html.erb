@@ -1,0 +1,26 @@
+<tr id='tr-diag-<%= p_d.id %>'>
+  <td><%= p_d.atencion_salud.nil? ? p_d.created_at.strftime('%Y-%m-%d') : p_d.atencion_salud.agendamiento.fecha_comienzo.strftime('%Y-%m-%d')  %></td>
+  <td><%= p_d.atencion_salud.nil? ? '-' : p_d.atencion_salud.agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
+  <td><%= p_d.atencion_salud.nil? ? '-' : p_d.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td>                
+  <td><%= p_d.nombre %></td>
+  <td><%= p_d.fecha_inicio.strftime('%Y-%m-%d') %></td>
+  <td><%= p_d.fecha_termino ? p_d.fecha_termino.strftime('%Y-%m-%d') : '-' %></td>
+  <td><%= p_d.estado_diagnostico.nombre %></td>
+  <td>
+	  <% if p_d.es_antecedente and p_d.atencion_salud.nil? %>
+	    <% if p_d.persona_id.eql? PerPersonas.where('user_id = ?',current_user.id).first.id %>  
+	      <a href="#modal-container-diag-<%= p_d.id %>" data-toggle="modal" id="diag<%= p_d.id %>" >Editar</a>
+	    <% else %>
+	      Añadido por paciente.
+	    <% end %>
+	  <% elsif @atencion_salud %> 
+	    <% if p_d.es_antecedente and p_d.atencion_salud_id.equal? @atencion_salud.id %> 
+	  	  <a href="#modal-container-diag-<%= p_d.id %>" data-toggle="modal" id="diag<%= p_d.id %>" >Editar</a>
+	    <% else %>  
+	      <%= link_to 'Ver atención', atenciones_salud_path(p_d.atencion_salud.id) %>
+	    <% end %>
+	  <% else %>
+	  	<%= link_to 'Ver atención', atenciones_salud_path(p_d.atencion_salud.id) %>
+	  <% end %>
+  </td>
+</tr>

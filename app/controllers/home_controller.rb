@@ -93,8 +93,9 @@ class HomeController < ApplicationController
 				#Antecedentes médicos		
 				@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
 																																						JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
-																																		.select('fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,fi_persona_diagnosticos_atenciones_salud.fecha_inicio,fi_persona_diagnosticos_atenciones_salud.fecha_termino,md.nombre')
+																																		.select('fi_persona_diagnosticos_atenciones_salud.id,fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,fi_persona_diagnosticos_atenciones_salud.fecha_inicio,fi_persona_diagnosticos_atenciones_salud.fecha_termino,md.nombre,fpd.es_antecedente,fpd.es_cronica,fi_persona_diagnosticos_atenciones_salud.comentario,fpd.persona_id,fpd.created_at')
 																																		.where('fpd.persona_id = ?',@persona.id) if @acceso
+				@estados_diagnostico = MedDiagnosticoEstados.all																														
 				#Antecedentes quirúrgicos													
 				min = 57
 				max = 250	
@@ -125,6 +126,7 @@ class HomeController < ApplicationController
 		  		@persona_actividad_fisica = FiPersonaActividadFisica.new 
 					@persona = PerPersonas.find(@persona.id)
 					@persona_actividad_fisica.persona = @persona
+					@persona_actividad_fisica.nivel_actividad = "Sin información"
 					@persona_actividad_fisica.save!
 				end
 				@segmento_actividad = @persona.getSegmentoActividadFisica

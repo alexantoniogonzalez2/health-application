@@ -1,4 +1,4 @@
-guardarActividad = (valor,pregunta) ->
+﻿guardarActividad = (valor,pregunta) ->
   if typeof atencion_salud_id != 'undefined'
     at_salud_id = atencion_salud_id
   else
@@ -151,3 +151,32 @@ $("#form_act_fis")
             message: 'Ingrese un valor entero.'  
   .on("success.field.bv", "[name=\"dias_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),($(this).attr "id").substring(14) ))
   .on("success.field.bv", "[name=\"minutos_actividad[]\"]", (e, data) -> guardarActividad( $(this).val(),($(this).attr "id").substring(14) ))
+
+
+$('#select_diagnostico_ant').select2
+  width: '380px'
+  minimumInputLength: 3
+  placeholder: 'Seleccione un diagnostico'
+  ajax:
+    url: '/cargar_diagnosticos'
+    dataType: 'json'
+    type: 'POST'
+    data: (term, page) ->
+      { q: term, diag_no_frec: diagnosticoNoFrecuente('#new-diag-no-frec-ant') }
+    results: (data, page) ->
+      { results: data }
+
+$('#select_diagnostico_ant').on 'change', (e) ->
+  value = $('#select_diagnostico_ant').select2('data').id
+  if typeof atencion_salud_id != 'undefined'
+    at_salud_id = atencion_salud_id
+  else
+    at_salud_id = 'persona'
+  $.ajax
+    type: 'POST'
+    url: '/agregar_diagnostico_ant'
+    data:
+      atencion_salud_id: at_salud_id
+      diagnostico_id: value
+    error: (jqXHR, textStatus, errorThrown) ->       
+    success: (data, textStatus, jqXHR) ->

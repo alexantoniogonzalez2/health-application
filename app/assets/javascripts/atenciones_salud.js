@@ -46,3 +46,4 @@ function cerrarModalHabTab(modal_id){ $('#modal-container-hab-tab-' + modal_id )
 function cerrarModalOcu(modal_id){ $('#modal-container-ocu-' + modal_id ).modal('hide'); }
 function cerrarModalAgregarPersona(modal_id){ $('#modal-container-agregar-persona-' + modal_id ).modal('hide'); }
 function cerrarModalAntFamMue(modal_id){ $('#modal-container-ant-fam-mue-' + modal_id ).modal('hide'); }
+function cerrarModalDiag(modal_id){ $('#modal-container-diag-' + modal_id ).modal('hide'); }

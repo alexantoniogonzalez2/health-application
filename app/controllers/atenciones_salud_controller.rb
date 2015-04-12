@@ -170,7 +170,7 @@ class AtencionesSaludController < ApplicationController
   	end
 
 		#Actividad física
-  	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@persona.id).first
+		@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@persona.id).first
   	if @persona_actividad_fisica.nil?
   		@persona_actividad_fisica = FiPersonaActividadFisica.new 
 			@persona_actividad_fisica.persona = @persona

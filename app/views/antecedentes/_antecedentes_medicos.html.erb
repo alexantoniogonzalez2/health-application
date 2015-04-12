@@ -1,29 +1,48 @@
 <% if @acceso %>
 	<h4>Historial de diagnósticos</h4>
-	  <% if @persona_diagnosticos.empty? %>
-      No hay información de diagnósticos anteriores.<br/>
-    <% else %>
-			<table class="table table-striped table-hover table-condensed">
-				<thead class="ajust-head">
-		      <tr class="info"><th class="col-sm-2">Fecha</th><th class="col-sm-2">Recinto</th><th class="col-sm-2">Profesional</th><th class="col-sm-3">Diagnóstico</th><th class="col-sm-2">Inicio</th><th class="col-sm-1">Término</th><th class="col-sm-1">Estado</th><th class="col-sm-1">Atención</th></tr>
-		    </thead>
-		    <tbody>
-		      <% @persona_diagnosticos.each do |p_d| %>
-		        <tr>
-		          <td><%= p_d.atencion_salud.agendamiento.fecha_comienzo.strftime('%Y-%m-%d') %></td>
-		          <td><%= p_d.atencion_salud.agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
-		          <td><%= p_d.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td>                
-		          <td><%= p_d.nombre %></td>
-		          <td><%= p_d.fecha_inicio.strftime('%Y-%m-%d') %></td>
-		          <td><%= p_d.fecha_termino ? p_d.fecha_termino.strftime('%Y-%m-%d') : '-' %></td>
-		          <td><%= p_d.estado_diagnostico.nombre %></td>
-		          <td><%= link_to 'Ver', atenciones_salud_path(p_d.atencion_salud.id) %></td>
-		        </tr>
-		      <% end %>
-		    </tbody>
-		  </table>  
-		<% end %>
-		<%= link_to 'Agregar antecedente médico', agendamientoBuscadorHora_path %>
+
+	<table class="table table-striped table-hover table-condensed">
+		<thead class="ajust-head">
+      <tr class="info"><th class="col-sm-2">Fecha</th><th class="col-sm-2">Recinto</th><th class="col-sm-2">Profesional</th><th class="col-sm-3">Diagnóstico</th><th class="col-sm-2">Inicio</th><th class="col-sm-1">Término</th><th class="col-sm-1">Estado</th><th class="col-sm-1">Atención</th></tr>
+    </thead>
+    <tbody id='lista-diagnosticos'>
+      <% if @persona_diagnosticos.empty? %>
+				<tr id='tr-vacio-diag'><td colspan='8' >No hay información de antecedentes médicos.</td></tr>
+			<% else %>	
+	      <% @persona_diagnosticos.each do |p_d| %>
+	      	<%= render :partial => "antecedentes/antecedentes_medicos_row", :locals => {:p_d => p_d, :atencion_salud => @atencion_salud } %>
+	      <% end %>
+	    <% end %>  
+    </tbody>
+  </table>  
+		
+	<div class='container agregar-med'>
+		<div class='row'>
+			<div class='col-md-6 column ajuste-padding'>
+				<p>Agregar información de otro antecedente médico.</p>
+			</div>
+			<div class='col-md-6 column'>
+				<input type='hidden' id="select_diagnostico_ant" class="ajuste-select" >
+					<div class="checkbox">
+	          <label for="new-diag-no-frec-ant">
+	            <input type="checkbox" name="checkboxes" id="new-diag-no-frec-ant" value="1">
+	            Incluir diagnósticos no frecuentes
+	          </label>
+       	 	</div>			
+			</div>
+		</div>
+	</div>	
+
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
 <% end %>  
+
+<div id='diag_ant_modal-div'></div>
+
+<% unless @persona_diagnosticos.empty? %>
+	<% @persona_diagnosticos.each do |p_d| %>
+		<%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d } %>
+	<% end %>
+<% end %>	
+
+<%= javascript_include_tag "ant_qui" %>

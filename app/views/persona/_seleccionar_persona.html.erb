@@ -10,8 +10,8 @@
 <select id='select_<%= id %>' class="select_persona form-control <%= clase %>" >
 	<option value="" selected disabled>Seleccionar</option>
   <% @cercanos.each do |cercano| %>
-  	<% unless subgrupo == 'afm' and !PerPersonas.find(cercano[1]).diagnostico_muerte.nil?  %>  	
-  		<option value="<%= cercano[1] %>" <% if cercano[1] == id_pre %> selected <%end%> > <%= cercano[0].dup << ' - ' << PerPersonas.find(cercano[1]).showName('%n%p%m') %></option> 
+  	<% unless subgrupo == 'afm' and !PerPersonas.find(cercano[0]).diagnostico_muerte.nil?  %>  	
+  		<option value="<%= cercano[0] %>" <% if cercano[1] == id_pre %> selected <%end%> > <%= cercano[1].dup << ' - ' << PerPersonas.find(cercano[0]).showName('%n%p%m') %></option> 
   	<% end %>     			
 	<% end %>
 </select>

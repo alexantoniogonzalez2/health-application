@@ -1,6 +1,13 @@
 class PersonaController < ApplicationController
 	def agregarPersona
 
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end
+
 		@user = User.new
 		@user.email = params[:correo]
 		@user.password = "Random123"
@@ -12,7 +19,7 @@ class PersonaController < ApplicationController
 			@persona_nueva.apellido_paterno = params[:apep]
 			@persona_nueva.apellido_materno = params[:apem]
 			@persona_nueva.rut = params[:rut]
-			@persona_nueva.genero =  params[:sexo] == 1 ? 'Masculino' : 'Femenino'
+			@persona_nueva.genero =  params[:sexo] == '1' ? 'Masculino' : 'Femenino'
 			@persona_nueva.digito_verificador = params[:dv]
 			@persona_nueva.fecha_nacimiento = params[:fecha_nacimiento]
 			@persona_nueva.user = @user
@@ -27,8 +34,6 @@ class PersonaController < ApplicationController
 			@persona_telefono.persona = @persona_nueva
 			@persona_telefono.telefono = @telefono
 			@persona_telefono.save!		
-
-			@persona = PerPersonas.find(params[:persona_id]) 
 
 			@texto_relacion = ''
 			case params[:relacion]
@@ -65,7 +70,7 @@ class PersonaController < ApplicationController
 					@parentesco.gesta = @gesta
 				end	
 				@parentesco.save!
-				@texto_relacion = params[:relacion] == 3 ? 'Hijo' : 'Hija'
+				@texto_relacion = params[:relacion] == '3' ? 'Hijo' : 'Hija'
 			when '5' #Otro
 				 @otra_relacion = PerOtrasRelaciones.new
 				 @otra_relacion.persona = @persona

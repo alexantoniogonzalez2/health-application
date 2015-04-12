@@ -297,7 +297,7 @@
 				<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
 			</div>
 			<div class="modal-body">
-				<%= render :partial => "persona/agregar_persona", :locals => {:p_d => p_d, :id => 'int_'+p_d.id.to_s, :subgrupo => 'todos' } %>
+				<%= render :partial => "persona/agregar_persona", :locals => {:origen => p_d.id, :id => 'int_'+p_d.id.to_s, :subgrupo => 'todos' } %>
 			</div>
 			<div class="modal-footer"></div>
 		</div>		

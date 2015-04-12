@@ -226,12 +226,12 @@ class PerPersonas < ActiveRecord::Base
     @familiares = getFamiliares
     @decesos = []
     @familiares.each do |familiar|
-      @decesos_familiares = PerPersonas.where('id = ? and diagnostico_muerte_id is not null',familiar[1])
+      @decesos_familiares = PerPersonas.where('id = ? and diagnostico_muerte_id is not null',familiar[0])
       @decesos_familiares.each do |deceso_familiar|
         @decesos << { 
-          'id' => familiar[1],
+          'id' => familiar[0],
           'persona' => deceso_familiar.showName('%n%p%m'),
-          'parentesco' => familiar[0],
+          'parentesco' => familiar[1],
           'diagnostico' => deceso_familiar.diagnostico_muerte.nombre,
           'fecha_deceso' => deceso_familiar.fecha_muerte.strftime('%Y-%m-%d')
         }  
@@ -245,11 +245,11 @@ class PerPersonas < ActiveRecord::Base
     @familiares = getFamiliares
     @enfermedades_cronicas = []
     @familiares.each do |familiar|
-      @enfermedades = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1',familiar[1])
+      @enfermedades = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1',familiar[0])
       @enfermedades.each do |enfermedad|
         @enfermedades_cronicas << { 
           'persona' => enfermedad.persona.showName('%n%p%m'),
-          'parentesco' => familiar[0] ,
+          'parentesco' => familiar[1] ,
           'diagnostico' => enfermedad.diagnostico.nombre,
           'inicio' => enfermedad.fecha_inicio.strftime('%Y-%m-%d')
         }  
@@ -264,17 +264,17 @@ class PerPersonas < ActiveRecord::Base
     @hijos = PerParentescos.where('progenitor_id = ?',id)
     @hijos.each do |hijo|
       @genero = hijo.hijo.genero == 'Masculino' ? 'Hijo' : 'Hija'
-      @familiares[@genero] = hijo.hijo.id
+      @familiares[hijo.hijo.id] = @genero
     end 
     @padres = PerParentescos.where('hijo_id = ?',id)
     @padres.each do |padre|
       @genero = padre.progenitor.genero == 'Masculino' ? 'Padre' : 'Madre'
-      @familiares[@genero] = padre.progenitor.id
+      @familiares[padre.progenitor.id] = @genero
 
       @hermanos = PerParentescos.where('progenitor_id = ? AND hijo_id != ?',padre.progenitor.id,id)
       @hermanos.each do |hermano|
         @genero = hermano.hijo.genero == 'Masculino' ? 'Hermano' : 'Hermana'
-        @familiares[@genero] = hermano.hijo.id
+        @familiares[hermano.hijo.id] = @genero
       end 
 
     end
@@ -285,7 +285,7 @@ class PerPersonas < ActiveRecord::Base
     @cercanos = getFamiliares
     @otras_relaciones = PerOtrasRelaciones.where('persona_id = ?',id)
     @otras_relaciones.each do |otra_relacion|
-      @cercanos[otra_relacion.relacion] = otra_relacion.persona_relacion.id
+      @cercanos[otra_relacion.persona_relacion.id] = otra_relacion.relacion
     end
     return @cercanos
   end 
