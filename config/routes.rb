@@ -67,7 +67,7 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_info_eno', to: 'persona_diagnostico#agregarInfoEno'
   post '/agregar_info_prestacion', to: 'persona_prestacion#agregarInfoPrestacion'  
   post '/cargar_prestaciones', to: 'persona_prestacion#cargarPrestaciones'
-  post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico', :as => :eliminarDiagnostico
+  post '/eliminar_diagnostico', to: 'persona_diagnostico#eliminarDiagnostico'
   post '/guardar_diagnostico', to: 'persona_diagnostico#guardarDiagnostico', :as => :guardarDiagnostico 
   post '/cargar_medicamentos', to: 'persona_medicamento#cargarMedicamentos'
   post '/agregar_medicamento', to: 'persona_medicamento#agregarMedicamento'

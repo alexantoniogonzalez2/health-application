@@ -216,8 +216,6 @@ ActiveRecord::Schema.define(version: 20150331160751) do
     t.integer  "estado_diagnostico_id"
     t.integer  "gesta_id"
     t.boolean  "es_cronica"
-    t.boolean  "es_antecedente"
-    t.integer  "atencion_salud_antecedente_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -233,6 +231,7 @@ ActiveRecord::Schema.define(version: 20150331160751) do
     t.boolean  "es_cronica"
     t.boolean  "en_tratamiento"
     t.boolean  "primer_diagnostico"
+    t.boolean  "es_antecedente"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

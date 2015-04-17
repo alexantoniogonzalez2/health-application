@@ -24,7 +24,8 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
                                  :comentario,
                                  :notificaciones_ges,
                                  :notificaciones_eno,
-                                 :interconsultas)
+                                 :interconsultas,
+                                 :es_antecedente)
   end
 								
 end

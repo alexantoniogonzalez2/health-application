@@ -128,19 +128,19 @@ $('.modal-diag').on('show.bs.modal', function (e) {
 })
 
 
-$('#atencion_salud_motivo_consulta').keyup( function(e) {
+$('#motivo_consulta').keyup( function(e) {
   if (typeof contador_mot === 'undefined') { } 
   else { clearTimeout(contador_mot);}
   contador_mot = setTimeout(function(){ guardarTexto('motivo') },2000);
 })
 
-$('#atencion_salud_examen_fisico').keyup( function(e) { 
+$('#examen_fisico').keyup( function(e) { 
   if (typeof contador_exa === 'undefined') { } 
   else { clearTimeout(contador_exa);}
   contador_exa = setTimeout(function(){ guardarTexto('examen') },2000);
 })
 
-$('#atencion_salud_indicaciones_generales').keyup( function(e) { 
+$('#indicaciones_generales').keyup( function(e) { 
   if (typeof contador_ind === 'undefined') { } 
   else { clearTimeout(contador_ind);}
   contador_ind = setTimeout(function(){ guardarTexto('indicaciones') },2000);
@@ -469,16 +469,16 @@ function agregarDiagnostico(diag_id){
 }
 
 function eliminarDiagnostico(pers_diag_aten_sal) {
-  var div = document.getElementById("modal-container-diag-"+pers_diag_aten_sal);
+  
+  if (typeof atencion_salud_id !== 'undefined') 
+    at_salud_id = atencion_salud_id;
+  else
+    at_salud_id = 'persona';
 
   $.ajax({
     type: 'POST',
     url: '/eliminar_diagnostico',
-    data: { 
-      persona_diagnostico_atencion_salud_id: pers_diag_aten_sal,
-      atencion_salud_id: atencion_salud_id
-    },
-
+    data: { persona_diagnostico_atencion_salud_id: pers_diag_aten_sal, atencion_salud_id: at_salud_id },
     success: function(response) { $("#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); $("#pd"+pers_diag_aten_sal).remove(); },
     error: function(xhr, status, error){ alert("No se pudo eliminar el diagnóstico del paciente.");   }
   });
@@ -486,13 +486,11 @@ function eliminarDiagnostico(pers_diag_aten_sal) {
 }
 
 function eliminarMedicamento(pers_med) {
-  var div = document.getElementById("modal-container-med-"+pers_med);
 
   $.ajax({
     type: 'POST',
     url: '/eliminar_medicamento',
     data: { persona_medicamento_id: pers_med},
-
     success: function(response) { $("#modal-container-med-"+pers_med).modal('hide'); $("#pm"+pers_med).remove(); $("#tr-med-"+pers_med).remove();},
     error: function(xhr, status, error){ alert("No se pudo eliminar el medicamento del paciente.");   }
   });
@@ -633,13 +631,13 @@ function guardarMetricas(pers_aten) {
 function guardarTexto(tipo_texto) {
   switch (tipo_texto) {
     case 'motivo':      
-      texto = $('#atencion_salud_motivo_consulta').val();
+      texto = $('#motivo_consulta').val();
       break;     
     case 'examen':
-      texto = $('#atencion_salud_examen_fisico').val();
+      texto = $('#examen_fisico').val();
       break;  
     case 'indicaciones':
-      texto = $('#atencion_salud_indicaciones_generales').val();
+      texto = $('#indicaciones_generales').val();
       break;
   }
 
@@ -663,13 +661,17 @@ function guardarTexto(tipo_texto) {
 function autoguardarComentario(pers_diag_aten_sal) {
 
   var comentario = $('#comentario_'+pers_diag_aten_sal).val();
+  if (typeof atencion_salud_id !== 'undefined') 
+    at_salud_id = atencion_salud_id;
+  else
+    at_salud_id = 'persona';
 
   $.ajax({
     type: 'POST',
     url: '/autoguardar_comentario',
     data: {
       persona_diagnostico_atencion_salud_id: pers_diag_aten_sal,
-      atencion_salud_id: atencion_salud_id,      
+      atencion_salud_id: at_salud_id,      
       comentario: comentario,      
      },
     success: function(response) {                                   
@@ -705,7 +707,7 @@ function autoguardarComentarioInt(pers_diag_aten_sal) {
 
 }
 
-function cerrarDiagnostico(pers_diag_aten_sal){ 
+function sinCambios(pers_diag_aten_sal){ 
 
   $('#modal-container-diag-'+pers_diag_aten_sal).modal('hide');
   id_mod = pers_diag_aten_sal
@@ -736,8 +738,10 @@ function cerrarDiagnostico(pers_diag_aten_sal){
 
 }
 
-function validarNuevaPersona(pd){
-  return true;
+function cerrarDiagnostico(pers_diag_aten_sal){ 
+
+  $('#modal-container-diag-'+pers_diag_aten_sal).modal('hide');
+  
 }
 
 function agregarInfoEno(pd,value,tipo){

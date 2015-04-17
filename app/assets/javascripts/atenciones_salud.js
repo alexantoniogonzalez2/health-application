@@ -3,7 +3,6 @@ function addSpinner(element_id){ $('#'+element_id).append("<div class='div-spinn
 
 $(document).ready(function() {
 
-
   $("#lista_atenciones").dataTable().fnDestroy();
 
   $('#lista_atenciones').dataTable({
@@ -46,4 +45,5 @@ function cerrarModalHabTab(modal_id){ $('#modal-container-hab-tab-' + modal_id )
 function cerrarModalOcu(modal_id){ $('#modal-container-ocu-' + modal_id ).modal('hide'); }
 function cerrarModalAgregarPersona(modal_id){ $('#modal-container-agregar-persona-' + modal_id ).modal('hide'); }
 function cerrarModalAntFamMue(modal_id){ $('#modal-container-ant-fam-mue-' + modal_id ).modal('hide'); }
+function cerrarModalAntFamCro(modal_id){ $('#modal-container-ant-fam-cro-' + modal_id ).modal('hide'); }
 function cerrarModalDiag(modal_id){ $('#modal-container-diag-' + modal_id ).modal('hide'); }

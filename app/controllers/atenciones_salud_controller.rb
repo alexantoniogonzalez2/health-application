@@ -55,6 +55,8 @@ class AtencionesSaludController < ApplicationController
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona = @agendamiento.persona
 	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
+	  @fecha_final_atencion = @agendamiento.fecha_final_real
+	  @fecha_final_atencion = DateTime.tomorrow if @fecha_final_atencion.nil?
 
 	  @persona_diagnostico = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
@@ -68,7 +70,7 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
 	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
 	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
-	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id' => params[:id])
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 0',params[:id])
 	  
 	  @persona_diagnostico_anteriores = FiPersonaDiagnosticos
 	  	.joins('JOIN fi_persona_diagnosticos_atenciones_salud as fpdas ON 
@@ -84,13 +86,13 @@ class AtencionesSaludController < ApplicationController
 	  					fpdas.estado_diagnostico_id,
 	  					fpdas.comentario,
 	  					fpdas.es_cronica,
+	  					fpdas.es_antecedente,
 	  					fpdas.en_tratamiento,
 	  					fpdas.primer_diagnostico")
 	  	.where('fi_persona_diagnosticos.persona_id = ? AND fpdas.atencion_salud_id != ? 
-	  					AND fpdas.es_cronica = 0 AND ag_agendamientos.fecha_comienzo_real < ?',
-	  					 @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
+	  					AND fpdas.es_cronica = 0 AND fpdas.es_antecedente = 0 AND ag_agendamientos.fecha_comienzo_real < ?', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
 
-	  @antecedentes = FiPersonaDiagnosticos
+	  @ant_med_at = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
 	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
 	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
@@ -99,11 +101,29 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
 	  					fi_persona_diagnosticos_atenciones_salud.comentario,
 	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+	  					fi_persona_diagnosticos_atenciones_salud.es_antecedente,	  					
+	  					fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,
 	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento,
 	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico")
-	  	.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.atencion_salud_id != ? 
-	  					AND fi_persona_diagnosticos_atenciones_salud.es_cronica = 1', @atencion_salud.persona.id,params[:id])	
+	  	.where('persona_id = ? AND (fi_persona_diagnosticos_atenciones_salud.created_at < ? )AND fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 AND
+	  				  fi_persona_diagnosticos_atenciones_salud.atencion_salud_id != ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 0', @atencion_salud.persona.id,@fecha_final_atencion,params[:id])	
 
+	  @ant_med_us = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id	JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
+										.select('fi_persona_diagnosticos_atenciones_salud.id,
+														 fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+														 fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,
+														 fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+														 fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+														 fi_persona_diagnosticos_atenciones_salud.comentario,
+														 fi_persona_diagnosticos_atenciones_salud.created_at,
+														 fi_persona_diagnosticos_atenciones_salud.es_antecedente,																																						 
+														 fi_persona_diagnosticos_atenciones_salud.es_cronica,	
+														 md.nombre,																																					 
+														 fpd.persona_id,
+														 fpd.diagnostico_id,
+														 md.codigo_cie10')
+										.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.created_at < ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1 ', @atencion_salud.persona.id,@fecha_final_atencion)
+	  						
 	  @diagnosticos = MedDiagnosticos.where('frecuente = ?',true)
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 	  @prestadores = PrePrestadores.all

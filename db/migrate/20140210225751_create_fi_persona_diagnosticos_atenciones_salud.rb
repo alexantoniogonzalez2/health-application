@@ -1,7 +1,6 @@
 class CreateFiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Migration
   def change
     create_table :fi_persona_diagnosticos_atenciones_salud do |t|
-
       t.integer :prioridad
       t.references :persona_diagnostico 	#persona_diagnostico_id
       t.references :atencion_salud	#atencion_salud_id
@@ -11,8 +10,8 @@ class CreateFiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Migration
       t.datetime :fecha_termino
       t.boolean :es_cronica
       t.boolean :en_tratamiento  
-      t.boolean :primer_diagnostico  
-
+      t.boolean :primer_diagnostico 
+      t.boolean :es_antecedente
       t.timestamps
     end
   end

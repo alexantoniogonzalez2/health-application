@@ -79,22 +79,64 @@
       </div>
     </div>
   </div>
-</div>  
+</div> 
 
 <div class="list-group" name="antecedentes-div" id="antecedentes-div">  
-  <% @antecedentes.each do |p_d| %>
+  <% @ant_med_at.each do |p_d| %>
+    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+  <% end %>
+  <% @ant_med_us.each do |p_d| %>
     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
   <% end %>
 </div>
 <div id="antecedentes-modal-div" >
-  <% @antecedentes.each do |p_d| %>
-     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
-  <% end %>      
+  <% @ant_med_at.each do |p_d| %>
+    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+  <% end %>
+  <% @ant_med_us.each do |p_d| %>     
+    <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d } %>     
+  <% end %>       
 </div>
+<a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a><br>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-container-ant-med" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header ajuste-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4>Agregar otro antecedente médico</h4>
+      </div>
+      <div class="modal-body ajuste-height">
+
+        <div class='container agregar-med'>
+          <div class='row'>
+            <div class='col-md-6 column'>
+              <input type='hidden' id="select_diagnostico_ant" class="ajuste-select" >
+                <div class="checkbox">
+                  <label for="new-diag-no-frec-ant">
+                    <input type="checkbox" name="checkboxes" id="new-diag-no-frec-ant" value="1">
+                    Incluir diagnósticos no frecuentes
+                  </label>
+                </div>      
+            </div>
+          </div>
+        </div>  
+              
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+      </div>
+    </div>
+  </div>
+</div>  
 
 <label>Diagnósticos recientes</label>
 
-<div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">  
+<div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">
+  <% if @persona_diagnostico_anteriores.blank? %>
+    No hay diagnósticos recientes.
+  <% end %>  
   <% @persona_diagnostico_anteriores.each do |p_d| %>
     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
   <% end %>

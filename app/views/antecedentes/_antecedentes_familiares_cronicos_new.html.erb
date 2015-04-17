@@ -1,0 +1,84 @@
+<div class="modal-body">
+	<div class="container ajustado">
+    <div class="row clearfix">
+      <div class="col-md-8 column">
+        <%= render :partial => "persona/seleccionar_persona", :locals => {:persona => @persona, :id => 'cro', :id_pre => '', :clase => '', :subgrupo => 'cro' } %>                   
+      </div>
+      <div class="col-md-4 column">
+        <a id="modal-agregar-persona" href="#modal-container-agregar-persona-cro" role="button" class="btn" data-toggle="modal">O agregue una persona</a>
+      </div>      
+    </div>
+    <div class='row'>
+      <div class='column col-md-12'>        
+        <label>Diagnóstico</label>:
+        <input type='hidden' id="select_diag-cro-new" class='select_diag'>
+        <div class="checkbox">
+          <label for="diag-no-frec-cro-new">
+            <input type="checkbox" name="checkboxes" id="diag-no-frec-cro-new" value="1">
+            Incluir diagnósticos no frecuentes
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row clearfix">
+      <div class="form-group">
+        <div class="col-md-4">
+          <div class="checkbox" id="enf_cro_new">
+            <label class="checkbox-der" for="checkboxes-cron-new">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-new"></label>
+          </div>                
+        </div>
+      </div>
+    </div>
+
+    <div class="row clearfix">
+      <div class="col-md-4 column">
+        <label>Fecha inicio</label>
+      </div>
+      <div class="col-md-8 column">
+        <input name="f_i_cro-new" class="datepicker" type="text" >
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-md-4 column">
+        <label>Fecha término</label>
+      </div>
+      <div class="col-md-8 column">
+        <input name="f_t_cro-new" class="datepicker" type="text">
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-md-3 column">
+        <div class="form-group form-estado" id="e_d_cro-new">
+          <label class="control-label" for="radios">Estado de diagnóstico</label>                      
+          <% @estados_diagnostico.each do |e_d| %>  
+            <div class="radio">
+              <label for="new-radios-cro-<%= e_d.id %>"><input type="radio" name="new-radios-estado-cro" value="<%= e_d.id %>" id="new-radios-cro-<%= e_d.id %>" ><%= e_d.nombre %></label>
+            </div> 
+          <% end %>                    
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">  
+      <div class="col-md-12 column">  
+        <label>Comentario</label>
+        <textarea class="form-control" rows="3" id="comentario_new_cro"></textarea>
+      </div>                  
+    </div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="modal-container-agregar-persona-cro" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ajuste-ancho">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cerrarModalAgregarPersona('cro')" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
+      </div>
+      <div class="modal-body">
+        <%= render :partial => "persona/agregar_persona", :locals => {:origen => 'cro', :id => 'cro', :subgrupo => 'todos' } %>
+      </div>
+    </div>    
+  </div>  
+</div>

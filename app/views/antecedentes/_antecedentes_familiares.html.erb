@@ -41,35 +41,57 @@
 					<button type="button" class="btn btn-default" onclick="cerrarModalAntFamMue('new')">Cerrar ventana</button>
 					<button type="button" id="agregar-ant-fam-mue-new" class="btn btn-success cambiar_antecedente">Agregar antecedente</button>
 				</div>
-			</div>
-			
-		</div>
-		
+			</div>			
+		</div>		
 	</div>
 
 	<br>
 	<h5>Enfermedades crónicas</h5>
-  <% if @ant_enf_cro.empty?  %>
-    No hay información de antecedentes familiares relacionados con enfermedades crónicas.<br/>
-  <% else %>
-		<table class="table table-striped table-hover table-condensed">
-			<thead class="ajust-head">
-	      <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha inicio</th></tr>	      
-	    </thead>
-	    <tbody>
+	<table class="table table-striped table-hover table-condensed">
+		<thead class="ajust-head">
+      <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha inicio</th><th class="col-sm-1">Editar</th></tr>	      
+    </thead>
+    <tbody>
+    	<% unless @ant_enf_cro.empty?  %>
 	    	<% @ant_enf_cro.each do |ant_enf_cro| %>
-		    	<tr>
-		    		<td><%= ant_enf_cro['persona'] %></td>
-		    		<td><%= ant_enf_cro['parentesco'] %></td>
-		    		<td><%= ant_enf_cro['diagnostico'] %></td>
-		    		<td><%= ant_enf_cro['inicio']  %></td>
-		    	</tr>
-		    <% end %>		    	
-	    </tbody>    
-		</table>
-	<% end %>	
-	<%= link_to 'Agregar antecedente familiar', agendamientoBuscadorHora_path %>
+	    		<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_row", :locals => {:ant_enf_cro => ant_enf_cro } %>
+		    <% end %>
+	    <% else %>
+	    	<tr id='tr-vacio-ant-fam-cro'><td colspan='5' > No hay información de antecedentes familiares relacionados con enfermedades crónicas.</td></tr>
+		  <% end %>		    	
+    </tbody>    
+	</table>
 
+	<a href="#modal-container-ant-fam-cro-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (enfermedad crónica)</a>
+	<div id='ant_alc_modal-div'></div>
+	
+
+	<% unless @ant_enf_cro.empty?  %>
+		<% @ant_enf_cro.each do |ant_enf_cro| %>
+			<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_edit", :locals => { :ant_enf_cro => ant_enf_cro } %>
+		<% end %>
+	<% end %>	
+
+	<div class="modal fade" id="modal-container-ant-fam-cro-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamCro('new')">×</button>
+					<h4 class="modal-title" id="myModalLabel">
+						Antecedentes familiares
+					</h4>
+				</div>
+				<div class="modal-body ajuste-alto">
+					<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_new", :locals => { :persona => @persona } %>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="cerrarModalAntFamCro('new')">Cerrar ventana</button>
+					<button type="button" id="agregar-ant-fam-cro-new" class="btn btn-success">Agregar antecedente</button>
+				</div>
+			</div>			
+		</div>		
+	</div>
+	
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
 <% end %>  

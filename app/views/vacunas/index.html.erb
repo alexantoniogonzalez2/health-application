@@ -6,7 +6,7 @@
   </thead>
   <tbody id='body-persona-vacuna'>
     <% if @personas_vacunas.blank? %>
-      No hay información de vacunas administradas.
+      <tr id='tr-vacio-vacunas'><td colspan='4'>No hay información de vacunas administradas.</td></tr>
     <% else %>      
       <% @personas_vacunas.each do |persona_vacuna| %>
         <%= render :partial => "vacunas/persona_vacuna", :locals => {:persona_vacuna => persona_vacuna} %>

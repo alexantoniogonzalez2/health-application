@@ -188,7 +188,6 @@ class AntecedentesController < ApplicationController
 		@profesional = PerPersonas.where('user_id = ?',current_user.id).first
 		@acceso = false if @atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.id != @profesional.id
 
-
 		case params[:ant]
 		when 'med'
 			@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id, params[:at_sal]).order('created_at')
