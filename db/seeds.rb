@@ -61,7 +61,6 @@ PerParentescos.create! :hijo => P1, :progenitor => P5
 PerParentescos.create! :hijo => B, :progenitor => P3
 PerParentescos.create! :hijo => B, :progenitor => P5
 
-
 puts 'Personas-telefono'
 PerPersonasTelefonos.create! :persona_id => 1, :telefono_id => 1
 PerPersonasTelefonos.create! :persona_id => 1, :telefono_id => 2

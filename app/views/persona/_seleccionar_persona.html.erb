@@ -3,14 +3,14 @@
 	case subgrupo
 	when 'todos'
 		@cercanos = persona.getCercanos
-	when 'afm'
+	when 'fam'
 		@cercanos = persona.getFamiliares 
 	end	
 %>
 <select id='select_<%= id %>' class="select_persona form-control <%= clase %>" >
 	<option value="" selected disabled>Seleccionar</option>
   <% @cercanos.each do |cercano| %>
-  	<% unless subgrupo == 'afm' and !PerPersonas.find(cercano[0]).diagnostico_muerte.nil?  %>  	
+  	<% unless subgrupo == 'fam' and !PerPersonas.find(cercano[0]).diagnostico_muerte.nil?  %>  	
   		<option value="<%= cercano[0] %>" <% if cercano[1] == id_pre %> selected <%end%> > <%= cercano[1].dup << ' - ' << PerPersonas.find(cercano[0]).showName('%n%p%m') %></option> 
   	<% end %>     			
 	<% end %>

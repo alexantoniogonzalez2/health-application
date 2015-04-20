@@ -245,14 +245,21 @@ class PerPersonas < ActiveRecord::Base
     @familiares = getFamiliares
     @enfermedades_cronicas = []
     @familiares.each do |familiar|
-      @enfermedades = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1',familiar[0])
+    @enfermedades= FiPersonaDiagnosticos
+    .joins(:persona_diagnosticos_atencion_salud)
+    .select("fi_persona_diagnosticos_atenciones_salud.id,
+            fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+            fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+            fi_persona_diagnosticos.diagnostico_id,
+            fi_persona_diagnosticos.persona_id,
+            fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+            fi_persona_diagnosticos_atenciones_salud.comentario,
+            fi_persona_diagnosticos_atenciones_salud.es_cronica,
+            fi_persona_diagnosticos_atenciones_salud.es_antecedente,              
+            fi_persona_diagnosticos_atenciones_salud.atencion_salud_id")
+    .where('persona_id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1)', familiar[0]) 
       @enfermedades.each do |enfermedad|
-        @enfermedades_cronicas << { 
-          'persona' => enfermedad.persona.showName('%n%p%m'),
-          'parentesco' => familiar[1] ,
-          'diagnostico' => enfermedad.diagnostico.nombre,
-          'inicio' => enfermedad.fecha_inicio.strftime('%Y-%m-%d')
-        }  
+        @enfermedades_cronicas << { 'datos' => enfermedad , 'parentesco' => familiar[1] }          
       end  
     end  
 

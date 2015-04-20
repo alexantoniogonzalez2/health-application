@@ -51,7 +51,7 @@
 		<thead class="ajust-head">
       <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha inicio</th><th class="col-sm-1">Editar</th></tr>	      
     </thead>
-    <tbody>
+    <tbody id='body-ant-cronicas'>
     	<% unless @ant_enf_cro.empty?  %>
 	    	<% @ant_enf_cro.each do |ant_enf_cro| %>
 	    		<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_row", :locals => {:ant_enf_cro => ant_enf_cro } %>
@@ -63,14 +63,13 @@
 	</table>
 
 	<a href="#modal-container-ant-fam-cro-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (enfermedad crónica)</a>
-	<div id='ant_alc_modal-div'></div>
-	
+	<div id='ant_cro_modal-div'></div>	
 
 	<% unless @ant_enf_cro.empty?  %>
 		<% @ant_enf_cro.each do |ant_enf_cro| %>
 			<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_edit", :locals => { :ant_enf_cro => ant_enf_cro } %>
 		<% end %>
-	<% end %>	
+	<% end %>
 
 	<div class="modal fade" id="modal-container-ant-fam-cro-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">

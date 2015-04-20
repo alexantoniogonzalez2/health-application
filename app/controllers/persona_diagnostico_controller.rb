@@ -253,10 +253,10 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona = @atencion_salud.persona
 		end
 
-		persona_diagnostico_atencion_actual = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud)
-																															 .where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id is null AND diagnostico_id = ? ',params[:diagnostico_id]).first
+		persona_diagnostico_antecedente = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud)
+																													 .where('fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1 AND diagnostico_id = ? AND persona_id',params[:diagnostico_id],@persona.id).first
 
-		if persona_diagnostico_atencion_actual
+		if persona_diagnostico_antecedente
 			render :json => { :success => false }	
 		else 	
 

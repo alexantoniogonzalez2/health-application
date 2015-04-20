@@ -1,4 +1,5 @@
 class AntecedentesController < ApplicationController
+	
 	def index
 		@acceso_especialista = false		
 		@acceso = true
@@ -49,59 +50,6 @@ class AntecedentesController < ApplicationController
 
 	end
 
-=begin
-	def edit
-		@acceso_especialista = true
-		@acceso = true
-		@agendamiento = AgAgendamientos.find(params[:id])
-		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
-		@acceso = false if  @agendamiento.especialidad_prestador_profesional.profesional.id != @usuario.id
-		@paciente = @agendamiento.persona 
-		#Antecedentes médicos		
-		@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
-																																				JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
-																																.select('fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,fi_persona_diagnosticos_atenciones_salud.fecha_inicio,fi_persona_diagnosticos_atenciones_salud.fecha_termino,md.nombre')
-																																.where('fpd.persona_id = ?',@paciente.id) if @acceso
-		#Antecedentes quirúrgicos													
-		min = 57
-		max = 250	
-		@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',@paciente.id,min,max) if @acceso
-		#Medicamentos	
-		@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? ',@paciente.id) if @acceso
-		#Alergias
-		@alergias = MedAlergias.joins('LEFT JOIN fi_personas_alergias as fpa ON med_alergias.id = fpa.alergia_id')
-													 .select('med_alergias.id, med_alergias.nombre, fpa.persona_id')
-													 .where('persona_id = ? or persona_id is null',@paciente.id)
-		#Alcohol
-		@test_audit = FiHabitosAlcohol.where('persona_id = ?', @paciente.id)
-		#Tabaco
-		@total_consumo = 0
-		@consumo = FiHabitosTabaco.where('persona_id = ?', @paciente.id)
-		@consumo.each do |con|
-  		@total_consumo += con.paquetes_agno
-  	end	
-  	#ocupaciones
-  	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@paciente.id);
-  	#antecedentes familiares
-  	@decesos = @paciente.getAntecedentesDecesos
-  	@ant_enf_cro = @paciente.getAntecedentesEnfermedadesCronicas
-  	#Actividad física
-  	@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@paciente.id).first
-  	if @persona_actividad_fisica.nil?
-  		@persona_actividad_fisica = FiPersonaActividadFisica.new 
-			@persona = PerPersonas.find(@paciente.id)
-			@persona_actividad_fisica.persona = @persona
-			@persona_actividad_fisica.save!
-		end
-		@segmento_actividad = @paciente.getSegmentoActividadFisica
-		@edad_act_fis = @paciente.age()
-		@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
-		#Vacunas
-		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
-																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
-																				 .where('persona_id = ?',@paciente.id)
-	end	
-=end
 	def editarAlergia
 		if params[:atencion_salud_id] == 'persona'
 			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
@@ -328,7 +276,7 @@ class AntecedentesController < ApplicationController
 			@persona = @atencion_salud.persona
 		end
 
-		@persona_antecedente = PerPersonas.find(params[:persona_ant])
+		@persona_antecedente = @persona
 		@persona_antecedente.diagnostico_muerte = MedDiagnosticos.find(params[:diag]) unless params[:diag] == ''
 		@persona_antecedente.fecha_muerte = params[:fecha] unless params[:fecha] == ''	
 		@persona_antecedente.save!
@@ -342,17 +290,102 @@ class AntecedentesController < ApplicationController
 
     if params[:tipo] == 'guardar'
 	    respond_to do |format|
-				format.js   {}
+	    	format.js   { }
 				format.json { render :json => { :success => true }	}
 			end
 		else
 			respond_to do |format|
-				format.js   { render 'agregarAntecedenteFamiliarMuerte'}
+				format.js   { render 'agregarAntecedenteFamiliarMuerte' }
 				format.json { render :json => { :success => true }	}
 			end	
-		end	
-				
-
+		end
 	end	
+
+	def guardarAntecedenteFamiliarCronica
+		@id_pre = params[:id_pre]
+		@enfermedad = Hash.new
+		@ant_prof = false
+
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+			@ant_prof = true
+		end
+
+		if params[:tipo] == 'guardar'
+				@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.find(params[:id_pre])
+				@persona_diagnostico_atencion.atencion_salud = @atencion_salud unless params[:atencion_salud_id] == 'persona'
+				@persona_diagnostico_atencion.fecha_inicio = params[:fecha_ini] unless params[:fecha_ini].blank?
+				@persona_diagnostico_atencion.fecha_termino = params[:fecha_fin] unless params[:fecha_fin].blank?
+				@persona_diagnostico_atencion.estado_diagnostico_id = params[:e_d] unless params[:e_d].blank?
+				@persona_diagnostico_atencion.es_cronica = params[:es_cronica] unless params[:es_cronica].blank?
+				@persona_diagnostico_atencion.save!
+		
+		else
+			@persona_ant = PerPersonas.find(params[:persona_ant])		
+			persona_diagnostico_antecedente = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud)
+																														 .where('fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1 AND diagnostico_id = ? AND persona_id = ?',params[:diag],@persona_ant.id).first
+
+			if persona_diagnostico_antecedente
+				render :json => { :success => false }	
+			else 	
+
+				@persona_diagnostico_temp = FiPersonaDiagnosticos.where('diagnostico_id = ? and persona_id = ?', params[:diag], @persona_ant.id).first
+				unless @persona_diagnostico_temp	
+					@persona_diagnostico_temp = FiPersonaDiagnosticos.new
+					@persona_diagnostico_temp.persona = @persona_ant
+					@persona_diagnostico_temp.diagnostico_id = params[:diag]
+					@persona_diagnostico_temp.fecha_inicio = params[:fecha_ini].blank? ? DateTime.current : params[:fecha_ini]
+					@persona_diagnostico_temp.fecha_termino = params[:fecha_fin] unless params[:fecha_fin].blank?
+					@persona_diagnostico_temp.estado_diagnostico_id = params[:e_d].blank? ? 1 : params[:e_d]
+					@persona_diagnostico_temp.es_cronica = params[:enf_cro]	
+					@persona_diagnostico_temp.save!
+				end		
+
+				@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.new
+				@persona_diagnostico_atencion.persona_diagnostico = @persona_diagnostico_temp
+				@persona_diagnostico_atencion.atencion_salud = @atencion_salud unless params[:atencion_salud_id] == 'persona'
+				@persona_diagnostico_atencion.fecha_inicio = params[:fecha_ini].blank? ? DateTime.current : params[:fecha_ini]
+				@persona_diagnostico_atencion.fecha_termino = params[:fecha_fin] unless params[:fecha_fin].blank?
+				@persona_diagnostico_atencion.estado_diagnostico_id = params[:e_d].blank? ? 1 : params[:e_d]
+				@persona_diagnostico_atencion.es_cronica = params[:enf_cro]
+				@persona_diagnostico_atencion.es_antecedente = 1			
+				@persona_diagnostico_atencion.save!
+			end	
+
+			@estados_diagnostico = MedDiagnosticoEstados.all
+			
+	    datos = FiPersonaDiagnosticos
+	    .joins(:persona_diagnosticos_atencion_salud)
+	    .select("fi_persona_diagnosticos_atenciones_salud.id,
+	            fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+	            fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+	            fi_persona_diagnosticos.diagnostico_id,
+	            fi_persona_diagnosticos.persona_id,
+	            fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+	            fi_persona_diagnosticos_atenciones_salud.comentario,
+	            fi_persona_diagnosticos_atenciones_salud.es_cronica,
+	            fi_persona_diagnosticos_atenciones_salud.es_antecedente,              
+	            fi_persona_diagnosticos_atenciones_salud.atencion_salud_id")
+	    .where('fi_persona_diagnosticos_atenciones_salud.id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1)', @persona_diagnostico_atencion.id).first 
+	    @enfermedad = { 'datos' => datos , 'parentesco' =>  params[:parentesco] }  
+
+	  end    
+
+    if params[:tipo] == 'guardar'
+	    respond_to do |format|
+	    	format.js   { }
+				format.json { render :json => { :success => true }	}
+			end
+		else
+			respond_to do |format|
+				format.js   { render 'agregarAntecedenteFamiliarCronica' }
+				format.json { render :json => { :success => true }	}
+			end	
+		end
+
+	end
 
 end

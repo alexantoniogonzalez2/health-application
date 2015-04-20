@@ -170,6 +170,7 @@ $('#select_diagnostico').select2({
   width: '380px',
   minimumInputLength: 3,
   placeholder: "Seleccione un diagnóstico",
+
   ajax: {
     url: '/cargar_diagnosticos',
     dataType: 'json',
@@ -185,7 +186,6 @@ $('.select_diag').select2({
   allowClear: true,
   width: '380px',
   minimumInputLength: 3,
-  placeholder: "Seleccione un diagnóstico",
   ajax: {
     url: '/cargar_diagnosticos',
     dataType: 'json',
@@ -243,13 +243,19 @@ $("#select_diagnostico").on("change", function(e) {
 
 $('.select_diag').on("change", function(e) { 
   var id = $(this).attr('id').substring(16);
-  if (id != 'new') 
+  var tipo = $(this).attr('id').substring(12,15);
+  if (id != 'new' && tipo != 'cro') 
     guardarAntecedenteFamiliarMuerte(id,false);  
 })
 
 $('.cambiar_antecedente').click(function() {
   var id = $(this).attr('id').substring(20); 
   guardarAntecedenteFamiliarMuerte(id,true);  
+});
+
+$('.cambiar_antecedente_cro').click(function() {
+  var id = $(this).attr('id').substring(20); 
+  guardarAntecedenteFamiliarCronica(id,true);  
 });
 
 $(".select_notificacion").on("change", function(e) { 
@@ -847,7 +853,7 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
   var fecha = $('#fecha-afm-'+id).val();
   var parentesco = $('#par-afm-'+id).text();
   var at_salud_id;
-  var tipo = 'guardar'
+  var tipo = 'guardar';
   var per_ant = id;
 
   if (typeof atencion_salud_id !== 'undefined') 
@@ -873,4 +879,48 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
     },
     error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
   });
+}
+
+$('#agregar-ant-fam-cro-new').click(function() {
+  guardarAntecedenteFamiliarCronica('new',true);
+})
+
+
+function guardarAntecedenteFamiliarCronica(id,cerrar){
+
+  var at_salud_id;
+  var tipo = 'guardar';
+  var per_ant;
+  var diag = $('#select_diag-cro-'+id).select2('data') != null ? $('#select_diag-cro-'+id).select2('data').id : null;
+  var enf_cro = $('#checkboxes-cron-'+id).is(':checked'); 
+  var fecha_ini = $('#cro-fin-'+id).val();
+  var fecha_fin = $('#cro-ini-'+id).val();
+  var parentesco = $('#par-cro-'+id).text();
+  var e_d = $('#e_d_cro-'+id).find('input[name='+id+'-radios-estado-cro]:checked').val();
+  var comentario = $('#comentario_'+id+'_cro').val();
+
+  if (typeof atencion_salud_id !== 'undefined') 
+    at_salud_id = atencion_salud_id;
+  else
+    at_salud_id = 'persona';
+
+  if (id == 'new'){  
+    tipo = 'agregar'  
+    per_ant = $("#select_cro option:selected").val();
+    var texto = $("#select_cro option:selected").text();
+    var pos_final = texto.indexOf("-");
+    parentesco = texto.substring(0,pos_final-1);  
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_antecedente_familiar_cronica',
+    data: { diag: diag, fecha_ini: fecha_ini, fecha_fin: fecha_fin, persona_ant: per_ant, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo, enf_cro: enf_cro, e_d: e_d, comentario: comentario,id_pre: id },
+    success: function(response){ 
+      if (cerrar)
+        cerrarModalAntFamCro(id);
+    },
+    error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
+  });
+
 }

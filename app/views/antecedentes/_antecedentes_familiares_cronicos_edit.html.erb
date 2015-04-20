@@ -1,0 +1,78 @@
+<div class="modal fade" id="modal-container-ant-fam-cro-<%= ant_enf_cro['datos'].id %>" role="dialog" aria-spanledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ajuste-ancho">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cerrarModalAntFamCro(<%= ant_enf_cro['datos'].id %>)" aria-hidden="true">×</button>
+        <h4 class="modal-title">Antecedentes familiares</h4>
+      </div>
+
+      <div class="modal-body">
+      	<div class="container ajustado">
+          <div class='row'>
+            <div class='column col-md-6'>
+              <label>Nombre</label>: <%= ant_enf_cro['datos'].persona.showName('%n%p%m') %>                             
+            </div>
+            <div class='column col-md-6'>
+              <label>Parentesco</label>: <span id="par-cro-<%= ant_enf_cro['datos'].id %>" ><%= ant_enf_cro['parentesco'] %></span>             
+            </div>
+          </div>
+          <div class='row'>
+            <div class='column col-md-12'>
+              <label>Diagnóstico</label>: <%= ant_enf_cro['datos'].diagnostico.nombre %>
+            </div>
+          </div> 
+          <div class="row clearfix">
+            <div class="form-group">
+              <div class="col-md-4">
+                <div class="checkbox" id="enf_cro_<%= ant_enf_cro['datos'].id %>">
+                  <label class="checkbox-der" for="checkboxes-cron-<%= ant_enf_cro['datos'].id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= ant_enf_cro['datos'].id %>" <% if ant_enf_cro['datos'].es_cronica %> checked="checked" <% end %> ></label>
+                </div>                
+              </div>
+            </div>
+          </div>
+
+          <div class="row clearfix">
+            <div class="col-md-4 column">
+              <label>Fecha inicio</label>
+            </div>
+            <div class="col-md-8 column">
+              <input id="cro-ini-<%= ant_enf_cro['datos'].id %>" class="datepicker" type="text" value='<%= ant_enf_cro['datos'].fecha_inicio.try(:strftime, '%Y-%m-%d') %>' >
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-4 column">
+              <label>Fecha término</label>
+            </div>
+            <div class="col-md-8 column">
+              <input id="cro-fin-<%= ant_enf_cro['datos'].id %>" class="datepicker" type="text" value='<%= ant_enf_cro['datos'].fecha_termino.try(:strftime, '%Y-%m-%d') %>' >
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-3 column">
+              <div class="form-group form-estado" id="e_d_cro-<%= ant_enf_cro['datos'].id %>">
+                <label class="control-label" for="radios">Estado de diagnóstico</label>                      
+                <% @estados_diagnostico.each do |e_d| %>  
+                  <div class="radio">
+                    <label for="<%= ant_enf_cro['datos'].id %>-radios-cro-<%= e_d.id %>"><input type="radio" name="<%= ant_enf_cro['datos'].id %>-radios-estado-cro" value="<%= e_d.id %>" id="<%= ant_enf_cro['datos'].id %>-radios-cro-<%= e_d.id %>" <% if ant_enf_cro['datos'].estado_diagnostico_id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
+                  </div> 
+                <% end %>                    
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">  
+            <div class="col-md-12 column">  
+              <label>Comentario</label>
+              <textarea class="form-control" rows="3" id="comentario_<%= ant_enf_cro['datos'].id %>_cro" ><%= ant_enf_cro['datos'].comentario %></textarea>
+            </div>                  
+          </div>
+
+      	</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="cerrarModalAntFamCro(<%= ant_enf_cro['datos'].id %>)">Cerrar ventana</button>
+        <button type="button" id="agregar-ant-fam-cro-<%= ant_enf_cro['datos'].id %>" class="btn btn-success cambiar_antecedente_cro">Cambiar antecedente</button>
+      </div>
+    </div>            
+  </div>        
+</div>

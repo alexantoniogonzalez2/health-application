@@ -22,17 +22,12 @@
           </div>
           <div class='row'>
             <div class='column col-md-12'>
-              <label>Fecha deceso</label>: <%= deceso['fecha_deceso'] %>
-            </div>
-          </div>
-          <div class='row'>
-            <div class='column col-md-12'>
               <br>
               <label>Cambiar diagnóstico</label>:
-              <input type='hidden' id="select_diag-afm-<%= deceso['id'] %>" class='select_diag'>
+              <input type='hidden' id="select_diag-afm-<%= deceso['id'] %>" class='select_diag' >
               <div class="checkbox">
                 <label for="diag-no-frec-afm-<%= deceso['id'] %>">
-                  <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-<%= deceso['id'] %>" value="1">
+                  <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-<%= deceso['id'] %>" value='1' >
                   Incluir diagnósticos no frecuentes
                 </label>
               </div>
@@ -40,10 +35,10 @@
           </div>
           <div class='row'>
             <div class='column col-md-4'>
-              <label>Cambiar fecha:</label>
+              <label>Fecha deceso:</label>
             </div>
             <div class='column col-md-8'>
-              <input type='text' class="form-control ajuste-posicion" id='fecha-afm-<%= deceso['id'] %>' placeholder='Ingresar fecha de deceso' />
+              <input type='text' class="form-control ajuste-posicion" id='fecha-afm-<%= deceso['id'] %>' placeholder='Ingresar fecha de deceso' value='<%= deceso['fecha_deceso'] %>' />
             </div>  
           </div>
 				</div>
