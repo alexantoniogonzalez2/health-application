@@ -3,6 +3,21 @@ function addSpinner(element_id){ $('#'+element_id).append("<div class='div-spinn
 
 $(document).ready(function() {
 
+  $('.icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.' }})
+  $('.icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
+  $('.icon-int').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
+  $('#med').qtip({ content: { text: 'Medicamentos' }})
+  $('#ale').qtip({ content: { text: 'Alergias' }})
+  $('#vac').qtip({ content: { text: 'Vacunas' }})
+  $('#act_fis').qtip({ content: { text: 'Actividad física' }})
+  $('#hab_alc').qtip({ content: { text: 'Hábitos de alcohol' }})
+  $('#hab_tab').qtip({ content: { text: 'Hábitos de tabaco' }})
+  $('#ant_fam').qtip({ content: { text: 'Antecedentes familiares' }})
+  $('#ant_soc').qtip({ content: { text: 'Antecedentes sociales' }})
+  $('#ant_lab').qtip({ content: { text: 'Antecedentes laborales' }})
+  $('#ant_qui').qtip({ content: { text: 'Antecedentes quirúrgicos' }})
+  $('#ant_gin').qtip({ content: { text: 'Antecedentes ginecológicos' }})
+
   $("#lista_atenciones").dataTable().fnDestroy();
 
   $('#lista_atenciones').dataTable({
@@ -47,3 +62,4 @@ function cerrarModalAgregarPersona(modal_id){ $('#modal-container-agregar-person
 function cerrarModalAntFamMue(modal_id){ $('#modal-container-ant-fam-mue-' + modal_id ).modal('hide'); }
 function cerrarModalAntFamCro(modal_id){ $('#modal-container-ant-fam-cro-' + modal_id ).modal('hide'); }
 function cerrarModalDiag(modal_id){ $('#modal-container-diag-' + modal_id ).modal('hide'); }
+

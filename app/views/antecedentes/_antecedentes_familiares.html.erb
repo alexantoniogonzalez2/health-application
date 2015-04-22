@@ -26,7 +26,7 @@
 	<% end %>	
 
 	<div class="modal fade" id="modal-container-ant-fam-mue-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg2">
 			<div class="modal-content">
 				<div class="modal-header">
 					 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamMue('new')">×</button>
@@ -34,7 +34,7 @@
 						Antecedentes familiares
 					</h4>
 				</div>
-				<div class="modal-body ajuste-alto">
+				<div class="modal-body ajuste-alto2">
 					<%= render :partial => "antecedentes/antecedentes_familiares_muertes_new", :locals => { :persona => @persona } %>
 				</div>
 				<div class="modal-footer">
@@ -72,7 +72,7 @@
 	<% end %>
 
 	<div class="modal fade" id="modal-container-ant-fam-cro-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg2">
 			<div class="modal-content">
 				<div class="modal-header">
 					 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamCro('new')">×</button>
@@ -80,12 +80,12 @@
 						Antecedentes familiares
 					</h4>
 				</div>
-				<div class="modal-body ajuste-alto">
+				<div class="modal-body ajuste-alto2">
 					<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_new", :locals => { :persona => @persona } %>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" onclick="cerrarModalAntFamCro('new')">Cerrar ventana</button>
-					<button type="button" id="agregar-ant-fam-cro-new" class="btn btn-success">Agregar antecedente</button>
+					<button type="submit" id="agregar-ant-fam-cro-new" class="btn btn-success">Agregar antecedente</button>
 				</div>
 			</div>			
 		</div>		
@@ -96,3 +96,4 @@
 <% end %>  
 
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
+<%= javascript_include_tag "atencion_salud/cargar_calendario" %>

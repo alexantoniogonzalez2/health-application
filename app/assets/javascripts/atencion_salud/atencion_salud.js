@@ -1,18 +1,3 @@
-$('.icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.' }})
-$('.icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
-$('.icon-int').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
-$('#med').qtip({ content: { text: 'Medicamentos' }})
-$('#ale').qtip({ content: { text: 'Alergias' }})
-$('#vac').qtip({ content: { text: 'Vacunas' }})
-$('#act_fis').qtip({ content: { text: 'Actividad física' }})
-$('#hab_alc').qtip({ content: { text: 'Hábitos de alcohol' }})
-$('#hab_tab').qtip({ content: { text: 'Hábitos de tabaco' }})
-$('#ant_fam').qtip({ content: { text: 'Antecedentes familiares' }})
-$('#ant_soc').qtip({ content: { text: 'Antecedentes sociales' }})
-$('#ant_lab').qtip({ content: { text: 'Antecedentes laborales' }})
-$('#ant_qui').qtip({ content: { text: 'Antecedentes quirúrgicos' }})
-$('#ant_gin').qtip({ content: { text: 'Antecedentes ginecológicos' }})
-
 $('.medicamento').on('shown.bs.modal', function() {
 
   var med = $(this).attr('id').substring(20);
@@ -892,7 +877,7 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
   var tipo = 'guardar';
   var per_ant;
   var diag = $('#select_diag-cro-'+id).select2('data') != null ? $('#select_diag-cro-'+id).select2('data').id : null;
-  var enf_cro = $('#checkboxes-cron-'+id).is(':checked'); 
+  var enf_cro = $('#check-enf-cron-'+id).is(':checked'); 
   var fecha_ini = $('#cro-fin-'+id).val();
   var fecha_fin = $('#cro-ini-'+id).val();
   var parentesco = $('#par-cro-'+id).text();
@@ -904,23 +889,27 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
   else
     at_salud_id = 'persona';
 
-  if (id == 'new'){  
+  if (id == 'new'){ 
     tipo = 'agregar'  
     per_ant = $("#select_cro option:selected").val();
     var texto = $("#select_cro option:selected").text();
     var pos_final = texto.indexOf("-");
-    parentesco = texto.substring(0,pos_final-1);  
+    parentesco = texto.substring(0,pos_final-1); 
+  }
+  if (diag != null && per_ant !=''){
+    $.ajax({
+      type: 'POST',
+      url: '/guardar_antecedente_familiar_cronica',
+      data: { diag: diag, fecha_ini: fecha_ini, fecha_fin: fecha_fin, persona_ant: per_ant, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo, enf_cro: enf_cro, e_d: e_d, comentario: comentario,id_pre: id },
+      success: function(response){ 
+        if (cerrar)
+          cerrarModalAntFamCro(id);
+      },
+      error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
+    });
+  } else{
+    alert('Seleccione un familiar y un diagnóstico');
   }
 
-  $.ajax({
-    type: 'POST',
-    url: '/guardar_antecedente_familiar_cronica',
-    data: { diag: diag, fecha_ini: fecha_ini, fecha_fin: fecha_fin, persona_ant: per_ant, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo, enf_cro: enf_cro, e_d: e_d, comentario: comentario,id_pre: id },
-    success: function(response){ 
-      if (cerrar)
-        cerrarModalAntFamCro(id);
-    },
-    error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
-  });
 
 }

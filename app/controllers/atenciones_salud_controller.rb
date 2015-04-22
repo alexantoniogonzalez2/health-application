@@ -236,6 +236,22 @@ class AtencionesSaludController < ApplicationController
 	  end	
  		@texto_ocupaciones = @array_ocupaciones.join('|') unless @array_ocupaciones.blank?
 
+ 		#Antecedentes familiares
+ 		@array_ant_fam = []
+ 		@decesos = @persona.getAntecedentesDecesos
+  	@ant_enf_cro = @persona.getAntecedentesEnfermedadesCronicas
+	  @decesos.each do |deceso|
+	  	@array_ant_fam.push(deceso['diagnostico'])
+  	end
+  	@ant_enf_cro.each do |enfermedad|
+	  	@array_ant_fam.push(enfermedad['datos'].diagnostico.nombre)
+  	end
+  	if @array_ant_fam.blank?
+  		@texto_ant_fam = 'Sin información'
+  	else
+  		@texto_ant_fam = @array_ant_fam.join('|')	
+  	end
+
   	
 	end
 

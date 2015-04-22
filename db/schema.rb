@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331160751) do
+ActiveRecord::Schema.define(version: 20150422014000) do
 
   create_table "ag_agendamiento_estados", force: true do |t|
     t.string   "nombre"
@@ -204,6 +204,21 @@ ActiveRecord::Schema.define(version: 20150331160751) do
     t.integer  "P13"
     t.integer  "P14"
     t.integer  "P15"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fi_persona_antecedentes_ginecologicos", force: true do |t|
+    t.integer  "persona_id"
+    t.datetime "fecha_menarquia"
+    t.datetime "fecha_menopausia"
+    t.integer  "duracion_menstruacion"
+    t.integer  "frecuencia_promedio"
+    t.datetime "fecha_ultimo_PAP"
+    t.datetime "fecha_ultima_mamografia"
+    t.integer  "numero_gestaciones"
+    t.integer  "numero_partos"
+    t.integer  "numero_abortos"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

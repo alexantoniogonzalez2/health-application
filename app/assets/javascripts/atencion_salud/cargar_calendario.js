@@ -20,6 +20,7 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
         fecha = $(this).datepicker("getDate")
       agregarInfoPrestacion(id,fecha,'fecha');
     }
+    else if (tipo === 'cron'){}
     else     
       guardarDiagnostico(id);
   }       

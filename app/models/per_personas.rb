@@ -26,6 +26,7 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_conocimiento_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_conocimiento_id'
   has_many :personas_conocimiento_int, :class_name => 'FiInterconsultas', :foreign_key => 'persona_conocimiento_id'
   has_one :persona_actividad_fisica, :class_name => 'FiPersonaActividadFisica', :foreign_key => 'persona_id'
+  has_one :persona_antecedentes_ginecologicos, :class_name => 'FiPersonaAntecedentesGinecologicos', :foreign_key => 'persona_id'
   has_many :personas, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_id'
   has_many :personas_relaciones, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_relacion_id'  
 
@@ -342,7 +343,8 @@ class PerPersonas < ActiveRecord::Base
                                     :persona_actividad_fisica,
                                     :personas,
                                     :personas_relaciones,
-                                    :pais_nacionalidad)
+                                    :pais_nacionalidad,
+                                    :persona_antecedentes_ginecologicos)
   end
 
 end

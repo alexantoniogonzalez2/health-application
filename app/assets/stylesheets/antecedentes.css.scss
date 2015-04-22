@@ -26,7 +26,8 @@ div.actividad-fisica {
 #nav-antecedentes  > li > a { color: #444; }
 #nav-antecedentes  > li.hover > a { color: $Blue; }
 #nav-antecedentes  > li.active > a { color: #444 ; font-weight: bold; right: 5px; color: #444; border-left: 5px solid $Blue; }
-#nav-antecedentes  > li:not(:hover)> a { color: #444 !important;  }
+#nav-antecedentes  > li:not(:hover)> a { color: #444 !important; }
+#nav-antecedentes > li > a { padding: 7px 15px !important ; }
 
 div.alert-act { 
 	margin-bottom: 5px;
@@ -41,3 +42,5 @@ div.agregar-med { margin-top: 20px; padding-left: 0px; padding-right: 0px; }
 div.ajuste-med { padding-left: 0px; padding-right: 0px;}
 div.ajuste-alergia { padding-top: 100px; }
 div.ajuste-separacion > div.row { margin-bottom: 35px !important;  margin-top: 35px !important;}
+div.ajuste-alto2 { min-height: 400px !important; }
+div.modal-lg2 { width: 850px !important; }

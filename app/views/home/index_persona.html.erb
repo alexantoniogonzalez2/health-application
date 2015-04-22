@@ -6,6 +6,7 @@
 				<li><a href="#horas" role="tab" data-toggle="tab">Buscador de horas</a></li>
 			  <li><a href="#ant_med" role="tab" data-toggle="tab">Antecedentes médicos</a></li>
 			  <li><a href="#ant_quir" role="tab" data-toggle="tab">Antecedentes quirúrgicos</a></li>
+			  <% if @persona.genero == 'Femenino' %><li><a href="#ant_gin" role="tab" data-toggle="tab">Antecedentes ginecológicos</a></li><% end %>
 			  <li><a href="#medicamentos" role="tab" data-toggle="tab">Medicamentos</a></li>
 			  <li><a href="#alergias" role="tab" data-toggle="tab">Alergias</a></li>
 			  <li><a href="#vacunas" role="tab" data-toggle="tab">Vacunas</a></li>
@@ -23,6 +24,7 @@
 				<div class="tab-pane" id="horas"><%= render :partial => "agendamiento/buscador_hora" %></div>
 			  <div class="tab-pane" id="ant_med"><%= render :partial => "antecedentes/antecedentes_medicos" %></div>
 			  <div class="tab-pane" id="ant_quir"><%= render :partial => "antecedentes/antecedentes_quirurgicos" %></div>
+			  <% if @persona.genero == 'Femenino' %><div class="tab-pane" id="ant_gin"><%= render :partial => "antecedentes/antecedentes_ginecologicos" %></div><% end %>
 			  <div class="tab-pane" id="medicamentos"><%= render :partial => "antecedentes/medicamentos" %></div>
 			  <div class="tab-pane" id="alergias"><%= render :partial => "antecedentes/alergias" %></div>
 			  <div class="tab-pane" id="vacunas"><%= render :template => "vacunas/index" %></div>

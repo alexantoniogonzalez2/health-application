@@ -1,6 +1,3 @@
-<% if @ant_prof %>
-<% else %>
-	$("<%= escape_javascript( render :partial => 'antecedentes_familiares_cronicos_row', :locals => {:ant_enf_cro => @enfermedad } ) %>").appendTo("#body-ant-cronicas");
-	$("<%= escape_javascript( render :partial => 'antecedentes_familiares_cronicos_edit', :locals => {:ant_enf_cro => @enfermedad } ) %>").appendTo("#ant_cro_modal-div");
-	$('#tr-vacio-ant-fam-cro').replaceWith('');
-<% end %>	
+$("<%= escape_javascript( render :partial => 'antecedentes_familiares_cronicos_row', :locals => {:ant_enf_cro => @enfermedad } ) %>").appendTo("#body-ant-cronicas");
+$("<%= escape_javascript( render :partial => 'antecedentes_familiares_cronicos_edit', :locals => {:ant_enf_cro => @enfermedad } ) %>").appendTo("#ant_cro_modal-div");
+$('#tr-vacio-ant-fam-cro').replaceWith('');

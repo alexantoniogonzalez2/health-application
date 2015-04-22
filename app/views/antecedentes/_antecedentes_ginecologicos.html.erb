@@ -1,0 +1,39 @@
+<% if @acceso %>
+<h4>Antecedentes ginecológicos</h4>
+
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-6'>
+		</div>
+		<div class='col-md-6'>
+			<div class="form-group">
+			  <label class="col-md-2 control-label" for="textinput">Duración de la menstruación:</label>  
+			  <div class="col-md-4">
+			  	<input id="dur-men" name="textinput" type="number" placeholder="Ingresar duración" class="form-control input-sm" value="<%=  %>">
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-6'>
+		</div>
+		<div class='col-md-6'>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-6'>
+		</div>
+		<div class='col-md-6'>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-6'>
+		</div>
+		<div class='col-md-6'>
+		</div>
+	</div>
+</div>
+
+<% else %>
+	<%= render :partial => "layouts/permiso" %>
+<% end %>  

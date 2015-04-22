@@ -218,6 +218,10 @@ class AntecedentesController < ApplicationController
 			@partial = 'habitos_tabaco/index'
 		when 'ant_gin'
 		when 'ant_fam'
+			@decesos = @persona.getAntecedentesDecesos
+  		@ant_enf_cro = @persona.getAntecedentesEnfermedadesCronicas
+  		@estados_diagnostico = MedDiagnosticoEstados.all
+			@partial = 'antecedentes/antecedentes_familiares'
 		when 'ant_soc'
 			@partial = 'antecedentes/antecedentes_sociales'
 		when 'ant_lab'
@@ -269,14 +273,8 @@ class AntecedentesController < ApplicationController
 
 	def guardarAntecedenteFamiliarMuerte
 		@deceso = Hash.new
-		if params[:atencion_salud_id] == 'persona'
-			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
-		else 
-			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
-			@persona = @atencion_salud.persona
-		end
 
-		@persona_antecedente = @persona
+		@persona_antecedente = PerPersonas.find(params[:persona_ant])
 		@persona_antecedente.diagnostico_muerte = MedDiagnosticos.find(params[:diag]) unless params[:diag] == ''
 		@persona_antecedente.fecha_muerte = params[:fecha] unless params[:fecha] == ''	
 		@persona_antecedente.save!
@@ -351,28 +349,29 @@ class AntecedentesController < ApplicationController
 				@persona_diagnostico_atencion.fecha_termino = params[:fecha_fin] unless params[:fecha_fin].blank?
 				@persona_diagnostico_atencion.estado_diagnostico_id = params[:e_d].blank? ? 1 : params[:e_d]
 				@persona_diagnostico_atencion.es_cronica = params[:enf_cro]
+				@persona_diagnostico_atencion.comentario = params[:comentario]
 				@persona_diagnostico_atencion.es_antecedente = 1			
 				@persona_diagnostico_atencion.save!
 			end	
 
-			@estados_diagnostico = MedDiagnosticoEstados.all
-			
-	    datos = FiPersonaDiagnosticos
-	    .joins(:persona_diagnosticos_atencion_salud)
-	    .select("fi_persona_diagnosticos_atenciones_salud.id,
-	            fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
-	            fi_persona_diagnosticos_atenciones_salud.fecha_termino,
-	            fi_persona_diagnosticos.diagnostico_id,
-	            fi_persona_diagnosticos.persona_id,
-	            fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
-	            fi_persona_diagnosticos_atenciones_salud.comentario,
-	            fi_persona_diagnosticos_atenciones_salud.es_cronica,
-	            fi_persona_diagnosticos_atenciones_salud.es_antecedente,              
-	            fi_persona_diagnosticos_atenciones_salud.atencion_salud_id")
-	    .where('fi_persona_diagnosticos_atenciones_salud.id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1)', @persona_diagnostico_atencion.id).first 
-	    @enfermedad = { 'datos' => datos , 'parentesco' =>  params[:parentesco] }  
+		end    	
 
-	  end    
+		@estados_diagnostico = MedDiagnosticoEstados.all
+		
+    datos = FiPersonaDiagnosticos
+    .joins(:persona_diagnosticos_atencion_salud)
+    .select("fi_persona_diagnosticos_atenciones_salud.id,
+            fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+            fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+            fi_persona_diagnosticos.diagnostico_id,
+            fi_persona_diagnosticos.persona_id,
+            fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+            fi_persona_diagnosticos_atenciones_salud.comentario,
+            fi_persona_diagnosticos_atenciones_salud.es_cronica,
+            fi_persona_diagnosticos_atenciones_salud.es_antecedente,              
+            fi_persona_diagnosticos_atenciones_salud.atencion_salud_id")
+    .where('fi_persona_diagnosticos_atenciones_salud.id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1)', @persona_diagnostico_atencion.id).first 
+    @enfermedad = { 'datos' => datos , 'parentesco' =>  params[:parentesco] }  
 
     if params[:tipo] == 'guardar'
 	    respond_to do |format|
