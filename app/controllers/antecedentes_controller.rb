@@ -217,6 +217,7 @@ class AntecedentesController < ApplicationController
 	  	end		
 			@partial = 'habitos_tabaco/index'
 		when 'ant_gin'
+			@partial = 'antecedentes/antecedentes_ginecologicos'
 		when 'ant_fam'
 			@decesos = @persona.getAntecedentesDecesos
   		@ant_enf_cro = @persona.getAntecedentesEnfermedadesCronicas
@@ -385,6 +386,45 @@ class AntecedentesController < ApplicationController
 			end	
 		end
 
+	end
+
+	def guardarAntecedentesGinecologicos
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end
+
+		if @persona.persona_antecedentes_ginecologicos.nil?
+			@antecedentes_ginecologicos = FiPersonaAntecedentesGinecologicos.new
+			@antecedentes_ginecologicos.persona = @persona
+			@antecedentes_ginecologicos.numero_gestaciones = 0
+			@antecedentes_ginecologicos.numero_partos = 0
+			@antecedentes_ginecologicos.numero_abortos = 0
+			@antecedentes_ginecologicos.save!
+		else
+			@antecedentes_ginecologicos = @persona.persona_antecedentes_ginecologicos
+		end		
+
+		case params[:id]
+		when 'menq' then @antecedentes_ginecologicos.fecha_menarquia = params[:value]
+		when 'menp' then @antecedentes_ginecologicos.fecha_menopausia = params[:value]
+		when 'dur-men' then @antecedentes_ginecologicos.duracion_menstruacion = params[:value]
+		when 'fre-pro' then @antecedentes_ginecologicos.frecuencia_promedio = params[:value] 
+		when 'PAP' then @antecedentes_ginecologicos.fecha_ultimo_PAP = params[:value]
+		when 'mam' then @antecedentes_ginecologicos.fecha_ultima_mamografia = params[:value]
+		when 'num-ges' then @antecedentes_ginecologicos.numero_gestaciones = params[:value]
+		when 'num-par' then @antecedentes_ginecologicos.numero_partos = params[:value]
+		when 'num-abo' then @antecedentes_ginecologicos.numero_abortos = params[:value]			
+		end
+
+		@antecedentes_ginecologicos.save!
+
+		respond_to do |format|
+			format.json { render :json => { :success => true } }
+		end	
+		
 	end
 
 end

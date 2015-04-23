@@ -445,7 +445,7 @@ function diagnosticoNoFrecuente(id){
 
 function agregarDiagnostico(diag_id){
  
- $.ajax({
+  $.ajax({
     type: 'POST',
     url: '/agregar_diagnostico',
     data: {
@@ -907,7 +907,7 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
       },
       error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
     });
-  } else{
+  } else {
     alert('Seleccione un familiar y un diagnóstico');
   }
 

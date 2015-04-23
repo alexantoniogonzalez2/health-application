@@ -52,7 +52,7 @@
       <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-beer fa-fw fa-lg"></i><%= @texto_alcohol %></a>
       <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_tabaco %></a>
       <% if @agendamiento.persona.genero == 'Femenino' %>
-        <a id="ant_gin" href="#" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_ant_fam %></a>
+        <a id="ant_gin" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-venus fa-fw fa-lg"></i><%= @texto_ant_gin %></a>
       <% end%>
     </div> 
     <div class="list-group col-md-4 column ajuste-ant2">

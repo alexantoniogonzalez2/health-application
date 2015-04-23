@@ -14,6 +14,7 @@
 <%	when 'hab_tab' %>
 			$( "#contenido-ant" ).replaceWith("<div id='contenido-ant'><%= escape_javascript( render :partial => @partial, :locals => {:consumo => @consumo, :total_consumo => @total_consumo } ) %></div>")	
 <%	when 'ant_gin' %>
+			$( "#contenido-ant" ).replaceWith("<div id='contenido-ant'><%= escape_javascript( render :partial => @partial ) %></div>")	
 <%	when 'ant_fam' %>
 			$( "#contenido-ant" ).replaceWith("<div id='contenido-ant'><%= escape_javascript( render :partial => @partial ) %></div>")	
 <%	when 'ant_soc' %>

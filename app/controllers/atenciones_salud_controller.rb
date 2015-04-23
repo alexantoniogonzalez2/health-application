@@ -252,6 +252,16 @@ class AtencionesSaludController < ApplicationController
   		@texto_ant_fam = @array_ant_fam.join('|')	
   	end
 
+  	 #Antecedentes laborales
+  	@texto_ant_gin = 'Sin información'
+  	@ant_gin = @persona.persona_antecedentes_ginecologicos
+  	if !@ant_gin.fecha_menopausia.nil?
+  		@texto_ant_gin = 'Menopausia' 
+  	elsif !@ant_gin.numero_gestaciones.nil?
+  		@texto_ant_gin = 'G'>>@ant_gin.numero_gestaciones>>'P'>>@ant_gin.numero_partos>>'A'>>@ant_gin.numero_abortos
+  	end
+  				
+
   	
 	end
 
