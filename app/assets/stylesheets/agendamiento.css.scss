@@ -12,24 +12,24 @@ $rojo_evento: #ee5f5b;
 
 #calendar { 
 	position: relative;
-	width: auto;
+	width: auto;	
+  margin-top: 20px;
 }
 #form-container { 
 	position: absolute;
-  top: 80px;
+  top: 0px;
   right: 0;
+  display: none;
+  background-color: white;
   z-index: 10;
-  display:none
 }
 
 #action {
 	float: right;
-
 }
 
 .div-form-buscar-hora {
-	padding-top: 15px;	
-
+	padding-top: 15px;
 }
 
 .div_checkbox_centros {
@@ -50,7 +50,7 @@ $rojo_evento: #ee5f5b;
 .fc-agenda .disponible .fc-event-inner,
 .disponible a {
     background-color: $azul_evento; /* background color */
-    border-color: $azul_evento;     /* border color */
+    /*border-color: $azul_evento;*/     /* border color */
     color: white;           /* text color */
 }
 
@@ -58,8 +58,15 @@ $rojo_evento: #ee5f5b;
 .fc-agenda .no_disponible .fc-event-inner,
 .no_disponible a {
     background-color: $rojo_evento; /* background color */
-    border-color: $rojo_evento;     /* border color */
+    /*border-color: $rojo_evento;   */  /* border color */
     color: white;           /* text color */
  }    
-
  select.oculto { display: none;}
+
+#diario > div.well, #comportamiento > div.well{ padding-top: 8px; margin-bottom: 0px; }
+.aj-button-top { margin-top: 5px !important; }
+
+a.fc-event:hover,
+a.fc-event:focus,
+a.fc-event:active,
+a.fc-event.active { color: white !important; }

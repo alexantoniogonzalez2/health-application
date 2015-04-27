@@ -1,46 +1,36 @@
-
-   
-    <% if tieneRol('Generar agendamientos') %>
-      Buscador de profesionales
-    <% else %>    
-      Buscador de atenciones de salud
-    <% end %>
-
-    <% if tieneRol('Generar agendamientos') %>
-    <div style="display: none">
-      <select id="e1" name="e1" class="chosen-select" style="display: none">        
-          <option value="<%= getIdPrestador('administrativo') %>"></option>       
-      </select>
-     </div>     
-    <% else %> 
-      Recinto de salud:
-      <select id="e1" name="e1" class="chosen-select" data-placeholder="Seleccione un recinto de salud" >
-          <option></option>
-        <% @prestadores.each do |p| %>
-          <option value="<%= p.id%>"><%= p.nombre %></option>
-        <% end %>
-      </select>      
-
-    <% end %>
-      <br/>
-      Especialidad:
-      <select id="e2" name="e2" class="chosen-select" data-placeholder="Seleccione una especialidad"  >
-          <option></option>
+<h4>Agregar horas</h4>
+<div class"container">  
+  <div class="row clearfix">
+    <div class="col-md-3 column">
+      <label>Especialidad</label> 
+    </div>
+    <div class="col-md-9 column">  
+      <select id="select_especialidad" name="select_especialidad"  class="select_especialidad"  >
+        <option></option>
         <% @especialidades.each do |e| %>
           <option value="<%= e.id%>"><%= e.nombre %></option>
         <% end %>
-      </select> <br/>
-     
-      Especialista:
-      <select id="e3" name="e3" class="chosen-select" data-placeholder="Seleccione un especialista">
-          <option></option>
-        <% @profesionales.each do |pro| %>
+      </select>         
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-md-3 column">
+      <label>Especialista</label>
+    </div>  
+    <div class="col-md-9 column"> 
+      <select id="select_especialista" name="select_especialista" class="select_especialista" >
+        <option></option>
+         <% @profesionales.each do |pro| %>
           <option value="<%= pro.id%>"><%= pro.showName('%n%p%m') %></option>
         <% end %>
-      </select> 
-      <button id="save">Ir a la agenda</button>
-
-  
-
+      </select>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <button id="<%= getIdPrestador('administrativo') %>"  class='agregar_horas btn btn-success' >Ir a la agenda</button>
+    </div> 
+  </div>
+</div> 
 
 <%= javascript_include_tag "agendamiento/buscar_especialista" %>

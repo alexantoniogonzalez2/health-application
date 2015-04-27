@@ -212,7 +212,7 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona_diagnostico_atencion.fecha_termino = @persona_diagnostico.fecha_termino
 			@persona_diagnostico_atencion.es_cronica = @persona_diagnostico.es_cronica
 			@persona_diagnostico_atencion.en_tratamiento = params[:en_tratamiento]
-			@persona_diagnostico_atencion.es_antecedente = 1
+			@persona_diagnostico_atencion.es_antecedente = 0
 			@persona_diagnostico_atencion.primer_diagnostico = @primer_diagnostico
 			@persona_diagnostico_atencion.save
 

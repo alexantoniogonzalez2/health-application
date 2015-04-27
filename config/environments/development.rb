@@ -31,15 +31,14 @@ AplicacionMedica::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-
   
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
     :authentication => "plain",
     :enable_starttls_auto => true,
-    :user_name => "aagonza1984@gmail.com",
-    :password => "blackhawkdown"
+    :user_name => "contacto@medracer.com",
+    :password => "P(?xq1v42"
   }
 
   #config.middleware.use "Rack::Insight::App",

@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><%= link_to "Inicio", root_path %></li>
-        <li><%= link_to "Ayuda", '#' %></li>
+        <!--<li><%= link_to "Ayuda", '#' %></li>-->
         <% if user_signed_in? %>  
           <li><%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete %></li>
           <li><%= link_to current_user.persona.showName('%n%p') ,'#'%> </li>

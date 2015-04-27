@@ -1,11 +1,7 @@
 function cargarMotivos(){
 
-		$(".chosen-select").chosen({
-    no_results_text: 'No hubo coincidencias.',
-    width: '300px',
-    allow_single_deselect: true
-
-	}); 
+	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
+	$('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true });
 
 	$('input[type=radio][name^=radios-motivo-]').change(function() {
 	  var id_agend = $(this).attr('name').substring(14);
@@ -47,47 +43,23 @@ if ( $( "#profesional" ).length ){
 
 $(document).ready(function() {	
 
-	$(".chosen-select").chosen({
-    no_results_text: 'No hubo coincidencias.',
-    width: '300px',
-    allow_single_deselect: true
-
-	}); 
+	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
+	$('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true });
 
 });
 
 $('#buscadorHora').fullCalendar({
-
 	header: {
-		left: 'prev,next month,agendaWeek,agendaDay,today',
-		center: '',
-		right: 'title',
+		left: 'prev,next today',
+		center: 'title',
+		right: 'month,agendaWeek,agendaDay',
 	},
-	dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-	dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sáb'],
-	monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-	monthNamesShort:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-	timeFormat: { 
-		week: 'H:mm-{H:mm}',
-		month: 'H:mm-{H:mm}',
-		day: 'H:mm-{H:mm}',
-		'': 'H:mm-{H:mm}' 
-},
-	titleFormat:{
-		month: 'MMMM yyyy',
-		week: 'd MMMM { - d MMMM}',
-		day: 'd MMMM yyyy',
-
-	},
+	lang: 'es',
+	allDaySlot: false,
 	slotMinutes: 30,
-	firstHour: 8,
-	maxTime: 20,
-	minTime: 8,
-	columnFormat: {
-		day: 'dddd d',
-		week: 'dddd d',
-		month: 'dddd',
-	},
+	minTime: '08:00:00',
+	maxTime: '20:00:00',
+	height: 'auto',
 	selectable: true,
 	buttonText: {
     today: 'Hoy',
@@ -95,11 +67,10 @@ $('#buscadorHora').fullCalendar({
     week: 'Semana',
     day: 'Día'
 	},
-	axisFormat: 'H:mm',
-	allDaySlot:false,
 	firstDay: 1,
 	editable: false,
-	defaultView: 'agendaWeek',     
+	defaultView: 'agendaWeek', 
+	axisFormat: 'H:mm',
   eventRender: function(event,element,view){
 
 		element.qtip({
@@ -114,10 +85,10 @@ $('#buscadorHora').fullCalendar({
 		})
 	},
 	eventAfterRender: function(event, element, view) {
-    var formattedTime = $.fullCalendar.formatDates(event.start, event.end, "HH:mm { - HH:mm}");
-    element.find(".fc-event-time").html(formattedTime + ' ' + event.icon);
-
-},
+		var span = element.find("span");
+		var div = element.find(".fc-time");
+		div.attr('data-start', span.text());
+	},
 	eventClick: function(calEvent, jsEvent, view){
 				
 		// Mostramos el detalle del evento

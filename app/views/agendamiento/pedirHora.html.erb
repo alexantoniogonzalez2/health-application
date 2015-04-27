@@ -1,4 +1,3 @@
-
 <script>
 	var especialidad_id =<%= params[:especialidad_id] %>
 	var prestador_id=<%= params[:prestador_id] %>
@@ -11,7 +10,7 @@
 </script>
 
 <% if @permisoParaAgregar %>
-	<div id='action'> <button class="btn btn-inverse">Agregar horas <<</button></div>
+	<div id='action'><button class="btn btn-success">Agregar horas <<</button></div>
 <% end %>	
 
 	<div id='breadcrumbs'>
@@ -22,8 +21,6 @@
 				>
 			<% end %>
 		<% end %>
-	</div>
-	<div id="simplemodal-show">
 	</div>
 
   <div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -36,151 +33,146 @@
 	<div id='calendar'>
 	<% if params[:especialidad_id]!='-1' and params[:prestador_id]!='-1' and params[:profesional_id]!='-1' and @permisoParaAgregar %>
 		
-		<div id='form-container' style='display:none'>
-			<div id='tabs'>
-				<ul>
-					<li><a href="#diario">Día</a></li>
-					<li><a href="#comportamiento">Múltiples días</a></li>
+		<div id='form-container'>
+			<div class="tabbable" >
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#diario" data-toggle="tab">Día</a>
+					</li>
+					<li>
+						<a href="#comportamiento" data-toggle="tab">Múltiples días</a>
+					</li>
 				</ul>
-				<div id='diario'>
-					<div class='well'>
-						<form id='diaForm' class='form-horizontal'>
+				<div class="tab-content">
+					<div class="tab-pane active" id='diario'>
+						<div class='well'>
+							<form id='diaForm' class='form-horizontal'>
+								<fieldset>
+
+								<div class="control-group">
+								  <label class="control-label" for="diai">Día de inicio:</label>
+								  <div class="controls">
+								    <input name="di" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">
+								  </div>
+								</div>
+
+								<div class="control-group">
+								  <label class="control-label" for="horai">Hora de inicio:</label>
+								  <div class="controls">
+								    <input name="hi" type="text" placeholder="Ej.: 23:59" class="input-medium">
+								  </div>
+								</div>
+
+								<div class="control-group">
+								  <label class="control-label" for="diat">Día de término:</label>
+								  <div class="controls">
+								    <input name="dt" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">
+								  </div>
+								</div>
+
+								<div class="control-group">
+								  <label class="control-label" for="horat">Hora de término:</label>
+								  <div class="controls">
+								    <input name="ht" type="text" placeholder="Ej.: 23:59" class="input-medium">
+								  </div>
+								</div>
+
+								<div class="control-group">
+								  <label class="control-label" for="i">Duración consulta (minutos):</label>
+								  <div class="controls">
+								    <input name="i" type="text" placeholder="Ej.: 30" class="input-medium">
+								  </div>
+								</div>
+
+						    <button type="submit" name="singlebutton" class="btn btn-primary aj-button-top">Agregar horas</button>
+						    <div class="status"></div>
+
+								</fieldset>
+							</form>
+						</div>
+					</div>
+					<div class="tab-pane" id='comportamiento'>
+					  <div class='well'>
+							<form id='comportamientoForm' class="form-horizontal">
 							<fieldset>
 
 							<div class="control-group">
-							  <label class="control-label" for="diai">Día de inicio:</label>
+							  <label class="control-label" for="">Día de inicio:</label>
 							  <div class="controls">
-							    <input name="di" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">
+								<input name="di" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">						    
 							  </div>
 							</div>
 
 							<div class="control-group">
-							  <label class="control-label" for="horai">Hora de inicio:</label>
+							  <label class="control-label" for="">Día de termino:</label>
+							  <div class="controls">
+							   <input name="dt" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">
+							    
+							  </div>
+							</div>
+
+							<div class="control-group">
+							  <label class="control-label" for="dias">Días de la semana:</label>
+							  <div class="container">
+							  	<div class='row'>
+							  		<div class='col-md-6'>
+							  			<div class='checkbox'>
+										    <label for="dias-0"><input id='dias-0' type="checkbox" name="checkboxes[]">Lunes</label>
+										  </div>  
+								  		<div class='checkbox'>
+										    <label for="dias-1"><input id='dias-1' type="checkbox" name="checkboxes[]">Martes</label>
+										  </div> 
+							  			<div class='checkbox'>
+										    <label for="dias-2"><input id='dias-2' type="checkbox" name="checkboxes[]">Miércoles</label>
+										  </div> 
+							  			<div class='checkbox'>
+										    <label for="dias-3"><input id='dias-3' type="checkbox" name="checkboxes[]">Jueves</label>
+										  </div> 
+							  			<div class='checkbox'>
+										    <label for="dias-4"><input id='dias-4' type="checkbox" name="checkboxes[]">Viernes</label>
+										  </div> 
+									  </div>
+									  <div class='col-md-6'>  
+							  			<div class='checkbox'>
+										    <label for="dias-5"><input id='dias-5' type="checkbox" name="checkboxes[]">Sábado</label>
+										  </div> 
+							  			<div class='checkbox'>
+										    <label for="dias-6"><input id='dias-6' type="checkbox" name="checkboxes[]">Domingo</label>
+										  </div> 
+									  </div>
+									</div>    
+							  </div>
+							</div>
+
+							<div class="control-group">
+							  <label class="control-label" for="">Hora de inicio:</label>
 							  <div class="controls">
 							    <input name="hi" type="text" placeholder="Ej.: 23:59" class="input-medium">
 							  </div>
 							</div>
 
 							<div class="control-group">
-							  <label class="control-label" for="diat">Día de término:</label>
+							  <label class="control-label" for="">Hora de término:</label>
 							  <div class="controls">
-							    <input name="dt" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">
+							    <input name="ht" type="text" placeholder="Ej.: 23:59" class="input-medium">						    
 							  </div>
 							</div>
 
 							<div class="control-group">
-							  <label class="control-label" for="horat">Hora de término:</label>
-							  <div class="controls">
-							    <input name="ht" type="text" placeholder="Ej.: 23:59" class="input-medium">
-							  </div>
-							</div>
-
-							<div class="control-group">
-							  <label class="control-label" for="i">Duración consulta (minutos):</label>
+							  <label class="control-label" for="i">Duración consulta: (minutos)</label>
 							  <div class="controls">
 							    <input name="i" type="text" placeholder="Ej.: 30" class="input-medium">
 							  </div>
 							</div>
-
-							<!-- Button -->
-							<div class="control-group">
-							  <div class="controls">
-							    <button type="submit" name="singlebutton" class="btn btn-primary">Agregar horas</button>
-							    <div class="status"></div>
-							  </div>
-							</div>
+		
+					    <button type="submit" name="singlebutton" class="btn btn-primary aj-button-top">Agregar horas</button>
+					    <div class="status"></div>							
 
 							</fieldset>
-						</form>
+							</form>
+						</div>
 					</div>
-				</div>
-				<div id='comportamiento'>
-					<div class='well'>
-						<form id='comportamientoForm' class="form-horizontal">
-						<fieldset>
-
-						<div class="control-group">
-						  <label class="control-label" for="">Día de inicio:</label>
-						  <div class="controls">
-							<input name="di" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">						    
-						  </div>
-						</div>
-
-						<div class="control-group">
-						  <label class="control-label" for="">Día de termino:</label>
-						  <div class="controls">
-						   <input name="dt" type="text" placeholder="Ej.: 2013-03-25" class="input-medium">
-						    
-						  </div>
-						</div>
-
-						<div class="control-group">
-						  <label class="control-label" for="dias">Días de la semana:</label>
-						  <div class="controls">
-						    <label class="checkbox inline" for="dias-0">
-						      <input type="checkbox" name="checkboxes[]">
-						      L
-						    </label>
-						    <label class="checkbox inline" for="dias-1">
-						      <input type="checkbox" name="checkboxes[]">
-						      M
-						    </label>
-						    <label class="checkbox inline" for="dias-2">
-						      <input type="checkbox" name="checkboxes[]">
-						      W
-						    </label>
-						    <label class="checkbox inline" for="dias-3">
-						      <input type="checkbox" name="checkboxes[]">
-						      J
-						    </label>
-						    <label class="checkbox inline" for="dias-4">
-						      <input type="checkbox" name="checkboxes[]">
-						      V
-						    </label>
-						    <label class="checkbox inline" for="dias-5">
-						      <input type="checkbox" name="checkboxes[]">
-						      S
-						    </label>
-						    <label class="checkbox inline" for="dias-6">
-						      <input type="checkbox" name="checkboxes[]">
-						      D
-						    </label>
-						  </div>
-						</div>
-
-						<div class="control-group">
-						  <label class="control-label" for="">Hora de inicio:</label>
-						  <div class="controls">
-						    <input name="hi" type="text" placeholder="Ej.: 23:59" class="input-medium">
-						  </div>
-						</div>
-
-						<div class="control-group">
-						  <label class="control-label" for="">Hora de término:</label>
-						  <div class="controls">
-						    <input name="ht" type="text" placeholder="Ej.: 23:59" class="input-medium">						    
-						  </div>
-						</div>
-
-						<div class="control-group">
-						  <label class="control-label" for="i">Duración consulta: (minutos)</label>
-						  <div class="controls">
-						    <input name="i" type="text" placeholder="Ej.: 30" class="input-medium">
-						  </div>
-						</div>
-
-						<!-- Button -->
-						<div class="control-group">
-						  <div class="controls">
-						    <button  type="submit" name="singlebutton" class="btn btn-primary">Agregar horas</button>
-						    <div class="status"></div>
-						  </div>
-						</div>
-
-						</fieldset>
-						</form>
-					</div>
-				</div>
+				</div>	
 			</div>
 		</div>
 

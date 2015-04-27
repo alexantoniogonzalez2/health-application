@@ -1,5 +1,3 @@
-@import "bootstrap";
-
 /* colors */
 $blue: #428bca;
 $blueFooter: #B5DBFF;
@@ -49,6 +47,7 @@ div.container { width: 100%; }
 
 section { overflow: auto; }
 h1, h2, h3, h4, h5, h6 { line-height: 1;}
+h2 { font-size: 21px !important; }
 h3 { font-size: 26px; }
 h4 { font-size: 22px; }
 h5 { font-size: 18px; margin-top: 0px; }
@@ -126,8 +125,8 @@ span.head-text{
   transition: opacity 0.25s, width 0.25s;
 }
 
-.has-spinner.active { cursor:progress; }
-
+.has-spinner.active { cursor: progress; }
+ 
 .has-spinner.active .spinner {
   opacity: 1;
   width: auto; /* This doesn't work, just fix for unkown width elements */
@@ -146,3 +145,8 @@ div.ajuste-ant2 { padding: 0px 0px 0px 0px; }
 #diagnostico-anterior-div { padding: 0px 0px 20px 0px; } 
 span.nota { font-size: 12px; }
 div.div-spinner{ margin: 0 auto; width: 10%; display: block; }
+
+th.fc-widget-header { font-weight: normal !important; }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button { padding: 0px !important; margin: 0px !important; }
+.fc-time-grid-event.fc-short .fc-time:after { content: "" !important; }

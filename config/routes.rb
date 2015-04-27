@@ -7,6 +7,7 @@ AplicacionMedica::Application.routes.draw do
   get 'account_created' => 'home#account_created'
   get 'password_reset' => 'home#password_reset'
   get 'password_reseted' => 'home#password_reseted'
+  post '/enviar_correo_contacto', to: 'home#enviarCorreoContacto'
 
   #Antecedentes
   get '/antecedentes/index', to: 'antecedentes#index', :as => :antecedentes_index 

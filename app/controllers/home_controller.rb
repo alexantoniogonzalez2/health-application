@@ -204,4 +204,12 @@ class HomeController < ApplicationController
 		end 	
 		
 	end
+
+	def enviarCorreoContacto
+		AppMailer.contact_email(params[:nombre],params[:correo],params[:telefono],params[:mensaje]).deliver_now
+		respond_to do |format|
+			format.html { render 'app_mailer/contact_email'}
+			format.json { render :json => { :success => true } }	
+		end	
+	end
 end

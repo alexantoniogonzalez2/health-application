@@ -1,42 +1,43 @@
-<div id="div_atenciones" >
-  <h4>Atenciones de salud</h4>
-
-  <table id="lista_atenciones" class="display" cellspacing="0" width="100%">
-    <thead>
-      <tr>
-        <th>Número</th>
-        <th>Rut paciente</th>
-        <th>Nombre paciente</th>
-        <th>Ver atención</th>
-        <th>Reabrir atención</th>           
-      </tr>
-    </thead> 
-    <tfoot>
-      <tr>
-        <th>Número</th>
-        <th>Rut paciente</th>
-        <th>Nombre paciente</th>
-        <th>Ver consulta</th>
-        <th>Reabrir consulta</th>           
-      </tr>
-    <tfoot>
-    <tbody>  
-
-      <% @atenciones_salud.each do |atencion_salud| %>
+<% if @atenciones_salud.blank? %> 
+  <h4>No hay atenciones de salud realizadas.</h4>
+<% else %>
+  <div id="div_atenciones" >
+    <h4>Atenciones de salud</h4>
+    <table id="lista_atenciones" class="display" cellspacing="0" width="100%">
+      <thead>
         <tr>
-          <td><%= atencion_salud.id %></td>
-          <td><%= atencion_salud.persona.showRut %></td>
-          <td><%= atencion_salud.persona.showName('%n%p%m') %></td>
-          <td><%= link_to 'Ver', atenciones_salud_path(atencion_salud) %></td>
-       		<td><%= link_to "Reabrir", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => atencion_salud.id }, :method => :post %></td>
-          <!--<td><%= button_to "Delete", {:controller => :atenciones_salud,
-          :action => 'destroy', :id => atencion_salud.id }, :method => :delete %></td>-->
+          <th>Número</th>
+          <th>Rut paciente</th>
+          <th>Nombre paciente</th>
+          <th>Ver atención</th>
+          <th>Reabrir atención</th>           
         </tr>
-      <% end %>
-    </tbody> 
-  </table>
-
-</div>
+      </thead> 
+      <tfoot>
+        <tr>
+          <th>Número</th>
+          <th>Rut paciente</th>
+          <th>Nombre paciente</th>
+          <th>Ver consulta</th>
+          <th>Reabrir consulta</th>           
+        </tr>
+      <tfoot>
+      <tbody> 
+        <% @atenciones_salud.each do |atencion_salud| %>
+          <tr>
+            <td><%= atencion_salud.id %></td>
+            <td><%= atencion_salud.persona.showRut %></td>
+            <td><%= atencion_salud.persona.showName('%n%p%m') %></td>
+            <td><%= link_to 'Ver', atenciones_salud_path(atencion_salud) %></td>
+         		<td><%= link_to "Reabrir", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => atencion_salud.id }, :method => :post %></td>
+            <!--<td><%= button_to "Delete", {:controller => :atenciones_salud,
+            :action => 'destroy', :id => atencion_salud.id }, :method => :delete %></td>-->
+          </tr>
+          <% end %>     
+      </tbody> 
+    </table>
+  </div>
+<% end %>  
 
 <%= javascript_include_tag "atenciones_salud" %>
 

@@ -4,7 +4,23 @@ var especialidad_id = -1;
 var profesional_id = -1;
 var prestador_id = -1;
 
+function cargarHoras(){
 
+  $.ajax({
+    type: 'POST',
+    url: '/buscar_horas',
+    data: {
+      centros: [1], 
+      especialidad: 1,
+      especialista: 4,    
+    },
+    success: function(response) {
+    	  $('#calendar').fullCalendar('addEventSource',response);
+    },
+    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+  });
+
+}
 
 $(function(){
 
@@ -78,43 +94,31 @@ $(function(){
 	});
 
 
+
 	$('#calendar').fullCalendar({
 		header: {
-			left: 'prev,next month,agendaWeek,agendaDay,today',
-			center: '',
-			right: 'title',
+			left: 'prev,next today month,agendaWeek,agendaDay',
+			center: 'title',
+			right: '',
 		},
-		dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sáb'],
-		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-		monthNamesShort:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-		timeFormat: {
-			agenda: 'H:mm{ - H:mm}',
-			'': 'H:mm {- H:mm}'
-		},
-		titleFormat:{
-			month: 'MMMM yyyy',
-			week: 'MMM d{ - MMM d}',
-			day: 'd MMMM yyyy'
-		},
+		lang: 'es',
+		allDaySlot: false,
 		slotMinutes: 15,
-		firstHour: 9,
-		columnFormat: {
-			day: 'dddd',
-			week:'ddd d/M'
-		},
+		minTime: '08:00:00',
+		maxTime: '20:00:00',
+		height: 'auto',
 		selectable: true,
 		buttonText: {
-		    today:    'Hoy',
-		    month:    'Mes',
-		    week:     'Semana',
-		    day:      'Día'
+	    today: 'Hoy',
+	    month: 'Mes',
+	    week: 'Semana',
+	    day: 'Día'
 		},
-		axisFormat: 'H:mm',
-		allDaySlot:false,
 		firstDay: 1,
 		editable: false,
-		defaultView: 'month', 
+		defaultView: 'agendaWeek', 
+		axisFormat: 'H:mm',
+		events: cargarHoras(), 
 		dayClick: function(date, allDay, jsEvent, view){
 			if(jsEvent.timeStamp-lastT<1000 && ''+date==''+lastDate){
 				$('#calendar').fullCalendar('gotoDate',date);
@@ -135,6 +139,11 @@ $(function(){
 				   viewport: $(window)
 				}
 			})
+		},
+		eventAfterRender: function(event, element, view) {
+			var span = element.find("span");
+			var div = element.find(".fc-time");
+			div.attr('data-start', span.text());
 		},
 		eventClick: function(calEvent, jsEvent, view){
 					
@@ -363,10 +372,7 @@ $(function(){
 		}
 	});
 
-	$("#tabs").tabs();
-
 	// Validar form
-
 	$('#comportamientoForm').validate({
 		rules: {
 			di: "required",
@@ -549,9 +555,6 @@ $(function(){
 	}
 
 	});
-
-
-
 
 
 	$('#diaForm').validate({ 

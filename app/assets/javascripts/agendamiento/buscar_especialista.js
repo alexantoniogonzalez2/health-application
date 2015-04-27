@@ -1,29 +1,24 @@
 $(document).ready(function() {
 
-	$(".chosen-select").chosen({
-    no_results_text: 'No hubo coincidencias.',
-    width: '300px',
-    allow_single_deselect: true
-
-	}); 
+  $('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
+  $('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true });
 
 });
 
-$('#save').click( function() {
+$('.agregar_horas').click( function() {
 
-  var centro = $("#e1").val();
-  var especialidad = $("#e2").val();
-  var especialista = $("#e3").val();
+  var centro = this.id;
+  var especialidad = $("#select_especialidad").val();
+  var especialista = $("#select_especialista").val();
   
   if (especialidad == '' ) 
     alert('Seleccione una especialidad.');
-  if (especialista == '' )
+  else if (especialista == '' )
     alert('Seleccione un especialista');
-  if (centro == '')
-    alert('Seleccione un centro médico.');     
-  
-  if(especialidad != '' && especialista != '' && centro != '') {
-    window.location="/agendamiento/pedirHora"+"/"+$("#e2").val()+"/"+$("#e1").val()+"/"+$("#e3").val();
+  else if (centro == '')
+    alert('Seleccione un centro médico.');   
+  else if(especialidad != '' && especialista != '' && centro != '') {
+    window.location="/agendamiento/pedirHora"+"/"+especialidad+"/"+centro+"/"+especialista;
   }
 
 });

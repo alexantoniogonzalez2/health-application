@@ -118,7 +118,20 @@ $('#new_password').bootstrapValidator({
 })
 
 $('#contactForm').bootstrapValidator({
-  fields: { 'email': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } }
+  fields: { 'email': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } },
+  onSuccess: function(e) { 
+    var nombre = $('#name').val();
+    var correo = $('#email').val();
+    var telefono = $('#phone').val();
+    var mensaje = $('#message').val();
+    $.ajax({
+      type: 'POST',
+      url: '/enviar_correo_contacto',
+      data: { nombre: nombre, correo: correo, telefono: telefono, mensaje: mensaje },
+      success: function(response) { alert('enviado'); },
+      error: function(xhr, status, error ){ 'Hubo un problema al enviar el correo.' }
+    });
+  }
 });
 
 $('#recuperar').bootstrapValidator({
