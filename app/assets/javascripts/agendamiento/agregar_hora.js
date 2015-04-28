@@ -10,9 +10,9 @@ function cargarHoras(){
     type: 'POST',
     url: '/buscar_horas',
     data: {
-      centros: [1], 
-      especialidad: 1,
-      especialista: 4,    
+      centros: prestador_id, 
+      especialidad: especialidad_id,
+      especialista: profesional_id,    
     },
     success: function(response) {
     	  $('#calendar').fullCalendar('addEventSource',response);
@@ -92,8 +92,6 @@ $(function(){
 
 		return true;
 	});
-
-
 
 	$('#calendar').fullCalendar({
 		header: {

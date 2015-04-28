@@ -298,9 +298,9 @@ $(".select_interconsulta").on("change", function(e) {
   
 })
 
-$(".select_prestadores").on("change", function(e) { 
+$(".select_prestadores_int").on("change", function(e) { 
   var pd = $(this).attr('id').substring(18);   
-  value = $("#select_prestadores"+pd).select2('data') != null ? $("#select_prestadores"+pd).select2('data').id : null;    
+  value = $("#select_prestadores_int"+pd).select2('data') != null ? $("#select_prestadores_int"+pd).select2('data').id : null;    
   $.ajax({
     type: 'POST',
     url: '/agregar_info_interconsulta',
@@ -314,9 +314,9 @@ $(".select_prestadores").on("change", function(e) {
   });   
 })
 
-$(".select_especialidad").on("change", function(e) { 
+$(".select_especialidad_int").on("change", function(e) { 
   var pd = $(this).attr('id').substring(19);   
-  value = $("#select_especialidad"+pd).select2('data') != null ? $("#select_especialidad"+pd).select2('data').id : null;    
+  value = $("#select_especialidad_int"+pd).select2('data') != null ? $("#select_especialidad_int"+pd).select2('data').id : null;    
   $.ajax({
     type: 'POST',
     url: '/agregar_info_interconsulta',

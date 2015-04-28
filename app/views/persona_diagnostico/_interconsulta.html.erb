@@ -140,7 +140,7 @@
 					<label>Establecimiento al cual se deriva</label>
 				</div>
 				<div class="col-md-8 column">:
-					<select id="select_prestadores<%= p_d.id %>" class="select_prestadores">	
+					<select id="select_prestadores_int<%= p_d.id %>" class="select_prestadores">	
 						<option></option>					
 					  <% @prestadores.each do |pres| %>
 					  	<option value="<%= pres.id %>"
@@ -160,7 +160,7 @@
 					<label>Especialidad</label>
 				</div>
 				<div class="col-md-8 column">:
-					<select id="select_especialidad<%= p_d.id %>" class="select_especialidad">	
+					<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad">	
 						<option></option>					
 					  <% @especialidades.each do |esp| %>
 					  	<option value="<%= esp.id %>" 

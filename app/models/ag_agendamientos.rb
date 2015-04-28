@@ -191,7 +191,7 @@ class AgAgendamientos < ActiveRecord::Base
               <tr><td>Fecha y hora de término</td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
     if (perm_tomar_horas and estado == 'Hora disponible')
-      elegir_paciente = '<tr><td>Paciente</td><td>:<select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="chosen-select" ><option value="" selected disabled>Seleccione un paciente</option>' 
+      elegir_paciente = '<tr><td>Paciente</td><td>:<select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="select_paciente" ><option></option>' 
       @pacientes = PerPersonas.all
       @pacientes.each do |pac|
         elegir_paciente<<'<option value='<<pac.id.to_s<<'>'<<pac.showRut<<' '<<pac.showName('%n%p%m')<<'</option>'      
@@ -201,7 +201,7 @@ class AgAgendamientos < ActiveRecord::Base
 
 
     if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and ((estado == 'Hora disponible' and !perm_profesional) or perm_paciente or (perm_profesional and estado != 'Hora disponible')) or perm_tomar_horas           
-      info_cap = '<tr><td></td><td><select id="select-capitulo-'<<id.to_s<<'" name="selectbasic" class="form-control"><option value="" selected disabled>Seleccione un motivo</option>' 
+      info_cap = '<tr><td></td><td><select id="select-capitulo-'<<id.to_s<<'" name="selectbasic" class="select_motivo"><option></option>' 
       @capitulos = MedDiagnosticosCapitulos.all
       @capitulos.each do |cap|
         info_cap<<'<option value='<<cap.id.to_s<<'>'<<cap.nombre<<'</option>'      
@@ -213,9 +213,9 @@ class AgAgendamientos < ActiveRecord::Base
       # De existir, carga los antecedentes del paciente
       @antecedentes = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1', id_usuario)     
       unless @antecedentes.empty?
-        informacion_antecedentes = '<tr><td></td><td><select id="select-motivo-'<<id.to_s<<'" name="selectbasic" class="form-control oculto"><option value="" selected disabled>Seleccione un antecedente</option>'      
+        informacion_antecedentes = '<tr><td></td><td><select id="select_motivo-'<<id.to_s<<'" name="selectbasic" class="select_antecedente oculto">'      
         @antecedentes.each do |ant|
-          informacion_antecedentes<<'<option value='<<ant.id.to_s<<'>'<<ant.diagnostico.nombre<<'</option>'      
+          informacion_antecedentes<<'<option value='<<ant.id.to_s<<'>'<<ant.diagnostico.nombre<<'</option><option></option>'      
         end
         informacion_antecedentes<<'</select></td></tr>'
       end

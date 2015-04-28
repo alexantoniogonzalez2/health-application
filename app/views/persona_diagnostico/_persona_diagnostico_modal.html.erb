@@ -72,7 +72,7 @@
                     <div id="checkboxes-trat-div-<%= p_d.id %>" class="col-md-9 column">
                       <div class="form-group trat">                      
                         <div class="checkbox" id="trat_<%= p_d.id %>">
-                          <label class="checkbox-der trat" for="checkboxes-trat-<%= p_d.id %>">No es el primer diagnóstico o el paciente ya estaba en tratamiento<input type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" <% if p_d.en_tratamiento == 1%> checked="checked" <% end %> ></label>
+                          <label class="checkbox-der trat" for="checkboxes-trat-<%= p_d.id %>"><input type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" <% if p_d.en_tratamiento == 1%> checked="checked" <% end %> > No es el primer diagnóstico o el paciente ya estaba en tratamiento</label>
                         </div>                      
                       </div>
                     </div>
@@ -81,7 +81,7 @@
                 <div class="row clearfix">  
                   <div class="col-md-12 column">  
                     <label>Comentario</label><span id="comentario-<%= p_d.id %>" class="alert alert-info comentario">Autoguardado</span>
-                    <textarea class="form-control comentario" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
+                    <textarea class="form-control" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
                   </div>                  
                 </div>
                 <div class="row clearfix footer">

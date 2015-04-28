@@ -11,15 +11,29 @@ class AgendamientoController < ApplicationController
 	def filtrarProfesionales
 		resp="<option></option>"
 
-		if params[:especialidad] == ""
-			PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno').each do |p|
-			resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";	
-			end 
-		else			
-			PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales where especialidad_id= ? )",params[:especialidad]).order('nombre,apellido_paterno,apellido_materno').each do |p|
-			resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";
-			end 
+		if tieneRol('Generar agendamientos') 
+			@prestador_id = getIdPrestador('administrativo')
+			if params[:especialidad] == ""
+				PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales where prestador_id = ? )",@prestador_id).order('nombre,apellido_paterno,apellido_materno').each do |p|
+				resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";	
+				end 
+			else			
+				PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales where especialidad_id = ? AND prestador_id = ? )",params[:especialidad],@prestador_id).order('nombre,apellido_paterno,apellido_materno').each do |p|
+				resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";
+				end 
+			end	
+		else
+			if params[:especialidad] == ""
+				PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno').each do |p|
+				resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";	
+				end 
+			else			
+				PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales where especialidad_id= ? )",params[:especialidad]).order('nombre,apellido_paterno,apellido_materno').each do |p|
+				resp<<"<option value=\"#{p.id}\">#{p.showName('%n%p%m')}</option>";
+				end 
+			end		
 		end	
+
 		render :text =>resp	
 	end
 

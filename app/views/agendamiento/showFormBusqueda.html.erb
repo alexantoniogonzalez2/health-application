@@ -5,20 +5,20 @@
       <label>Especialidad</label> 
     </div>
     <div class="col-md-9 column">  
-      <select id="select_especialidad" name="select_especialidad"  class="select_especialidad"  >
+      <select id="select_especialidad_agregar" class="select_especialidad_agregar"  >
         <option></option>
         <% @especialidades.each do |e| %>
           <option value="<%= e.id%>"><%= e.nombre %></option>
         <% end %>
       </select>         
     </div>
-  </div>
+  </div><br>
   <div class="row clearfix">
     <div class="col-md-3 column">
       <label>Especialista</label>
     </div>  
     <div class="col-md-9 column"> 
-      <select id="select_especialista" name="select_especialista" class="select_especialista" >
+      <select id="select_especialista_agregar" class="select_especialista_agregar" >
         <option></option>
          <% @profesionales.each do |pro| %>
           <option value="<%= pro.id%>"><%= pro.showName('%n%p%m') %></option>
