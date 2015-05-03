@@ -13,690 +13,690 @@
 
 ActiveRecord::Schema.define(version: 20150422014000) do
 
-  create_table "ag_agendamiento_estados", force: true do |t|
-    t.string   "nombre"
+  create_table "ag_agendamiento_estados", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ag_agendamiento_log_estados", force: true do |t|
-    t.integer  "responsable_id"
-    t.integer  "agendamiento_estado_id"
-    t.integer  "agendamiento_id"
+  create_table "ag_agendamiento_log_estados", force: :cascade do |t|
+    t.integer  "responsable_id",         limit: 4
+    t.integer  "agendamiento_estado_id", limit: 4
+    t.integer  "agendamiento_id",        limit: 4
     t.datetime "fecha"
   end
 
-  create_table "ag_agendamientos", force: true do |t|
-    t.integer  "persona_id"
+  create_table "ag_agendamientos", force: :cascade do |t|
+    t.integer  "persona_id",                            limit: 4
     t.datetime "fecha_comienzo"
     t.datetime "fecha_final"
     t.datetime "fecha_llegada_paciente"
     t.datetime "fecha_comienzo_real"
     t.datetime "fecha_final_real"
-    t.integer  "agendamiento_estado_id"
-    t.integer  "especialidad_prestador_profesional_id"
-    t.boolean  "motivo_consulta_nuevo"
-    t.integer  "persona_diagnostico_control_id"
-    t.integer  "capitulo_cie10_control_id"
+    t.integer  "agendamiento_estado_id",                limit: 4
+    t.integer  "especialidad_prestador_profesional_id", limit: 4
+    t.boolean  "motivo_consulta_nuevo",                 limit: 1
+    t.integer  "persona_diagnostico_control_id",        limit: 4
+    t.integer  "capitulo_cie10_control_id",             limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_atenciones_salud", force: true do |t|
-    t.text     "motivo_consulta"
-    t.text     "examen_fisico"
-    t.text     "indicaciones_generales"
-    t.integer  "agendamiento_id"
-    t.integer  "persona_id"
-    t.integer  "tipo_ficha_id"
-    t.boolean  "es_cronica"
+  create_table "fi_atenciones_salud", force: :cascade do |t|
+    t.text     "motivo_consulta",        limit: 65535
+    t.text     "examen_fisico",          limit: 65535
+    t.text     "indicaciones_generales", limit: 65535
+    t.integer  "agendamiento_id",        limit: 4
+    t.integer  "persona_id",             limit: 4
+    t.integer  "tipo_ficha_id",          limit: 4
+    t.boolean  "es_cronica",             limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_calendario_vacunas", force: true do |t|
-    t.integer  "vacuna_id"
-    t.string   "edad"
-    t.integer  "numero_vacuna"
-    t.integer  "agno"
+  create_table "fi_calendario_vacunas", force: :cascade do |t|
+    t.integer  "vacuna_id",     limit: 4
+    t.string   "edad",          limit: 255
+    t.integer  "numero_vacuna", limit: 4
+    t.integer  "agno",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_certificados", force: true do |t|
-    t.text     "motivo"
+  create_table "fi_certificados", force: :cascade do |t|
+    t.text     "motivo",            limit: 65535
     t.datetime "fecha_inicio"
     t.datetime "fecha_final"
-    t.integer  "atencion_salud_id"
+    t.integer  "atencion_salud_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_ficha_tipos", force: true do |t|
-    t.string   "nombre"
+  create_table "fi_ficha_tipos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_gestas", force: true do |t|
+  create_table "fi_gestas", force: :cascade do |t|
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.string   "desenlace"
-    t.integer  "persona_id"
+    t.string   "desenlace",     limit: 255
+    t.integer  "persona_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_habitos_alcohol", force: true do |t|
-    t.integer  "persona_id"
+  create_table "fi_habitos_alcohol", force: :cascade do |t|
+    t.integer  "persona_id",       limit: 4
     t.datetime "fecha_test_audit"
-    t.integer  "audit_1"
-    t.integer  "audit_2"
-    t.integer  "audit_3"
-    t.integer  "audit_4"
-    t.integer  "audit_5"
-    t.integer  "audit_6"
-    t.integer  "audit_7"
-    t.integer  "audit_8"
-    t.integer  "audit_9"
-    t.integer  "audit_10"
-    t.integer  "audit_puntaje"
+    t.integer  "audit_1",          limit: 4
+    t.integer  "audit_2",          limit: 4
+    t.integer  "audit_3",          limit: 4
+    t.integer  "audit_4",          limit: 4
+    t.integer  "audit_5",          limit: 4
+    t.integer  "audit_6",          limit: 4
+    t.integer  "audit_7",          limit: 4
+    t.integer  "audit_8",          limit: 4
+    t.integer  "audit_9",          limit: 4
+    t.integer  "audit_10",         limit: 4
+    t.integer  "audit_puntaje",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_habitos_drogas", force: true do |t|
-    t.integer  "persona_id"
+  create_table "fi_habitos_drogas", force: :cascade do |t|
+    t.integer  "persona_id",      limit: 4
     t.datetime "fecha_test_dast"
-    t.string   "tipo_dast"
-    t.integer  "dast_1"
-    t.integer  "dast_2"
-    t.integer  "dast_3"
-    t.integer  "dast_4"
-    t.integer  "dast_5"
-    t.integer  "dast_6"
-    t.integer  "dast_7"
-    t.integer  "dast_8"
-    t.integer  "dast_9"
-    t.integer  "dast_10"
-    t.integer  "dast_11"
-    t.integer  "dast_12"
-    t.integer  "dast_13"
-    t.integer  "dast_14"
-    t.integer  "dast_15"
-    t.integer  "dast_16"
-    t.integer  "dast_17"
-    t.integer  "dast_19"
-    t.integer  "dast_20"
-    t.integer  "dast_puntaje"
+    t.string   "tipo_dast",       limit: 255
+    t.integer  "dast_1",          limit: 4
+    t.integer  "dast_2",          limit: 4
+    t.integer  "dast_3",          limit: 4
+    t.integer  "dast_4",          limit: 4
+    t.integer  "dast_5",          limit: 4
+    t.integer  "dast_6",          limit: 4
+    t.integer  "dast_7",          limit: 4
+    t.integer  "dast_8",          limit: 4
+    t.integer  "dast_9",          limit: 4
+    t.integer  "dast_10",         limit: 4
+    t.integer  "dast_11",         limit: 4
+    t.integer  "dast_12",         limit: 4
+    t.integer  "dast_13",         limit: 4
+    t.integer  "dast_14",         limit: 4
+    t.integer  "dast_15",         limit: 4
+    t.integer  "dast_16",         limit: 4
+    t.integer  "dast_17",         limit: 4
+    t.integer  "dast_19",         limit: 4
+    t.integer  "dast_20",         limit: 4
+    t.integer  "dast_puntaje",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_habitos_tabaco", force: true do |t|
-    t.integer  "persona_id"
+  create_table "fi_habitos_tabaco", force: :cascade do |t|
+    t.integer  "persona_id",       limit: 4
     t.datetime "fecha_inicio"
     t.datetime "fecha_final"
-    t.integer  "cigarros_por_dia"
-    t.decimal  "paquetes_agno",    precision: 10, scale: 2
+    t.integer  "cigarros_por_dia", limit: 4
+    t.decimal  "paquetes_agno",              precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_interconsultas", force: true do |t|
-    t.integer  "persona_diagnostico_atencion_salud_id"
+  create_table "fi_interconsultas", force: :cascade do |t|
+    t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
     t.datetime "fecha_solicitud"
-    t.integer  "prestador_destino_id"
-    t.integer  "especialidad_id"
-    t.integer  "persona_conocimiento_id"
-    t.integer  "proposito"
-    t.text     "proposito_otro"
-    t.text     "comentario"
+    t.integer  "prestador_destino_id",                  limit: 4
+    t.integer  "especialidad_id",                       limit: 4
+    t.integer  "persona_conocimiento_id",               limit: 4
+    t.integer  "proposito",                             limit: 4
+    t.text     "proposito_otro",                        limit: 65535
+    t.text     "comentario",                            limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_metricas", force: true do |t|
-    t.string   "nombre"
-    t.string   "unidad"
+  create_table "fi_metricas", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.string   "unidad",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_notificaciones_eno", force: true do |t|
-    t.integer  "persona_diagnostico_atencion_salud_id"
+  create_table "fi_notificaciones_eno", force: :cascade do |t|
+    t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
     t.datetime "fecha_notificacion"
     t.datetime "fecha_primeros_sintomas"
-    t.string   "confirmacion_diagnostica"
-    t.string   "antecedentes_vacunacion"
-    t.integer  "pais_contagio_id"
-    t.string   "embarazo"
-    t.integer  "semanas_gestacion"
-    t.string   "tbc"
+    t.string   "confirmacion_diagnostica",              limit: 255
+    t.string   "antecedentes_vacunacion",               limit: 255
+    t.integer  "pais_contagio_id",                      limit: 4
+    t.string   "embarazo",                              limit: 255
+    t.integer  "semanas_gestacion",                     limit: 4
+    t.string   "tbc",                                   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_notificaciones_ges", force: true do |t|
-    t.integer  "persona_diagnostico_atencion_salud_id"
-    t.integer  "persona_conocimiento_id"
-    t.string   "confirmacion_diagnostica"
+  create_table "fi_notificaciones_ges", force: :cascade do |t|
+    t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
+    t.integer  "persona_conocimiento_id",               limit: 4
+    t.string   "confirmacion_diagnostica",              limit: 255
     t.datetime "fecha_notificacion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_persona_actividad_fisica", force: true do |t|
-    t.integer  "persona_id"
-    t.string   "nivel_actividad"
-    t.integer  "P1"
-    t.integer  "P2"
-    t.integer  "P3"
-    t.integer  "P4"
-    t.integer  "P5"
-    t.integer  "P6"
-    t.integer  "P7"
-    t.integer  "P8"
-    t.integer  "P9"
-    t.integer  "P10"
-    t.integer  "P11"
-    t.integer  "P12"
-    t.integer  "P13"
-    t.integer  "P14"
-    t.integer  "P15"
+  create_table "fi_persona_actividad_fisica", force: :cascade do |t|
+    t.integer  "persona_id",      limit: 4
+    t.string   "nivel_actividad", limit: 255
+    t.integer  "P1",              limit: 4
+    t.integer  "P2",              limit: 4
+    t.integer  "P3",              limit: 4
+    t.integer  "P4",              limit: 4
+    t.integer  "P5",              limit: 4
+    t.integer  "P6",              limit: 4
+    t.integer  "P7",              limit: 4
+    t.integer  "P8",              limit: 4
+    t.integer  "P9",              limit: 4
+    t.integer  "P10",             limit: 4
+    t.integer  "P11",             limit: 4
+    t.integer  "P12",             limit: 4
+    t.integer  "P13",             limit: 4
+    t.integer  "P14",             limit: 4
+    t.integer  "P15",             limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_persona_antecedentes_ginecologicos", force: true do |t|
-    t.integer  "persona_id"
+  create_table "fi_persona_antecedentes_ginecologicos", force: :cascade do |t|
+    t.integer  "persona_id",              limit: 4
     t.datetime "fecha_menarquia"
     t.datetime "fecha_menopausia"
-    t.integer  "duracion_menstruacion"
-    t.integer  "frecuencia_promedio"
+    t.integer  "duracion_menstruacion",   limit: 4
+    t.integer  "frecuencia_promedio",     limit: 4
     t.datetime "fecha_ultimo_PAP"
     t.datetime "fecha_ultima_mamografia"
-    t.integer  "numero_gestaciones"
-    t.integer  "numero_partos"
-    t.integer  "numero_abortos"
+    t.integer  "numero_gestaciones",      limit: 4
+    t.integer  "numero_partos",           limit: 4
+    t.integer  "numero_abortos",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_persona_diagnosticos", force: true do |t|
+  create_table "fi_persona_diagnosticos", force: :cascade do |t|
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.integer  "persona_id"
-    t.integer  "diagnostico_id"
-    t.integer  "estado_diagnostico_id"
-    t.integer  "gesta_id"
-    t.boolean  "es_cronica"
+    t.integer  "persona_id",            limit: 4
+    t.integer  "diagnostico_id",        limit: 4
+    t.integer  "estado_diagnostico_id", limit: 4
+    t.integer  "gesta_id",              limit: 4
+    t.boolean  "es_cronica",            limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_persona_diagnosticos_atenciones_salud", force: true do |t|
-    t.integer  "prioridad"
-    t.integer  "persona_diagnostico_id"
-    t.integer  "atencion_salud_id"
-    t.integer  "estado_diagnostico_id"
-    t.text     "comentario"
+  create_table "fi_persona_diagnosticos_atenciones_salud", force: :cascade do |t|
+    t.integer  "prioridad",              limit: 4
+    t.integer  "persona_diagnostico_id", limit: 4
+    t.integer  "atencion_salud_id",      limit: 4
+    t.integer  "estado_diagnostico_id",  limit: 4
+    t.text     "comentario",             limit: 65535
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.boolean  "es_cronica"
-    t.boolean  "en_tratamiento"
-    t.boolean  "primer_diagnostico"
-    t.boolean  "es_antecedente"
+    t.boolean  "es_cronica",             limit: 1
+    t.boolean  "en_tratamiento",         limit: 1
+    t.boolean  "primer_diagnostico",     limit: 1
+    t.boolean  "es_antecedente",         limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_persona_medicamentos", force: true do |t|
+  create_table "fi_persona_medicamentos", force: :cascade do |t|
     t.datetime "fecha_inicio"
     t.datetime "fecha_final"
-    t.integer  "persona_id"
-    t.integer  "medicamento_id"
-    t.integer  "persona_diagnostico_id"
-    t.integer  "atencion_salud_id"
-    t.integer  "cantidad"
-    t.integer  "periodicidad"
-    t.integer  "duracion"
-    t.integer  "total"
-    t.integer  "persona_vacuna_id"
-    t.boolean  "es_antecedente"
+    t.integer  "persona_id",             limit: 4
+    t.integer  "medicamento_id",         limit: 4
+    t.integer  "persona_diagnostico_id", limit: 4
+    t.integer  "atencion_salud_id",      limit: 4
+    t.integer  "cantidad",               limit: 4
+    t.integer  "periodicidad",           limit: 4
+    t.integer  "duracion",               limit: 4
+    t.integer  "total",                  limit: 4
+    t.integer  "persona_vacuna_id",      limit: 4
+    t.boolean  "es_antecedente",         limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_persona_metricas", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "metrica_id"
-    t.integer  "atencion_salud_id"
-    t.decimal  "valor",             precision: 10, scale: 0
+  create_table "fi_persona_metricas", force: :cascade do |t|
+    t.integer  "persona_id",        limit: 4
+    t.integer  "metrica_id",        limit: 4
+    t.integer  "atencion_salud_id", limit: 4
+    t.decimal  "valor",                       precision: 10
     t.datetime "fecha"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_persona_prestaciones", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "prestacion_id"
-    t.integer  "atencion_salud_id"
-    t.integer  "prestador_id"
+  create_table "fi_persona_prestaciones", force: :cascade do |t|
+    t.integer  "persona_id",        limit: 4
+    t.integer  "prestacion_id",     limit: 4
+    t.integer  "atencion_salud_id", limit: 4
+    t.integer  "prestador_id",      limit: 4
     t.datetime "fecha_prestacion"
-    t.boolean  "es_antecedente"
+    t.boolean  "es_antecedente",    limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_personas_alergias", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "alergia_id"
+  create_table "fi_personas_alergias", force: :cascade do |t|
+    t.integer  "persona_id", limit: 4
+    t.integer  "alergia_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fi_personas_vacunas", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "vacuna_id"
+  create_table "fi_personas_vacunas", force: :cascade do |t|
+    t.integer  "persona_id",        limit: 4
+    t.integer  "vacuna_id",         limit: 4
     t.datetime "fecha"
-    t.integer  "numero_vacuna"
-    t.integer  "atencion_salud_id"
+    t.integer  "numero_vacuna",     limit: 4
+    t.integer  "atencion_salud_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_alergias", force: true do |t|
-    t.string   "nombre"
-    t.boolean  "comun"
+  create_table "med_alergias", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.boolean  "comun",      limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_componentes", force: true do |t|
-    t.string   "nombre"
-    t.string   "descripcion"
+  create_table "med_componentes", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.string   "descripcion", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_diagnostico_estados", force: true do |t|
-    t.string   "nombre"
+  create_table "med_diagnostico_estados", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_diagnosticos", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo_cie10"
-    t.string   "descripcion"
-    t.integer  "grupo_id"
-    t.integer  "numero"
-    t.boolean  "frecuente"
-    t.boolean  "nodo_terminal"
+  create_table "med_diagnosticos", force: :cascade do |t|
+    t.string   "nombre",        limit: 255
+    t.string   "codigo_cie10",  limit: 255
+    t.string   "descripcion",   limit: 255
+    t.integer  "grupo_id",      limit: 4
+    t.integer  "numero",        limit: 4
+    t.boolean  "frecuente",     limit: 1
+    t.boolean  "nodo_terminal", limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_diagnosticos_bloques", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo"
-    t.integer  "capitulo_id"
+  create_table "med_diagnosticos_bloques", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.string   "codigo",      limit: 255
+    t.integer  "capitulo_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_diagnosticos_capitulos", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo"
-    t.string   "descripcion"
+  create_table "med_diagnosticos_capitulos", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.string   "codigo",      limit: 255
+    t.string   "descripcion", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_diagnosticos_grupos", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo"
-    t.integer  "bloque_id"
+  create_table "med_diagnosticos_grupos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.string   "codigo",     limit: 255
+    t.integer  "bloque_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_enfermedades_notificacion_obligatoria", force: true do |t|
-    t.string   "nombre"
-    t.integer  "diagnostico_id"
-    t.string   "tipo_vigilancia"
-    t.string   "frecuencia_notificacion"
-    t.integer  "prioridad"
+  create_table "med_enfermedades_notificacion_obligatoria", force: :cascade do |t|
+    t.string   "nombre",                  limit: 255
+    t.integer  "diagnostico_id",          limit: 4
+    t.string   "tipo_vigilancia",         limit: 255
+    t.string   "frecuencia_notificacion", limit: 255
+    t.integer  "prioridad",               limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_laboratorios", force: true do |t|
-    t.string   "nombre"
-    t.string   "descripcion"
+  create_table "med_laboratorios", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.string   "descripcion", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_medicamentos", force: true do |t|
-    t.string   "nombre"
-    t.string   "descripcion"
-    t.string   "codigo_isp"
-    t.integer  "cantidad"
-    t.integer  "medicamento_tipo_id"
-    t.integer  "laboratorio_id"
+  create_table "med_medicamentos", force: :cascade do |t|
+    t.string   "nombre",              limit: 255
+    t.string   "descripcion",         limit: 255
+    t.string   "codigo_isp",          limit: 255
+    t.integer  "cantidad",            limit: 4
+    t.integer  "medicamento_tipo_id", limit: 4
+    t.integer  "laboratorio_id",      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_medicamentos_componentes", force: true do |t|
-    t.decimal  "relacion",       precision: 10, scale: 0
-    t.integer  "medicamento_id"
-    t.integer  "componente_id"
+  create_table "med_medicamentos_componentes", force: :cascade do |t|
+    t.decimal  "relacion",                 precision: 10
+    t.integer  "medicamento_id", limit: 4
+    t.integer  "componente_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_medicamentos_metatipos", force: true do |t|
-    t.string   "nombre"
+  create_table "med_medicamentos_metatipos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_medicamentos_tipos", force: true do |t|
-    t.string   "unidad"
-    t.integer  "medicamento_metatipo_id"
+  create_table "med_medicamentos_tipos", force: :cascade do |t|
+    t.string   "unidad",                  limit: 255
+    t.integer  "medicamento_metatipo_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_prestaciones", force: true do |t|
-    t.text     "nombre"
-    t.text     "descripcion"
-    t.string   "codigo_fonasa"
-    t.integer  "subgrupo_id"
+  create_table "med_prestaciones", force: :cascade do |t|
+    t.text     "nombre",        limit: 65535
+    t.text     "descripcion",   limit: 65535
+    t.string   "codigo_fonasa", limit: 255
+    t.integer  "subgrupo_id",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_prestaciones_grupos", force: true do |t|
-    t.string   "nombre"
-    t.text     "descripcion"
+  create_table "med_prestaciones_grupos", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.text     "descripcion", limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_prestaciones_subgrupos", force: true do |t|
-    t.string   "nombre"
-    t.text     "descripcion"
-    t.integer  "grupo_id"
+  create_table "med_prestaciones_subgrupos", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.text     "descripcion", limit: 65535
+    t.integer  "grupo_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_problemas_salud_auge", force: true do |t|
-    t.string   "nombre"
-    t.integer  "diagnostico_id"
-    t.integer  "edad_desde"
-    t.integer  "edad_hasta"
-    t.string   "genero"
-    t.integer  "prioridad"
+  create_table "med_problemas_salud_auge", force: :cascade do |t|
+    t.string   "nombre",            limit: 255
+    t.integer  "diagnostico_id",    limit: 4
+    t.integer  "edad_desde",        limit: 4
+    t.integer  "edad_hasta",        limit: 4
+    t.string   "genero",            limit: 255
+    t.integer  "prioridad",         limit: 4
     t.datetime "fecha_inicio_auge"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_vacunas", force: true do |t|
-    t.string   "nombre"
-    t.string   "protege_contra"
-    t.string   "tipo"
+  create_table "med_vacunas", force: :cascade do |t|
+    t.string   "nombre",         limit: 255
+    t.string   "protege_contra", limit: 255
+    t.string   "tipo",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "med_vacunas_medicamentos", force: true do |t|
-    t.integer  "vacuna_id"
-    t.integer  "medicamento_id"
+  create_table "med_vacunas_medicamentos", force: :cascade do |t|
+    t.integer  "vacuna_id",      limit: 4
+    t.integer  "medicamento_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ocu_grandes_grupos", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo"
+  create_table "ocu_grandes_grupos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.string   "codigo",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ocu_grupos", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo"
-    t.integer  "gran_grupo_id"
+  create_table "ocu_grupos", force: :cascade do |t|
+    t.string   "nombre",        limit: 255
+    t.string   "codigo",        limit: 255
+    t.integer  "gran_grupo_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ocu_ocupaciones", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo"
-    t.integer  "subgrupo_id"
+  create_table "ocu_ocupaciones", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.string   "codigo",      limit: 255
+    t.integer  "subgrupo_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ocu_personas_ocupaciones", force: true do |t|
+  create_table "ocu_personas_ocupaciones", force: :cascade do |t|
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.integer  "persona_id"
-    t.integer  "ocupacion_id"
-    t.boolean  "es_actual"
+    t.integer  "persona_id",    limit: 4
+    t.integer  "ocupacion_id",  limit: 4
+    t.boolean  "es_actual",     limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ocu_subgrupos", force: true do |t|
-    t.string   "nombre"
-    t.string   "codigo"
-    t.integer  "grupo_id"
+  create_table "ocu_subgrupos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.string   "codigo",     limit: 255
+    t.integer  "grupo_id",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "per_otras_relaciones", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "persona_relacion_id"
-    t.string   "relacion"
+  create_table "per_otras_relaciones", force: :cascade do |t|
+    t.integer  "persona_id",          limit: 4
+    t.integer  "persona_relacion_id", limit: 4
+    t.string   "relacion",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "per_parentescos", force: true do |t|
-    t.integer  "hijo_id"
-    t.integer  "progenitor_id"
-    t.integer  "gesta_id"
+  create_table "per_parentescos", force: :cascade do |t|
+    t.integer  "hijo_id",       limit: 4
+    t.integer  "progenitor_id", limit: 4
+    t.integer  "gesta_id",      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "per_personas", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "rut"
+  create_table "per_personas", force: :cascade do |t|
+    t.integer  "user_id",                 limit: 4
+    t.integer  "rut",                     limit: 4
     t.string   "digito_verificador",      limit: 1
-    t.string   "nombre"
-    t.string   "apellido_paterno"
-    t.string   "apellido_materno"
-    t.string   "genero"
-    t.string   "nivel_escolaridad"
-    t.integer  "numero_personas_familia"
+    t.string   "nombre",                  limit: 255
+    t.string   "apellido_paterno",        limit: 255
+    t.string   "apellido_materno",        limit: 255
+    t.string   "genero",                  limit: 255
+    t.string   "nivel_escolaridad",       limit: 255
+    t.integer  "numero_personas_familia", limit: 4
     t.datetime "fecha_nacimiento"
     t.datetime "fecha_muerte"
-    t.integer  "diagnostico_muerte_id"
-    t.string   "causa_muerte"
-    t.integer  "pais_nacionalidad_id"
+    t.integer  "diagnostico_muerte_id",   limit: 4
+    t.string   "causa_muerte",            limit: 255
+    t.integer  "pais_nacionalidad_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "per_personas_direcciones", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "direccion_id"
+  create_table "per_personas_direcciones", force: :cascade do |t|
+    t.integer  "persona_id",    limit: 4
+    t.integer  "direccion_id",  limit: 4
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "per_personas_previsiones_salud", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "prevision_salud_id"
+  create_table "per_personas_previsiones_salud", force: :cascade do |t|
+    t.integer  "persona_id",         limit: 4
+    t.integer  "prevision_salud_id", limit: 4
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "per_personas_telefonos", force: true do |t|
-    t.integer  "persona_id"
-    t.integer  "telefono_id"
+  create_table "per_personas_telefonos", force: :cascade do |t|
+    t.integer  "persona_id",  limit: 4
+    t.integer  "telefono_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "per_previsiones_salud", force: true do |t|
-    t.string   "nombre"
+  create_table "per_previsiones_salud", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pre_prestador_administrativos", force: true do |t|
-    t.integer  "prestador_id"
-    t.integer  "rol_administrativo_id"
-    t.integer  "administrativo_id"
+  create_table "pre_prestador_administrativos", force: :cascade do |t|
+    t.integer  "prestador_id",          limit: 4
+    t.integer  "rol_administrativo_id", limit: 4
+    t.integer  "administrativo_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pre_prestador_profesionales", force: true do |t|
-    t.integer  "prestador_id"
-    t.integer  "profesional_id"
-    t.integer  "especialidad_id"
+  create_table "pre_prestador_profesionales", force: :cascade do |t|
+    t.integer  "prestador_id",    limit: 4
+    t.integer  "profesional_id",  limit: 4
+    t.integer  "especialidad_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pre_prestadores", force: true do |t|
-    t.integer  "rut"
-    t.string   "nombre"
+  create_table "pre_prestadores", force: :cascade do |t|
+    t.integer  "rut",        limit: 4
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pre_prestadores_direcciones", force: true do |t|
-    t.integer  "prestador_id"
-    t.integer  "direccion_id"
+  create_table "pre_prestadores_direcciones", force: :cascade do |t|
+    t.integer  "prestador_id", limit: 4
+    t.integer  "direccion_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pre_prestadores_telefonos", force: true do |t|
-    t.integer  "prestador_id"
-    t.integer  "telefono_id"
+  create_table "pre_prestadores_telefonos", force: :cascade do |t|
+    t.integer  "prestador_id", limit: 4
+    t.integer  "telefono_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pre_rol_administrativos", force: true do |t|
-    t.text     "nombre"
+  create_table "pre_rol_administrativos", force: :cascade do |t|
+    t.text     "nombre",     limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pro_especialidades", force: true do |t|
-    t.string   "nombre"
+  create_table "pro_especialidades", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pro_instituciones", force: true do |t|
-    t.string   "nombre"
+  create_table "pro_instituciones", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pro_profesionales", force: true do |t|
-    t.boolean  "validado"
-    t.integer  "profesional_id"
-    t.integer  "especialidad_id"
-    t.integer  "institucion_id"
+  create_table "pro_profesionales", force: :cascade do |t|
+    t.boolean  "validado",        limit: 1
+    t.integer  "profesional_id",  limit: 4
+    t.integer  "especialidad_id", limit: 4
+    t.integer  "institucion_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tra_ciudades", force: true do |t|
-    t.string   "nombre"
+  create_table "tra_ciudades", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tra_comunas", force: true do |t|
-    t.string   "nombre"
+  create_table "tra_comunas", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tra_direcciones", force: true do |t|
-    t.string   "calle"
-    t.integer  "numero"
-    t.integer  "departamento"
-    t.integer  "comuna_id"
-    t.integer  "ciudad_id"
-    t.integer  "pais_id"
+  create_table "tra_direcciones", force: :cascade do |t|
+    t.string   "calle",        limit: 255
+    t.integer  "numero",       limit: 4
+    t.integer  "departamento", limit: 4
+    t.integer  "comuna_id",    limit: 4
+    t.integer  "ciudad_id",    limit: 4
+    t.integer  "pais_id",      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tra_paises", force: true do |t|
-    t.string   "nombre"
+  create_table "tra_paises", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tra_regiones", force: true do |t|
-    t.string   "nombre"
+  create_table "tra_regiones", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tra_regiones_comunas", force: true do |t|
-    t.integer  "region_id"
-    t.integer  "comuna_id"
+  create_table "tra_regiones_comunas", force: :cascade do |t|
+    t.integer  "region_id",  limit: 4
+    t.integer  "comuna_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tra_telefonos", force: true do |t|
-    t.integer  "codigo"
-    t.integer  "numero"
+  create_table "tra_telefonos", force: :cascade do |t|
+    t.integer  "codigo",     limit: 4
+    t.integer  "numero",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "confirmation_token",     limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
+    t.string   "unconfirmed_email",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
