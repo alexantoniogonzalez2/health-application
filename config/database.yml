@@ -9,14 +9,16 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
+  host: dbmedracer.cwljpgozligb.us-west-2.rds.amazonaws.com
+  port: 3306
   adapter: mysql2
   encoding: utf8
   reconnect: false
   database: aplicacion_salud
   pool: 5
-  username: root
-  password: alex2
-  socket: /var/run/mysqld/mysqld.sock
+  username: admin_medracer
+  password: H*UQSrT~U~
+  socket: /var/lib/mysql/mysql.sock
 
 # test:
 #   adapter: mysql2
@@ -42,21 +44,25 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
+  host: dbmedracer.cwljpgozligb.us-west-2.rds.amazonaws.com
+  port: 3306
   adapter: mysql2
   encoding: utf8
   reconnect: false
   database: aplicacion_salud_test
   pool: 5
-  username: root
-  password: alex2
-  socket: /var/run/mysqld/mysqld.sock
+  username: admin_medracer
+  password: H*UQSrT~U~
+  socket: /var/lib/mysql/mysql.sock
 
 production:
+  host: dbmedracer.cwljpgozligb.us-west-2.rds.amazonaws.com
+  port: 3306
   adapter: mysql2
   encoding: utf8
   reconnect: false
   database: aplicacion_salud_production
   pool: 5
-  username: root
-  password: alex2
-  socket: /var/run/mysqld/mysqld.sock
+  username: admin_medracer
+  password: H*UQSrT~U~
+  socket: /var/lib/mysql/mysql.sock
