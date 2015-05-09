@@ -1,6 +1,7 @@
 class AtencionesSaludController < ApplicationController
 
 	include ActionView::Helpers::NumberHelper
+	include ActionView::Helpers::UrlHelper
 	
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
@@ -318,9 +319,9 @@ class AtencionesSaludController < ApplicationController
 
 	def update
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
-		@atencion_salud.update( motivo_consulta: params['atencion_salud']['motivo_consulta'], examen_fisico: params['atencion_salud']['examen_fisico'], indicaciones_generales: params['atencion_salud']['indicaciones_generales'] )
+		@atencion_salud.update( motivo_consulta: params['motivo'], examen_fisico: params['examen'], indicaciones_generales: params['indicaciones'] )
 
-		if params[:finalizar] 
+		if params[:finalizar] == 'finalizar'
 			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
 			@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
 			@agendamiento.agendamiento_estado = @estadoAgendamiento
@@ -328,9 +329,33 @@ class AtencionesSaludController < ApplicationController
 			@agendamiento.save
 		end	
 
-		redirect_to root_path
+		render :json => { :success => true } 
 
 	end
+
+	def cargarAtenciones
+
+		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
+		
+		@atenciones_salud = FiAtencionesSalud
+		.select('fi_atenciones_salud.id, ag.fecha_comienzo, fi_atenciones_salud.persona_id')
+			.joins('JOIN ag_agendamientos AS ag
+						  ON fi_atenciones_salud.agendamiento_id = ag.id
+						  JOIN pre_prestador_profesionales as ppp
+						  ON ag.especialidad_prestador_profesional_id = ppp.id')
+					.where('ppp.id = ?',@especialidad_prestador_profesional.id)
+
+		@atenciones = []
+
+		@atenciones_salud.each do |at_sal|
+			@atenciones << [at_sal.id,at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut,
+			 link_to( 'Ver', atenciones_salud_path(at_sal)) ]
+		end	
+
+		render :json => @atenciones
+
+	end 	
 
 	private
 	  def app_params

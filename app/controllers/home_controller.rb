@@ -78,12 +78,14 @@ class HomeController < ApplicationController
 						 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 					.order(fecha: :desc)
 
+				@pacientes_profesional = @profesional.misPacientes(@especialidad_prestador_profesional.id)
+
 				@atenciones_salud = FiAtencionesSalud
 					.joins('JOIN ag_agendamientos AS ag
 								  ON fi_atenciones_salud.agendamiento_id = ag.id
 								  JOIN pre_prestador_profesionales as ppp
 								  ON ag.especialidad_prestador_profesional_id = ppp.id')
-					.where('ppp.profesional_id = ?',@profesional.id)
+					.where('ppp.id = ?',@especialidad_prestador_profesional.id)
 					
   			render 'index_profesional'
 		  else

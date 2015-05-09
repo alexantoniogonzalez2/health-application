@@ -1,19 +1,21 @@
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-3 column">
+		<div class="col-md-3 column col-ant">
 			<ul id="nav-antecedentes" class="nav nav-pills nav-pills nav-stacked nav-antecedentes" role="tablist">
 			  <li class="active"><a href="#ant_med" role="tab" data-toggle="tab">Horas agendadas para el día</a></li>
 			  <li><a href="#ant_quir" role="tab" data-toggle="tab">Últimas actualizaciones</a></li>
 			  <li><a href="#agenda" role="tab" data-toggle="tab">Ver agenda</a></li>
-			  <li><a href="#atenciones" role="tab" data-toggle="tab">Ver atenciones</a></li>
+			  <li><a href="#atenciones" role="tab" data-toggle="tab">Ver últimas atenciones</a></li>
+			  <li><a href="#atenciones_realizadas" role="tab" data-toggle="tab">Buscar atenciones realizadas</a></li>
 			</ul>
 		</div>
-		<div class="col-md-9 column antecedentes">
+		<div class="col-md-9 column col-ant">
 			<div class="tab-content antecedentes">
 			  <div class="tab-pane active" id="ant_med"><%= render :partial => "horas_agendadas", :locals => {:agendamientos => @agendamientos} %></div>
 			  <div class="tab-pane" id="ant_quir"><%= render :partial => "log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %> <button id="actualizar" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button></div>
 			  <div class="tab-pane" id="agenda"><%= render :partial => "agendamiento/buscador_hora" %></div>
-			  <div class="tab-pane" id="atenciones"><%= render :partial => "atenciones_salud/index" %></div>	
+			  <div class="tab-pane" id="atenciones"><%= render :partial => "atenciones_salud/index" %></div>
+				<div class="tab-pane" id="atenciones_realizadas"><%= render :partial => "atenciones_salud/index_buscar" %></div>	
 			</div>
 		</div>
 	</div>

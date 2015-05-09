@@ -27,7 +27,7 @@ div.actividad-fisica {
 #nav-antecedentes  > li.hover > a { color: $Blue; }
 #nav-antecedentes  > li.active > a { color: #444 ; font-weight: bold; right: 5px; color: #444; border-left: 5px solid $Blue; }
 #nav-antecedentes  > li:not(:hover)> a { color: #444 !important; }
-#nav-antecedentes > li > a { padding: 7px 15px !important ; }
+#nav-antecedentes > li > a { padding: 7px 0px 7px 15px !important ; }
 
 div.alert-act { 
 	margin-bottom: 5px;

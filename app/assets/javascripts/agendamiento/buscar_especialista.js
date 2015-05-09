@@ -39,7 +39,7 @@ $("#select_especialidad_agregar").on("change", function(e) {
       var newOption = response
       $('#select_especialista_agregar').append(response);
     },
-    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.5"); }
   });  
 
 })

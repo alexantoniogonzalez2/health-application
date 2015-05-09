@@ -1,0 +1,51 @@
+<% if @atenciones_salud.blank? %> 
+  <h4>No hay atenciones de salud realizadas.</h4>
+<% else %>
+  <h4>Atenciones de salud</h4>
+  
+  <div class='container well'>
+    <h5>Buscar atenciones anteriores</h5>
+    <div class='row'>
+      <div class='col-md-4'>
+        Paciente:
+        <select id="select-paciente-buscar" name="selectbasic" class="select_buscar_paciente" >
+          <option></option>
+          <% @pacientes_profesional.each do |pac| %>             
+            <option value="<%= pac['id'] %>"><%= pac['rut']<<' '<<pac['nombre'] %></option> 
+          <% end %>    
+        </select>   
+      </div>
+      <div class='col-md-4'>
+        Desde:
+        <input type='text' class="form-control" id='date_fecha_inicio' name='date' placeholder='Seleccionar fecha' />
+      </div>
+      <div class='col-md-4'>
+        Final:
+        <input type='text' class="form-control" id='date_fecha_final' name='date' placeholder='Seleccionar fecha' />
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'><br>
+        <button id="buscar-atenciones" class="btn btn-primary ajus-pos-right">Buscar atenciones</button>
+      </div>
+    </div>
+  </div>
+
+  <br><br>
+  <h5>Atenciones de salud</h5>    
+  <table id="lista_atenciones_buscar" class="display" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Fecha</th>
+        <th>Paciente</th>
+        <th>Rut</th>          
+        <th>Ver atención</th>          
+      </tr>
+    </thead>
+    <tbody> 
+    </tbody> 
+  </table>
+<% end %>  
+
+<%= javascript_include_tag "atenciones_salud" %>

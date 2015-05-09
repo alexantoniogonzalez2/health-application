@@ -37,7 +37,7 @@ if ( $( "#profesional" ).length ){
     success: function(response) {
     	  $('#buscadorHora').fullCalendar('addEventSource',response);
     },
-    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.2"); }
   });
 }
 
@@ -67,7 +67,7 @@ $("#select_especialidad").on("change", function(e) {
       var newOption = response
       $('#select_especialista').append(response);
     },
-    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.3"); }
   });  
 
   $('#buscadorHora').fullCalendar('removeEvents');
@@ -384,7 +384,7 @@ function actualizarCentro(){
 	    success: function(response) {
 	    	  $('#buscadorHora').fullCalendar('addEventSource',response);
 	    },
-	    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+	    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.4"); }
 	  }); 		
 	}
 	else{	alert('Seleccione una especialidad o un especialista.'); }

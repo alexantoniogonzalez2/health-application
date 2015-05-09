@@ -90,6 +90,8 @@ AplicacionMedica::Application.routes.draw do
   get '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc'
   post '/agregar_diag_med', to: 'persona_medicamento#agregarDiagMed'
   post '/actualizar_diag_med', to: 'persona_medicamento#actualizarDiagMed'
+  post '/guardar_atencion', to: 'atenciones_salud#update'
+  post '/cargar_atenciones_salud', to: 'atenciones_salud#cargarAtenciones'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

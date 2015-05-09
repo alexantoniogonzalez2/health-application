@@ -12,7 +12,7 @@ class PerPersonas < ActiveRecord::Base
   has_many :persona_diagnosticos, :class_name => 'FiPersonaDiagnosticos', :foreign_key => 'persona_id' 
   has_many :gesta, :class_name => 'FiGestas', :foreign_key => 'persona_id'  
   has_many :persona_medicamentos, :class_name => 'FiPersonaMedicamentos', :foreign_key => 'persona_id'
-  has_many :atenciones_medicas, :class_name => 'FiAtencionesMedicas', :foreign_key => 'persona_id'
+  has_many :atenciones_salud, :class_name => 'FiAtencionesSalud', :foreign_key => 'persona_id'
   has_many :persona_metricas, :class_name => 'FiPersonaMetricas', :foreign_key => 'persona_id'
   has_many :personas_direcciones, :class_name => 'PerPersonasDirecciones', :foreign_key => 'persona_id'
   has_many :personas_previsiones_salud, :class_name => 'PerPersonasPrevisionesSalud', :foreign_key => 'persona_id'
@@ -41,6 +41,25 @@ class PerPersonas < ActiveRecord::Base
   }
 
   end
+
+  def misPacientes(especialidad_prestador_profesional)
+    @id_paciente = []
+    @id_pacientes = FiAtencionesSalud.select('distinct(fi_atenciones_salud.persona_id)')
+      .joins('JOIN ag_agendamientos as ag on fi_atenciones_salud.agendamiento_id = ag.id')
+      .where('especialidad_prestador_profesional_id = ?', especialidad_prestador_profesional )
+
+    @id_pacientes.each do |id_paciente|
+      @paciente = PerPersonas.find(id_paciente.persona_id)
+      @id_paciente << { 
+        'id' => id_paciente.persona_id,
+        'rut' => @paciente.showRut, 
+        'nombre' => @paciente.showName('%n%p%m')
+      }  
+    end 
+
+    return @id_paciente 
+
+  end 
 
   def getGrupoEtareo(fecha_atencion_salud)
     if fecha_nacimiento

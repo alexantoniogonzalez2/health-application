@@ -17,9 +17,7 @@ $(document).ready(function() {
   $('#ant_qui').qtip({ content: { text: 'Antecedentes quirúrgicos' }})
   $('#ant_gin').qtip({ content: { text: 'Antecedentes ginecológicos' }})
 
-  if ( $.fn.dataTable.isDataTable( '#lista_atenciones' ) ) {
-     
-  }
+  if ( $.fn.dataTable.isDataTable( '#lista_atenciones' ) ) { }
   else {
     $('#lista_atenciones').DataTable({
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
@@ -38,7 +36,24 @@ $(document).ready(function() {
     });
   }
 
-
+  if ( $.fn.dataTable.isDataTable( '#lista_atenciones_buscar' ) ) { }
+  else {
+    var table = $('#lista_atenciones_buscar').DataTable({
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
+                    "language": {
+                      "lengthMenu": "Mostrar _MENU_ atenciones por página",
+                      "zeroRecords": "La búsqueda no arrojó resultados.",
+                      "info": "Página _PAGE_ de _PAGES_",
+                      "infoEmpty": "No hay atenciones que mostrar",
+                      "infoFiltered": "(filtrados de un total de _MAX_ atenciones de salud)",
+                      "search": "Búsqueda",
+                      "oPaginate": {
+                        "sPrevious": "Página anterior",
+                        "sNext": "Página siguiente"
+                      }      
+                    }
+                  });
+  }
    
   $('#div_atenciones').show();
 
@@ -66,3 +81,63 @@ function cerrarModalAntFamMue(modal_id){ $('#modal-container-ant-fam-mue-' + mod
 function cerrarModalAntFamCro(modal_id){ $('#modal-container-ant-fam-cro-' + modal_id ).modal('hide'); }
 function cerrarModalDiag(modal_id){ $('#modal-container-diag-' + modal_id ).modal('hide'); }
 
+$('select.select_buscar_paciente').select2({ width: '100%', placeholder: 'Selecciona un paciente', allowClear: true });
+
+$('#date_fecha_inicio').datetimepicker({
+    locale: 'es',
+    format: 'YYYY-MM-DD',
+    viewMode: 'years',
+});
+
+$('#date_fecha_final').datetimepicker({
+    locale: 'es',
+    format: 'YYYY-MM-DD',
+    viewMode: 'years',
+});
+
+$('#buscar-atenciones').click(function() {
+  var paciente = $('#select-paciente-buscar').val();
+  var fecha_inicio = $('#date_fecha_inicio').val();
+  var fecha_final = $('#date_fecha_final').val();
+
+  if (paciente != '' || fecha_inicio != '' || fecha_final != '' ){
+    $.ajax({
+      type: 'POST',
+      url: '/cargar_atenciones_salud',
+      data: { paciente: paciente, fecha_inicio: fecha_inicio, fecha_final: fecha_final },
+      success: function(response){ 
+
+        if ( $.fn.dataTable.isDataTable( '#lista_atenciones_buscar' ) ) { var table = $('#lista_atenciones_buscar').DataTable(); table.destroy(); }
+       
+          var table = $('#lista_atenciones_buscar').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
+                "language": {
+                  "lengthMenu": "Mostrar _MENU_ atenciones por página",
+                  "zeroRecords": "La búsqueda no arrojó resultados.",
+                  "info": "Página _PAGE_ de _PAGES_",
+                  "infoEmpty": "No hay atenciones que mostrar",
+                  "infoFiltered": "(filtrados de un total de _MAX_ atenciones de salud)",
+                  "search": "Búsqueda",
+                  "oPaginate": {
+                    "sPrevious": "Página anterior",
+                    "sNext": "Página siguiente"
+                  }      
+                },                
+                "data": response,
+                 "columns": [
+                      { "title": "Número" },
+                      { "title": "Fecha" },
+                      { "title": "Paciente" },
+                      { "title": "Rut" },
+                      { "title": "Ver atención" },
+                  ]
+              });
+
+      },
+      error: function(xhr, status, error){ alert("Se produjo un error al cargar los antecedentes."); }
+    });
+
+  } 
+  else
+    alert('Selecciona un parámetro de búsqueda.'); 
+});

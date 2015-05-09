@@ -363,7 +363,7 @@ $("#select_procedimiento").on("change", function(e) {
       atencion_salud_id: atencion_salud_id,
       tipo: 'procedimiento'
     },
-    success: function(response) {$("#select_procedimiento").select2("val", ""); },
+    success: function(response) { $("#select_procedimiento").select2("val", ""); },
     error: function(xhr, status, error){ alert("No se pudo agregar el procedimiento o cirugía del paciente."); }
   });  
 
@@ -910,6 +910,28 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
   } else {
     alert('Seleccione un familiar y un diagnóstico');
   }
+}
 
+$('#finalizar').click(function() {
+  guardarAtencion("finalizar");
+});
+
+$('#guardar').click(function() {
+  guardarAtencion("guardar");
+});
+
+function guardarAtencion(action){
+    
+  motivo = $('#motivo_consulta').val();
+  examen = $('#examen_fisico').val();
+  indicaciones = $('#indicaciones_generales').val();
+  
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_atencion',
+    data: { id: atencion_salud_id, finalizar: action, motivo: motivo, examen: examen, indicaciones: indicaciones },
+    success: function(response) { window.location = '/' },
+    error: function(xhr, status, error) { alert('No se pudo guardar la atención de salud.'); }
+  });
 
 }

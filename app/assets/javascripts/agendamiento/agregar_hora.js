@@ -17,7 +17,7 @@ function cargarHoras(){
     success: function(response) {
     	  $('#calendar').fullCalendar('addEventSource',response);
     },
-    error: function(xhr, status, error){ alert("Error al filtrar por especialidad."); }
+    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.1"); }
   });
 
 }
