@@ -1,8 +1,8 @@
-function actualizarVacunas(vac,estado){
+function actualizarVacunas(vac,estado,tipo){
 	$.ajax({
     type: 'POST',
     url: '/actualizar_vacunas',
-    data: { vac: vac, estado: estado },
+    data: { vac: vac, estado: estado, tipo: tipo },
     success: function(response) { 
       if(!estado){
         $("#tr-pers-vac-"+response).remove();
@@ -20,7 +20,7 @@ function actualizarVacunas(vac,estado){
 $('input[type=checkbox][id^=checkboxes-vac-]').change(function() {
   var vac = $(this).attr('id').substring(15);
   var estado = $(this).is(':checked');
-  actualizarVacunas(vac,estado); 
+  actualizarVacunas(vac,estado,'calendario'); 
   /*
   var message = $('<p />', { text: 'Se modificará información sobre las vacunas asociadas a la persona.' }),
   ok = $('<button />', { text: 'Modificar', id: 'ok', class: 'btn btn-sm btn-primary' }),
@@ -42,3 +42,8 @@ $('input[type=checkbox][id^=checkboxes-vac-]').change(function() {
   });*/
 });
 
+$('input[type=checkbox][id^=check-vac-otras-]').change(function() {
+  var vac = $(this).attr('id').substring(16);
+  var estado = $(this).is(':checked');
+  actualizarVacunas(vac,estado,'otras'); 
+});

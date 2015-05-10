@@ -1,0 +1,13 @@
+<h4>Seguimiento a otras vacunas</h4>
+<table class="table table-striped table-hover table-condensed">
+  <thead><tr class='info'><th class="col-sm-1">Tipo</th><th class="col-sm-1">Vacuna</th><th class="col-sm-1">Estado de vacunación</th></tr></thead>
+  <tbody>
+    <% @otras_vacunas.each do |otra_vacuna| %>
+      <tr>
+        <td><%= otra_vacuna.tipo %></td>
+        <td><%= otra_vacuna.nombre %></td>
+        <td><label class="calendario-vacunas"><input type="checkbox" id="check-vac-otras-<%= otra_vacuna.id %>" <%= 'checked' unless otra_vacuna.persona_id.nil? %> ></label></td>
+      </tr>
+    <% end %>
+   </tbody>    
+</table>      

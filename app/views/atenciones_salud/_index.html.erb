@@ -6,7 +6,6 @@
     <table id="lista_atenciones" class="display" cellspacing="0" width="100%">
       <thead>
         <tr>
-          <th>Número</th>
           <th>Fecha</th>
           <th>Paciente</th>
           <th>Rut</th>          
@@ -16,7 +15,6 @@
       </thead> 
       <tfoot>
         <tr>
-          <th>Número</th>
           <th>Fecha</th>
           <th>Paciente</th>
           <th>Rut</th>          
@@ -27,7 +25,6 @@
       <tbody> 
         <% @atenciones_salud.each do |atencion_salud| %>
           <tr>
-            <td><%= atencion_salud.id %></td>
             <td><%= atencion_salud.agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
             <td><%= atencion_salud.persona.showName('%n%p%m') %></td>
             <td><%= atencion_salud.persona.showRut %></td>            

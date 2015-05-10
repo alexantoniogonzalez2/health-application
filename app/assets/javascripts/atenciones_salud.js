@@ -39,7 +39,8 @@ $(document).ready(function() {
   if ( $.fn.dataTable.isDataTable( '#lista_atenciones_buscar' ) ) { }
   else {
     var table = $('#lista_atenciones_buscar').DataTable({
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],                    
+                    "order":[[ 0, "desc"]],
                     "language": {
                       "lengthMenu": "Mostrar _MENU_ atenciones por página",
                       "zeroRecords": "La búsqueda no arrojó resultados.",
@@ -111,6 +112,7 @@ $('#buscar-atenciones').click(function() {
        
           var table = $('#lista_atenciones_buscar').DataTable({
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
+                "order":[[ 0, "desc"]],
                 "language": {
                   "lengthMenu": "Mostrar _MENU_ atenciones por página",
                   "zeroRecords": "La búsqueda no arrojó resultados.",
@@ -125,7 +127,6 @@ $('#buscar-atenciones').click(function() {
                 },                
                 "data": response,
                  "columns": [
-                      { "title": "Número" },
                       { "title": "Fecha" },
                       { "title": "Paciente" },
                       { "title": "Rut" },

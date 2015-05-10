@@ -4,7 +4,7 @@
 <%	when 'ale' %>
 			$( "#contenido-ant" ).replaceWith("<div id='contenido-ant'><%= escape_javascript( render :partial => @partial, :locals => {:persona_prestacion => @persona_prestacion, :atencion_salud => @atencion_salud, :prestadores => @prestadores } ) %></div>")
 <%	when 'vac' %>
-			$( "#contenido-ant" ).replaceWith("<div id='contenido-ant'><%= escape_javascript( render :template => @partial, :locals => {:personas_vacunas => @personas_vacunas, :agno => @agno, :partial_seguimiento => @partial_seguimiento, :calendario_vacunas_persona => @calendario_vacunas_persona , :agnos => @agnos, :calendario_vacunas => @calendario_vacunas, :otras_vacunas => @otras_vacunas } ) %></div>")
+			$( "#contenido-ant" ).replaceWith("<div id='contenido-ant'><%= escape_javascript( render :template => @partial, :locals => {:personas_vacunas => @personas_vacunas, :personas_vacunas_otras => @personas_vacunas_otras,:agno => @agno, :partial_seguimiento => @partial_seguimiento, :calendario_vacunas_persona => @calendario_vacunas_persona , :agnos => @agnos, :calendario_vacunas => @calendario_vacunas, :otras_vacunas => @otras_vacunas } ) %></div>")
 <%	when 'ant_qui' %>
 			$( "#contenido-ant" ).replaceWith("<div id='contenido-ant'><%= escape_javascript( render :partial => @partial, :locals => {:alergias => @alergias } ) %></div>")			
 <%	when 'act_fis' %>

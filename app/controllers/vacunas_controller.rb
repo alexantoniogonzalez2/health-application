@@ -53,27 +53,40 @@ class VacunasController < ApplicationController
 		@otras_vacunas = MedVacunas.where('tipo != ?','pni')			
 	end
 	def actualizar
-		@agno = FiCalendarioVacunas.maximum('agno')
-		@calendario_vacuna = FiCalendarioVacunas.where('id = ? AND agno = ?',params[:vac],@agno).first
+		if params[:tipo] == 'calendario'
+			@agno = FiCalendarioVacunas.maximum('agno')
+			@calendario_vacuna = FiCalendarioVacunas.where('id = ? AND agno = ?',params[:vac],@agno).first
+		end	
 		@persona = PerPersonas.where('user_id = ?',current_user.id).first
 		if params[:estado] == 'true'			
 			@persona_vacuna_nueva = FiPersonasVacunas.new
 			@persona_vacuna_nueva.persona = @persona
-			@persona_vacuna_nueva.vacuna = MedVacunas.find(@calendario_vacuna.vacuna.id)
 			@persona_vacuna_nueva.fecha = DateTime.current
-			@persona_vacuna_nueva.numero_vacuna = @calendario_vacuna.numero_vacuna
-			@persona_vacuna_nueva.save!
+			@persona_vacuna_nueva.vacuna = MedVacunas.find(@calendario_vacuna.vacuna.id) if params[:tipo] == 'calendario'
+			@persona_vacuna_nueva.vacuna = MedVacunas.find(params[:vac]) if params[:tipo] == 'otras'
+			@persona_vacuna_nueva.numero_vacuna = @calendario_vacuna.numero_vacuna if params[:tipo] == 'calendario'
+			@persona_vacuna_nueva.save! 
 
-			@persona_vacuna = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
+			if params[:tipo] == 'calendario'
+				@persona_vacuna = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																		 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																		 .where('fi_personas_vacunas.id = ?',@persona_vacuna_nueva.id).first
+			else
+				@persona_vacuna = FiPersonasVacunas.joins('JOIN med_vacunas AS mv ON fi_personas_vacunas.vacuna_id = mv.id')
+																		 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id, mv.tipo as edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
+																		 .where('fi_personas_vacunas.id = ?',@persona_vacuna_nueva.id).first
+			end															 
 
 			respond_to do |format|     
       	format.js { }
       	format.json { render :json => { :success => true, :persona_vacuna => @persona_vacuna } }
       end	
 		else
-			@persona_vacuna_quitar = FiPersonasVacunas.where('persona_id = ? AND vacuna_id = ? AND (numero_vacuna = ? or numero_vacuna is null)',@persona.id, @calendario_vacuna.vacuna.id, @calendario_vacuna.numero_vacuna).first
+			if params[:tipo] == 'calendario'
+				@persona_vacuna_quitar = FiPersonasVacunas.where('persona_id = ? AND vacuna_id = ? AND (numero_vacuna = ? or numero_vacuna is null)',@persona.id, @calendario_vacuna.vacuna.id, @calendario_vacuna.numero_vacuna).first
+			else
+				@persona_vacuna_quitar = FiPersonasVacunas.where('persona_id = ? AND vacuna_id = ?',@persona.id, params[:vac]).first
+			end	
 			id_quitar = @persona_vacuna_quitar.id 
 			@persona_vacuna_quitar.destroy
 			respond_to do |format|

@@ -1,7 +1,6 @@
 class AtencionesSaludController < ApplicationController
 
-	include ActionView::Helpers::NumberHelper
-	include ActionView::Helpers::UrlHelper
+	include ActionView::Helpers::NumberHelper	
 	
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
@@ -257,11 +256,13 @@ class AtencionesSaludController < ApplicationController
   	if @persona.genero == 'Femenino' 
 	  	@texto_ant_gin = 'Sin información'
 	  	@ant_gin = @persona.persona_antecedentes_ginecologicos
-	  	if !@ant_gin.fecha_menopausia.nil?
-	  		@texto_ant_gin = 'Menopausia' 
-	  	elsif !@ant_gin.numero_gestaciones.nil?
-	  		@texto_ant_gin = 'G'>>@ant_gin.numero_gestaciones>>'P'>>@ant_gin.numero_partos>>'A'>>@ant_gin.numero_abortos
-	  	end
+	  	if !@ant_gin.nil?
+		  	if !@ant_gin.fecha_menopausia.nil?
+		  		@texto_ant_gin = 'Menopausia' 
+		  	elsif !@ant_gin.numero_gestaciones.nil? and @ant_gin.numero_gestaciones != 'null'
+		  		@texto_ant_gin = 'G' << @ant_gin.numero_gestaciones.to_s << 'P' << @ant_gin.numero_partos.to_s << 'A' <<@ant_gin.numero_abortos.to_s
+		  	end
+		  end	
 	  end	
   				
 
@@ -287,7 +288,7 @@ class AtencionesSaludController < ApplicationController
 
 	def editarAtencion		
 
-  	redirect_to :action => "edit", :id =>params[:id]
+  	redirect_to action: "edit", id: params[:id]
 	
 	end
 
@@ -297,7 +298,7 @@ class AtencionesSaludController < ApplicationController
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
 		@agendamiento.agendamiento_estado = @estadoAgendamiento
 		@agendamiento.save	
-  	redirect_to :action => "edit", :id =>params[:id_atencion]	
+  	redirect_to action: "edit", id: params[:id_atencion]	
 	end
 		
 	def guardarTexto
@@ -337,19 +338,27 @@ class AtencionesSaludController < ApplicationController
 
 		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
 		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
-		
-		@atenciones_salud = FiAtencionesSalud
-		.select('fi_atenciones_salud.id, ag.fecha_comienzo, fi_atenciones_salud.persona_id')
+		@fecha_inicial = params[:fecha_inicio].blank? ? DateTime.new(2015, 01, 01, 20, 0, 0) : params[:fecha_inicio]
+		@fecha_final = params[:fecha_final].blank? ? DateTime.current : params[:fecha_final].to_time + 1.days
+
+		@query = FiAtencionesSalud
+			.select('fi_atenciones_salud.id, ag.fecha_comienzo, fi_atenciones_salud.persona_id')
 			.joins('JOIN ag_agendamientos AS ag
 						  ON fi_atenciones_salud.agendamiento_id = ag.id
 						  JOIN pre_prestador_profesionales as ppp
 						  ON ag.especialidad_prestador_profesional_id = ppp.id')
-					.where('ppp.id = ?',@especialidad_prestador_profesional.id)
+					.where('ppp.id = ? AND fecha_comienzo BETWEEN ? AND ?',@especialidad_prestador_profesional.id,@fecha_inicial,@fecha_final)
+
+		if params[:paciente].blank?
+			@atenciones_salud = @query
+		else
+			@atenciones_salud = @query.where('fi_atenciones_salud.persona_id = ?',params[:paciente])
+		end	 			
 
 		@atenciones = []
 
 		@atenciones_salud.each do |at_sal|
-			@atenciones << [at_sal.id,at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut,
+			@atenciones << [at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut,
 			 link_to( 'Ver', atenciones_salud_path(at_sal)) ]
 		end	
 

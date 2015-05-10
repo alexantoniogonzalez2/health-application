@@ -150,6 +150,10 @@ class AntecedentesController < ApplicationController
 			@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																					 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																					 .where('persona_id = ?',@persona.id)
+			@personas_vacunas_otras = FiPersonasVacunas.joins('JOIN med_vacunas AS mv ON fi_personas_vacunas.vacuna_id = mv.id')
+																						 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,mv.tipo as edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
+																						 .where('persona_id = ? AND mv.tipo != ?',@persona.id,'pni')
+																						 
 			@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)
 			@agno = FiCalendarioVacunas.maximum('agno')
 			@array_grupo = []												
@@ -188,7 +192,9 @@ class AntecedentesController < ApplicationController
 					@calendarios[agno.agno][contador]['protege_contra'] = calendario_vacuna.vacuna.protege_contra
 				end	
 			end
-			@otras_vacunas = MedVacunas.where('tipo != ?','pni')
+			@otras_vacunas = MedVacunas.joins('LEFT JOIN fi_personas_vacunas as fpv ON fpv.vacuna_id = med_vacunas.id')
+														.select('fpv.persona_id, med_vacunas.id,med_vacunas.nombre,med_vacunas.tipo')
+														.where('tipo != ? AND (persona_id = ? OR persona_id is null)','pni',@persona.id)
 			@partial = 'vacunas/index'
 		when 'ant_qui'
 			@prestadores = PrePrestadores.all		

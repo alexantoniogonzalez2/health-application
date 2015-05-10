@@ -86,8 +86,13 @@ class HomeController < ApplicationController
 								  JOIN pre_prestador_profesionales as ppp
 								  ON ag.especialidad_prestador_profesional_id = ppp.id')
 					.where('ppp.id = ?',@especialidad_prestador_profesional.id)
-					
+					.order('fecha_comienzo asc')
+					.limit(100)
+
+				#@atenciones_salud = @query.where('fecha_comienzo > ?', 1.week.ago)
+				#@atenciones_salud = @query.where('fecha_comienzo > ?', 1.week.ago) if @atenciones_salud.blank?					
   			render 'index_profesional'
+
 		  else
 				@acceso_especialista = false		
 				@acceso = true
@@ -149,6 +154,9 @@ class HomeController < ApplicationController
 				@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																						 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																						 .where('persona_id = ?',@persona.id)
+				@personas_vacunas_otras = FiPersonasVacunas.joins('JOIN med_vacunas AS mv ON fi_personas_vacunas.vacuna_id = mv.id')
+																						 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,mv.tipo as edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
+																						 .where('persona_id = ? AND mv.tipo != ?',@persona.id,'pni')
 
 				@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)
 				@agno = FiCalendarioVacunas.maximum('agno')												
@@ -192,7 +200,9 @@ class HomeController < ApplicationController
 					end	
 				end
 
-				@otras_vacunas = MedVacunas.where('tipo != ?','pni')	
+				@otras_vacunas = MedVacunas.joins('LEFT JOIN fi_personas_vacunas as fpv ON fpv.vacuna_id = med_vacunas.id')
+																		.select('fpv.persona_id, med_vacunas.id,med_vacunas.nombre,med_vacunas.tipo')
+																		.where('tipo != ? AND (persona_id = ? OR persona_id is null)','pni',@persona.id)	
 
 				#Buscador hora															 
 				@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
