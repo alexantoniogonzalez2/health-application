@@ -8,7 +8,7 @@
 
 Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
 
-if ENV["prueba"]
+if Rails.env.development?
 	Dir[File.join(Rails.root, 'db', 'seeds_prueba', '*.rb')].sort.each { |seed| load seed }
 	Rake::Task['agendamiento:crear_agendamientos'].invoke
 end 

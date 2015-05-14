@@ -8,6 +8,7 @@ class CreateMedDiagnosticos < ActiveRecord::Migration
       t.integer :numero
       t.boolean :frecuente
       t.boolean :nodo_terminal
+      t.string :genero
       t.timestamps
     end
   end

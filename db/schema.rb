@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422014000) do
+ActiveRecord::Schema.define(version: 20150514052350) do
 
   create_table "ag_agendamiento_estados", force: :cascade do |t|
     t.string   "nombre",     limit: 255
@@ -334,6 +334,7 @@ ActiveRecord::Schema.define(version: 20150422014000) do
     t.integer  "numero",        limit: 4
     t.boolean  "frecuente",     limit: 1
     t.boolean  "nodo_terminal", limit: 1
+    t.string   "genero",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -362,14 +363,20 @@ ActiveRecord::Schema.define(version: 20150422014000) do
     t.datetime "updated_at"
   end
 
-  create_table "med_enfermedades_notificacion_obligatoria", force: :cascade do |t|
-    t.string   "nombre",                  limit: 255
+  create_table "med_eno", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "med_eno_diagnostico", force: :cascade do |t|
+    t.integer  "eno_id",                  limit: 4
     t.integer  "diagnostico_id",          limit: 4
     t.string   "tipo_vigilancia",         limit: 255
     t.string   "frecuencia_notificacion", limit: 255
     t.integer  "prioridad",               limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "med_laboratorios", force: :cascade do |t|
@@ -437,14 +444,19 @@ ActiveRecord::Schema.define(version: 20150422014000) do
 
   create_table "med_problemas_salud_auge", force: :cascade do |t|
     t.string   "nombre",            limit: 255
-    t.integer  "diagnostico_id",    limit: 4
     t.integer  "edad_desde",        limit: 4
     t.integer  "edad_hasta",        limit: 4
-    t.string   "genero",            limit: 255
-    t.integer  "prioridad",         limit: 4
     t.datetime "fecha_inicio_auge"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "med_problemas_salud_auge_diagnosticos", force: :cascade do |t|
+    t.integer  "diagnostico_id",         limit: 4
+    t.integer  "problema_salud_auge_id", limit: 4
+    t.integer  "prioridad",              limit: 4
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "med_vacunas", force: :cascade do |t|

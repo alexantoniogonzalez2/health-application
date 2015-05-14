@@ -32,7 +32,7 @@ R5 = PreRolAdministrativos.create! :nombre => "Generar estadísticas"
 R6 = PreRolAdministrativos.create! :nombre => "Tomar horas"
 
 puts 'Institución'
-I = ProInstituciones.create! nombre => "Pontificia Universidad Católica de Chile"
+I = ProInstituciones.create! :nombre => "Pontificia Universidad Católica de Chile"
 
 puts 'Estados Agendamientos'
 AgAgendamientoEstados.create! :nombre => "Hora disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
