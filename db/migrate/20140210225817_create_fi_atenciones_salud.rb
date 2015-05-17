@@ -4,6 +4,7 @@ class CreateFiAtencionesSalud < ActiveRecord::Migration
       t.text :motivo_consulta
       t.text :examen_fisico
       t.text :indicaciones_generales
+      t.text :anamnesis
       t.references :agendamiento 	#agendamiento_id
       t.references :persona 	#persona_id
       t.references :tipo_ficha 	#tipo_ficha_id

@@ -1,0 +1,99 @@
+<div class="modal fade" id="modal-container-signos" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div id="modal-dialog-signos" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">
+          Signos vitales
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="tabbable" >
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#panel-signos" data-toggle="tab">Ingresar datos</a>
+            </li>
+            <li>
+              <a id="tabpanel-frec_car" href="#panel-frec_car" data-toggle="tab">Gráfico frecuencia cardiaca</a>
+            </li>
+            <li>
+              <a id="tabpanel-frec_res" href="#panel-frec_res" data-toggle="tab">Gráfico frecuencia respitaroria</a>
+            </li>
+            <li>
+              <a id="tabpanel-presion" href="#panel-presion" data-toggle="tab">Gráfico presión</a>
+            </li>
+            <li>
+              <a id="tabpanel-temp" href="#panel-temp" data-toggle="tab">Gráfico temperatura</a>
+            </li>
+            <li>
+              <a id="tabpanel-sat" href="#panel-sat" data-toggle="tab">Gráfico saturación</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="panel-signos">   
+            <br><br>         
+              <table>
+                <tr>
+                  <th>Signo vital</th>
+                  <th>Valor</th>
+                  <th>Unidad</th>
+                  <th>Característica</th>
+                </tr>
+                <tr>
+                  <td><span>Frecuencia cardiaca</span></td>
+                  <td><input id="frec_car-<%= id %>" type="text" class="form-control metrica" value="<%= p_fc %>" maxlength="4" size="4" ></td>
+                  <td><span class="text-med">latidos por minuto</span></td>
+                  <td><input id="car_frec_car-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_fc %>" maxlength="60" size="60" ></td>
+                </tr>
+                <tr>
+                  <td><span>Frecuencia respiratoria</span></td>
+                  <td><input id="frec_res-<%= id %>" type="text" class="form-control metrica" value="<%= p_fr %>" maxlength="4" size="4" ></td>
+                  <td><span class="text-med">respiraciones por minuto</span></td>
+                  <td><input id="car_frec_res-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_fr %>" maxlength="60" size="60" ></td>
+                </tr>
+                <tr>
+                  <td><span>Presión</span></td>
+                  <td><input id="presion-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr %>" maxlength="4" size="4" ></td>
+                  <td><span class="text-med">mm HG</span></td>
+                  <td><input id="car_presion-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_pr %>" maxlength="60" size="60" ></td>
+                </tr>
+                <tr>
+                  <td><span>Temperatura</span></td>
+                  <td><input id="temp-<%= id %>" type="text" class="form-control metrica" value="<%= p_t %>" maxlength="4" size="4" ></td>
+                  <td><span class="text-med">C°</span></td>
+                  <td><input id="car_temp-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_t %>" maxlength="60" size="60" ></td>
+                </tr>
+                <tr>
+                  <td><span>Saturación</span></td>
+                  <td><input id="sat-<%= id %>" type="text" class="form-control metrica" value="<%= p_sat %>" maxlength="4" size="4" ></td>
+                  <td><span class="text-med">%</span></td>
+                  <td><input id="car_sat-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_sat %>" maxlength="60" size="60" ></td>
+                </tr>
+              </table>              
+            </div>
+            <div class="tab-pane" id="panel-frec_car">              
+              <div id="grafico_frec_car" class="metricas" ></div>         
+            </div>
+            <div class="tab-pane" id="panel-frec_res">              
+              <div id="grafico_frec_res" class="metricas"></div>            
+            </div>
+            <div class="tab-pane" id="panel-presion">              
+              <div id="grafico_presion" class="metricas"></div>            
+            </div>
+            <div class="tab-pane" id="panel-temp">              
+              <div id="grafico_temp" class="metricas"></div>            
+            </div>
+            <div class="tab-pane" id="panel-sat">              
+              <div id="grafico_sat" class="metricas"></div>            
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+         <button type="button" onclick="guardarSignos(<%= id %>)" class="btn btn-success">Guardar signos vitales</button>
+      </div>
+    </div>      
+  </div>    
+</div>
+

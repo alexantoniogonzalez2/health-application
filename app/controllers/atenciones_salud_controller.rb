@@ -139,11 +139,26 @@ class AtencionesSaludController < ApplicationController
 	  @persona_peso = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],2).first
 	  @persona_presion = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],3).first
 	  @persona_imc= FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],4).first
+	  @persona_frec_car = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],5).first
+	  @persona_frec_res = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],6).first
+	  @persona_temp = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],7).first
+	  @persona_sat= FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],8).first
+
 
 	  @estatura = @persona_estatura ? @persona_estatura.valor : ''
 	  @peso = @persona_peso ? @persona_peso.valor : ''
 	  @presion = @persona_presion ? @persona_presion.valor : ''
 	  @imc = @persona_imc ? @persona_imc.valor : ''
+	  @frec_car = @persona_frec_car ? @persona_frec_car.valor : ''
+	  @frec_res = @persona_frec_res ? @persona_frec_res.valor : ''
+	  @temp = @persona_temp ? @persona_temp.valor : ''
+	  @sat = @persona_sat ? @persona_sat.valor : '' 
+	  @car_frec_car = @persona_frec_car ? @persona_frec_car.caracteristica : ''
+	  @car_frec_res = @persona_frec_res ? @persona_frec_res.caracteristica : ''
+	  @car_temp = @persona_temp ? @persona_temp.caracteristica : ''
+	  @car_sat = @persona_sat ? @persona_sat.caracteristica : ''
+	  @car_presion = @persona_presion ? @persona_presion.caracteristica : ''
+
 
 	  @array_medicamentos = []
 	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id,params[:id]).order('created_at')
@@ -312,6 +327,8 @@ class AtencionesSaludController < ApplicationController
 			@atencion_salud.update( examen_fisico: params[:texto] )					
 		when 'indicaciones'
 			@atencion_salud.update( indicaciones_generales: params[:texto] )	
+		when 'anamnesis'
+			@atencion_salud.update( anamnesis: params[:texto] )		
 		end
 
 		render :json => { :success => true } 	  

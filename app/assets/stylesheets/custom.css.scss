@@ -144,7 +144,7 @@ span.head-text{
 div.ajuste-ant { padding: 0px 5px 0px 0px; }
 div.ajuste-ant2 { padding: 0px 0px 0px 0px; }
 #antecedentes-div { padding: 5px 0px 0px 0px; } 
-#diagnostico-anterior-div { padding: 0px 0px 20px 0px; } 
+#diagnostico-anterior-div { padding: 0px 0px 15px 0px; } 
 span.nota { font-size: 12px; }
 div.div-spinner{ margin: 0 auto; width: 10%; display: block; }
 
@@ -153,3 +153,32 @@ th.fc-widget-header { font-weight: normal !important; }
 .dataTables_wrapper .dataTables_paginate .paginate_button { padding: 0px !important; margin: 0px !important; }
 .fc-time-grid-event.fc-short .fc-time:after { content: "" !important; }
  #log-actualizaciones { margin-bottom: 10px; }
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] { position: relative !important; }
+
+fieldset {
+  border: 1px dashed #c0c0c0 !important;
+  margin: 0px 0px 10px 0px !important;
+  padding: 5px 10px 2px 10px !important;
+  border-radius: 6px;
+}
+
+legend {
+  font-weight: bold;
+  padding: 0px 7px !important;
+  margin: 0px !important;
+  border: 0px!important;
+  font-size: 14px !important;
+  width: inherit !important;
+}
+
+input.ajuste-motivo{
+  display: inline-block;
+  width: 70%;
+  float: right;
+  padding: 0px 6px;
+  height: 25px;
+}

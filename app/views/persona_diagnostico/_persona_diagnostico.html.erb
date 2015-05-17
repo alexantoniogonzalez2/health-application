@@ -1,5 +1,5 @@
 <a href="#modal-container-diag-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
-	<p class="list-group-item-text ajuste"><%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %></p>
+	<p class="list-group-item-text ajuste ellipsis"><%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %></p>
 	<% if p_d.diagnostico.esAuge %>
 		<span class="alert alert-success boton-auge" >AUGE</span>		
 	<% end %>

@@ -52,10 +52,14 @@ ED2 = MedDiagnosticoEstados.create! :nombre => "Sospecha"
 ED3 = MedDiagnosticoEstados.create! :nombre => "Descartado"
 
 puts 'Métricas'
-Metr1 = FiMetricas.create! :nombre => "Estatura", :unidad => "centimetros"
-Metr2 = FiMetricas.create! :nombre => "Peso", :unidad => "kilogramos"
-Metr3 = FiMetricas.create! :nombre => "Presion", :unidad => "mb"
-Metr4 = FiMetricas.create! :nombre => "IMC", :unidad => "kilogramos/metros2"
+FiMetricas.create! :nombre => "Estatura", :unidad => "centimetros"
+FiMetricas.create! :nombre => "Peso", :unidad => "kilogramos"
+FiMetricas.create! :nombre => "Presion", :unidad => "mb"
+FiMetricas.create! :nombre => "IMC", :unidad => "kilogramos/metros2"
+FiMetricas.create! :nombre => "Frecuencia cardiaca", :unidad => "latidos por minuto"
+FiMetricas.create! :nombre => "Frecuencia respiratoria", :unidad => "respiraciones por minuto"
+FiMetricas.create! :nombre => "Temperatura", :unidad => "grados celcius"
+FiMetricas.create! :nombre => "Saturación", :unidad => "porcentaje"
 
 puts 'Tipos Ficha'
 TF1=FiFichaTipos.create! :nombre => "Tipo ficha general"
@@ -125,12 +129,12 @@ FiCalendarioVacunas.create! :edad => '8° básico', :agno => 2014, :vacuna_id =>
 FiCalendarioVacunas.create! :edad => 'Adulto de 65 años', :agno => 2014, :vacuna_id => 9
 
 puts 'Componente'
-C1 = MedComponentes.create! :id => 1, :nombre => 'Componente 1'
-C2 = MedComponentes.create! :id => 2, :nombre => 'Componente 2'
+MedComponentes.create! :id => 1, :nombre => 'Componente 1'
+MedComponentes.create! :id => 2, :nombre => 'Componente 2'
 
 puts 'Medicamentos Componente'
-C1 = MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
-C2 = MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
+MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
+MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
 
 puts 'Alergias'
 MedAlergias.create! :nombre => 'Polvo', :comun => 1

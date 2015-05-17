@@ -8,235 +8,224 @@
 <input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
 
 <div id="atencion-salud" class="panel panel-success">
-<div class="panel-heading">
-  <h3 class="panel-title"><span>Atención de Salud</span><span class='right'>Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %> </span></h3>
-</div>
-<div class="panel-body">	
-
-<div class="row">
-
-<div class="col-md-6 div-form-atencion">
-
-  <div class="container ajustado">
-    <div class="row clearfix">
-      <div class="col-md-7 column">
-        <label>Paciente</label>: <%= @agendamiento.persona.showName('%n%p%m') %>
-      </div>
-      <div class="col-md-5 column">
-        <label>Edad</label>: <%= @agendamiento.persona.age_text %>  
-      </div>
-    </div>
-    <div class="row clearfix">
-      <div class="col-md-7 column">
-       <label>Rut</label>: <%= @agendamiento.persona.showRut %>  
-      </div>
-      <div class="col-md-5 column">
-       <label>Sexo</label>: <%= @agendamiento.persona.showSexo %>  
-      </div>
-    </div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><span>Atención de Salud</span><span class='right'>Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %> </span></h3>
   </div>
-
-<label>Antecedentes</label>
-<%= link_to "Ver todos los antecedentes", {:controller => :antecedentes, :action => 'edit', :id => @agendamiento.id }, :method => :post %>
-
-<div class"container">
-  <div class="row clearfix">
-    <div class="list-group col-md-4 column ajuste-ant">
-      <a id="med" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-archive fa-fw fa-lg"></i><%= @texto_ant_med %></a>
-      <a id="ale" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-shield fa-fw fa-lg"></i><%= @texto_alergias %></a>
-      <a id="vac" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_vacunas %></a>
-      <a id="ant_qui" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_ant_pro %></a>
-    </div>
-    <div class="list-group col-md-4 column ajuste-ant">
-      <a id="act_fis" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-soccer-ball-o fa-fw fa-lg"></i><%= @persona_actividad_fisica.nivel_actividad %></a>
-      <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-beer fa-fw fa-lg"></i><%= @texto_alcohol %></a>
-      <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i><%= @texto_tabaco %></a>
-      <% if @agendamiento.persona.genero == 'Femenino' %>
-        <a id="ant_gin" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-venus fa-fw fa-lg"></i><%= @texto_ant_gin %></a>
-      <% end%>
-    </div> 
-    <div class="list-group col-md-4 column ajuste-ant2">
-      <a id="ant_fam" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i><%= @texto_ant_fam %></a>
-      <a id="ant_soc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i><%= @persona.getNivelEscolaridad %></a>
-      <a id="ant_lab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-money fa-fw fa-lg"></i><%= @texto_ocupaciones %></a>
-    </div>
-  </div>  
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header ajuste-modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4>Antecedentes del paciente</h4>
-      </div>
-      <div class="modal-body ajuste-height">
-        <div id='contenido-ant'></div>        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
-      </div>
-    </div>
-  </div>
-</div> 
-
-<div class="list-group" name="antecedentes-div" id="antecedentes-div">  
-  <% @ant_med_at.each do |p_d| %>
-    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
-  <% end %>
-  <% @ant_med_us.each do |p_d| %>
-    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
-  <% end %>
-</div>
-<div id="antecedentes-modal-div" >
-  <% @ant_med_at.each do |p_d| %>
-    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
-  <% end %>
-  <% @ant_med_us.each do |p_d| %>     
-    <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d } %>     
-  <% end %>       
-</div>
-<a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a><br>
-
-<!-- Modal -->
-<div class="modal fade" id="modal-container-ant-med" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header ajuste-modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4>Agregar otro antecedente médico</h4>
-      </div>
-      <div class="modal-body ajuste-height">
-
-        <div class='container agregar-med'>
-          <div class='row'>
-            <div class='col-md-6 column'>
-              <input type='hidden' id="select_diagnostico_ant" class="ajuste-select" >
-                <div class="checkbox">
-                  <label for="new-diag-no-frec-ant">
-                    <input type="checkbox" name="checkboxes" id="new-diag-no-frec-ant" value="1">
-                    Incluir diagnósticos no frecuentes
-                  </label>
-                </div>      
+  <div class="panel-body">	
+    <div class="row">
+      <div class="col-md-6 div-form-atencion">
+        <div class="container ajustado">
+          <div class="row clearfix">
+            <div class="col-md-7 column">
+              <label>Paciente</label>: <%= @agendamiento.persona.showName('%n%p%m') %>
+            </div>
+            <div class="col-md-5 column">
+              <label>Edad</label>: <%= @agendamiento.persona.age_text %>  
             </div>
           </div>
-        </div>  
-              
+          <div class="row clearfix">
+            <div class="col-md-7 column">
+             <label>Rut</label>: <%= @agendamiento.persona.showRut %>  
+            </div>
+            <div class="col-md-5 column">
+             <label>Sexo</label>: <%= @agendamiento.persona.showSexo %>  
+            </div>
+          </div>
+        </div>
+        <fieldset>
+          <legend>Antecedentes</legend>
+          <div class"container">
+            <div class="row clearfix">
+              <div class="list-group col-md-4 column ajuste-ant">
+                <a id="med" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-archive fa-fw fa-lg"></i>Medicamentos</a>
+                <a id="ale" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-shield fa-fw fa-lg"></i>Alergias</a>
+                <a id="vac" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Vacunas</a>
+                <a id="ant_qui" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Antecedentes quirúrgicos</a>
+              </div>
+              <div class="list-group col-md-4 column ajuste-ant">
+                <a id="act_fis" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-soccer-ball-o fa-fw fa-lg"></i>Actividad física</a>
+                <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-beer fa-fw fa-lg"></i>Hábitos de alcohol</a>
+                <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-magic fa-fw fa-lg"></i>Hábitos de tabaco</a>
+                <% if @agendamiento.persona.genero == 'Femenino' %>
+                  <a id="ant_gin" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-venus fa-fw fa-lg"></i>Antecedentes ginecológicos</a>
+                <% end%>
+              </div> 
+              <div class="list-group col-md-4 column ajuste-ant2">
+                <a id="ant_fam" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Familia</a>
+                <a id="ant_soc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-users fa-fw fa-lg"></i>Antecedentes sociales</a>
+                <a id="ant_lab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant"><i class="fa fa-money fa-fw fa-lg"></i>Antecedentes laborales</a>
+              </div>
+            </div>  
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header ajuste-modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4>Antecedentes del paciente</h4>
+                </div>
+                <div class="modal-body ajuste-height">
+                  <div id='contenido-ant'></div>        
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+                </div>
+              </div>
+            </div>
+          </div> 
+
+          <label>Antecedentes médicos</label>
+          <div class="list-group" name="antecedentes-div" id="antecedentes-div">  
+            <% @ant_med_at.each do |p_d| %>
+              <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+            <% end %>
+            <% @ant_med_us.each do |p_d| %>
+              <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+            <% end %>
+          </div>
+          <div id="antecedentes-modal-div" >
+            <% @ant_med_at.each do |p_d| %>
+              <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+            <% end %>
+            <% @ant_med_us.each do |p_d| %>     
+              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d } %>     
+            <% end %>       
+          </div>
+          <a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modal-container-ant-med" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header ajuste-modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4>Agregar otro antecedente médico</h4>
+                </div>
+                <div class="modal-body ajuste-height">
+
+                  <div class='container agregar-med'>
+                    <div class='row'>
+                      <div class='col-md-6 column'>
+                        <input type='hidden' id="select_diagnostico_ant" class="ajuste-select" >
+                          <div class="checkbox">
+                            <label for="new-diag-no-frec-ant">
+                              <input type="checkbox" name="checkboxes" id="new-diag-no-frec-ant" value="1">
+                              Incluir diagnósticos no frecuentes
+                            </label>
+                          </div>      
+                      </div>
+                    </div>
+                  </div>  
+                        
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </fieldset>
+
+        <label>Diagnósticos recientes</label>
+        <div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">
+          <% if @persona_diagnostico_anteriores.blank? %>
+            No hay diagnósticos recientes.
+          <% end %>  
+          <% @persona_diagnostico_anteriores.each do |p_d| %>
+            <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+          <% end %>
+        </div>
+        <div id="diag_ant-modal-div" >
+          <% @persona_diagnostico_anteriores.each do |p_d| %>
+             <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+          <% end %>      
+        </div>
+        <div id="ajuste-motivo">
+          <label>Motivo de consulta:</label><input id='motivo_consulta' type='text' class="form-control ajuste-motivo" value="<%= @atencion_salud.motivo_consulta %>">
+        </div>
+        <label>Anamnesis</label><span id="auto-anamnesis" >Autoguardado</span>
+        <textarea id='anamnesis' class = "form-control" rows='3' cols='50'><%= @atencion_salud.anamnesis %></textarea>
+        <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>|<a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
+        <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc} %>
+        <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr => @presion, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr => @car_presion, :car_p_sat => @car_sat} %>
+        <br><label>Examen físico</label><span id="auto-examen" >Autoguardado</span>
+        <textarea id='examen_fisico' class = "form-control" rows='3' cols='50'><%= @atencion_salud.examen_fisico %></textarea>       
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+      <div class="col-md-6 div-form-atencion">
+
+        <label>Diagnóstico</label>
+        <input type='hidden' id="select_diagnostico" class="float-right">
+        <div class="checkbox ajus-margen">
+          <label for="diag-no-frec">
+            <input type="checkbox" name="checkboxes" id="diag-no-frec" value="1">
+            Incluir diagnósticos no frecuentes
+          </label>
+        </div>
+        <div class="list-group" name="diagnostico-div" id="diagnostico-div">	
+          <% @persona_diagnostico.each do |p_d| %>
+            <%= render :partial => "persona_diagnostico/persona_diagnostico", :locals => {:p_d => p_d} %>
+          <% end %>
+      	</div>
+        <div id="diag_modal-div" >
+          <% @persona_diagnostico.each do |p_d| %>
+             <%= render :partial => "persona_diagnostico/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+          <% end %>      
+        </div>
+    	
+        <fieldset>
+          <legend>Indicaciones</legend>
+        	<label>Exámenes</label>
+          <input type='hidden' id="select_examen" class="ajuste-select float-right" width="600px" >
+          <div class="list-group" name="examen-div" id="examen-div">  
+            <% @persona_examen.each do |p_e| %>
+              <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_e} %> 
+            <% end %>
+          </div>
+          <div id="exa_modal-div" >
+            <% @persona_examen.each do |p_e| %>
+              <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_e} %> 
+            <% end %>      
+          </div>
+
+          <label>Procedimientos/Cirugías</label>
+          <input type='hidden' id="select_procedimiento" class="ajuste-select float-right" >
+          <div class="list-group" name="procedimiento-div" id="procedimiento-div">  
+            <% @persona_procedimiento.each do |p_p| %>
+              <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_p} %>  
+            <% end %>
+          </div>
+          <div id="proc_modal-div" >
+            <% @persona_procedimiento.each do |p_p| %>
+              <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_p} %> 
+            <% end %>      
+          </div> 
+
+          <label>Medicamentos</label>
+          <input type='hidden' id="select_medicamento" class="float-right">
+          <div class="list-group" name="medicamento-div" id="medicamento-div">  
+            <% @persona_medicamento.each do |p_m| %>
+              <%= render :partial => "persona_medicamento/persona_medicamento", :locals => {:persona_medicamento => p_m} %>     
+            <% end %>
+          </div>
+          <div id="med_modal-div" >
+            <% @persona_medicamento.each do |p_m| %>
+              <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m} %> 
+            <% end %>      
+          </div>
+
+          <label>Indicaciones generales</label><span id="auto-indicaciones">Autoguardado</span>
+          <textarea id='indicaciones_generales' class='form-control' rows='3' cols='50'><%= @atencion_salud.indicaciones_generales %></textarea>
+
+          <a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Emitir certificado</a>|<a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Imprimir indicaciones</a>
+          <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id} %>
+        </fieldset>
+        <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
+        <button id='guardar' class='btn btn-success ajus-pos-right'>Guardar atención</button>
       </div>
-    </div>
-  </div>
-</div>  
-
-<label>Diagnósticos recientes</label>
-
-<div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">
-  <% if @persona_diagnostico_anteriores.blank? %>
-    No hay diagnósticos recientes.
-  <% end %>  
-  <% @persona_diagnostico_anteriores.each do |p_d| %>
-    <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
-  <% end %>
-</div>
-<div id="diag_ant-modal-div" >
-  <% @persona_diagnostico_anteriores.each do |p_d| %>
-     <%= render :partial => "persona_diagnostico/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
-  <% end %>      
-</div>
-
-<label>Motivo de consulta</label><span class="alert alert-info" id="auto-motivo" >Autoguardado</span>
-<textarea id='motivo_consulta' class = "form-control" rows='3' cols='50'></textarea>
-<label>Examen físico</label><span class="alert alert-info" id="auto-examen" >Autoguardado</span>
-<textarea id='examen_fisic' class = "form-control" rows='3' cols='50'></textarea>
- 
-<a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>
-<%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :p_pr => @presion} %>
- 
-</div>
-
-<div class="col-md-6 div-form-atencion">
-
-  <label>Diagnóstico</label>
-  <input type='hidden' id="select_diagnostico"></input>
-  <div class="checkbox">
-    <label for="diag-no-frec">
-      <input type="checkbox" name="checkboxes" id="diag-no-frec" value="1">
-      Incluir diagnósticos no frecuentes
-    </label>
-  </div>
-  <div class="list-group" name="diagnostico-div" id="diagnostico-div">	
-    <% @persona_diagnostico.each do |p_d| %>
-      <%= render :partial => "persona_diagnostico/persona_diagnostico", :locals => {:p_d => p_d} %>
-    <% end %>
-	</div>
-  <div id="diag_modal-div" >
-    <% @persona_diagnostico.each do |p_d| %>
-       <%= render :partial => "persona_diagnostico/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
-    <% end %>      
-  </div>
-	
-	<label>Exámenes</label>
-
-  <input type='hidden' id="select_examen" class="ajuste-select" width="600px" ></input>
-  <div class="list-group" name="examen-div" id="examen-div">  
-    <% @persona_examen.each do |p_e| %>
-      <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_e} %> 
-    <% end %>
-  </div>
-  <div id="exa_modal-div" >
-    <% @persona_examen.each do |p_e| %>
-      <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_e} %> 
-    <% end %>      
-  </div>
-
-  <label>Procedimientos/Cirugías</label>
-  <input type='hidden' id="select_procedimiento" class="ajuste-select" ></input>
-  <div class="list-group" name="procedimiento-div" id="procedimiento-div">  
-    <% @persona_procedimiento.each do |p_p| %>
-      <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_p} %>  
-    <% end %>
-  </div>
-  <div id="proc_modal-div" >
-    <% @persona_procedimiento.each do |p_p| %>
-      <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_p} %> 
-    <% end %>      
-  </div> 
-
-  <label>Medicamentos</label>
-  <input type='hidden' id="select_medicamento"></input>
-  <div class="list-group" name="medicamento-div" id="medicamento-div">  
-    <% @persona_medicamento.each do |p_m| %>
-      <%= render :partial => "persona_medicamento/persona_medicamento", :locals => {:persona_medicamento => p_m} %>     
-    <% end %>
-  </div>
-  <div id="med_modal-div" >
-    <% @persona_medicamento.each do |p_m| %>
-      <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m} %> 
-    <% end %>      
-  </div>
-
-  <label>Indicaciones</label><span id="auto-indicaciones" class="alert alert-info">Autoguardado</span>
-  <textarea id='indicaciones_generales' class='form-control' rows='4' cols='50'></textarea>
-
-  <a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Emitir certificado</a>
-  <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id} %><br>
-
-
-</div>
-
-</div> <!--Cierre div row -->
-
-<div class="row ajus-padd-bott">
-  <div class="col-md-12 column">
-    <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
-    <button id='guardar' class='btn btn-success ajus-pos-right'>Guardar atención</button>
-  </div>
-</div>  
-
-</div> <!--Cierre div panel-body -->
+    </div> <!--Cierre div row -->    
+  </div> <!--Cierre div panel-body -->
 </div> <!--Cierre div panel -->
 
 

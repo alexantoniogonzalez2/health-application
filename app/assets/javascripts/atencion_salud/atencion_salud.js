@@ -131,6 +131,12 @@ $('#indicaciones_generales').keyup( function(e) {
   contador_ind = setTimeout(function(){ guardarTexto('indicaciones') },2000);
 })
 
+$('#anamnesis').keyup( function(e) { 
+  if (typeof contador_ana === 'undefined') { } 
+  else { clearTimeout(contador_ana);}
+  contador_ana = setTimeout(function(){ guardarTexto('anamnesis') },2000);
+})
+
 $('.comentario').keyup( function(e) { 
   if (typeof contador_com === 'undefined') { } 
   else { clearTimeout(contador_com);}
@@ -619,6 +625,29 @@ function guardarMetricas(pers_aten) {
   });
 }
 
+function guardarSignos(pers_aten) {
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_signos',
+    data: {
+      atencion_salud_id: pers_aten,
+      persona_id: persona_id,
+      frec_car: $( "#frec_car-"+pers_aten).val(),
+      frec_res: $( "#frec_res-"+pers_aten).val(),
+      temp: $( "#temp-"+pers_aten).val(),  
+      presion: $( "#presion-"+pers_aten).val(),  
+      sat: $( "#sat-"+pers_aten).val(),
+      car_frec_car: $( "#car_frec_car-"+pers_aten).val(),
+      car_frec_res: $( "#car_frec_res-"+pers_aten).val(),
+      car_temp: $( "#car_temp-"+pers_aten).val(),  
+      car_presion: $( "#car_presion-"+pers_aten).val(),  
+      car_sat: $( "#car_sat-"+pers_aten).val(),      
+    },
+    success: function(response) { $( "#modal-container-signos").modal('hide'); },
+    error: function(xhr, status, error){ alert("No se pudo guardar los signos vitales del paciente.");   }
+  });
+}
+
 function guardarTexto(tipo_texto) {
   switch (tipo_texto) {
     case 'motivo':      
@@ -630,6 +659,9 @@ function guardarTexto(tipo_texto) {
     case 'indicaciones':
       texto = $('#indicaciones_generales').val();
       break;
+    case 'anamnesis':
+      texto = $('#anamnesis').val();
+      break;  
   }
 
   $.ajax({

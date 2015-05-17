@@ -16,7 +16,7 @@ class FiAtencionesSalud < ActiveRecord::Base
  	private
   def app_params
     params.require(:list).permit(:persona,:ficha_tipo,:agendamiento,:persona_examenes,:persona_medicamentos,:persona_diagnosticos_atencion_salud,:certificados,:interconsultas,:persona_metricas,
-      :motivo_consulta,:examen_fisico,:persona_vacunas,:indicaciones_generales)
+      :motivo_consulta,:examen_fisico,:persona_vacunas,:indicaciones_generales,:anamnesis)
   end
 
 end

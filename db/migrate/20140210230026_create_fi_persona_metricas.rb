@@ -6,6 +6,7 @@ class CreateFiPersonaMetricas < ActiveRecord::Migration
       t.references :atencion_salud 	#atencion_salud_id
       t.decimal :valor
       t.datetime :fecha
+      t.text :caracteristica
 
       t.timestamps
     end

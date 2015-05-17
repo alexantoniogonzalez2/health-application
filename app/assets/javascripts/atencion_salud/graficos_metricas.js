@@ -1,6 +1,6 @@
 $(function() {
 
-    $('#tabpanel-peso, #tabpanel-estatura, #tabpanel-presion, #tabpanel-IMC').bind('click', function (e) {
+    $('#tabpanel-peso, #tabpanel-estatura, #tabpanel-presion, #tabpanel-IMC, #tabpanel-frec_car,#tabpanel-frec_res,#tabpanel-temp,#tabpanel-sat').bind('click', function (e) {
       
       id = this.id;
       tipo = id.substring(9);
@@ -15,7 +15,7 @@ $(function() {
         success: function(response) {   
           cargarGrafico(response,tipo);
         },
-        error: function(xhr, status, error){ alert("No se pudo cargar los datos de peso del paciente.");   }
+        error: function(xhr, status, error){ alert("No se pudo actualizar los gráficos métricas o signos vitales del paciente.");   }
       });
       
     });

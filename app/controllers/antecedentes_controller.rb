@@ -56,7 +56,6 @@ class AntecedentesController < ApplicationController
 		else 
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona
-			@persona_medicamento.atencion_salud = @atencion_salud
 		end	
 
 		case params[:estado]
