@@ -17,7 +17,7 @@ $('input[id^=fecha-gin-]').on("dp.change", function (e) {
 });
 
 function guardarAntecedentesGinecologicos(id, value){
-   if (typeof atencion_salud_id !== 'undefined') 
+  if (typeof atencion_salud_id !== 'undefined') 
     at_salud_id = atencion_salud_id;
   else
     at_salud_id = 'persona';

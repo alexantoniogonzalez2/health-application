@@ -26,4 +26,4 @@ $('#select_procedimiento_ant').on 'change', (e) ->
       prestacion_id: value
       tipo: 'procedimiento'
     error: (jqXHR, textStatus, errorThrown) ->       
-    success: (data, textStatus, jqXHR) ->
+    success: (data, textStatus, jqXHR) -> $('#ant_qui').addClass 'active-ant' if $('#lista-procedimientos tr').length > 0

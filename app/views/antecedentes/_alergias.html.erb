@@ -2,16 +2,14 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-md-4'>
-			<h4>Alergias</h4>
-			
+			<h4>Alergias</h4>			
 				<div id='checkbox-alergias'>
 			 	  <% @alergias.each do |a| %>
 					  <div class="checkbox">
-					    <label for="checkboxes-aler-<%= a.id %>"><input type="checkbox" name="checkboxes" id="checkboxes-aler-<%= a.id %>" <% if a.persona_id %> checked="checked" <% end %> ><%= a.nombre %></label>
+					    <label for="checkboxes-aler-<%= a.id %>"><input type="checkbox" name="checkboxes-alergia" id="checkboxes-aler-<%= a.id %>" <% if a.persona_id %> checked="checked" <% end %> ><%= a.nombre %></label>
 						</div>
 					<% end %>	
-				</div>
-					
+				</div>					
 		</div>
 		<div class='col-md-8 ajuste-alergia'>
 		<form id="alergias" class="form-validator" method="POST">

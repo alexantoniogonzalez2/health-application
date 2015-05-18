@@ -33,7 +33,9 @@ saveTest = ->
     	param_9 : param_9
     	param_10 : param_10
     error: (jqXHR, textStatus, errorThrown) ->       
-    success: (data, textStatus, jqXHR) -> cerrarModalHabAlc 'new'
+    success: (data, textStatus, jqXHR) -> 
+    	cerrarModalHabAlc 'new'
+    	$('#hab_alc').addClass 'active-ant'
 
 alertMessage = (messageId) ->
   $('#alert-'+messageId).show()

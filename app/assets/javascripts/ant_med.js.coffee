@@ -25,4 +25,4 @@ $('#select_medicamento_ant').on 'change', (e) ->
       medicamento_id: value
       atencion_salud_id: at_salud_id
     error: (jqXHR, textStatus, errorThrown) ->       
-    success: (data, textStatus, jqXHR) ->
+    success: (data, textStatus, jqXHR) -> $('#med').addClass 'active-ant' if $('#lista-medicamentos tr').length > 0

@@ -10,7 +10,7 @@
       pregunta : pregunta
       atencion_salud_id: at_salud_id
     error: (jqXHR, textStatus, errorThrown) ->       
-    success: (data, textStatus, jqXHR) ->
+    success: (data, textStatus, jqXHR) -> $('#act_fis').addClass 'active-ant'
 
 calculaActVig = ->
   preg_2 = $('#input-act-fis-2').val()

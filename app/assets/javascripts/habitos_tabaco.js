@@ -87,7 +87,8 @@ function guardarConsumo(f_i, f_f, cigarrosDia, paquetesAgno, tipo, id) {
     },
     error: function(jqXHR, textStatus, errorThrown) {},
     success: function(data, textStatus, jqXHR) {
-    	$("#modal-container-hab-tab-" + id).modal('hide');
+    	$("#modal-container-hab-tab-"+id).modal('hide');
+      $('#hab_tab').addClass('active-ant');
     }
   });
 };

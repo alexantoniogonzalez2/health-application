@@ -1,2 +1,6 @@
-$("<%= escape_javascript( render :partial => "persona_vacuna", :locals => {:persona_vacuna => @persona_vacuna} ) %>").appendTo("#body-persona-vacuna");
-$('#tr-vacio-vacunas').replaceWith('');	
+<% if @estado == 'true' %>	
+	$("<%= escape_javascript( render :partial => "persona_vacuna", :locals => {:persona_vacuna => @persona_vacuna} ) %>").appendTo("#body-persona-vacuna");
+	$('#tr-vacio-vacunas').replaceWith('');
+<% else %>
+	$("#tr-pers-vac-" + <%= @id_quitar %> ).replaceWith('');
+<% end %>

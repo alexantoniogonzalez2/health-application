@@ -41,5 +41,5 @@ $("input[type=checkbox][id^=checkboxes-aler-]").change ->
       estado : estado
       atencion_salud_id: at_salud_id
     error: (jqXHR, textStatus, errorThrown) ->
-    success: (data, textStatus, jqXHR) ->
+    success: (data, textStatus, jqXHR) -> if $('input[name="checkboxes-alergia"]:checked').length > 0 then $('#ale').addClass 'active-ant' else $('#ale').removeClass 'active-ant'
   return

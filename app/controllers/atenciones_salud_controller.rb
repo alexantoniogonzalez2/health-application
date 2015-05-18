@@ -144,7 +144,6 @@ class AtencionesSaludController < ApplicationController
 	  @persona_temp = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],7).first
 	  @persona_sat= FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],8).first
 
-
 	  @estatura = @persona_estatura ? @persona_estatura.valor : ''
 	  @peso = @persona_peso ? @persona_peso.valor : ''
 	  @presion = @persona_presion ? @persona_presion.valor : ''
@@ -158,130 +157,66 @@ class AtencionesSaludController < ApplicationController
 	  @car_temp = @persona_temp ? @persona_temp.caracteristica : ''
 	  @car_sat = @persona_sat ? @persona_sat.caracteristica : ''
 	  @car_presion = @persona_presion ? @persona_presion.caracteristica : ''
-
-
-	  @array_medicamentos = []
+ 
 	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id,params[:id]).order('created_at')
-	  @persona_medicamentos_ant.each do |p_m_a|
-	  	@array_medicamentos.push(p_m_a.medicamento.nombre)
-  	end
-  	if @array_medicamentos.blank?
-  		@texto_ant_med = 'Sin información'
-  	else
-  		@texto_ant_med = @array_medicamentos.join('|')	
-  	end	
-
-  	@array_procedimiento = []
+  	@class_med = @persona_medicamentos_ant.blank? ? '' : 'active-ant'	
+  	
 	  @persona_procedimiento_ant = FiPersonaPrestaciones.where(' prestacion_id >= ? AND persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',572,@persona.id,params[:id]).order('created_at')
-	  @persona_procedimiento_ant.each do |p_p_a|
-	  	@array_procedimiento.push(p_p_a.prestacion.nombre)
-  	end
-  	if @array_procedimiento.blank?
-  		@texto_ant_pro = 'Sin información'
-  	else
-  		@texto_ant_pro = @array_procedimiento.join('|')	
-  	end
-
-  	@array_alergias = []
+  	@class_ant_pro = @persona_procedimiento_ant.blank? ? '' : 'active-ant'		
+  	
 	  @persona_alergias = FiPersonasAlergias.where('persona_id = ? ',@persona.id).order('created_at')
-	  @persona_alergias.each do |p_a|
-	  	@array_alergias.push(p_a.alergia.nombre)
-  	end
-  	if @array_alergias.blank?
-  		@texto_alergias = 'Sin información'
-  	else
-  		@texto_alergias = @array_alergias.join('|')	
-  	end
+  	@class_alergias = @persona_alergias.blank? ? '' : 'active-ant'
 
-  	@array_vacunas = []
-	  @persona_vacunas = FiPersonasVacunas.where('persona_id = ? ',@persona.id).order('created_at')
-	  @persona_vacunas.each do |p_v|
-	  	@array_vacunas.push(p_v.vacuna.nombre)
-  	end
-  	if @array_vacunas.blank?
-  		@texto_vacunas = 'Sin información'
-  	else
-  		@texto_vacunas = @array_vacunas.join('|')	
-  	end
+  	@persona_vacunas = FiPersonasVacunas.where('persona_id = ? ',@persona.id).order('created_at')
+  	@class_vacunas = @persona_vacunas.blank? ? '' : 'active-ant'	
 
 		#Actividad física
+		@class_act_fis = 'active-ant'
 		@persona_actividad_fisica = FiPersonaActividadFisica.where('persona_id = ?',@persona.id).first
   	if @persona_actividad_fisica.nil?
   		@persona_actividad_fisica = FiPersonaActividadFisica.new 
 			@persona_actividad_fisica.persona = @persona
 			@persona_actividad_fisica.nivel_actividad = "Sin información"
 			@persona_actividad_fisica.save!
-		end
+			@class_act_fis = ''
+		else
+			@class_act_fis = '' if @persona_actividad_fisica.nivel_actividad == "Sin información"
+		end 	
 		@segmento_actividad = @persona.getSegmentoActividadFisica
 		@edad_act_fis = @persona.age()
 		@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
 
 		#Hábitos de alcohol
-		@ultimo_test = FiHabitosAlcohol
-			.select('MAX(fecha_test_audit),audit_puntaje')
-			.where('persona_id = ?', @persona.id ).first
-
-		@texto_alcohol = 'Sin información'	
-		if @ultimo_test
-			case @ultimo_test.audit_puntaje				      
-	    when 8..15
-	      @texto_alcohol = 'Consumo de riesgo'
-	    when 0..7
-	      @texto_alcohol = 'Consumo de bajo riesgo'
-	    when 16..40
-	    	@texto_alcohol = 'Consumo perjudicial o dependencia'	 
-	    end 
-		end
+		@ultimo_test = FiHabitosAlcohol.select('MAX(fecha_test_audit),audit_puntaje').where('persona_id = ?', @persona.id ).first
+		@class_alcohol = @ultimo_test.audit_puntaje.nil? ? '' : 'active-ant'
 
 		#Hábitos de tabaco
-		@texto_tabaco = 'Sin información'
-		@total_consumo = 0
 		@consumo = FiHabitosTabaco.where('persona_id = ?', @persona.id )
-		@consumo.each do |con|
-  		@total_consumo += con.paquetes_agno
-  	end	
-  	@texto_tabaco = 'Paquetes-año: ' <<  number_to_human(@total_consumo, precision: 2, separator: ',') unless @consumo.first.nil?
+		@class_tabaco = @consumo.blank? ? '' : 'active-ant'	
 
   	#Antecedentes laborales
-  	@texto_ocupaciones = 'Sin información'
   	@ocupaciones = OcuPersonasOcupaciones.where('persona_id = ?',@persona.id );
-  	@array_ocupaciones = []
-	  @ocupaciones.each do |ocu|
-	  	@array_ocupaciones.push(ocu.ocupacion.nombre)
-	  end	
- 		@texto_ocupaciones = @array_ocupaciones.join('|') unless @array_ocupaciones.blank?
+		@class_ocupaciones = @ocupaciones.blank? ? '' : 'active-ant'	
 
  		#Antecedentes familiares
- 		@array_ant_fam = []
  		@decesos = @persona.getAntecedentesDecesos
   	@ant_enf_cro = @persona.getAntecedentesEnfermedadesCronicas
-	  @decesos.each do |deceso|
-	  	@array_ant_fam.push(deceso['diagnostico'])
-  	end
-  	@ant_enf_cro.each do |enfermedad|
-	  	@array_ant_fam.push(enfermedad['datos'].diagnostico.nombre)
-  	end
-  	if @array_ant_fam.blank?
-  		@texto_ant_fam = 'Sin información'
-  	else
-  		@texto_ant_fam = @array_ant_fam.join('|')	
-  	end
+  	@class_ant_fam = ( @decesos.blank? and @ant_enf_cro.blank? ) ? '' : 'active-ant'	
 
-  	 #Antecedentes ginecológicos
+  	#Antecedentes ginecológicos
   	if @persona.genero == 'Femenino' 
-	  	@texto_ant_gin = 'Sin información'
+  		@class_gin = ''
 	  	@ant_gin = @persona.persona_antecedentes_ginecologicos
 	  	if !@ant_gin.nil?
-		  	if !@ant_gin.fecha_menopausia.nil?
-		  		@texto_ant_gin = 'Menopausia' 
-		  	elsif !@ant_gin.numero_gestaciones.nil? and @ant_gin.numero_gestaciones != 'null'
-		  		@texto_ant_gin = 'G' << @ant_gin.numero_gestaciones.to_s << 'P' << @ant_gin.numero_partos.to_s << 'A' <<@ant_gin.numero_abortos.to_s
+		  	if !@ant_gin.fecha_menopausia.nil? or !@ant_gin.numero_gestaciones.nil? or @ant_gin.numero_gestaciones != 'null'
+		  		@class_gin = 'active-ant'
 		  	end
 		  end	
 	  end	
-  				
 
-  	
+	  #Antecedentes sociales
+		@class_sociales = ( @persona.nivel_escolaridad == 'null' and @persona.numero_personas_familia == 'null' ) ? '' : 'active-ant'
+ 	
 	end
 
 	def crearAtencion	

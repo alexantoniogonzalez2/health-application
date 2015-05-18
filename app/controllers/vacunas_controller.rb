@@ -53,11 +53,20 @@ class VacunasController < ApplicationController
 		@otras_vacunas = MedVacunas.where('tipo != ?','pni')			
 	end
 	def actualizar
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end	
+
 		if params[:tipo] == 'calendario'
 			@agno = FiCalendarioVacunas.maximum('agno')
 			@calendario_vacuna = FiCalendarioVacunas.where('id = ? AND agno = ?',params[:vac],@agno).first
 		end	
-		@persona = PerPersonas.where('user_id = ?',current_user.id).first
+
+		@estado = params[:estado]
+
 		if params[:estado] == 'true'			
 			@persona_vacuna_nueva = FiPersonasVacunas.new
 			@persona_vacuna_nueva.persona = @persona
@@ -79,7 +88,7 @@ class VacunasController < ApplicationController
 
 			respond_to do |format|     
       	format.js { }
-      	format.json { render :json => { :success => true, :persona_vacuna => @persona_vacuna } }
+      	format.json { render :json => { :success => true } }
       end	
 		else
 			if params[:tipo] == 'calendario'
@@ -87,10 +96,11 @@ class VacunasController < ApplicationController
 			else
 				@persona_vacuna_quitar = FiPersonasVacunas.where('persona_id = ? AND vacuna_id = ?',@persona.id, params[:vac]).first
 			end	
-			id_quitar = @persona_vacuna_quitar.id 
+			@id_quitar = @persona_vacuna_quitar.id 
 			@persona_vacuna_quitar.destroy
 			respond_to do |format|
-				format.json { render json: id_quitar}
+				format.js { }
+				format.json { render :json => { :success => true } }
 			end
 		end		
 	end

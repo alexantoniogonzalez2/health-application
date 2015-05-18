@@ -1,17 +1,16 @@
 function actualizarVacunas(vac,estado,tipo){
+  
+  if (typeof atencion_salud_id !== 'undefined') 
+    at_salud_id = atencion_salud_id;
+  else
+    at_salud_id = 'persona';
+
 	$.ajax({
     type: 'POST',
     url: '/actualizar_vacunas',
-    data: { vac: vac, estado: estado, tipo: tipo },
+    data: { vac: vac, estado: estado, tipo: tipo, atencion_salud_id: at_salud_id },
     success: function(response) { 
-      if(!estado){
-        $("#tr-pers-vac-"+response).remove();
-        var rowCount = $('#tabla-persona-vacunas tr').length;
-        if (rowCount == 1)
-          $("#body-persona-vacuna").append('<tr id="tr-pers-vac-sin"><td colspan="4">No hay información de vacunas administradas.</td></tr> ');        
-      }
-      else
-        $("#tr-pers-vac-sin").remove();           
+      $('#body-persona-vacuna tr').length > 0 ? $('#vac').addClass('active-ant') : $('#vac').removeClass('active-ant') ;         
     },
     error: function(xhr, status, error){  }
   });

@@ -488,7 +488,13 @@ function eliminarMedicamento(pers_med) {
     type: 'POST',
     url: '/eliminar_medicamento',
     data: { persona_medicamento_id: pers_med},
-    success: function(response) { $("#modal-container-med-"+pers_med).modal('hide'); $("#pm"+pers_med).remove(); $("#tr-med-"+pers_med).remove();},
+    success: function(response) { 
+      $("#modal-container-med-"+pers_med).modal('hide');
+      $("#pm"+pers_med).remove();
+      $("#tr-med-"+pers_med).remove();
+      if ($('#lista-medicamentos tr').length == 0 )
+        $('#med').removeClass('active-ant');      
+    },
     error: function(xhr, status, error){ alert("No se pudo eliminar el medicamento del paciente.");   }
   });
    
@@ -567,7 +573,13 @@ function eliminarPrestacion(pers_pre) {
     data: { 
       persona_prestacion_id: pers_pre 
     },
-    success: function(response) { $("#modal-container-pres-"+pers_pre).modal('hide'); $("#pp"+pers_pre).remove();},
+    success: function(response) { 
+      $("#modal-container-pres-"+pers_pre).modal('hide');
+      $("#pp"+pers_pre).remove();
+      $("#tr-pre-"+pers_pre).remove();
+      if ($('#lista-procedimientos tr').length == 0 )
+        $('#ant_qui').removeClass('active-ant');
+    },
     error: function(xhr, status, error){ alert("No se pudo eliminar el examen o procedimiento del paciente."); }
   });
    
