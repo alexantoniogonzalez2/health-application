@@ -12,6 +12,7 @@ $lightGray: #999;
 .logo-top { width: 20%; float: left; }
 .div-contact { padding-left: 10%; padding-right: 10%; }
 .ajuste-hover:hover { color: $blue !important; }
+.ajuste-hover { margin-right: 20px; }
 .glyphicon-envelope{ margin-right: 0px !important; }
 .text-primary { color: #fed136; }
 .navbar-ajuste { margin-top:50px !important; }
@@ -96,24 +97,20 @@ form.contactForm {
 i.form-control-feedback { display: none !important;}
 .has-feedback .form-control { padding-right: 12px !important; }
 
-div.ajuste-rut { margin-left: 40px !important; }
+div.ajuste-rut { margin-left: 40px !important; margin-right: 0px !important; }
 label.ajuste-fecha { font-weight: normal !important; float: left; margin-left: 80px;}
 
 span.digito_verificador { 
   position: relative;
-  right: 33px;
+  right: 40px;
   top: 25px;
 }
 
-span.ajuste-sexo {
-  float: left;
-  margin-left: 80px;
-}
-div.ajuste-sexo { /*margin-top: 15px;*/ float: left; width: 100%; }
-.text-muted {
-  letter-spacing: 1px;
-  color: white;
-}
+span.ajuste-sexo { float: left; margin-left: 80px; }
+div.ajuste-sexo {float: left; width: 100%; }
+span.ajuste-sexo2 { float: left; margin-left: 20px; }
+div.ajuste-sexo3 {float: left; width: 100%; margin-left: 40px;}
+.text-muted {letter-spacing: 1px; color: white; }
 
 .fecha-nacimiento { width: 300px !important; float: right; margin-right: 40px; }
 input.datepicker, input.datepicker-disabled , .ui-datepicker { /*z-index: 3 !important;*/ }
@@ -131,11 +128,7 @@ span.glyphicon-calendar { margin: 0px; }
 }
 .form-control{ border: 1px solid #cccccc !important; } 
 
-p {
-    font-size: 14px;
-    line-height: 1.75;
-}
-
+p { font-size: 14px; line-height: 1.75; }
 p.large { font-size: 16px; }
 
 a,
@@ -413,3 +406,7 @@ footer {
 }
 
 div.feedback { display: none; }
+.col-rut { width: 330px !important; padding-right: 0px;}
+.dv { padding: 6px 8px; width: 35px; }
+.ajuste-pad-right { padding-right: 0px;}
+.ajuste-pad-left { padding-left: 0px;}

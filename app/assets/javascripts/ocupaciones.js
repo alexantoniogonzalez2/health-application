@@ -16,7 +16,7 @@ function guardarOcupacion(tipo,id){
     type: 'POST',
     url: '/ocupaciones',
     data: { f_i: f_i, f_f: f_f, value: value, tipo: tipo, id: id , atencion_salud_id: atencion_salud_id, ocu_act: ocu_act },
-    success: function(response) { $( "#modal-container-ocu-" + id ).modal('hide'); },
+    success: function(response) { $( "#modal-container-ocu-" + id ).modal('hide'); $('#ant_lab').addClass('active-ant'); },
     error: function(xhr, status, error){ alert("No se pudo agregar el antecedente laboral."); }
   }); 
 }

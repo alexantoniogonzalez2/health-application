@@ -25,7 +25,7 @@ U11 = User.create! :email => 'paciente5@gmail.com', :password => 'alex1234', :pa
 #Pacientes
 puts 'Pacientes'
 P1 = PerPersonas.create! :rut => 10000000, :digito_verificador => 'K', :nombre => 'Alex', :apellido_paterno => 'González', :apellido_materno => 'Tobar', :genero=> 'Masculino', :fecha_nacimiento => '1984-10-23', :fecha_muerte => '2100-10-23', :diagnostico_muerte => MedDiagnosticos.find(25), :user => U1
-P2 = PerPersonas.create! :rut => 20000000, :digito_verificador => '5', :nombre => 'Camila', :apellido_paterno => 'González', :apellido_materno => 'Aravena', :genero=> 'Femenino', :fecha_nacimiento => '2012-06-28', :user => U2
+P2 = PerPersonas.create! :rut => 20000000, :digito_verificador => '5', :nombre => 'Camila', :apellido_paterno => 'González', :apellido_materno => 'Aravena', :genero=> 'Femenino', :fecha_nacimiento => '2012-05-28', :user => U2
 P3 = PerPersonas.create! :rut => 30000000, :digito_verificador => '2', :nombre => 'Fernando', :apellido_paterno => 'González', :apellido_materno => 'Salazar', :genero=> 'Masculino', :fecha_nacimiento => '1960-10-23', :fecha_muerte => '2100-10-22', :diagnostico_muerte => MedDiagnosticos.find(26), :user => U3
 
 #Profesionales
@@ -38,10 +38,10 @@ D4 = PerPersonas.create! :rut => 70000000, :digito_verificador => '2', :nombre =
 #Administrativo
 puts 'Secretarias'
 A = PerPersonas.create! :rut => 80000000, :digito_verificador => '2', :nombre => 'Maricela', :apellido_paterno => 'Santibañez', :apellido_materno => 'Santibañez', :genero=> 'Femenino', :fecha_nacimiento => '1984-07-23', :user => U8
-B = PerPersonas.create! :rut => 90000000, :digito_verificador => '2', :nombre => 'Fernanda', :apellido_paterno => 'González', :apellido_materno => 'González', :genero=> 'Femenino', :fecha_nacimiento => '1984-07-23', :user => U9
+B = PerPersonas.create! :rut => 90000000, :digito_verificador => '2', :nombre => 'Fernanda', :apellido_paterno => 'González', :apellido_materno => 'González', :genero=> 'Femenino', :fecha_nacimiento => '1993-01-27', :user => U9
 
-P4 = PerPersonas.create! :rut => 44000000, :digito_verificador => '2', :nombre => 'Andrea', :apellido_paterno => 'Aravena', :apellido_materno => 'Marín', :genero=> 'Femenino', :fecha_nacimiento => '1985-10-23', :fecha_muerte => '2101-10-22', :diagnostico_muerte => MedDiagnosticos.find(27), :user => U10
-P5 = PerPersonas.create! :rut => 55000000, :digito_verificador => '2', :nombre => 'María', :apellido_paterno => 'González', :apellido_materno => 'Tobar', :genero=> 'Femenino', :fecha_nacimiento => '1952-10-23', :fecha_muerte => '2101-10-22', :diagnostico_muerte => MedDiagnosticos.find(28), :user => U11
+P4 = PerPersonas.create! :rut => 44000000, :digito_verificador => '2', :nombre => 'Andrea', :apellido_paterno => 'Aravena', :apellido_materno => 'Marín', :genero=> 'Femenino', :fecha_nacimiento => '1985-12-03', :fecha_muerte => '2101-10-22', :diagnostico_muerte => MedDiagnosticos.find(27), :user => U10
+P5 = PerPersonas.create! :rut => 55000000, :digito_verificador => '2', :nombre => 'María', :apellido_paterno => 'González', :apellido_materno => 'Tobar', :genero=> 'Femenino', :fecha_nacimiento => '1952-01-10', :fecha_muerte => '2101-10-22', :diagnostico_muerte => MedDiagnosticos.find(28), :user => U11
 
 puts 'Parentesco'
 PerParentescos.create! :hijo => P2, :progenitor => P1

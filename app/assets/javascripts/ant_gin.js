@@ -26,7 +26,7 @@ function guardarAntecedentesGinecologicos(id, value){
     type: 'POST',
     url: '/guardar_antecedentes_ginecologicos',
     data: { id: id, value: value, atencion_salud_id: at_salud_id },
-    success: function(response) { },
+    success: function(response) { $('#ant_gin').addClass('active-ant'); },
     error: function(xhr, status, error){ alert("No se pudo actualizar el antecedente."); }
   });
 

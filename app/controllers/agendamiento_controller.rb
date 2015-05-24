@@ -180,8 +180,19 @@ class AgendamientoController < ApplicationController
 	def pedirHoraEvento
 
 		#Posible problema por transacciones
+		@antecedente = params[:antecedente]
 		respuesta="0"
-		@persona = params[:paciente].blank? ? PerPersonas.where('user_id = ?',current_user.id).first : PerPersonas.find(params[:paciente])
+		if params[:persona_hora].blank?
+			@persona = params[:paciente].blank? ? PerPersonas.where('user_id = ?',current_user.id).first : PerPersonas.find(params[:paciente])
+		else
+			if params[:persona_hora] == "Para mi"
+				@persona = PerPersonas.where('user_id = ?',current_user.id).first				
+			else
+				@antecedente = ''
+				@persona = PerPersonas.find(params[:persona_hora])
+			end	
+		end
+
 		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora reservada").first
@@ -191,7 +202,7 @@ class AgendamientoController < ApplicationController
 				@Agendamiento.persona= @persona
 				@Agendamiento.agendamiento_estado= @EstadoAgendamiento
 				@Agendamiento.motivo_consulta_nuevo = params[:motivo]		
-				@Agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(params[:antecedente]) unless params[:antecedente].blank?
+				@Agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(@antecedente) unless @antecedente.blank?
 				@Agendamiento.capitulo_cie10_control = MedDiagnosticosCapitulos.find(params[:capitulo_cie_10]) unless params[:capitulo_cie_10].blank?
 				@Agendamiento.save
 
@@ -354,7 +365,7 @@ class AgendamientoController < ApplicationController
 		@Agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
 
 		if (@Agendamiento.persona)
-			perm_paciente = (@usuario.id == @Agendamiento.persona.id)? true : false 	
+			perm_paciente = (@usuario.id == @Agendamiento.persona.id) || (@usuario.id == @Agendamiento.agendamiento_log_estados.where(agendamiento_estado: 3 ).first.responsable_id ) ? true : false 	
 		end 
 		if (@Agendamiento.especialidad_prestador_profesional)
 			perm_profesional = (@usuario.id == @Agendamiento.especialidad_prestador_profesional.profesional_id)? true : false 	

@@ -1,4 +1,5 @@
 function addSpinner(element_id){ $('#'+element_id).append("<div class='div-spinner'><i class='fa fa-cog fa-spin fa-5x'></i></div>"); }
+function addLittleSpinner(element_id){ $('#'+element_id).append("<div class='div-spinner'><i class='fa fa-cog fa-spin fa-2x'></i></div>"); }
 
 $(document).ready(function() {
 

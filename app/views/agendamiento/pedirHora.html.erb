@@ -24,7 +24,7 @@
 	</div>
 
   <div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content" id="modal-content">        
       </div>          
     </div>        
@@ -47,8 +47,7 @@
 					<div class="tab-pane active" id='diario'>
 						<div class='well'>
 							<form id='diaForm' class='form-horizontal'>
-								<fieldset>
-
+								
 								<div class="control-group">
 								  <label class="control-label" for="diai">Día de inicio:</label>
 								  <div class="controls">
@@ -86,15 +85,14 @@
 
 						    <button type="submit" name="singlebutton" class="btn btn-primary aj-button-top">Agregar horas</button>
 						    <div class="status"></div>
-
-								</fieldset>
+								
 							</form>
 						</div>
 					</div>
 					<div class="tab-pane" id='comportamiento'>
 					  <div class='well'>
 							<form id='comportamientoForm' class="form-horizontal">
-							<fieldset>
+						
 
 							<div class="control-group">
 							  <label class="control-label" for="">Día de inicio:</label>
@@ -113,9 +111,9 @@
 
 							<div class="control-group">
 							  <label class="control-label" for="dias">Días de la semana:</label>
-							  <div class="container">
+							  <div class="container ajuste-padding2">
 							  	<div class='row'>
-							  		<div class='col-md-6'>
+							  		<div class='col-md-6 ajuste-padding2'>
 							  			<div class='checkbox'>
 										    <label for="dias-0"><input id='dias-0' type="checkbox" name="checkboxes[]">Lunes</label>
 										  </div>  
@@ -132,7 +130,7 @@
 										    <label for="dias-4"><input id='dias-4' type="checkbox" name="checkboxes[]">Viernes</label>
 										  </div> 
 									  </div>
-									  <div class='col-md-6'>  
+									  <div class='col-md-6 ajuste-padding2'>  
 							  			<div class='checkbox'>
 										    <label for="dias-5"><input id='dias-5' type="checkbox" name="checkboxes[]">Sábado</label>
 										  </div> 
@@ -168,7 +166,7 @@
 					    <button type="submit" name="singlebutton" class="btn btn-primary aj-button-top">Agregar horas</button>
 					    <div class="status"></div>							
 
-							</fieldset>
+							
 							</form>
 						</div>
 					</div>
@@ -180,3 +178,5 @@
 
 		
 	<% end %>
+
+<%= javascript_include_tag "agendamiento" %>

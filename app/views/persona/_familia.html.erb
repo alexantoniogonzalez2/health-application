@@ -1,0 +1,40 @@
+<% if @acceso %>
+	<h4>Familiares o personas cercanas</h4>
+
+	<table class="table table-striped table-hover table-condensed">
+		<thead class="ajust-head">
+      <tr class="info"><th class="col-sm-1">Rut</th><th class="col-sm-2">Persona</th><th class="col-sm-2">Parentesco</th></tr>
+    </thead>
+    <tbody id='lista-familiares'>
+      <% if @familiares.empty? %>
+				<tr id='tr-vacio-familiares'><td colspan='8' >No hay información de familiares.</td></tr>
+			<% else %>	
+	      <% @familiares.each do |fam| %>
+	      	<%= render :partial => "persona/familiares_row", :locals => {:fam => fam } %>
+	      <% end %>
+	    <% end %>  
+    </tbody>
+  </table>  
+
+  <a id="modal-agregar-persona" href="#modal-container-agregar-persona-fam" role="button" class="btn" data-toggle="modal">Agregar familiar o persona cercana</a>
+		
+	<div class="modal fade" id="modal-container-agregar-persona-fam" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog ajuste-ancho">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" onclick="cerrarModalAgregarPersona('fam')" aria-hidden="true">×</button>
+	        <h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
+	      </div>
+	      <div class="modal-body">
+	        <%= render :partial => "persona/agregar_persona", :locals => {:origen => 'fam', :id => 'fam', :subgrupo => 'todos' } %>
+	      </div>
+	    </div>    
+	  </div>  
+	</div>
+
+<% else %>
+	<%= render :partial => "layouts/permiso" %>
+<% end %>  
+
+<%= javascript_include_tag "ant_qui" %>
+<%= javascript_include_tag "label_better" %>  

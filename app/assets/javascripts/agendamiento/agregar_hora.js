@@ -6,20 +6,19 @@ var prestador_id = -1;
 
 function cargarHoras(){
 
-  $.ajax({
-    type: 'POST',
-    url: '/buscar_horas',
-    data: {
-      centros: prestador_id, 
-      especialidad: especialidad_id,
-      especialista: profesional_id,    
-    },
-    success: function(response) {
-    	  $('#calendar').fullCalendar('addEventSource',response);
-    },
-    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.1"); }
-  });
-
+	if ( $('#calendar').length > 0 ){		
+		$.ajax({
+	    type: 'POST',
+	    url: '/buscar_horas',
+	    data: {
+	      centros: prestador_id, 
+	      especialidad: especialidad_id,
+	      especialista: profesional_id,    
+	    },
+	    success: function(response) { $('#calendar').fullCalendar('addEventSource',response); },
+	    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.1"); }
+	  });
+	}
 }
 
 $(function(){
@@ -548,7 +547,7 @@ $(function(){
         	error: function(xhr, status, error){
         		alert("No se pudo concretar la acción");
         	}
-       	});
+     });
 
 	}
 
@@ -661,7 +660,6 @@ $(function(){
 				d_i=tmp_f;
 			}
 			$('#calendar').fullCalendar('addEventSource', add_events);
-
 			
 			$('#diaForm .status').html(link_loading);
 			$.ajax({
@@ -687,27 +685,9 @@ $(function(){
 	        		alert("No se pudo concretar la acción");
 	        	}
 	       	});
-
 		}
-
 
 	});	
-/*
-	$.ajax({
-		type: 'POST',
-		url: '/aux/mostrarEventos',
-		data: {
-			especialidad_id: especialidad_id,
-			profesional_id: profesional_id,
-			prestador_id: prestador_id,
-		},
-		success: function(response) {
-			 $('#calendar').fullCalendar('addEventSource',response);
-		},
-		error: function(xhr, status, error){
-			alert("No se pudieron cargar las horas de atención");
-		}
-	});*/
 
 	function Mostrar(){
 		$('#action button').unbind('click');

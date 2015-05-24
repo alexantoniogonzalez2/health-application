@@ -323,6 +323,14 @@ class PersonaDiagnosticoController < ApplicationController
 
   	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where(" id = ? ",params[:persona_diagnostico_atencion_salud_id]).first
   	@persona_diagnostico_id = @persona_diagnostico_atencion.persona_diagnostico.id
+
+  	#Se borra potencial asociación con medicamentos
+  	@persona_medicamentos = FiPersonaMedicamentos.where('persona_diagnostico_id = ?', @persona_diagnostico_id )
+  	@persona_medicamentos.each do |p_m|
+			p_m.persona_diagnostico = nil
+			p_m.save!			
+		end
+  	
   	@era_antecedente = @persona_diagnostico_atencion.es_antecedente
   	@persona_diagnostico_atencion.destroy
 
@@ -350,7 +358,6 @@ class PersonaDiagnosticoController < ApplicationController
   			format.json { render :json => { :success => true } }  			
   		end		
   	end	
-
 	end
 
 	def guardarDiagnostico	

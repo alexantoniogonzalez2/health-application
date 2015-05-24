@@ -1,6 +1,6 @@
 class AtencionesSaludController < ApplicationController
 
-	include ActionView::Helpers::NumberHelper	
+	include ActionView::Helpers::NumberHelper		
 	
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
@@ -215,10 +215,10 @@ class AtencionesSaludController < ApplicationController
 	  end	
 
 	  #Antecedentes sociales
-		@class_sociales = ( @persona.nivel_escolaridad == 'null' and @persona.numero_personas_familia == 'null' ) ? '' : 'active-ant'
+		@class_sociales = ( @persona.nivel_escolaridad.nil? and @persona.numero_personas_familia.nil? ) ? '' : 'active-ant'
  	
 	end
-
+ 
 	def crearAtencion	
 
 		@agendamiento =  AgAgendamientos.find(params[:id])

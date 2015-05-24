@@ -1,0 +1,6 @@
+<% if @iniciador == 'fam' %>
+	<% @fam.each do |fam| %>
+		$("<%= escape_javascript( render :partial => "persona/familiares_row", :locals => {:fam => fam } ) %>").appendTo("#lista-familiares");
+		$('#tr-vacio-familiares').replaceWith('');
+	<% end %>	
+<% end %>	

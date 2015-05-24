@@ -104,9 +104,10 @@ $('#new_user').bootstrapValidator({
     'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
     sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
     rut: { validators: { digits: { message: 'Ingresa solo números' } } },
+    celular: { validators: { digits: { message: 'Ingresa solo números' } } },
     'user[password]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' }, notEmpty: { message: 'La contraseña es requerida' } } },
     'user[password_confirmation]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres', notEmpty: { message: 'La contraseña es requerida' } } } },
-    date: { validators: { notEmpty: { message: 'La fecha de nacimiento es requerida' }, date: { format: 'DD/MM/YYYY', min: '01/01/1900', max: '01/01/2016',  message: 'Formato no válido o fecha incorrecta' } } }
+    date: { validators: { notEmpty: { message: 'La fecha de nacimiento es requerida' }, date: { format: 'YYYY-MM-DD', min: '1900-01-01', max: getFechaActual(),  message: 'Formato no válido o fecha incorrecta' } } }
   }
 })
 
@@ -150,6 +151,20 @@ $('#sign-in-form').find('#user_email').change(function () {
      ajuste2_label_better('user_password');
   }
 })
+
+function getFechaActual(){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  if(dd<10)
+    dd='0'+dd;
+
+  if(mm<10) 
+    mm='0'+mm;
+ 
+  return yyyy+'-'+mm+'-'+dd;
+}
 
 function ajuste2_label_better (label_better_id) {
   var settings = {

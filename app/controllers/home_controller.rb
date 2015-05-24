@@ -18,8 +18,7 @@ class HomeController < ApplicationController
 				 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 			.order(fecha: :desc)
 
-		@hora_actual = DateTime.current
-	
+		@hora_actual = DateTime.current	
 
 		respond_to do |format|     
     	format.js   {}
@@ -208,8 +207,9 @@ class HomeController < ApplicationController
 				@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
 				@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
 				@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')	
-		  	
-		  	render 'index_persona'
+		  	@familiares = @persona.getCercanos
+
+		  	render 'index_persona' 
 		  end 	
 		else
 			render 'index', :layout => false

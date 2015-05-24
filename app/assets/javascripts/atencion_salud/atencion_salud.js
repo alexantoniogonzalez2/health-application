@@ -1,16 +1,3 @@
-$('.medicamento').on('shown.bs.modal', function() {
-
-  var med = $(this).attr('id').substring(20);
-  $('#div-diagnosticos-'+med).empty();
-  $.ajax({
-    type: 'POST',
-    url: '/agregar_diag_med',
-    data: { id: atencion_salud_id, med: med },
-    success: function(response) { },
-    error: function(xhr, status, error){ }
-  });
-})
-
 $('.ges-cancelar').click(function() {
   var pd = $(this).attr('id').substring(13);
   $("#per_not_"+pd).collapse('hide');
@@ -476,7 +463,17 @@ function eliminarDiagnostico(pers_diag_aten_sal) {
     type: 'POST',
     url: '/eliminar_diagnostico',
     data: { persona_diagnostico_atencion_salud_id: pers_diag_aten_sal, atencion_salud_id: at_salud_id },
-    success: function(response) { $("#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); $("#pd"+pers_diag_aten_sal).remove(); },
+    success: function(response) {
+      $("#modal-container-diag-"+pers_diag_aten_sal).modal('hide');
+      $("#pd"+pers_diag_aten_sal).remove();
+      $(".diag-med-"+pers_diag_aten_sal).remove();
+      $("[id^=div-diagnosticos-]").each(function( ) {
+        var med = $(this).attr('id').substring(17);
+        if ($('#div-diagnosticos-'+med+' div').length == 0 )
+          $('#div-diagnosticos'+med).append('<p id="no-med-'+med+'">No hay diagnósticos seleccionados.</p>');     
+      });
+          
+    },
     error: function(xhr, status, error){ alert("No se pudo eliminar el diagnóstico del paciente.");   }
   });
    
@@ -903,6 +900,9 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
     url: '/guardar_antecedente_familiar_muerte',
     data: { diag: diag, fecha: fecha, persona_ant: per_ant, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo },
     success: function(response){ 
+      if ($('#body-ant-muertes tr').length > 0 || $('#body-ant-cronicas tr').length > 0)
+        $('#ant_fam').addClass('active-ant');
+
       if (cerrar)
         cerrarModalAntFamMue(id);
     },

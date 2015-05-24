@@ -16,5 +16,5 @@ $("#guardar-ant-soc").click ->
       nivel_escolaridad : nivel_escolaridad
       atencion_salud_id : at_salud_id
     error: (jqXHR, textStatus, errorThrown) ->
-    success: (data, textStatus, jqXHR) ->
+    success: (data, textStatus, jqXHR) -> $('#ant_soc').addClass 'active-ant'
   return 

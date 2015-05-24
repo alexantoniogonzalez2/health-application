@@ -60,8 +60,8 @@
             </div>
           </div>  
             <div class="checkbox">
+              <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>
               <%= f.check_box :remember_me, :id => "remember_me" %> 
-              <%= f.label 'No cerrar sesión', :for => "remember_me" ,:class => 'ajuste-hover' %>              
             </div>
               <%= f.submit 'Iniciar sesión' ,id: 'inicia_sesion', class: "btn btn-large btn-primary btn-block" %><br>
               <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  

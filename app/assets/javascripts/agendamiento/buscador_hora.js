@@ -6,19 +6,17 @@ function cargarMotivos(){
 	$('input[type=radio][name^=radios-motivo-]').change(function() {
 	  var id_agend = $(this).attr('name').substring(14);
 	  var m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();
-	  if (m_c == 1 ){
-	  	$('#select-motivo-'+id_agend).hide();
-	  	$('#select-motivo-'+id_agend).prop('selectedIndex',0);
-	  	$('#select-capitulo-'+id_agend).show();
+	  if (m_c == '1' ){
+	  	
+	  	$('#div-sel-ant-'+id_agend).hide();
+	  	$('#div-sel-cap-'+id_agend).show();	  	
 	  } 
 	  else {
-	  	$('#select-motivo-'+id_agend).show();
 	  	
-	  	if($('#select-motivo-'+id_agend).length ){
-	  		$('#select-capitulo-'+id_agend).hide();
-	  		$('#select-capitulo-'+id_agend).prop('selectedIndex',0)
-
-			} else { $('#select-capitulo-'+id_agend).show(); };
+	  	$('#div-sel-ant-'+id_agend).show();
+	  	if($('#div-sel-ant-'+id_agend).length ){	  		
+	  		$('#div-sel-cap-'+id_agend).hide();
+			} else { $('#div-sel-cap-'+id_agend).show(); };
 	  
 	  };
 
@@ -28,7 +26,7 @@ function cargarMotivos(){
 
 }
 
-if ( $( "#profesional" ).length ){
+if ( $("#buscadorHora").length > 0 ){
 	  
 	$.ajax({
     type: 'POST',
@@ -50,6 +48,8 @@ $(document).ready(function() {
 
 
 $("#select_especialidad").on("change", function(e) { 
+
+	addLittleSpinner('cargando-especialistas');
 
   var value = $("#select_especialidad").val();
 
@@ -302,16 +302,16 @@ $('#buscadorHora').fullCalendar({
 				});
 			});
 
-
 			// Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click
 			$('#modal-content .modal-footer .pedir-hora').click(function(){
 
 				id_agend = calEvent.id
 				m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();	
-				s_m = $('#select-motivo-'+id_agend).val();
+				s_m = $('#select-antecedente-'+id_agend).val();
 				s_c = $('#select-capitulo-'+id_agend).val();	
-				s_p = $('#select-paciente-'+id_agend).val();	
-				
+				s_p = $('#select-paciente-'+id_agend).val();
+				s_ph = $('#select-persona-hora-'+id_agend).val();		
+
 				$.ajax({
 					type: 'POST',
 					url: '/aux/pedirHoraEvento',
@@ -320,7 +320,8 @@ $('#buscadorHora').fullCalendar({
 						motivo: m_c,
 						antecedente: s_m,
 						capitulo_cie_10: s_c,
-						paciente: s_p
+						paciente: s_p,
+						persona_hora: s_ph,
 					},
 					success: function(response) {
 
@@ -352,7 +353,8 @@ $('#buscadorHora').fullCalendar({
 
 })
 
-function actualizarCentro(){
+function actualizarCentro(){	
+
 
 	var centros_seleccionados = new Array();
 	var fieldset = document.getElementById("checkbox_centros")
@@ -369,11 +371,12 @@ function actualizarCentro(){
 	}
 
 	var especialidad = $("#select_especialidad").val();
-	var especialista = $("#select_especialista").val();
-	
+	var especialista = $("#select_especialista").val();	
+		
 	if(especialidad != '' || especialista != ''){
-
-	  $.ajax({
+		
+		$("#select_especialista").prop("disabled", true);		
+		$.ajax({
 	    type: 'POST',
 	    url: '/buscar_horas',
 	    data: {
@@ -381,14 +384,16 @@ function actualizarCentro(){
 	      especialidad: especialidad,
 	      especialista: especialista,    
 	    },
-	    success: function(response) {
-	    	  $('#buscadorHora').fullCalendar('addEventSource',response);
+	    success: function(response) {																		    	
+	    	  $('#buscadorHora').fullCalendar('addEventSource',response);	    	  
+	    	  $("#select_especialista").prop("disabled", false);
+	    	  $('#cargando-especialistas').html('');	    	 
 	    },
 	    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.4"); }
 	  }); 		
 	}
 	else{	alert('Seleccione una especialidad o un especialista.'); }
-	 
+
 }
 
 function actualizarTodosLosCentros(){

@@ -1,0 +1,11 @@
+function actualizarDiagnosticos(med){
+
+  $('#div-diagnosticos-'+med).empty();
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_diag_med',
+    data: { id: atencion_salud_id, med: med },
+    success: function(response) { },
+    error: function(xhr, status, error){ }
+  });
+}

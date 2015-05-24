@@ -4,6 +4,7 @@ $blueFooter: #B5DBFF;
 $lightBlue: #85D3F5;
 $mediumBlue: #D9EDF7;
 $lightGray: #444;
+$lightGreen: #DFF0D8;
 $white: white;
 
 html { overflow-y: scroll; }
@@ -182,3 +183,7 @@ input.ajuste-motivo{
   padding: 0px 6px;
   height: 25px;
 }
+div.ajuste-padding2 { padding-left: 0px; padding-right: 0px;}
+span.ajus-fl-left {float: left; }
+.no-padding { padding: 0px !important; }
+.help-block { color: #a94442; }

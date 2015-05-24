@@ -3,7 +3,8 @@
 		<div class="col-md-3 column">
 			<ul id="nav-antecedentes" class="nav nav-pills nav-pills nav-stacked nav-antecedentes" role="tablist">
 				<li class="active"><a href="#inicio" role="tab" data-toggle="tab">Inicio</a></li>
-				<li><a href="#horas" role="tab" data-toggle="tab">Buscador de horas</a></li>
+				<li><a href="#familia" role="tab" data-toggle="tab">Familia</a></li>
+				<li><a href="#horas" role="tab" data-toggle="tab">Buscador de horas</a></li>				
 			  <li><a href="#ant_med" role="tab" data-toggle="tab">Antecedentes médicos</a></li>
 			  <li><a href="#ant_quir" role="tab" data-toggle="tab">Antecedentes quirúrgicos</a></li>
 			  <% if @persona.genero == 'Femenino' %><li><a href="#ant_gine" role="tab" data-toggle="tab">Antecedentes ginecológicos</a></li><% end %>
@@ -21,6 +22,7 @@
 		<div class="col-md-9 column antecedentes">
 			<div class="tab-content antecedentes">
 				<div class="tab-pane active" id="inicio"><%= render :partial => "inicio" %></div>
+				<div class="tab-pane" id="familia"><%= render :partial => "persona/familia" %></div>
 				<div class="tab-pane" id="horas"><%= render :partial => "agendamiento/buscador_hora" %></div>
 			  <div class="tab-pane" id="ant_med"><%= render :partial => "antecedentes/antecedentes_medicos" %></div>
 			  <div class="tab-pane" id="ant_quir"><%= render :partial => "antecedentes/antecedentes_quirurgicos" %></div>

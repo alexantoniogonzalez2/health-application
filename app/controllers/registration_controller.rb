@@ -21,6 +21,13 @@ class RegistrationController < Devise::RegistrationsController
 			@user.save
 			@persona.user = @user
 			@persona.save
+			unless params[:celular].blank?
+				@celular = TraTelefonos.create! :codigo => 9, :numero => params[:celular]
+				@persona_telefono = PerPersonasTelefonos.new
+				@persona_telefono.persona = @persona
+				@persona_telefono.telefono = @celular
+				@persona_telefono.save!
+			end	
 			redirect_to account_created_path
 		else
 			render :action => "new"

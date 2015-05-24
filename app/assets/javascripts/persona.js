@@ -1,12 +1,36 @@
 $("form[id^='form-agregar-persona-'").submit(function (e) { return false; });
 
 $("form[id^='form-agregar-persona-'").bootstrapValidator({
-	live: 'submitted',
+  live: 'disabled',
 	fields: {
 		sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
 		email: { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
 		rut: { validators: { digits: { message: 'Ingresa solo números' } } },
 		rut: { validators: { validarRut: { message: 'El RUT ingresado no es válido' } } },
+    telefono: { validators: { digits: { message: 'Ingresa solo números' } } },
+    otra_relacion: {  validators: {
+                        callback: {
+                            message: 'Especificar otra relación',
+                            callback: function(value, validator, $field) {
+                              var hook = $field[0].id.substring(4);                                
+                              var relacion = $('#form-agregar-persona-'+hook).find('[name="select_relacion"]').val();
+                              return (relacion !== '5') ? true : (value !== '');
+                            }
+                        }
+                    }
+                  },
+    codigo: {  validators: {
+                    callback: {
+                        message: 'Especificar tipo de teléfono',
+                        callback: function(value, validator, $field) {
+                            var hook = $field[0].id.substring(6);
+                            var telefono = $('#form-agregar-persona-'+hook).find('[name="telefono"]').val();                           
+                            return (telefono == '') ? true : (value != null );
+                        }
+                    }
+                }
+              },              
+
 	},
   onSuccess: function(e) {
   	var id = $(e.target).attr('id').substring(21);
@@ -20,7 +44,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
   	var celular =  $('#telefono'+id).val();
     var codigo = $('#codigo'+id).val();
   	var fecha_nacimiento = $('#fecha'+id).val();
-    var sexo = $('#sexo'+id).val();
+    var sexo = $('input[name=sexo'+id+']:checked').val();
   	var otro = $('#otro'+id).val();
 
     if (typeof atencion_salud_id !== 'undefined') 
@@ -45,20 +69,36 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
         atencion_salud_id: at_salud_id,
         sexo: sexo,
         otro: otro,
+        iniciador: id,
       },
       success: function(response){
-        if (response.success){       
-        	$("#select_"+id).append('<option value='+response.id+'>'+response.text+'</option>');
-          $("#select_"+id).val(response.id);
-         	cerrarModalAgregarPersona(id); 
-          $("#select_"+id).trigger("change");
-          $(e.target).data('bootstrapValidator').resetForm();
+          if (id == 'fam'){
+            if ( typeof response.success !== 'undefined' ){
+              if (response.success){ 
+                cerrarModalAgregarPersona(id);      
+                $(e.target).data('bootstrapValidator').resetForm(); 
+              } else
+                alert("Ya existe ese correo electrónico en la base de datos."); 
+            } else { 
+              cerrarModalAgregarPersona(id);      
+              $(e.target).data('bootstrapValidator').resetForm(); 
+            }     
+
+          }
+          else {
+            if (response.success){ 
+              $("#select_"+id).append('<option value='+response.id+'>'+response.text+'</option>');
+              $("#select_"+id).val(response.id);            
+              $("#select_"+id).trigger("change");             
+              cerrarModalAgregarPersona(id);      
+            	$(e.target).data('bootstrapValidator').resetForm(); 
+            } else
+              alert("Ya existe ese correo electrónico en la base de datos."); 
         }
-        else
-           alert("Ya existe ese correo electrónico en la base de datos."); 
+        
 
       },
-      error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
+      error: function(xhr, status, error){ alert("No se pudo agregar la persona."); }
     }); 
     
   }
@@ -84,10 +124,3 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
 
     }
   }
-
-$(".label_better").label_better({
-    position: "top",
-    animationTime: 500,
-    easing: "ease-in-out",
-    offset: 5
-});

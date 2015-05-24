@@ -1,6 +1,9 @@
 class PersonaController < ApplicationController
 	def agregarPersona
 
+		@iniciador = params[:iniciador]
+		@fam = Hash.new
+
 		if params[:atencion_salud_id] == 'persona'
 			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
 		else 
@@ -8,8 +11,15 @@ class PersonaController < ApplicationController
 			@persona = @atencion_salud.persona
 		end
 
+		if params[:correo] == ''
+			next_id = User.maximum(:id) + 1
+			correo = 'noreply'<<next_id.to_s<<'@medracer.com'
+		else
+			correo = params[:correo]	
+		end	
+
 		@user = User.new
-		@user.email = params[:correo]
+		@user.email = correo
 		@user.password = "Random123"
 		respuesta = @user.save
 
@@ -78,19 +88,28 @@ class PersonaController < ApplicationController
 				 @otra_relacion.relacion = params[:otro]
 				 @otra_relacion.save!	
 				 @texto_relacion = params[:otro]		
-			end		
+			end	
+			@fam[@persona_nueva.id] = @texto_relacion	
 		end 
-		
+				
 		if respuesta	
-			respond_to do |format|
-				format.json { render :json => { :success => respuesta, :id => @persona_nueva.id, :text =>  @texto_relacion << ' - ' << @persona_nueva.showName('%n%p%m') }	}
-			end
+			if @iniciador == 'fam' 
+				respond_to do |format|
+					format.js { }		
+					format.json { }						
+				end
+			else	
+				respond_to do |format|
+					format.json { render :json => { :success => respuesta, :id => @persona_nueva.id, :text =>  @texto_relacion << ' - ' << @persona_nueva.showName('%n%p%m') }	}
+					format.js { }				
+				end
+			end	
 		else
 			respond_to do |format|
 				format.json { render :json => { :success => respuesta }	}
-			end
-		
+			end		
 		end	
 				
 	end
+
 end
