@@ -13,96 +13,87 @@
 			end
 	
 end	%>
+<label class="folio">Folio: <%= @interconsulta.id %></label><br>
+<h2 class="print" align="center">Solicitud de Interconsulta o Derivación</h2>
+<label class="print">Fecha y hora de la solicitud: <%= l Time.now %></label>
+<br>
+<table class='print'>
+	<tr>
+		<td><label>Establecimiento</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
+		<td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>		
+	</tr>
+</table>
 
-<h1 class="enc-ges">Solicitud de Interconsulta o Derivación</h1>
+<label class="rotate ro-pac">Datos del paciente</label>
+<table class='print aj-marg-left '>
+	<tr>
+		<td><label>Apellido paterno</label>: <%= @agendamiento.persona.showName('%p') %></td>
+		<td><span class="print">Apellido materno</span>: <%= @agendamiento.persona.showName('%m') %></td>
+		<td><label>Nombres</label>: <%= @agendamiento.persona.showName('%n') %></td>
+	</tr>
+	<tr>
+		<td><label>Rut</label>: <%= @agendamiento.persona.showRut %></td>
+		<td><label>Sexo</label>: <%= @agendamiento.persona.showSexo %></td>
+		<td><span class="print">Previsión de salud</span>: <%= @agendamiento.persona.getPrevision %></td>
+	</tr>
+	<tr>
+		<td colspan="3"><label>Domicilio</label>: <%= @agendamiento.persona.getDomicilio %></td>
+	</tr>
+	<tr>
+		<td><label>Correo electrónico</label>:	<%= @agendamiento.persona.user.email %></td>
+		<td><label>Telefono fijo</label>: <%= @agendamiento.persona.getTelefonoFijo %></td>
+		<td><label>Celular</label>: <%= @agendamiento.persona.getCelular %></td>
+	</tr>
+	<tr>
+		<td colspan="3"><span class="print">En caso de que la perona que tomó conocimiento no sea el paciente:</span></td>
+	</tr>
+	<tr>	
+		<td colspan="2"><label>Nombre</label>: <%= nombre %></td>
+		<td><label>Rut</label>: <%= rut %></td>
+	</tr>
+	<tr>		
+		<td colspan="2"><label>Correo electrónico</label>: <%= correo %></td>
+		<td><label>Celular</label>: <%= celular %>
+	</tr>
+</table>
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del prestador</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-		<table>
-			<tr><td><label>Institución</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td></tr>
-			<tr><td><label>Dirección</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td></tr>
-			<tr><td><label>Profesional que notifica</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td></tr>
-			<tr><td><label>Rut profesional</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td></tr>
-			<tr><td><label>Especialidad</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td></tr>
-		</table>
-  </div>
-</div>
+<label class="rotate ro-cli">Datos clínicos</label>
+<table class='print aj-marg-left'>
+	<tr>
+		<td colspan="2"><span class="print">Establecimiento al cual se deriva</span>: <%= @interconsulta.prestador_destino_texto unless @interconsulta.prestador_destino_texto.nil? %></td>
+	</tr>
+	<tr>
+		<td colspan="2"><label>Especialidad</label>: <%= @interconsulta.especialidad.nombre unless @interconsulta.especialidad.nil? %></td>
+	</tr>
+	<tr>
+		<td><span class="print">Confirmación Diagnóstica</span>:	<%= p_d.diagnostico.nombre %></td>
+		<td><span class="print">Código CIE10</span>:	<%= p_d.diagnostico.codigo_cie10 %></td>
+	</tr>
+	<tr>
+		<td>
+			<span class="print">Propósito:</span><br>
+			<input type="radio" <% if @interconsulta.proposito == 1 %> checked <% end %> >Diagnóstico<br>
+		  <input type="radio" <% if @interconsulta.proposito == 2 %> checked <% end %> >Paciente en tratamiento<br>
+		  <input type="radio" <% if @interconsulta.proposito == 3 %> checked <% end %> >Seguimiento<br>
+		  <input type="radio" <% if @interconsulta.proposito == 4 %> checked <% end %> >Otro		
+		</td>
+		<td>
+			<span class="print">Comentario:</span><br>
+			<%= @interconsulta.comentario %>
+		</td>
+	</tr>				
+</table>	
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del paciente</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-  	<table>
-  		<tr><td><label>Nombre</label></td><td>:	<%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
-			<tr><td><label>Rut</label></td><td>: <%= @agendamiento.persona.showRut %></td></tr>
-			<tr><td><label>Previsión de salud</label></td><td>:	<%= @agendamiento.persona.getPrevision %></td></tr>
-			<tr><td><label>Domicilio</label></td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
-			<tr><td><label>Correo electrónico</label></td><td>:	<%= @agendamiento.persona.user.email %></td></tr>
-			<tr><td><label>Telefono fijo</label></td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>
-			<tr><td><label>Celular</label></td><td>: <%= @agendamiento.persona.getCelular %></td></tr>
-		</table>
-  </div>
-</div>
+<label class="rotate ro-pro">Profesional</label>
+<table class='print aj-marg-left'>
+	<tr>
+		<td><span class="print">Apellido paterno</span>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%p') %></td>
+		<td><span class="print">Apellido materno</span>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%m') %></td>
+		<td><span class="print">Nombres</span>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n') %></td></tr>
+	<tr>
+		<td><label>Rut</label>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td>
+		<td colspan="2" class="firma"><label class="firma">Firma profesional</label></td>
+	</tr>
+</table>
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Información médica</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-  	<table>
-  		<tr><td><label>Establecimiento al cual se deriva</label></td><td>: <%= @interconsulta.prestador_destino.nombre unless @interconsulta.prestador_destino.nil? %></td></tr>
-  		<tr><td><label>Especialidad</label></td><td>:	<%= @interconsulta.especialidad.nombre unless @interconsulta.especialidad.nil? %></td></tr>
-			<tr><td><label>Confirmación Diagnóstica</label></td><td>:	<%= p_d.diagnostico.nombre %></td></tr>			
-			<tr><td><label>Código CIE10</label></td><td>:	<%= p_d.diagnostico.codigo_cie10 %></td></tr>
-			<tr>
-				<td>
-					<label>Propósito:</label>
-					<div class="form-group form-ges" id="int_<%= p_d.id %>">
-				    <div class="radio">
-				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if @interconsulta.proposito == 1 %> checked <% end %> >Diagnóstico</label>
-				    </div>					
-				    <div class="radio">
-				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if @interconsulta.proposito == 2 %> checked <% end %> >Paciente en tratamiento</label>
-				    </div> 						
-				    <div class="radio">
-				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if @interconsulta.proposito == 3 %> checked <% end %> >Seguimiento</label>
-				    </div>				
-				    <div class="radio">
-				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if @interconsulta.proposito == 4 %> checked <% end %> >Otro</label>
-				    </div> 
-					</div>
-				</td>
-				<td>
-					<label>Comentario:<label>
-					<textarea id="int-comment-<%= p_d.id%>" class="form-control int-comment" rows="4" cols="50"><%= @interconsulta.comentario %></textarea>
-				</td>
-			</tr>				
-		</table>				
-  </div>
-</div>
 
-<div class="panel panel-default">
-	<div class="panel-body panel-body-ajustado">
-		<table>
-			<tr><td><label>Fecha y hora de la solicitud</label></td><td>:	<%= l Time.now %></td></tr>
-			<tr><td colspan="2"><br/><br/><br/></td></tr>
-			<tr><td colspan="2"><label class="firma">Firma profesional</label></td></tr>
-		</table>	
-	</div>
-</div>
-
-<div class="panel panel-default">
-	<div class="panel-body panel-body-ajustado">
-		En caso que la persona que tomó conocimiento no sea el paciente, identificar:
-		<table>
-			<tr><td><label>Nombre</label></td><td>: <span id="int_nombre_<%= p_d.id %>"><%= nombre %></span></td></tr>
-			<tr><td><label>Rut</label></td><td>: <span id="int_rut_<%= p_d.id %>"><%= rut %></span></td></tr>
-			<tr><td><label>Correo electrónico</label></td><td>: <span id="int_correo_<%= p_d.id %>"><%= correo %></span></td></tr>
-			<tr><td><label>Celular</label></td><td>: <span id="int_celular_<%= p_d.id %>"><%= celular %></span></td></tr>
-		</table>	
- 	</div>
-</div>

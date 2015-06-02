@@ -359,7 +359,9 @@ $(function(){
 	    language: "es",
 	    calendarWeeks: true,
 	    todayHighlight: true,
-	    autoclose: true
+	    autoclose: true,
+	    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+	    minDate: '0',
 	});
 
 	$('#diaForm input[name="di"]').change(function(){
@@ -392,7 +394,7 @@ $(function(){
 			i: {
 				required: true,
 				number: true,
-				maxlength: 3,
+				max: 30,
 				positive: true,
 				intervalOk: function(e){
 					tmp=$(e).parents("form:first");
@@ -427,8 +429,8 @@ $(function(){
 			
 			required: "Ingrese intervalo válido",
 			number: "Ingrese intervalo válido",
-			maxlength: "El intervalo es entre 5 y 999",
-			positive: "El intervalo es entre 5 y 999",
+			max: "El intervalo es entre 5 y 30",
+			positive: "El intervalo es entre 5 y 30",
 			intervalOk: "Intervalo dado no calza con fechas"
 		},
 		'checkboxes[]': 'Debe elegir al menos 1 día'
@@ -583,7 +585,7 @@ $(function(){
 			i: {
 				required: true,
 				number: true,
-				maxlength: 3,
+				max: 30,
 				positive: true,
 				intervalOk: function(e){
 					tmp=$(e).parents("form:first");
@@ -602,14 +604,13 @@ $(function(){
 			ht: {
 				required: "Ingrese hora válida",
 				hourFormat: "Ingrese hora válida",
-				greaterThan1: "Termino debe ser mayor que inicio"
+				greaterThan1: "Término debe ser mayor que inicio"
 			},
-			i: {
-				
+			i: {				
 				required: "Ingrese intervalo válido",
 				number: "Ingrese intervalo válido",
-				maxlength: "El intervalo es entre 5 y 999",
-				positive: "El intervalo es entre 5 y 999",
+				max: "El intervalo es entre 5 y 30",
+				positive: "El intervalo es entre 5 y 30",
 				intervalOk: "Intervalo dado no calza con fechas"
 			}
 
@@ -618,10 +619,8 @@ $(function(){
 
 		submitHandler: function(form){
 
-
 			$('#calendar').fullCalendar('removeEvents','tmp');
 			$('#calendar').fullCalendar('removeEvents','err');
-
 
 			di=$(form).find('input[name="di"]').val().split('-');
 			dt=$(form).find('input[name="dt"]').val().split('-');

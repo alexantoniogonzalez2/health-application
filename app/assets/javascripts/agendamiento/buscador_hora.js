@@ -26,8 +26,7 @@ function cargarMotivos(){
 
 }
 
-if ( $("#buscadorHora").length > 0 ){
-	  
+if ( $("#iconos-leyenda").length > 0 ){	  
 	$.ajax({
     type: 'POST',
     url: '/buscar_horas_profesional',
@@ -40,10 +39,8 @@ if ( $("#buscadorHora").length > 0 ){
 }
 
 $(document).ready(function() {	
-
 	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
 	$('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true });
-
 });
 
 
@@ -415,7 +412,6 @@ function actualizarTodosLosCentros(){
 	}	
 
 }
-
 
 //Este código es para simular el efecto árbol del checkbox
 $(document).ready(

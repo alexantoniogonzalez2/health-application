@@ -7,7 +7,7 @@ class FiInterconsultas < ActiveRecord::Base
 
   private
   def app_params
-    params.require(:list).permit(:id,:persona_diagnostico_atencion_salud,:fecha_solicitud,:prestador_destino,:especialidad,:persona_conocimiento,:proposito,:proposito_otro,:comentario)
+    params.require(:list).permit(:id,:persona_diagnostico_atencion_salud,:fecha_solicitud,:prestador_destino,:prestador_destino_texto,:especialidad,:persona_conocimiento,:proposito,:proposito_otro,:comentario)
   end
 								
 end

@@ -4,6 +4,7 @@ $blueFooter: #B5DBFF;
 $lightBlue: #85D3F5;
 $mediumBlue: #D9EDF7;
 $lightGray: #444;
+$verylightGray: #ddd;
 $lightGreen: #DFF0D8;
 $white: white;
 
@@ -183,7 +184,56 @@ input.ajuste-motivo{
   padding: 0px 6px;
   height: 25px;
 }
+input.ajuste-cen-der {
+  width: 95%;
+  display: inline-block;
+  padding: 0px 6px;
+  height: 25px;
+}
 div.ajuste-padding2 { padding-left: 0px; padding-right: 0px;}
 span.ajus-fl-left {float: left; }
 .no-padding { padding: 0px !important; }
 .help-block { color: #a94442; }
+.fc-event { border: 1px solid $verylightGray;} 
+
+table.print { 
+  width: 100%;
+  font-size: 12px;
+  border-width: 0 0 1px 1px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-color: #ddd;
+  border-style: solid;
+  td {
+    border-color: #ddd;
+    border-style: solid;
+    margin: 0;
+    padding: 4px;
+    border-width: 1px 1px 0 0;
+  }
+ }
+
+table.aj-marg-left { margin-left: 20px; width: 97%; }
+
+label.rotate {
+  -ms-transform: rotate(-90.0deg); /* IE 9 */
+  -webkit-transform: rotate(-90.0deg); /* Chrome, Safari, Opera */
+  transform: rotate(-90.0deg);
+  color: white; 
+  background-color: #464646;
+  white-space: nowrap;
+  text-align: center;  
+  position: relative;
+  
+}
+
+label.ro-pac { left: -77px; top: 98px; width: 176px; }
+label.ro-cli { left: -75px; top: 95px; width: 170px; }
+label.ro-pro { left: -35px; top: 60px; width: 95px; }
+
+h2.print { text-transform: uppercase; text-decoration: underline; } 
+table.aj-marg-left { margin-left: 20px; }
+label.folio { display: block; float: right; }
+span.print { font-weight: bold; }
+label.print { display: block; text-align: center; }
+td.firma { padding-top: 50px !important ; }

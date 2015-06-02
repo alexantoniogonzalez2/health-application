@@ -18,7 +18,7 @@ $('.agregar_horas').click( function() {
   else if (centro == '')
     alert('Seleccione un centro médico.');   
   else if(especialidad != '' && especialista != '' && centro != '') {
-    window.location="/agendamiento/pedirHora"+"/"+especialidad+"/"+centro+"/"+especialista;
+    window.location="/agendamiento/generarHora"+"/"+especialidad+"/"+centro+"/"+especialista;
   }
 
 });

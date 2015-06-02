@@ -97,8 +97,8 @@ AplicacionMedica::Application.routes.draw do
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
   get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda
-  get '/agendamiento/pedirHora/:especialidad_id/:prestador_id/:profesional_id', to: 'agendamiento#pedirHora'
-  put '/agendamiento/pedirHora', to: 'agendamiento#pedirHora', :as => :pedirHora #Esta es solo para ponerle un nombre a la anterior pero sin parámtros
+  get '/agendamiento/generarHora/:especialidad_id/:prestador_id/:profesional_id', to: 'agendamiento#generarHora'
+  put '/agendamiento/generarHora', to: 'agendamiento#generarHora', :as => :generarHora #Esta es solo para ponerle un nombre a la anterior pero sin parámtros
   get '/agendamiento/buscadorHora', to: 'agendamiento#buscadorHora', :as => :agendamientoBuscadorHora
   post '/cargarTodos', to: 'agendamiento#cargarTodos', :as => :agendamientoCargarTodos
   post '/filtrar_profesionales', to: 'agendamiento#filtrarProfesionales', :as => :filtrarProfesionales

@@ -7,7 +7,8 @@ class CreateFiInterconsultas < ActiveRecord::Migration
     	t.references :especialidad #especialidad_id
       t.references :persona_conocimiento #persona_conocimiento_id
       t.integer :proposito
-      t.text :proposito_otro
+      t.string :prestador_destino_texto
+      t.string :proposito_otro
       t.text :comentario      
       t.timestamps
     end

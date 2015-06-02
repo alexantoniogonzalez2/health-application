@@ -140,6 +140,8 @@
 					<label>Establecimiento al cual se deriva</label>
 				</div>
 				<div class="col-md-8 column">:
+				<input id="int-pdt-<%= p_d.id%>" type="text" class="form-control ajuste-cen-der auto-int-pdt" value="<%= interconsulta.prestador_destino_texto if !interconsulta.nil?  %>">
+				<!--
 					<select id="select_prestadores_int<%= p_d.id %>" class="select_prestadores">	
 						<option></option>					
 					  <% @prestadores.each do |pres| %>
@@ -152,7 +154,8 @@
 					  	 			end
 					  	 		end %> ><%= pres.nombre %></option>      			
    					<% end %>
-  				</select>					
+  				</select>
+  			-->						
 				</div>				
 			</div>
 			<div class="row clearfix ajuste-margin">

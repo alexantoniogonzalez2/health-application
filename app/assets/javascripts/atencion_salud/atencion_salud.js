@@ -69,7 +69,7 @@ $('input[type=radio][name^=radios-int-]').change(function() {
       pers_diag: pers_diag,
     },
     success: function(response){  },
-    error: function(xhr, status, error){ alert("No se pudo agregar el prestador."); }
+    error: function(xhr, status, error){ alert("No se pudo agregar la información."); }
   });
 });
 
@@ -136,6 +136,13 @@ $('.int-comment').keyup( function(e) {
   else { clearTimeout(contador_int_com);}
   id = this.id.substring(12);
   contador_int_com = setTimeout(function(){ autoguardarComentarioInt(id) },2000);
+})
+
+$('.auto-int-pdt').keyup( function(e) { 
+  if (typeof contador_int_pdt === 'undefined') { } 
+  else { clearTimeout(contador_int_pdt);}
+  id = this.id.substring(8);
+  contador_int_pdt = setTimeout(function(){ autoguardarPrestadorDestinoTexto(id) },2000);
 })
 
 $('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
@@ -291,8 +298,8 @@ $(".select_interconsulta").on("change", function(e) {
   
 })
 
-$(".select_prestadores_int").on("change", function(e) { 
-  var pd = $(this).attr('id').substring(18);   
+$(".select_prestadores").on("change", function(e) { 
+  var pd = $(this).attr('id').substring(22);   
   value = $("#select_prestadores_int"+pd).select2('data') != null ? $("#select_prestadores_int"+pd).select2('data').id : null;    
   $.ajax({
     type: 'POST',
@@ -307,8 +314,8 @@ $(".select_prestadores_int").on("change", function(e) {
   });   
 })
 
-$(".select_especialidad_int").on("change", function(e) { 
-  var pd = $(this).attr('id').substring(19);   
+$(".select_especialidad").on("change", function(e) { 
+  var pd = $(this).attr('id').substring(23);   
   value = $("#select_especialidad_int"+pd).select2('data') != null ? $("#select_especialidad_int"+pd).select2('data').id : null;    
   $.ajax({
     type: 'POST',
@@ -717,27 +724,35 @@ function autoguardarComentario(pers_diag_aten_sal) {
 }
 
 function autoguardarComentarioInt(pers_diag_aten_sal) {
-
   var int_comentario = $('#int-comment-'+pers_diag_aten_sal).val();
-
   $.ajax({
     type: 'POST',
     url: '/agregar_info_interconsulta',
-    data: { 
-      tipo: 'comentario',
-      valor: int_comentario,
-      pers_diag: pers_diag_aten_sal,
-    },
+    data: { tipo: 'comentario', valor: int_comentario, pers_diag: pers_diag_aten_sal},
     success: function(response){
       $('#auto-int-'+pers_diag_aten_sal).show("hide");
       setTimeout(function(){$('#auto-int-'+pers_diag_aten_sal).hide("hide");},2000) ;
       pre_int_comentario = int_comentario;
     },
     error: function(xhr, status, error){ alert("No se guardar el comentario."); }
-  });    
-  
-
+  });  
 }
+
+function autoguardarPrestadorDestinoTexto(pers_diag_aten_sal) {
+  var pres_des_tex = $('#int-pdt-'+pers_diag_aten_sal).val();
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_interconsulta',
+    data: { tipo: 'pres_des_tex', valor: pres_des_tex, pers_diag: pers_diag_aten_sal},
+    success: function(response){
+      // $('#auto-int-'+pers_diag_aten_sal).show("hide");
+      //setTimeout(function(){$('#auto-int-'+pers_diag_aten_sal).hide("hide");},2000) ;
+      //pre_descomentario = pres_des_tex;
+    },
+    error: function(xhr, status, error){ alert("No se guardar el comentario."); }
+  });  
+}
+
 
 function sinCambios(pers_diag_aten_sal){ 
 

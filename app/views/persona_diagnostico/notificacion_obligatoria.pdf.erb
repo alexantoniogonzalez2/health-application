@@ -25,7 +25,7 @@
   	<table>
 			<tr><td><label>Nombre</label></td><td>: <%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
 			<tr><td><label>Rut</label></td><td>: <%= @agendamiento.persona.showRut %></td></tr>
-			<tr><td><label>Previsión de salud</label></td><td>: <%= @agendamiento.persona.getPrevision.prevision_salud.nombre %></td></tr>
+			<tr><td><label>Previsión de salud</label></td><td>: <%= @agendamiento.persona.getPrevision %></td></tr>
 			<tr><td><label>Domicilio</label></td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
 			<tr><td><label>Correo electrónico</label></td><td>: <%= @agendamiento.persona.user.email %></td></tr>
 			<tr><td><label>Telefono fijo</label></td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>

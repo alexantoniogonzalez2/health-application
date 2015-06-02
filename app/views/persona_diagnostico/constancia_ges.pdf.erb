@@ -24,7 +24,7 @@
     <table>
       <tr><td><label>Nombre</label></td><td>: <%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
       <tr><td><label>Rut</label></td><td>: <%= @agendamiento.persona.showRut %></td></tr>
-      <tr><td><label>Previsión de salud</label></td><td>: <%= @agendamiento.persona.getPrevision.prevision_salud.nombre %></td></tr>
+      <tr><td><label>Previsión de salud</label></td><td>: <%= @agendamiento.persona.getPrevision %></td></tr>
       <tr><td><label>Domicilio</label></td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
       <tr><td><label>Correo electrónico</label></td><td>: <%= @agendamiento.persona.user.email %></td></tr>
       <tr><td><label>Telefono fijo</label></td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>      
@@ -44,8 +44,8 @@
       <tr><td><label>Código CIE10</label></td><td>: <%= p_d.diagnostico.codigo_cie10 %></td></tr>
       <tr>
         <td colspan="2"><br/>          
-          <input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="1" id="radios-conf-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and !p_d.en_tratamiento %> checked <% end %>>Confirmación diagnóstica</label><br/>
-          <input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="2" id="radios-trat-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento %> checked <% end %>>Paciente en tratamiento</label>
+          <input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="1" id="radios-conf-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento  == 0 %> checked <% end %>>Confirmación diagnóstica</label><br/>
+          <input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="2" id="radios-trat-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %>>Paciente en tratamiento</label>
         </td>
       </tr>
     </table>       
@@ -131,8 +131,7 @@
           <li>Epilepsia No Refractaria en personas desde 1 año y menores de 15 años</li>
           <li>Salud Oral Integral para niños y niñas de 6 años</li>
           <li>Prevención de Parto Prematuro</li>
-          <li>Trastornos de Generación del Impulso y Conducción en personas de 15 años y más,</li>
-          <li>requieren marcapaso</li>
+          <li>Trastornos de Generación del Impulso y Conducción en personas de 15 años y más, requieren marcapaso</li>
           <li>Colecistectomía Preventiva del Cáncer de Vesícula en personas de 35 a 49 años</li>
           <li>Cáncer Gástrico</li>
           <li>Cáncer de Próstata en personas de 15 años y más</li>

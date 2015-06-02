@@ -52,7 +52,18 @@ class PersonaDiagnosticoController < ApplicationController
 
 		if @notificacion_eno.nil? 			
 			@notificacion_eno = FiNotificacionesEno.new
-			@notificacion_eno.persona_diagnostico_atencion_salud_id = params[:pers_diag]						
+			@notificacion_eno.persona_diagnostico_atencion_salud_id = params[:pers_diag]
+			#Si existe una notificación completa, se utilizará esa información
+			@notificacion_eno_completa = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? ',params[:id]).order('fecha_notificacion DESC').first
+			if @notificacion_eno_completa
+				@notificacion_eno.fecha_primeros_sintomas = @notificacion_eno_completa.fecha_primeros_sintomas
+				@notificacion_eno.confirmacion_diagnostica = @notificacion_eno_completa.confirmacion_diagnostica
+				@notificacion_eno.antecedentes_vacunacion = @notificacion_eno_completa.antecedentes_vacunacion
+				@notificacion_eno.pais_contagio = @notificacion_eno_completa.pais_contagio
+				@notificacion_eno.embarazo = @notificacion_eno_completa.embarazo
+				@notificacion_eno.semanas_gestacion = @notificacion_eno_completa.semanas_gestacion 
+				@notificacion_eno.tbc = @notificacion_eno_completa.tbc	
+			end
 		end	
 
 		case params[:tipo]
@@ -105,15 +116,28 @@ class PersonaDiagnosticoController < ApplicationController
 			when 'especialidad'
 				@especialidad = ProEspecialidades.find(params[:valor])
 			when 'comentario'
-			when 'proposito'			
+			when 'proposito'
+			when 'pres_des_tex'			
 		end
 
 		@interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is null ',params[:pers_diag]).first
 
 		if @interconsulta
-		else	#se info persona temporalmente, sin fecha			
+		else	#se guarda info persona temporalmente, sin fecha			
 			@interconsulta = FiInterconsultas.new
-			@interconsulta.persona_diagnostico_atencion_salud_id = params[:pers_diag]						
+			@interconsulta.persona_diagnostico_atencion_salud_id = params[:pers_diag]	
+			#si existe una interconsulta completa, se utiliza esa informacíón
+			@interconsulta_completa = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? ',params[:pers_diag]).order('fecha_solicitud DESC').first
+			if @interconsulta_completa
+				@interconsulta.persona_conocimiento = @interconsulta_completa.persona_conocimiento 
+				@interconsulta.proposito = @interconsulta_completa.proposito  
+				@interconsulta.prestador_destino = @interconsulta_completa.prestador_destino
+				@interconsulta.especialidad = @interconsulta_completa.especialidad
+				@interconsulta.comentario = @interconsulta_completa.comentario
+				@interconsulta.proposito_otro = @interconsulta_completa.proposito_otro
+				@interconsulta.prestador_destino_texto = @interconsulta_completa.prestador_destino_texto
+				@interconsulta.save			
+			end
 		end	
 
 		case params[:tipo]
@@ -126,7 +150,9 @@ class PersonaDiagnosticoController < ApplicationController
 			when 'comentario'
 				@interconsulta.comentario = params[:valor]
 			when 'proposito'
-				@interconsulta.proposito = params[:valor]			
+				@interconsulta.proposito = params[:valor]	
+			when 'pres_des_tex'
+				@interconsulta.prestador_destino_texto = params[:valor]				
 		end
 
 		@interconsulta.save
@@ -211,7 +237,7 @@ class PersonaDiagnosticoController < ApplicationController
 			@persona_diagnostico_atencion.fecha_inicio = @persona_diagnostico.fecha_inicio
 			@persona_diagnostico_atencion.fecha_termino = @persona_diagnostico.fecha_termino
 			@persona_diagnostico_atencion.es_cronica = @persona_diagnostico.es_cronica
-			@persona_diagnostico_atencion.en_tratamiento = params[:en_tratamiento]
+			@persona_diagnostico_atencion.en_tratamiento = 0
 			@persona_diagnostico_atencion.es_antecedente = 0
 			@persona_diagnostico_atencion.primer_diagnostico = @primer_diagnostico
 			@persona_diagnostico_atencion.save
@@ -503,6 +529,7 @@ class PersonaDiagnosticoController < ApplicationController
 		@especialidad = nil
 		@comentario = nil
 		@proposito_otro = nil
+		@prestador_destino_texto = nil
 		borrar = false
 
 		if (!@interconsulta_pre)
@@ -517,7 +544,8 @@ class PersonaDiagnosticoController < ApplicationController
 			@prestador_destino = @interconsulta_pre.prestador_destino
 			@especialidad = @interconsulta_pre.especialidad
 			@comentario = @interconsulta_pre.comentario
-			#@proposito_otro = @interconsulta_pre.proposito_otro
+			@proposito_otro = @interconsulta_pre.proposito_otro
+			@prestador_destino_texto = @interconsulta_pre.prestador_destino_texto 
 			if borrar
 				@interconsulta_pre.destroy
 			end	
@@ -532,7 +560,8 @@ class PersonaDiagnosticoController < ApplicationController
 		@interconsulta.prestador_destino = @prestador_destino
 		@interconsulta.especialidad = @especialidad
 		@interconsulta.comentario = @comentario
-		#@interconsulta.proposito_otro = @proposito_otro
+		@interconsulta.proposito_otro = @proposito_otro
+		@interconsulta.prestador_destino_texto = @prestador_destino_texto
 		@interconsulta.save
 	
 	  @agendamiento = AgAgendamientos.find(params[:ag])
@@ -561,7 +590,7 @@ class PersonaDiagnosticoController < ApplicationController
                  :template => "persona_diagnostico/interconsulta.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona, :interconsulta => @interconsulta } ,
                  :disposition => 'attachment',
                  :encoding => "utf8",
-                 :show_as_html => params[:debug]                 
+                 :show_as_html => params[:debug]         
  					 end               
 		end
 

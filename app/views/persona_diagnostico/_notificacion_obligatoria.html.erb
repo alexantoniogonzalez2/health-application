@@ -193,8 +193,10 @@
 						  <% @paises.each do |pais| %>
 						  	<option value="<%= pais.id %>"
 						  		<% unless notificacion_eno.nil?
-					  				if notificacion_eno.pais_contagio.id == pais.id 
+						  			unless notificacion_eno.pais_contagio.nil? 
+					  					if notificacion_eno.pais_contagio.id == pais.id 
 					  		%> selected <% 
+					  					end
 					  				end
 					  		end %> ><%= pais.nombre %></option>      			
 	   					<% end %>

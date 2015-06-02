@@ -62,7 +62,7 @@ gem "highcharts-rails"
 gem 'jquery-datatables-rails'
 gem "font-awesome-rails"
 gem 'wicked_pdf'
-gem 'pdfkit'
+#gem 'pdfkit'
 gem 'bootstrap-validator-rails'
 gem 'label_better_rails'
 gem 'momentjs-rails'

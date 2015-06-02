@@ -213,18 +213,20 @@ $(window).scroll(function() {
   	var position = $(this).position().top;
     if ( position <= height + 50 ) {   	
         $('.navbar-fixed-top a.active').removeClass('active');
-        $('.navbar-fixed-top a').eq(i+1).addClass('active');        
+        $('.navbar-fixed-top a').eq(i).addClass('active');        
     }
-    if ( 0 < height &&  height < 930 )
+    if ( 0 <= height &&  height < 580 )
     	$('.home').css("background-image", "url(../assets/bg1.jpg)");
-    if ( 930 <= height &&  height < 1600 )
-    	$('.home').css("background-image", "url(../assets/bg5.jpg)");
-    if ( 1600 <= height &&  height < 2430 )	
+    if ( 580 <= height &&  height < 1300 )
+      $('.home').css("background-image", "url(../assets/bg2.jpg)");
+    if ( 1300 <= height &&  height < 2020 )
     	$('.home').css("background-image", "url(../assets/bg3.jpg)");
-    if ( 2430 <= height &&  height < 3630 )	
+    if ( 2020 <= height &&  height < 2660 )	
     	$('.home').css("background-image", "url(../assets/bg4.jpg)");
-    if ( 3630 <= height &&  height < 4530 )	
-    	$('.home').css("background-image", "url(../assets/bg2.jpg)");
+    if ( 2660 <= height &&  height < 3490 )	
+    	$('.home').css("background-image", "url(../assets/bg5.jpg)");
+    if ( 3490 <= height )	
+    	$('.home').css("background-image", "url(../assets/bg6.jpg)");
     
   });
 });

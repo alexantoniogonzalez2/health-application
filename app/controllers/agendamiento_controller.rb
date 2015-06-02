@@ -148,7 +148,7 @@ class AgendamientoController < ApplicationController
 
 	end
 
-	def pedirHora
+	def generarHora
 		
 		@breadcrumbs=[]
 		if params[:especialidad_id] != "-1" or params[:profesional_id] != "-1" or params[:prestador_id] != "-1"
