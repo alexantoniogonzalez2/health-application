@@ -1,111 +1,88 @@
-<% notificacion_eno = p_d.getNotificacionEno(p_d.id) %>	
 <%= wicked_pdf_stylesheet_link_tag 'application' %>
 
-<h1 class="enc-ges">Declaración de Enfermedad de Notificación Obligatoria</h1>
+<%
+	notificacion_eno = p_d.getNotificacionEno(p_d.id)
+	fecha_pri_sin = notificacion_eno.nil? ? p_d.getFechaInicio : (notificacion_eno.fecha_primeros_sintomas.nil? ? p_d.getFechaInicio : notificacion_eno.fecha_primeros_sintomas.strftime('%Y-%m-%d') ) 
+	conf_diag = notificacion_eno.nil? ? 8 : notificacion_eno.confirmacion_diagnostica
+	case conf_diag
+		when '1' then text_con_diag = 'Clínica (incluye imagenología)'
+		when '2' then text_con_diag = 'Epidemiológica'
+		when '3' then text_con_diag = 'Frotis'
+		when '4' then text_con_diag = 'Cultivo'
+		when '5' then text_con_diag = 'Serología'
+		when '6' then text_con_diag = 'Biopsia'
+		when '7' then text_con_diag = 'Autopsia'
+		when '8' then text_con_diag = ''
+	end	
+	ant_vac = notificacion_eno.nil? ? 5 : notificacion_eno.antecedentes_vacunacion
+	case ant_vac
+		when '1' then text_ant_vac = 'Sí'
+		when '2' then text_ant_vac = 'No'
+		when '3' then text_ant_vac = 'Ignorado'
+		when '4' then text_ant_vac = 'No corresponde'
+		when '5' then text_ant_vac = ''		
+	end
+	emb = notificacion_eno.nil? ? 4 : notificacion_eno.embarazo
+	case emb
+		when '1' then text_emb = 'Sí'
+		when '2' then text_emb = 'No'
+		when '3' then text_emb = 'No corresponde'
+		when '4' then text_emb = ''		
+	end
+	tbc = notificacion_eno.nil? ? 4 : notificacion_eno.embarazo
+	case tbc
+		when '1' then text_tbc = 'Caso nuevo'
+		when '2' then text_tbc = 'Recaída, igual localización'
+		when '3' then text_tbc = 'Recaída, otra localización'
+		when '4' then text_tbc = ''		
+	end
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del prestador</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-		<table>
-			<tr><td><label>Institución</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td></tr>
-			<tr><td><label>Dirección</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td></tr>
-			<tr><td><label>Profesional que notifica</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td></tr>
-			<tr><td><label>Rut profesional</label></td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td></tr>			
-		</table>	
-  </div>
+ %>	
+
+<label class="folio">Folio: <%= notificacion_eno.id %></label><br>
+<h5 class="uppercase" align="center">Declaración de Enfermedad de Notificación Obligatoria</h5>
+<br>
+<h6 class="uppercase">Datos del prestador</h6>
+<table class="print4">
+	<tr><td class="uppercase">Institución</td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td></tr>
+	<tr><td class="uppercase">Dirección</td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td></tr>
+	<tr><td class="uppercase">Profesional que notifica</td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td></tr>
+	<tr><td class="uppercase">Rut profesional</td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td></tr>			
+</table>
+<h6 class="uppercase">Datos del paciente</h6>
+<table class="print4">
+	<tr><td class="uppercase">Nombre</td><td>: <%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
+	<tr><td class="uppercase">Rut</td><td>: <%= @agendamiento.persona.showRut %></td></tr>
+	<tr><td class="uppercase">Edad</td><td>: <%= @agendamiento.persona.age_text %></td></tr>
+	<tr><td class="uppercase">Sexo</td><td>: <%= @agendamiento.persona.showSexo %></td></tr>
+	<tr><td class="uppercase">Previsión de salud</td><td>: <%= @agendamiento.persona.getPrevision %></td></tr>
+	<tr><td class="uppercase">Domicilio</td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
+	<tr><td class="uppercase">Correo electrónico</td><td>: <%= @agendamiento.persona.user.email %></td></tr>
+	<tr><td class="uppercase">Telefono fijo</td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>
+	<tr><td class="uppercase">Celular</td><td>: <%= @agendamiento.persona.getCelular %></td></tr>
+</table>
+<h6 class="uppercase">Información médica</h6>
+<table class="print4">
+	<tr><td class="uppercase">Diagnóstico</td><td>: <%= p_d.diagnostico.nombre %></td></tr>
+	<tr><td class="uppercase">Código CIE10</td><td>:	<%= p_d.diagnostico.codigo_cie10 %></td></tr>
+	<tr><td class="uppercase">Fecha primeros síntomas</td><td>: <%= fecha_pri_sin %> </td></tr>
+	<tr><td class="uppercase">Confirmación diagnóstica</td><td>: <%= text_con_diag  %>	</td></tr>
+	<tr><td class="uppercase">Antecedentes de vacunación</td><td>: <%= text_ant_vac %></td></tr>
+	<tr><td class="uppercase">País de contagio</td><td>:	<%= notificacion_eno.pais_contagio.nombre unless notificacion_eno.pais_contagio.nil? %></td></tr>
+	<tr><td class="uppercase">Embarazo</td><td>: <%= text_emb %></td></tr>	  
+	<tr><td class="uppercase">Semanas de gestación</td><td>: <%= notificacion_eno.semanas_gestacion unless notificacion_eno.nil? %></td></tr>
+	<tr><td class="uppercase">En caso de TBC</td><td>: <%= text_tbc %></td></tr>
+</table>
+<table class="print4">
+	<tr><td><label>Fecha y hora de la notificación</label></td><td>: <%= l Time.now %></td></tr>
+	<tr><td colspan="2"><br><br><br><br></td></tr>
+	<tr><td colspan="2"><label class="firma">Firma profesional</label></td></tr>
+</table>
+
+<div class="div-bottom">
+	<p>Generado en 
+	<%= wicked_pdf_image_tag 'logo_medracer_small.png', :class => 'logo-bottom' %>
+	www.medracer.com
+	</p>
 </div>
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del paciente</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-  	<table>
-			<tr><td><label>Nombre</label></td><td>: <%= @agendamiento.persona.showName('%n%p%m') %></td></tr>
-			<tr><td><label>Rut</label></td><td>: <%= @agendamiento.persona.showRut %></td></tr>
-			<tr><td><label>Previsión de salud</label></td><td>: <%= @agendamiento.persona.getPrevision %></td></tr>
-			<tr><td><label>Domicilio</label></td><td>: <%= @agendamiento.persona.getDomicilio %></td></tr>
-			<tr><td><label>Correo electrónico</label></td><td>: <%= @agendamiento.persona.user.email %></td></tr>
-			<tr><td><label>Telefono fijo</label></td><td>: <%= @agendamiento.persona.getTelefonoFijo %></td></tr>
-			<tr><td><label>Celular</label></td><td>: <%= @agendamiento.persona.getCelular %></td></tr>
-		</table>
-  </div>
-</div>
-
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Información médica</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-  	<table>
-  		<tr><td><label>Diagnóstico</label></td><td>: <%= p_d.diagnostico.nombre %></td></tr>
-			<tr><td><label>Código CIE10</label></td><td>:	<%= p_d.diagnostico.codigo_cie10 %></td></tr>
-			<tr><td><label>Fecha primeros síntomas</label></td><td>:	<input name="p_s_<%= p_d.id%>" id="p_s_<%= p_d.id%>" class="datepicker" type="text" value="<%= if (!notificacion_eno.nil?)
-																																																																																if (!notificacion_eno.fecha_primeros_sintomas.nil?)
-																																																																																	notificacion_eno.fecha_primeros_sintomas.strftime('%Y-%m-%d')
-																																																																																else
-																																																																																	p_d.getFechaInicio 	
-																																																																																end
-																																																																															else
-																																																																															 	p_d.getFechaInicio
-																																																																															end  %>" ></td></tr>
-			<tr><td><label>Confirmación diagnóstica</label></td><td>: <% conf = 8
-																																	unless notificacion_eno.nil? 
-																																		conf = notificacion_eno.confirmacion_diagnostica
-																																	end %>
-																																<select id="select-confirmacion<%=p_d.id%>" class="select-confirmacion">
-																																	<option></option>
-																														      <option value="1" <% if conf == '1' %> selected <% end %> >Clínica (incluye imagenología)</option>
-																														      <option value="2" <% if conf == '2' %> selected <% end %> >Epidemiológica</option>
-																														      <option value="3" <% if conf == '3' %> selected <% end %> >Frotis</option>
-																														      <option value="4" <% if conf == '4' %> selected <% end %> >Cultivo</option>
-																														      <option value="5" <% if conf == '5' %> selected <% end %> >Serología</option>
-																														      <option value="6" <% if conf == '6' %> selected <% end %> >Biopsia</option>
-																														      <option value="7" <% if conf == '7' %> selected <% end %> >Autopsia</option>
-																														    </select></td></tr>
-			<tr><td><label>Antecedentes de vacunación</label></td><td>: <% ant_vac = 5
-																																	unless notificacion_eno.nil? 
-																																		ant_vac = notificacion_eno.antecedentes_vacunacion
-																																	end %>
-			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-0"><input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-0" value="1">Sí</label> 
-			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1"><input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" value="2">No</label> 
-			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2"><input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" value="3">Ignorado</label> 
-			  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3"><input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" value="4">No corresponde</label></td></tr>
-			<tr><td><label>País de contagio</label></td><td>:	<% unless notificacion_eno.pais_contagio.nil?
-																													notificacion_eno.pais_contagio.nombre 
-																												end %></td></tr>
-
-			<tr><td><label class="eno">Embarazo</label></td><td><span class="eno">:</span> <% emb = 4
-																																											unless notificacion_eno.nil? 
-																																												emb = notificacion_eno.embarazo
-																																											end %>	
-			  <label class="radio-inline" for="radios-emb<%=p_d.id%>-0"><input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-0" value="1" >Sí</label> 
-			  <label class="radio-inline" for="radios-emb<%=p_d.id%>-1"><input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" value="2">No</label> 
-			  <label class="radio-inline" for="radios-emb<%=p_d.id%>-3"><input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" value="3">No corresponde</label></td></tr>	  
-			<tr><td><label class="eno">Semanas de gestación</label></td><td><span>:</span><input id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= unless notificacion_eno.nil? 
-																																																																																										notificacion_eno.semanas_gestacion
-				 																																																																																				  end %>"></td></tr>
-			<tr><td><label class="eno">En caso de TBC</label></td><td><span class="eno">:</span> <% tbc = 4
-																																														unless notificacion_eno.nil? 
-																																															tbc = notificacion_eno.tbc
-																																														end %>
-			  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-0"><input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-0" value="1" >Caso nuevo</label> 
-			  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-1"><input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="2">Recaída, igual localización</label> 
-			  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-3"><input <% if tbc == '3' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-3" value="4">Recaída, otra localización</label></td></tr>
-		</table>
-  </div>
-</div>
-
-<div class="panel panel-default">
-	<div class="panel-body panel-body-ajustado">
-		<table>
-			<tr><td><label>Fecha y hora de la notificación</label></td><td>: <%= l Time.now %></td></tr>
-			<tr><td colspan="2"><br/><br/><br/></td></tr>
-			<tr><td colspan="2"><label class="firma">Firma profesional</label></td></tr>
-		</table>
- 	</div>
-</div>
-
-<%= javascript_include_tag "atencion_salud/cargar_calendario" %>

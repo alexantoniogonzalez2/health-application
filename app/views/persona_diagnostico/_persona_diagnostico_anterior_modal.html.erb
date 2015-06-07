@@ -14,7 +14,7 @@
             <li>
               <a href="#panel-interconsulta-<%= p_d.id %>" class="panel_tab" data-toggle="tab">Interconsulta</a>
             </li>
-            <% if p_d.diagnostico.esAuge %>
+            <% if p_d.diagnostico.esAuge(p_d.id) %>
               <li>
                 <a href="#panel-constancia-ges-<%= p_d.id %>" class="panel_tab" data-toggle="tab">Constancia GES</a>
               </li>
@@ -79,7 +79,7 @@
 
             <div class="tab-pane" id="panel-interconsulta-<%= p_d.id %>">              
             </div>
-            <% if p_d.diagnostico.esAuge %>
+            <% if p_d.diagnostico.esAuge(p_d.id) %>
               <div class="tab-pane" id="panel-constancia-ges-<%= p_d.id %>">
               <%= link_to 'Imprimir constancia GES', agendaShowFormBusqueda_path %>              
               </div>

@@ -138,6 +138,15 @@ class PerPersonas < ActiveRecord::Base
     end 
   end
 
+  def ageAtDate(date)
+    if fecha_nacimiento
+      dob = fecha_nacimiento 
+      date.year - dob.year - ((date.month > dob.month || (date.month == dob.month && date.day >= dob.day)) ? 0 : 1)
+    else
+      'Sin información' 
+    end 
+  end
+
   def age_text
     edad = age
     dob = fecha_nacimiento 

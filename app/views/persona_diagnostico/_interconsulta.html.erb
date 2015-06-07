@@ -87,6 +87,22 @@
 		</div>
 		<div class="row clearfix">	
 			<div class="col-md-4 column">
+				<label>Edad</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.age_text %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Sexo</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.showSexo %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
 				<label>Previsión de salud</label>
 			</div>
 			<div class="col-md-8 column">:
@@ -163,7 +179,7 @@
 					<label>Especialidad</label>
 				</div>
 				<div class="col-md-8 column">:
-					<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad">	
+					<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad_interconsulta">	
 						<option></option>					
 					  <% @especialidades.each do |esp| %>
 					  	<option value="<%= esp.id %>" 

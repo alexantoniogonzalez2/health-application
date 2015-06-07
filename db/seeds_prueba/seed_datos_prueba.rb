@@ -98,12 +98,14 @@ puts 'Prestador 1'
 C1=PrePrestadores.new
 C1.nombre= "Centro Médico 1"
 C1.rut=109000000
+C1.es_centinela = true
 C1.save
 
 puts 'Prestador 2'
 C2=PrePrestadores.new
 C2.nombre= "Centro Médico 2"
 C2.rut=109000001
+C2.es_centinela = false
 C2.save
 
 puts 'Prestador - Direcciones '

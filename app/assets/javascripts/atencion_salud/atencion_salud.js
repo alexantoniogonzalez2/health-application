@@ -314,7 +314,7 @@ $(".select_prestadores").on("change", function(e) {
   });   
 })
 
-$(".select_especialidad").on("change", function(e) { 
+$(".select_especialidad_interconsulta").on("change", function(e) { 
   var pd = $(this).attr('id').substring(23);   
   value = $("#select_especialidad_int"+pd).select2('data') != null ? $("#select_especialidad_int"+pd).select2('data').id : null;    
   $.ajax({

@@ -1,9 +1,9 @@
 <a href="#modal-container-diag-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd<%= p_d.id%>" >
 	<p class="list-group-item-text ajuste ellipsis"><%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %></p>
-	<% if p_d.diagnostico.esAuge %>
+	<% if p_d.diagnostico.esAuge(p_d.id) %>
 		<span class="alert alert-success boton-auge" >AUGE</span>		
 	<% end %>
-	<% if p_d.diagnostico.esENO %>
+	<% if p_d.diagnostico.esENO(p_d.id) %>
 		<span class="alert alert-success boton-eno" >ENO</span>		
 	<% end %>
 </a>

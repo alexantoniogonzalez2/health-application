@@ -1,4 +1,6 @@
-<%  persona_notificacion = p_d.getPersonaNotificacion(p_d.id)
+<%  
+		notificacion = p_d.getNotificacion(p_d.id)
+		persona_notificacion = notificacion.persona_conocimiento unless notificacion.nil?
 		nombre = ''
 		rut = ''
 		correo = ''
@@ -256,7 +258,7 @@
 <div class="panel-group" id="panel-GES">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-GES" href="#panel-element-GES">Problemas de Salud Garantizados según D.S. N° 4, de 2012, de Salud</a>
+			 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-GES" href="#panel-element-GES">Problemas de Salud Garantizados según Decreto Supremo N° 4, de 2013, de Salud</a>
 		</div>
 		<div id="panel-element-GES" class="panel-collapse collapse">
 			<div class="panel-body panel-body-ajustado panel-ges">

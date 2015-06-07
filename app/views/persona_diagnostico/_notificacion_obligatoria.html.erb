@@ -1,6 +1,10 @@
 <% notificacion_eno = p_d.getNotificacionEno(p_d.id) %>	
-
-<h1 class="enc-ges">Declaración de Enfermedad de Notificación Obligatoria</h1>
+<% texto_eno = p_d.diagnostico.getTextoENO(p_d.id) %>	
+<h1 class="enc-ges"><strong>Declaración de Enfermedad de Notificación Obligatoria</strong>
+<% texto_eno.each do |te| %>
+<br><%= te['text'] %>
+<% end %>
+</h1>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">
@@ -60,6 +64,22 @@
 			</div>
 			<div class="col-md-8 column">:
 				<%= @agendamiento.persona.showRut %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Edad</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.age_text %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Sexo</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.showSexo %>
 			</div>
 		</div>
 		<div class="row clearfix">	
@@ -130,7 +150,7 @@
 			</div>
 			<div class="row clearfix">	
 				<div class="col-md-4 column">
-					<label>Fecha primeros síntomas</label> <span class="glyphicon glyphicon-info-sign icon-en"></span>
+					<label>Fecha primeros síntomas</label> <span class="glyphicon glyphicon-info-sign icon-eno"></span>
 				</div>
 				<div class="col-md-8 column">:
 					<input name="p_s_<%= p_d.id%>" id="p_s_<%= p_d.id%>" class="datepicker" type="text" value="<%= if (!notificacion_eno.nil?)
@@ -176,10 +196,10 @@
 						end %>
 				<div class="col-md-8 column">:
 					<div class="form-group ajuste-eno">
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-0"><input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-0" value="1">Sí</label> 
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1"><input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" value="2">No</label> 
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2"><input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" value="3">Ignorado</label> 
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3"><input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" value="4">No corresponde</label>
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1"><input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" value="1">Sí</label> 
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2"><input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" value="2">No</label> 
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3"><input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" value="3">Ignorado</label> 
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-4"><input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-4" value="4">No corresponde</label>
 					</div>
 				</div>
 			</div>
@@ -212,9 +232,9 @@
 							emb = notificacion_eno.embarazo
 						end %>
 				<div class="col-md-5 column"><span class="eno">:</span>
-				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-0"><input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-0" value="1" >Sí</label> 
-				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-1"><input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" value="2">No</label> 
-				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-3"><input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" value="3">No corresponde</label>	  
+				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-1"><input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" value="1" >Sí</label> 
+				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-2"><input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" value="2">No</label> 
+				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-3"><input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-3" value="3">No corresponde</label>	  
 				</div>
 				<div class="col-md-3 column">
 					<label class="eno">Semanas de gestación</label>
@@ -234,8 +254,8 @@
 						end %>
 				<div class="col-md-9 column"><span class="eno">:</span>
 					<div class="form-group ajuste-eno">
-					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-0"><input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-0" value="1" >Caso nuevo</label> 
-					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-1"><input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="2">Recaída, igual localización</label> 
+					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-1"><input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="1" >Caso nuevo</label> 
+					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-2"><input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-2" value="2">Recaída, igual localización</label> 
 					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-3"><input <% if tbc == '3' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-3" value="4">Recaída, otra localización</label>					  
 					</div>
 				</div>

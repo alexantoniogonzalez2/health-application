@@ -597,7 +597,7 @@ class PersonaDiagnosticoController < ApplicationController
 	end	
 
 	def descargarConstanciaGes 
-
+	
 		@notificacion_ges = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is null ',params[:id]).first
 		
 		@persona = nil
