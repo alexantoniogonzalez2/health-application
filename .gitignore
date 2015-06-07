@@ -17,3 +17,5 @@
 
 # Ignore database configuration
 /config/database.yml
+
+/config/initializers/wicked_pdf.rb
