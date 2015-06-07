@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20150514052350) do
     t.text     "motivo_consulta",        limit: 65535
     t.text     "examen_fisico",          limit: 65535
     t.text     "indicaciones_generales", limit: 65535
+    t.text     "anamnesis",              limit: 65535
     t.integer  "agendamiento_id",        limit: 4
     t.integer  "persona_id",             limit: 4
     t.integer  "tipo_ficha_id",          limit: 4
@@ -150,7 +151,8 @@ ActiveRecord::Schema.define(version: 20150514052350) do
     t.integer  "especialidad_id",                       limit: 4
     t.integer  "persona_conocimiento_id",               limit: 4
     t.integer  "proposito",                             limit: 4
-    t.text     "proposito_otro",                        limit: 65535
+    t.string   "prestador_destino_texto",               limit: 255
+    t.string   "proposito_otro",                        limit: 255
     t.text     "comentario",                            limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -272,8 +274,9 @@ ActiveRecord::Schema.define(version: 20150514052350) do
     t.integer  "persona_id",        limit: 4
     t.integer  "metrica_id",        limit: 4
     t.integer  "atencion_salud_id", limit: 4
-    t.decimal  "valor",                       precision: 10
+    t.decimal  "valor",                           precision: 10
     t.datetime "fecha"
+    t.text     "caracteristica",    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -598,8 +601,9 @@ ActiveRecord::Schema.define(version: 20150514052350) do
   end
 
   create_table "pre_prestadores", force: :cascade do |t|
-    t.integer  "rut",        limit: 4
-    t.string   "nombre",     limit: 255
+    t.integer  "rut",          limit: 4
+    t.string   "nombre",       limit: 255
+    t.boolean  "es_centinela", limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
