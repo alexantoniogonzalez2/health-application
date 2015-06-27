@@ -1,0 +1,293 @@
+<%  interconsulta = p_d.getInterconsulta(p_d.id)
+		nombre = ''
+		rut = ''
+		correo = ''
+		celular = ''
+		telefono_fijo = ''
+		unless interconsulta.nil? 
+			unless interconsulta.persona_conocimiento.nil? 
+				nombre = interconsulta.persona_conocimiento.showName('%n%p%m')
+				rut = interconsulta.persona_conocimiento.showRut
+				correo = interconsulta.persona_conocimiento.user.email 
+				celular = interconsulta.persona_conocimiento.getCelular 
+				telefono_fijo = interconsulta.persona_conocimiento.getTelefonoFijo
+				id_pre = interconsulta.persona_conocimiento.id			 				 		
+			end
+		end 
+%>	
+
+<h1 class="enc-ges">Solicitud de Interconsulta o Derivación</h1>
+
+<div class="panel panel-default ges">
+  <div class="panel-heading">
+    <h3 class="panel-title">Datos del prestador</h3>
+  </div>
+  <div class="panel-body panel-body-ajustado">
+	<div class="container ajustado">
+		<div class="row clearfix">
+			<div class="col-md-4 column">
+				<label>Institución</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Dirección</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Profesional que notifica</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
+			</div>
+		</div>
+		<div class="row clearfix">			
+			<div class="col-md-4 column">
+				<label>Rut profesional</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
+			</div>
+		</div>
+		<div class="row clearfix">			
+			<div class="col-md-4 column">
+				<label>Especialidad</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div class="panel panel-default ges">
+  <div class="panel-heading">
+    <h3 class="panel-title">Datos del paciente</h3>
+  </div>
+  <div class="panel-body panel-body-ajustado">
+	<div class="container ajustado">
+		<div class="row clearfix">
+			<div class="col-md-4 column">
+				<label>Nombre</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.showName('%n%p%m') %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Rut</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.showRut %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Edad</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.age_text %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Sexo</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.showSexo %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
+				<label>Previsión de salud</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.getPrevision %>
+			</div>
+		</div>
+		<div class="row clearfix">			
+			<div class="col-md-4 column">
+				<label>Domicilio</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.getDomicilio %>
+			</div>
+		</div>
+		<div class="row clearfix">			
+			<div class="col-md-4 column">
+				<label>Correo electrónico</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.user.email %>
+			</div>
+		</div>
+		<div class="row clearfix">			
+			<div class="col-md-4 column">
+				<label>Telefono fijo</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.getTelefonoFijo %>
+			</div>
+		</div>
+		<div class="row clearfix">			
+			<div class="col-md-4 column">
+				<label>Celular</label>
+			</div>
+			<div class="col-md-8 column">:
+				<%= @agendamiento.persona.getCelular %>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div class="panel panel-default ges">
+  <div class="panel-heading">
+    <h3 class="panel-title">Información médica</h3>
+  </div>
+  <div class="panel-body panel-body-ajustado">
+		<div class="container ajustado">
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					<label>Establecimiento al cual se deriva</label>
+				</div>
+				<div class="col-md-8 column">:
+					<input id="int-pdt-<%= p_d.id%>" type="text" class="form-control ajuste-cen-der auto-int-pdt" disabled value="<%= interconsulta.prestador_destino_texto if !interconsulta.nil?  %>">					
+				</div>				
+			</div>
+			<div class="row clearfix ajuste-margin">
+				<div class="col-md-4 column">
+					<label>Especialidad</label>
+				</div>
+				<div class="col-md-8 column">:
+					<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad_interconsulta">	
+						<option></option>					
+					  <% @especialidades.each do |esp| %>
+					  	<option value="<%= esp.id %>" 
+					  		<% unless interconsulta.nil?
+					  				unless interconsulta.especialidad.nil?
+					  					if interconsulta.especialidad.id == esp.id 
+					  						%> selected <%
+					  					end	 
+					  				end
+					  		end %> ><%= esp.nombre %></option>      			
+   					<% end %>
+  				</select>
+				</div>				
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					<label>Confirmación Diagnóstica</label>
+				</div>
+				<div class="col-md-8 column">:
+					<%= p_d.diagnostico.nombre %>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					<label>Código CIE10</label>
+				</div>
+				<div class="col-md-8 column">:
+					<%= p_d.diagnostico.codigo_cie10 %>
+				</div>
+			</div>
+			<div class="row clearfix">	
+				<div class="col-md-4 column">
+						<% prop = 5
+						unless interconsulta.nil? 
+							prop = interconsulta.proposito
+						end %>
+					<label>Propósito:</label>
+					<div class="form-group form-ges" id="int_<%= p_d.id %>">
+				    <div class="radio">
+				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %>>Diagnóstico</label>
+				    </div>					
+				    <div class="radio">
+				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %>>Paciente en tratamiento</label>
+				    </div> 						
+				    <div class="radio">
+				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="3" id="radios-int-3" <% if prop == 3 %> checked <% end %>>Seguimiento</label>
+				    </div>				
+				    <div class="radio">
+				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="4" id="radios-int-4" <% if prop == 4 %> checked <% end %>>Otro</label>
+				    </div> 
+					</div>
+				</div>
+				<div class="col-md-8 column">
+					<label class="com-int">Comentario:</label><span class="alert alert-info auto-int-comment" id="auto-int-<%= p_d.id %>">Autoguardado</span>
+					<textarea id="int-comment-<%= p_d.id%>" disabled class="form-control int-comment" rows="4" cols="50"><%= unless interconsulta.nil?
+					 interconsulta.comentario 
+					 end %></textarea>
+				</div>	
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-4 column"><label>Exámenes asociados al diagnóstico:</label>					
+				</div>
+				<div class="col-md-8 column">
+					<div id="int_diag<%= p_d.id %>"></div>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-body panel-body-ajustado">
+		<div class="container ajustado">
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					<label>Fecha y hora de la solicitud</label>
+				</div>
+				<div class="col-md-8 column">:
+					<%= l Time.now %>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-12 column firma">
+					<label class="firma">Firma profesional</label>
+				</div>
+			</div>
+		</div>
+ 	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-body panel-body-ajustado">
+		<div class="container ajustado">
+			
+			<div class="row clearfix">	
+				<div class="col-md-12 column">
+				En caso que la persona que tomó conocimiento no sea el paciente, identificar:			
+				</div>
+			</div>			  
+			<div class="row clearfix ajus-mar-top">
+				<div class="col-md-6 column">
+					<label>Nombre</label>: <span id="int_nombre_<%= p_d.id %>"><%= nombre %></span>				
+				</div>				
+				<div class="col-md-6 column">
+					<label>Rut</label>: <span id="int_rut_<%= p_d.id %>" ><%= rut %></span>					
+				</div>				
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-6 column">
+					<label>Correo electrónico</label>: <span id="int_correo_<%= p_d.id %>" ><%= correo %></span>
+				</div>			
+				<div class="col-md-6 column">
+					<label>Celular</label>: <span id="int_celular_<%= p_d.id %>" ><%= celular %></span>
+				</div>				
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-6 column">
+					<label>Telefono fijo</label>: <span id="int_telefono_<%= p_d.id %>" ><%= telefono_fijo %></span>
+				</div>			
+				<div class="col-md-6 column">
+				</div>				
+			</div>
+
+		</div>
+ 	</div>
+</div>

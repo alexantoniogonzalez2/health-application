@@ -86,6 +86,8 @@ AplicacionMedica::Application.routes.draw do
   post '/descargar_interconsulta', to: 'persona_diagnostico#descargarInterconsulta'
   post '/descargar_notificacion_obligatoria', to: 'persona_diagnostico#descargarNotificacionObligatoria'
   post '/descargar_certificado', to: 'atenciones_salud#descargarCertificado'
+  post '/descargar_indicaciones', to: 'atenciones_salud#descargarIndicaciones'
+  post '/descargar_receta', to: 'atenciones_salud#descargarReceta'
   post '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen', :as => :persona_prestacion_index_examen  
   get '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen'
   post '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc', :as => :persona_prestacion_index_procedimiento  

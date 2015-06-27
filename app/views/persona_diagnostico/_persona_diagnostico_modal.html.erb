@@ -60,12 +60,15 @@
                 <div class="row clearfix">
                   <div class="col-md-3 column">
                     <div class="form-group form-estado" id="e_d_<%= p_d.id %>">
-                      <label class="control-label" for="radios">Estado de diagnóstico</label>                      
-                      <% @estados_diagnostico.each do |e_d| %>  
-                        <div class="radio">
-                          <label for="radios-<%= p_d.id%>-<%= e_d.id %>"><input type="radio" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
-                        </div> 
-                      <% end %>                    
+                      <label class="control-label" for="radios">Estado de diagnóstico</label>          
+                        <% @estados_diagnostico.each do |e_d| %>  
+                          <div class="radio">
+                            <label for="radios-<%= p_d.id%>-<%= e_d.id %>">
+                              <input type="radio" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> >
+                              <%= e_d.nombre %>
+                            </label>
+                          </div> 
+                        <% end %>                    
                     </div>
                   </div>
                   <% if p_d.primer_diagnostico and p_d.estado_diagnostico.id == 1 %>         
@@ -86,7 +89,7 @@
                 </div>
                 <div class="row clearfix footer">
                   <div class="col-md-12 column">
-                    <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-success ajus-pos-right">Guardar</button>                                       
+                    <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-success ajus-pos-right">Guardar</button>                                      
                     <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger ajus-pos-right" id="bc<%= p_d.id%>"> Eliminar diagnóstico</button>
                     <button type="button" onclick="cerrarDiagnostico(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
                     <button type="button" onclick="sinCambios(<%= p_d.id%>)" class="btn btn-warning ajus-pos-right" >No guardar cambios</button> 

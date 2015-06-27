@@ -1,0 +1,57 @@
+<%= wicked_pdf_stylesheet_link_tag 'application' %>
+
+<label class="folio">N°: <%= @atencion_salud.id %></label><br>
+<h2 class="print" align="center">Indicaciones</h2>
+<label class="print">Fecha y hora de la atención: <%= l Time.now %></label>
+<br>
+<table class='print'>
+  <tr>
+    <td><label>Establecimiento</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
+    <td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>   
+  </tr>
+</table>
+<br>
+<table class='print'>
+  <tr>
+    <td colspan='3' class="enc_tab_int">Datos del paciente</td>
+  </tr>
+  <tr>
+    <td width="40%"><label>Apellido paterno</label>: <%= @agendamiento.persona.showName('%p') %></td>
+    <td width="30%"><span class="print">Apellido materno</span>: <%= @agendamiento.persona.showName('%m') %></td>
+    <td width="30%"><label>Nombres</label>: <%= @agendamiento.persona.showName('%n') %></td>
+  </tr>
+  <tr>
+    <td><label>Rut</label>: <%= @agendamiento.persona.showRut %></td>
+    <td><label>Edad</label>: <%= @agendamiento.persona.age_text %></td>
+    <td><label>Sexo</label>: <%= @agendamiento.persona.showSexo %></td>
+  </tr>  
+</table>
+<br>
+<table class='print'>
+  <tr>
+    <td colspan="2" >
+      <span class="print">Exámenes:</span><br>
+      <% @persona_examen.each do |p_e| %>
+        <%= p_e.prestacion.nombre %><br>
+      <% end %> 
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <span class="print">Procedimientos:</span><br>
+      <% @persona_procedimiento.each do |p_p| %>
+        <%= p_p.prestacion.nombre %><br>
+      <% end %>         
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><span class="print">Indicaciones generales: </span><%= @atencion_salud.indicaciones_generales %>   </td>
+  </tr>       
+</table>  
+
+<div class="div-bottom">
+  <p>Generado en 
+  <%= wicked_pdf_image_tag 'logo_medracer_small.png', :class => 'logo-bottom' %>
+  www.medracer.com
+  </p>
+</div>

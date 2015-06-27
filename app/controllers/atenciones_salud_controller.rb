@@ -83,6 +83,7 @@ class AtencionesSaludController < ApplicationController
 	  					fpdas.fecha_inicio,
 	  					fpdas.fecha_termino,
 	  					fi_persona_diagnosticos.diagnostico_id,
+	  					fi_persona_diagnosticos.persona_id,
 	  					fpdas.estado_diagnostico_id,
 	  					fpdas.comentario,
 	  					fpdas.es_cronica,
@@ -98,6 +99,7 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
 	  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
 	  					fi_persona_diagnosticos.diagnostico_id,
+	  					fi_persona_diagnosticos.persona_id,
 	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
 	  					fi_persona_diagnosticos_atenciones_salud.comentario,
 	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
@@ -328,7 +330,8 @@ class AtencionesSaludController < ApplicationController
 
 	def descargarCertificado
 		@certificado = FiCertificados.find(params[:id])
-		@at_sal = @certificado.atencion_salud
+		@at_sal = @certificado.atencion_salud		
+	  @agendamiento = AgAgendamientos.find(@at_sal .agendamiento_id)
 
 		@persona_diagnostico = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
@@ -346,15 +349,53 @@ class AtencionesSaludController < ApplicationController
 	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fcd.certificado_id = ? ',@at_sal,@certificado.id)
 
 		nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' Certificado ' << ' RUT '  
+	  nombre.to_s << ' Certificado ' << @agendamiento.persona.showRut 
 
 		respond_to do |format|
 			format.pdf do
           render :pdf => nombre,
                  :template => "atenciones_salud/certificado.pdf.erb", :locals => {:persona_diagnostico => @persona_diagnostico, :certificado => @certificado } ,
                  :disposition => 'attachment',
-                 :encoding => "utf8",
-                 :show_as_html => params[:debug]                 
+                 :encoding => "utf8"            
+ 					 end               
+		end
+	end 
+
+	def descargarIndicaciones
+		@atencion_salud = FiAtencionesSalud.find(params[:id])
+		@persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
+	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
+		@agendamiento = AgAgendamientos.find(params[:ag])
+
+		nombre = l DateTime.current, format: :timestamp
+	  nombre.to_s << ' Indicaciones ' << @agendamiento.persona.showRut
+
+		respond_to do |format|
+			format.pdf do
+          render :pdf => nombre,
+                 :template => "atenciones_salud/indicaciones.pdf.erb",
+                 :disposition => 'attachment',
+                 :encoding => "utf8"               
+ 					 end               
+		end
+	end 
+
+	def descargarReceta
+		@atencion_salud = FiAtencionesSalud.find(params[:id])
+		
+		@agendamiento = AgAgendamientos.find(params[:ag])
+
+		nombre = l DateTime.current, format: :timestamp
+	  nombre.to_s << ' Receta ' << @agendamiento.persona.showRut
+
+	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
+
+		respond_to do |format|
+			format.pdf do
+          render :pdf => nombre,
+                 :template => "atenciones_salud/receta.pdf.erb",
+                 :disposition => 'attachment',
+                 :encoding => "utf8"               
  					 end               
 		end
 	end 
