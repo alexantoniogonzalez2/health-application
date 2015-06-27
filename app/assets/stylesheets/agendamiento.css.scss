@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$azul_evento: #05c;
+$azul_evento: #3a87ad;
 $rojo_evento: #ee5f5b;
 
 .container { 
@@ -49,7 +49,7 @@ $rojo_evento: #ee5f5b;
 .disponible,
 .fc-agenda .disponible .fc-event-inner,
 .disponible a {
-    background-color: $azul_evento; 
+    background-color: $azul_evento;
     color: white;        
 }
 
@@ -70,3 +70,4 @@ a.fc-event:active,
 a.fc-event.active { color: white !important; }
 
 #cargando-especialistas { display: inline-block; }
+div.fc-bg { background-color: transparent !important;}

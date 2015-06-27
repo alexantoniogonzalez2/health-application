@@ -1,0 +1,6 @@
+<div id="diag-pres-<%= p_d.id %>" class="checkbox">
+  <label for="pd_pres_<%= p_d.id%>-<%= p_p %>" >
+    <input type="checkbox" name="check-pres" onchange="act_pres_diag(<%= p_d.id %>,<%= p_p %>)" id="pd_pres_<%= p_d.id %>-<%= p_p %>"  <% if p_d.paraPrestacion(p_p,p_d.id)  %> checked="checked" <% end %>>
+    <%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %>
+  </label>
+</div>

@@ -1,17 +1,137 @@
 <div class="modal fade" id="modal-container-certificados" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title" id="myModalLabel">Certificados</h4>
+        <h4 class="modal-title">Certificado</h4>
       </div>
       <div class="modal-body">
-
+        <h1 class="enc-ges">Certificado</h1>
+        <div class="panel panel-default ges">
+          <div class="panel-body panel-body-ajustado">
+            <div class="container ajustado">
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Institución</label>
+                </div>
+                <div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
+                </div>
+              </div>
+              <div class="row clearfix">  
+                <div class="col-md-4 column">
+                  <label>Profesional que notifica</label>
+                </div>
+                <div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
+                </div>
+              </div>
+            </div>         
+            <div class="container ajustado">
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Nombre paciente</label>
+                </div>
+                <div class="col-md-8 column">:
+                  <%= @agendamiento.persona.showName('%n%p%m') %>
+                </div>
+              </div>           
+            </div>          
+            <div class="container ajustado">
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Diagnóstico(s):</label>
+                </div>
+                <div class="col-md-8 column">
+                  <div id="div-diag-cert<%= certificado.id %>" class="div-diag-cert"></div>
+                </div>
+              </div>
+              <div class="row clearfix">  
+                <div class="col-md-4 column">
+                  <label>Tipo de reposo</label>
+                </div>
+                <div class="col-md-8 column">:
+                  <label class="radio-inline" for="t_r-0">
+                    <input type="radio" name="tipo_reposo<%= certificado.id %>" id="t_r-0" value="relativo" <% if certificado.tipo_reposo == 'relativo' %> checked <% end %> > Relativo
+                  </label> 
+                  <label class="radio-inline" for="t_r-1">
+                    <input type="radio" name="tipo_reposo<%= certificado.id %>" id="t_r-1" value="absoluto" <% if certificado.tipo_reposo == 'absoluto' %> checked <% end %> > Absoluto
+                  </label> 
+                </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Días de reposo</label>
+                </div>
+                <div class="col-md-8 column">:
+                  <input id="dias_reposo<%= certificado.id %>" type="integer" class="form-control dias-rep" maxlength="2" size="2" value="<%= certificado.dias_reposo %>" >
+                </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Fecha control</label>
+                </div>
+                <div class="col-md-8 column">:
+                  <input id="control<%= certificado.id %>" type="text" class="form-control fecha-mes" placeholder='Ingresar fecha' value='<%= certificado.control.try(:strftime, '%Y-%m-%d') %>' />
+                </div>
+              </div> 
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Fecha alta</label>
+                </div>
+                <div class="col-md-8 column">:
+                  <input id="alta<%= certificado.id %>" type="text" class="form-control fecha-mes" placeholder='Ingresar fecha' value='<%= certificado.alta.try(:strftime, '%Y-%m-%d') %>' />
+                </div>
+              </div> 
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Para ser presentado en:</label>
+                </div>
+                <div class="col-md-8 column">
+                  <div class="checkbox">
+                    <label for="cert_prop_1">
+                      <input type="checkbox" name="cert_prop<%= certificado.id %>" id="cert_prop_1" <% if certificado.para_trabajo %> checked="checked" <% end %> > Trabajo
+                    </label>
+                    <label for="cert_prop_2">
+                      <input type="checkbox" name="cert_prop<%= certificado.id %>" id="cert_prop_2" <% if certificado.para_colegio %> checked="checked" <% end %> > Colegio
+                    </label>
+                    <label for="cert_prop_3">
+                      <input type="checkbox" name="cert_prop<%= certificado.id %>" id="cert_prop_3" <% if certificado.para_juzgado %> checked="checked" <% end %> > Juzgado
+                    </label>
+                    <label for="cert_prop_4">
+                      <input type="checkbox" name="cert_prop<%= certificado.id %>" id="cert_prop_4" <% if certificado.para_carabinero %> checked="checked" <% end %> > Carabineros
+                    </label>
+                    <label for="cert_prop_5">
+                      <input type="checkbox" name="cert_prop<%= certificado.id %>" id="cert_prop_5" <% if certificado.para_otros %> checked="checked" <% end %> > Otro
+                    </label>
+                  </div>
+                </div>
+              </div>             
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body panel-body-ajustado">
+            <div class="container ajustado">
+              <div class="row clearfix">
+                <div class="col-md-4 column">
+                  <label>Fecha y hora del certicado</label>
+                </div>
+                <div class="col-md-8 column">:
+                  <%= l Time.now %>
+                </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-md-12 column firma">
+                  <label class="firma">Firma profesional</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        <%= link_to 'Descargar certificado', descargar_certificado_path(:id => certificado.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%>        
       </div>
     </div>      
   </div>    
 </div>
-

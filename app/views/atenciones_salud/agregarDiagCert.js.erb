@@ -1,0 +1,8 @@
+<% if !@persona_diagnostico.exists? %>
+	$("<p id='no-cert<%= @certificado.id %>'>No hay diagnósticos seleccionados.</p>").appendTo("#div-diag-cert<%= @certificado.id %>"); 
+<% else %>
+	$('#no-cert<%= @certificado.id %>').remove();
+	<% @persona_diagnostico.each do |p_d| %> 
+		$("<%= escape_javascript( render :partial => "atenciones_salud/persona_diagnostico", :locals => {:p_d => p_d, :cert => @certificado.id } ) %>").appendTo("#div-diag-cert<%= @certificado.id %>") ;    
+	<% end %>
+<% end %>

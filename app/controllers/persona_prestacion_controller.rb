@@ -139,7 +139,7 @@ class PersonaPrestacionController < ApplicationController
 			when 'fecha'
 				@persona_prestacion.fecha_prestacion = params[:valor] 
 			when 'prestador'
-				@persona_prestacion.prestador = PrePrestadores.find(params[:valor])  
+				@persona_prestacion.prestador_texto = params[:valor]  
 		end
 		@persona_prestacion.save!
 
@@ -153,5 +153,56 @@ class PersonaPrestacionController < ApplicationController
 
 	end	
 
+	def agregarDiagPres
+		@p_p = FiPersonaPrestaciones.find(params[:id])
+		@id = (params[:atencion_salud_id])
+
+		@persona_diagnostico = FiPersonaDiagnosticos
+	  	.joins(:persona_diagnosticos_atencion_salud)
+	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+	  					fi_persona_diagnosticos.diagnostico_id")
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ?',@id)	  
+
+		respond_to do |format|     
+    	format.js   {}
+    	format.json { render :json => { :success => true } }
+    end	
+	end	
+
+	def actualizarDiagPrestacion
+		@persona_prestacion = FiPersonaPrestaciones.find(params[:p_p])
+		@pdat = FiPersonaDiagnosticosAtencionesSalud.find(params[:p_d]) 
+		@persona_prestacion_diagnostico = FiPersonaPrestacionDiagnosticos.where('persona_prestacion_id = ? AND persona_diagnostico_atencion_salud_id = ?',params[:p_p],params[:p_d]).first
+
+		if params[:valor] == 'true'
+			if !@persona_prestacion_diagnostico
+				@persona_prestacion_diagnostico = FiPersonaPrestacionDiagnosticos.new
+				@persona_prestacion_diagnostico.persona_prestacion = @persona_prestacion
+				@persona_prestacion_diagnostico.persona_diagnostico_atencion_salud = @pdat
+				@persona_prestacion_diagnostico.para_interconsulta = true
+				@persona_prestacion_diagnostico.save!
+			end	
+		else
+			if @persona_prestacion_diagnostico
+				@persona_prestacion_diagnostico.destroy!
+			end		
+		end 	
+		respond_to do |format|   
+    	format.json { render :json => { :success => true } }
+    end	
+
+	end	
+
+	def actualizarDiagPrestacionInt
+
+		@persona_prestacion_diagnostico = FiPersonaPrestacionDiagnosticos.where('id = ? AND persona_diagnostico_atencion_salud_id = ?',params[:p_p],params[:p_d]).first
+		@persona_prestacion_diagnostico.para_interconsulta = (params[:valor] == 'true') ? true : false
+		@persona_prestacion_diagnostico.save!	
+
+		respond_to do |format|   
+    	format.json { render :json => { :success => true } }
+    end	
+
+	end	
 
 end

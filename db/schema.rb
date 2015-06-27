@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514052350) do
+ActiveRecord::Schema.define(version: 20150626172001) do
 
   create_table "ag_agendamiento_estados", force: :cascade do |t|
     t.string   "nombre",     limit: 255
@@ -64,11 +64,24 @@ ActiveRecord::Schema.define(version: 20150514052350) do
     t.datetime "updated_at"
   end
 
+  create_table "fi_certificado_diagnosticos", force: :cascade do |t|
+    t.integer  "certificado_id",                        limit: 4
+    t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
+
   create_table "fi_certificados", force: :cascade do |t|
-    t.text     "motivo",            limit: 65535
-    t.datetime "fecha_inicio"
-    t.datetime "fecha_final"
+    t.string   "tipo_reposo",       limit: 255
+    t.integer  "dias_reposo",       limit: 4
+    t.datetime "control"
+    t.datetime "alta"
     t.integer  "atencion_salud_id", limit: 4
+    t.boolean  "para_trabajo",      limit: 1
+    t.boolean  "para_colegio",      limit: 1
+    t.boolean  "para_juzgado",      limit: 1
+    t.boolean  "para_carabinero",   limit: 1
+    t.boolean  "para_otros",        limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -281,11 +294,19 @@ ActiveRecord::Schema.define(version: 20150514052350) do
     t.datetime "updated_at"
   end
 
+  create_table "fi_persona_prestacion_diagnosticos", force: :cascade do |t|
+    t.integer  "persona_prestacion_id",                 limit: 4
+    t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
+
   create_table "fi_persona_prestaciones", force: :cascade do |t|
     t.integer  "persona_id",        limit: 4
     t.integer  "prestacion_id",     limit: 4
     t.integer  "atencion_salud_id", limit: 4
     t.integer  "prestador_id",      limit: 4
+    t.string   "prestador_texto",   limit: 255
     t.datetime "fecha_prestacion"
     t.boolean  "es_antecedente",    limit: 1
     t.datetime "created_at"

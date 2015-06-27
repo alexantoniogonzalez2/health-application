@@ -36,8 +36,8 @@
     <td>
       <label>Diagnóstico</label>: <%= p_d.diagnostico.nombre %><br>
       <label>Código CIE10</label>: <%= p_d.diagnostico.codigo_cie10 %><br>
-      <input type="radio" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento  == 0 %> checked <% end %>>Confirmación diagnóstica  </label>
-      <input type="radio" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %>>Paciente en tratamiento</label>
+      <input type="radio" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento  == 0 %> checked <% end %>>  Confirmación diagnóstica  </label>
+      <input type="radio" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %>>  Paciente en tratamiento</label>
     </td>
   </tr>
 </table>
@@ -74,7 +74,7 @@ En caso que la persona que tomó conocimiento no sea el paciente, identificar:
   </p>
 </div>
 
-<div class="page-break"></div>
+<br><br><br><br><br><br><br><br>
 
 <h6 class="uppercase">Problemas de Salud Garantizados según Decreto Supremo N°4, de 2013</h6>
 <ol class="print">  
@@ -159,3 +159,10 @@ En caso que la persona que tomó conocimiento no sea el paciente, identificar:
   <li>Tratamiento quirúrgico de lesiones crónicas de las válvulas mitral y tricúspide en personas de 15 años y más</li>
   <li>Tratamiento de erradicación del helicobacter pylori</li>
 </ol>
+
+<div class="div-bottom2">
+  <p>Generado en 
+  <%= wicked_pdf_image_tag 'logo_medracer_small.png', :class => 'logo-bottom' %>
+  www.medracer.com
+  </p>
+</div>

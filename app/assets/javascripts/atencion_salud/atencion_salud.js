@@ -146,6 +146,7 @@ $('.auto-int-pdt').keyup( function(e) {
 })
 
 $('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
+$('select.select_especialidad_interconsulta').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
 $('select.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
 $('select.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
 $('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
@@ -430,6 +431,16 @@ $('input[id^=fecha]').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD',
     viewMode: 'years',
+});
+
+$('.fecha-mes').datetimepicker({
+    locale: 'es',
+    format: 'YYYY-MM-DD'
+});
+
+$('.fecha').datetimepicker({
+    locale: 'es',
+    format: 'YYYY-MM-DD'
 });
 
 $('input[id^=fecha-afm]').on("dp.change", function (e) {
@@ -822,9 +833,10 @@ function agregarInfoPrestacion(p_p,valor,param){
 }
 
 function guardarPrestacion(p_p){  
-  var value = $("#select_prestadores"+p_p).select2('data') != null ? $("#select_prestadores"+p_p).select2('data').id : null; 
+  //var value = $("#select_prestadores"+p_p).select2('data') != null ? $("#select_prestadores"+p_p).select2('data').id : null;
+  var value =  $("#prestador-prestacion-"+p_p).val();
   agregarInfoPrestacion(p_p,value,'prestador');
-  var value = $('.datepicker[name=f_p_'+p_p+']').datepicker("getDate");
+  var value = $('input[name=f_p_'+p_p+']').val();
   agregarInfoPrestacion(p_p,value,'fecha');
   $( "#modal-container-pres-"+p_p).modal('hide');
 }
@@ -993,4 +1005,81 @@ function guardarAtencion(action){
     error: function(xhr, status, error) { alert('No se pudo guardar la atención de salud.'); }
   });
 
+}
+
+$('input[type=radio][name^=tipo_reposo]').change(function() {
+  var cert = $(this).attr('name').substring(11);
+  var value = $('input[name=tipo_reposo'+cert+']:checked').val();
+  agregarInfoCertificado('tipo_reposo',value,cert);  
+});
+
+$('.dias-rep').keyup( function(e) {
+  var cert = $(this).attr('id').substring(11);
+  var value =$('#dias_reposo'+cert).val();
+  agregarInfoCertificado('dias_reposo',value,cert);  
+})
+
+$('input[id^=alta]').on("dp.change", function(e) {
+    var cert = $(this).attr('id').substring(4);
+    var value =$('#alta'+cert).val();
+    agregarInfoCertificado('alta',value,cert);
+});
+
+$('input[id^=control]').on("dp.change", function(e) {
+  var cert = $(this).attr('id').substring(7);
+  var value =$('#control'+cert).val();
+  agregarInfoCertificado('control',value,cert);
+});
+
+$('input[type=checkbox][name^=cert_prop]').change(function() {
+  var cert = $(this).attr('name').substring(9);
+  var value = $(this).is(':checked');
+  agregarInfoCertificado($(this).attr('id'),value,cert);  
+});
+
+function agregarInfoCertificado(param,value,certificado){
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_info_certificado',
+    data: { 
+      param: param,
+      valor: value,
+      cert: certificado
+    },
+    success: function(response){  },
+    error: function(xhr, status, error){ alert("No se pudo guardar la información del certificado."); }
+  });
+}
+
+function act_cert_diag(p_d,cert){
+  var value = $('#pd_cert_'+p_d+'-'+cert).is(':checked');
+  $.ajax({
+    type: 'POST',
+    url: '/actualizar_diag_certificado',
+    data: { p_d: p_d, cert: cert, valor: value},
+    success: function(response){ },
+    error: function(xhr, status, error){ alert("No se pudo guardar la información del certificado."); }
+  }); 
+}
+
+function act_pres_diag(p_d,p_p){
+  var value = $('#pd_pres_'+p_d+'-'+p_p).is(':checked');
+  $.ajax({
+    type: 'POST',
+    url: '/actualizar_diag_prestacion',
+    data: { p_d: p_d, p_p: p_p, valor: value},
+    success: function(response){ },
+    error: function(xhr, status, error){ alert("No se pudo guardar la información de la prestación."); }
+  }); 
+}
+
+function act_pres_int(p_p,p_d){
+  var value = $('#pr-in-'+p_p+'-'+p_d).is(':checked');
+  $.ajax({
+    type: 'POST',
+    url: '/actualizar_diag_prestacion_int',
+    data: { p_d: p_d, p_p: p_p, valor: value},
+    success: function(response){ },
+    error: function(xhr, status, error){ alert("No se pudo guardar la información de la interconsulta"); }
+  }); 
 }

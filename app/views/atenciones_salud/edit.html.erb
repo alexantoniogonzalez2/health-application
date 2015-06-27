@@ -145,7 +145,7 @@
         </div>
         <label>Anamnesis</label><span id="auto-anamnesis" >Autoguardado</span>
         <textarea id='anamnesis' class = "form-control" rows='3' cols='50'><%= @atencion_salud.anamnesis %></textarea>
-        <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a>|<a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
+        <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a> | <a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
         <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc} %>
         <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr => @presion, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr => @car_presion, :car_p_sat => @car_sat} %>
         <br><label>Examen físico</label><span id="auto-examen" >Autoguardado</span>
@@ -216,8 +216,9 @@
           <label>Indicaciones generales</label><span id="auto-indicaciones">Autoguardado</span>
           <textarea id='indicaciones_generales' class='form-control' rows='3' cols='50'><%= @atencion_salud.indicaciones_generales %></textarea>
 
-          <a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Emitir certificado</a>|<a id="modal-" href="#modal-container-certificados" role="button" class="btn" data-toggle="modal">Imprimir indicaciones</a>
-          <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id} %>
+          <a href="#modal-container-certificados" role="button" class="btn" data-toggle="modal" onclick="actualizarDiagCert(<%= @certificado.id %>)">Emitir certificado</a> | <a href="#modal-container-indicaciones" role="button" class="btn" data-toggle="modal">Imprimir indicaciones</a>
+          <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id , :certificado => @certificado} %>
+          <%= render :partial => "indicaciones", :locals => {:id => @atencion_salud.id} %>
         </fieldset>
         <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
         <button id='guardar' class='btn btn-success ajus-pos-right'>Guardar atención</button>
@@ -241,3 +242,4 @@
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
 <%= javascript_include_tag "home" %>
 <%= javascript_include_tag "antecedentes" %>
+<%= javascript_include_tag "atencion_salud/certificado" %>

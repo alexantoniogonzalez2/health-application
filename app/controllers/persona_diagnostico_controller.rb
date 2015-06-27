@@ -350,11 +350,23 @@ class PersonaDiagnosticoController < ApplicationController
   	@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.where(" id = ? ",params[:persona_diagnostico_atencion_salud_id]).first
   	@persona_diagnostico_id = @persona_diagnostico_atencion.persona_diagnostico.id
 
-  	#Se borra potencial asociación con medicamentos
+  	#Se borra eventual asociación con medicamentos
   	@persona_medicamentos = FiPersonaMedicamentos.where('persona_diagnostico_id = ?', @persona_diagnostico_id )
   	@persona_medicamentos.each do |p_m|
 			p_m.persona_diagnostico = nil
 			p_m.save!			
+		end
+
+		#Se borra eventual asociación con certificados
+  	@certificado_diagnosticos = FiCertificadoDiagnosticos.where('persona_diagnostico_atencion_salud_id = ?', @persona_diagnostico_atencion.id )
+  	@certificado_diagnosticos.each do |c_d|
+			c_d.destroy	
+		end
+
+		#Se borra eventual asociación con prestaciones
+  	@persona_prestacion_diagnosticos = FiPersonaPrestacionDiagnosticos.where('persona_diagnostico_atencion_salud_id = ?', @persona_diagnostico_atencion.id )
+  	@persona_prestacion_diagnosticos.each do |p_p_d|
+			p_p_d.destroy	
 		end
   	
   	@era_antecedente = @persona_diagnostico_atencion.es_antecedente
@@ -504,15 +516,14 @@ class PersonaDiagnosticoController < ApplicationController
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 
 	  nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' ' << params[:id] << ' ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+	  nombre.to_s << ' Notificación obligatoria ' << p_d.persona.showRut << p_d.diagnostico.nombre 
 
 		respond_to do |format|
 			format.pdf do
           render :pdf => nombre,
                  :template => "persona_diagnostico/notificacion_obligatoria.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona } ,
                  :disposition => 'attachment',
-                 :encoding => "utf8",
-                 :show_as_html => params[:debug]                 
+                 :encoding => "utf8"            
  					 end               
 		end
 
@@ -579,18 +590,19 @@ class PersonaDiagnosticoController < ApplicationController
   					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
   	.where('fi_persona_diagnosticos_atenciones_salud.id' => params[:id]).first
 
+  	@persona_prestacion = FiPersonaPrestacionDiagnosticos.where('persona_diagnostico_atencion_salud_id = ? AND para_interconsulta is true',params[:id])
+
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 
 	  nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' ' << params[:id] << ' ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+	  nombre.to_s << ' Interconsulta ' << p_d.persona.showRut << p_d.diagnostico.nombre 
 
 		respond_to do |format|
 			format.pdf do
           render :pdf => nombre,
                  :template => "persona_diagnostico/interconsulta.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona, :interconsulta => @interconsulta } ,
                  :disposition => 'attachment',
-                 :encoding => "utf8",
-                 :show_as_html => params[:debug]         
+                 :encoding => "utf8"      
  					 end               
 		end
 
@@ -649,17 +661,26 @@ class PersonaDiagnosticoController < ApplicationController
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 
 	  nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' ' << params[:id] << ' ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+	  nombre.to_s << ' Constancia GES' << p_d.persona.showRut << p_d.diagnostico.nombre 
 
 		respond_to do |format|
 			format.pdf do
           render :pdf => nombre,
                  :template => "persona_diagnostico/constancia_ges.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona } ,
                  :disposition => 'attachment',
-                 :encoding => "utf8",
-                 :show_as_html => params[:debug]                 
+                 :encoding => "utf8"          
  					 end               
 		end
 
 	end	
+
+	def agregarPresInt
+		@persona_prestacion = FiPersonaPrestacionDiagnosticos.where('persona_diagnostico_atencion_salud_id = ?',params[:p_d])
+	  @p_d = 	params[:p_d]
+		respond_to do |format|     
+    	format.js   {}
+    	format.json { render :json => { :success => true } }
+    end	
+	end	
+
 end

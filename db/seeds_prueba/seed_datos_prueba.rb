@@ -117,71 +117,48 @@ PrePrestadoresTelefonos.create! :prestador_id => 1, :telefono_id => 1
 PrePrestadoresTelefonos.create! :prestador_id => 2, :telefono_id => 2
 
 puts 'Relación Prestador - Administrativo'
-PA=PrePrestadorAdministrativos.new
-PA.prestador=C1
-PA.administrativo=A
-PA.rol_administrativo=R1
-PA.save
-
-PA=PrePrestadorAdministrativos.new
-PA.prestador=C1
-PA.administrativo=A
-PA.rol_administrativo=R2
-PA.save
-
-PA=PrePrestadorAdministrativos.new
-PA.prestador=C1
-PA.administrativo=A
-PA.rol_administrativo=R3
-PA.save
-
-PA=PrePrestadorAdministrativos.new
-PA.prestador=C1
-PA.administrativo=A
-PA.rol_administrativo=R4
-PA.save
-
-PA=PrePrestadorAdministrativos.new
-PA.prestador=C1
-PA.administrativo=A
-PA.rol_administrativo=R6
-PA.save
+PA1=PrePrestadorAdministrativos.new
+PA1.prestador=C1
+PA1.administrativo=A
+PA1.rol_administrativo=R1
+PA1.save
 
 PA2=PrePrestadorAdministrativos.new
-PA2.prestador=C2
-PA2.administrativo=B
-PA2.rol_administrativo=R1
+PA2.prestador=C1
+PA2.administrativo=A
+PA2.rol_administrativo=R2
 PA2.save
+
+PA3=PrePrestadorAdministrativos.new
+PA3.prestador=C1
+PA3.administrativo=A
+PA3.rol_administrativo=R3
+PA3.save
+
+PA4=PrePrestadorAdministrativos.new
+PA4.prestador=C1
+PA4.administrativo=A
+PA4.rol_administrativo=R4
+PA4.save
+
+PA5=PrePrestadorAdministrativos.new
+PA5.prestador=C1
+PA5.administrativo=A
+PA5.rol_administrativo=R6
+PA5.save
+
+PA6=PrePrestadorAdministrativos.new
+PA6.prestador=C2
+PA6.administrativo=B
+PA6.rol_administrativo=R1
+PA6.save
 
 #Profesionales
 puts 'Relación Persona-Profesión'
-P=ProProfesionales.new
-P.validado = true
-P.profesional=D1
-P.especialidad=E1
-P.institucion=I
-P.save
-
-P=ProProfesionales.new
-P.validado = true
-P.profesional=D2
-P.especialidad=E2
-P.institucion=I
-P.save
-
-P=ProProfesionales.new
-P.validado = true
-P.profesional=D3
-P.especialidad=E3
-P.institucion=I
-P.save
-
-P=ProProfesionales.new
-P.validado = true
-P.profesional=D4
-P.especialidad=E3
-P.institucion=I
-P.save
+ProProfesionales.create! :validado => true, :profesional => D1, :especialidad => E1, :institucion => I
+ProProfesionales.create! :validado => true, :profesional => D2, :especialidad => E2, :institucion => I
+ProProfesionales.create! :validado => true, :profesional => D3, :especialidad => E3, :institucion => I
+ProProfesionales.create! :validado => true, :profesional => D4, :especialidad => E3, :institucion => I
 
 # Centro 1
 puts 'Relación Prestador-Profesional'
@@ -204,11 +181,11 @@ PP4.especialidad=E3
 PP4.save
 
 # Centro 2
-PP6=PrePrestadorProfesionales.new
-PP6.prestador=C2
-PP6.profesional=D2
-PP6.especialidad=E2
-PP6.save
+PP5=PrePrestadorProfesionales.new
+PP5.prestador=C2
+PP5.profesional=D2
+PP5.especialidad=E2
+PP5.save
 
 PP6=PrePrestadorProfesionales.new
 PP6.prestador=C2

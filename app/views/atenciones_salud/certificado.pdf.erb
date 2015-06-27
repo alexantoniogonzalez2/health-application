@@ -1,0 +1,44 @@
+<%= wicked_pdf_stylesheet_link_tag 'application' %>
+
+<label class="folio">Folio: <%= certificado.id %></label>
+<br>
+<h5 class="uppercase" align="center">Certificado</h5>
+<br>
+
+<h6 class="uppercase">Datos del prestador</h6>
+<label>Institución</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.prestador.nombre %><br>
+<label>Dirección</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.prestador.getDireccion %><br>
+<label>Profesional</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %><br>
+<label>Rut profesional</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showRut %>
+<br>
+
+<p>El profesional que suscribe, certifica haber atendido al Señor(a): <%= certificado.atencion_salud.agendamiento.persona.showName('%n%p%m')%> quien presenta diagnóstico de :</p>
+
+<% @persona_diagnostico.each do |p_d| %> 
+<%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %>
+<% end %>
+
+<br><br>
+
+<h6 class="uppercase">Indicaciones generales de cuidado</h6>
+<p>Reposo <%= certificado.tipo_reposo %> por <%= certificado.dias_reposo%> días.</p>
+<p>Control: <%= certificado.control.try(:strftime, '%Y-%m-%d') %></p>
+<p>Alta: <%= certificado.alta.try(:strftime, '%Y-%m-%d') %></p>
+<br>
+<p>Se extiende el presente certificado a petición del interesado para ser presentado en:</p>                 
+<input type="checkbox" <% if certificado.para_trabajo %> checked="checked" <% end %> > Trabajo
+<input type="checkbox" <% if certificado.para_colegio %> checked="checked" <% end %> > Colegio
+<input type="checkbox" <% if certificado.para_juzgado %> checked="checked" <% end %> > Juzgado
+<input type="checkbox" <% if certificado.para_carabinero %> checked="checked" <% end %> > Carabineros
+<input type="checkbox" <% if certificado.para_otros %> checked="checked" <% end %> > Otro 
+
+<br><br><br><br><br><br><br><br>
+
+<label class="firma">Firma profesional</label>       
+
+<div class="div-bottom">
+	<p>Generado en 
+	<%= wicked_pdf_image_tag 'logo_medracer_small.png', :class => 'logo-bottom' %>
+	www.medracer.com
+	</p>
+</div>

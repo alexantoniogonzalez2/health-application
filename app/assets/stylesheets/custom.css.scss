@@ -77,8 +77,8 @@ div.ajuste-signin > div.intro-text2 > div.alert-danger { width: 600px; margin: a
 }
 
 .checkbox {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .row-buscar-hora {
@@ -213,32 +213,18 @@ table.print {
   }
  }
 
-table.aj-marg-left { margin-left: 20px; width: 97%; }
 
-label.rotate {
-  -ms-transform: rotate(-90.0deg); /* IE 9 */
-  -webkit-transform: rotate(-90.0deg); /* Chrome, Safari, Opera */
-  transform: rotate(-90.0deg);
-  color: white; 
-  background-color: #464646;
-  white-space: nowrap;
-  text-align: center;  
-  position: relative;  
-}
-
-label.ro-pac { left: -77px; top: 98px; width: 176px; }
-label.ro-cli { left: -75px; top: 95px; width: 170px; }
-label.ro-pro { left: -35px; top: 60px; width: 95px; }
 h2.print { text-transform: uppercase; text-decoration: underline; } 
 h5.uppercase, h6.uppercase, label.uppercase { text-transform: uppercase; font-weight: bold; } 
 h6.uppercase { font-size: 16px; margin-bottom: 10px;}
-table.aj-marg-left { margin-left: 20px; }
 label.folio { display: block; float: right; }
 span.print { font-weight: bold; }
 label.print { display: block; text-align: center; }
-td.firma { padding-top: 50px !important ; }
+td.firma { padding-top: 60px !important ; }
 .logo-bottom { vertical-align: text-bottom; }
-.div-bottom { position: fixed; bottom: 0px; right:0px; }
+.div-bottom { position: absolute; bottom: -1020px; right:0px; }
+.div-bottom2 { position: absolute; bottom: -2045px; right:0px; }
+td.enc_tab_int { background-color: #444; color: white; text-align: center; text-transform: uppercase; }
 
 table.print2 { 
   font-size: 14px;
@@ -255,14 +241,21 @@ table.print3 {
   td.overline { text-decoration: overline; font-weight: bold; }
 }
 .no-margin-top { margin-top: 0px; }
-.page-break { display:block; clear:both; page-break-after:always; }
 label.uppercase { margin-top: 10px; }
 ol.print { line-height: 1; font-size: 12px; }
 table.print4 { 
   font-size: 14px;
   width: 100%; 
   margin-bottom: 20px;
-  td { };
   td.uppercase { text-transform: uppercase; }
 }
 
+input.fecha, input.fecha-mes {
+  display: inline-block;
+  width: 150px;
+  height: 30px;
+  margin-top: 1px;
+}
+
+div.checkbox { /*display: inline-block;*/ } 
+div.div-diag-cert { display: inline;}

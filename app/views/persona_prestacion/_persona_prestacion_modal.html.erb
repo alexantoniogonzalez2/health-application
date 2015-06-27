@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-container-pres-<%= p_p.id %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" onclick="cerrarModalAntPres(<%= p_p.id %>)" >×</button>
@@ -12,14 +12,16 @@
               <label>Fecha prestación</label>
             </div>
             <div class="col-md-8 column">:
-              <input name="f_p_<%= p_p.id%>" class="datepicker datepicker_prestacion" type="text" value="<%= p_p.getFechaPrestacion %>">
+              <input name="f_p_<%= p_p.id%>" class="form-control fecha-mes" type="text" value="<%= p_p.getFechaPrestacion %>">
             </div>
           </div>
-          <div class="row clearfix">
+          <div class="row clearfix margin-top">
             <div class="col-md-4 column">
               <label>Establecimiento</label>
             </div>
             <div class="col-md-8 column">:
+            <input id="prestador-prestacion-<%= p_p.id%>" type="text" class="form-control ajuste-cen-der width_300" value="<%= p_p.prestador_texto %>">
+            <!--
               <select id="select_prestadores<%= p_p.id %>" class="select_prestadores_proc">  
                 <option></option>         
                 <% @prestadores.each do |pres| %>
@@ -32,8 +34,17 @@
                         end
                       end %> ><%= pres.nombre %></option>           
                 <% end %>
-              </select>         
+              </select>   
+              -->      
             </div>        
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-4 column">
+              <label>Diagnósticos:</label>
+            </div>
+            <div class="col-md-8 column">
+              <div id="div-diag-pres<%= p_p.id %>" class="div-diag-cert"></div>
+            </div>
           </div>
         </div>         
       </div>

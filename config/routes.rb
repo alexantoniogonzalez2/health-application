@@ -85,20 +85,28 @@ AplicacionMedica::Application.routes.draw do
   post '/descargar_constancia_ges', to: 'persona_diagnostico#descargarConstanciaGes'
   post '/descargar_interconsulta', to: 'persona_diagnostico#descargarInterconsulta'
   post '/descargar_notificacion_obligatoria', to: 'persona_diagnostico#descargarNotificacionObligatoria'
+  post '/descargar_certificado', to: 'atenciones_salud#descargarCertificado'
   post '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen', :as => :persona_prestacion_index_examen  
   get '/persona_prestacion/index_examen', to: 'persona_prestacion#indexExamen'
   post '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc', :as => :persona_prestacion_index_procedimiento  
   get '/persona_prestacion/index_procedimiento', to: 'persona_prestacion#indexProc'
   post '/agregar_diag_med', to: 'persona_medicamento#agregarDiagMed'
+  post '/agregar_diag_cert', to: 'atenciones_salud#agregarDiagCert'
+  post '/agregar_diag_pres', to: 'persona_prestacion#agregarDiagPres'
+  post '/agregar_pres_int', to: 'persona_diagnostico#agregarPresInt'
   post '/actualizar_diag_med', to: 'persona_medicamento#actualizarDiagMed'
   post '/guardar_atencion', to: 'atenciones_salud#update'
   post '/cargar_atenciones_salud', to: 'atenciones_salud#cargarAtenciones'
+  post '/agregar_info_certificado', to: 'atenciones_salud#agregarInfoCertificado'
+  post '/actualizar_diag_certificado', to: 'atenciones_salud#actualizarDiagCertificado'
+  post '/actualizar_diag_prestacion', to: 'persona_prestacion#actualizarDiagPrestacion'
+  post '/actualizar_diag_prestacion_int', to: 'persona_prestacion#actualizarDiagPrestacionInt'
  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
   get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda
   get '/agendamiento/generarHora/:especialidad_id/:prestador_id/:profesional_id', to: 'agendamiento#generarHora'
-  put '/agendamiento/generarHora', to: 'agendamiento#generarHora', :as => :generarHora #Esta es solo para ponerle un nombre a la anterior pero sin parámtros
+  put '/agendamiento/generarHora', to: 'agendamiento#generarHora', :as => :generarHora #Esta es solo para ponerle un nombre a la anterior pero sin parámetros
   get '/agendamiento/buscadorHora', to: 'agendamiento#buscadorHora', :as => :agendamientoBuscadorHora
   post '/cargarTodos', to: 'agendamiento#cargarTodos', :as => :agendamientoCargarTodos
   post '/filtrar_profesionales', to: 'agendamiento#filtrarProfesionales', :as => :filtrarProfesionales

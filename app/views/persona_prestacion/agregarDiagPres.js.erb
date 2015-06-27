@@ -1,0 +1,8 @@
+<% if !@persona_diagnostico.exists? %>
+	$("<p id='no-pres<%= @p_p.id %>'>No hay diagnósticos seleccionados.</p>").appendTo("#div-diag-pres<%= @p_p.id %>"); 
+<% else %>
+	$('#no-pres<%= @p_p.id %>').remove();
+	<% @persona_diagnostico.each do |p_d| %> 
+		$("<%= escape_javascript( render :partial => "persona_prestacion/persona_diagnostico", :locals => {:p_d => p_d, :p_p => @p_p.id } ) %>").appendTo("#div-diag-pres<%= @p_p.id %>") ;    
+	<% end %>
+<% end %>

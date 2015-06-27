@@ -64,7 +64,7 @@ textarea.form-control {
   font-weight: normal;
  }
 
-.div-form-atencion{ padding-top: 10px; }
+.div-form-atencion{ padding-top: 10px; padding-bottom: 5px;}
 
 div.tab-content {
   padding: 10px 10px 10px 10px;
@@ -208,7 +208,7 @@ div.ajuste-eno {
 .select-per{ margin: 0px; padding: 5px 0px 15px 0px !important;}
 div.ajuste-ges{ padding: 0px !important; }
 .colum-ajuste-eno { padding: 0px !important; }
-input.sem-ges{ width: 50px; display: inline; padding: 6px 3px; height: 25px; margin-top: 5px;}
+input.sem-ges , input.dias-rep { width: 50px; display: inline; padding: 6px 3px; height: 25px; margin-top: 5px;}
 label.eno { padding-top: 7px;}
 span.eno { top: 4px; position: relative;}
 label.com-int { float: top;}
@@ -245,8 +245,6 @@ a.select2-choice, a.select2-default { height: 30px !important; }
 .ajuste-padding { padding-left: 0px !important; padding-right: 0px !important; }
 .ajuste-modal-header { padding: 15px 15px 5px 15px !important;}
 
-.datepicker_prestacion { float: right !important; width: 230px !important; }
-
 .form-horizontal .form-group {
   margin-left: 0px !important;
   margin-right: 0px !important;
@@ -282,7 +280,7 @@ span.ajuste-bottom { padding-left: 20px !important; position: relative !importan
 span.pad-fecha { padding-left: 40px }
 span.ajuste-guion { padding-right: 5px; padding-left: 5px; position: relative; float: left; top: 5px; }
 input.dv {
-  width: 65% !important;
+  width: 80% !important;
   border-bottom-left-radius: 4px !important;
   border-top-left-radius: 4px !important;
 }
@@ -306,3 +304,5 @@ div.float-right { float:right;}
 #ajuste-motivo { padding: 0px; margin: 0px 0px 10px 0px;}
 #modal-dialog-signos { width: 1050px;}
 a.active-ant, a.active-ant:focus { background-color: $lightGreen; color: $blue;}
+div.margin-top { margin-top: 5px;}
+input.width_300 { width: 300px !important; }

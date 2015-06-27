@@ -52,6 +52,15 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
     end    
   end
 
+  def paraPrestacion (p_p,p_d)
+    persona_prestacion_diagnostico = FiPersonaPrestacionDiagnosticos.where('persona_prestacion_id = ? AND persona_diagnostico_atencion_salud_id = ?',p_p,p_d).first
+    if persona_prestacion_diagnostico
+      return true
+    else 
+      return false
+    end  
+  end  
+
   private
   def app_params
     params.require(:list).permit(:diagnostico,:estado_diagnostico,:fecha_inicio,:fecha_termino,:es_cronica,:gesta,:id,:persona,:persona_diagnosticos_atencion_salud,:persona_medicamentos,:agendamientos_control)

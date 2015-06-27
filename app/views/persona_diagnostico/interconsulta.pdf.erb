@@ -24,13 +24,15 @@
 		<td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>		
 	</tr>
 </table>
-
-<label class="rotate ro-pac">Datos del paciente</label>
-<table class='print aj-marg-left '>
+<br>
+<table class='print'>
 	<tr>
-		<td><label>Apellido paterno</label>: <%= @agendamiento.persona.showName('%p') %></td>
-		<td><span class="print">Apellido materno</span>: <%= @agendamiento.persona.showName('%m') %></td>
-		<td><label>Nombres</label>: <%= @agendamiento.persona.showName('%n') %></td>
+		<td colspan='3' class="enc_tab_int">Datos del paciente</td>
+	</tr>
+	<tr>
+		<td width="40%"><label>Apellido paterno</label>: <%= @agendamiento.persona.showName('%p') %></td>
+		<td width="30%"><span class="print">Apellido materno</span>: <%= @agendamiento.persona.showName('%m') %></td>
+		<td width="30%"><label>Nombres</label>: <%= @agendamiento.persona.showName('%n') %></td>
 	</tr>
 	<tr>
 		<td><label>Rut</label>: <%= @agendamiento.persona.showRut %></td>
@@ -58,9 +60,11 @@
 		<td><label>Celular</label>: <%= celular %>
 	</tr>
 </table>
-
-<label class="rotate ro-cli">Datos clínicos</label>
-<table class='print aj-marg-left'>
+<br>
+<table class='print'>
+	<tr>
+		<td colspan='3' class="enc_tab_int">Datos clínicos</td>
+	</tr>
 	<tr>
 		<td colspan="2"><span class="print">Establecimiento al cual se deriva</span>: <%= @interconsulta.prestador_destino_texto unless @interconsulta.prestador_destino_texto.nil? %></td>
 	</tr>
@@ -68,32 +72,44 @@
 		<td colspan="2"><label>Especialidad</label>: <%= @interconsulta.especialidad.nombre unless @interconsulta.especialidad.nil? %></td>
 	</tr>
 	<tr>
-		<td><span class="print">Confirmación Diagnóstica</span>:	<%= p_d.diagnostico.nombre %></td>
-		<td><span class="print">Código CIE10</span>:	<%= p_d.diagnostico.codigo_cie10 %></td>
+		<td width="70%"><span class="print">Confirmación Diagnóstica</span>:	<%= p_d.diagnostico.nombre %></td>
+		<td width="30%"><span class="print">Código CIE10</span>:	<%= p_d.diagnostico.codigo_cie10 %></td>
 	</tr>
 	<tr>
-		<td>
+		<td colspan="2" >
 			<span class="print">Propósito:</span><br>
-			<input type="radio" <% if @interconsulta.proposito == 1 %> checked <% end %> >Diagnóstico<br>
-		  <input type="radio" <% if @interconsulta.proposito == 2 %> checked <% end %> >Paciente en tratamiento<br>
-		  <input type="radio" <% if @interconsulta.proposito == 3 %> checked <% end %> >Seguimiento<br>
-		  <input type="radio" <% if @interconsulta.proposito == 4 %> checked <% end %> >Otro		
+			<input type="radio" <% if @interconsulta.proposito == 1 %> checked <% end %> > Diagnóstico<br>
+		  <input type="radio" <% if @interconsulta.proposito == 2 %> checked <% end %> > Paciente en tratamiento<br>
+		  <input type="radio" <% if @interconsulta.proposito == 3 %> checked <% end %> > Seguimiento<br>
+		  <input type="radio" <% if @interconsulta.proposito == 4 %> checked <% end %> > Otro		
 		</td>
-		<td>
-			<span class="print">Comentario:</span><br>
-			<%= @interconsulta.comentario %>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<span class="print">Exámenes:</span><br>
+			<% @persona_prestacion.each do |p_p| %>
+				<%= p_p.persona_prestacion.prestacion.nombre %><br>
+			<% end %>					
 		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><span class="print">Comentario: </span><%= @interconsulta.comentario %>		</td>
 	</tr>				
 </table>	
-
-<label class="rotate ro-pro">Profesional</label>
-<table class='print aj-marg-left'>
+<br>
+<table class='print'>
+	<tr>
+		<td colspan='3' class="enc_tab_int">Profesional</td>
+	</tr>
 	<tr>
 		<td><span class="print">Apellido paterno</span>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%p') %></td>
 		<td><span class="print">Apellido materno</span>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%m') %></td>
-		<td><span class="print">Nombres</span>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n') %></td></tr>
+	</tr>
 	<tr>
+		<td><span class="print">Nombres</span>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n') %></td>
 		<td><label>Rut</label>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td>
+	</tr>
+	<tr>		
 		<td colspan="2" class="firma"><label class="firma">Firma profesional</label></td>
 	</tr>
 </table>

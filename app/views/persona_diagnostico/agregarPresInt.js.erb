@@ -1,0 +1,8 @@
+<% if !@persona_prestacion.exists? %>
+	$("<p id='no-pres-int<%= @p_d %>'>No hay prestaciones seleccionadas.</p>").appendTo("#int_diag<%= @p_d %>"); 
+<% else %>
+	$('#no-pres-int<%= @p_d %>').remove();
+	<% @persona_prestacion.each do |p_p| %> 
+		$("<%= escape_javascript( render :partial => "persona_diagnostico/persona_prestacion_interconsulta", :locals => {:p_d => @p_d, :p_p => p_p } ) %>").appendTo("#int_diag<%= @p_d %>") ;    
+	<% end %>
+<% end %>

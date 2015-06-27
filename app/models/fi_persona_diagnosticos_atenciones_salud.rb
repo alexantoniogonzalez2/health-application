@@ -8,6 +8,8 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
   has_many :notificaciones_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'person_diagnostico_atencion_salud_id'
   has_many :notificaciones_eno, :class_name => 'FiNotificacionesEno', :foreign_key => 'person_diagnostico_atencion_salud_id'
   has_many :interconsultas, :class_name => 'FiInterconsultas', :foreign_key => 'person_diagnostico_atencion_salud_id'
+  has_many :certificado_diagnosticos, :class_name => 'FiCertificadoDiagnosticos', :foreign_key => 'person_diagnostico_atencion_salud_id'
+  has_many :persona_prestacion_diagnosticos, :class_name => 'FiPersonaPrestacionDiagnosticos', :foreign_key => 'person_diagnostico_atencion_salud_id'
 
   private
   def app_params
@@ -25,7 +27,9 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
                                  :notificaciones_ges,
                                  :notificaciones_eno,
                                  :interconsultas,
-                                 :es_antecedente)
+                                 :es_antecedente,
+                                 :certificado_diagnosticos,
+                                 :persona_prestacion_diagnosticos)
   end
 								
 end

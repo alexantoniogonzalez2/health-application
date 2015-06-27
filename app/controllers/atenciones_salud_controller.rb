@@ -216,6 +216,14 @@ class AtencionesSaludController < ApplicationController
 
 	  #Antecedentes sociales
 		@class_sociales = ( @persona.nivel_escolaridad.nil? and @persona.numero_personas_familia.nil? ) ? '' : 'active-ant'
+
+		#certificado
+		@certificado = FiCertificados.where('atencion_salud_id = ?',@atencion_salud.id).first
+		unless @certificado
+			@certificado = FiCertificados.new
+			@certificado.atencion_salud = @atencion_salud 
+			@certificado.save!
+		end	
  	
 	end
  
@@ -316,7 +324,118 @@ class AtencionesSaludController < ApplicationController
 
 		render :json => @atenciones
 
-	end 	
+	end
+
+	def descargarCertificado
+		@certificado = FiCertificados.find(params[:id])
+		@at_sal = @certificado.atencion_salud
+
+		@persona_diagnostico = FiPersonaDiagnosticos
+	  	.joins(:persona_diagnosticos_atencion_salud)
+	  	.joins('LEFT JOIN fi_certificado_diagnosticos as fcd ON fcd.persona_diagnostico_atencion_salud_id = fi_persona_diagnosticos_atenciones_salud.id')
+	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+	  					fcd.certificado_id,
+	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+	  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+	  					fi_persona_diagnosticos.diagnostico_id,
+	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+	  					fi_persona_diagnosticos_atenciones_salud.comentario,
+	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
+	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fcd.certificado_id = ? ',@at_sal,@certificado.id)
+
+		nombre = l DateTime.current, format: :timestamp
+	  nombre.to_s << ' Certificado ' << ' RUT '  
+
+		respond_to do |format|
+			format.pdf do
+          render :pdf => nombre,
+                 :template => "atenciones_salud/certificado.pdf.erb", :locals => {:persona_diagnostico => @persona_diagnostico, :certificado => @certificado } ,
+                 :disposition => 'attachment',
+                 :encoding => "utf8",
+                 :show_as_html => params[:debug]                 
+ 					 end               
+		end
+	end 
+
+	def agregarDiagCert
+		@certificado = FiCertificados.find(params[:id])
+		@id = @certificado.atencion_salud
+
+		@persona_diagnostico = FiPersonaDiagnosticos
+	  	.joins(:persona_diagnosticos_atencion_salud)
+	  	.joins('LEFT JOIN fi_certificado_diagnosticos as fcd ON fcd.persona_diagnostico_atencion_salud_id = fi_persona_diagnosticos_atenciones_salud.id')
+	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+	  					fcd.certificado_id,
+	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+	  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+	  					fi_persona_diagnosticos.diagnostico_id,
+	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+	  					fi_persona_diagnosticos_atenciones_salud.comentario,
+	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
+	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND (fcd.certificado_id = ?  OR fcd.certificado_id is null)',@id,@certificado.id)	  
+
+		respond_to do |format|     
+    	format.js   {}
+    	format.json { render :json => { :success => true } }
+    end	
+	end	
+
+	def agregarInfoCertificado
+		@certificado = FiCertificados.find(params[:cert])
+		case params[:param]
+			when 'tipo_reposo'
+				@certificado.tipo_reposo = params[:valor] 
+			when 'dias_reposo'
+				@certificado.dias_reposo = params[:valor]  
+			when 'alta'
+				@certificado.alta = params[:valor] 
+			when 'control'
+				@certificado.control = params[:valor] 
+			when 'cert_prop_1'
+				@certificado.para_trabajo = params[:valor]
+			when 'cert_prop_2'
+				@certificado.para_colegio = params[:valor]
+			when 'cert_prop_3'
+				@certificado.para_juzgado = params[:valor]	
+			when 'cert_prop_4'
+				@certificado.para_carabinero = params[:valor]		
+			when 'cert_prop_5'
+				@certificado.para_otros = params[:valor]				
+		end
+
+		@certificado.save!
+
+		respond_to do |format|   
+    	format.json { render :json => { :success => true } }
+    end			
+	end
+
+	def actualizarDiagCertificado
+		@certificado = FiCertificados.find(params[:cert])
+		@pdat = FiPersonaDiagnosticosAtencionesSalud.find(params[:p_d]) 
+		@certificado_diagnostico = FiCertificadoDiagnosticos.where('certificado_id = ? AND persona_diagnostico_atencion_salud_id = ?',params[:cert],params[:p_d]).first
+
+		if params[:valor] == 'true'
+			if !@certificado_diagnostico
+				@certificado_diagnostico = FiCertificadoDiagnosticos.new
+				@certificado_diagnostico.certificado = @certificado
+				@certificado_diagnostico.persona_diagnostico_atencion_salud = @pdat
+				@certificado_diagnostico.save!
+			end	
+		else
+			if @certificado_diagnostico
+				@certificado_diagnostico.destroy!
+			end		
+		end 	
+		respond_to do |format|   
+    	format.json { render :json => { :success => true } }
+    end	
+
+	end	
 
 	private
 	  def app_params
