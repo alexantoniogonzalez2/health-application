@@ -57,9 +57,20 @@ class HomeController < ApplicationController
 
 		
 		if user_signed_in?
-			if tieneRol('Generar agendamientos')
+			if tieneRol('Generar agendamientos') or tieneRol('Confirmar agendamientos') or tieneRol('Recibir pacientes') or tieneRol('Bloquear horas') or tieneRol('Generar estadísticas') or tieneRol('Tomar horas')
 				@profesionales = PerPersonas.where("id IN (SELECT profesional_id FROM pre_prestador_profesionales WHERE prestador_id = ? )",getIdPrestador('administrativo'))
-		  	@especialidades= ProEspecialidades.where("id IN (SELECT especialidad_id FROM pre_prestador_profesionales WHERE prestador_id= ? )",getIdPrestador('administrativo'))		    
+		  	@especialidades= ProEspecialidades.where("id IN (SELECT especialidad_id FROM pre_prestador_profesionales WHERE prestador_id= ? )",getIdPrestador('administrativo'))	
+		  	@atenciones_salud_para_boleta = FiAtencionesSalud
+					.joins('JOIN ag_agendamientos AS ag
+								  ON fi_atenciones_salud.agendamiento_id = ag.id
+								  JOIN pre_prestador_profesionales as ppp
+								  ON ag.especialidad_prestador_profesional_id = ppp.id
+								  JOIN pre_atenciones_pagadas as pap
+								  ON ag.id = pap.agendamiento_id
+								  LEFT JOIN pre_boletas_atenciones_pagadas as pbap
+								  ON pap.id = pbap.atencion_pagada_id')
+					.where('ag.agendamiento_estado_id = 7 AND pbap.id is null')
+					.order('fecha_comienzo asc')	    
 				render 'index_agendamiento'
 		  elsif esProfesionalSalud 
 		  	@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
@@ -87,6 +98,18 @@ class HomeController < ApplicationController
 					.where('ppp.id = ?',@especialidad_prestador_profesional.id)
 					.order('fecha_comienzo asc')
 					.limit(100)
+
+				@atenciones_salud_para_pago = FiAtencionesSalud
+					.joins('JOIN ag_agendamientos AS ag
+								  ON fi_atenciones_salud.agendamiento_id = ag.id
+								  JOIN pre_prestador_profesionales as ppp
+								  ON ag.especialidad_prestador_profesional_id = ppp.id
+								  JOIN pre_atenciones_pagadas as pap
+								  ON ag.id = pap.agendamiento_id
+								  LEFT JOIN pre_boletas_atenciones_pagadas as pbap
+								  ON pap.id = pbap.atencion_pagada_id')
+					.where('ppp.id = ? AND ag.agendamiento_estado_id = 7 AND pbap.id is null',@especialidad_prestador_profesional.id)
+					.order('fecha_comienzo asc')
 
 				#@atenciones_salud = @query.where('fecha_comienzo > ?', 1.week.ago)
 				#@atenciones_salud = @query.where('fecha_comienzo > ?', 1.week.ago) if @atenciones_salud.blank?					

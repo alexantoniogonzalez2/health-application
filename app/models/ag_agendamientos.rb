@@ -7,7 +7,7 @@ class AgAgendamientos < ActiveRecord::Base
   belongs_to :capitulo_cie10_control, :class_name => 'MedDiagnosticosCapitulos'
   has_one :atencion_salud, :class_name => 'FiAtencionesSalud', :foreign_key => 'agendamiento_id'
   has_many :agendamiento_log_estados, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'agendamiento_id'
-
+  has_one :atencion_pagada, :class_name => 'PreAtencionesPagadas', :foreign_key => 'agendamiento_id'
 
   def month(val)
     if val==1
@@ -283,7 +283,7 @@ class AgAgendamientos < ActiveRecord::Base
       end
     end 
     if perm_admin_recibe 
-      llegada_paciente<<"<button class='btn btn-primary marcar-llegada'>Marcar llegada del paciente</button>"  
+      llegada_paciente<<"<button class='btn btn-primary marcar-llegada'>Realizar ingreso del paciente</button>"  
     end                  
     if perm_admin_confirma or perm_paciente
       confirmar<<"<button class='btn btn-primary confirmar-hora'>Confirmar hora</button>"  
@@ -314,7 +314,7 @@ class AgAgendamientos < ActiveRecord::Base
         detalle<<info_paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion
     end   
 
-    detalle<<elegir_paciente<<persona_hora<<motivo<<informacion_antecedentes<<info_cap<<'</table></div><div class="modal-footer">'
+    detalle<<elegir_paciente<<persona_hora<<motivo<<informacion_antecedentes<<info_cap<<"</table><div id='ingreso-#{id}'></div></div><div class='modal-footer'>"
 
     case estado
       when 'Hora disponible'
@@ -357,7 +357,8 @@ class AgAgendamientos < ActiveRecord::Base
                                   :persona_diagnostico_control,
                                   :capitulo_cie10_control,
                                   :atencion_salud,  
-                                  :agendamiento_log_estados                                  
+                                  :agendamiento_log_estados,
+                                  :atenciones_pagadas                                  
                                 )
   end
 

@@ -213,7 +213,12 @@ class PerPersonas < ActiveRecord::Base
     persona_prevision = personas_previsiones_salud.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
     nombre_prevision = persona_prevision.nil? ? "Sin información" : persona_prevision.prevision_salud.nombre
     return nombre_prevision
-  end  
+  end
+
+  def getPrevisionSalud
+    persona_prevision = personas_previsiones_salud.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
+    return persona_prevision.prevision_salud
+  end
 
   def getDomicilio
     domicilio = personas_direcciones.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first

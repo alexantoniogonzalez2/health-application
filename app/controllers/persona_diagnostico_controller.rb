@@ -677,6 +677,8 @@ class PersonaDiagnosticoController < ApplicationController
 	def agregarPresInt
 		@persona_prestacion = FiPersonaPrestacionDiagnosticos.where('persona_diagnostico_atencion_salud_id = ?',params[:p_d])
 	  @p_d = 	params[:p_d]
+	  @tipo = 	params[:tipo]
+	  
 		respond_to do |format|     
     	format.js   {}
     	format.json { render :json => { :success => true } }

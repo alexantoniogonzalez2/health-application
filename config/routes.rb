@@ -122,6 +122,7 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/confirmarHora', to: 'agendamiento#confirmarHora', :as => :confirmarHora
   post '/aux/marcarLlegada', to: 'agendamiento#marcarLlegada', :as => :marcarLlegada
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
+  post 'preparar_ingreso', to: 'agendamiento#prepararIngreso'
 
   #Home
   post '/actualizar_atenciones', to: 'home#actualizarAtenciones'

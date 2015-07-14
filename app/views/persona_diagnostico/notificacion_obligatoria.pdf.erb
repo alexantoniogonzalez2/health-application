@@ -46,6 +46,7 @@
 <table class="print4">
 	<tr><td class="uppercase">Institución</td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td></tr>
 	<tr><td class="uppercase">Dirección</td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td></tr>
+	<tr><td class="uppercase">Teléfono</td><td>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %></td></tr>
 	<tr><td class="uppercase">Profesional que notifica</td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td></tr>
 	<tr><td class="uppercase">Rut profesional</td><td>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %></td></tr>			
 </table>

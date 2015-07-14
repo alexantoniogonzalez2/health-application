@@ -1,26 +1,52 @@
+puts 'Prestaciones para atención'
+MPG = MedPrestacionesGrupos.create! :nombre => 'Grupo atenciones de salud', :descripcion => ''
+MPS = MedPrestacionesSubgrupos.create! :grupo => MPG, :nombre => 'Subgrupo atenciones de salud', :descripcion => ''
+MP1 = MedPrestaciones.create! :codigo_fonasa => '00001', :subgrupo => MPS, :nombre => 'Atención de Salud: Medicina General'
+MP2 = MedPrestaciones.create! :codigo_fonasa => '00002', :subgrupo => MPS, :nombre => 'Atención de Salud: Pediatría'
+MP3 = MedPrestaciones.create! :codigo_fonasa => '00003', :subgrupo => MPS, :nombre => 'Atención de Salud: Cardiología'
+MP4 = MedPrestaciones.create! :codigo_fonasa => '00004', :subgrupo => MPS, :nombre => 'Atención de Salud: Broncopulmonar" '
+MP5 = MedPrestaciones.create! :codigo_fonasa => '00005', :subgrupo => MPS, :nombre => 'Atención de Salud: Dermatología'
+MP6 = MedPrestaciones.create! :codigo_fonasa => '00006', :subgrupo => MPS, :nombre => 'Atención de Salud: Endocrinología'
+MP7 = MedPrestaciones.create! :codigo_fonasa => '00007', :subgrupo => MPS, :nombre => 'Atención de Salud: Fonoaudiología'
+MP8 = MedPrestaciones.create! :codigo_fonasa => '00008', :subgrupo => MPS, :nombre => 'Atención de Salud: Gastroenterología'
+MP9 = MedPrestaciones.create! :codigo_fonasa => '00009', :subgrupo => MPS, :nombre => 'Atención de Salud: Geriatría'
+MP10 = MedPrestaciones.create! :codigo_fonasa => '00010', :subgrupo => MPS, :nombre => 'Atención de Salud: Ginecología'
+MP11 = MedPrestaciones.create! :codigo_fonasa => '00011', :subgrupo => MPS, :nombre => 'Atención de Salud: Nefrología'
+MP12 = MedPrestaciones.create! :codigo_fonasa => '00012', :subgrupo => MPS, :nombre => 'Atención de Salud: Neurología'
+MP13 = MedPrestaciones.create! :codigo_fonasa => '00013', :subgrupo => MPS, :nombre => 'Atención de Salud: Nutrición'
+MP14 = MedPrestaciones.create! :codigo_fonasa => '00014', :subgrupo => MPS, :nombre => 'Atención de Salud: Odontología'
+MP15 = MedPrestaciones.create! :codigo_fonasa => '00015', :subgrupo => MPS, :nombre => 'Atención de Salud: Oftalmología'
+MP16 = MedPrestaciones.create! :codigo_fonasa => '00016', :subgrupo => MPS, :nombre => 'Atención de Salud: Oncología'
+MP17 = MedPrestaciones.create! :codigo_fonasa => '00017', :subgrupo => MPS, :nombre => 'Atención de Salud: Otorrinolaringología'
+MP18 = MedPrestaciones.create! :codigo_fonasa => '00018', :subgrupo => MPS, :nombre => 'Atención de Salud: Psicología'
+MP19 = MedPrestaciones.create! :codigo_fonasa => '00019', :subgrupo => MPS, :nombre => 'Atención de Salud: Psiquiatría'
+MP20 = MedPrestaciones.create! :codigo_fonasa => '00020', :subgrupo => MPS, :nombre => 'Atención de Salud: Reumatología'
+MP21 = MedPrestaciones.create! :codigo_fonasa => '00021', :subgrupo => MPS, :nombre => 'Atención de Salud: Traumatología'
+MP22 = MedPrestaciones.create! :codigo_fonasa => '00022', :subgrupo => MPS, :nombre => 'Atención de Salud: Urología'
+
 puts 'Especialidad 1'
-E1 = ProEspecialidades.create! :nombre => "Medicina General"
-E2 = ProEspecialidades.create! :nombre => "Pediatría"
-E3 = ProEspecialidades.create! :nombre => "Cardiología"
-ProEspecialidades.create! :nombre => "Broncopulmonar"
-ProEspecialidades.create! :nombre => "Dermatología"
-ProEspecialidades.create! :nombre => "Endocrinología"
-ProEspecialidades.create! :nombre => "Fonoaudiología"
-ProEspecialidades.create! :nombre => "Gastroenterología"
-ProEspecialidades.create! :nombre => "Geriatría"
-ProEspecialidades.create! :nombre => "Ginecología"
-ProEspecialidades.create! :nombre => "Nefrología"
-ProEspecialidades.create! :nombre => "Neurología"
-ProEspecialidades.create! :nombre => "Nutrición"
-ProEspecialidades.create! :nombre => "Odontología"
-ProEspecialidades.create! :nombre => "Oftalmología"
-ProEspecialidades.create! :nombre => "Oncología"
-ProEspecialidades.create! :nombre => "Otorrinolaringología"
-ProEspecialidades.create! :nombre => "Psicología"
-ProEspecialidades.create! :nombre => "Psiquiatría"
-ProEspecialidades.create! :nombre => "Reumatología"
-ProEspecialidades.create! :nombre => "Traumatología"
-ProEspecialidades.create! :nombre => "Urología"
+E1 = ProEspecialidades.create! :nombre => "Medicina General", :prestacion => MP1
+E2 = ProEspecialidades.create! :nombre => "Pediatría", :prestacion => MP2
+E3 = ProEspecialidades.create! :nombre => "Cardiología", :prestacion => MP3
+ProEspecialidades.create! :nombre => "Broncopulmonar" , :prestacion => MP4
+ProEspecialidades.create! :nombre => "Dermatología", :prestacion => MP5
+ProEspecialidades.create! :nombre => "Endocrinología", :prestacion => MP6
+ProEspecialidades.create! :nombre => "Fonoaudiología", :prestacion => MP7
+ProEspecialidades.create! :nombre => "Gastroenterología", :prestacion => MP8
+ProEspecialidades.create! :nombre => "Geriatría", :prestacion => MP9
+ProEspecialidades.create! :nombre => "Ginecología", :prestacion => MP10
+ProEspecialidades.create! :nombre => "Nefrología", :prestacion => MP11
+ProEspecialidades.create! :nombre => "Neurología", :prestacion => MP12
+ProEspecialidades.create! :nombre => "Nutrición", :prestacion => MP13
+ProEspecialidades.create! :nombre => "Odontología", :prestacion => MP14
+ProEspecialidades.create! :nombre => "Oftalmología", :prestacion => MP15
+ProEspecialidades.create! :nombre => "Oncología", :prestacion => MP16
+ProEspecialidades.create! :nombre => "Otorrinolaringología", :prestacion => MP17
+ProEspecialidades.create! :nombre => "Psicología", :prestacion => MP18
+ProEspecialidades.create! :nombre => "Psiquiatría", :prestacion => MP19
+ProEspecialidades.create! :nombre => "Reumatología", :prestacion => MP20
+ProEspecialidades.create! :nombre => "Traumatología", :prestacion => MP21
+ProEspecialidades.create! :nombre => "Urología", :prestacion => MP22
 
 
 puts 'Rol Administrativo'

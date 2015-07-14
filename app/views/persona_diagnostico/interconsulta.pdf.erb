@@ -20,8 +20,15 @@
 <br>
 <table class='print'>
 	<tr>
+		<td colspan='2' class="enc_tab_int">Datos del prestador</td>
+	</tr>
+	<tr>
 		<td><label>Establecimiento</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
 		<td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>		
+	</tr>
+	<tr>
+		<td><label>Dirección</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td>
+		<td><label>Teléfono</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono%></td>		
 	</tr>
 </table>
 <br>

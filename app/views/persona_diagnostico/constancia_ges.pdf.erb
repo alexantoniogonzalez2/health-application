@@ -11,6 +11,7 @@
     <td>
       <label>Institución</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %><br>
       <label>Dirección</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %><br>
+      <label>Teléfono</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %><br>
       <label>Profesional que notifica</label>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %><br>
       <label>Rut profesional</label>: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
     </td>

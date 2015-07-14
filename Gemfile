@@ -63,20 +63,10 @@ gem 'jquery-datatables-rails'
 gem "font-awesome-rails"
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-#gem 'pdfkit'
 gem 'bootstrap-validator-rails'
 gem 'label_better_rails'
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "compass-rails", github: "Compass/compass-rails", branch: "master"
-
-#gem 'wkhtmltopdf-binary', '~> 0.9.9.1'
-#gem 'ruby-debug'
-#gem "rack-insight"
-
-#group :development do
- # gem "better_errors"
-#end
-
-#gem "binding_of_caller"
+gem 'savon'

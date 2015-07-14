@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626172001) do
+ActiveRecord::Schema.define(version: 20150629220843) do
 
   create_table "ag_agendamiento_estados", force: :cascade do |t|
     t.string   "nombre",     limit: 255
@@ -297,6 +297,7 @@ ActiveRecord::Schema.define(version: 20150626172001) do
   create_table "fi_persona_prestacion_diagnosticos", force: :cascade do |t|
     t.integer  "persona_prestacion_id",                 limit: 4
     t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
+    t.boolean  "para_interconsulta",                    limit: 1
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
   end
@@ -605,6 +606,38 @@ ActiveRecord::Schema.define(version: 20150626172001) do
     t.datetime "updated_at"
   end
 
+  create_table "pre_atenciones_pagadas", force: :cascade do |t|
+    t.integer  "agendamiento_id",              limit: 4
+    t.integer  "prestacion_id",                limit: 4
+    t.integer  "valor",                        limit: 4
+    t.integer  "bonificacion_financiador",     limit: 4
+    t.integer  "aporte_seguro_complementario", limit: 4
+    t.integer  "excedentes",                   limit: 4
+    t.integer  "copago_beneficiario",          limit: 4
+    t.datetime "fecha_pago"
+    t.integer  "prevision_salud_id",           limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  create_table "pre_boletas", force: :cascade do |t|
+    t.integer  "profesional_id", limit: 4
+    t.integer  "prestador_id",   limit: 4
+    t.integer  "monto",          limit: 4
+    t.string   "estado",         limit: 255
+    t.datetime "fecha_desde"
+    t.datetime "fecha_hasta"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "pre_boletas_atenciones_pagadas", force: :cascade do |t|
+    t.integer  "boleta_id",          limit: 4
+    t.integer  "atencion_pagada_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
   create_table "pre_prestador_administrativos", force: :cascade do |t|
     t.integer  "prestador_id",          limit: 4
     t.integer  "rol_administrativo_id", limit: 4
@@ -643,6 +676,17 @@ ActiveRecord::Schema.define(version: 20150626172001) do
     t.datetime "updated_at"
   end
 
+  create_table "pre_regla_pagos", force: :cascade do |t|
+    t.string   "tipo",                                  limit: 255
+    t.integer  "prestador_id",                          limit: 4
+    t.integer  "especialidad_prestador_profesional_id", limit: 4
+    t.decimal  "porcentaje",                                        precision: 10
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_termino"
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
+  end
+
   create_table "pre_rol_administrativos", force: :cascade do |t|
     t.text     "nombre",     limit: 65535
     t.datetime "created_at"
@@ -650,7 +694,8 @@ ActiveRecord::Schema.define(version: 20150626172001) do
   end
 
   create_table "pro_especialidades", force: :cascade do |t|
-    t.string   "nombre",     limit: 255
+    t.string   "nombre",        limit: 255
+    t.integer  "prestacion_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

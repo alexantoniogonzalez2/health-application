@@ -4,15 +4,31 @@ $(function() {
     
     var id = $(this).attr('id');      
     p_d = id.substring(9);
-
-    $('#int_diag'+p_d).empty();
-    $.ajax({
-      type: 'POST',
-      url: '/agregar_pres_int',
-      data: { p_d: p_d },
-      success: function(response) { },
-      error: function(xhr, status, error){ }
-    });
+    agregarPresInt(p_d,'act');
     
   });
 });
+
+$(function() {
+
+  $('.panel_interconsulta_ant').bind('click', function (e) {
+    
+    var id = $(this).attr('id');      
+    p_d = id.substring(9);
+    agregarPresInt(p_d,'ant');
+    
+  });
+});
+
+function agregarPresInt(p_d,tipo){
+
+  $('#int_diag'+p_d).empty();
+  $.ajax({
+    type: 'POST',
+    url: '/agregar_pres_int',
+    data: { p_d: p_d, tipo: tipo },
+    success: function(response) { },
+    error: function(xhr, status, error){ }
+  });
+
+}

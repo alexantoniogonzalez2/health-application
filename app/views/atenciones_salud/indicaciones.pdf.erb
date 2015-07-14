@@ -6,8 +6,15 @@
 <br>
 <table class='print'>
   <tr>
+    <td colspan='2' class="enc_tab_int">Datos del prestador</td>
+  </tr>
+  <tr>
     <td><label>Establecimiento</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
-    <td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>   
+    <td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td> 
+  </tr>
+  <tr>
+    <td><label>Dirección</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td>
+    <td><label>Teléfono</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %></td>  
   </tr>
 </table>
 <br>
@@ -29,6 +36,23 @@
 <br>
 <table class='print'>
   <tr>
+    <td colspan='2' class="enc_tab_int">Diagnósticos</td>
+  </tr>
+  <tr>
+    <td colspan="2" >
+      <span class="print">Diagnósticos:</span><br>
+        <% @persona_diagnostico.each do |p_d| %> 
+          <%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %><br>
+        <% end %>
+    </td>
+  </tr>      
+</table> 
+<br>
+<table class='print'>
+  <tr>
+    <td colspan='2' class="enc_tab_int">Indicaciones</td>
+  </tr>
+  <tr>
     <td colspan="2" >
       <span class="print">Exámenes:</span><br>
       <% @persona_examen.each do |p_e| %>
@@ -45,7 +69,7 @@
     </td>
   </tr>
   <tr>
-    <td colspan="2"><span class="print">Indicaciones generales: </span><%= @atencion_salud.indicaciones_generales %>   </td>
+    <td colspan="2"><span class="print">Indicaciones generales: </span><%= @atencion_salud.indicaciones_generales %> </td>
   </tr>       
 </table>  
 

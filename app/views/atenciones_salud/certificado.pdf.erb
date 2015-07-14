@@ -8,14 +8,15 @@
 <h6 class="uppercase">Datos del prestador</h6>
 <label>Institución</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.prestador.nombre %><br>
 <label>Dirección</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.prestador.getDireccion %><br>
+<label>Teléfono</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.prestador.getTelefono %><br>
 <label>Profesional</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %><br>
 <label>Rut profesional</label>: <%= certificado.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showRut %>
-<br>
+<br><br>
 
 <p>El profesional que suscribe, certifica haber atendido al Señor(a): <%= certificado.atencion_salud.agendamiento.persona.showName('%n%p%m')%> quien presenta diagnóstico de :</p>
 
 <% @persona_diagnostico.each do |p_d| %> 
-<%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %>
+	<%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %>
 <% end %>
 
 <br><br>

@@ -1,6 +1,6 @@
 class PrePrestadoresTelefonos < ActiveRecord::Base
 
-	belongs_to :telefono, :class_name => 'TraTelefono'
+	belongs_to :telefono, :class_name => 'TraTelefonos'
 	belongs_to :prestador, :class_name => 'PrePrestadores'
 
 	private

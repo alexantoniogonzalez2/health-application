@@ -7,6 +7,8 @@
 			  <li><a href="#agenda" role="tab" data-toggle="tab">Ver agenda</a></li>
 			  <li><a href="#atenciones" role="tab" data-toggle="tab">Ver últimas atenciones</a></li>
 			  <li><a href="#atenciones_realizadas" role="tab" data-toggle="tab">Buscar atenciones realizadas</a></li>
+			  <li><a href="#atenciones_para_pago" role="tab" data-toggle="tab">Ver atenciones para pago</a></li>
+			  <li><a href="#boletas" role="tab" data-toggle="tab">Ver boletas</a></li>
 			</ul>
 		</div>
 		<div class="col-md-9 column col-ant">
@@ -15,7 +17,9 @@
 			  <div class="tab-pane" id="ant_quir"><%= render :partial => "log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %> <button id="actualizar" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button></div>
 			  <div class="tab-pane" id="agenda"><%= render :partial => "agendamiento/buscador_hora" %></div>
 			  <div class="tab-pane" id="atenciones"><%= render :partial => "atenciones_salud/index" %></div>
-				<div class="tab-pane" id="atenciones_realizadas"><%= render :partial => "atenciones_salud/index_buscar" %></div>	
+				<div class="tab-pane" id="atenciones_realizadas"><%= render :partial => "atenciones_salud/index_buscar" %></div>
+				<div class="tab-pane" id="atenciones_para_pago"><%= render :partial => "administracion/atenciones_para_pago" %></div>
+				<div class="tab-pane" id="boletas"><%= render :partial => "administracion/boletas" %></div>
 			</div>
 		</div>
 	</div>

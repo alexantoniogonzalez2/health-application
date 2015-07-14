@@ -40,6 +40,13 @@
 		</div>
 		<div class="row clearfix">	
 			<div class="col-md-4 column">
+				<label>Teléfono</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
 				<label>Profesional que notifica</label>
 			</div>
 			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
@@ -219,16 +226,16 @@
 					<label>Propósito:</label>
 					<div class="form-group form-ges" id="int_<%= p_d.id %>">
 				    <div class="radio">
-				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %>>Diagnóstico</label>
+				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %>> Diagnóstico</label>
 				    </div>					
 				    <div class="radio">
-				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %>>Paciente en tratamiento</label>
+				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %>> Paciente en tratamiento</label>
 				    </div> 						
 				    <div class="radio">
-				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if prop == 3 %> checked <% end %>>Seguimiento</label>
+				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if prop == 3 %> checked <% end %>> Seguimiento</label>
 				    </div>				
 				    <div class="radio">
-				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if prop == 4 %> checked <% end %>>Otro</label>
+				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if prop == 4 %> checked <% end %>> Otro</label>
 				    </div> 
 					</div>
 				</div>

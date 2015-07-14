@@ -41,6 +41,13 @@
 		</div>
 		<div class="row clearfix">	
 			<div class="col-md-4 column">
+				<label>Teléfono</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
 				<label>Profesional que notifica</label>
 			</div>
 			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
@@ -203,14 +210,6 @@
 				En caso que la persona que tomó conocimiento no sea el paciente, identificar:			
 				</div>
 			</div>			  
-			<div class="row clearfix">
-				<div class="col-md-8 column">
-					<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'not_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_notificacion', :subgrupo => 'todos'  } %>
-				</div>
-				<div class="col-md-4 column">
-					<a id="modal-agregar-persona" href="#modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>			 		
-				</div>				
-			</div>
 			<div class="row clearfix ajus-mar-top">
 				<div class="col-md-6 column">
 					<label>Nombre</label>: <span id="not_nombre_<%= p_d.id %>" ><%= nombre %></span>				

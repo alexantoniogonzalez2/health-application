@@ -2,6 +2,8 @@ class MedPrestaciones < ActiveRecord::Base
 
 	has_many :persona_prestaciones, :class_name => 'FiPersonaPrestaciones', :foreign_key => 'prestacion_id' 
 	belongs_to :subgrupo, :class_name => 'MedPrestacionesSubgrupos'
+  has_many :atenciones_pagadas, :class_name => 'PreAtencionesPagadas', :foreign_key => 'prestacion_id'
+  has_many :especialidades, :class_name => 'ProEspecialidades', :foreign_key => 'prestacion_id'
 	
 
   def formato_prestaciones
@@ -20,7 +22,9 @@ class MedPrestaciones < ActiveRecord::Base
     														  :nombre,
     														  :descripcion,
     														  :persona_prestaciones,
-    														  :subgrupo)
+    														  :subgrupo,
+                                  :atenciones_pagadas,
+                                  :especialidades)
   end
 
 end

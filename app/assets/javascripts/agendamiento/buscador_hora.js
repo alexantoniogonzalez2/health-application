@@ -271,6 +271,18 @@ $('#buscadorHora').fullCalendar({
 			// Si existe el botón "marcar-llegada", le pondrá la siguiente acción al hacer click
 			$('#modal-content .modal-footer .marcar-llegada').click(function(){
 
+				/*
+				$('#ingreso-'+calEvent.id).empty();
+
+				$.ajax({
+					type: 'POST',
+					url: '/preparar_ingreso',
+					data: {	agendamiento_id: calEvent.id	},
+					success: function(response) {},
+					error: function(xhr, status, error){ alert("No se pudo hacer el ingreso del paciente.");	}
+				});
+			*/
+							
 				$.ajax({
 					type: 'POST',
 					url: '/aux/marcarLlegada',
@@ -297,6 +309,7 @@ $('#buscadorHora').fullCalendar({
 					},
 					error: function(xhr, status, error){alert("No se pudieron cargar las horas de atención");	}
 				});
+
 			});
 
 			// Si existe el botón "pedir-hora", le pondrá la siguiente acción al hacer click

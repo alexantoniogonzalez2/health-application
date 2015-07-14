@@ -1,0 +1,47 @@
+<h4>Atenciones para pago</h4>
+
+<% if @atenciones_salud_para_pago.blank? %> 
+  <p>No hay atenciones de salud pendientes de pago.</p>
+<% else %>
+  <div id="div_atenciones_para_pago" >
+    <table id="lista_atenciones_para_pago" class="display" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Paciente</th>
+          <th>Rut</th>          
+          <th>Prevision de salud</th>
+          <th>Valor de la atención</th> 
+          <th>Monto para pago</th>            
+        </tr>
+      </thead> 
+      <tfoot>
+        <tr>
+          <th>Fecha</th>
+          <th>Paciente</th>
+          <th>Rut</th>          
+          <th>Previsión de salud</th>
+          <th>Valor de la atención</th> 
+          <th>Monto para pago</th>           
+        </tr>
+      <tfoot>
+      <tbody>
+      	<% @total = 0 %> 
+        <% @atenciones_salud_para_pago.each do |atencion_salud| %>
+        	<% @total += atencion_salud.agendamiento.atencion_pagada.monto_pago_profesional %>
+          <tr>
+            <td><%= atencion_salud.agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
+            <td><%= atencion_salud.persona.showName('%n%p%m') %></td>
+            <td><%= atencion_salud.persona.showRut %></td>            
+            <td><%= atencion_salud.agendamiento.atencion_pagada.prevision_salud.nombre %></td>
+         		<td><%= number_to_currency(atencion_salud.agendamiento.atencion_pagada.valor, unit: "$ ", separator: '.') %></td>
+         		<td><%= number_to_currency(atencion_salud.agendamiento.atencion_pagada.monto_pago_profesional, unit: "$ ", separator: '.') %></td>
+          </tr>
+          <% end %>     
+      </tbody> 
+    </table>    
+    <div class="alert alert-success" role="alert"><label>Monto total para pago: <%= number_to_currency(@total, unit: "$ ", separator: '.') %></label></div>
+  </div>
+<% end %>  
+
+<%= javascript_include_tag "administracion" %>

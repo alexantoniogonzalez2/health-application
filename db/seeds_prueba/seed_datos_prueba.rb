@@ -117,41 +117,13 @@ PrePrestadoresTelefonos.create! :prestador_id => 1, :telefono_id => 1
 PrePrestadoresTelefonos.create! :prestador_id => 2, :telefono_id => 2
 
 puts 'Relación Prestador - Administrativo'
-PA1=PrePrestadorAdministrativos.new
-PA1.prestador=C1
-PA1.administrativo=A
-PA1.rol_administrativo=R1
-PA1.save
-
-PA2=PrePrestadorAdministrativos.new
-PA2.prestador=C1
-PA2.administrativo=A
-PA2.rol_administrativo=R2
-PA2.save
-
-PA3=PrePrestadorAdministrativos.new
-PA3.prestador=C1
-PA3.administrativo=A
-PA3.rol_administrativo=R3
-PA3.save
-
-PA4=PrePrestadorAdministrativos.new
-PA4.prestador=C1
-PA4.administrativo=A
-PA4.rol_administrativo=R4
-PA4.save
-
-PA5=PrePrestadorAdministrativos.new
-PA5.prestador=C1
-PA5.administrativo=A
-PA5.rol_administrativo=R6
-PA5.save
-
-PA6=PrePrestadorAdministrativos.new
-PA6.prestador=C2
-PA6.administrativo=B
-PA6.rol_administrativo=R1
-PA6.save
+PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R1
+PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R2
+PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R3
+PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R4
+PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R5
+PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R6
+PrePrestadorAdministrativos.create! :prestador=> C2, :administrativo => B, :rol_administrativo => R1
 
 #Profesionales
 puts 'Relación Persona-Profesión'
@@ -192,3 +164,6 @@ PP6.prestador=C2
 PP6.profesional=D3
 PP6.especialidad=E3
 PP6.save
+
+PreReglaPagos.create! :tipo => 'prestador', :prestador => C1, :porcentaje => 0.3 , :fecha_inicio => '2014-01-01'
+PreReglaPagos.create! :tipo => 'profesional', :especialidad_prestador_profesional => PP1 , :porcentaje => 0.4, :fecha_inicio => '2014-01-01' 

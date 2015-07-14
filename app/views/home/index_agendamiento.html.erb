@@ -2,14 +2,30 @@
 	<div class="row clearfix">
 		<div class="col-md-3 column">
 			<ul id="nav-antecedentes" class="nav nav-pills nav-pills nav-stacked nav-antecedentes" role="tablist">
-			  <li class="active"><a href="#ant_med" role="tab" data-toggle="tab">Agregar horas</a></li>
-			  <li><a href="#agenda" role="tab" data-toggle="tab">Ver agenda</a></li>
+				<li><a href="#inicio" class="active" role="tab" data-toggle="tab">Inicio</a></li>
+				<% if tieneRol('Confirmar agendamientos') or tieneRol('Recibir pacientes') or tieneRol('Bloquear horas') or tieneRol('Tomar horas') %>
+					<li><a href="#agenda" role="tab" data-toggle="tab">Ver agenda</a></li>
+				<% end %>		
+				<% if tieneRol('Generar agendamientos') %>
+			  	<li><a href="#ant_med" role="tab" data-toggle="tab">Agregar horas</a></li>
+			  <% end %>	
+			  <% if tieneRol('Generar estadísticas') %>
+			  	<li><a href="#gen_boletas" role="tab" data-toggle="tab">Generar boletas</a></li>
+			  <% end %>		  
 			</ul>
 		</div>
 		<div class="col-md-9 column antecedentes">
 			<div class="tab-content antecedentes">
-			  <div class="tab-pane active" id="ant_med"><%= render :template => "agendamiento/showFormBusqueda", :locals => {:especialidades => @especialidades , :profesionales => @profesionales } %></div>
-			  <div class="tab-pane" id="agenda"><%= render :partial => "agendamiento/buscador_hora" %></div>
+				<div class="tab-pane active" id="inicio"><%= render :partial => "inicio_agendamiento" %></div>
+				<% if tieneRol('Confirmar agendamientos') or tieneRol('Recibir pacientes') or tieneRol('Bloquear horas') or tieneRol('Tomar horas') %>
+					<div class="tab-pane" id="agenda"><%= render :partial => "agendamiento/buscador_hora" %></div>
+				<% end %>	
+				<% if tieneRol('Generar agendamientos') %>
+			  	<div class="tab-pane" id="ant_med"><%= render :template => "agendamiento/showFormBusqueda", :locals => {:especialidades => @especialidades , :profesionales => @profesionales } %></div>
+			  <% end %>
+			  <% if tieneRol('Generar estadísticas') %>
+			  	<div class="tab-pane" id="gen_boletas"><%= render :template => "administracion/generar_boletas" %></div>
+			  <% end %>					  
 			</div>
 		</div>
 	</div>

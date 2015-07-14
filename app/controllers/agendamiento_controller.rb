@@ -280,17 +280,30 @@ class AgendamientoController < ApplicationController
 
 	def marcarLlegada
 		#Posible problema por transacciones
-		respuesta="0"
-		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
-		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Paciente en espera").first
+		respuesta = "0"
+		@agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
+		@EstadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente en espera").first
 		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
 
-		@Agendamiento.transaction do
-			respuesta="1"
-			@Agendamiento.fecha_llegada_paciente = DateTime.current 
-			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
-			@Agendamiento.save			
+		@agendamiento.transaction do
+			respuesta = "1"
+			@agendamiento.fecha_llegada_paciente = DateTime.current 
+			@agendamiento.agendamiento_estado = @EstadoAgendamiento
+			@agendamiento.save			
 		end
+
+		#Simulación de prestación I-Med
+		@valor = 20000
+		@prestacion = @agendamiento.especialidad_prestador_profesional.especialidad.prestacion
+		@pre_atencion_pagada = PreAtencionesPagadas.new
+		@pre_atencion_pagada.agendamiento = @agendamiento
+		@pre_atencion_pagada.prestacion = @prestacion 
+		@pre_atencion_pagada.valor = @valor
+		@pre_atencion_pagada.monto_pago_profesional = @agendamiento.especialidad_prestador_profesional.getMontoPagoProfesional(20000,DateTime.current)
+		@pre_atencion_pagada.fecha_pago = DateTime.current
+		@pre_atencion_pagada.prevision_salud = @agendamiento.persona.getPrevisionSalud
+		@pre_atencion_pagada.save!
+		# Fin Simulación de prestación I-Med
 
 		@agendamiento_log = AgAgendamientoLogEstados.new
 		@agendamiento_log.responsable = @responsable
@@ -299,7 +312,17 @@ class AgendamientoController < ApplicationController
 		@agendamiento_log.fecha = DateTime.current
 		@agendamiento_log.save
 		
-		render :text=> respuesta
+		render :text => respuesta
+	end	
+
+	def prepararIngreso
+		@agendamiento = AgAgendamientos.find(params[:agendamiento_id])
+
+		respond_to do |format|     
+    	format.js   {}
+    	format.json { render :json => { :success => true } }
+    end	
+		
 	end	
 
 	def bloquearHora

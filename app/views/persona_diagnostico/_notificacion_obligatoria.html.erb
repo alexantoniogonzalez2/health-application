@@ -28,6 +28,13 @@
 		</div>
 		<div class="row clearfix">	
 			<div class="col-md-4 column">
+				<label>Teléfono</label>
+			</div>
+			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
+			</div>
+		</div>
+		<div class="row clearfix">	
+			<div class="col-md-4 column">
 				<label>Profesional que notifica</label>
 			</div>
 			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>

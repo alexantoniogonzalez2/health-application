@@ -5,8 +5,7 @@ class TraTelefonos < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(
-    															:id,
+    params.require(:list).permit(	:id,
     															:codigo,
     															:numero,
     															:personas_telefonos,

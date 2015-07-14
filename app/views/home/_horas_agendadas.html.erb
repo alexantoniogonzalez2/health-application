@@ -37,12 +37,12 @@
             <%= button_to "Reabrir atención", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => getIdAtencion(agendamiento.id)}, :method => :post,class: "btn btn-xs btn-info" %>
           <% elsif existeAtencion(agendamiento.id) %>
             <%= button_to "Continuar atención", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => getIdAtencion(agendamiento.id) }, :method => :post,class: "btn btn-xs btn-success" %>
-          <% elsif agendamiento.persona_id %>    
+          <% elsif agendamiento.agendamiento_estado_id == 5 %>    
             <%= button_to "Atender paciente", {:controller => :atenciones_salud,
             :action => 'crearAtencion', :id => agendamiento.id }, :method => :post,class: "btn btn-xs btn-success" %>
-          <% elsif agendamiento.agendamiento_estado_id == 2 %> 
+          <% elsif agendamiento.agendamiento_estado_id == 2 %>
             <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="desbloquearHora(<%= agendamiento.id%>)">Desbloquear Hora</button>  
-          <% elsif %>  
+          <% elsif agendamiento.agendamiento_estado_id == 1 %>  
             <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="bloquearHora(<%= agendamiento.id%>)">Bloquear Hora</button>     
           <% end %>
         </td>

@@ -1,6 +1,7 @@
 class AtencionesSaludController < ApplicationController
 
-	include ActionView::Helpers::NumberHelper		
+	include ActionView::Helpers::NumberHelper
+	include ActionView::Helpers::UrlHelper		
 	
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
@@ -320,8 +321,7 @@ class AtencionesSaludController < ApplicationController
 		@atenciones = []
 
 		@atenciones_salud.each do |at_sal|
-			@atenciones << [at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut,
-			 link_to( 'Ver', atenciones_salud_path(at_sal)) ]
+			@atenciones << [at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut, link_to( 'Ver', atenciones_salud_path(at_sal)) ]
 		end	
 
 		render :json => @atenciones
@@ -366,6 +366,22 @@ class AtencionesSaludController < ApplicationController
 		@persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
 	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
 		@agendamiento = AgAgendamientos.find(params[:ag])
+
+		@persona_diagnostico = FiPersonaDiagnosticos
+	  	.joins(:persona_diagnosticos_atencion_salud)
+	  	.joins('LEFT JOIN fi_certificado_diagnosticos as fcd ON fcd.persona_diagnostico_atencion_salud_id = fi_persona_diagnosticos_atenciones_salud.id')
+	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+	  					fcd.certificado_id,
+	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+	  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+	  					fi_persona_diagnosticos.diagnostico_id,
+	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+	  					fi_persona_diagnosticos_atenciones_salud.comentario,
+	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
+	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ?',@atencion_salud.id)
+
 
 		nombre = l DateTime.current, format: :timestamp
 	  nombre.to_s << ' Indicaciones ' << @agendamiento.persona.showRut

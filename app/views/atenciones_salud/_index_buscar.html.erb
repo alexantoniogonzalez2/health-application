@@ -1,8 +1,7 @@
+ <h4>Atenciones de salud</h4>
 <% if @atenciones_salud.blank? %> 
-  <h4>No hay atenciones de salud realizadas.</h4>
-<% else %>
-  <h4>Atenciones de salud</h4>
-  
+  <p>No hay atenciones de salud realizadas.</4>
+<% else %>  
   <div class='container well'>
     <h5>Buscar atenciones anteriores</h5>
     <div class='row'>
@@ -20,7 +19,7 @@
         <input type='text' class="form-control" id='date_fecha_inicio' name='date' placeholder='Seleccionar fecha' />
       </div>
       <div class='col-md-4'>
-        Final:
+        Hasta:
         <input type='text' class="form-control" id='date_fecha_final' name='date' placeholder='Seleccionar fecha' />
       </div>
     </div>

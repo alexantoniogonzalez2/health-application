@@ -6,8 +6,15 @@
 <br>
 <table class='print'>
   <tr>
+    <td colspan='2' class="enc_tab_int">Datos del prestador</td>
+  </tr>
+  <tr>
     <td><label>Establecimiento</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
-    <td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>   
+    <td><label>Especialidad</label>: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td> 
+  </tr>
+  <tr>
+    <td><label>Dirección</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %></td>
+    <td><label>Teléfono</label>: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %></td>  
   </tr>
 </table>
 <br>
@@ -24,6 +31,15 @@
     <td><label>Rut</label>: <%= @agendamiento.persona.showRut %></td>
     <td><label>Edad</label>: <%= @agendamiento.persona.age_text %></td>
     <td><label>Sexo</label>: <%= @agendamiento.persona.showSexo %></td>
+  </tr>
+  <tr>
+    <td><span class="print">Previsión de salud</span>: <%= @agendamiento.persona.getPrevision %></td>
+    <td colspan="2"><label>Domicilio</label>: <%= @agendamiento.persona.getDomicilio %></td>
+  </tr>
+  <tr>
+    <td><label>Correo electrónico</label>:  <%= @agendamiento.persona.user.email %></td>
+    <td><label>Telefono fijo</label>: <%= @agendamiento.persona.getTelefonoFijo %></td>
+    <td><label>Celular</label>: <%= @agendamiento.persona.getCelular %></td>
   </tr>  
 </table>
 <br>
