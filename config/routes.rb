@@ -99,6 +99,7 @@ AplicacionMedica::Application.routes.draw do
   post '/actualizar_diag_med', to: 'persona_medicamento#actualizarDiagMed'
   post '/guardar_atencion', to: 'atenciones_salud#update'
   post '/cargar_atenciones_salud', to: 'atenciones_salud#cargarAtenciones'
+  post '/cargar_atenciones_salud_para_pago', to: 'atenciones_salud#cargarAtencionesParaPago'
   post '/agregar_info_certificado', to: 'atenciones_salud#agregarInfoCertificado'
   post '/actualizar_diag_certificado', to: 'atenciones_salud#actualizarDiagCertificado'
   post '/actualizar_diag_prestacion', to: 'persona_prestacion#actualizarDiagPrestacion'

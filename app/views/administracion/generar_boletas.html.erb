@@ -1,3 +1,6 @@
+<script>
+	var fecha_minima="<%= @fecha_minima.fecha_comienzo.strftime('%Y-%m-%d') %>";
+</script>
 <h4>Generar boletas</h4>  
 <% if @atenciones_salud_para_boleta.blank? %> 
   <p>No hay atenciones de salud para pagar.</p>
@@ -16,7 +19,7 @@
 				  <div class="radio">
 				    <label for="radios-1">
 				      <input type="radio" name="radios-boletas" id="radios-1" value="2">
-				      	Algunos profesionales
+				      Seleccionar profesionales
 				    </label>
 					</div>		   
       </div>
@@ -24,9 +27,9 @@
         <div class="form-group">
         	Desde:
           <div class='input-group date' id='datetimepicker6'>
-            <input type='text' class="form-control" id='fecha_inicio_boleta' name='date' placeholder='Seleccionar fecha' />
+            <input type='text' class="form-control" id='fecha_inicio_boleta' name='date' placeholder='Seleccionar fecha' value="<%= @fecha_minima.fecha_comienzo %>" />
             <span class="input-group-addon">
-               <span class="glyphicon glyphicon-calendar"></span>
+              <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
         </div>
@@ -37,7 +40,7 @@
           <div class='input-group date' id='datetimepicker7'>
             <input type='text' class="form-control" id='fecha_hasta_boleta' name='date' placeholder='Seleccionar fecha' />
             <span class="input-group-addon">
-               <span class="glyphicon glyphicon-calendar"></span>
+              <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
         </div>
@@ -45,46 +48,85 @@
 
     </div>
     <div class='row'>
-      <div class='col-md-12'><br>
-        <button id="filtrar-atenciones" class="btn btn-primary ajus-pos-right">Filtrar atenciones</button>
+      <div class='col-md-9'>
+      	<p></p>
+      </div>    	
+      <div class='col-md-3'><br>
+        <button id="filtrar-atenciones" class="btn btn-primary">Filtrar atenciones</button>
       </div>
     </div>
   </div>
 
-  <br><br>
+  <br>
   <h5>Atenciones de salud seleccionadas para pago</h5>    
-  <table id="lista_atenciones_buscar" class="display" cellspacing="0" width="100%">
+  <table id="lista_atenciones_para_pago" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
     <thead>
       <tr>
+      	<th>Id</th>
         <th>Fecha</th>
+        <th>Rut profesional</th> 
+        <th>Profesional</th>
+        <th>Especialidad</th>
+        <th>Rut paciente</th> 
         <th>Paciente</th>
-        <th>Rut</th>          
-        <th>Ver atención</th>          
+        <th>Monto a pagar</th>         
       </tr>
     </thead>
-    <tbody> 
-    </tbody> 
+    <tbody>      
+      <% @atenciones_salud_para_boleta.each do |atencion_salud| %>
+        <tr>
+        	<td><%= atencion_salud.atencion_pagada %></td>
+          <td><%= atencion_salud.agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showRut %></td>
+          <td><%= atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+          <td><%= atencion_salud.agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>
+          <td><%= atencion_salud.persona.showRut %></td>  
+          <td><%= atencion_salud.persona.showName('%n%p%m') %></td>   
+       		<td><%= number_to_currency(atencion_salud.agendamiento.atencion_pagada.monto_pago_profesional, unit: "$ ", separator: '.') %></td>
+        </tr>
+      <% end %>  
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="6">Monto a pagar:</th>
+        <th colspan="2"></th>
+      </tr>
+  	</tfoot> 
   </table>
+
+  <div class="alert alert-success" role="alert"><button id="generar-boletas" class="btn btn-primary">Generar boletas</button></div>
 
   <!-- Modal -->
   <div class="modal fade" id="algunos_profesionales" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header ajuste-modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4>Seleccionar profesionales</h4>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4>Seleccionar profesionales</h4>
         </div>
-        <div class="modal-body ajuste-height">
-          Lista de profesionales      
-        </div>
+        <div class="modal-body">
+        	<fieldset id="checkbox_profesionales">
+		        <div class='tree-columns'>
+			        <div class="checkbox">
+		        		<label for="parentProfesionales" class="bold" >
+		        			<input type="checkbox" class="parentCheckBox" id="parentProfesionales"> Todos los profesionales
+		        		</label>
+		        	</div>
+		        	<% @profesionales_para_boleta.each do |profesional| %>
+							  <div class="checkbox">
+							    <label for="profesional-<%= profesional.id %>">
+							      <input type="checkbox" name="checkboxes" id="profesional-<%= profesional.id %>" class="childCheckBox"> <%= profesional.showName('%n%p%m') %>
+							    </label>
+								</div>
+							<% end %>					  
+						</div>
+					</fieldset>	
+  			</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
         </div>
       </div>
     </div>
   </div>
-
-
 
 <% end %>  
 

@@ -58,7 +58,7 @@ class HomeController < ApplicationController
 		
 		if user_signed_in?
 			if tieneRol('Generar agendamientos') or tieneRol('Confirmar agendamientos') or tieneRol('Recibir pacientes') or tieneRol('Bloquear horas') or tieneRol('Generar estadísticas') or tieneRol('Tomar horas')
-				@profesionales = PerPersonas.where("id IN (SELECT profesional_id FROM pre_prestador_profesionales WHERE prestador_id = ? )",getIdPrestador('administrativo'))
+				@profesionales = PerPersonas.where("id IN (SELECT profesional_id FROM pre_prestador_profesionales WHERE prestador_id = ? )",getIdPrestador('administrativo'))	
 		  	@especialidades= ProEspecialidades.where("id IN (SELECT especialidad_id FROM pre_prestador_profesionales WHERE prestador_id= ? )",getIdPrestador('administrativo'))	
 		  	@atenciones_salud_para_boleta = FiAtencionesSalud
 					.joins('JOIN ag_agendamientos AS ag
@@ -69,8 +69,16 @@ class HomeController < ApplicationController
 								  ON ag.id = pap.agendamiento_id
 								  LEFT JOIN pre_boletas_atenciones_pagadas as pbap
 								  ON pap.id = pbap.atencion_pagada_id')
-					.where('ag.agendamiento_estado_id = 7 AND pbap.id is null')
-					.order('fecha_comienzo asc')	    
+					.select('fi_atenciones_salud.*,profesional_id,fecha_comienzo,pap.id as atencion_pagada')
+					.where('ag.agendamiento_estado_id = 7 AND pbap.id is null AND ppp.prestador_id = ? ',getIdPrestador('administrativo'))
+					.order('fecha_comienzo asc')
+
+				@lista_profesionales_para_boleta = @atenciones_salud_para_boleta.map {|atencion| atencion.profesional_id }
+				@profesionales_para_boleta = PerPersonas.where("id IN (?)",@lista_profesionales_para_boleta)
+
+				@fecha_minima = @atenciones_salud_para_boleta.select('min(fecha_comienzo)').first
+
+
 				render 'index_agendamiento'
 		  elsif esProfesionalSalud 
 		  	@profesional = PerPersonas.where('user_id = ?',current_user.id).first	

@@ -1,8 +1,8 @@
 class AtencionesSaludController < ApplicationController
 
 	include ActionView::Helpers::NumberHelper
-	include ActionView::Helpers::UrlHelper		
-	
+	include ApplicationHelper
+		
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
 	end
@@ -321,7 +321,48 @@ class AtencionesSaludController < ApplicationController
 		@atenciones = []
 
 		@atenciones_salud.each do |at_sal|
-			@atenciones << [at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut, link_to( 'Ver', atenciones_salud_path(at_sal)) ]
+			@atenciones << [at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut,'<a href="'<<atenciones_salud_path(at_sal)<<'">Ver atención</a>' ]
+		end	
+
+		render :json => @atenciones
+
+	end
+
+	def cargarAtencionesParaPago
+
+		@fecha_inicial = params[:fecha_inicio].blank? ? DateTime.new(2015, 01, 01, 20, 0, 0) : params[:fecha_inicio]
+		@fecha_final = params[:fecha_final].blank? ? DateTime.current : params[:fecha_final].to_time + 1.days
+
+  	@query = FiAtencionesSalud
+  		.select('fi_atenciones_salud.id, ag.fecha_comienzo, fi_atenciones_salud.persona_id, fi_atenciones_salud.agendamiento_id, pap.id as atencion_pagada')
+			.joins('JOIN ag_agendamientos AS ag
+						  ON fi_atenciones_salud.agendamiento_id = ag.id
+						  JOIN pre_prestador_profesionales as ppp
+						  ON ag.especialidad_prestador_profesional_id = ppp.id
+						  JOIN pre_atenciones_pagadas as pap
+						  ON ag.id = pap.agendamiento_id
+						  LEFT JOIN pre_boletas_atenciones_pagadas as pbap
+						  ON pap.id = pbap.atencion_pagada_id')
+			.where('ag.agendamiento_estado_id = 7 AND pbap.id is null AND ppp.prestador_id = ? AND fecha_comienzo BETWEEN ? AND ?',getIdPrestador('administrativo'),@fecha_inicial,@fecha_final)
+			.order('fecha_comienzo asc')
+
+		if params[:todos_profesionales] == '1'
+			@atenciones_salud = @query
+		else
+			@atenciones_salud = @query.where('ppp.profesional_id IN (?)',params[:profesionales])
+		end	 			
+
+		@atenciones = []
+
+		@atenciones_salud.each do |at_sal|
+			@atenciones << [at_sal.atencion_pagada,
+											at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),
+											at_sal.agendamiento.especialidad_prestador_profesional.profesional.showRut,
+											at_sal.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m'),
+											at_sal.agendamiento.especialidad_prestador_profesional.especialidad.nombre,
+											at_sal.persona.showRut,at_sal.
+											persona.showName('%n%p%m'),
+											number_to_currency(at_sal.agendamiento.atencion_pagada.monto_pago_profesional, unit: "$ ", separator: '.')]
 		end	
 
 		render :json => @atenciones

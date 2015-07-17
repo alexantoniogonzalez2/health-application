@@ -109,31 +109,11 @@ $('#buscar-atenciones').click(function() {
       data: { paciente: paciente, fecha_inicio: fecha_inicio, fecha_final: fecha_final },
       success: function(response){ 
 
-        if ( $.fn.dataTable.isDataTable( '#lista_atenciones_buscar' ) ) { var table = $('#lista_atenciones_buscar').DataTable(); table.destroy(); }
-       
-          var table = $('#lista_atenciones_buscar').DataTable({
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
-                "order":[[ 0, "desc"]],
-                "language": {
-                  "lengthMenu": "Mostrar _MENU_ atenciones por página",
-                  "zeroRecords": "La búsqueda no arrojó resultados.",
-                  "info": "Página _PAGE_ de _PAGES_",
-                  "infoEmpty": "No hay atenciones que mostrar",
-                  "infoFiltered": "(filtrados de un total de _MAX_ atenciones de salud)",
-                  "search": "Búsqueda",
-                  "oPaginate": {
-                    "sPrevious": "Página anterior",
-                    "sNext": "Página siguiente"
-                  }      
-                },                
-                "data": response,
-                 "columns": [
-                      { "title": "Fecha" },
-                      { "title": "Paciente" },
-                      { "title": "Rut" },
-                      { "title": "Ver atención" },
-                  ]
-              });
+        var table = $('#lista_atenciones_buscar').DataTable();
+        table
+          .clear()
+          .rows.add(response)
+          .draw();
 
       },
       error: function(xhr, status, error){ alert("Se produjo un error al cargar los antecedentes."); }

@@ -1,0 +1,19 @@
+// Place all the styles related to the administracion controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.table > tfoot > tr > th { text-align: right }
+
+.tree-columns {
+  /*-webkit-column-count: 3;*/ /* Chrome, Safari, Opera */
+  -moz-column-count: 3; /* Firefox */
+  column-count: 3;
+
+  -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+  -moz-column-gap: 40px; /* Firefox */
+  column-gap: 40px;
+
+  -webkit-column-rule: 2px outset ; /* Chrome, Safari, Opera */
+  -moz-column-rule: 2px outset ; /* Firefox */
+  column-rule: 2px outset ;
+}

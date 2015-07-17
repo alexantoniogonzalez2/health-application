@@ -37,7 +37,7 @@
          		<td><%= number_to_currency(atencion_salud.agendamiento.atencion_pagada.valor, unit: "$ ", separator: '.') %></td>
          		<td><%= number_to_currency(atencion_salud.agendamiento.atencion_pagada.monto_pago_profesional, unit: "$ ", separator: '.') %></td>
           </tr>
-          <% end %>     
+        <% end %>     
       </tbody> 
     </table>    
     <div class="alert alert-success" role="alert"><label>Monto total para pago: <%= number_to_currency(@total, unit: "$ ", separator: '.') %></label></div>
