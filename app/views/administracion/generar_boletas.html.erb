@@ -1,5 +1,5 @@
 <script>
-	var fecha_minima="<%= @fecha_minima.fecha_comienzo.strftime('%Y-%m-%d') %>";
+	var fecha_minima="<%= @fecha_minima.fecha_comienzo.try(:strftime, '%Y-%m-%d') %>";
 </script>
 <h4>Generar boletas</h4>  
 <% if @atenciones_salud_para_boleta.blank? %> 
@@ -59,7 +59,7 @@
 
   <br>
   <h5>Atenciones de salud seleccionadas para pago</h5>    
-  <table id="lista_atenciones_para_pago" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+  <table id="lista_atenciones_para_pago_gen_bol" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
     <thead>
       <tr>
       	<th>Id</th>
@@ -129,5 +129,3 @@
   </div>
 
 <% end %>  
-
-<%= javascript_include_tag "administracion" %>

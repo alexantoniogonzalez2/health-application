@@ -6,18 +6,18 @@ class PreAtencionesPagadas < ActiveRecord::Base
 	belongs_to :prevision_salud, :class_name => 'PerPrevisionesSalud'
 
 	private
-      def app_params
-        params.require(:list).permit(:id,
-                    								 :agendamiento,
-                    								 :prestacion,
-                    								 :valor,
-                    								 :bonificacion_financiador,
-                    								 :aporte_seguro_complementario,
-                    								 :excedentes,
-                    								 :copago_beneficiario,
-                    								 :fecha_pago,
-                    								 :prevision_salud,
-                                     :monto_pago_profesional,
-                    								 :boletas_atenciones_pagadas)
-      end	
+  def app_params
+    params.require(:list).permit(:id,
+                								 :agendamiento,
+                								 :prestacion,
+                								 :valor,
+                								 :bonificacion_financiador,
+                								 :aporte_seguro_complementario,
+                								 :excedentes,
+                								 :copago_beneficiario,
+                								 :fecha_pago,
+                								 :prevision_salud,
+                                 :monto_pago_profesional,
+                								 :boletas_atenciones_pagadas)
+  end	
 end

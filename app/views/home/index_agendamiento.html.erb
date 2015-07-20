@@ -11,6 +11,7 @@
 			  <% end %>	
 			  <% if tieneRol('Generar estadísticas') %>
 			  	<li><a href="#gen_boletas" role="tab" data-toggle="tab">Generar boletas</a></li>
+			  	<li><a href="#ver_boletas" role="tab" data-toggle="tab">Ver boletas</a></li>
 			  <% end %>		  
 			</ul>
 		</div>
@@ -25,6 +26,7 @@
 			  <% end %>
 			  <% if tieneRol('Generar estadísticas') %>
 			  	<div class="tab-pane" id="gen_boletas"><%= render :template => "administracion/generar_boletas" %></div>
+			  	<div class="tab-pane" id="ver_boletas"><%= render :template => "administracion/ver_boletas" %></div>
 			  <% end %>					  
 			</div>
 		</div>

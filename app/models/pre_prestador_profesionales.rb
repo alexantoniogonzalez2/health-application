@@ -3,6 +3,7 @@ class PrePrestadorProfesionales < ActiveRecord::Base
 	belongs_to :prestador, :class_name => 'PrePrestadores'
 	belongs_to :profesional, :class_name => 'PerPersonas'
 	belongs_to :especialidad, :class_name => 'ProEspecialidades'
+	has_many :boletas, :class_name => 'PreBoletas', :foreign_key => 'especialidad_prestador_profesional_id'
 	has_many :agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'especialidad_prestador_profesional_id'
 	has_many :regla_pagos, :class_name => 'PreReglaPagos', :foreign_key => 'especialidad_prestador_profesional_id'
 

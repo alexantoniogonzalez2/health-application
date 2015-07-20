@@ -2,7 +2,6 @@
   else {
     $('#lista_atenciones_para_pago').DataTable({
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
-      "columnDefs":[ { "targets": [ 0 ], "visible": false }],
       "language": {
         "lengthMenu": "Mostrar _MENU_ atenciones por página",
         "zeroRecords": "La búsqueda no arrojó resultados.",
@@ -14,42 +13,62 @@
           "sPrevious": "Página anterior",
           "sNext": "Página siguiente"
         }
-      },
-      "footerCallback": function ( row, data, start, end, display ) {
-        var api = this.api(), data;
-
-        // Remove the formatting to get integer data for summation
-        var intVal = function ( i ) {
-            return typeof i === 'string' ?
-                i.replace(/[\$.]/g, '')*1 :
-                typeof i === 'number' ?
-                    i : 0;
-        };
-
-        // Total over all pages
-        total = api
-            .column( 7 )
-            .data()
-            .reduce( function (a, b) {
-                return intVal(a) + intVal(b);
-            } );
-
-        // Total over this page
-        pageTotal = api
-            .column( 7, { search: 'applied'} )
-            .data()
-            .reduce( function (a, b) {
-                return intVal(a) + intVal(b);
-            }, 0 );
-
-        // Update footer
-        $( api.column( 6 ).footer() ).html(
-            '$ '+pageTotal.toLocaleString().replace(',','.') +' ( de un total de $ '+ total.toLocaleString().replace(',','.') +')'
-        );
       }
+  });
+}
 
-    });
-  }
+if ( $.fn.dataTable.isDataTable( '#lista_atenciones_para_pago_gen_bol' ) ) { }
+else {
+  $('#lista_atenciones_para_pago_gen_bol').DataTable({
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
+    "columnDefs":[ { "targets": [ 0 ], "visible": false }],
+    "language": {
+      "lengthMenu": "Mostrar _MENU_ atenciones por página",
+      "zeroRecords": "La búsqueda no arrojó resultados.",
+      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ atenciones de salud",
+      "infoEmpty": "No hay atenciones que mostrar",
+      "infoFiltered": "(filtrados de un total de _MAX_)",
+      "search": "Búsqueda",
+      "oPaginate": {
+        "sPrevious": "Página anterior",
+        "sNext": "Página siguiente"
+      }
+    },
+    "footerCallback": function ( row, data, start, end, display ) {
+      var api = this.api(), data;
+
+      // Remove the formatting to get integer data for summation
+      var intVal = function ( i ) {
+        return typeof i === 'string' ?
+          i.replace(/[\$.]/g, '')*1 :
+          typeof i === 'number' ?
+            i : 0;
+      };
+      
+      // Total over all pages
+      total = api
+          .column( 7 )
+          .data()
+          .reduce( function (a, b) {
+            return intVal(a) + intVal(b);
+          } );
+
+      // Total over this page
+      pageTotal = api
+          .column( 7, { search: 'applied'} )
+          .data()
+          .reduce( function (a, b) {
+            return intVal(a) + intVal(b);
+          }, 0 );
+
+      // Update footer
+      $( api.column( 6 ).footer() ).html(
+          '$ '+pageTotal.toLocaleString().replace(',','.') +' (de un total de $ '+ total.toLocaleString().replace(',','.') +')'
+      );
+      
+    }
+  });
+}
 
 $(function () {
   $('#datetimepicker6').datetimepicker({
@@ -107,8 +126,7 @@ $('#filtrar-atenciones').click(function() {
       url: '/cargar_atenciones_salud_para_pago',
       data: { todos_profesionales: todos_profesionales, profesionales: profesionales, fecha_inicio: fecha_inicio, fecha_final: fecha_final },
       success: function(response){ 
-
-        var table = $('#lista_atenciones_para_pago').DataTable();
+        var table = $('#lista_atenciones_para_pago_gen_bol').DataTable();
         table
           .clear()
           .rows.add(response)
@@ -125,8 +143,21 @@ $('#filtrar-atenciones').click(function() {
 
 $('#generar-boletas').click(function() {
 
-  var table = $('#lista_atenciones_para_pago').DataTable();
-  console.log(table.column( 0, {order:'current'} ).data());
-                             
+  var table = $('#lista_atenciones_para_pago_gen_bol').DataTable();
+  var lista_atenciones = table.columns( 0, { search: 'applied'} ).data()[0];
+  var fecha_inicio = $('#fecha_inicio_boleta').val();
+  var fecha_final = $('#fecha_hasta_boleta').val();
+
+  $.ajax({
+    type: 'POST',
+    url: '/generar_boletas',
+    data: { lista_atenciones: lista_atenciones, fecha_inicio: fecha_inicio, fecha_final: fecha_final },
+    success: function(response){ 
+
+      alert('hola');
+
+    },
+    error: function(xhr, status, error){ alert("Se produjo un error al cargar los antecedentes."); }
+  });                             
 
 })

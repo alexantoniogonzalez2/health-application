@@ -287,7 +287,7 @@ ActiveRecord::Schema.define(version: 20150629220843) do
     t.integer  "persona_id",        limit: 4
     t.integer  "metrica_id",        limit: 4
     t.integer  "atencion_salud_id", limit: 4
-    t.decimal  "valor",                           precision: 10
+    t.decimal  "valor",                           precision: 10, scale: 2
     t.datetime "fecha"
     t.text     "caracteristica",    limit: 65535
     t.datetime "created_at"
@@ -423,7 +423,7 @@ ActiveRecord::Schema.define(version: 20150629220843) do
   end
 
   create_table "med_medicamentos_componentes", force: :cascade do |t|
-    t.decimal  "relacion",                 precision: 10
+    t.decimal  "relacion",                 precision: 10, scale: 2
     t.integer  "medicamento_id", limit: 4
     t.integer  "componente_id",  limit: 4
     t.datetime "created_at"
@@ -615,20 +615,22 @@ ActiveRecord::Schema.define(version: 20150629220843) do
     t.integer  "excedentes",                   limit: 4
     t.integer  "copago_beneficiario",          limit: 4
     t.datetime "fecha_pago"
+    t.integer  "monto_pago_profesional",       limit: 4
     t.integer  "prevision_salud_id",           limit: 4
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end
 
   create_table "pre_boletas", force: :cascade do |t|
-    t.integer  "profesional_id", limit: 4
-    t.integer  "prestador_id",   limit: 4
-    t.integer  "monto",          limit: 4
-    t.string   "estado",         limit: 255
+    t.integer  "especialidad_prestador_profesional_id", limit: 4
+    t.integer  "responsable_id",                        limit: 4
+    t.integer  "monto",                                 limit: 4
+    t.string   "estado",                                limit: 255
+    t.datetime "fecha"
     t.datetime "fecha_desde"
     t.datetime "fecha_hasta"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   create_table "pre_boletas_atenciones_pagadas", force: :cascade do |t|
@@ -680,11 +682,11 @@ ActiveRecord::Schema.define(version: 20150629220843) do
     t.string   "tipo",                                  limit: 255
     t.integer  "prestador_id",                          limit: 4
     t.integer  "especialidad_prestador_profesional_id", limit: 4
-    t.decimal  "porcentaje",                                        precision: 10
+    t.decimal  "porcentaje",                                        precision: 10, scale: 2
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.datetime "created_at",                                                       null: false
-    t.datetime "updated_at",                                                       null: false
+    t.datetime "created_at",                                                                 null: false
+    t.datetime "updated_at",                                                                 null: false
   end
 
   create_table "pre_rol_administrativos", force: :cascade do |t|

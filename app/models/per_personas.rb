@@ -8,6 +8,7 @@ class PerPersonas < ActiveRecord::Base
   has_many :profesionales, :class_name => 'ProProfesionales', :foreign_key => 'profesional_id'  
   has_many :persona_agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'persona_id'
   has_many :responsable_agendamientos, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'responsable_id'
+  has_many :responsable_boletas, :class_name => 'PreBoletas', :foreign_key => 'responsable_id'
   has_many :persona_examenes, :class_name => 'FiPersonaExamenes', :foreign_key => 'persona_id' 
   has_many :persona_diagnosticos, :class_name => 'FiPersonaDiagnosticos', :foreign_key => 'persona_id' 
   has_many :gesta, :class_name => 'FiGestas', :foreign_key => 'persona_id'  
@@ -39,7 +40,6 @@ class PerPersonas < ActiveRecord::Base
     'id'        => id,
     'text'      => number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador<<' '<<nombre<<' '<<apellido_paterno<<' '<<apellido_materno     
   }
-
   end
 
   def misPacientes(especialidad_prestador_profesional)

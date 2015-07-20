@@ -129,6 +129,10 @@ AplicacionMedica::Application.routes.draw do
   post '/actualizar_atenciones', to: 'home#actualizarAtenciones'
   post '/revisar_actualizaciones', to: 'home#revisarActualizaciones'
 
+  #Administración
+  post '/generar_boletas', to: 'administracion#generarBoletas'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

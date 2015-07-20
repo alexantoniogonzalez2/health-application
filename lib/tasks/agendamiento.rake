@@ -1,14 +1,30 @@
 namespace :agendamiento do
-  desc "Crear Mes de Agendamiento"
-  task crear_agendamientos: :environment do  	
-		fecha_inicio = DateTime.current
-		fecha_final = fecha_inicio + 1.month
+  
+  desc "Crear mes de Agendamiento"
+  task crear_agendamientos: :environment do
+		crearAgendamientos('10:00','12:00',"Hora disponible",1)
+		crearAgendamientos('11:00','13:00',"Hora disponible",2)
+		crearAgendamientos('12:00','14:00',"Paciente en espera",1)
+		crearAgendamientos('13:00','15:00',"Paciente en espera",2)
+		crearAgendamientos('11:00','13:00',"Paciente atendido",1) 
+		crearAgendamientos('11:00','13:00',"Paciente atendido",2)
+  end
+
+  def crearAgendamientos (hora_inicio,hora_termino,estado,esp_pre_pro)
+
+  	if estado == "Paciente atendido"
+			fecha_final = DateTime.current
+			fecha_inicio = fecha_final - 1.week
+		else
+			fecha_inicio = DateTime.current
+			fecha_final = fecha_inicio + 1.month
+		end
+		
 		step = 30
 		daysOfWeek = [true,true,true,true,true,true,true]
-		hora_inicio = '10:00'
-		hora_termino = '12:00'
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.find(1)
-		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
+
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.find(esp_pre_pro)
+		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?",estado).first
 
 		days = []
 		d_i = fecha_inicio
@@ -37,28 +53,43 @@ namespace :agendamiento do
 				while fecha_comienzo < fecha_termino do
 					tmp_i = fecha_comienzo
 					tmp_f = fecha_comienzo + step.to_i.minutes
-					#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
-					#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
 
-					@Agendamiento = AgAgendamientos.new
-					#@Agendamiento.persona = PerPersonas.find(1) 
-					@Agendamiento.fecha_comienzo = tmp_i
-					@Agendamiento.fecha_final = tmp_f
-					@Agendamiento.agendamiento_estado = @estadoAgendamiento
-					@Agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional
-					@Agendamiento.save
+					@agendamiento = AgAgendamientos.new
+					if estado == "Paciente atendido" @agendamiento.persona = PerPersonas.find(1) 
+					@agendamiento.fecha_comienzo = tmp_i
+					@agendamiento.fecha_final = tmp_f
+					@agendamiento.agendamiento_estado = @estadoAgendamiento
+					@agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional
+					@agendamiento.save
 					
 					@agendamiento_log = AgAgendamientoLogEstados.new
 					@agendamiento_log.responsable = PerPersonas.find(8) 
 					@agendamiento_log.agendamiento_estado = @estadoAgendamiento
-					@agendamiento_log.agendamiento = @Agendamiento
+					@agendamiento_log.agendamiento = @agendamiento
 					@agendamiento_log.fecha = DateTime.current
 					@agendamiento_log.save
+					fecha_comienzo = tmp_f
 
-					fecha_comienzo=tmp_f
+					#Simulación de prestación I-Med
+					if estado == "Paciente atendido"
+						@valor = 20000
+						@prestacion = @agendamiento.especialidad_prestador_profesional.especialidad.prestacion
+						@pre_atencion_pagada = PreAtencionesPagadas.new
+						@pre_atencion_pagada.agendamiento = @agendamiento
+						@pre_atencion_pagada.prestacion = @prestacion 
+						@pre_atencion_pagada.valor = @valor
+						@pre_atencion_pagada.monto_pago_profesional = @agendamiento.especialidad_prestador_profesional.getMontoPagoProfesional(@valor,DateTime.current)
+						@pre_atencion_pagada.fecha_pago = DateTime.current
+						@pre_atencion_pagada.prevision_salud = @agendamiento.persona.getPrevisionSalud
+						@pre_atencion_pagada.save!
+					end
+					# Fin Simulación de prestación I-Med
+
+
 				end #while
 			end #days.each
 		end #transaction
-  end
+
+  end	
 
 end

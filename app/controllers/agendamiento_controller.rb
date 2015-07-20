@@ -299,7 +299,7 @@ class AgendamientoController < ApplicationController
 		@pre_atencion_pagada.agendamiento = @agendamiento
 		@pre_atencion_pagada.prestacion = @prestacion 
 		@pre_atencion_pagada.valor = @valor
-		@pre_atencion_pagada.monto_pago_profesional = @agendamiento.especialidad_prestador_profesional.getMontoPagoProfesional(20000,DateTime.current)
+		@pre_atencion_pagada.monto_pago_profesional = @agendamiento.especialidad_prestador_profesional.getMontoPagoProfesional(@valor,DateTime.current)
 		@pre_atencion_pagada.fecha_pago = DateTime.current
 		@pre_atencion_pagada.prevision_salud = @agendamiento.persona.getPrevisionSalud
 		@pre_atencion_pagada.save!
