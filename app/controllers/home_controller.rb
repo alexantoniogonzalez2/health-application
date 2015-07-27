@@ -53,9 +53,7 @@ class HomeController < ApplicationController
 
 	end	
 
-	def index
-
-		
+	def index		
 		if user_signed_in?
 			if tieneRol('Generar agendamientos') or tieneRol('Confirmar agendamientos') or tieneRol('Recibir pacientes') or tieneRol('Bloquear horas') or tieneRol('Generar estadísticas') or tieneRol('Tomar horas')
 				@profesionales = PerPersonas.where("id IN (SELECT profesional_id FROM pre_prestador_profesionales WHERE prestador_id = ? )",getIdPrestador('administrativo'))	
@@ -75,8 +73,13 @@ class HomeController < ApplicationController
 
 				@lista_profesionales_para_boleta = @atenciones_salud_para_boleta.map {|atencion| atencion.profesional_id }
 				@profesionales_para_boleta = PerPersonas.where("id IN (?)",@lista_profesionales_para_boleta)
-
 				@fecha_minima = @atenciones_salud_para_boleta.select('min(fecha_comienzo)').first
+				
+				@boletas = PreBoletas.joins(:especialidad_prestador_profesional)
+														 .select('pre_boletas.*,profesional_id')
+														 .where('pre_prestador_profesionales.prestador_id = ?',getIdPrestador('administrativo'))
+				@lista_profesionales_con_boleta = @boletas.map {|boleta| boleta.profesional_id }
+				@profesionales_con_boleta = PerPersonas.where("id IN (?)",@lista_profesionales_con_boleta)
 
 
 				render 'index_agendamiento'
@@ -119,8 +122,10 @@ class HomeController < ApplicationController
 					.where('ppp.id = ? AND ag.agendamiento_estado_id = 7 AND pbap.id is null',@especialidad_prestador_profesional.id)
 					.order('fecha_comienzo asc')
 
-				#@atenciones_salud = @query.where('fecha_comienzo > ?', 1.week.ago)
-				#@atenciones_salud = @query.where('fecha_comienzo > ?', 1.week.ago) if @atenciones_salud.blank?					
+				@boletas_profesional = PreBoletas.joins(:especialidad_prestador_profesional)
+														 .select('pre_boletas.*,profesional_id')
+														 .where('pre_prestador_profesionales.id = ?',@especialidad_prestador_profesional.id)	
+
   			render 'index_profesional'
 
 		  else

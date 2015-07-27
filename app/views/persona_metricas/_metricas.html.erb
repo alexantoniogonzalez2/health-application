@@ -1,3 +1,4 @@
+<% disabled = (@tipo == 'edit') ? '' : 'disabled' %>
 <div class="modal fade" id="modal-container-metricas" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div id="modal-dialog-metricas" class="modal-dialog">
     <div class="modal-content">
@@ -28,17 +29,21 @@
               <table>
                 <tr>
                   <td><span>Estatura</span></td>
-                  <td><input id="estatura-<%= id %>" type="text" class="form-control metrica" value="<%= p_e %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
+                  <td>
+                    <input id="estatura-<%= id %>" type="text" class="form-control metrica" value="<%= p_e %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)" <%= disabled %> />
+                  </td>
                   <td><span class="text-med">centimetros</span></td>
                 </tr>
                 <tr>
                   <td><span>Peso</span></td>
-                  <td><input id="peso-<%= id %>" type="text" class="form-control metrica" value="<%= p_p %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)"></td>
+                  <td>
+                    <input id="peso-<%= id %>" type="text" class="form-control metrica" value="<%= p_p %>" maxlength="4" size="4" onkeyup="calcularIMC(<%= id %>)" <%= disabled %> />
+                  </td>
                   <td><span class="text-med">kilos</span></td>
                 </tr>
                 <tr>
                   <td><span>IMC</span></td>
-                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>" maxlength="4" size="4" ></td>
+                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>" maxlength="4" size="4" /></td>
                   <td><span class="text-med">kilos/metros2</span></td>
                 </tr>
               </table>              

@@ -1,6 +1,7 @@
+<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>
 <div id="diag-cert-<%= p_d.id %>" class="checkbox">
   <label for="pd_cert_<%= p_d.id%>-<%= cert %>" >
-    <input type="checkbox" name="check-cert" onchange="act_cert_diag(<%= p_d.id %>,<%= cert %>)" id="pd_cert_<%= p_d.id %>-<%= cert %>"  <% if !p_d.certificado_id.nil?  %> checked="checked" <% end %>>
+    <input type="checkbox" name="check-cert" onchange="act_cert_diag(<%= p_d.id %>,<%= cert %>)" id="pd_cert_<%= p_d.id %>-<%= cert %>"  <% if !p_d.certificado_id.nil?  %> checked="checked" <% end %> <%= disabled %>  />
     <%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %>
   </label>
 </div>

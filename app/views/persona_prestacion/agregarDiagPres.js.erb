@@ -3,6 +3,6 @@
 <% else %>
 	$('#no-pres<%= @p_p.id %>').remove();
 	<% @persona_diagnostico.each do |p_d| %> 
-		$("<%= escape_javascript( render :partial => "persona_prestacion/persona_diagnostico", :locals => {:p_d => p_d, :p_p => @p_p.id } ) %>").appendTo("#div-diag-pres<%= @p_p.id %>") ;    
+		$("<%= escape_javascript( render :partial => "persona_prestacion/persona_diagnostico", :locals => {:p_d => p_d, :p_p => @p_p.id, :tipo => @tipo } ) %>").appendTo("#div-diag-pres<%= @p_p.id %>") ;    
 	<% end %>
 <% end %>

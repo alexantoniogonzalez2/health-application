@@ -1,0 +1,29 @@
+<table id="lista_atenciones_boletas" class="display" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Paciente</th>
+      <th>Rut</th>          
+      <th>Prevision de salud</th>
+      <th>Valor de la atención</th> 
+      <th>Monto para pago</th>            
+    </tr>
+  </thead> 
+  <tbody>
+  	<% @total = 0 %> 
+    <% @atenciones.each do |atencion| %>
+    	<% @total += atencion.atencion_pagada.monto_pago_profesional %>
+      <tr>
+        <td><%= atencion.atencion_pagada.agendamiento.fecha_comienzo.strftime("%Y-%m-%d") %></td>
+        <td><%= atencion.atencion_pagada.agendamiento.persona.showName('%n%p%m') %></td>
+        <td><%= atencion.atencion_pagada.agendamiento.persona.showRut %></td>            
+        <td><%= atencion.atencion_pagada.prevision_salud.nombre %></td>
+     		<td><%= number_to_currency(atencion.atencion_pagada.valor, unit: "$ ", separator: '.') %></td>
+     		<td><%= number_to_currency(atencion.atencion_pagada.monto_pago_profesional, unit: "$ ", separator: '.') %></td>
+      </tr>
+    <% end %>     
+  </tbody> 
+</table>    
+<div class="alert alert-success" role="alert"><label>Monto total para pago: <%= number_to_currency(@total, unit: "$ ", separator: '.') %></label></div>
+
+<%= javascript_include_tag "boleta_atenciones" %>

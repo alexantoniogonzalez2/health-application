@@ -1,0 +1,141 @@
+<div class="panel-group">
+
+	<div class="panel panel-default">	
+	  <div class="panel-heading">
+	    <a class="panel-title collapsed" data-toggle="collapse" href="#panel-prestador-<%= id %>">Datos del prestador</a>
+	  </div>
+	  <div id="panel-prestador-<%= id %>" class="panel-collapse collapse">
+	  	<div class="panel-body panel-body-ajustado">
+				<div class="container ajustado">
+					<div class="row clearfix">
+						<div class="col-md-4 column">
+							<label>Institución</label>
+						</div>
+						<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
+						</div>
+					</div>
+					<div class="row clearfix">	
+						<div class="col-md-4 column">
+							<label>Dirección</label>
+						</div>
+						<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
+						</div>
+					</div>
+					<div class="row clearfix">	
+						<div class="col-md-4 column">
+							<label>Teléfono</label>
+						</div>
+						<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
+						</div>
+					</div>
+					<div class="row clearfix">	
+						<div class="col-md-4 column">
+							<label>Profesional que notifica</label>
+						</div>
+						<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
+						</div>
+					</div>
+					<div class="row clearfix">			
+						<div class="col-md-4 column">
+							<label>Rut profesional</label>
+						</div>
+						<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
+						</div>
+					</div>
+					<div class="row clearfix">			
+						<div class="col-md-4 column">
+							<label>Especialidad</label>
+						</div>
+						<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %>
+						</div>
+					</div>
+				</div>
+			</div>	
+	  </div>
+	</div>
+
+  <div class="panel panel-default">
+	  <div class="panel-heading">
+	    <a class="panel-title collapsed" data-toggle="collapse" href="#panel-paciente-<%= id %>">Datos del paciente</a>
+	  </div>
+	  <div id="panel-paciente-<%= id %>" class="panel-collapse collapse">
+		  <div class="panel-body panel-body-ajustado">
+				<div class="container ajustado">
+					<div class="row clearfix">
+						<div class="col-md-4 column">
+							<label>Nombre</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.showName('%n%p%m') %>
+						</div>
+					</div>
+					<div class="row clearfix">	
+						<div class="col-md-4 column">
+							<label>Rut</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.showRut %>
+						</div>
+					</div>
+					<div class="row clearfix">	
+						<div class="col-md-4 column">
+							<label>Edad</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.age_text %>
+						</div>
+					</div>
+					<div class="row clearfix">	
+						<div class="col-md-4 column">
+							<label>Sexo</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.showSexo %>
+						</div>
+					</div>
+					<div class="row clearfix">	
+						<div class="col-md-4 column">
+							<label>Previsión de salud</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.getPrevision %>
+						</div>
+					</div>
+					<div class="row clearfix">			
+						<div class="col-md-4 column">
+							<label>Domicilio</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.getDomicilio %>
+						</div>
+					</div>
+					<div class="row clearfix">			
+						<div class="col-md-4 column">
+							<label>Correo electrónico</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.user.email %>
+						</div>
+					</div>
+					<div class="row clearfix">			
+						<div class="col-md-4 column">
+							<label>Telefono fijo</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.getTelefonoFijo %>
+						</div>
+					</div>
+					<div class="row clearfix">			
+						<div class="col-md-4 column">
+							<label>Celular</label>
+						</div>
+						<div class="col-md-8 column">:
+							<%= @agendamiento.persona.getCelular %>
+						</div>
+					</div>
+				</div>
+		  </div>
+		</div>
+	</div>
+
+</div>

@@ -3,7 +3,15 @@
 
 	<table class="table table-striped table-hover table-condensed">
 		<thead class="ajust-head">
-      <tr class='info'><th class="col-sm-1">Fecha indicación</th><th class="col-sm-3">Diagnóstico</th><th class="col-sm-2">Medicamento</th><th class="col-sm-2">Posología</th><th class="col-sm-1">Fecha inicio (*)</th><th class="col-sm-1">Fecha final (*)</th><th class="col-sm-1">Acción</th></tr>
+      <tr class='info'>
+      	<th class="col-sm-1">Fecha indicación</th>
+      	<th class="col-sm-3">Diagnóstico</th>
+      	<th class="col-sm-2">Medicamento</th>
+      	<th class="col-sm-2">Posología</th>
+      	<th class="col-sm-1">Fecha inicio (*)</th>
+      	<th class="col-sm-1">Fecha final (*)</th>      	
+      	<th class="col-sm-1">Editar</th>      	
+      </tr>
     </thead>
     <tbody id='lista-medicamentos'>
   	  <% if @persona_medicamentos.empty? %>
@@ -17,17 +25,18 @@
 	</table>
 	
 	<span class='nota'>(*) Las fechas de inicio y término son estimadas.</span>
-
-	<div class='container agregar-med'>
-		<div class='row'>
-			<div class='col-md-6 column ajuste-padding'>
-				<p>Agregar información de otro medicamento administrado:</p>
-			</div>
-			<div class='col-md-6 column'>
-				<input type='hidden' id="select_medicamento_ant">				
+	<% if @tipo == 'edit' or !@atencion_salud %>
+		<div class='container agregar-med'>
+			<div class='row'>
+				<div class='col-md-6 column ajuste-padding'>
+					<p>Agregar información de otro medicamento administrado:</p>
+				</div>
+				<div class='col-md-6 column'>
+					<input type='hidden' id="select_medicamento_ant">				
+				</div>
 			</div>
 		</div>
-	</div>			
+	<% end %>				
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
 <% end %>  

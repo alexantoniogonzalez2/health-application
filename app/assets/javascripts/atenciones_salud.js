@@ -1,4 +1,7 @@
-function addSpinner(element_id){ $('#'+element_id).append("<div class='div-spinner'><i class='fa fa-cog fa-spin fa-5x'></i></div>"); }
+function addSpinner(element_id){ 
+  $('#'+element_id).html('');
+  $('#'+element_id).append("<div class='div-spinner'><i class='fa fa-cog fa-spin fa-5x'></i></div>");
+}
 function addLittleSpinner(element_id){ $('#'+element_id).append("<div class='div-spinner'><i class='fa fa-cog fa-spin fa-2x'></i></div>"); }
 
 $(document).ready(function() {
@@ -59,19 +62,28 @@ $(document).ready(function() {
    
   $('#div_atenciones').show();
 
-  $('.load_ant').click(function() {
-    addSpinner('contenido-ant');
+  $('.load_ant').click(function() {    
     var ant = $(this).attr('id');
-    $.ajax({
-      type: 'POST',
-      url: '/cargar_antecedentes',
-      data: { ant: ant, persona_id: persona_id, at_sal: atencion_salud_id},
-      success: function(response){ },
-      error: function(xhr, status, error){ alert("Se produjo un error al cargar los antecedentes."); }
-    });
+    loadAntecedentes(ant,'edit');
+  });
+
+  $('.load_ant_show').click(function() {
+    var ant = $(this).attr('id');
+    loadAntecedentes(ant,'show');    
   });
 
 });
+
+function loadAntecedentes(ant,tipo){
+  addSpinner('contenido-ant-'+tipo);
+  $.ajax({
+    type: 'POST',
+    url: '/cargar_antecedentes',
+    data: { ant: ant, persona_id: persona_id, at_sal: atencion_salud_id, tipo: tipo },
+    success: function(response){ },
+    error: function(xhr, status, error){ alert("Se produjo un error al cargar los antecedentes."); }
+  });
+}
 
 function cerrarModalAntMed(modal_id){ $('#modal-container-med-' + modal_id ).modal('hide'); }
 function cerrarModalAntPres(modal_id){ $('#modal-container-pres-' + modal_id ).modal('hide'); }

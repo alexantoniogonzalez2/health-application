@@ -3,6 +3,6 @@
 <% else %>
 	$('#no-cert<%= @certificado.id %>').remove();
 	<% @persona_diagnostico.each do |p_d| %> 
-		$("<%= escape_javascript( render :partial => "atenciones_salud/persona_diagnostico", :locals => {:p_d => p_d, :cert => @certificado.id } ) %>").appendTo("#div-diag-cert<%= @certificado.id %>") ;    
+		$("<%= escape_javascript( render :partial => "atenciones_salud/persona_diagnostico", :locals => {:p_d => p_d, :cert => @certificado.id, :tipo => @tipo } ) %>").appendTo("#div-diag-cert<%= @certificado.id %>") ;    
 	<% end %>
 <% end %>

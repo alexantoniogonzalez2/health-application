@@ -1,3 +1,4 @@
+<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>
 <div class="modal fade modal-diag" id="modal-container-diag-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -34,7 +35,8 @@
                   <div class="form-group">
                     <div class="col-md-4">
                       <div class="checkbox" id="enf_cro_<%= p_d.id %>">
-                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
+                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica
+                          <input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> <%= disabled %> ></label>
                       </div>                
                     </div>
                   </div>
@@ -46,7 +48,7 @@
                     <label>Fecha inicio</label>
                   </div>
                   <div class="col-md-8 column">
-                    <input name="f_i_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.getFechaInicio %>">
+                    <input name="f_i_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.getFechaInicio %>" <%= disabled %> />
                   </div>
                 </div>
                 <div class="row clearfix">
@@ -54,7 +56,7 @@
                     <label>Fecha término</label>
                   </div>
                   <div class="col-md-8 column">
-                    <input name="f_t_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.getFechaTermino %>">
+                    <input name="f_t_<%= p_d.id%>" class="datepicker" type="text" value="<%= p_d.getFechaTermino %>" <%= disabled %> />
                   </div>
                 </div>
                 <div class="row clearfix">
@@ -64,7 +66,7 @@
                         <% @estados_diagnostico.each do |e_d| %>  
                           <div class="radio">
                             <label for="radios-<%= p_d.id%>-<%= e_d.id %>">
-                              <input type="radio" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> >
+                              <input type="radio" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> <%= disabled %> />
                               <%= e_d.nombre %>
                             </label>
                           </div> 
@@ -75,7 +77,9 @@
                     <div id="checkboxes-trat-div-<%= p_d.id %>" class="col-md-9 column">
                       <div class="form-group trat">                      
                         <div class="checkbox" id="trat_<%= p_d.id %>">
-                          <label class="checkbox-der trat" for="checkboxes-trat-<%= p_d.id %>"><input type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" <% if p_d.en_tratamiento == 1%> checked="checked" <% end %> > No es el primer diagnóstico o el paciente ya estaba en tratamiento</label>
+                          <label class="checkbox-der trat" for="checkboxes-trat-<%= p_d.id %>">
+                            <input type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" <% if p_d.en_tratamiento == 1%> checked="checked" <% end %> <%= disabled %> /> No es el primer diagnóstico o el paciente ya estaba en tratamiento
+                          </label>
                         </div>                      
                       </div>
                     </div>
@@ -84,7 +88,7 @@
                 <div class="row clearfix">  
                   <div class="col-md-12 column">  
                     <label>Comentario</label><span id="comentario-<%= p_d.id %>" class="alert alert-info comentario">Autoguardado</span>
-                    <textarea class="form-control" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
+                    <textarea class="form-control" rows="3" id="comentario_<%= p_d.id %>" <%= disabled %> ><%= p_d.comentario %></textarea>
                   </div>                  
                 </div>
                 <div class="row clearfix footer">
@@ -102,7 +106,7 @@
               <div class="container ajustado">  
                 <div class="row clearfix">
                   <div class="col-md-12 column">              
-                    <%= render :partial => "persona_diagnostico/interconsulta", :locals => {:p_d => p_d, :@agendamiento => @agendamiento} %>
+                    <%= render :partial => "persona_diagnostico/interconsulta", :locals => {:p_d => p_d, :@agendamiento => @agendamiento, :tipo => tipo } %>
                   </div>
                 </div>
                 <div class="row clearfix">
@@ -118,7 +122,7 @@
                 <div class="container ajustado">  
                   <div class="row clearfix">
                     <div class="col-md-12 column">              
-                      <%= render :partial => "persona_diagnostico/constancia_ges", :locals => {:p_d => p_d, :@agendamiento => @agendamiento} %>
+                      <%= render :partial => "persona_diagnostico/constancia_ges", :locals => {:p_d => p_d, :@agendamiento => @agendamiento, :tipo => tipo} %>
                     </div>
                   </div>
                   <div class="row clearfix">
@@ -135,7 +139,7 @@
                 <div class="container ajustado">  
                   <div class="row clearfix">
                     <div class="col-md-12 column">              
-                      <%= render :partial => "persona_diagnostico/notificacion_obligatoria", :locals => {:p_d => p_d, :@agendamiento => @agendamiento} %>
+                      <%= render :partial => "persona_diagnostico/notificacion_obligatoria", :locals => {:p_d => p_d, :@agendamiento => @agendamiento, :tipo => tipo} %>
                     </div>
                   </div>
                   <div class="row clearfix">

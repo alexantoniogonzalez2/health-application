@@ -15,120 +15,12 @@
 			id_pre = persona_notificacion.id			 				 		
 		end
 	
-%>	
+%>
+<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>		
 
 <h1 class="enc-ges">Formulario de constancia de información al paciente GES (Artículo 24°, Ley 19.996)</h1>
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del prestador</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Institución</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Dirección</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Teléfono</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Profesional que notifica</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Rut profesional</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
-
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del paciente</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Nombre</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Rut</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Previsión de salud</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getPrevision %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Domicilio</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getDomicilio %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Correo electrónico</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.user.email %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Telefono fijo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getTelefonoFijo %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Celular</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getCelular %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
+<%= render :partial => "datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'con_'+p_d.id.to_s  } %>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">
@@ -156,10 +48,14 @@
 				<div class="col-md-12 column">
 					<div class="form-group form-ges" id="ges_<%= p_d.id %>">						
 				    <div class="radio">
-				      <label for="radios-conf-<%= p_d.id%>"><input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="1" id="radios-conf-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0 %> checked <% end %>>Confirmación diagnóstica</label>
+				      <label for="radios-conf-<%= p_d.id%>">
+				      	<input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="1" id="radios-conf-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0 %> checked <% end %> <%= disabled %> />Confirmación diagnóstica
+				      </label>
 				    </div> 						
 				    <div class="radio">
-				      <label for="radios-trat-<%= p_d.id%>"><input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="2" id="radios-trat-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %>>Paciente en tratamiento</label>
+				      <label for="radios-trat-<%= p_d.id%>">
+				      	<input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="2" id="radios-trat-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %> <%= disabled %> />Paciente en tratamiento
+				      </label>
 				    </div> 						
 					</div>
 				</div>
@@ -204,20 +100,21 @@
 <div class="panel panel-default">
 	<div class="panel-body panel-body-ajustado">
 		<div class="container ajustado">
-
 			<div class="row clearfix">	
 				<div class="col-md-12 column">
 				En caso que la persona que tomó conocimiento no sea el paciente, identificar:			
 				</div>
-			</div>			  
-			<div class="row clearfix">
-				<div class="col-md-8 column">
-					<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'not_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_notificacion', :subgrupo => 'todos'  } %>
-				</div>
-				<div class="col-md-4 column">
-					<a id="modal-agregar-persona" href="#modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>			 		
-				</div>				
 			</div>
+			<% if tipo == 'edit' %>			  
+				<div class="row clearfix">
+					<div class="col-md-8 column">
+						<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'not_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_notificacion', :subgrupo => 'todos'  } %>
+					</div>
+					<div class="col-md-4 column">
+						<a id="modal-agregar-persona" href="#modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>			 		
+					</div>				
+				</div>
+			<% end %>
 			<div class="row clearfix ajus-mar-top">
 				<div class="col-md-6 column">
 					<label>Nombre</label>: <span id="not_nombre_<%= p_d.id %>" ><%= nombre %></span>				
@@ -241,26 +138,26 @@
 				<div class="col-md-6 column">
 				</div>				
 			</div>
-
 		</div>
  	</div>
 </div>
 
-<div class="modal fade" id="modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog ajuste-top">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" onclick="cerrarModalAgregarPersona('not_'+<%= p_d.id.to_s %>)" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
-			</div>
-			<div class="modal-body">
-				<%= render :partial => "persona/agregar_persona", :locals => {:origen => p_d.id, :id => 'not_'+p_d.id.to_s, :subgrupo => 'todos' } %>
-			</div>
-			<div class="modal-footer"></div>
-		</div>		
-	</div>	
-</div>
-
+<% if tipo == 'edit' %>	
+	<div class="modal fade" id="modal-container-agregar-persona-not_<%= p_d.id.to_s %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog ajuste-top">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="cerrarModalAgregarPersona('not_'+<%= p_d.id.to_s %>)" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
+				</div>
+				<div class="modal-body">
+					<%= render :partial => "persona/agregar_persona", :locals => {:origen => p_d.id, :id => 'not_'+p_d.id.to_s, :subgrupo => 'todos' } %>
+				</div>
+				<div class="modal-footer"></div>
+			</div>		
+		</div>	
+	</div>
+<% end %>
 
 <div class="panel-group" id="panel-GES">
 	<div class="panel panel-default">
@@ -270,89 +167,9 @@
 		<div id="panel-element-GES" class="panel-collapse collapse">
 			<div class="panel-body panel-body-ajustado panel-ges">
 				<ol>	
-					<li>Enfermedad renal crónica etapa 4 y 5</li>
-					<li>Cardiopatías Congénitas Operables en menores de 15 años</li>
-					<li>Cáncer Cérvicouterino</li>
-					<li>Alivio del dolor y cuidados paliativos por cáncer avanzado</li>
-					<li>Infarto Agudo del Miocardio</li>
-					<li>Diabetes Mellitus Tipo 1</li>
-					<li>Diabetes Mellitus Tipo 2</li>
-					<li>Cáncer de Mama en personas de 15 años y más</li>
-					<li>Disrafias Espinales</li>
-					<li>Tratamiento Quirúrgico de Escoliosis en personas menores de 25 años</li>
-					<li>Tratamiento Quirúrgico de Cataratas</li>
-					<li>Endoprotesis Total de Cadera en personas de 65 años y más con Artrosis de Cadera con Limitación Funcional Severa</li>
-					<li>Fisura Labiopalatina</li>
-					<li>Cáncer en personas menores de 15 años</li>
-					<li>Esquizofrenia</li>
-					<li>Cáncer de Testículo en personas de 15 años y más</li>
-					<li>Linfomas en personas de 15 años y más</li>
-					<li>Síndrome de la Inmunodeficiencia Adquirida VIH/SIDA</li>
-					<li>Infección Respiratoria Aguda (IRA) de manejo ambulatorio en personas menores de 5 años</li>
-					<li>Neumonía Adquirida en la Comunidad de manejo ambulatorio en personas de 65 años y más</li>
-					<li>Hipertensión Arterial Primaria o Esencial en personas de 15 años y más</li>
-					<li>Epilepsia No Refractaria en personas desde 1 año y menores de 15 años</li>
-					<li>Salud Oral Integral para niños y niñas de 6 años</li>
-					<li>Prevención de Parto Prematuro</li>
-					<li>Trastornos de Generación del Impulso y Conducción en personas de 15 años y más, que requieren marcapaso</li>
-					<li>Colecistectomía Preventiva del Cáncer de Vesícula en personas de 35 a 49 años</li>
-					<li>Cáncer Gástrico</li>
-					<li>Cáncer de Próstata en personas de 15 años y más</li>
-					<li>Vicios de Refracción en personas de 65 años y más</li>
-					<li>Estrabismo en personas menores de 9 años</li>
-					<li>Retinopatía Diabética</li>
-					<li>Desprendimiento de Retina Regmatógeno no traumático</li>
-					<li>Hemofilia</li>
-					<li>Depresión en personas de 15 años y más</li>
-					<li>Tratamiento de la Hiperplasia Benigna de la Próstata en personas sintomáticas</li>
-					<li>Órtesis (o ayudas técnicas) para personas de 65 años y más</li>
-					<li>Accidente Cerebrovascular Isquémico en personas de 15 Años y más</li>
-					<li>Enfermedad Pulmonar Obstructiva Crónica de tratamiento ambulatorio</li>
-					<li>Asma Bronquial Moderada y Grave en menores de 15 años</li>
-					<li>Síndrome de Dificultad Respiratoria en el Recién Nacido</li>
-					<li>Tratamiento médico en personas de 55 años y más con artrosis de cadera y/o rodilla, leve o moderada</li>
-					<li>Hemorragia subaracnoidea secundaria a ruptura de aneurismas cerebrales</li>
-					<li>Tumores primarios del sistema nervioso central en personas de 15 años o más.</li>
-					<li>Tratamiento quirúrgico de hernia del núcleo pulposo lumbar</li>
-					<li>Leucemia en personas de 15 años y más</li>
-					<li>Urgencia odontológica ambulatoria</li>
-					<li>Salud oral integral del adulto de 60 años</li>
-					<li>Politraumatizado grave</li>
-					<li>Traumatismo cráneo encefálico moderado o grave</li>
-					<li>Trauma ocular grave</li>
-					<li>Fibrosis Quística</li>
-					<li>Artritis reumatoidea</li>
-					<li>Consumo perjudicial o dependencia de riesgo bajo a moderado de alcohol y drogas en personas menores de 20 años</li>
-					<li>Analgesia del parto</li>
-					<li>Gran quemado</li>
-					<li>Hipoacusia bilateral en personas de 65 años y más que requieren uso de audífono</li>
-					<li>Retinopatía del prematuro</li>
-					<li>Displasia broncopulmonar del prematuro</li>
-					<li>Hipoacusia neurosensorial bilateral del prematuro</li>
-					<li>Epilepsia no refractaria en personas de 15 años y más</li>
-					<li>Asma bronquial en personas de 15 años y más</li>
-					<li>Enfermedad de parkinson</li>
-					<li>Artritis idiopática juvenil</li>
-					<li>Prevencion secundaria enfermedad renal crónica terminal</li>
-					<li>Displasia luxante de caderas</li>
-					<li>Salud oral integral de la embarazada</li>
-					<li>Esclerosis múltiple remitente recurrente</li>
-					<li>Hepatitis crónica por virus hepatitis B</li>
-					<li>Hepatitis C</li>
-					<li>Cáncer colorectal en personas de 15 años y más</li>
-					<li>Cáncer de ovario epitelial</li>
-					<li>Cáncer vesical en personas de 15 años y más</li>
-					<li>Osteosarcoma en personas de 15 años y más</li>
-					<li>Tratamiento quirúrgico de lesiones crónicas de la válvula aórtica en personas de 15 años y más</li>
-					<li>Trastorno bipolar en personas de 15 años y más</li>
-					<li>Hipotiroidismo en personas de 15 años y más</li>
-					<li>Tratamiento de hipoacusia moderada en menores de 2 años</li>
-					<li>Lupus eritematoso sistémico</li>
-					<li>Tratamiento quirúrgico de lesiones crónicas de las válvulas mitral y tricúspide en personas de 15 años y más</li>
-					<li>Tratamiento de erradicación del helicobacter pylori</li>
+					<%= render :partial => "lista_ges" %>
 				</ol>
 			</div>
 		</div>
-
 	</div>
 </div>

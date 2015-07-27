@@ -1,4 +1,5 @@
 <% if @acceso %>
+<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
 <h4>Antecedentes actividad física</h4>
 
 <%=	case @segmento_actividad
@@ -30,10 +31,14 @@
 			<label>1. ¿Su trabajo supone desplegar una actividad vigorosa, que aumenta mucho las frecuencias respiratoria y cardiaca (llevar o levantar objetos pesados, cavar o realizar tareas de construcción) durante al menos 10 minutos seguidos?</label>	
 			<div class="form-group">			  
 			  <div class="radio">
-			    <label for="rad-act-fis-1-1"><input type="radio" name="rad-act-fis-1" id="rad-act-fis-1-1" value="1" <% if @persona_actividad_fisica.P1 == 1 %> checked <% end %> >Sí</label>
+			    <label for="rad-act-fis-1-1">
+			    	<input type="radio" name="rad-act-fis-1" id="rad-act-fis-1-1" value="1" <% if @persona_actividad_fisica.P1 == 1 %> checked <% end %> <%= disabled %> >Sí
+			    </label>
 				</div>
 			  <div class="radio">
-			    <label for="rad-act-fis-1-2"><input type="radio" name="rad-act-fis-1" id="rad-act-fis-1-2" value="0" <% if @persona_actividad_fisica.P1 == 0 %> checked <% end %> >No</label>
+			    <label for="rad-act-fis-1-2">
+			    	<input type="radio" name="rad-act-fis-1" id="rad-act-fis-1-2" value="0" <% if @persona_actividad_fisica.P1 == 0 %> checked <% end %> <%= disabled %> >No
+			    </label>
 				</div>						  
 			</div>
 		</div>
@@ -43,12 +48,12 @@
 		<div class="row clearfix">
 		  <label class="col-md-5 control-label" for="input-act-fis-2">2. En una semana ordinaria, ¿cuántos días despliega usted actividades vigorosas como parte de su trabajo?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-2" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P2 %>' >
+			  <input id="input-act-fis-2" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P2 %>' <%= disabled %> >
 			  <span class="help-block">Días</span>  
 		  </div>
 		  <label class="col-md-5 control-label" for="input-act-fis-3">3. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades vigorosas?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-3" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P3 %>'>
+			  <input id="input-act-fis-3" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P3 %>' <%= disabled %> >
 			  <span class="help-block">Minutos</span>  
 		  </div>		
 		</div>	
@@ -59,10 +64,14 @@
 			<label>4. ¿En su trabajo tiene usted que realizar actividades moderadas, que causan un pequeño aumento de las frecuencias respiratoria y cardiaca, como caminar a paso vivo (o llevar cargas ligeras) durante al menos 10 minutos seguidos?</label>
 			<div class="form-group">			  
 			  <div class="radio">
-			    <label for="rad-act-fis-4-1"><input type="radio" name="rad-act-fis-4" id="rad-act-fis-4-1" value="1" <% if @persona_actividad_fisica.P4 == 1 %> checked <% end %> >Sí</label>
+			    <label for="rad-act-fis-4-1">
+			    	<input type="radio" name="rad-act-fis-4" id="rad-act-fis-4-1" value="1" <% if @persona_actividad_fisica.P4 == 1 %> checked <% end %> <%= disabled %> >Sí
+			    </label>
 				</div>
 			  <div class="radio">
-			    <label for="rad-act-fis-4-2"><input type="radio" name="rad-act-fis-4" id="rad-act-fis-4-2" value="0" <% if @persona_actividad_fisica.P4 == 0 %> checked <% end %> >No</label>
+			    <label for="rad-act-fis-4-2">
+			    	<input type="radio" name="rad-act-fis-4" id="rad-act-fis-4-2" value="0" <% if @persona_actividad_fisica.P4 == 0 %> checked <% end %> <%= disabled %> >No
+			    </label>
 				</div>						  
 			</div>
 		</div>
@@ -72,12 +81,12 @@
 		<div class="row clearfix">			
 		  <label class="col-md-5 control-label" for="input-act-fis-5">5. En una semana corriente, ¿cuántos días despliega usted actividades de intensidad moderada como parte de su trabajo?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-5" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P5 %>'>
+			  <input id="input-act-fis-5" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P5 %>' <%= disabled %> >
 			  <span class="help-block">Días</span>  
 		  </div>			
 			<label class="col-md-5 control-label" for="input-act-fis-6">6. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades de intensidad moderada?</label>
 			<div class="col-md-1">
-			  <input id="input-act-fis-6" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P6 %>'>
+			  <input id="input-act-fis-6" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P6 %>' <%= disabled %> >
 			  <span class="help-block">Minutos</span>  
 			</div>			
 		</div>	
@@ -88,25 +97,29 @@
 			<label>7. ¿Camina o monta en bicicleta (o triciclo) durante por lo menos 10 minutos seguidos para ir y volver a los distintos lugares?</label>
 			<div class="form-group">			  
 			  <div class="radio">
-			    <label for="rad-act-fis-7-1"><input type="radio" name="rad-act-fis-7" id="rad-act-fis-7-1" value="1" <% if @persona_actividad_fisica.P7 == 1 %> checked <% end %> >Sí</label>
+			    <label for="rad-act-fis-7-1">
+			    	<input type="radio" name="rad-act-fis-7" id="rad-act-fis-7-1" value="1" <% if @persona_actividad_fisica.P7 == 1 %> checked <% end %> <%= disabled %> >Sí
+			    </label>
 				</div>
 			  <div class="radio">
-			    <label for="rad-act-fis-7-2"><input type="radio" name="rad-act-fis-7" id="rad-act-fis-7-2" value="0" <% if @persona_actividad_fisica.P7 == 0 %> checked <% end %> >No</label>
+			    <label for="rad-act-fis-7-2">
+			    	<input type="radio" name="rad-act-fis-7" id="rad-act-fis-7-2" value="0" <% if @persona_actividad_fisica.P7 == 0 %> checked <% end %> <%= disabled %> >No
+			    </label>
 				</div>						  
 			</div>
-		</div>
+		</div> 
 	</div>
 	
 	<div id="preg-7">
 		<div class="row clearfix">			
 		  <label class="col-md-5 control-label" for="input-act-fis-8">8. En una semana corriente, ¿cuántos días camina o monta en bicicleta durante por lo menos 10 minutos seguidos para ir y volver a los distintos lugares?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-8" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P8 %>'>
+			  <input id="input-act-fis-8" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P8 %>' <%= disabled %> >
 			  <span class="help-block">Días</span>  
 		  </div>			
 		  <label class="col-md-5 control-label" for="input-act-fis-9">9. En un día corriente, ¿cuánto tiempo pasa usted caminando o en bicicleta para desplazarse?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-9" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P9 %>'>
+			  <input id="input-act-fis-9" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P9 %>' <%= disabled %> >
 			  <span class="help-block">Minutos</span>  
 		  </div>			
 		</div>
@@ -117,10 +130,14 @@
 			<label>10. ¿Practica usted algún deporte, ejercicio físico o actividad recreativa vigorosa que aumente mucho las frecuencias respiratoria y cardiaca (correr o jugar al futbol) durante al menos 10 minutos seguidos?</label>
 			<div class="form-group">			  
 			  <div class="radio">
-			    <label for="rad-act-fis-10-1"><input type="radio" name="rad-act-fis-10" id="rad-act-fis-10-1" value="1" <% if @persona_actividad_fisica.P10 == 1 %> checked <% end %> >Sí</label>
+			    <label for="rad-act-fis-10-1">
+			    	<input type="radio" name="rad-act-fis-10" id="rad-act-fis-10-1" value="1" <% if @persona_actividad_fisica.P10 == 1 %> checked <% end %> <%= disabled %> >Sí
+			    </label>
 				</div>
 			  <div class="radio">
-			    <label for="rad-act-fis-10-2"><input type="radio" name="rad-act-fis-10" id="rad-act-fis-10-2" value="0" <% if @persona_actividad_fisica.P10 == 0 %> checked <% end %> >No</label>
+			    <label for="rad-act-fis-10-2">
+			    	<input type="radio" name="rad-act-fis-10" id="rad-act-fis-10-2" value="0" <% if @persona_actividad_fisica.P10 == 0 %> checked <% end %> <%= disabled %> >No
+			    </label>
 				</div>						  
 			</div>
 		</div>
@@ -130,12 +147,12 @@
 		<div class="row clearfix">
 		  <label class="col-md-5 control-label" for="input-act-fis-11">11. En una semana corriente, ¿cuántos días despliega usted actividades vigorosas practicando un deporte, haciendo ejercicio físico o divirtiéndose?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-11" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P11 %>'>
+			  <input id="input-act-fis-11" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P11 %>' <%= disabled %> >
 			  <span class="help-block">Días</span>  
 		  </div>
 		  <label class="col-md-5 control-label" for="input-act-fis-12">12. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades vigorosas en deportes, ejercicio físico o recreación?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-12" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P12 %>'>
+			  <input id="input-act-fis-12" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P12 %>' <%= disabled %> >
 			  <span class="help-block">Minutos</span>  
 		  </div>
 		</div>	
@@ -146,10 +163,12 @@
 			<label>13. ¿Practica usted algún deporte, ejercicio físico o actividad recreativa con una intensidad que acelere un poco la frecuencia respiratoria y cardiaca, como caminar a paso vivo (montar en bicicleta, nadar, jugar al volibol) durante por lo menos 10 minutos seguidos?</label>
 			<div class="form-group">			  
 			  <div class="radio">
-			    <label for="rad-act-fis-13-1"><input type="radio" name="rad-act-fis-13" id="rad-act-fis-13-1" value="1" <% if @persona_actividad_fisica.P13 == 1 %> checked <% end %> >Sí</label>
+			    <label for="rad-act-fis-13-1">
+			    	<input type="radio" name="rad-act-fis-13" id="rad-act-fis-13-1" value="1" <% if @persona_actividad_fisica.P13 == 1 %> checked <% end %> <%= disabled %> >Sí</label>
 				</div>
 			  <div class="radio">
-			    <label for="rad-act-fis-13-2"><input type="radio" name="rad-act-fis-13" id="rad-act-fis-13-2" value="0" <% if @persona_actividad_fisica.P13 == 0 %> checked <% end %> >No</label>
+			    <label for="rad-act-fis-13-2">
+			    	<input type="radio" name="rad-act-fis-13" id="rad-act-fis-13-2" value="0" <% if @persona_actividad_fisica.P13 == 0 %> checked <% end %> <%= disabled %> >No</label>
 			  </div>						  
 			</div>
 		</div>
@@ -159,12 +178,12 @@
 		<div class="row clearfix">
 		  <label class="col-md-5 control-label" for="input-act-fis-14">14. En una semana corriente, ¿cuántos días despliega usted actividades de intensidad moderada practicando un deporte, haciendo ejercicio físico o divirtiéndose?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-14" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P14 %>'>
+			  <input id="input-act-fis-14" type="text" class="form-control input-md" name="dias_actividad[]" value='<%= @persona_actividad_fisica.P14 %>' <%= disabled %> >
 			  <span class="help-block">Días</span>  
 		  </div>
 		  <label class="col-md-5 control-label" for="input-act-fis-15">15. En un día corriente, ¿cuánto tiempo pasa usted desplegando actividades de intensidad mediana practicando deportes, ejercicio físico o divirtiéndose?</label>
 		  <div class="col-md-1">
-			  <input id="input-act-fis-15" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P15 %>'>
+			  <input id="input-act-fis-15" type="text" class="form-control input-md" name="minutos_actividad[]" value='<%= @persona_actividad_fisica.P15 %>' <%= disabled %> >
 			  <span class="help-block">Minutos</span>  
 		  </div>
 		</div>	

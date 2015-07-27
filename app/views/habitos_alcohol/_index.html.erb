@@ -1,49 +1,51 @@
-<h4>Test AUDIT realizados</h4>
+<% if @acceso %>
+	<h4>Test AUDIT realizados</h4>
+		<table class="table table-striped table-hover table-condensed">
+			<thead class="ajust-head">
+	      <tr class="info" ><th class="col-sm-2">Fecha</th><th class="col-sm-2">Puntaje</th><th class="col-sm-2">Test</th></tr>
+	    </thead>
+	    <tbody id='lista-hab-alc'>
+	    <% unless @test_audit.blank? %> 		
+				<% @test_audit.each do |test| %>
+					<%= render :partial => "habitos_alcohol/habitos_alcohol_row", :locals => {:test => test } %>
+				<% end %>
+			<% else %>
+				<tr id='tr-vacio-alc'><td colspan='3' >No se han realizado test AUDIT.</td></tr>
+			<% end %>	
+			</tbody>    
+		</table>		
 
-	<table class="table table-striped table-hover table-condensed">
-		<thead class="ajust-head">
-      <tr class="info" ><th class="col-sm-2">Fecha</th><th class="col-sm-2">Puntaje</th><th class="col-sm-2">Test</th></tr>
-    </thead>
-    <tbody id='lista-hab-alc'>
-    <% unless @test_audit.blank? %> 		
-			<% @test_audit.each do |test| %>
-				<%= render :partial => "habitos_alcohol/habitos_alcohol_row", :locals => {:test => test } %>
-			<% end %>
-		<% else %>
-			<tr id='tr-vacio-alc'><td colspan='3' >No se han realizado test AUDIT.</td></tr>
-		<% end %>	
-		</tbody>    
-	</table>		
+	</br>
 
-</br>
-<a id="modal-260234" href="#modal-container-hab-alc-new" role="button" class="btn" data-toggle="modal">Agregar antecedente de alcohol</a>
-
-<div id='ant_alc_modal-div'></div>
-
-<% unless @test_audit.blank? %>
-	<% @test_audit.each do |test| %>
-		<%= render :partial => "habitos_alcohol/show", :locals => { :test => test } %>
+	<div id='ant_alc_modal-div'></div>
+	<% unless @test_audit.blank? %>
+		<% @test_audit.each do |test| %>
+			<%= render :partial => "habitos_alcohol/show", :locals => { :test => test } %>
+		<% end %>
 	<% end %>
-<% end %>	
 
-<div class="modal fade" id="modal-container-hab-alc-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog ajuste-ancho">
-		<div class="modal-content">
-			<div class="modal-header">
-				 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalHabAlc('new')">×</button>
-				<h4 class="modal-title" id="myModalLabel">
-					Test AUDIT
-				</h4>
-			</div>
-			<div class="modal-body">
-				<%= render :partial => "habitos_alcohol/new" %>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" onclick="cerrarModalHabAlc('new')">Cerrar ventana</button>
-				<button type="button" id="button1id" name="s" class="btn btn-success">Finalizar test</button>			  
-			</div>
-		</div>		
-	</div>	
-</div>
+	<% if @tipo == 'edit' or !@atencion_salud %>
+		<a href="#modal-container-hab-alc-new" role="button" class="btn" data-toggle="modal">Agregar antecedente de alcohol</a>
+		<div class="modal fade" id="modal-container-hab-alc-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog ajuste-ancho">
+				<div class="modal-content">
+					<div class="modal-header">
+						 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalHabAlc('new')">×</button>
+						<h4 class="modal-title" id="myModalLabel">
+							Test AUDIT
+						</h4>
+					</div>
+					<div class="modal-body">
+						<%= render :partial => "habitos_alcohol/new" %>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="cerrarModalHabAlc('new')">Cerrar ventana</button>
+						<button type="button" id="button1id" name="s" class="btn btn-success">Finalizar test</button>			  
+					</div>
+				</div>		
+			</div>	
+		</div>
+	<% end %>
+<% end %>
 
 <%= javascript_include_tag "habitos_alcohol" %>

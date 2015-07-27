@@ -14,143 +14,12 @@
 				id_pre = interconsulta.persona_conocimiento.id			 				 		
 			end
 		end 
-%>	
+%>
+<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>	
 
 <h1 class="enc-ges">Solicitud de Interconsulta o Derivación</h1>
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del prestador</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Institución</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Dirección</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Teléfono</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Profesional que notifica</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Rut profesional</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Especialidad</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
-
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del paciente</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Nombre</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Rut</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Edad</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.age_text %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Sexo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showSexo %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Previsión de salud</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getPrevision %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Domicilio</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getDomicilio %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Correo electrónico</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.user.email %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Telefono fijo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getTelefonoFijo %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Celular</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getCelular %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
+<%= render :partial => "datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'int_'+p_d.id.to_s } %>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">
@@ -163,22 +32,7 @@
 					<label>Establecimiento al cual se deriva</label>
 				</div>
 				<div class="col-md-8 column">:
-				<input id="int-pdt-<%= p_d.id%>" type="text" class="form-control ajuste-cen-der auto-int-pdt" value="<%= interconsulta.prestador_destino_texto if !interconsulta.nil?  %>">
-				<!--
-					<select id="select_prestadores_int<%= p_d.id %>" class="select_prestadores">	
-						<option></option>					
-					  <% @prestadores.each do |pres| %>
-					  	<option value="<%= pres.id %>"
-					  		<% unless interconsulta.nil?
-					  				unless interconsulta.prestador_destino.nil?
-					  	 				if interconsulta.prestador_destino.id == pres.id 
-					  	 					%> selected <% 
-					  	 				end	
-					  	 			end
-					  	 		end %> ><%= pres.nombre %></option>      			
-   					<% end %>
-  				</select>
-  			-->						
+				<input id="int-pdt-<%= p_d.id%>" type="text" class="form-control ajuste-cen-der auto-int-pdt" value="<%= interconsulta.prestador_destino_texto if !interconsulta.nil?  %>"  <%= disabled %>/>						
 				</div>				
 			</div>
 			<div class="row clearfix ajuste-margin">
@@ -186,19 +40,23 @@
 					<label>Especialidad</label>
 				</div>
 				<div class="col-md-8 column">:
-					<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad_interconsulta">	
-						<option></option>					
-					  <% @especialidades.each do |esp| %>
-					  	<option value="<%= esp.id %>" 
-					  		<% unless interconsulta.nil?
-					  				unless interconsulta.especialidad.nil?
-					  					if interconsulta.especialidad.id == esp.id 
-					  						%> selected <%
-					  					end	 
-					  				end
-					  		end %> ><%= esp.nombre %></option>      			
-   					<% end %>
-  				</select>
+					<% if tipo == 'edit' %>
+						<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad_interconsulta">	
+							<option></option>					
+						  <% @especialidades.each do |esp| %>
+						  	<option value="<%= esp.id %>" 
+						  		<% unless interconsulta.nil?
+						  				unless interconsulta.especialidad.nil?
+						  					if interconsulta.especialidad.id == esp.id 
+						  						%> selected <%
+						  					end	 
+						  				end
+						  		end %> ><%= esp.nombre %></option>      			
+	   					<% end %>
+	  				</select>
+	  			<% else %>
+	  				<%= interconsulta.try(:especialidad).try(:nombre) unless interconsulta.nil? %>	
+  				<% end %>
 				</div>				
 			</div>
 			<div class="row clearfix">
@@ -226,22 +84,30 @@
 					<label>Propósito:</label>
 					<div class="form-group form-ges" id="int_<%= p_d.id %>">
 				    <div class="radio">
-				      <label for="radios-int-1"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %>> Diagnóstico</label>
+				      <label for="radios-int-1">
+				      	<input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %> <%= disabled %> /> Diagnóstico
+				      </label>
 				    </div>					
 				    <div class="radio">
-				      <label for="radios-int-2"><input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %>> Paciente en tratamiento</label>
+				      <label for="radios-int-2">
+				      	<input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %> <%= disabled %> /> Paciente en tratamiento
+				      </label>
 				    </div> 						
 				    <div class="radio">
-				      <label for="radios-int-3"><input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if prop == 3 %> checked <% end %>> Seguimiento</label>
+				      <label for="radios-int-3">
+				      	<input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if prop == 3 %> checked <% end %> <%= disabled %> /> Seguimiento
+				      </label>
 				    </div>				
 				    <div class="radio">
-				      <label for="radios-int-4"><input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if prop == 4 %> checked <% end %>> Otro</label>
+				      <label for="radios-int-4">
+				      	<input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if prop == 4 %> checked <% end %> <%= disabled %> /> Otro
+				      </label>
 				    </div> 
 					</div>
 				</div>
 				<div class="col-md-8 column">
 					<label class="com-int">Comentario:</label><span class="alert alert-info auto-int-comment" id="auto-int-<%= p_d.id %>">Autoguardado</span>
-					<textarea id="int-comment-<%= p_d.id%>" class="form-control int-comment" rows="4" cols="50"><%= unless interconsulta.nil?
+					<textarea id="int-comment-<%= p_d.id%>" class="form-control int-comment" rows="4" cols="50" <%= disabled %> ><%= unless interconsulta.nil?
 					 interconsulta.comentario 
 					 end %></textarea>
 				</div>	
@@ -285,15 +151,17 @@
 				<div class="col-md-12 column">
 				En caso que la persona que tomó conocimiento no sea el paciente, identificar:			
 				</div>
-			</div>			  
-			<div class="row clearfix">
-				<div class="col-md-8 column">
-					<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'int_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_interconsulta', :subgrupo => 'todos'  } %>										
-				</div>
-				<div class="col-md-4 column">
-					<a id="modal-agregar-persona" href="#modal-container-agregar-persona-int_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>
-				</div>			
 			</div>
+			<% if tipo == 'edit' %>				  
+				<div class="row clearfix">
+					<div class="col-md-8 column">
+						<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'int_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_interconsulta', :subgrupo => 'todos'  } %>
+					</div>
+					<div class="col-md-4 column">
+						<a id="modal-agregar-persona" href="#modal-container-agregar-persona-int_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>
+					</div>			
+				</div>
+			<% end %>
 			<div class="row clearfix ajus-mar-top">
 				<div class="col-md-6 column">
 					<label>Nombre</label>: <span id="int_nombre_<%= p_d.id %>"><%= nombre %></span>				
@@ -322,17 +190,19 @@
  	</div>
 </div>
 
-<div class="modal fade" id="modal-container-agregar-persona-int_<%= p_d.id.to_s %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog ajuste-top">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" onclick="cerrarModalAgregarPersona('int_<%= p_d.id.to_s %>')" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
-			</div>
-			<div class="modal-body">
-				<%= render :partial => "persona/agregar_persona", :locals => {:origen => p_d.id, :id => 'int_'+p_d.id.to_s, :subgrupo => 'todos' } %>
-			</div>
-			<div class="modal-footer"></div>
-		</div>		
-	</div>	
-</div>
+<% if tipo == 'edit' %>	
+	<div class="modal fade" id="modal-container-agregar-persona-int_<%= p_d.id.to_s %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog ajuste-top">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="cerrarModalAgregarPersona('int_<%= p_d.id.to_s %>')" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
+				</div>
+				<div class="modal-body">
+					<%= render :partial => "persona/agregar_persona", :locals => {:origen => p_d.id, :id => 'int_'+p_d.id.to_s, :subgrupo => 'todos' } %>
+				</div>
+				<div class="modal-footer"></div>
+			</div>		
+		</div>	
+	</div>
+<% end %>

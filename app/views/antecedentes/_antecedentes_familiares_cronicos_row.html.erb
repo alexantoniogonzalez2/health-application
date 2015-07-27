@@ -7,8 +7,10 @@
 		<% if ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.nil? %>
 		  <a href="#modal-container-ant-fam-cro-<%= ant_enf_cro['datos'].id %>" data-toggle="modal" id="ant-fam-cro<%= ant_enf_cro['datos'].id %>" >Editar</a>		  
 		<% elsif @atencion_salud %> 
-		  <% if ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id %> 
+		  <% if ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id and @tipo == "edit" %> 
 			  <a href="#modal-container-ant-fam-cro-<%= ant_enf_cro['datos'].id %>" data-toggle="modal" id="ant-fam-cro<%= ant_enf_cro['datos'].id %>" >Editar</a>
+			<% if ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id and @tipo == "show" %>
+				<span>-</span>  
 		  <% else %>  
 		    <%= link_to 'Ver atención', atenciones_salud_path(ant_enf_cro['datos'].atencion_salud_id) %>
 		  <% end %>

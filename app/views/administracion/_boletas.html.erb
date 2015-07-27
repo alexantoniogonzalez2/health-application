@@ -1,1 +1,50 @@
-<h4>Boletas</h4>	
+<h4>Ver boletas</h4>
+<% if @boletas_profesional.blank? %> 
+  <p>No hay boletas generadas.</p>
+<% else %>  
+	<h5>Lista de boletas</h5>    
+	<table id="lista_boletas_profesional" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+	  <thead>
+	    <tr>
+	    	<th>Id</th>
+	      <th>Fecha</th>
+	      <th>Especialidad</th>
+	      <th>Fecha desde</th>
+	      <th>Fecha hasta</th>       
+	      <th>Monto</th>
+	      <th>Estado</th>
+	      <th>Ver atenciones</th> 
+	    </tr>
+	  </thead>
+	  <tbody>      
+	    <% @boletas_profesional.each do |boleta_profesional| %>
+	      <tr>
+	      	<td><%= boleta_profesional.id %></td>
+	        <td><%= boleta_profesional.fecha.strftime("%Y-%m-%d %H:%M") %></td>
+	        <td><%= boleta_profesional.especialidad_prestador_profesional.especialidad.nombre %></td>
+	        <td><%= boleta_profesional.fecha_desde.try(:strftime, "%Y-%m-%d") %></td>
+	        <td><%= boleta_profesional.fecha_hasta.try(:strftime, "%Y-%m-%d") %></td>
+	     		<td><%= number_to_currency(boleta_profesional.monto, unit: "$ ", separator: '.') %></td>
+	     		<td><%= boleta_profesional.estado %></td>
+	     		<td><a id="bol-<%= boleta_profesional.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" class="load_atenciones">Ver atenciones</a></td>
+	      </tr>
+	    <% end %>  
+	  </tbody>    
+	</table>
+	<!-- Modal -->
+	<div class="modal fade" id="ver_atenciones_boleta" role="dialog" aria-labelledby="headerVerAtencionesBoleta" aria-hidden="false">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header ajuste-modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4 id="headerVerAtencionesBoleta">Atenciones consideradas en la boleta</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div id='contenido-ver-atenciones-boleta'></div>   
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<% end %>	

@@ -109,6 +109,7 @@ class PersonaMedicamentoController < ApplicationController
 	end
 
 	def agregarDiagMed
+		@tipo = params[:tipo]
 		@med = params[:med]
 		@persona_medicamento = FiPersonaMedicamentos.find(params[:med])
 		@per_diag_aten_sal = FiPersonaDiagnosticosAtencionesSalud.where('persona_diagnostico_id = ? AND atencion_salud_id = ?',@persona_medicamento.persona_diagnostico_id,@persona_medicamento.atencion_salud_id ).first

@@ -1,3 +1,4 @@
+<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>
 <div class="modal fade" id="modal-container-med-<%= persona_medicamento.id %>" role="dialog" aria-spanledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -14,17 +15,17 @@
                 <table>
                   <tr>
                     <td><span>Ingerir</span></td>
-                    <td><input id="cantidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.cantidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+                    <td><input id="cantidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.cantidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)" <%= disabled %> ></td>
                     <td><span class="text-med"><%= persona_medicamento.medicamento.medicamento_tipo.unidad %></span></td>
                   </tr>
                   <tr>
                     <td><span>cada</span></td>
-                    <td><input id="periodicidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.periodicidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+                    <td><input id="periodicidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.periodicidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)" <%= disabled %> ></td>
                     <td><span class="text-med">horas</span></td>
                   </tr>
                   <tr>
                     <td><span>por</span></td>
-                    <td><input id="duracion-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.duracion %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)"></td>
+                    <td><input id="duracion-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.duracion %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)" <%= disabled %> ></td>
                     <td><span class="text-med">días.</span></td>
                   </tr>
                   <tr>
@@ -62,8 +63,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" onclick="cerrarModalAntMed(<%= persona_medicamento.id %>)">Cerrar ventana</button>
-        <button id="bpm<%= persona_medicamento.id %>" type="button" class="btn btn-danger" onclick="eliminarMedicamento(<%= persona_medicamento.id %>)">Eliminar medicamento</button>
-        <button type="button" onclick="guardarMedicamento(<%= persona_medicamento.id %>, true)" class="btn btn-success">Guardar</button>
+        <% if tipo == 'edit' %>
+          <button id="bpm<%= persona_medicamento.id %>" type="button" class="btn btn-danger" onclick="eliminarMedicamento(<%= persona_medicamento.id %>)">Eliminar medicamento</button>
+          <button type="button" onclick="guardarMedicamento(<%= persona_medicamento.id %>, true)" class="btn btn-success">Guardar</button>
+        <% end%>
       </div>
     </div>            
   </div>        

@@ -129,6 +129,7 @@ class AntecedentesController < ApplicationController
 	def cargarAntecedentes
 
 		@ant = params[:ant]
+		@tipo = params[:tipo]
 		@acceso = true
 		@atencion_salud = FiAtencionesSalud.find(params[:at_sal])
 		@persona = PerPersonas.find(params[:persona_id])
@@ -236,7 +237,7 @@ class AntecedentesController < ApplicationController
 		end
 
 		respond_to do |format|     
-    		format.js   {}
+    	format.js   {}
     end	
 
 	end	

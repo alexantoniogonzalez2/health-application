@@ -1,4 +1,6 @@
 <% if @acceso %>
+<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
+
 <div class='container'>
 	<div class='row'>
 		<div class='col-md-4'>
@@ -6,23 +8,27 @@
 				<div id='checkbox-alergias'>
 			 	  <% @alergias.each do |a| %>
 					  <div class="checkbox">
-					    <label for="checkboxes-aler-<%= a.id %>"><input type="checkbox" name="checkboxes-alergia" id="checkboxes-aler-<%= a.id %>" <% if a.persona_id %> checked="checked" <% end %> ><%= a.nombre %></label>
+					    <label for="checkboxes-aler-<%= a.id %>">
+					    	<input type="checkbox" name="checkboxes-alergia" id="checkboxes-aler-<%= a.id %>" <%= disabled %> <% if a.persona_id %> checked="checked" <% end %> > <%= a.nombre %>
+					    </label>
 						</div>
 					<% end %>	
 				</div>					
 		</div>
 		<div class='col-md-8 ajuste-alergia'>
-		<form id="alergias" class="form-validator" method="POST">
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="textinput">Otras alergias:</label>  
-			  <div class="col-md-5">
-			  <input id="agregar-alergia" name="input_alergia" type="text" placeholder="Agregue otra alergia" class="form-control input-md" data-bv-notempty="true" data-bv-notempty-message="Este campo es requerido">			  
-			  </div>
-			  <div class="col-md-3">
-			  	<button name="singlebutton" class="btn btn-success agregar-alergia">Agregar alergia</button>
-			  </div>
-			</div>	
-			</form>				
+			<% if @tipo == 'edit' or !@atencion_salud %>
+				<form id="alergias" class="form-validator" method="POST">
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="textinput">Otras alergias:</label>  
+					  <div class="col-md-5">
+					  <input id="agregar-alergia" name="input_alergia" type="text" placeholder="Agregue otra alergia" class="form-control input-md" data-bv-notempty="true" data-bv-notempty-message="Este campo es requerido">			  
+					  </div>
+					  <div class="col-md-3">
+					  	<button name="singlebutton" class="btn btn-success agregar-alergia">Agregar alergia</button>
+					  </div>
+					</div>	
+				</form>
+			<% end %> 
 		</div>
 	</div>
 </div>

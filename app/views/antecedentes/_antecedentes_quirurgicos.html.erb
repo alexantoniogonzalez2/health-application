@@ -6,7 +6,7 @@
     </thead>
     <tbody id='lista-procedimientos'>
   		<% if @persona_prestaciones.empty? %>
-				<tr id='tr-vacio-pro'><td colspan='5' >No hay información de antecedentes quirúrgicos.</td></tr>
+				<tr id='tr-vacio-pro'><td colspan='6' >No hay información de antecedentes quirúrgicos.</td></tr>
 			<% else %>	
 	    	<% @persona_prestaciones.each do |p_p| %>
 	      	<%= render :partial => "persona_prestacion/prestacion_row", :locals => {:p_p => p_p, :atencion_salud => @atencion_salud } %>
@@ -15,14 +15,16 @@
     </tbody>
 	</table>
 	<div class='container agregar-med'>
-		<div class='row'>
-			<div class='col-md-6 column ajuste-padding'>
-				<p>Agregar información de otro antecedente quirúrgico:</p>
+		<% if @tipo == 'edit' or !@atencion_salud %>
+			<div class='row'>
+				<div class='col-md-6 column ajuste-padding'>
+					<p>Agregar información de otro antecedente quirúrgico:</p>
+				</div>
+				<div class='col-md-6 column'>
+					<input type='hidden' id="select_procedimiento_ant" class="ajuste-select" >			
+				</div>
 			</div>
-			<div class='col-md-6 column'>
-				<input type='hidden' id="select_procedimiento_ant" class="ajuste-select" ></input>			
-			</div>
-		</div>
+		<% end %>
 	</div>		
 		
 <% else %>

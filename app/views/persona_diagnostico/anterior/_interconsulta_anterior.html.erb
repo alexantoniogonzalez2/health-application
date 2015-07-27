@@ -18,139 +18,7 @@
 
 <h1 class="enc-ges">Solicitud de Interconsulta o Derivación</h1>
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del prestador</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Institución</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Dirección</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Teléfono</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Profesional que notifica</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Rut profesional</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Especialidad</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
-
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del paciente</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Nombre</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Rut</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Edad</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.age_text %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Sexo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showSexo %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Previsión de salud</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getPrevision %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Domicilio</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getDomicilio %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Correo electrónico</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.user.email %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Telefono fijo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getTelefonoFijo %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Celular</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getCelular %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
+<%= render :partial => "datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'int_ant'+p_d.id.to_s  } %>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">
@@ -171,19 +39,23 @@
 					<label>Especialidad</label>
 				</div>
 				<div class="col-md-8 column">:
-					<select id="select_especialidad_int<%= p_d.id %>" disabled class="select_especialidad_interconsulta_ant">	
-						<option></option>					
-					  <% @especialidades.each do |esp| %>
-					  	<option value="<%= esp.id %>" 
-					  		<% unless interconsulta.nil?
-					  				unless interconsulta.especialidad.nil?
-					  					if interconsulta.especialidad.id == esp.id 
-					  						%> selected <%
-					  					end	 
-					  				end
-					  		end %> ><%= esp.nombre %></option>      			
-   					<% end %>
-  				</select>
+					<% if @tipo == 'edit' %>
+						<select id="select_especialidad_int<%= p_d.id %>" disabled class="select_especialidad_interconsulta_ant">	
+							<option></option>					
+						  <% @especialidades.each do |esp| %>
+						  	<option value="<%= esp.id %>" 
+						  		<% unless interconsulta.nil?
+						  				unless interconsulta.especialidad.nil?
+						  					if interconsulta.especialidad.id == esp.id 
+						  						%> selected <%
+						  					end	 
+						  				end
+						  		end %> ><%= esp.nombre %></option>      			
+	   					<% end %>
+	  				</select>
+	  			<% else %>
+	  				<%= interconsulta.try(:especialidad).try(:nombre) %>	
+  				<% end %>
 				</div>				
 			</div>
 			<div class="row clearfix">

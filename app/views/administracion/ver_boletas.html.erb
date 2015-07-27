@@ -1,126 +1,144 @@
 <h4>Ver boletas</h4>
-<div id="prueba">hola</div>  
-<% if @boletas.blank? %> 
-  <p>No hay boletas generadas.</p>
-<% else %>  
-  <div class='container well'>
-    <h5>Filtrar boletas</h5>
-    <div class='row'>
-      <div class='col-md-4'>
-      	<label class="control-label" for="radios">Profesionales</label>			  
-				  <div class="radio">
-				    <label for="radios-3">
-				      <input type="radio" name="radios-ver-boletas" id="radios-3" value="1" checked="checked">
-				      Todos los profesionales
-				    </label>
-					</div>
-				  <div class="radio">
-				    <label for="radios-4">
-				      <input type="radio" name="radios-ver-boletas" id="radios-4" value="2">
-				      Seleccionar profesionales
-				    </label>
-					</div>		   
-      </div>
-	    <div class='col-md-4'>
-        <div class="form-group">
-        	Desde:
-          <div class='input-group date' id='datetimepicker8'>
-            <input type='text' class="form-control" id='fecha_inicio_ver_boleta' name='date' placeholder='Seleccionar fecha' />
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-          </div>
-        </div>
-	    </div>
-	    <div class='col-md-4'>
-        <div class="form-group">
-        	Hasta:
-          <div class='input-group date' id='datetimepicker9'>
-            <input type='text' class="form-control" id='fecha_hasta_ver_boleta' name='date' placeholder='Seleccionar fecha' />
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-          </div>
-        </div>
-	    </div>
-
+<div class='container well'>
+  <h5>Filtrar boletas</h5>
+  <div class='row'>
+    <div class='col-md-4'>
+    	<label class="control-label" for="radios">Profesionales</label>			  
+			  <div class="radio">
+			    <label for="radios-3">
+			      <input type="radio" name="radios-ver-boletas" id="radios-3" value="1" checked="checked">
+			      Todos los profesionales
+			    </label>
+				</div>
+			  <div class="radio">
+			    <label for="radios-4">
+			      <input type="radio" name="radios-ver-boletas" id="radios-4" value="2">
+			      Seleccionar profesionales
+			    </label>
+				</div>		   
     </div>
-    <div class='row'>
-      <div class='col-md-9'>
-      	<p></p>
-      </div>    	
-      <div class='col-md-3'><br>
-        <button id="filtrar-atenciones" class="btn btn-primary">Filtrar boletas</button>
+    <div class='col-md-4'>
+      <div class="form-group">
+      	Desde:
+        <div class='input-group date' id='datetimepicker8'>
+          <input type='text' class="form-control" id='fecha_inicio_ver_boleta' name='date' placeholder='Seleccionar fecha' />
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-4'>
+      <div class="form-group">
+      	Hasta:
+        <div class='input-group date' id='datetimepicker9'>
+          <input type='text' class="form-control" id='fecha_hasta_ver_boleta' name='date' placeholder='Seleccionar fecha' />
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
       </div>
     </div>
   </div>
-
-  <br>
-  <h5>Lista de boletas</h5>    
-  <table id="lista_boletas" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
-    <thead>
+  <div class='row'>
+    <div class='col-md-9'>
+    	<p></p>
+    </div>    	
+    <div class='col-md-3'><br>
+      <button id="filtrar-boletas" class="btn btn-primary">Filtrar boletas</button>
+    </div>
+  </div>
+</div>
+<br>
+<h5>Lista de boletas</h5>    
+<table id="lista_boletas" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+    	<th>Id</th>
+      <th>Fecha</th>
+      <th>Rut profesional</th> 
+      <th>Profesional</th>
+      <th>Especialidad</th>
+      <th>Fecha desde</th>
+      <th>Fecha hasta</th>       
+      <th>Monto</th>
+      <th>Estado</th>
+      <th>Ver atenciones</th>
+      <th>Anular boleta</th>  
+    </tr>
+  </thead>
+  <tbody>      
+    <% @boletas.each do |boleta| %>
       <tr>
-      	<th>Id</th>
-        <th>Fecha</th>
-        <th>Rut profesional</th> 
-        <th>Profesional</th>
-        <th>Fecha desde</th>
-        <th>Fecha hasta</th>       
-        <th>Monto</th>
-        <th>Estado</th>
-        <th>Accion</th> 
-       </tr>
-    </thead>
-    <tbody>      
-      <% @boletas.each do |boleta| %>
-        <tr>
-        	<td><%= boleta.id %></td>
-          <td><%= boleta.fecha.strftime("%Y-%m-%d %H:%M") %></td>
-          <td><%= boleta.especialidad_prestador_profesional.profesional.showRut %></td>
-          <td><%= boleta.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
-          <td><%= boleta.especialidad_prestador_profesional.especialidad.nombre %></td>
-          <td><%= boleta.fecha_desde.strftime("%Y-%m-%d %H:%M") %></td>
-          <td><%= boleta.fecha_hasta.strftime("%Y-%m-%d %H:%M") %></td>
-       		<td><%= number_to_currency(boleta.monto, unit: "$ ", separator: '.') %></td>
-       		<td><%= boleta.estado %></td>
-       		<td><a href='#'>Ver atenciones</a></td>
-        </tr>
-      <% end %>  
-    </tbody>    
-  </table>
+      	<td><%= boleta.id %></td>
+        <td><%= boleta.fecha.strftime("%Y-%m-%d") %></td>
+        <td><%= boleta.especialidad_prestador_profesional.profesional.showRut %></td>
+        <td><%= boleta.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+        <td><%= boleta.especialidad_prestador_profesional.especialidad.nombre %></td>
+        <td><%= boleta.fecha_desde.try(:strftime, "%Y-%m-%d") %></td>
+        <td><%= boleta.fecha_hasta.try(:strftime, "%Y-%m-%d") %></td>
+     		<td><%= number_to_currency(boleta.monto, unit: "$ ", separator: '.') %></td>
+     		<td id="cell-<%= boleta.id %>"><%= boleta.estado %></td>
+     		<td><a id="bol-<%= boleta.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" onclick="loadAtenciones(<%= boleta.id%>)">Ver atenciones</a></td>
+        <td>
+        <% if boleta.estado == "Generada" %>  
+          <button id="anular-<%= boleta.id%>" type="button" class="btn btn-xs btn-warning" onclick="anularBoleta(<%= boleta.id%>)">Anular boleta</button>     
+        <% else %>
+          <span>-</span>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>  
+  </tbody>    
+</table>
 
-  <!-- Modal -->
-  <div class="modal fade" id="algunos_profesionales_ver_boletas" role="dialog" aria-labelledby="headerVerBoletas" aria-hidden="false">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4 id="headerVerBoletas">Seleccionar profesionales</h4>
-        </div>
-        <div class="modal-body">
-        	<fieldset id="checkbox_profesionales">
-		        <div class='tree-columns'>
-			        <div class="checkbox">
-		        		<label for="parentProfesionalesVerBoletas" class="bold" >
-		        			<input type="checkbox" class="parentCheckBox" id="parentProfesionalesVerBoletas"> Todos los profesionales
-		        		</label>
-		        	</div>
-		        	<% @profesionales_con_boleta.each do |profesional| %>
-							  <div class="checkbox">
-							    <label for="profesional-ver-boleta-<%= profesional.id %>">
-							      <input type="checkbox" name="checkboxes" id="profesional-ver-boleta-<%= profesional.id %>" class="childCheckBox"> <%= profesional.showName('%n%p%m') %>
-							    </label>
-								</div>
-							<% end %>					  
-						</div>
-					</fieldset>	
-  			</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="algunos_profesionales_ver_boletas" role="dialog" aria-labelledby="headerVerBoletas" aria-hidden="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header ajuste-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4 id="headerVerBoletas">Seleccionar profesionales</h4>
+      </div>
+      <div class="modal-body">
+      	<fieldset id="checkbox_profesionales_boletas">
+	        <div class='tree-columns'>
+		        <div class="checkbox">
+	        		<label for="parentProfesionalesVerBoletas" class="bold" >
+	        			<input type="checkbox" class="parentCheckBox" id="parentProfesionalesVerBoletas"> Todos los profesionales
+	        		</label>
+	        	</div>
+	        	<% @profesionales_con_boleta.each do |profesional| %>
+						  <div class="checkbox">
+						    <label for="profesional-ver-boleta-<%= profesional.id %>">
+						      <input type="checkbox" name="checkboxes" id="profesional-ver-boleta-<%= profesional.id %>" class="childCheckBox"> <%= profesional.showName('%n%p%m') %>
+						    </label>
+							</div>
+						<% end %>					  
+					</div>
+				</fieldset>	
+			</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
       </div>
     </div>
   </div>
+</div>
 
-<% end %>  
+<!-- Modal -->
+<div class="modal fade" id="ver_atenciones_boleta" role="dialog" aria-labelledby="headerVerAtencionesBoleta" aria-hidden="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header ajuste-modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4 id="headerVerAtencionesBoleta">Atenciones consideradas en la boleta</h4>
+      </div>
+      <div class="modal-body">
+        <div id='contenido-ver-atenciones-boleta'></div>   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= javascript_include_tag "administracion" %>

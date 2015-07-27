@@ -1,7 +1,7 @@
 <script>
 	var fecha_minima="<%= @fecha_minima.fecha_comienzo.try(:strftime, '%Y-%m-%d') %>";
 </script>
-<h4>Generar boletas</h4>  
+<h4>Generar boletas</h4>
 <% if @atenciones_salud_para_boleta.blank? %> 
   <p>No hay atenciones de salud para pagar.</p>
 <% else %>  
@@ -94,14 +94,14 @@
   	</tfoot> 
   </table>
 
-  <div class="alert alert-success" role="alert"><button id="generar-boletas" class="btn btn-primary">Generar boletas</button></div>
+  <div class="alert alert-success" role="alert"><button id="generar-boletas" class="btn btn-primary">Generar boletas</button><p id="msg_boletas"></p></div>
 
   <!-- Modal -->
-  <div class="modal fade" id="algunos_profesionales" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="algunos_profesionales" role="dialog" aria-labelledby="headerSeleccionarProfesionales" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4>Seleccionar profesionales</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 id="headerSeleccionarProfesionales">Seleccionar profesionales</h4>
         </div>
         <div class="modal-body">
         	<fieldset id="checkbox_profesionales">

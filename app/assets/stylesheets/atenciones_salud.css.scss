@@ -127,15 +127,17 @@ h1.enc-ges{
   padding: 10px 15px;
   background-color: #428bca;
   padding: 10px 15px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-radius: 4px;
   letter-spacing: 0px;
   margin: 0px;
+  margin-bottom: 5px;
 }
+
+div.panel-group { margin-bottom: 5px !important; }
 
 div.ges{
   margin-bottom: 0px;
-  border-radius: 0px;
+  /*border-radius: 0px;*/
 }
 
 p.texto_font_bajo { font-size: 13px; line-height: 1.25; }

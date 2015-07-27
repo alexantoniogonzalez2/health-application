@@ -1,137 +1,13 @@
 <% notificacion_eno = p_d.getNotificacionEno(p_d.id) %>	
-<% texto_eno = p_d.diagnostico.getTextoENO(p_d.id) %>	
-<h1 class="enc-ges"><strong>Declaración de Enfermedad de Notificación Obligatoria</strong>
-<% texto_eno.each do |te| %>
-<br><%= te['text'] %>
-<% end %>
+<% texto_eno = p_d.diagnostico.getTextoENO(p_d.id) %>
+<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>	
+
+<h1 class="enc-ges">
+	<strong>Declaración de Enfermedad de Notificación Obligatoria</strong>
+	<% texto_eno.each do |te| %>	<br><%= te['text'] %> <% end %>
 </h1>
 
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del prestador</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Institución</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Dirección</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getDireccion %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Teléfono</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.prestador.getTelefono %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Profesional que notifica</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Rut profesional</label>
-			</div>
-			<div class="col-md-8 column">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showRut %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
-
-<div class="panel panel-default ges">
-  <div class="panel-heading">
-    <h3 class="panel-title">Datos del paciente</h3>
-  </div>
-  <div class="panel-body panel-body-ajustado">
-	<div class="container ajustado">
-		<div class="row clearfix">
-			<div class="col-md-4 column">
-				<label>Nombre</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showName('%n%p%m') %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Rut</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showRut %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Edad</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.age_text %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Sexo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.showSexo %>
-			</div>
-		</div>
-		<div class="row clearfix">	
-			<div class="col-md-4 column">
-				<label>Previsión de salud</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getPrevision %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Domicilio</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getDomicilio %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Correo electrónico</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.user.email %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Telefono fijo</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getTelefonoFijo %>
-			</div>
-		</div>
-		<div class="row clearfix">			
-			<div class="col-md-4 column">
-				<label>Celular</label>
-			</div>
-			<div class="col-md-8 column">:
-				<%= @agendamiento.persona.getCelular %>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
+<%= render :partial => "datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'not_'+p_d.id.to_s  } %>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">
@@ -169,7 +45,7 @@
 																																																				 else
 																																																				 	p_d.getFechaInicio
 																																																				 end 
-																																																				  %>" >
+																																																				  %>" <%= disabled %> />
 				</div>
 			</div>
 			<div class="row clearfix">
@@ -181,7 +57,7 @@
 						unless notificacion_eno.nil? 
 							conf = notificacion_eno.confirmacion_diagnostica
 						end %>
-					<select id="select-confirmacion<%=p_d.id%>" class="select-confirmacion">
+					<select id="select-confirmacion<%=p_d.id%>" class="select-confirmacion" <%= disabled %> >
 						<option></option>
 			      <option value="1" <% if conf == '1' %> selected <% end %> >Clínica (incluye imagenología)</option>
 			      <option value="2" <% if conf == '2' %> selected <% end %> >Epidemiológica</option>
@@ -203,10 +79,18 @@
 						end %>
 				<div class="col-md-8 column">:
 					<div class="form-group ajuste-eno">
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1"><input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" value="1">Sí</label> 
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2"><input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" value="2">No</label> 
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3"><input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" value="3">Ignorado</label> 
-					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-4"><input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-4" value="4">No corresponde</label>
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1">
+					  	<input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" value="1" <%= disabled %> /> Sí
+					  </label> 
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2">
+					  	<input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" value="2" <%= disabled %> /> No
+					  </label> 
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3">
+					  	<input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" value="3" <%= disabled %> /> Ignorado
+					  </label> 
+					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-4">
+					  	<input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-4" value="4" <%= disabled %> /> No corresponde
+					  </label>
 					</div>
 				</div>
 			</div>
@@ -215,19 +99,23 @@
 					<label>País de contagio</label>
 				</div>
 				<div class="col-md-6 column">:
-					<select id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio">
-						<option></option>					
-						  <% @paises.each do |pais| %>
-						  	<option value="<%= pais.id %>"
-						  		<% unless notificacion_eno.nil?
-						  			unless notificacion_eno.pais_contagio.nil? 
-					  					if notificacion_eno.pais_contagio.id == pais.id 
-					  		%> selected <% 
-					  					end
-					  				end
-					  		end %> ><%= pais.nombre %></option>      			
-	   					<% end %>
-			    </select>
+					<% if tipo == 'edit' %>
+						<select id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio">
+							<option></option>					
+							  <% @paises.each do |pais| %>
+							  	<option value="<%= pais.id %>"
+							  		<% unless notificacion_eno.nil?
+							  			unless notificacion_eno.pais_contagio.nil? 
+						  					if notificacion_eno.pais_contagio.id == pais.id 
+						  		%> selected <% 
+						  					end
+						  				end
+						  		end %> ><%= pais.nombre %></option>      			
+		   					<% end %>
+				    </select>
+			    <% else %>
+			    	<%= notificacion_eno.try(:pais_contagio).try(:nombre) unless notificacion.nil? %>
+			    <% end %>
 				</div>
 			</div>
 			<div class="row clearfix">	
@@ -239,16 +127,21 @@
 							emb = notificacion_eno.embarazo
 						end %>
 				<div class="col-md-5 column"><span class="eno">:</span>
-				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-1"><input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" value="1" >Sí</label> 
-				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-2"><input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" value="2">No</label> 
-				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-3"><input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-3" value="3">No corresponde</label>	  
+				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-1">
+				  	<input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" value="1" <%= disabled %> /> Sí
+				  </label> 
+				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-2">
+				  	<input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" value="2" <%= disabled %> /> No
+				  </label> 
+				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-3">
+				  	<input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-3" value="3" <%= disabled %> /> No corresponde
+				  </label>	  
 				</div>
 				<div class="col-md-3 column">
 					<label class="eno">Semanas de gestación</label>
 				</div>
-				<div class="col-md-2 column colum-ajuste-eno"><span>:</span><input id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= unless notificacion_eno.nil? 
-																																																																																										notificacion_eno.semanas_gestacion
-				 																																																																																				  end %>">
+				<div class="col-md-2 column colum-ajuste-eno">
+					<span>:</span><input id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= notificacion_eno.try(:semanas_gestacion) unless notificacion_eno.nil? %>" <%= disabled %> />
 				</div>
 			</div>			
 			<div class="row clearfix">	
@@ -261,9 +154,15 @@
 						end %>
 				<div class="col-md-9 column"><span class="eno">:</span>
 					<div class="form-group ajuste-eno">
-					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-1"><input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="1" >Caso nuevo</label> 
-					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-2"><input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-2" value="2">Recaída, igual localización</label> 
-					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-3"><input <% if tbc == '3' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-3" value="4">Recaída, otra localización</label>					  
+					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-1">
+					  	<input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="1" <%= disabled %> /> Caso nuevo
+					  </label> 
+					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-2">
+					  	<input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-2" value="2" <%= disabled %> /> Recaída, igual localización
+					  </label> 
+					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-3">
+					  	<input <% if tbc == '3' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-3" value="4" <%= disabled %> /> Recaída, otra localización
+					  </label>					  
 					</div>
 				</div>
 			</div>			

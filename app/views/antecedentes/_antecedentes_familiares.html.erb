@@ -15,35 +15,39 @@
 				<tr id='tr-vacio-ant-fam-mue'><td colspan='5' >No hay información de antecedentes familiares.</td></tr>
 			<% end %>
     </tbody>    
-	</table>	
-	<a href="#modal-container-ant-fam-mue-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (muerte)</a>
-	<div id='ant_mue_modal-div'></div>
+	</table>
 
-	<% unless @decesos.empty?  %>
-		<% @decesos.each do |deceso| %>
-			<%= render :partial => "antecedentes/antecedentes_familiares_muertes_edit", :locals => { :deceso => deceso } %>
-		<% end %>
-	<% end %>	
+	<% if @tipo == 'edit' or !@atencion_salud %>
+		<a href="#modal-container-ant-fam-mue-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (muerte)</a>
+		<div id='ant_mue_modal-div'></div>
 
-	<div class="modal fade" id="modal-container-ant-fam-mue-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg2">
-			<div class="modal-content">
-				<div class="modal-header">
-					 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamMue('new')">×</button>
-					<h4 class="modal-title" id="myModalLabel">
-						Antecedentes familiares
-					</h4>
-				</div>
-				<div class="modal-body ajuste-alto2">
-					<%= render :partial => "antecedentes/antecedentes_familiares_muertes_new", :locals => { :persona => @persona } %>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="cerrarModalAntFamMue('new')">Cerrar ventana</button>
-					<button type="button" id="agregar-ant-fam-mue-new" class="btn btn-success cambiar_antecedente">Agregar antecedente</button>
-				</div>
-			</div>			
-		</div>		
-	</div>
+		<% unless @decesos.empty?  %>
+			<% @decesos.each do |deceso| %>
+				<%= render :partial => "antecedentes/antecedentes_familiares_muertes_edit", :locals => { :deceso => deceso } %>
+			<% end %>
+		<% end %>	
+
+		<div class="modal fade" id="modal-container-ant-fam-mue-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg2">
+				<div class="modal-content">
+					<div class="modal-header">
+						 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamMue('new')">×</button>
+						<h4 class="modal-title" id="myModalLabel">
+							Antecedentes familiares
+						</h4>
+					</div>
+					<div class="modal-body ajuste-alto2">
+						<%= render :partial => "antecedentes/antecedentes_familiares_muertes_new", :locals => { :persona => @persona } %>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="cerrarModalAntFamMue('new')">Cerrar ventana</button>
+						<button type="button" id="agregar-ant-fam-mue-new" class="btn btn-success cambiar_antecedente">Agregar antecedente</button>
+					</div>
+				</div>			
+			</div>		
+		</div>
+	<% end %>
+
 
 	<br>
 	<h5>Enfermedades crónicas</h5>
@@ -62,34 +66,36 @@
     </tbody>    
 	</table>
 
-	<a href="#modal-container-ant-fam-cro-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (enfermedad crónica)</a>
-	<div id='ant_cro_modal-div'></div>	
+	<% if @tipo == 'edit' or !@atencion_salud %>
+		<a href="#modal-container-ant-fam-cro-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (enfermedad crónica)</a>
+		<div id='ant_cro_modal-div'></div>	
 
-	<% unless @ant_enf_cro.empty?  %>
-		<% @ant_enf_cro.each do |ant_enf_cro| %>
-			<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_edit", :locals => { :ant_enf_cro => ant_enf_cro } %>
+		<% unless @ant_enf_cro.empty?  %>
+			<% @ant_enf_cro.each do |ant_enf_cro| %>
+				<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_edit", :locals => { :ant_enf_cro => ant_enf_cro } %>
+			<% end %>
 		<% end %>
-	<% end %>
 
-	<div class="modal fade" id="modal-container-ant-fam-cro-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg2">
-			<div class="modal-content">
-				<div class="modal-header">
-					 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamCro('new')">×</button>
-					<h4 class="modal-title" id="myModalLabel">
-						Antecedentes familiares
-					</h4>
-				</div>
-				<div class="modal-body ajuste-alto2">
-					<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_new", :locals => { :persona => @persona } %>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="cerrarModalAntFamCro('new')">Cerrar ventana</button>
-					<button type="submit" id="agregar-ant-fam-cro-new" class="btn btn-success">Agregar antecedente</button>
-				</div>
-			</div>			
-		</div>		
-	</div>
+		<div class="modal fade" id="modal-container-ant-fam-cro-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg2">
+				<div class="modal-content">
+					<div class="modal-header">
+						 <button type="button" class="close" aria-hidden="true" onclick="cerrarModalAntFamCro('new')">×</button>
+						<h4 class="modal-title" id="myModalLabel">
+							Antecedentes familiares
+						</h4>
+					</div>
+					<div class="modal-body ajuste-alto2">
+						<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_new", :locals => { :persona => @persona } %>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="cerrarModalAntFamCro('new')">Cerrar ventana</button>
+						<button type="submit" id="agregar-ant-fam-cro-new" class="btn btn-success">Agregar antecedente</button>
+					</div>
+				</div>			
+			</div>		
+		</div>
+	<% end %>
 	
 <% else %>
 	<%= render :partial => "layouts/permiso" %>

@@ -154,6 +154,7 @@ class PersonaPrestacionController < ApplicationController
 	end	
 
 	def agregarDiagPres
+		@tipo = params[:tipo]
 		@p_p = FiPersonaPrestaciones.find(params[:id])
 		@id = (params[:atencion_salud_id])
 

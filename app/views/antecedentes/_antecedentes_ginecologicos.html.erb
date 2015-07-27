@@ -1,4 +1,5 @@
 <% if @acceso %>
+<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
 <h4>Antecedentes ginecológicos</h4>
 
 <div class='container'>
@@ -6,14 +7,14 @@
     <div class="col-md-6">
     	<div class="form-group col-md-10">
       	<span>Fecha de menarquía:</span>      
-      	<input type='text' class="form-control" id='fecha-gin-menq' placeholder='Ingresar fecha de menarquía' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_menarquia) %>' />  
+      	<input type='text' class="form-control" id='fecha-gin-menq' placeholder='Ingresar fecha de menarquía' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_menarquia) %>' <%= disabled %> />  
       </div>     
     </div>
 		<div class='col-md-6'>
 			<div class="form-group col-md-12">
 			  <span>Duración de menstruación (días):</span><br>  
 			  <div class="col-md-4">
-			  	<input id="ant-gin-dur-men" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:duracion_menstruacion) %>'>
+			  	<input id="ant-gin-dur-men" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:duracion_menstruacion) %>' <%= disabled %> />
 			  </div>
 			</div>	
 		</div>
@@ -23,14 +24,14 @@
 			<div class="form-group col-md-12">
 			  <span>Frecuencia promedio (días):</span><br>  
 			  <div class="col-md-4">
-			  	<input id="ant-gin-fre-pro" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:frecuencia_promedio) %>'>
+			  	<input id="ant-gin-fre-pro" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:frecuencia_promedio) %>' <%= disabled %> />
 			  </div>
 			</div>	
 		</div>
     <div class="col-md-6">
     	<div class="form-group col-md-10 column">
       	<span>Fecha de menopausia:</span>      
-      	<input type='text' class="form-control" id='fecha-gin-menp' placeholder='Ingresar fecha de menopausia' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_menopausia) %>' />  
+      	<input type='text' class="form-control" id='fecha-gin-menp' placeholder='Ingresar fecha de menopausia' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_menopausia) %>' <%= disabled %> />  
       </div>     
     </div>
 	</div>
@@ -38,13 +39,13 @@
     <div class="col-md-6">
     	<div class="form-group col-md-10 column">
       	<span>Fecha de último PAP:</span>      
-      	<input type='text' class="form-control" id='fecha-gin-PAP' placeholder='Ingresar fecha de último PAP' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_ultimo_PAP) %>' />  
+      	<input type='text' class="form-control" id='fecha-gin-PAP' placeholder='Ingresar fecha de último PAP' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_ultimo_PAP) %>' <%= disabled %> />  
       </div>     
     </div>
     <div class="col-md-6">
     	<div class="form-group col-md-10 column">
       	<span>Fecha de última mamografía:</span>      
-      	<input type='text' class="form-control" id='fecha-gin-mam' placeholder='Ingresar fecha de última mamografía' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_ultima_mamografia) %>' />  
+      	<input type='text' class="form-control" id='fecha-gin-mam' placeholder='Ingresar fecha de última mamografía' value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:fecha_ultima_mamografia) %>' <%= disabled %> />  
       </div>     
     </div>
 	</div>
@@ -53,7 +54,7 @@
 			<div class="form-group col-md-12">
 			  <span>Número de gestaciones:</span><br>  
 			  <div class="col-md-6">
-			  	<input id="ant-gin-num-ges" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:numero_gestaciones) %>'>
+			  	<input id="ant-gin-num-ges" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:numero_gestaciones) %>' <%= disabled %> />
 			  </div>
 			</div>	
 		</div>
@@ -61,7 +62,7 @@
 			<div class="form-group col-md-12">
 			  <span>Número de partos:</span><br>  
 			  <div class="col-md-6">
-			  	<input id="ant-gin-num-par" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:numero_partos) %>'>
+			  	<input id="ant-gin-num-par" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:numero_partos) %>' <%= disabled %> />
 			  </div>
 			</div>	
 		</div>
@@ -69,7 +70,7 @@
 			<div class="form-group col-md-12">
 			  <span>Número de abortos:</span><br>  
 			  <div class="col-md-6">
-			  	<input id="ant-gin-num-abo" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:numero_abortos) %>'>
+			  	<input id="ant-gin-num-abo" type="number" class="form-control" value='<%= @persona.try(:persona_antecedentes_ginecologicos).try(:numero_abortos) %>' <%= disabled %> />
 			  </div>
 			</div>	
 		</div>

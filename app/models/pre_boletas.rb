@@ -6,6 +6,6 @@ class PreBoletas < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit(:id,:especialidad_prestador_profesional,:prestador,:monto,:estado,:fecha,:responsable,:fecha_desde,:fecha_hasta,:boletas_atenciones_pagadas)
+    params.require(:list).permit(:id,:especialidad_prestador_profesional,:monto,:estado,:fecha,:responsable,:fecha_desde,:fecha_hasta,:boletas_atenciones_pagadas)
   end	
 end

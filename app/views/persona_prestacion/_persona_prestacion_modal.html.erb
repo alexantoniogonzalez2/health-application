@@ -1,3 +1,4 @@
+<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>
 <div class="modal fade" id="modal-container-pres-<%= p_p.id %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -12,7 +13,7 @@
               <label>Fecha prestación</label>
             </div>
             <div class="col-md-8 column">:
-              <input name="f_p_<%= p_p.id%>" class="form-control fecha-mes" type="text" value="<%= p_p.getFechaPrestacion %>">
+              <input name="f_p_<%= p_p.id%>" class="form-control fecha-mes" type="text" value="<%= p_p.getFechaPrestacion %>" <%= disabled %> >
             </div>
           </div>
           <div class="row clearfix margin-top">
@@ -20,22 +21,7 @@
               <label>Establecimiento</label>
             </div>
             <div class="col-md-8 column">:
-            <input id="prestador-prestacion-<%= p_p.id%>" type="text" class="form-control ajuste-cen-der width_300" value="<%= p_p.prestador_texto %>">
-            <!--
-              <select id="select_prestadores<%= p_p.id %>" class="select_prestadores_proc">  
-                <option></option>         
-                <% @prestadores.each do |pres| %>
-                  <option value="<%= pres.id %>"
-                    <% unless p_p.nil?
-                        unless p_p.prestador.nil?
-                          if p_p.prestador.id == pres.id 
-                            %> selected <% 
-                          end 
-                        end
-                      end %> ><%= pres.nombre %></option>           
-                <% end %>
-              </select>   
-              -->      
+              <input id="prestador-prestacion-<%= p_p.id%>" type="text" class="form-control ajuste-cen-der width_300" value="<%= p_p.prestador_texto %>" <%= disabled %> >
             </div>        
           </div>
           <div class="row clearfix">
@@ -50,8 +36,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" onclick="cerrarModalAntPres(<%= p_p.id %>)">Cerrar ventana</button>
-        <button id="bcp<%= p_p.id%>" type="button" class="btn btn-danger" onclick="eliminarPrestacion(<%= p_p.id%>)">Eliminar</button>
-        <button type="button" onclick="guardarPrestacion(<%= p_p.id%>)" class="btn btn-success">Guardar</button>
+        <% if tipo == 'edit' %>
+          <button id="bcp<%= p_p.id%>" type="button" class="btn btn-danger" onclick="eliminarPrestacion(<%= p_p.id%>)">Eliminar</button>
+          <button type="button" onclick="guardarPrestacion(<%= p_p.id%>)" class="btn btn-success">Guardar</button>
+        <% end %>  
       </div>
     </div>            
   </div>        

@@ -131,6 +131,9 @@ AplicacionMedica::Application.routes.draw do
 
   #Administración
   post '/generar_boletas', to: 'administracion#generarBoletas'
+  post '/filtrar_boletas', to: 'administracion#filtrarBoletas'
+  post '/cargar_atenciones_boleta', to: 'administracion#cargarAtencionesBoleta'
+  post '/anular_boleta', to: 'administracion#anularBoleta'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

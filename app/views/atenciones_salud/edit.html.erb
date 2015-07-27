@@ -67,7 +67,7 @@
                   <h4>Antecedentes del paciente</h4>
                 </div>
                 <div class="modal-body ajuste-height">
-                  <div id='contenido-ant'></div>        
+                  <div id='contenido-ant-edit'></div>        
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
@@ -168,7 +168,7 @@
       	</div>
         <div id="diag_modal-div" >
           <% @persona_diagnostico.each do |p_d| %>
-             <%= render :partial => "persona_diagnostico/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+             <%= render :partial => "persona_diagnostico/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo =>'edit'} %>
           <% end %>      
         </div>
     	
@@ -178,12 +178,12 @@
           <input type='hidden' id="select_examen" class="ajuste-select float-right" width="600px" >
           <div class="list-group" name="examen-div" id="examen-div">  
             <% @persona_examen.each do |p_e| %>
-              <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_e} %> 
+              <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_e, :tipo =>'edit'} %> 
             <% end %>
           </div>
           <div id="exa_modal-div" >
             <% @persona_examen.each do |p_e| %>
-              <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_e} %> 
+              <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_e, :tipo =>'edit'} %> 
             <% end %>      
           </div>
 
@@ -191,12 +191,12 @@
           <input type='hidden' id="select_procedimiento" class="ajuste-select float-right" >
           <div class="list-group" name="procedimiento-div" id="procedimiento-div">  
             <% @persona_procedimiento.each do |p_p| %>
-              <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_p} %>  
+              <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_p, :tipo =>'edit'} %>  
             <% end %>
           </div>
           <div id="proc_modal-div" >
             <% @persona_procedimiento.each do |p_p| %>
-              <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_p} %> 
+              <%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_p, :tipo =>'edit'} %> 
             <% end %>      
           </div> 
 
@@ -204,20 +204,20 @@
           <input type='hidden' id="select_medicamento" class="float-right">
           <div class="list-group" name="medicamento-div" id="medicamento-div">  
             <% @persona_medicamento.each do |p_m| %>
-              <%= render :partial => "persona_medicamento/persona_medicamento", :locals => {:persona_medicamento => p_m} %>     
+              <%= render :partial => "persona_medicamento/persona_medicamento", :locals => {:persona_medicamento => p_m, :tipo =>'edit'} %>     
             <% end %>
           </div>
           <div id="med_modal-div" >
             <% @persona_medicamento.each do |p_m| %>
-              <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m} %> 
+              <%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m, :tipo =>'edit'} %> 
             <% end %>      
           </div>
 
           <label>Indicaciones generales</label><span id="auto-indicaciones">Autoguardado</span>
           <textarea id='indicaciones_generales' class='form-control' rows='3' cols='50'><%= @atencion_salud.indicaciones_generales %></textarea>
 
-          <a href="#modal-container-certificados" role="button" class="btn" data-toggle="modal" onclick="actualizarDiagCert(<%= @certificado.id %>)">Emitir certificado</a> | <%= link_to 'Imprimir indicaciones', descargar_indicaciones_path(:id => @atencion_salud.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post %> | <%= link_to 'Imprimir receta', descargar_receta_path(:id => @atencion_salud.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post %>
-          <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id , :certificado => @certificado} %>
+          <a href="#modal-container-certificados" role="button" class="btn" data-toggle="modal" onclick="actualizarDiagCert(<%= @certificado.id %>,'edit')">Emitir certificado</a> | <%= link_to 'Imprimir indicaciones', descargar_indicaciones_path(:id => @atencion_salud.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post %> | <%= link_to 'Imprimir receta', descargar_receta_path(:id => @atencion_salud.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post %>
+          <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id , :certificado => @certificado, :tipo => 'edit' } %>
         </fieldset>
         <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
         <button id='guardar' class='btn btn-success ajus-pos-right'>Guardar atención</button>
@@ -242,3 +242,4 @@
 <%= javascript_include_tag "home" %>
 <%= javascript_include_tag "antecedentes" %>
 <%= javascript_include_tag "atencion_salud/certificado" %>
+<%= javascript_include_tag "atenciones_salud" %>
