@@ -55,7 +55,7 @@ namespace :agendamiento do
 					tmp_f = fecha_comienzo + step.to_i.minutes
 
 					@agendamiento = AgAgendamientos.new
-					if estado == "Paciente atendido" @agendamiento.persona = PerPersonas.find(1) 
+					@agendamiento.persona = PerPersonas.find(1) if (estado == "Paciente atendido" or estado == "Paciente en espera")
 					@agendamiento.fecha_comienzo = tmp_i
 					@agendamiento.fecha_final = tmp_f
 					@agendamiento.agendamiento_estado = @estadoAgendamiento
