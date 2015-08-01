@@ -652,7 +652,7 @@ class AtencionesSaludController < ApplicationController
 	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
 	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
 	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
-	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND (fcd.certificado_id = ?  OR fcd.certificado_id is null)',@id,@certificado.id)	  
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND (fcd.certificado_id = ?  OR fcd.certificado_id is null) AND es_antecedente != 1',@id,@certificado.id)	  
 
 		respond_to do |format|     
     	format.js   {}

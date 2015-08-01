@@ -1,5 +1,5 @@
-$("<%= escape_javascript( render :partial => "persona_medicamento", :locals => {:persona_medicamento => @persona_medicamento} ) %>").appendTo("#medicamento-div");
-$("<%= escape_javascript( render :partial => "persona_medicamento_modal", :locals => {:persona_medicamento => @persona_medicamento} ) %>").appendTo("#med_modal-div");
+$("<%= escape_javascript( render :partial => "persona_medicamento", :locals => {:persona_medicamento => @persona_medicamento, :tipo => 'edit'} ) %>").appendTo("#medicamento-div");
+$("<%= escape_javascript( render :partial => "persona_medicamento_modal", :locals => {:persona_medicamento => @persona_medicamento, :tipo => 'edit'} ) %>").appendTo("#med_modal-div");
 $.ajax({
   type: 'POST',
   url: '/agregar_diag_med',

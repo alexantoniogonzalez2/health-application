@@ -162,7 +162,7 @@ class PersonaPrestacionController < ApplicationController
 	  	.joins(:persona_diagnosticos_atencion_salud)
 	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
 	  					fi_persona_diagnosticos.diagnostico_id")
-	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ?',@id)	  
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND es_antecedente != 1 ',@id)	  
 
 		respond_to do |format|     
     	format.js   {}

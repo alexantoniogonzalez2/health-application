@@ -20,7 +20,7 @@
 
 <h1 class="enc-ges">Formulario de constancia de información al paciente GES (Artículo 24°, Ley 19.996)</h1>
 
-<%= render :partial => "datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'con_'+p_d.id.to_s  } %>
+<%= render :partial => "atenciones_salud/datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'con_'+p_d.id.to_s  } %>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">
@@ -167,7 +167,7 @@
 		<div id="panel-element-GES" class="panel-collapse collapse">
 			<div class="panel-body panel-body-ajustado panel-ges">
 				<ol>	
-					<%= render :partial => "lista_ges" %>
+					<%= render :partial => "atenciones_salud/lista_ges" %>
 				</ol>
 			</div>
 		</div>

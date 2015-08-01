@@ -5,7 +5,7 @@
 	<% texto_eno.each do |te| %> <br><%= te['text'] %>	<% end %>
 </h1>
 
-<%= render :partial => "datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'not_ant'+p_d.id.to_s  } %>
+<%= render :partial => "atenciones_salud/datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'not_ant'+p_d.id.to_s  } %>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">

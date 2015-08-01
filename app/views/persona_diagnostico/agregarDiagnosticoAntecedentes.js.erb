@@ -1,5 +1,5 @@
 <% if @ant_prof %>
-	$("<%= escape_javascript( render :partial => 'persona_diagnostico/persona_diagnostico_anterior', :locals => {:p_d => @persona_diagnostico} ) %>").appendTo("#antecedentes-div");
+	$("<%= escape_javascript( render :partial => 'persona_diagnostico/anterior/persona_diagnostico_anterior', :locals => {:p_d => @persona_diagnostico} ) %>").appendTo("#antecedentes-div");
 	$("<%= escape_javascript( render :partial => 'antecedentes/persona_diagnostico_modal', :locals => {:p_d => @persona_diagnostico } ) %>").appendTo("#antecedentes-modal-div");	
 <% else %>
 	$("<%= escape_javascript( render :partial => 'antecedentes/antecedentes_medicos_row', :locals => {:p_d => @persona_diagnostico } ) %>").appendTo("#lista-diagnosticos");

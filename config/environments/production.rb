@@ -20,14 +20,14 @@ AplicacionMedica::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -59,7 +59,11 @@ AplicacionMedica::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  # config.assets.precompile += %w( search.js )
+   config.assets.precompile += %w( home.js )
+   config.assets.precompile += %w( agendamiento/buscador_hora.js )
+   config.assets.precompile += %w( agendamiento.js )
+   config.assets.precompile += %w( atenciones_salud.js )
+   config.assets.precompile += %w( administracion.js )
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -77,4 +81,20 @@ AplicacionMedica::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.action_mailer.default_url_options = { host: 'medracer.com'}
+  config.action_mailer.delivery_method = :smtp  
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8"
+
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :authentication => "plain",
+    :enable_starttls_auto => true,
+    :user_name => "contacto@medracer.com",
+    :password => "P(?xq1v42"
+  }
+
 end

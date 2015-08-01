@@ -29,7 +29,6 @@
 //= require jquery-ui/autocomplete
 //= require jquery-ui/datepicker
 //= require jquery.label_better
-//= require jquery.qtip.js
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require_tree .

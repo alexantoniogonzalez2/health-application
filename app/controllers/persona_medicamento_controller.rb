@@ -3,8 +3,7 @@ class PersonaMedicamentoController < ApplicationController
 	def cargarMedicamentos		
 
 		term= params[:q]
-		med=[]
-		
+		med=[]		
 
 		@medicamentos = MedMedicamentos.where("med_medicamentos.nombre LIKE ? ", "%#{term}%" )
 		
@@ -126,7 +125,7 @@ class PersonaMedicamentoController < ApplicationController
 	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
 	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
 	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
-	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos.persona_id = ? ',params[:id], @persona_medicamento.persona )	  
+	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos.persona_id = ? AND es_antecedente != 1',params[:id], @persona_medicamento.persona )	  
 
 		respond_to do |format|     
     	format.js   {}

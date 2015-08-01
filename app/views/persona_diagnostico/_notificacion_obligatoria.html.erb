@@ -7,7 +7,7 @@
 	<% texto_eno.each do |te| %>	<br><%= te['text'] %> <% end %>
 </h1>
 
-<%= render :partial => "datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'not_'+p_d.id.to_s  } %>
+<%= render :partial => "atenciones_salud/datos_prestador_paciente", :locals => { :agendamiento => @agendamiento, :id => 'not_'+p_d.id.to_s  } %>
 
 <div class="panel panel-default ges">
   <div class="panel-heading">
@@ -114,7 +114,7 @@
 		   					<% end %>
 				    </select>
 			    <% else %>
-			    	<%= notificacion_eno.try(:pais_contagio).try(:nombre) unless notificacion.nil? %>
+			    	<%= notificacion_eno.try(:pais_contagio).try(:nombre) unless notificacion_eno.nil? %>
 			    <% end %>
 				</div>
 			</div>

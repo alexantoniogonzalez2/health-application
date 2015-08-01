@@ -291,7 +291,7 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .bg-pattern-horizontal {
-  background-image: url(../assets/pattern_horizontal.png) !important;
+  background-image: asset-data-url("pattern_horizontal.png") !important;
   background-repeat: repeat;
   top: 0;
   left: 0;
@@ -301,7 +301,7 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .bg-pattern-vertical {
-  background-image: url(../assets/pattern_vertical.png) !important;
+  background-image: asset-data-url("pattern_vertical.png") !important;
   background-repeat: repeat;
   top: 0;
   left: 0;
@@ -311,7 +311,7 @@ fieldset[disabled] .btn-xl.active {
 }
 
 section.bg-pattern-horizontal {
-  background-image: url(../assets/pattern_horizontal.png) !important;
+  background-image: asset-data-url("pattern_horizontal.png") !important;
   background-repeat: repeat;
   top: 0;
   left: 0;
@@ -321,7 +321,7 @@ section.bg-pattern-horizontal {
 }
 
 section.bg-pattern-vertical {
-  background-image: url(../assets/pattern_vertical.png) !important;
+  background-image: asset-data-url("pattern_vertical.png") !important;
   background-repeat: repeat;
   top: 0;
   left: 0;
@@ -335,7 +335,7 @@ body.home {
   color: white;
   text-align: center;
   background-attachment: fixed !important;
-  background-image: url(../assets/bg1.jpg);
+  background-image: asset-data-url("bg1.jpg");
   -webkit-transition:background-image 1s ease-in; 
   background-repeat: no-repeat;
   -webkit-background-size: cover;

@@ -1,5 +1,5 @@
 <% if @ant_prof %>
-	$("#pd_ant<%= @persona_diagnostico.id %>").remove();
+	$("#pd_ant<%= @persona_diagnostico_atencion.id %>").remove();
 <% else %>
-	$("#tr-diag-<%= @persona_diagnostico.id %>").replaceWith('');
+	$("#tr-diag-<%= @persona_diagnostico_atencion.id %>").replaceWith('');
 <% end %>
