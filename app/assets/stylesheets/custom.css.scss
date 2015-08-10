@@ -73,6 +73,7 @@ div.ajuste-signin > div.intro-text2 > div.alert-danger { width: 600px; margin: a
 .row { margin: 0px; }
 .ajustado {
   padding-left: 0px !important;
+  padding-right: 0px !important;
   div.row > .column { padding-left: 0px !important; padding-right: 0px !important; }
 }
 
@@ -213,7 +214,6 @@ table.print {
   }
  }
 
-
 h2.print { text-transform: uppercase; text-decoration: underline; } 
 h5.uppercase, h6.uppercase, label.uppercase { text-transform: uppercase; font-weight: bold; } 
 h6.uppercase { font-size: 16px; margin-bottom: 10px;}
@@ -257,7 +257,11 @@ input.fecha, input.fecha-mes {
   margin-top: 1px;
 }
 
-div.checkbox { /*display: inline-block;*/ } 
 div.div-diag-cert { display: inline;}
 
 .bold { font-weight: bold !important; }
+
+/*Fix problema de borde izquierdo de select3 al colocar float:right y inline-block; */
+.select2-choice, .select2-default {overflow: visible !important; }
+
+.margin-right { margin-right: 10px;}

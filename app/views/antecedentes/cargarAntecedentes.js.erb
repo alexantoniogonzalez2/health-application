@@ -1,6 +1,6 @@
 <%	case @ant %>
 <%	when 'med' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_medicamentos => @persona_medicamentos, :atencion_salud => @atencion_salud } ) %></div>")			
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_medicamentos => @persona_medicamentos, :atencion_salud => @atencion_salud, :tipo => 'edit' } ) %></div>")			
 <%	when 'ale' %>
 			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_prestacion => @persona_prestacion, :atencion_salud => @atencion_salud, :prestadores => @prestadores } ) %></div>")
 <%	when 'vac' %>

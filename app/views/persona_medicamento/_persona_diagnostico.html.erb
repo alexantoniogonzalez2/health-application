@@ -1,4 +1,4 @@
-<% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>
+<% disabled = (@tipo == 'edit' ) ? '' : 'disabled' %>
 <div class="radio diag-med-<%= p_d.id %>">
   <label for="pd_med_<%= p_d.id%>-<%= med %>" >
     <input type="radio" name="rad-med-<%= med %>" onchange="act_med_diag(<%= med %>)" id="pd_med_<%= p_d.id%>-<%= med %>" value="<%= p_d.id%>" <% if p_d.id == pe_di %> checked <% end %> <%= disabled %> >

@@ -433,10 +433,10 @@ class AtencionesSaludController < ApplicationController
 	def reabrirAtencion	
 		@atencion_salud = FiAtencionesSalud.find(params[:id_atencion])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
-		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
+		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Atención reabierta").first
 		@agendamiento.agendamiento_estado = @estadoAgendamiento
 		@agendamiento.save	
-  	redirect_to action: "edit", id: params[:id_atencion]	
+  	redirect_to action: "show", id: params[:id_atencion]	
 	end
 		
 	def guardarTexto

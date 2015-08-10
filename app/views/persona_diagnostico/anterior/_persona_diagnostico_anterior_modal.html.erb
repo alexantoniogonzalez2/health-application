@@ -90,9 +90,7 @@
               <div class="row clearfix footer">
                 <div class="col-md-12 column">
                   <button type="button" onclick="actualizarDiagnostico(<%= p_d.diagnostico.id %>,<%= p_d.id%>)" class="btn btn-primary">Actualizar Diagnóstico</button> 
-
-                  <button type="button" onclick="cerrarDiagnostico(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
-
+                  <button type="button" onclick="cerrarDiagnosticoAnterior(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
                 </div>                  
               </div>
             </div> <!--Cierre container -->
@@ -135,7 +133,7 @@
               <div class="container ajustado">  
                 <div class="row clearfix">
                   <div class="col-md-12 column">              
-                    <%= render :partial => "persona_diagnostico/anterior/notificacion_obligatoria_anterior", :locals => {:p_d => p_d, :@agendamiento => @agendamiento} %>
+                    <%= render :partial => "persona_diagnostico/anterior/notificacion_obligatoria_anterior", :locals => {:p_d => p_d, :@agendamiento => @agendamiento, :tipo => 'show'} %>
                   </div>
                 </div>
                 <div class="row clearfix">

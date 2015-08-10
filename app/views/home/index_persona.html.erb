@@ -25,9 +25,9 @@
 				<div class="tab-pane" id="familia"><%= render :partial => "persona/familia" %></div>
 				<div class="tab-pane" id="horas"><%= render :partial => "agendamiento/buscador_hora" %></div>
 			  <div class="tab-pane" id="ant_med"><%= render :partial => "antecedentes/antecedentes_medicos" %></div>
-			  <div class="tab-pane" id="ant_quir"><%= render :partial => "antecedentes/antecedentes_quirurgicos" %></div>
+			  <div class="tab-pane" id="ant_quir"><%= render :partial => "antecedentes/antecedentes_quirurgicos",:locals => { :tipo => 'edit' } %></div>
 			  <% if @persona.genero == 'Femenino' %><div class="tab-pane" id="ant_gine"><%= render :partial => "antecedentes/antecedentes_ginecologicos" %></div><% end %>
-			  <div class="tab-pane" id="medicamentos"><%= render :partial => "antecedentes/medicamentos" %></div>
+			  <div class="tab-pane" id="medicamentos"><%= render :partial => "antecedentes/medicamentos",:locals => { :tipo => 'edit' } %></div>
 			  <div class="tab-pane" id="alergias"><%= render :partial => "antecedentes/alergias" %></div>
 			  <div class="tab-pane" id="vacunas"><%= render :template => "vacunas/index" %></div>
 			  <div class="tab-pane" id="actividad_fisica"><%= render :partial => "antecedentes/actividad_fisica" %></div>

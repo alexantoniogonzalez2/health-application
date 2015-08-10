@@ -32,7 +32,7 @@
 					<label>Establecimiento al cual se deriva</label>
 				</div>
 				<div class="col-md-8 column">:
-				<input id="int-pdt-<%= p_d.id%>" type="text" class="form-control ajuste-cen-der auto-int-pdt" value="<%= interconsulta.prestador_destino_texto if !interconsulta.nil?  %>"  <%= disabled %>/>						
+				<input id="int-pdt-<%= p_d.id %>" type="text" class="form-control ajuste-cen-der" onkeyup="autoIntPdt(<%= p_d.id %>)" value="<%= interconsulta.prestador_destino_texto unless interconsulta.nil?  %>" <%= disabled %> />						
 				</div>				
 			</div>
 			<div class="row clearfix ajuste-margin">
@@ -41,7 +41,7 @@
 				</div>
 				<div class="col-md-8 column">:
 					<% if tipo == 'edit' %>
-						<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad_interconsulta">	
+						<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad_interconsulta" onchange="selectEspecialidadInterconsulta(<%= p_d.id %>)">	
 							<option></option>					
 						  <% @especialidades.each do |esp| %>
 						  	<option value="<%= esp.id %>" 
@@ -84,30 +84,30 @@
 					<label>Propósito:</label>
 					<div class="form-group form-ges" id="int_<%= p_d.id %>">
 				    <div class="radio">
-				      <label for="radios-int-1">
-				      	<input type="radio" name="radios-int-<%= p_d.id%>" disabled value="1" id="radios-int-1" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %> <%= disabled %> /> Diagnóstico
+				      <label for="radios-int-1-<%= p_d.id%>">
+				      	<input type="radio" disabled onchange="agregarPropInt(<%= p_d.id %>,1)" id="radios-int-1-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %> <%= disabled %> /> Diagnóstico
 				      </label>
 				    </div>					
 				    <div class="radio">
-				      <label for="radios-int-2">
-				      	<input type="radio" name="radios-int-<%= p_d.id%>" disabled value="2" id="radios-int-2" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %> <%= disabled %> /> Paciente en tratamiento
+				      <label for="radios-int-2-<%= p_d.id%>">
+				      	<input type="radio" disabled onchange="agregarPropInt(<%= p_d.id %>,2)" id="radios-int-2-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %> <%= disabled %> /> Paciente en tratamiento
 				      </label>
 				    </div> 						
 				    <div class="radio">
-				      <label for="radios-int-3">
-				      	<input type="radio" name="radios-int-<%= p_d.id%>" value="3" id="radios-int-3" <% if prop == 3 %> checked <% end %> <%= disabled %> /> Seguimiento
+				      <label for="radios-int-3-<%= p_d.id%>">
+				      	<input type="radio" onchange="agregarPropInt(<%= p_d.id %>,3)" id="radios-int-3-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 3 %> checked <% end %> <%= disabled %> /> Seguimiento
 				      </label>
 				    </div>				
 				    <div class="radio">
-				      <label for="radios-int-4">
-				      	<input type="radio" name="radios-int-<%= p_d.id%>" value="4" id="radios-int-4" <% if prop == 4 %> checked <% end %> <%= disabled %> /> Otro
+				      <label for="radios-int-4-<%= p_d.id%>">
+				      	<input type="radio" onchange="agregarPropInt(<%= p_d.id %>,4)" id="radios-int-4-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 4 %> checked <% end %> <%= disabled %> /> Otro
 				      </label>
 				    </div> 
 					</div>
 				</div>
 				<div class="col-md-8 column">
 					<label class="com-int">Comentario:</label><span class="alert alert-info auto-int-comment" id="auto-int-<%= p_d.id %>">Autoguardado</span>
-					<textarea id="int-comment-<%= p_d.id%>" class="form-control int-comment" rows="4" cols="50" <%= disabled %> ><%= unless interconsulta.nil?
+					<textarea onkeyup="autoIntComment(<%= p_d.id%>)" class="form-control" rows="4" cols="50" <%= disabled %> ><%= unless interconsulta.nil?
 					 interconsulta.comentario 
 					 end %></textarea>
 				</div>	
@@ -192,7 +192,7 @@
 
 <% if tipo == 'edit' %>	
 	<div class="modal fade" id="modal-container-agregar-persona-int_<%= p_d.id.to_s %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog ajuste-top">
+		<div class="modal-dialog ajuste-top modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" onclick="cerrarModalAgregarPersona('int_<%= p_d.id.to_s %>')" aria-hidden="true">×</button>

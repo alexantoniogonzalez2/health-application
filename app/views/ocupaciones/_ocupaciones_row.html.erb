@@ -8,7 +8,7 @@
 	<td><%= ocu.getTiempoTotal %>
 	</td>
 	<td>
-		<% if @tipo == 'edit' or !@atencion_salud %>
+		<% if (@tipo == 'edit') or !@atencion_salud %>
 			<a href="#modal-container-ocu-<%= ocu.id %>" data-toggle="modal" id="ocu-<%= ocu.id %>" >Editar</a>
 		<% else %>
 			<span>-</span>

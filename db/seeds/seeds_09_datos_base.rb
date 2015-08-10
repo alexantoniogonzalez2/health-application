@@ -70,7 +70,7 @@ AgAgendamientoEstados.create! :nombre => "Paciente siendo atendido" #El paciente
 AgAgendamientoEstados.create! :nombre => "Paciente atendido" #La atención se realizó por completo  
 AgAgendamientoEstados.create! :nombre => "Hora cancelada"
 AgAgendamientoEstados.create! :nombre => "Paciente no llegó"
-AgAgendamientoEstados.create! :nombre => "Hora reabierta"  
+AgAgendamientoEstados.create! :nombre => "Atención reabierta"  
 
 puts 'Estados Diagnóstico'
 ED1 = MedDiagnosticoEstados.create! :nombre => "Confirmado"

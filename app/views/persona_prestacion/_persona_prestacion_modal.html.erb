@@ -24,14 +24,7 @@
               <input id="prestador-prestacion-<%= p_p.id%>" type="text" class="form-control ajuste-cen-der width_300" value="<%= p_p.prestador_texto %>" <%= disabled %> >
             </div>        
           </div>
-          <div class="row clearfix">
-            <div class="col-md-4 column">
-              <label>Diagnósticos:</label>
-            </div>
-            <div class="col-md-8 column">
-              <div id="div-diag-pres<%= p_p.id %>" class="div-diag-cert"></div>
-            </div>
-          </div>
+          <div class="row clearfix" id="div-diag-pres<%= p_p.id %>" ></div>
         </div>         
       </div>
       <div class="modal-footer">

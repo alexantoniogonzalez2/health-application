@@ -51,12 +51,12 @@
           <div class="row clearfix">  
             <div class="col-md-12 column">  
               <label>Comentario</label><span id="comentario-<%= p_d.id %>" class="alert alert-info comentario">Autoguardado</span>
-              <textarea class="form-control comentario" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
+              <textarea class="form-control" rows="3" id="comentario_<%= p_d.id %>"><%= p_d.comentario %></textarea>
             </div>                  
           </div>
           <div class="row clearfix footer">
             <div class="col-md-12 column">
-              <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-success ajus-pos-right">Guardar</button>                                       
+              <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>)" class="btn btn-success ajus-pos-right">Guardar</button>
               <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger ajus-pos-right" id="bc<%= p_d.id%>"> Eliminar diagnóstico</button>
               <button type="button" onclick="cerrarModalDiag(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
             </div>                  

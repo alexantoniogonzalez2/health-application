@@ -36,7 +36,7 @@
 <% if @persona_prestaciones.empty? %>
 <% else %>
 	<% @persona_prestaciones.each do |p_p| %>
-		<%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_p } if p_p.es_antecedente == true %>
+		<%= render :partial => "persona_prestacion/persona_prestacion_modal", :locals => {:p_p => p_p, :tipo => 'edit' } if p_p.es_antecedente == true %>
 	<% end %>
 <% end %>	
 

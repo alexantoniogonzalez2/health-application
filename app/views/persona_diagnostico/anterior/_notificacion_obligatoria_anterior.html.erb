@@ -1,5 +1,7 @@
 <% notificacion_eno = p_d.getNotificacionEno(p_d.id) %>	
-<% texto_eno = p_d.diagnostico.getTextoENO(p_d.id) %>	
+<% texto_eno = p_d.diagnostico.getTextoENO(p_d.id) %>
+<% disabled = tipo == 'edit' ? '' : 'disabled' %>	
+
 <h1 class="enc-ges">
 	<strong>Declaración de Enfermedad de Notificación Obligatoria</strong>
 	<% texto_eno.each do |te| %> <br><%= te['text'] %>	<% end %>
@@ -89,19 +91,23 @@
 					<label>País de contagio</label>
 				</div>
 				<div class="col-md-6 column">:
-					<select disabled id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio">
-						<option></option>					
-						  <% @paises.each do |pais| %>
-						  	<option value="<%= pais.id %>"
-						  		<% unless notificacion_eno.nil?
-						  			unless notificacion_eno.pais_contagio.nil? 
-					  					if notificacion_eno.pais_contagio.id == pais.id 
-					  		%> selected <% 
-					  					end
-					  				end
-					  		end %> ><%= pais.nombre %></option>      			
-	   					<% end %>
-			    </select>
+					<% if tipo == 'edit' %>
+						<select disabled id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio">
+							<option></option>					
+							  <% @paises.each do |pais| %>
+							  	<option value="<%= pais.id %>"
+							  		<% unless notificacion_eno.nil?
+							  			unless notificacion_eno.pais_contagio.nil? 
+						  					if notificacion_eno.pais_contagio.id == pais.id 
+						  		%> selected <% 
+						  					end
+						  				end
+						  		end %> ><%= pais.nombre %></option>      			
+		   					<% end %>
+				    </select>
+				  <% else %>
+			    	<%= notificacion_eno.try(:pais_contagio).try(:nombre) unless notificacion_eno.nil? %>
+			    <% end %>
 				</div>
 			</div>
 			<div class="row clearfix">	
@@ -120,9 +126,9 @@
 				<div class="col-md-3 column">
 					<label class="eno">Semanas de gestación</label>
 				</div>
-				<div class="col-md-2 column colum-ajuste-eno"><span>:</span><input disabled id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= unless notificacion_eno.nil? 
-																																																																																										notificacion_eno.semanas_gestacion
-				 																																																																																				  end %>">
+				<div class="col-md-2 column colum-ajuste-eno">
+					<span>:</span>
+					<input disabled id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= notificacion_eno.semanas_gestacion unless notificacion_eno.nil? %>">
 				</div>
 			</div>			
 			<div class="row clearfix">	

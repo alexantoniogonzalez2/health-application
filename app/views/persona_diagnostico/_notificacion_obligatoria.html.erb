@@ -57,7 +57,7 @@
 						unless notificacion_eno.nil? 
 							conf = notificacion_eno.confirmacion_diagnostica
 						end %>
-					<select id="select-confirmacion<%=p_d.id%>" class="select-confirmacion" <%= disabled %> >
+					<select id="select-confirmacion<%=p_d.id%>" class="select-confirmacion" <%= disabled %> onchange="selectConfirmacion(<%= p_d.id %>)" >
 						<option></option>
 			      <option value="1" <% if conf == '1' %> selected <% end %> >Clínica (incluye imagenología)</option>
 			      <option value="2" <% if conf == '2' %> selected <% end %> >Epidemiológica</option>
@@ -80,16 +80,16 @@
 				<div class="col-md-8 column">:
 					<div class="form-group ajuste-eno">
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1">
-					  	<input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" value="1" <%= disabled %> /> Sí
+					  	<input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" onchange="radioAntVac(%=p_d.id%>,1)" value="1" <%= disabled %> /> Sí
 					  </label> 
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2">
-					  	<input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" value="2" <%= disabled %> /> No
+					  	<input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" onchange="radioAntVac(%=p_d.id%>,2)" value="2" <%= disabled %> /> No
 					  </label> 
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3">
-					  	<input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" value="3" <%= disabled %> /> Ignorado
+					  	<input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" onchange="radioAntVac(%=p_d.id%>,3)" value="3" <%= disabled %> /> Ignorado
 					  </label> 
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-4">
-					  	<input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-4" value="4" <%= disabled %> /> No corresponde
+					  	<input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-4" onchange="radioAntVac(%=p_d.id%>,4)" value="4" <%= disabled %> /> No corresponde
 					  </label>
 					</div>
 				</div>
@@ -100,7 +100,7 @@
 				</div>
 				<div class="col-md-6 column">:
 					<% if tipo == 'edit' %>
-						<select id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio">
+						<select id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio" onchange="selectConfirmacion(<%= p_d.id %>)">
 							<option></option>					
 							  <% @paises.each do |pais| %>
 							  	<option value="<%= pais.id %>"
@@ -128,20 +128,20 @@
 						end %>
 				<div class="col-md-5 column"><span class="eno">:</span>
 				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-1">
-				  	<input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" value="1" <%= disabled %> /> Sí
+				  	<input <% if emb == '1' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-1" onchange="radiosEmb(<%=p_d.id%>,1)" value="1" <%= disabled %> /> Sí
 				  </label> 
 				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-2">
-				  	<input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" value="2" <%= disabled %> /> No
+				  	<input <% if emb == '2' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-2" onchange="radiosEmb(<%=p_d.id%>,2)" value="2" <%= disabled %> /> No
 				  </label> 
 				  <label class="radio-inline" for="radios-emb<%=p_d.id%>-3">
-				  	<input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-3" value="3" <%= disabled %> /> No corresponde
+				  	<input <% if emb == '3' %> checked <% end %> type="radio" name="radios-emb<%=p_d.id%>" id="radios-emb<%=p_d.id%>-3" onchange="radiosEmb(<%=p_d.id%>,3)" value="3" <%= disabled %> /> No corresponde
 				  </label>	  
 				</div>
 				<div class="col-md-3 column">
 					<label class="eno">Semanas de gestación</label>
 				</div>
 				<div class="col-md-2 column colum-ajuste-eno">
-					<span>:</span><input id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= notificacion_eno.try(:semanas_gestacion) unless notificacion_eno.nil? %>" <%= disabled %> />
+					<span>:</span><input id="semanas-<%=p_d.id%>" type="integer" class="form-control sem-ges" maxlength="2" size="2" value="<%= notificacion_eno.try(:semanas_gestacion) unless notificacion_eno.nil? %>" <%= disabled %> onkeyup="semGes(<%=p_d.id%>)" />
 				</div>
 			</div>			
 			<div class="row clearfix">	
@@ -155,13 +155,13 @@
 				<div class="col-md-9 column"><span class="eno">:</span>
 					<div class="form-group ajuste-eno">
 					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-1">
-					  	<input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="1" <%= disabled %> /> Caso nuevo
+					  	<input <% if tbc == '1' %> checked <% end %> type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-1" value="1" <%= disabled %> onchange="radiosTbc(<%=p_d.id%>,1)" /> Caso nuevo
 					  </label> 
 					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-2">
-					  	<input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-2" value="2" <%= disabled %> /> Recaída, igual localización
+					  	<input <% if tbc == '2' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-2" value="2" <%= disabled %> onchange="radiosTbc(<%=p_d.id%>,2)" /> Recaída, igual localización
 					  </label> 
 					  <label class="radio-inline" for="radios-tbc<%=p_d.id%>-3">
-					  	<input <% if tbc == '3' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-3" value="4" <%= disabled %> /> Recaída, otra localización
+					  	<input <% if tbc == '3' %> checked <% end %>type="radio" name="radios-tbc<%=p_d.id%>" id="radios-tbc<%=p_d.id%>-3" value="4" <%= disabled %> onchange="radiosTbc(<%=p_d.id%>,3)" /> Recaída, otra localización
 					  </label>					  
 					</div>
 				</div>

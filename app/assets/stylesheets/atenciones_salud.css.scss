@@ -18,8 +18,7 @@ $mediumBlue: #D9EDF7;
 div.list-group {
   margin-bottom: 0px;
   padding-top: 13px;
-  padding-bottom: 15px;
- 
+  padding-bottom: 15px; 
   a.list-group-item {
     padding: 2px 1px 3px 5px;
     font-size: 13px;
@@ -132,12 +131,7 @@ h1.enc-ges{
 }
 
 div.panel-group { margin-bottom: 5px !important; }
-
-div.ges{
-  margin-bottom: 0px;
-  /*border-radius: 0px;*/
-}
-
+div.ges{ margin-bottom: 0px; }
 p.texto_font_bajo { font-size: 13px; line-height: 1.25; }
 
 label.firma {
@@ -230,7 +224,7 @@ div.metricas {
 .ajus-pos-right { float: right; margin-left: 5px !important; }
 .ajus-padd-bott { padding-bottom: 10px; }
 input.ajuste-select { width: 400px !important; }
-//.select2-container { float: right; }
+
 a.select2-choice, a.select2-default { height: 30px !important; }
 .ajuste-margin-top { margin-top: 25px !important; }
 .right { float: right; }
@@ -255,11 +249,11 @@ small.help-block { min-width: 200px; position: relative !important; }
 div.ajuste-height { min-height: 450px !important; }
 .select_ocupacion { float: left !important; margin-bottom: 20px !important; }
 div.ajuste-margin { margin-top: 5px !important; }
-#modal-agregar-persona {  margin-left: 10px;}
-div.ajuste-top { top: 600px !important; width: 800px; } 
+#modal-agregar-persona { margin-left: 10px;}
+div.ajuste-top { width: 90%; margin-top: 300px; } 
 div.agregar-persona {
-  div {    
-    div {       
+  div { 
+    div {            
       div.input-group { 
         margin-top: 25px !important;
         div { display: block !important; }
@@ -274,11 +268,11 @@ div.agregar-persona {
     }
   }
 }
+div.no-padding-right-left { padding-right: 0px !important; padding-left: 0px !important; }
 div.ajuste-padding { padding-left: 10px !important; }
 div.ajuste-left { padding-left: 100px !important; }
 span.ajuste-bottom { padding-left: 20px !important; position: relative !important; top: 26px !important; }
-span.pad-fecha { padding-left: 40px }
-span.ajuste-guion { padding-right: 5px; padding-left: 5px; position: relative; float: left; top: 5px; }
+span.ajuste-guion { padding-right: 5px; padding-left: 25px; position: relative; float: left; top: 5px; margin-top: 25px !important }
 input.dv {
   width: 80% !important;
   border-bottom-left-radius: 4px !important;
@@ -302,7 +296,10 @@ input.ajuste-posicion { display: inline-block !important; width: 220px !importan
 div.ajus-margen { margin: 0px;}
 div.float-right { float:right;}
 #ajuste-motivo { padding: 0px; margin: 0px 0px 10px 0px;}
-#modal-dialog-signos { width: 1050px;}
+#modal-dialog-signos { width: 90%;}
 a.active-ant, a.active-ant:focus { background-color: $lightGreen; color: $blue;}
 div.margin-top { margin-top: 5px;}
 input.width_300 { width: 300px !important; }
+
+.modal { overflow-y: auto; }
+.modal-open { overflow: auto; }

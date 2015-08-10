@@ -6,9 +6,6 @@ function addLittleSpinner(element_id){ $('#'+element_id).append("<div class='div
 
 $(document).ready(function() {
 
-  $('.icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.' }})
-  $('.icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
-  $('.icon-int').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
   $('#med').qtip({ content: { text: 'Medicamentos' }})
   $('#ale').qtip({ content: { text: 'Alergias' }})
   $('#vac').qtip({ content: { text: 'Vacunas' }})
@@ -71,6 +68,11 @@ $(document).ready(function() {
     var ant = $(this).attr('id');
     loadAntecedentes(ant,'show');    
   });
+  $('.load_ant_reabrir').click(function() {
+    var ant = $(this).attr('id');
+    loadAntecedentes(ant,'reabrir');    
+  });
+
 
 });
 

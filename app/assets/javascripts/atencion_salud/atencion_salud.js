@@ -36,9 +36,8 @@ $('.panel-ges2').on('hidden.bs.collapse', function() {
   $("#row_nombre_"+pd+","+"#row_rut_"+pd+","+"#row_correo_"+pd+","+"#row_celular_"+pd).show(''); 
 });
 
-$('input[type=radio][name^=radios-estado-]').change(function() {
-  var pers_diag = $(this).attr('name').substring(14);  
-  var e_d = $('input[name=radios-estado-'+pers_diag+']:checked').val();
+function actualizarEstado(pers_diag,e_d){
+  
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   (e_d == 1) ? $( '#checkboxes-trat-div-'+pers_diag).show() : $( '#checkboxes-trat-div-'+pers_diag).hide();
  
@@ -52,14 +51,10 @@ $('input[type=radio][name^=radios-estado-]').change(function() {
     $('input[name=radios-int-'+pers_diag+'][value=1]').prop('checked', false);
     $('input[name=radios-int-'+pers_diag+'][value=2]').prop('checked', false);
   }
-
   guardarDiagnostico(pers_diag);
+}
 
-});
-
-$('input[type=radio][name^=radios-int-]').change(function() {
-  var pers_diag = $(this).attr('name').substring(11);
-  var value = $('input[name=radios-int-'+pers_diag+']:checked').val();
+function agregarPropInt(pers_diag,value){
   $.ajax({
     type: 'POST',
     url: '/agregar_info_interconsulta',
@@ -71,7 +66,7 @@ $('input[type=radio][name^=radios-int-]').change(function() {
     success: function(response){  },
     error: function(xhr, status, error){ alert("No se pudo agregar la información."); }
   });
-});
+}
 
 $('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
   var pers_diag = $(this).attr('id').substring(16);
@@ -84,10 +79,9 @@ $('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
 
 });
 
-$('input[type=checkbox][id^=checkboxes-cron-]').change(function() {
-  var pers_diag = $(this).attr('id').substring(16);
+function actualizarEnfCron(pers_diag){
   guardarDiagnostico(pers_diag);
-});
+}
 
 $('.modal-diag').on('show.bs.modal', function (e) {
   id_mod = this.id.substring(21);
@@ -124,34 +118,28 @@ $('#anamnesis').keyup( function(e) {
   contador_ana = setTimeout(function(){ guardarTexto('anamnesis') },2000);
 })
 
-$('.comentario').keyup( function(e) { 
+function autoguardarComentarioOnkeyup(p_d) {  
   if (typeof contador_com === 'undefined') { } 
   else { clearTimeout(contador_com);}
-  id = this.id; 
-  contador_com = setTimeout(function(){ autoguardarComentario(id.substring(11)) },500);
-})
+  contador_com = setTimeout(function(){ autoguardarComentario(p_d) },2000);
+}
 
-$('.int-comment').keyup( function(e) { 
+function autoIntComment(p_d){  
   if (typeof contador_int_com === 'undefined') { } 
   else { clearTimeout(contador_int_com);}
-  id = this.id.substring(12);
-  contador_int_com = setTimeout(function(){ autoguardarComentarioInt(id) },2000);
-})
+  contador_int_com = setTimeout(function(){ autoguardarComentarioInt(p_d) },2000);
+}
 
-$('.auto-int-pdt').keyup( function(e) { 
+function autoIntPdt(p_d){
   if (typeof contador_int_pdt === 'undefined') { } 
   else { clearTimeout(contador_int_pdt);}
-  id = this.id.substring(8);
-  contador_int_pdt = setTimeout(function(){ autoguardarPrestadorDestinoTexto(id) },2000);
-})
+  contador_int_pdt = setTimeout(function(){ autoguardarPrestadorDestinoTexto(p_d) },2000); 
+}
 
 $('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
-$('select.select_especialidad_interconsulta').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
-$('select.select_especialidad_interconsulta_ant').select2({ width: '80%', placeholder: 'Seleccione una especialidad anterior', disabled: true });
 $('select.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
 $('select.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
-$('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
-$('select.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
+
 
 $('#select_diagnostico').select2({
   width: '380px',
@@ -245,61 +233,6 @@ $('.cambiar_antecedente_cro').click(function() {
   guardarAntecedenteFamiliarCronica(id,true);  
 });
 
-$(".select_notificacion").on("change", function(e) { 
-
-  var pd = $(this).attr('id').substring(11);   
-  var value = $(this).val() != null ? $(this).val() : null;        
-  $.ajax({
-    type: 'POST',
-    url: '/agregar_persona_notificacion',
-    data: { 
-      persona_id: value,
-      pers_diag: pd
-    },
-    success: function(response){
-      $("#not_nombre_"+pd).html( response.nombre );
-      $("#not_rut_"+pd).html( response.rut );
-      $("#not_correo_"+pd).html( response.correo );
-      $("#not_celular_"+pd).html( response.celular );
-      $("#not_telefono_"+pd).html( response.telefono ); 
-    },
-    error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
-  });    
-  
-})
-
-$(".select-relacion").on("change", function(e) { 
-
-  var id = $(this).attr('id').substring(15);   
-  value = $(this).val();
-  (value == '5') ? $("#otro-div"+id).show() : $("#otro-div"+id).hide();    
-  
-})
-
-$(".select_interconsulta").on("change", function(e) { 
-
-  var pd = $(this).attr('id').substring(11);
-  value = $(this).val() != null ? $(this).val() : null;       
-  $.ajax({
-    type: 'POST',
-    url: '/agregar_info_interconsulta',
-    data: { 
-      tipo: 'persona',
-      valor: value,
-      pers_diag: pd,
-    },
-    success: function(response){
-      $("#int_nombre_"+pd).html( response.nombre );
-      $("#int_rut_"+pd).html( response.rut );
-      $("#int_correo_"+pd).html( response.correo );
-      $("#int_celular_"+pd).html( response.celular ); 
-      $("#int_telefono_"+pd).html( response.telefono ); 
-    },
-    error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
-  });    
-  
-})
-
 $(".select_prestadores").on("change", function(e) { 
   var pd = $(this).attr('id').substring(22);   
   value = $("#select_prestadores_int"+pd).select2('data') != null ? $("#select_prestadores_int"+pd).select2('data').id : null;    
@@ -316,21 +249,40 @@ $(".select_prestadores").on("change", function(e) {
   });   
 })
 
-$(".select_especialidad_interconsulta").on("change", function(e) { 
-  var pd = $(this).attr('id').substring(23);   
-  value = $("#select_especialidad_int"+pd).select2('data') != null ? $("#select_especialidad_int"+pd).select2('data').id : null;    
+function selectPersonaIntNot(p_d,tipo){ 
+  var url = '/agregar_info_interconsulta';
+  if (tipo == "not_")
+    url = '/agregar_persona_notificacion';   
+  value = $("#select_"+tipo+p_d).select2('data') != null ? $("#select_"+tipo+p_d).select2('data').id : null;   
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: { tipo: 'persona', valor: value, pers_diag: p_d},
+    success: function(response){
+      $("#"+tipo+"nombre_"+p_d).html( response.nombre );
+      $("#"+tipo+"rut_"+p_d).html( response.rut );
+      $("#"+tipo+"correo_"+p_d).html( response.correo );
+      $("#"+tipo+"celular_"+p_d).html( response.celular ); 
+      $("#"+tipo+"telefono_"+p_d).html( response.telefono ); 
+    },
+    error: function(xhr, status, error){ alert("No se pudo cargar la persona."); }
+  });  
+}
+
+function selectEspecialidadInterconsulta(p_d){ 
+  value = $("#select_especialidad_int"+p_d).select2('data') != null ? $("#select_especialidad_int"+p_d).select2('data').id : null;    
   $.ajax({
     type: 'POST',
     url: '/agregar_info_interconsulta',
     data: { 
       tipo: 'especialidad',
       valor: value,
-      pers_diag: pd,
+      pers_diag: p_d,
     },
     success: function(response){  },
     error: function(xhr, status, error){ alert("No se pudo agregar la especialidad."); }
-  });   
-})
+  });  
+}
 
 $("#select_examen").on("change", function(e) { 
 
@@ -390,41 +342,32 @@ $("#select_medicamento").on("change", function(e) {
 
 })
 
-$(".select-pais-contagio").on("change", function(e) {
-  var pd = $(this).attr('id').substring(20); 
-  var value = $("#select-pais-contagio"+pd).select2('data').id;
-  agregarInfoEno(pd,value,'pais');
-})
+function selectPaisContagio(p_d){
+  var value = $("#select-pais-contagio"+p_d).select2('data').id;
+  agregarInfoEno(p_d,value,'pais');
+}
 
-$(".select-confirmacion").on("change", function(e) {
-  var pd = $(this).attr('id').substring(19); 
-  var value = $("#select-confirmacion"+pd).select2('data').id;
-  agregarInfoEno(pd,value,'confirmacion');
-})
+function selectConfirmacion(p_d){
+  var value = $("#select-confirmacion"+p_d).select2('data').id;
+  agregarInfoEno(p_d,value,'confirmacion');
+}
 
-$('input[type=radio][name^=radios-ant]').change(function() {
-  var pd = $(this).attr('name').substring(10);
-  var value = $('input[name=radios-ant'+pd+']:checked').val();
-  agregarInfoEno(pd,value,'vacunacion');
-});
+function radioAntVac(p_d,value){
+  agregarInfoEno(p_d,value,'vacunacion');
+}
 
-$('input[type=radio][name^=radios-emb]').change(function() {
-  var pd = $(this).attr('name').substring(10);
-  var value = $('input[name=radios-emb'+pd+']:checked').val();
-  agregarInfoEno(pd,value,'embarazo');
-});
+function radiosEmb(p_d,value){
+  agregarInfoEno(p_d,value,'embarazo');
+}
 
-$('input[type=radio][name^=radios-tbc]').change(function() {
-  var pd = $(this).attr('name').substring(10);
-  var value = $('input[name=radios-tbc'+pd+']:checked').val();
+function radiosTbc(p_d,value){
   agregarInfoEno(pd,value,'tbc');
-});
+}
 
-$('.sem-ges').keyup( function(e) {
-  var pd = $(this).attr('id').substring(8);
+function semGes(p_d){
   var value =$('#semanas-'+pd).val();
   agregarInfoEno(pd,value,'sem_emb'); 
-})
+}
 
 $("#alergias").submit(function (e) { return false; });
 
@@ -756,11 +699,7 @@ function autoguardarPrestadorDestinoTexto(pers_diag_aten_sal) {
     type: 'POST',
     url: '/agregar_info_interconsulta',
     data: { tipo: 'pres_des_tex', valor: pres_des_tex, pers_diag: pers_diag_aten_sal},
-    success: function(response){
-      // $('#auto-int-'+pers_diag_aten_sal).show("hide");
-      //setTimeout(function(){$('#auto-int-'+pers_diag_aten_sal).hide("hide");},2000) ;
-      //pre_descomentario = pres_des_tex;
-    },
+    success: function(response){ },
     error: function(xhr, status, error){ alert("No se guardar el comentario."); }
   });  
 }
@@ -798,9 +737,10 @@ function sinCambios(pers_diag_aten_sal){
 }
 
 function cerrarDiagnostico(pers_diag_aten_sal){ 
-
-  $('#modal-container-diag-'+pers_diag_aten_sal).modal('hide');
-  
+  $('#modal-container-diag-'+pers_diag_aten_sal).modal('hide');  
+}
+function cerrarDiagnosticoAnterior(pers_diag_aten_sal){ 
+  $('#modal-container-diag-ant'+pers_diag_aten_sal).modal('hide');  
 }
 
 function agregarInfoEno(pd,value,tipo){

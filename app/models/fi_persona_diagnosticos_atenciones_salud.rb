@@ -5,11 +5,12 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
 	belongs_to :persona_diagnostico, :class_name => 'FiPersonaDiagnosticos'
 	belongs_to :atencion_salud, :class_name => 'FiAtencionesSalud'
 	belongs_to :estado_diagnostico, :class_name => 'MedDiagnosticoEstados'
-  has_many :notificaciones_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'person_diagnostico_atencion_salud_id'
-  has_many :notificaciones_eno, :class_name => 'FiNotificacionesEno', :foreign_key => 'person_diagnostico_atencion_salud_id'
-  has_many :interconsultas, :class_name => 'FiInterconsultas', :foreign_key => 'person_diagnostico_atencion_salud_id'
-  has_many :certificado_diagnosticos, :class_name => 'FiCertificadoDiagnosticos', :foreign_key => 'person_diagnostico_atencion_salud_id'
-  has_many :persona_prestacion_diagnosticos, :class_name => 'FiPersonaPrestacionDiagnosticos', :foreign_key => 'person_diagnostico_atencion_salud_id'
+  has_many :notificaciones_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_diagnostico_atencion_salud_id'
+  has_many :notificaciones_eno, :class_name => 'FiNotificacionesEno', :foreign_key => 'persona_diagnostico_atencion_salud_id'
+  has_many :interconsultas, :class_name => 'FiInterconsultas', :foreign_key => 'persona_diagnostico_atencion_salud_id'
+  has_many :certificado_diagnosticos, :class_name => 'FiCertificadoDiagnosticos', :foreign_key => 'persona_diagnostico_atencion_salud_id'
+  has_many :persona_prestacion_diagnosticos, :class_name => 'FiPersonaPrestacionDiagnosticos', :foreign_key => 'persona_diagnostico_atencion_salud_id'
+  has_many :reabrir_estado_diagnostico, :class_name => 'FiReabrirEstadoDiagnostico', :foreign_key => 'persona_diagnostico_atencion_salud_id'
 
   private
   def app_params
@@ -29,7 +30,8 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
                                  :interconsultas,
                                  :es_antecedente,
                                  :certificado_diagnosticos,
-                                 :persona_prestacion_diagnosticos)
+                                 :persona_prestacion_diagnosticos,
+                                 :reabrir_estado_diagnostico)
   end
 								
 end

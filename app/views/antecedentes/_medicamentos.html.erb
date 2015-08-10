@@ -18,14 +18,14 @@
 			<tr id='tr-vacio-med'><td colspan='7' >No hay información de medicamentos.</td></tr>
 	    <% else %>
 	      <% @persona_medicamentos.each do |p_m| %>
-	      	<%= render :partial => "persona_medicamento/medicamento_row", :locals => {:p_m => p_m, :atencion_salud => @atencion_salud } %>
+	      	<%= render :partial => "persona_medicamento/medicamento_row", :locals => {:p_m => p_m, :atencion_salud => @atencion_salud, :tipo => tipo } %>
 	      <% end %>
 	    <% end %>  
     </tbody>
 	</table>
 	
 	<span class='nota'>(*) Las fechas de inicio y término son estimadas.</span>
-	<% if @tipo == 'edit' or !@atencion_salud %>
+	<% if tipo == 'edit' or !@atencion_salud %>
 		<div class='container agregar-med'>
 			<div class='row'>
 				<div class='col-md-6 column ajuste-padding'>
@@ -46,7 +46,7 @@
 <% if @persona_medicamentos.empty? %>
 <% else %>
 	<% @persona_medicamentos.each do |p_m| %>
-		<%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m } if p_m.es_antecedente == true %>
+		<%= render :partial => "persona_medicamento/persona_medicamento_modal", :locals => {:persona_medicamento => p_m, :tipo => 'edit' } if p_m.es_antecedente == true %>
 	<% end %>
 <% end %>	
 

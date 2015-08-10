@@ -124,3 +124,11 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
 
     }
   }
+
+$(".select-relacion").on("change", function(e) { 
+
+  var id = $(this).attr('id').substring(15);   
+  value = $(this).val();
+  (value == '5') ? $("#otro-div"+id).show() : $("#otro-div"+id).hide();    
+  
+})

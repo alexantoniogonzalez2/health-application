@@ -375,7 +375,6 @@ section h3.section-subheading {
 
 .service-heading {
   font-weight: bold;
-  /*color: $blue;*/
   margin: 15px 0;
   text-transform: none;
   letter-spacing: 1px;
@@ -409,7 +408,7 @@ footer {
 
 div.feedback { display: none; }
 .col-rut { width: 330px !important; padding-right: 0px;}
-.dv { padding: 6px 8px; width: 35px; }
+.dv { padding: 6px 8px; width: 35px !important; }
 .ajuste-pad-right { padding-right: 0px;}
 .ajuste-pad-left { padding-left: 0px;}
 
