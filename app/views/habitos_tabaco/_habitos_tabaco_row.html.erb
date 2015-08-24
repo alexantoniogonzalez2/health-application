@@ -3,6 +3,12 @@
 	<td><%= cons.fecha_final.strftime('%Y-%m-%d') %></td>
 	<td><%= cons.cigarros_por_dia %></td>
 	<td><%= number_to_human(cons.paquetes_agno, precision: 2, separator: ',') %></td>
-	<td><a href="#modal-container-hab-tab-<%= cons.id %>" data-toggle="modal" id="hab-tab-<%= cons.id %>" >Editar</a></td>
+	<td>
+		<% if @tipo == 'edit' or  @tipo == 'reabrir' or !@atencion_salud %>
+			<a href="#modal-container-hab-tab-<%= cons.id %>" data-toggle="modal" id="hab-tab-<%= cons.id %>" >Editar</a>
+		<% else %>
+			<span>-</span>
+		<% end %>
+	</td>
 </tr>
 

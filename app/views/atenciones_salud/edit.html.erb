@@ -9,7 +9,10 @@
 
 <div id="atencion-salud" class="panel panel-success">
   <div class="panel-heading">
-    <h3 class="panel-title"><span>Atención de Salud</span><span class='right'>Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %> </span></h3>
+    <h3 class="panel-title">
+      <label>Atención de Salud </label>
+      <span class='right'>Fecha: <%= @agendamiento.fecha_comienzo.strftime("%Y-%m-%d") %> Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></span>
+    </h3>
   </div>
   <div class="panel-body">	
     <div class="row">
@@ -82,13 +85,10 @@
 
           <!-- Modal -->
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div id="modal-dialog-antecedentes" class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header ajuste-modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h4>Antecedentes del paciente</h4>
-                </div>
                 <div class="modal-body ajuste-height">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                   <div id='contenido-ant-edit'></div>        
                 </div>
                 <div class="modal-footer">
@@ -166,12 +166,12 @@
           <label>Motivo de consulta:</label><input id='motivo_consulta' type='text' class="form-control ajuste-motivo" value="<%= @atencion_salud.motivo_consulta %>">
         </div>
         <label>Anamnesis</label><span id="auto-anamnesis" >Autoguardado</span>
-        <textarea id='anamnesis' class = "form-control" rows='3' cols='50'><%= @atencion_salud.anamnesis %></textarea>
+        <textarea id='anamnesis' class = "form-control" rows='2' cols='50'><%= @atencion_salud.anamnesis %></textarea>
         <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a> | <a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
         <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :tipo => 'edit'} %>
         <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr => @presion, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr => @car_presion, :car_p_sat => @car_sat, :tipo => 'edit'} %>
         <br><label>Examen físico</label><span id="auto-examen" >Autoguardado</span>
-        <textarea id='examen_fisico' class = "form-control" rows='3' cols='50'><%= @atencion_salud.examen_fisico %></textarea>       
+        <textarea id='examen_fisico' class = "form-control" rows='2' cols='50'><%= @atencion_salud.examen_fisico %></textarea>       
       </div>
       <div class="col-md-6 div-form-atencion">
 
@@ -197,7 +197,7 @@
         <fieldset>
           <legend>Indicaciones</legend>
         	<label>Exámenes</label>
-          <input type='hidden' id="select_examen" class="ajuste-select float-right" width="600px" >
+          <input type='hidden' id="select_examen" class="ajuste-select float-right" >
           <div class="list-group" name="examen-div" id="examen-div">  
             <% @persona_examen.each do |p_e| %>
               <%= render :partial => "persona_prestacion/persona_prestacion", :locals => {:p_p => p_e, :tipo =>'edit'} %> 
@@ -248,7 +248,7 @@
   </div> <!--Cierre div panel-body -->
 </div> <!--Cierre div panel -->
 
-
+<hr>
 <div class="row clearfix">
   <div class="horas_agendadas col-md-12 column">
     <button id="actualizar2" class="btn btn-success has-spinner"><span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>Actualizar atenciones</button>

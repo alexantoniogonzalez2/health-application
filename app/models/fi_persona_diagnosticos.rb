@@ -59,7 +59,16 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
     else 
       return false
     end  
-  end  
+  end 
+
+  def tieneCambioEstado (persona_diagnostico_id)
+    estado_reabierta = FiReabrirEstadoDiagnostico.where('persona_diagnostico_atencion_salud_id = ?',persona_diagnostico_id).first;
+    if estado_reabierta.nil?
+      return false
+    else 
+      return true
+    end  
+  end 
 
   private
   def app_params

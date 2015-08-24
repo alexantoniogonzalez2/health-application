@@ -273,7 +273,7 @@ class PerPersonas < ActiveRecord::Base
           'persona' => deceso_familiar.showName('%n%p%m'),
           'parentesco' => familiar[1],
           'diagnostico' => deceso_familiar.diagnostico_muerte.nombre,
-          'fecha_deceso' => deceso_familiar.fecha_muerte.strftime('%Y-%m-%d')
+          'fecha_deceso' => deceso_familiar.fecha_muerte.try(:strftime,'%Y-%m-%d')
         }  
       end  
     end  

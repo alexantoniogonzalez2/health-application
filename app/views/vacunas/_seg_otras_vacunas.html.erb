@@ -1,4 +1,4 @@
-<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
+<% disabled = (@tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud) ? '' : 'disabled' %>
 <h4>Seguimiento a otras vacunas</h4>
 <table class="table table-striped table-hover table-condensed">
   <thead><tr class='info'><th class="col-sm-1">Tipo</th><th class="col-sm-1">Vacuna</th><th class="col-sm-1">Estado de vacunación</th></tr></thead>

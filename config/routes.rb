@@ -61,6 +61,7 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_diagnostico_ant', to: 'persona_diagnostico#agregarDiagnosticoAntecedentes'
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
   post '/reabrir_atencion', to: 'atenciones_salud#reabrirAtencion'
+  post '/ver_atencion', to: 'atenciones_salud#verAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
   post '/cargar_diagnosticos', to: 'persona_diagnostico#cargarDiagnosticos'
   post '/cargar_personas', to: 'persona_diagnostico#cargarPersonas'
@@ -104,7 +105,7 @@ AplicacionMedica::Application.routes.draw do
   post '/actualizar_diag_certificado', to: 'atenciones_salud#actualizarDiagCertificado'
   post '/actualizar_diag_prestacion', to: 'persona_prestacion#actualizarDiagPrestacion'
   post '/actualizar_diag_prestacion_int', to: 'persona_prestacion#actualizarDiagPrestacionInt'
- 
+  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
   get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda

@@ -3,13 +3,16 @@
 	<td><%= ant_enf_cro['parentesco'] %></td>
 	<td><%= ant_enf_cro['datos'].diagnostico.nombre %></td>
 	<td><%= ant_enf_cro['datos'].fecha_inicio.strftime('%Y-%m-%d') %></td>
+	<td><%= ant_enf_cro['datos'].fecha_termino.try(:strftime, '%Y-%m-%d') %></td>
 	<td>
 		<% if ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.nil? %>
 		  <a href="#modal-container-ant-fam-cro-<%= ant_enf_cro['datos'].id %>" data-toggle="modal" id="ant-fam-cro<%= ant_enf_cro['datos'].id %>" >Editar</a>		  
 		<% elsif @atencion_salud %> 
-		  <% if ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id and @tipo == "edit" %> 
+			<% if ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id and @tipo == "reabrir" and FiPersonaDiagnosticosAtencionesSalud.find(ant_enf_cro['datos'].id).editarEnReabrir %> 
 			  <a href="#modal-container-ant-fam-cro-<%= ant_enf_cro['datos'].id %>" data-toggle="modal" id="ant-fam-cro<%= ant_enf_cro['datos'].id %>" >Editar</a>
-			<% elsif ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id and @tipo == "show" %>
+		  <% elsif ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id and @tipo == "edit" %> 
+			  <a href="#modal-container-ant-fam-cro-<%= ant_enf_cro['datos'].id %>" data-toggle="modal" id="ant-fam-cro<%= ant_enf_cro['datos'].id %>" >Editar</a>
+			<% elsif ant_enf_cro['datos'].es_antecedente and ant_enf_cro['datos'].atencion_salud_id.equal? @atencion_salud.id and ( @tipo == "show" or  @tipo == 'reabrir') %>
 				<span>-</span>  
 		  <% else %>  
 		    <%= link_to 'Ver atención', atenciones_salud_path(ant_enf_cro['datos'].atencion_salud_id) %>

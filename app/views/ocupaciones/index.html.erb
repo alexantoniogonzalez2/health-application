@@ -21,7 +21,7 @@
 	</tbody>    
 </table>
 
-<% if @tipo == 'edit' or !@atencion_salud %>
+<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 
 	<div id='ocu_modal-div'></div>
 	<% unless @ocupaciones.blank? %>

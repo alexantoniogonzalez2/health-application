@@ -64,7 +64,7 @@
                         <% @estados_diagnostico.each do |e_d| %>  
                           <div class="radio">
                             <label for="radios-<%= p_d.id%>-<%= e_d.id %>">
-                              <input type="radio" onchange="actualizarEstado(<%= p_d.id%>,<%= e_d.id %>);" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> <%= disabled_est_diag %> />
+                              <input type="radio" <% if tipo != 'reabrir' %> onchange="actualizarEstado(<%= p_d.id%>,<%= e_d.id %>)" <% end %> name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> <%= disabled_est_diag %> />
                               <%= e_d.nombre %>
                             </label>
                           </div> 
@@ -82,6 +82,25 @@
                       </div>
                     </div>
                   <% end %>  
+                </div>
+                <div class="row clearfix"> 
+                <% if tipo == 'reabrir' %>                  
+                  <div class="col-md-2 column">
+                    <button type="button" onclick="guardarDiagReabrir(<%= p_d.id%>)" class="btn btn-xs btn-success">Guardar nuevo estado</button>
+                  </div>
+                <% end %>
+                <% if p_d.tieneCambioEstado ( p_d.id ) %>    
+                  <div class="col-md-10 column">
+                    Historial de cambios:
+                    <fieldset>
+                      <div id="reabrir-estado-diag-<%= p_d.id%>">
+                        <% FiPersonaDiagnosticosAtencionesSalud.find(p_d.id).reabrir_estado_diagnostico.each do |r_e_d| %>
+                          <%= render :partial => "persona_diagnostico/reabrir_estado_diagnostico", :locals => {:r_e_d => r_e_d} %>
+                        <% end %>
+                      </div>
+                    </fieldset>
+                  </div>                  
+                <% end %>
                 </div>
                 <div class="row clearfix">  
                   <div class="col-md-12 column">  

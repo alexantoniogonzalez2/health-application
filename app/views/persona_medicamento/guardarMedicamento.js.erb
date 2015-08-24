@@ -1,1 +1,2 @@
-$('#tr-med-<%= @persona_medicamento.id %>').replaceWith("<%= escape_javascript( render :partial => "medicamento_row", :locals => {:p_m => @persona_medicamento, :atencion_salud => @atencion_salud} ) %>");
+<% @tipo = 'edit' %>
+$('#tr-med-<%= @persona_medicamento.id %>').replaceWith("<%= escape_javascript( render :partial => "medicamento_row", :locals => {:p_m => @persona_medicamento, :atencion_salud => @atencion_salud,:tipo => @tipo} ) %>");

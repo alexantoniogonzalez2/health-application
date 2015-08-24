@@ -1,24 +1,24 @@
 <%	case @ant %>
 <%	when 'med' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_medicamentos => @persona_medicamentos, :atencion_salud => @atencion_salud, :tipo => 'edit' } ) %></div>")			
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_medicamentos => @persona_medicamentos, :atencion_salud => @atencion_salud, :tipo => @tipo } ) %></div>")			
 <%	when 'ale' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_prestacion => @persona_prestacion, :atencion_salud => @atencion_salud, :prestadores => @prestadores } ) %></div>")
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_prestacion => @persona_prestacion, :atencion_salud => @atencion_salud, :prestadores => @prestadores, :tipo => @tipo } ) %></div>")
 <%	when 'vac' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :template => @partial, :locals => {:personas_vacunas => @personas_vacunas, :personas_vacunas_otras => @personas_vacunas_otras,:agno => @agno, :partial_seguimiento => @partial_seguimiento, :calendario_vacunas_persona => @calendario_vacunas_persona , :agnos => @agnos, :calendario_vacunas => @calendario_vacunas, :otras_vacunas => @otras_vacunas } ) %></div>")
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :template => @partial, :locals => {:personas_vacunas => @personas_vacunas, :personas_vacunas_otras => @personas_vacunas_otras,:agno => @agno, :partial_seguimiento => @partial_seguimiento, :calendario_vacunas_persona => @calendario_vacunas_persona , :agnos => @agnos, :calendario_vacunas => @calendario_vacunas, :otras_vacunas => @otras_vacunas, :tipo => @tipo } ) %></div>")
 <%	when 'ant_qui' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:alergias => @alergias } ) %></div>")			
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:alergias => @alergias, :tipo => @tipo  } ) %></div>")			
 <%	when 'act_fis' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_actividad_fisica => @persona_actividad_fisica, :segmento_actividad => @segmento_actividad, :edad_act_fis => @edad_act_fis } ) %></div>")	
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona_actividad_fisica => @persona_actividad_fisica, :segmento_actividad => @segmento_actividad, :edad_act_fis => @edad_act_fis, :tipo => @tipo } ) %></div>")	
 <%	when 'hab_alc' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:test_audit => @test_audit } ) %></div>")	
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:test_audit => @test_audit, :tipo => @tipo } ) %></div>")	
 <%	when 'hab_tab' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:consumo => @consumo, :total_consumo => @total_consumo } ) %></div>")	
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:consumo => @consumo, :total_consumo => @total_consumo, :tipo => @tipo } ) %></div>")	
 <%	when 'ant_gin' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial ) %></div>")	
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:tipo => @tipo } ) %></div>")	
 <%	when 'ant_fam' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial ) %></div>")	
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:tipo => @tipo } ) %></div>")	
 <%	when 'ant_soc' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona => @persona } ) %></div>")	
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :partial => @partial, :locals => {:persona => @persona, :tipo => @tipo  } ) %></div>")	
 <%	when 'ant_lab' %>
-			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :template => @partial, :locals => {:ocupaciones => @ocupaciones } ) %></div>")	
+			$( "#contenido-ant-<%= @tipo %>" ).replaceWith("<div id='contenido-ant-<%= @tipo %>'><%= escape_javascript( render :template => @partial, :locals => {:ocupaciones => @ocupaciones, :tipo => @tipo  } ) %></div>")	
 <%	end %>

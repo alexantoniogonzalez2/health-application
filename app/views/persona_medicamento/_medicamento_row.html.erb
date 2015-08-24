@@ -1,5 +1,5 @@
 <tr id='tr-med-<%= p_m.id %>'>
-  <td><%= p_m.atencion_salud.nil? ? p_m.created_at.strftime('%Y-%m-%d') : p_m.atencion_salud.agendamiento.fecha_comienzo.strftime('%Y-%m-%d') %></td> 
+  <td><%= p_m.created_at.strftime('%Y-%m-%d %H:%M') %></td> 
   <td><%= p_m.persona_diagnostico.nil? ? '-' : p_m.persona_diagnostico.diagnostico.nombre %></td>              
   <td><%= p_m.medicamento.nombre %></td>
   <td><%= p_m.getPosologia %></td>
@@ -13,9 +13,11 @@
       Añadido por paciente.
     <% end %>
   <% elsif @atencion_salud %> 
-    <% if p_m.es_antecedente and p_m.atencion_salud_id.equal? @atencion_salud.id and tipo == 'edit' %> 
+    <% if p_m.es_antecedente and p_m.atencion_salud_id.equal? @atencion_salud.id and @tipo == 'reabrir' and p_m.editarEnReabrir %> 
+      <a href="#modal-container-med-<%= p_m.id %>" data-toggle="modal" id="pm<%= p_m.id %>" >Editar</a>
+    <% elsif p_m.es_antecedente and p_m.atencion_salud_id.equal? @atencion_salud.id and @tipo == 'edit' %> 
   	  <a href="#modal-container-med-<%= p_m.id %>" data-toggle="modal" id="pm<%= p_m.id %>" >Editar</a>
-    <% elsif p_m.es_antecedente and p_m.atencion_salud_id.equal? @atencion_salud.id and tipo == 'show' %> 
+    <% elsif p_m.es_antecedente and p_m.atencion_salud_id.equal? @atencion_salud.id and ( @tipo == 'show' or  @tipo == 'reabrir')%> 
       <span>-</span>
     <% else %>  
       <%= link_to 'Ver atención', atenciones_salud_path(p_m.atencion_salud.id) %>

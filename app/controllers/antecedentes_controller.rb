@@ -290,7 +290,7 @@ class AntecedentesController < ApplicationController
 	    'persona' => @persona_antecedente.showName('%n%p%m'),
 	    'parentesco' => params[:parentesco],
 	    'diagnostico' => @persona_antecedente.diagnostico_muerte.nombre,
-	    'fecha_deceso' => @persona_antecedente.fecha_muerte.strftime('%Y-%m-%d')
+	    'fecha_deceso' => @persona_antecedente.fecha_muerte.try(:strftime,'%Y-%m-%d')
     } 
 
     if params[:tipo] == 'guardar'
@@ -325,7 +325,8 @@ class AntecedentesController < ApplicationController
 				@persona_diagnostico_atencion.fecha_inicio = params[:fecha_ini] unless params[:fecha_ini].blank?
 				@persona_diagnostico_atencion.fecha_termino = params[:fecha_fin] unless params[:fecha_fin].blank?
 				@persona_diagnostico_atencion.estado_diagnostico_id = params[:e_d] unless params[:e_d].blank?
-				@persona_diagnostico_atencion.es_cronica = params[:es_cronica] unless params[:es_cronica].blank?
+				@persona_diagnostico_atencion.es_cronica = params[:enf_cro] unless params[:enf_cro].blank?
+				@persona_diagnostico_atencion.comentario = params[:comentario] unless params[:comentario].blank?
 				@persona_diagnostico_atencion.save!
 		
 		else

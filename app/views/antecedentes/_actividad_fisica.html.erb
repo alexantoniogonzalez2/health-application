@@ -1,5 +1,5 @@
 <% if @acceso %>
-<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
+<% disabled = (@tipo == 'reabrir' or @tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
 <h4>Antecedentes actividad física</h4>
 
 <%=	case @segmento_actividad

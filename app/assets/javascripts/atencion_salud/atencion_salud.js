@@ -53,6 +53,26 @@ function actualizarEstado(pers_diag,e_d){
   }
   guardarDiagnostico(pers_diag);
 }
+function guardarDiagReabrir(pers_diag){
+  trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
+  e_d = $('input[type=radio][name=radios-estado-'+pers_diag+']:checked').val();
+  (e_d == 1) ? $( '#checkboxes-trat-div-'+pers_diag).show() : $( '#checkboxes-trat-div-'+pers_diag).hide(); 
+  if(e_d == 1) { 
+    estado_trat = (trat == 1) ? 2 : 1; 
+    $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+    $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+  }
+  else { 
+    $('input[name=radios-ges-'+pers_diag+']').prop('checked', false);
+    $('input[name=radios-int-'+pers_diag+'][value=1]').prop('checked', false);
+    $('input[name=radios-int-'+pers_diag+'][value=2]').prop('checked', false);
+  }
+  var fecha_hora = getFechaActual() + ' ' + getHoraActual(); 
+  var pre_estado = $("label[for='radios-"+pers_diag+"-"+pre_e_d+"']").text();
+  $('#reabrir-estado-diag-'+pers_diag).append("<span>Fecha: "+fecha_hora+" Estado anterior: "+pre_estado+" </span><br/>")
+  
+  guardarDiagnostico(pers_diag);
+}
 
 function agregarPropInt(pers_diag,value){
   $.ajax({
@@ -159,8 +179,9 @@ $('#select_diagnostico').select2({
 
 $('.select_diag').select2({
   allowClear: true,
-  width: '380px',
+  width: '60%',
   minimumInputLength: 3,
+  placeholder: "Selecciona un diagnóstico",
   ajax: {
     url: '/cargar_diagnosticos',
     dataType: 'json',
@@ -760,8 +781,6 @@ function agregarInfoEno(pd,value,tipo){
 }
 
 function agregarInfoPrestacion(p_p,valor,param){
-
-
   if (typeof atencion_salud_id !== 'undefined') { }
   else { atencion_salud_id = 'persona'; } 
   $.ajax({
@@ -774,7 +793,6 @@ function agregarInfoPrestacion(p_p,valor,param){
 }
 
 function guardarPrestacion(p_p){  
-  //var value = $("#select_prestadores"+p_p).select2('data') != null ? $("#select_prestadores"+p_p).select2('data').id : null;
   var value =  $("#prestador-prestacion-"+p_p).val();
   agregarInfoPrestacion(p_p,value,'prestador');
   var value = $('input[name=f_p_'+p_p+']').val();
@@ -863,19 +881,23 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
     parentesco = texto.substring(0,pos_final-1);  
   }
 
-  $.ajax({
-    type: 'POST',
-    url: '/guardar_antecedente_familiar_muerte',
-    data: { diag: diag, fecha: fecha, persona_ant: per_ant, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo },
-    success: function(response){ 
-      if ($('#body-ant-muertes tr').length > 0 || $('#body-ant-cronicas tr').length > 0)
-        $('#ant_fam').addClass('active-ant');
+  if ((diag != null && per_ant !='') || tipo == 'guardar' ){
+    $.ajax({
+      type: 'POST',
+      url: '/guardar_antecedente_familiar_muerte',
+      data: { diag: diag, fecha: fecha, persona_ant: per_ant, atencion_salud_id: at_salud_id, parentesco: parentesco, tipo: tipo },
+      success: function(response){ 
+        if ($('#body-ant-muertes tr').length > 0 || $('#body-ant-cronicas tr').length > 0)
+          $('#ant_fam').addClass('active-ant');
 
-      if (cerrar)
-        cerrarModalAntFamMue(id);
-    },
-    error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
-  });
+        if (cerrar)
+          cerrarModalAntFamMue(id);
+      },
+      error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
+    });
+  } else {
+    alert('Seleccione un familiar y un diagnóstico');
+  }  
 }
 
 $('#agregar-ant-fam-cro-new').click(function() {
@@ -890,8 +912,8 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
   var per_ant;
   var diag = $('#select_diag-cro-'+id).select2('data') != null ? $('#select_diag-cro-'+id).select2('data').id : null;
   var enf_cro = $('#check-enf-cron-'+id).is(':checked'); 
-  var fecha_ini = $('#cro-fin-'+id).val();
-  var fecha_fin = $('#cro-ini-'+id).val();
+  var fecha_ini = $('#fecha-afc-ini-'+id).val();
+  var fecha_fin = $('#fecha-afc-ter-'+id).val();
   var parentesco = $('#par-cro-'+id).text();
   var e_d = $('#e_d_cro-'+id).find('input[name='+id+'-radios-estado-cro]:checked').val();
   var comentario = $('#comentario_'+id+'_cro').val();
@@ -908,7 +930,7 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
     var pos_final = texto.indexOf("-");
     parentesco = texto.substring(0,pos_final-1); 
   }
-  if (diag != null && per_ant !=''){
+  if ((diag != null && per_ant !='') || tipo == 'guardar' ){
     $.ajax({
       type: 'POST',
       url: '/guardar_antecedente_familiar_cronica',

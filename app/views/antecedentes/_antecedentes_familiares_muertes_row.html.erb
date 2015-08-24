@@ -4,7 +4,7 @@
 	<td><%= deceso['diagnostico'] %></td>
 	<td><%= deceso['fecha_deceso'] %></td>
 	<td>
-		<% if @tipo == 'edit' or !@atencion_salud %>
+		<% if @tipo == 'edit' or @tipo == 'reabrir' or  !@atencion_salud %>
 			<a href="#modal-container-ant-fam-mue-<%= deceso['id'] %>" data-toggle="modal" id="ant-fam-mue<%= deceso['id'] %>" >Editar</a>
 		<% else %>
 			<span>-</span>

@@ -4,7 +4,7 @@
 	<table class="table table-striped table-hover table-condensed">
 		<thead class="ajust-head">
       <tr class='info'>
-      	<th class="col-sm-1">Fecha indicación</th>
+      	<th class="col-sm-2">Fecha indicación o registro</th>
       	<th class="col-sm-3">Diagnóstico</th>
       	<th class="col-sm-2">Medicamento</th>
       	<th class="col-sm-2">Posología</th>
@@ -18,14 +18,14 @@
 			<tr id='tr-vacio-med'><td colspan='7' >No hay información de medicamentos.</td></tr>
 	    <% else %>
 	      <% @persona_medicamentos.each do |p_m| %>
-	      	<%= render :partial => "persona_medicamento/medicamento_row", :locals => {:p_m => p_m, :atencion_salud => @atencion_salud, :tipo => tipo } %>
+	      	<%= render :partial => "persona_medicamento/medicamento_row", :locals => {:p_m => p_m, :atencion_salud => @atencion_salud, :tipo => @tipo } %>
 	      <% end %>
 	    <% end %>  
     </tbody>
 	</table>
 	
 	<span class='nota'>(*) Las fechas de inicio y término son estimadas.</span>
-	<% if tipo == 'edit' or !@atencion_salud %>
+	<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 		<div class='container agregar-med'>
 			<div class='row'>
 				<div class='col-md-6 column ajuste-padding'>

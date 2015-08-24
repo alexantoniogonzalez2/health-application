@@ -20,7 +20,7 @@ function desbloquearHora(agen) {
     type: 'POST',
     url: '/desbloquear_hora',
     data: { agendamiento_id: agen },
-    success: function(response) { $("#agen"+agen).remove(); parent.append('<button id="agen'+agen+'" type="button" class="btn btn-xs btn-warning" onclick="bloquearHora('+agen+')">Bloquear Hora</button>'); },
+    success: function(response) { $("#agen"+agen).remove(); parent.append('<button id="agen'+agen+'" type="button" class="btn btn-xs btn-default" onclick="bloquearHora('+agen+')">Bloquear Hora</button>'); },
     error: function(xhr, status, error){ alert("No se pudo desbloquear la hora.");   }
   });
    

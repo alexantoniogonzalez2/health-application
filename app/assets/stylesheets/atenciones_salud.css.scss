@@ -33,18 +33,18 @@ div.select2-container{ font-size: 13px; }
 
 .boton-auge{
   position: relative;
-  bottom: 2px;
+  bottom: 1px;
   float: right;
-  padding: 2px !important;
+  padding: 1px !important;
   margin-bottom: 0px !important; 
   margin-left: 1px;
   display: inline-block;
 }
 .boton-eno{
   position: relative;
-  bottom: 2px;
+  bottom: 1px;
   float: right;
-  padding: 2px !important;
+  padding: 1px !important;
   margin-bottom: 0px !important; 
   display: inline-block;
 }
@@ -104,13 +104,13 @@ div.footer{ margin-top: 20px !important; }
 
 label.checkbox-der {
   font-weight: bold !important;
-  margin-left: 0px !important;
-  padding-left: 0px !important;
+  /*margin-left: 0px !important;
+  padding-left: 0px !important;*/
 }
 
 input.checkbox-der {
-  float: right !important;
-  margin-left: 10px !important;
+  /*float: right !important;
+  margin-left: 10px !important;*/
 }
 
 a.btn-large{
@@ -246,7 +246,7 @@ a.select2-choice, a.select2-default { height: 30px !important; }
 }
 
 small.help-block { min-width: 200px; position: relative !important; }
-div.ajuste-height { min-height: 450px !important; }
+div.ajuste-height { min-height: 520px !important; }
 .select_ocupacion { float: left !important; margin-bottom: 20px !important; }
 div.ajuste-margin { margin-top: 5px !important; }
 #modal-agregar-persona { margin-left: 10px;}
@@ -287,19 +287,19 @@ select.codigo, input.telefono, input.otra-relacion {
 .ajuste-row { padding-top: 15px !important; }
 div.otra-relacion-div { display: none; }
 div.ajuste-parentesco { margin-top: 25px !important; }
-//input.fecha { margin-left: 40px; width: 89%; }
 .ajuste-top-fecha { margin-top: 7px; }
 div.footer { width: 100%;}
 select.select_persona{  width: 270px !important; }
 div.ajus-mar-top { margin-top: 15px; }
-input.ajuste-posicion { display: inline-block !important; width: 220px !important; float: left !important ;}
+input.ajuste-posicion { display: inline-block !important; width: 95%; float: right !important ;}
 div.ajus-margen { margin: 0px;}
 div.float-right { float:right;}
 #ajuste-motivo { padding: 0px; margin: 0px 0px 10px 0px;}
-#modal-dialog-signos { width: 90%;}
+#modal-dialog-signos, #modal-dialog-antecedentes { width: 90%;}
 a.active-ant, a.active-ant:focus { background-color: $lightGreen; color: $blue;}
 div.margin-top { margin-top: 5px;}
 input.width_300 { width: 300px !important; }
 
 .modal { overflow-y: auto; }
 .modal-open { overflow: auto; }
+

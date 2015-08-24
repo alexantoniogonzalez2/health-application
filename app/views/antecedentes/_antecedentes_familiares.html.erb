@@ -9,7 +9,7 @@
     <tbody id='body-ant-muertes'> 
     	<% unless @decesos.empty? %>
 	    	<% @decesos.each do |deceso| %>
-		   		<%= render :partial => "antecedentes/antecedentes_familiares_muertes_row", :locals => {:deceso => deceso } %>
+		   		<%= render :partial => "antecedentes/antecedentes_familiares_muertes_row", :locals => {:deceso => deceso,:tipo => @tipo } %>
 		    <% end %>	
 		  <% else %>
 				<tr id='tr-vacio-ant-fam-mue'><td colspan='5' >No hay información de antecedentes familiares.</td></tr>
@@ -17,7 +17,7 @@
     </tbody>    
 	</table>
 
-	<% if @tipo == 'edit' or !@atencion_salud %>
+	<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 		<a href="#modal-container-ant-fam-mue-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (muerte)</a>
 		<div id='ant_mue_modal-div'></div>
 
@@ -36,7 +36,7 @@
 							Antecedentes familiares
 						</h4>
 					</div>
-					<div class="modal-body ajuste-alto2">
+					<div class="modal-body ajuste-new-ant-fam">
 						<%= render :partial => "antecedentes/antecedentes_familiares_muertes_new", :locals => { :persona => @persona } %>
 					</div>
 					<div class="modal-footer">
@@ -53,12 +53,12 @@
 	<h5>Enfermedades crónicas</h5>
 	<table class="table table-striped table-hover table-condensed">
 		<thead class="ajust-head">
-      <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha inicio</th><th class="col-sm-1">Editar</th></tr>	      
+      <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha inicio</th><th class="col-sm-1">Fecha término</th><th class="col-sm-1">Editar</th></tr>	      
     </thead>
     <tbody id='body-ant-cronicas'>
     	<% unless @ant_enf_cro.empty?  %>
 	    	<% @ant_enf_cro.each do |ant_enf_cro| %>
-	    		<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_row", :locals => {:ant_enf_cro => ant_enf_cro } %>
+	    		<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_row", :locals => {:ant_enf_cro => ant_enf_cro, :tipo => @tipo} %>
 		    <% end %>
 	    <% else %>
 	    	<tr id='tr-vacio-ant-fam-cro'><td colspan='5' > No hay información de antecedentes familiares relacionados con enfermedades crónicas.</td></tr>
@@ -66,7 +66,7 @@
     </tbody>    
 	</table>
 
-	<% if @tipo == 'edit' or !@atencion_salud %>
+	<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 		<a href="#modal-container-ant-fam-cro-new" role="button" class="btn" data-toggle="modal">Agregar antecedente familiar (enfermedad crónica)</a>
 		<div id='ant_cro_modal-div'></div>	
 
@@ -85,7 +85,7 @@
 							Antecedentes familiares
 						</h4>
 					</div>
-					<div class="modal-body ajuste-alto2">
+					<div class="modal-body ajuste-new-ant-fam">
 						<%= render :partial => "antecedentes/antecedentes_familiares_cronicos_new", :locals => { :persona => @persona } %>
 					</div>
 					<div class="modal-footer">

@@ -6,39 +6,43 @@
         <h4 class="modal-title">Antecedentes familiares</h4>
       </div>
       <div class="modal-body">
-				<div class="container">
+				<div class="container ajustado">
           <div class='row'>
-            <div class='column col-md-6'>
+            <div class='column col-md-12'>
               <label>Nombre</label>: <%= deceso['persona'] %>                             
             </div>
-            <div class='column col-md-6'>
+          </div>
+          <div class='row padding-top'>
+            <div class='column col-md-12'>
               <label>Parentesco</label>: <span id="par-afm-<%= deceso['id'] %>" ><%= deceso['parentesco'] %></span>             
             </div>
           </div>
-          <div class='row'>
+          <div class='row padding-top'>
             <div class='column col-md-12'>
               <label>Diagnóstico de deceso</label>: <%= deceso['diagnostico'] %>
             </div>
           </div>
-          <div class='row'>
-            <div class='column col-md-12'>
-              <br>
+          <div class='row padding-top'>
+            <div class='column col-md-8 '>
               <label>Cambiar diagnóstico</label>:
-              <input type='hidden' id="select_diag-afm-<%= deceso['id'] %>" class='select_diag' >
-              <div class="checkbox">
+              <input type='hidden' id="select_diag-afm-<%= deceso['id'] %>" class='select_diag float-right' >
+            </div>
+            <div class='column col-md-4'>   
+              <div class="checkbox padding-left">
                 <label for="diag-no-frec-afm-<%= deceso['id'] %>">
-                  <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-<%= deceso['id'] %>" value='1' >
-                  Incluir diagnósticos no frecuentes
+                  <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-<%= deceso['id'] %>" value='1' > Incluir diagnósticos no frecuentes
                 </label>
               </div>
             </div>
           </div>
-          <div class='row'>
-            <div class='column col-md-4'>
+          <div class='row padding-top'>
+            <div class='column col-md-3'>
               <label>Fecha deceso:</label>
             </div>
-            <div class='column col-md-8'>
+            <div class='column col-md-5'>
               <input type='text' class="form-control ajuste-posicion" id='fecha-afm-<%= deceso['id'] %>' placeholder='Ingresar fecha de deceso' value='<%= deceso['fecha_deceso'] %>' />
+            </div>
+            <div class='column col-md-4'>        
             </div>  
           </div>
 				</div>

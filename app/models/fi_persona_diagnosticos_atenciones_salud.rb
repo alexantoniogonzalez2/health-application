@@ -12,6 +12,14 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
   has_many :persona_prestacion_diagnosticos, :class_name => 'FiPersonaPrestacionDiagnosticos', :foreign_key => 'persona_diagnostico_atencion_salud_id'
   has_many :reabrir_estado_diagnostico, :class_name => 'FiReabrirEstadoDiagnostico', :foreign_key => 'persona_diagnostico_atencion_salud_id'
 
+  def editarEnReabrir
+    respuesta = true
+    fecha_comienzo = atencion_salud.agendamiento.fecha_comienzo_real
+    fecha_final = atencion_salud.agendamiento.fecha_final_real
+    respuesta = false if created_at > fecha_comienzo and created_at < fecha_final
+    return respuesta
+  end 
+
   private
   def app_params
     params.require(:list).permit(:atencion_salud,
@@ -31,7 +39,8 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
                                  :es_antecedente,
                                  :certificado_diagnosticos,
                                  :persona_prestacion_diagnosticos,
-                                 :reabrir_estado_diagnostico)
+                                 :reabrir_estado_diagnostico,
+                                 :created_at)
   end
 								
 end

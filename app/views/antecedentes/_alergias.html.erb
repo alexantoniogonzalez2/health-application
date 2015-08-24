@@ -1,5 +1,5 @@
 <% if @acceso %>
-<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
+<% disabled = (@tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud) ? '' : 'disabled' %>
 
 <div class='container'>
 	<div class='row'>

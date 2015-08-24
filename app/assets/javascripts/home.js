@@ -166,6 +166,13 @@ function getFechaActual(){
   return yyyy+'-'+mm+'-'+dd;
 }
 
+function getHoraActual(){
+  var now = new Date();
+  var hh = now.getHours();
+  var mm = now.getMinutes();  
+  return hh+':'+mm;
+}
+
 function ajuste2_label_better (label_better_id) {
   var settings = {
     position: "top",

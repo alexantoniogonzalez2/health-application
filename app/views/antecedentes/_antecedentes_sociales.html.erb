@@ -1,5 +1,5 @@
 <h4>Antecedentes sociales</h4>
-<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
+<% disabled = (@tipo == 'reabrir' or @tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
 
 <div class="container">
 	<div class="row">
@@ -45,7 +45,7 @@
 		</div>
 	</div>
 	<div>
-		<% if @tipo == 'edit' or !@atencion_salud %>
+		<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 			<div class="form-group">
 				<div class="col-md-8">
 			  </div>

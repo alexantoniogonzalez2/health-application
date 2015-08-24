@@ -9,11 +9,13 @@
       <div class="modal-body">
       	<div class="container ajustado">
           <div class='row'>
-            <div class='column col-md-6'>
+            <div class='column col-md-12'>
               <label>Nombre</label>: <%= ant_enf_cro['datos'].persona.showName('%n%p%m') %>                             
             </div>
-            <div class='column col-md-6'>
-              <label>Parentesco</label>: <span id="par-cro-<%= ant_enf_cro['datos'].id %>" ><%= ant_enf_cro['parentesco'] %></span>             
+          </div>
+          <div class='row'>
+            <div class='column col-md-12'>
+              <label>Parentesco</label>: <span id="par-cro-<%= ant_enf_cro['datos'].id %>" ><%= ant_enf_cro['parentesco'] %></span>                           
             </div>
           </div>
           <div class='row'>
@@ -22,29 +24,31 @@
             </div>
           </div> 
           <div class="row clearfix">
-            <div class="form-group">
-              <div class="col-md-4">
-                <div class="checkbox" id="enf_cro_<%= ant_enf_cro['datos'].id %>">
-                  <label class="checkbox-der" for="check-enf-cron-<%= ant_enf_cro['datos'].id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="check-enf-cron-<%= ant_enf_cro['datos'].id %>" <% if ant_enf_cro['datos'].es_cronica %> checked="checked" <% end %> ></label>
-                </div>                
-              </div>
-            </div>
+            <div class="column col-md-4">
+              <div class="checkbox" id="enf_cro_<%= ant_enf_cro['datos'].id %>">
+                <label for="check-enf-cron-<%= ant_enf_cro['datos'].id %>"><input type="checkbox" name="checkboxes" id="check-enf-cron-<%= ant_enf_cro['datos'].id %>" <% if ant_enf_cro['datos'].es_cronica %> checked="checked" <% end %> > Enfermerdad crónica</label>
+              </div>                
+            </div>         
           </div>
 
           <div class="row clearfix">
-            <div class="col-md-4 column">
+            <div class="col-md-3 column">
               <label>Fecha inicio</label>
             </div>
-            <div class="col-md-8 column">
-              <input id="cro-ini-<%= ant_enf_cro['datos'].id %>" name='cron-ini' class="datepicker" type="text" value='<%= ant_enf_cro['datos'].fecha_inicio.try(:strftime, '%Y-%m-%d') %>' >
+            <div class="col-md-5 column">
+              <input id="fecha-cro-ini-<%= ant_enf_cro['datos'].id %>" placeholder='Ingresar fecha de inicio' class="form-control ajuste-posicion" name='cron-ini' type="text" value='<%= ant_enf_cro['datos'].fecha_inicio.try(:strftime, '%Y-%m-%d') %>' >
+            </div>
+            <div class="col-md-4 column">         
             </div>
           </div>
-          <div class="row clearfix">
-            <div class="col-md-4 column">
+          <div class="row clearfix padding-top">
+            <div class="col-md-3 column">
               <label>Fecha término</label>
             </div>
-            <div class="col-md-8 column">
-              <input id="cro-fin-<%= ant_enf_cro['datos'].id %>" name='cron-ter' class="datepicker" type="text" value='<%= ant_enf_cro['datos'].fecha_termino.try(:strftime, '%Y-%m-%d') %>' >
+            <div class="col-md-5 column">
+              <input id="fecha-cro-fin-<%= ant_enf_cro['datos'].id %>" placeholder='Ingresar fecha de término' class="form-control ajuste-posicion" name='cron-ter' type="text" value='<%= ant_enf_cro['datos'].fecha_termino.try(:strftime, '%Y-%m-%d') %>' > 
+            </div>
+            <div class="col-md-4 column">         
             </div>
           </div>
           <div class="row clearfix">
@@ -53,7 +57,7 @@
                 <label class="control-label" for="radios">Estado de diagnóstico</label>                      
                 <% @estados_diagnostico.each do |e_d| %>  
                   <div class="radio">
-                    <label for="<%= ant_enf_cro['datos'].id %>-radios-cro-<%= e_d.id %>"><input type="radio" name="<%= ant_enf_cro['datos'].id %>-radios-estado-cro" value="<%= e_d.id %>" id="<%= ant_enf_cro['datos'].id %>-radios-cro-<%= e_d.id %>" <% if ant_enf_cro['datos'].estado_diagnostico_id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
+                    <label for="<%= ant_enf_cro['datos'].id %>-radios-cro-<%= e_d.id %>"><input type="radio" name="<%= ant_enf_cro['datos'].id %>-radios-estado-cro" value="<%= e_d.id %>" id="<%= ant_enf_cro['datos'].id %>-radios-cro-<%= e_d.id %>" <% if ant_enf_cro['datos'].estado_diagnostico_id ==  e_d.id  %> checked <% end %> > <%= e_d.nombre %></label>
                   </div> 
                 <% end %>                    
               </div>

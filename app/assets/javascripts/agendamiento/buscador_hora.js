@@ -32,7 +32,7 @@ if ( $("#iconos-leyenda").length > 0 ){
     url: '/buscar_horas_profesional',
     data: {  },
     success: function(response) {
-    	  $('#buscadorHora').fullCalendar('addEventSource',response);
+    	$('#buscadorHora').fullCalendar('addEventSource',response);
     },
     error: function(xhr, status, error){ alert("Error al filtrar por especialidad.2"); }
   });

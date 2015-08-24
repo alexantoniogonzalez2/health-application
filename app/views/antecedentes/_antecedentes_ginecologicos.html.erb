@@ -1,5 +1,5 @@
 <% if @acceso %>
-<% disabled = (@tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
+<% disabled = (@tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud) ? '' : 'disabled' %>
 <h4>Antecedentes ginecológicos</h4>
 
 <div class='container'>

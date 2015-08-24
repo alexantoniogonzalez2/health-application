@@ -24,7 +24,7 @@
 		<% end %>
 	<% end %>
 
-	<% if @tipo == 'edit' or !@atencion_salud %>
+	<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 		<a href="#modal-container-hab-alc-new" role="button" class="btn" data-toggle="modal">Agregar antecedente de alcohol</a>
 		<div class="modal fade" id="modal-container-hab-alc-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog ajuste-ancho">

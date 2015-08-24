@@ -7,7 +7,7 @@
 	  <tbody id='lista-hab-tab'> 
 		  <% unless @consumo.blank? %>
 				<% @consumo.each do |consumo| %>
-					<%= render :partial => "habitos_tabaco/habitos_tabaco_row", :locals => {:cons => consumo } %>
+					<%= render :partial => "habitos_tabaco/habitos_tabaco_row", :locals => {:cons => consumo, :tipo => @tipo } %>
 				<% end %>
 			<% else %>
 				<tr id='tr-vacio-tab'><td colspan='5' >No hay información de consumo de cigarrillos.</td></tr>
@@ -16,14 +16,15 @@
 	</table></br>	
 	<div class="alert alert-success" role="alert">Total consumo: <span id="total-consumo"><%= number_to_human(@total_consumo, precision: 2, separator: ',') %></span> </div>
 
-	<div id='ant_tab_modal-div'></div>
-	<% unless @consumo.blank? %>
-		<% @consumo.each do |consumo| %>
-			<%= render :partial => "habitos_tabaco/edit", :locals => { :cons => consumo } %>
-		<% end %>
-	<% end %>	
+	<% if @tipo == 'edit' or  @tipo == 'reabrir' or !@atencion_salud %>
 
-	<% if @tipo == 'edit' or !@atencion_salud %>
+		<div id='ant_tab_modal-div'></div>
+		<% unless @consumo.blank? %>
+			<% @consumo.each do |consumo| %>
+				<%= render :partial => "habitos_tabaco/edit", :locals => { :cons => consumo, :tipo => @tipo } %>
+			<% end %>
+		<% end %>	
+
 		<a href="#modal-container-hab-tab-new" role="button" class="btn" data-toggle="modal">Ingresar consumo de tabaco</a>
 
 		<div class="modal fade" id="modal-container-hab-tab-new" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

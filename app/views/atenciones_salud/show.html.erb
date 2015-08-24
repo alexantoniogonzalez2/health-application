@@ -5,12 +5,16 @@
 </script>
 <% load_ant = @agendamiento.agendamiento_estado.nombre == 'Atención reabierta' ? 'load_ant_reabrir' : 'load_ant_show' %>
 <% estado = @agendamiento.agendamiento_estado.nombre == 'Atención reabierta' ? 'reabrir' : 'show' %>
-<% texto_enc = estado == 'reabrir' ? 'reabierta' : '' %>
+<% texto_enc = estado == 'reabrir' ? ' - REABIERTA' : '' %>
+<% color = estado == 'reabrir' ? 'panel-warning' : 'panel-info' %>
 <input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
 
-<div id="atencion-salud" class="panel panel-success">
+<div id="atencion-salud" class="panel <%= color %>">
   <div class="panel-heading">
-    <h3 class="panel-title"><span>Atención de Salud</span><label>: <%= texto_enc %></label><span class='right'>Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %> </span></h3>
+    <h3 class="panel-title">
+      <label> Atención de Salud <%= texto_enc %></label>
+      <span class='right'>Fecha: <%= @agendamiento.fecha_comienzo.strftime("%Y-%m-%d") %> Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></span>
+    </h3>
   </div>
   <div class="panel-body">	
     <div class="row">
@@ -83,13 +87,10 @@
 
           <!-- Modal -->
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header ajuste-modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h4>Antecedentes del paciente</h4>
-                </div>
+            <div id="modal-dialog-antecedentes" class="modal-dialog">
+              <div class="modal-content">                
                 <div class="modal-body ajuste-height">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                   <div id='contenido-ant-<%= estado %>'></div>  
                 </div>
                 <div class="modal-footer">
@@ -136,12 +137,12 @@
           <label>Motivo de consulta:</label><input type='text' class="form-control ajuste-motivo" value="<%= @atencion_salud.motivo_consulta %>" disabled >
         </div>
         <label>Anamnesis</label>
-        <textarea class = "form-control" rows='3' cols='50' disabled ><%= @atencion_salud.anamnesis %></textarea>
+        <textarea class = "form-control"  cols='50' disabled ><%= @atencion_salud.anamnesis %></textarea>
         <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a> | <a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
         <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :tipo => 'show'} %>
         <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr => @presion, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr => @car_presion, :car_p_sat => @car_sat, :tipo => 'show'} %>
         <br><label>Examen físico</label>
-        <textarea class="form-control" rows='3' cols='50' disabled ><%= @atencion_salud.examen_fisico %></textarea>       
+        <textarea class="form-control" cols='50' disabled ><%= @atencion_salud.examen_fisico %></textarea>       
       </div>
       <div class="col-md-6 div-form-atencion">
         <label>Diagnóstico</label>
@@ -203,6 +204,8 @@
         <% if estado == 'reabrir' %>
           <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
         <% end %>
+        Hora comienzo real: <%= @agendamiento.fecha_comienzo_real.strftime('%H:%M') %><br>
+        Hora final real: <%= @agendamiento.fecha_final_real.strftime('%H:%M') %>
       </div>
     </div> <!--Cierre div row -->    
   </div> <!--Cierre div panel-body -->

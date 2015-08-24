@@ -1,5 +1,5 @@
 <div class="modal-body">
-	<div class="container ajustado ajuste-separacion">
+	<div class="container ajustado">
     <div class="row clearfix">
       <div class="col-md-8 column">
         <%= render :partial => "persona/seleccionar_persona", :locals => {:persona => @persona, :id => 'afm', :id_pre => '', :clase => '', :subgrupo => 'fam' } %>                   
@@ -8,24 +8,27 @@
         <a id="modal-agregar-persona" href="#modal-container-agregar-persona-afm" role="button" class="btn" data-toggle="modal">O agregue una persona</a>
       </div>      
     </div>
-    <div class='row'>
-      <div class='column col-md-12'>        
+    <div class='row padding-top'>
+      <div class='column col-md-8'>        
         <label>Diagnóstico</label>:
-        <input type='hidden' id="select_diag-afm-new" class='select_diag'>
-        <div class="checkbox">
+        <input type='hidden' id="select_diag-afm-new" class='select_diag float-right'>
+      </div>  
+      <div class='column col-md-4'> 
+        <div class="checkbox padding-left">
           <label for="diag-no-frec-afm-new">
-            <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-new" value="1">
-            Incluir diagnósticos no frecuentes
+            <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-new" value="1"> Incluir diagnósticos no frecuentes
           </label>
         </div>
       </div>
     </div>
-    <div class='row'>
-      <div class='column col-md-4'>
+    <div class='row padding-top'>
+      <div class='column col-md-3'>
         <label>Fecha deceso:</label>
-      </div>
-      <div class='column col-md-8'>
+      </div>  
+      <div class='column col-md-5'>         
         <input type='text' class="form-control ajuste-posicion" id='fecha-afm-new' placeholder='Ingresar fecha de deceso' />
+      </div>
+      <div class='column col-md-4'>        
       </div>  
     </div>
 	</div>

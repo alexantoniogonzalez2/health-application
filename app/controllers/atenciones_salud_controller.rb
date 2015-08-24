@@ -110,7 +110,7 @@ class AtencionesSaludController < ApplicationController
 	  						 
 	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
 	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
-	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
+	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ? AND es_antecedente is null', params[:id],572)
 	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
 
 	  @persona_estatura = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],1).first
@@ -202,7 +202,7 @@ class AtencionesSaludController < ApplicationController
 			@certificado.atencion_salud = @atencion_salud 
 			@certificado.save!
 		end	
- 	
+			
 	end
 
   def index
@@ -312,7 +312,7 @@ class AtencionesSaludController < ApplicationController
 	  
 	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
 	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
-	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ?', params[:id],572)
+	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ? AND es_antecedente is null', params[:id],572)
 	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
 
 	  @persona_estatura = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],1).first
@@ -424,10 +424,12 @@ class AtencionesSaludController < ApplicationController
 	
 	end
 
-	def editarAtencion		
+	def editarAtencion	
+  	redirect_to action: "edit", id: params[:id]	
+	end
 
-  	redirect_to action: "edit", id: params[:id]
-	
+	def verAtencion	
+  	redirect_to action: "show", id: params[:id_atencion]	
 	end
 
 	def reabrirAtencion	
@@ -464,14 +466,14 @@ class AtencionesSaludController < ApplicationController
 
 		if params[:finalizar] == 'finalizar'
 			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
+			estado_actual = @agendamiento.agendamiento_estado_id
 			@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
 			@agendamiento.agendamiento_estado = @estadoAgendamiento
-			@agendamiento.fecha_final_real = DateTime.current
+			@agendamiento.fecha_final_real = DateTime.current if estado_actual != 10 #Si fue reabierta no se guarda esa hora
 			@agendamiento.save
 		end	
 
 		render :json => { :success => true } 
-
 	end
 
 	def cargarAtenciones
@@ -496,7 +498,6 @@ class AtencionesSaludController < ApplicationController
 		end	 			
 
 		@atenciones = []
-
 		@atenciones_salud.each do |at_sal|
 			@atenciones << [at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),at_sal.persona.showName('%n%p%m'),at_sal.persona.showRut,'<a href="'<<atenciones_salud_path(at_sal)<<'">Ver atención</a>' ]
 		end	

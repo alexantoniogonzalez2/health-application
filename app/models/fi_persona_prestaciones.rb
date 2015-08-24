@@ -14,9 +14,17 @@ class FiPersonaPrestaciones < ActiveRecord::Base
     return fecha_formato  
   end
 
+  def editarEnReabrir
+    respuesta = true
+    fecha_comienzo = atencion_salud.agendamiento.fecha_comienzo_real
+    fecha_final = atencion_salud.agendamiento.fecha_final_real
+    respuesta = false if created_at > fecha_comienzo and created_at < fecha_final
+    return respuesta
+  end 
+
   private
   def app_params
-    params.require(:list).permit(:id,:persona,:prestacion,:atencion_salud,:fecha_prestacion,:prestador,:es_antecedente,:prestador_texto,:persona_prestacion_diagnosticos)
+    params.require(:list).permit(:id,:persona,:prestacion,:atencion_salud,:fecha_prestacion,:prestador,:es_antecedente,:prestador_texto,:persona_prestacion_diagnosticos,:created_at)
   end
 
 end

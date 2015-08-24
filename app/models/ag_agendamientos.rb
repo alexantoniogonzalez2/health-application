@@ -67,56 +67,14 @@ class AgAgendamientos < ActiveRecord::Base
     icon = ''
     show = false
     grupo_etareo = ''
+    className = 'no_disponible'
 
-    case agendamiento_estado.nombre
-    when 'Hora disponible'
-        className = 'disponible'
-        custom<< "<b>Hora disponible</b>"
-        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-        description<<"</br>Hora: #{range('estimado')}"
-        show=true        
-    when 'Hora bloqueada'
-        className = 'no_disponible'
-        custom<< "<b>Hora no disponible</b>"
-        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-        description<<"</br>Hora: <s>#{range('estimado')}</s>"
-        show=true
-    when 'Hora reservada'
-        className = 'no_disponible'
-        custom<< "<b>Hora reservada</b>"
-        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-        description<<"</br>Hora: #{range('estimado')}"
-        show=true
-        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)  
-    when 'Hora confirmada' 
-        className = 'no_disponible'
-        custom<< "<b>Hora confirmada</b>"
-        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-        description<<"</br>Hora: #{range('estimado')}"
-        show=true
-        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)         
-    when 'Paciente en espera'
-        className = 'no_disponible'
-        custom<< "<b>Paciente en espera</b>"
-        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-        description<<"</br>Hora: #{range('estimado')}"
-        show=true
-        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)
-    when 'Paciente siendo atendido'
-        className = 'no_disponible'
-        custom<< "<b>Paciente siendo atendido</b>"
-        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-        description<<"</br>Hora: #{range('estimado')}"
-        show=true 
-        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)   
-    when 'Paciente atendido'
-        className = 'no_disponible'
-        custom<< "<b>Paciente atendido</b>"
-        description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-        description<<"</br>Hora: #{range('estimado')}"
-        show=true
-        grupo_etareo = persona.getGrupoEtareo(fecha_comienzo)
-    end
+    grupo_etareo = persona.getGrupoEtareo(fecha_comienzo) unless ['Hora disponible','Hora bloqueada'].include?(agendamiento_estado.nombre)
+    className = 'disponible' if agendamiento_estado.nombre == 'Hora disponible'
+
+    description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
+    description<<"</br>Hora: #{range('estimado')}"
+    custom<<"<b>"<<agendamiento_estado.nombre<<"</b>"
 
     case grupo_etareo
     when 'Recién nacido'
@@ -133,6 +91,9 @@ class AgAgendamientos < ActiveRecord::Base
       icon = "<i class='fa fa-child'></i>";
     end  
 
+    #Este parámetro es para no mostrar algún estado de agendamiento. Hay que modificar la función para que devuelva 'null' en tal caso y para sea leida correctamente en el controlador.
+    #Anteriormente se devolvía { } y fallaba.
+    show=true 
     if show
       {
         'id'          => id,
@@ -143,9 +104,7 @@ class AgAgendamientos < ActiveRecord::Base
         'description' => description,
         'className'   => className,
         'icon'        => icon         
-      }
-    else
-      {}
+      }    
     end
   end
 
@@ -358,8 +317,7 @@ class AgAgendamientos < ActiveRecord::Base
                                   :capitulo_cie10_control,
                                   :atencion_salud,  
                                   :agendamiento_log_estados,
-                                  :atenciones_pagadas                                  
-                                )
+                                  :atenciones_pagadas )
   end
 
 end

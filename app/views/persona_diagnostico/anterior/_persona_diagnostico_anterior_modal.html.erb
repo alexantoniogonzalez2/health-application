@@ -29,19 +29,14 @@
           <div class="tab-content">
             <div class="tab-pane active" id="panel-diagnostico-<%= p_d.id %>">
               <div class="container ajustado">                
-                <div class="row clearfix">
-
-                  <div class="form-group">
-                    <div class="col-md-4">
+                <div class="row clearfix">                  
+                    <div class="col-md-4 column">
                       <div class="checkbox disabled" id="enf_cro_<%= p_d.id %>">
-                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica<input class="checkbox-der " disabled type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
+                        <label for="checkboxes-cron-<%= p_d.id %>" class='checkbox-der'><input disabled type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> > Enfermerdad crónica</label>
                       </div>                 
                     </div>
-                  </div>
-
                 </div>
-
-                <div class="row clearfix">
+                <div class="row clearfix padding-top">
                   <div class="col-md-4 column">
                     <label>Fecha inicio</label>
                   </div>

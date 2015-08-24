@@ -1,1 +1,2 @@
-$('#tr-pre-<%= @persona_prestacion.id %>').replaceWith("<%= escape_javascript( render :partial => "prestacion_row", :locals => {:p_p => @persona_prestacion, :atencion_salud => @atencion_salud} ) %>");
+<% @tipo = 'edit' %>
+$('#tr-pre-<%= @persona_prestacion.id %>').replaceWith("<%= escape_javascript( render :partial => "prestacion_row", :locals => {:p_p => @persona_prestacion, :atencion_salud => @atencion_salud, :tipo => @tipo } ) %>");

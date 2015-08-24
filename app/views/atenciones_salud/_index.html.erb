@@ -9,8 +9,8 @@
           <th>Fecha</th>
           <th>Paciente</th>
           <th>Rut</th>          
-          <th>Ver atención</th>
-          <th>Reabrir atención</th>           
+          <th>Estado</th>
+          <th>Atención</th>           
         </tr>
       </thead> 
       <tfoot>
@@ -18,8 +18,8 @@
           <th>Fecha</th>
           <th>Paciente</th>
           <th>Rut</th>          
-          <th>Ver atención</th>
-          <th>Reabrir atención</th>           
+          <th>Estado</th>
+          <th>Atención</th>           
         </tr>
       <tfoot>
       <tbody> 
@@ -27,9 +27,17 @@
           <tr>
             <td><%= atencion_salud.agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
             <td><%= atencion_salud.persona.showName('%n%p%m') %></td>
-            <td><%= atencion_salud.persona.showRut %></td>            
-            <td><%= link_to 'Ver', atenciones_salud_path(atencion_salud) %></td>
-         		<td><%= link_to "Reabrir", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => atencion_salud.id }, :method => :post %></td>
+            <td><%= atencion_salud.persona.showRut %></td>
+            <td><%= atencion_salud.agendamiento.agendamiento_estado.nombre %></td>            
+            <td>
+              <% if atencion_salud.agendamiento.agendamiento_estado_id == 6 %>
+                <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => atencion_salud.id }, :method => :post,class: "btn btn-xs btn-primary" %>
+              <% elsif atencion_salud.agendamiento.agendamiento_estado_id == 10 %>
+                <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion =>  atencion_salud.id }, :method => :post,class: "btn btn-xs btn-primary" %>
+              <% else %> 
+                <%= button_to "Ver", {:controller => :atenciones_salud, :action => 'verAtencion', :id_atencion => atencion_salud.id }, :method => :post,class: "btn btn-xs btn-info" %><%= button_to "Reabrir", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => atencion_salud.id }, :method => :post,class: "btn btn-xs btn-warning" %>
+              <% end %>  
+            </td>
           </tr>
           <% end %>     
       </tbody> 
