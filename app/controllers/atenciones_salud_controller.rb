@@ -25,19 +25,24 @@ class AtencionesSaludController < ApplicationController
 	end
 
 	def show
+		permiso = false
+
 		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
 		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
-		
-		@hora_actual = DateTime.current	
-
-		#validar que tenga acceso a esta atención		
-		@id = params[:id]
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona = @agendamiento.persona
-	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
+
+	  permiso = true if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional
+	  permiso = true if @profesional == @persona
+		redirect_to :action => "sinPermiso" unless permiso		
+
+		@fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
 	  @fecha_final_atencion = @agendamiento.fecha_final_real
 	  @fecha_final_atencion = DateTime.tomorrow if @fecha_final_atencion.nil?
+		
+		@id = params[:id]
+		@hora_actual = DateTime.current		  
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 
 	  @persona_diagnostico = FiPersonaDiagnosticos
@@ -210,11 +215,30 @@ class AtencionesSaludController < ApplicationController
 	end
 
 	def edit
-
+		permiso = false
+		editar = false
+			
 		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first		
+		@atencion_salud = FiAtencionesSalud.find(params[:id])
+	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)		 
+
+	  permiso = true if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional
+		redirect_to :action => "sinPermiso" unless permiso
+
+		editar = true if @agendamiento.agendamiento_estado.nombre == "Paciente siendo atendido"
+		redirect_to :action => "sinEditar" unless editar
+
+	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
+	  @fecha_final_atencion = @agendamiento.fecha_final_real
+	  @fecha_final_atencion = DateTime.tomorrow if @fecha_final_atencion.nil?
+
+	  @hora_actual = DateTime.current	
+	  @id = params[:id]
+	  @persona = @agendamiento.persona
+	  
 		@agendamientos = AgAgendamientos.where( "especialidad_prestador_profesional_id = ? AND fecha_comienzo BETWEEN ? AND ? ", @especialidad_prestador_profesional, Date.today, Date.tomorrow )
-		@actualizaciones = AgAgendamientoLogEstados
+	  @actualizaciones = AgAgendamientoLogEstados
 			.joins(:agendamiento)
 			.select("ag_agendamientos.fecha_comienzo,
 							 ag_agendamiento_log_estados.fecha,
@@ -224,17 +248,6 @@ class AtencionesSaludController < ApplicationController
 			.where( "fecha > ? AND ag_agendamientos.especialidad_prestador_profesional_id = ? AND ag_agendamientos.fecha_comienzo BETWEEN ? AND ? ",
 				 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 			.order(fecha: :desc)
-
-		@hora_actual = DateTime.current	
-
-		#validar que tenga acceso a esta atención		
-		@id = params[:id]
-		@atencion_salud = FiAtencionesSalud.find(params[:id])
-	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
-	  @persona = @agendamiento.persona
-	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
-	  @fecha_final_atencion = @agendamiento.fecha_final_real
-	  @fecha_final_atencion = DateTime.tomorrow if @fecha_final_atencion.nil?
 
 	  @persona_diagnostico = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
@@ -403,10 +416,16 @@ class AtencionesSaludController < ApplicationController
 			@certificado = FiCertificados.new
 			@certificado.atencion_salud = @atencion_salud 
 			@certificado.save!
-		end	
+		end		
  	
 	end
+
+	def sinEditar
+	end	
  
+ 	def sinPermiso
+	end	
+
 	def crearAtencion	
 
 		@agendamiento =  AgAgendamientos.find(params[:id])
@@ -535,11 +554,11 @@ class AtencionesSaludController < ApplicationController
 		@atenciones_salud.each do |at_sal|
 			@atenciones << [at_sal.atencion_pagada,
 											at_sal.fecha_comienzo.strftime("%Y-%m-%d %H:%M"),
-											at_sal.agendamiento.especialidad_prestador_profesional.profesional.showRut,
 											at_sal.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m'),
+											at_sal.agendamiento.especialidad_prestador_profesional.profesional.showRut,											
 											at_sal.agendamiento.especialidad_prestador_profesional.especialidad.nombre,
-											at_sal.persona.showRut,at_sal.
-											persona.showName('%n%p%m'),
+											at_sal.persona.showName('%n%p%m'),
+											at_sal.persona.showRut,
 											number_to_currency(at_sal.agendamiento.atencion_pagada.monto_pago_profesional, unit: "$ ", separator: '.')]
 		end	
 

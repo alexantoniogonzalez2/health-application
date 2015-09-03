@@ -12,6 +12,7 @@ class CreateAgAgendamientos < ActiveRecord::Migration
       t.boolean :motivo_consulta_nuevo
       t.references :persona_diagnostico_control #persona_diagnostico_control_id
       t.references :capitulo_cie10_control #capitulo_cie10_control_id
+      t.references :accion_masiva             #accion_masiva_id
       t.timestamps
     end
   end

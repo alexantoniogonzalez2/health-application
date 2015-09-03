@@ -1,0 +1,2 @@
+$('#div-vista-sin-cancelar').empty();
+$("<%= escape_javascript( render :partial => 'accion_masiva_sin_cancelar_modal', :locals => {:accion_masiva => @accion_masiva }) %>").appendTo('#div-vista-sin-cancelar');

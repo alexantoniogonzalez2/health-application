@@ -60,6 +60,8 @@ AplicacionMedica::Application.routes.draw do
   post '/agregar_diagnostico', to: 'persona_diagnostico#agregarDiagnostico', :as => :agregarDiagnostico
   post '/agregar_diagnostico_ant', to: 'persona_diagnostico#agregarDiagnosticoAntecedentes'
   post '/crear_atencion', to: 'atenciones_salud#crearAtencion'
+  get '/sin_permiso', to: 'atenciones_salud#sinPermiso'
+  get '/sin_editar', to: 'atenciones_salud#sinEditar'
   post '/reabrir_atencion', to: 'atenciones_salud#reabrirAtencion'
   post '/ver_atencion', to: 'atenciones_salud#verAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
@@ -124,7 +126,10 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/confirmarHora', to: 'agendamiento#confirmarHora', :as => :confirmarHora
   post '/aux/marcarLlegada', to: 'agendamiento#marcarLlegada', :as => :marcarLlegada
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh
-  post 'preparar_ingreso', to: 'agendamiento#prepararIngreso'
+  post '/preparar_ingreso', to: 'agendamiento#prepararIngreso'
+  post '/cargar_cancelar_accion', to: 'agendamiento#cargarCancelarAccion'
+  post '/cargar_vista_sin_cancelar', to: 'agendamiento#cargarVistaSinCancelar'
+  post '/cancelar_accion_masiva', to: 'agendamiento#cancelarAccionMasiva'
 
   #Home
   post '/actualizar_atenciones', to: 'home#actualizarAtenciones'

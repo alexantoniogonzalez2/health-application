@@ -4,7 +4,6 @@
   var link_loading = '<%= image_tag("loading.gif", alt: "Rails") %>'	
   var id=<%= @id %>
 </script>
-
 <input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
 
 <div id="atencion-salud" class="panel panel-success">
@@ -83,7 +82,6 @@
             </div>  
           </div>
 
-          <!-- Modal -->
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div id="modal-dialog-antecedentes" class="modal-dialog">
               <div class="modal-content">
@@ -117,7 +115,6 @@
           </div>
           <a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a>
 
-          <!-- Modal -->
           <div class="modal fade" id="modal-container-ant-med" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
@@ -159,7 +156,7 @@
         </div>
         <div id="diag_ant-modal-div" >
           <% @persona_diagnostico_anteriores.each do |p_d| %>
-             <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+            <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
           <% end %>      
         </div>
         <div id="ajuste-motivo">

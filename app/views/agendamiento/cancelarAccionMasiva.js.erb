@@ -1,0 +1,5 @@
+<% if @accion_masiva.estado == 'cancelada completa'%>
+	$('#accion_masiva<%= @accion_masiva.id %>').replaceWith("<%= escape_javascript( render :partial => 'agendamiento/accion_masiva_cancelada_completa_row', :locals => { :accion_masiva => @accion_masiva }) %>");
+<% else %>
+	$('#accion_masiva<%= @accion_masiva.id %>').replaceWith("<%= escape_javascript( render :partial => 'agendamiento/accion_masiva_cancelada_incompleta_row', :locals => { :accion_masiva => @accion_masiva }) %>");
+<% end %>

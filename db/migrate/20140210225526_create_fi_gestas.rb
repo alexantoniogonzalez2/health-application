@@ -5,8 +5,6 @@ class CreateFiGestas < ActiveRecord::Migration
       t.datetime :fecha_termino		#fecha_termino
       t.string :desenlace				#desenlace
       t.references :persona			#persona_id
-
-
       t.timestamps
     end
   end

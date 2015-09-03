@@ -59,8 +59,18 @@ namespace :agendamiento do
 					@agendamiento.fecha_comienzo = tmp_i
 					@agendamiento.fecha_final = tmp_f
 					@agendamiento.agendamiento_estado = @estadoAgendamiento
-					@agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional
-					@agendamiento.save
+					@agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional					
+					
+					if (estado == "Paciente atendido" )
+						@agendamiento.fecha_comienzo_real = tmp_i
+						@agendamiento.fecha_final_real = tmp_f	
+						@agendamiento.save
+						@persona = @agendamiento.persona
+						@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => @agendamiento.id,:persona_id => @persona.id, :tipo_ficha_id => 1)				
+					  @atencion_salud.save(:validate => false)										
+					else
+						@agendamiento.save
+					end	
 					
 					@agendamiento_log = AgAgendamientoLogEstados.new
 					@agendamiento_log.responsable = PerPersonas.find(8) 

@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802194947) do
+ActiveRecord::Schema.define(version: 20150827013308) do
+
+  create_table "ag_accion_masiva", force: :cascade do |t|
+    t.string   "estado",                                limit: 255
+    t.integer  "responsable_id",                        limit: 4
+    t.integer  "especialidad_prestador_profesional_id", limit: 4
+    t.integer  "total_agendamientos",                   limit: 4
+    t.integer  "agendamientos_cancelados",              limit: 4
+    t.integer  "agendamientos_sin_cancelar",            limit: 4
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+  end
 
   create_table "ag_agendamiento_estados", force: :cascade do |t|
     t.string   "nombre",     limit: 255
@@ -38,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150802194947) do
     t.boolean  "motivo_consulta_nuevo",                 limit: 1
     t.integer  "persona_diagnostico_control_id",        limit: 4
     t.integer  "capitulo_cie10_control_id",             limit: 4
+    t.integer  "accion_masiva_id",                      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

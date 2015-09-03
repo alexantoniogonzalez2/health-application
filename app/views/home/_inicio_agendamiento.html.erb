@@ -1,5 +1,16 @@
 <div class='container'>
-	<div class='row'><h4>Inicio</h4><!--
+	<div class='row'><h4>Inicio</h4>
+		<% if tieneRol('Generar agendamientos') %>
+	  	<div id="acciones_masivas">
+	  		<% unless @acciones_masivas.empty? %>
+	  			<%= button_to "Actualizar", root_path, :method => :get,class: "btn btn-xs btn-success" %><br><br>
+	  		<% end %>
+	  		<% @acciones_masivas.each do |accion_masiva| %>
+	  			<%= render :partial => "agendamiento/accion_masiva", :locals => {:accion_masiva => accion_masiva } %>
+	  		<% end %>
+	  	</div>
+	  <% end %>	
+		<!--
 		<div class='col-md-6 column'>
 			<h4>Últimas actualizaciones</h4>
 		</div>

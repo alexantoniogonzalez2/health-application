@@ -168,7 +168,7 @@ $('#filtrar-atenciones').click(function() {
   if (profesionales.length == 0 && todos_profesionales == 2)
     alert('Seleccione un profesional.');  
   else if ( fecha_inicio != '' || fecha_final != '') {
-    ('#msg_boletas').html('');
+    $('#msg_boletas').html('');
     $.ajax({
       type: 'POST',
       url: '/cargar_atenciones_salud_para_pago',

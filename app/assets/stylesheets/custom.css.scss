@@ -269,3 +269,11 @@ div.div-diag-cert { display: inline;}
 form.button_to { display: inline-block; padding-right: 3px;}
 .padding-left { padding-left: 10px; }
 .padding-top { padding-top: 10px; }
+
+div.menu-inicial {
+  > div {
+    div.col-md-3 { padding-right: 0px; }
+    div.col-md-9 { padding-right: 0px; padding-left: 0px; }
+  }
+}
+div.tab-inicial { min-height: 500px; }

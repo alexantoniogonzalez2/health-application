@@ -1,0 +1,44 @@
+<% if accion_masiva.estado == 'creada' %>
+	<%= render :partial => "agendamiento/accion_masiva_creada_row", :locals => { :accion_masiva => accion_masiva } %>
+<% elsif accion_masiva.estado == 'cancelada completa'  %>
+	<%= render :partial => "agendamiento/accion_masiva_cancelada_completa_row", :locals => { :accion_masiva => accion_masiva } %>		
+<% elsif accion_masiva.estado == 'cancelada incompleta'  %>
+	<%= render :partial => "agendamiento/accion_masiva_cancelada_incompleta_row", :locals => { :accion_masiva => accion_masiva } %>	
+<% end %>
+<div id='div-modals'>
+	<div class="modal fade" id="cancelar_accion" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header ajuste-modal-header">
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	        <h4>Agendamientos</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div id='div-cancelar-accion'></div>                             
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<div id='div-modals-sin-cancelar'>
+	<div class="modal fade" id="vista_sin_cancelar" tabindex="-1" role="dialog">
+	  <div class="modal-dialog ">
+	    <div class="modal-content modal-lg">
+	      <div class="modal-header ajuste-modal-header">
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	        <h4>Agendamientos sin cancelar</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div id='div-vista-sin-cancelar'></div>	                                 
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>

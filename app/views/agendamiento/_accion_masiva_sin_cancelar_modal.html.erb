@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 column">
+			Agendamientos totales: <%= @accion_masiva.total_agendamientos %>
+		</div>	
+		<div class="col-md-4 column">	
+			Agendamientos eliminados: <%= @accion_masiva.agendamientos_cancelados %>
+		</div>
+		<div class="col-md-4 column">	
+			Sin eliminar: <%= @accion_masiva.agendamientos_sin_cancelar %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 column"><br>  
+        <table id="lista_agendamientos_sin_cancelar" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+		      <thead>
+		        <tr>
+		          <th>Fecha</th>     
+		          <th>Estado</th>
+		          <th>Paciente</th> 
+		          <th>Rut</th>          
+		        </tr>
+		      </thead> 					      
+		      <tbody> 
+		        <% accion_masiva.agendamientos.each do |agendamiento| %>
+		          <tr>
+		            <td><%= agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>					            
+		            <td><%= agendamiento.agendamiento_estado.nombre %></td>   
+		            <td><%= agendamiento.atencion_salud.nil? ? '-' : agendamiento.atencion_salud.persona.showName('%n%p%m') %></td>
+		            <td><%= agendamiento.atencion_salud.nil? ? '-' : agendamiento.atencion_salud.persona.showRut %></td> 
+		          </tr>
+		        <% end %>     
+		      </tbody> 
+		    </table>
+		</div>    
+	</div>	
+</div>
+
+<%= javascript_include_tag "agendamiento/accion_masiva" %>	

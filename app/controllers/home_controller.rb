@@ -80,6 +80,8 @@ class HomeController < ApplicationController
 														 .where('pre_prestador_profesionales.prestador_id = ?',getIdPrestador('administrativo'))
 				@lista_profesionales_con_boleta = @boletas.map {|boleta| boleta.profesional_id }
 				@profesionales_con_boleta = PerPersonas.where("id IN (?)",@lista_profesionales_con_boleta)
+				@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+				@acciones_masivas = AgAccionMasiva.where('responsable_id = ?',@usuario.id).limit(20)
 
 
 				render 'index_agendamiento'

@@ -3,12 +3,25 @@ class AntecedentesController < ApplicationController
 	def index
 		@acceso_especialista = false		
 		@acceso = true
-		@paciente = PerPersonas.where('user_id = ?',current_user.id).first		
+		@paciente = PerPersonas.where('user_id = ?',current_user.id).first #se debería quitar esta variable
+		@persona = PerPersonas.where('user_id = ?',current_user.id).first		
 		#Antecedentes médicos		
 		@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
 																																				JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
-																																.select('fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,fi_persona_diagnosticos_atenciones_salud.fecha_inicio,fi_persona_diagnosticos_atenciones_salud.fecha_termino,md.nombre')
+																																.select('fi_persona_diagnosticos_atenciones_salud.id,
+																																						 fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+																																						 fi_persona_diagnosticos_atenciones_salud.atencion_salud_id,
+																																						 fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+																																						 fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+																																						 fi_persona_diagnosticos_atenciones_salud.comentario,
+																																						 fi_persona_diagnosticos_atenciones_salud.created_at,
+																																						 fi_persona_diagnosticos_atenciones_salud.es_antecedente,																																						 
+																																						 fi_persona_diagnosticos_atenciones_salud.es_cronica,	
+																																						 md.nombre,																																					 
+																																						 fpd.persona_id')
 																																.where('fpd.persona_id = ?',@paciente.id) if @acceso
+		@estados_diagnostico = MedDiagnosticoEstados.all
+																																
 		#Antecedentes quirúrgicos													
 		min = 57
 		max = 250	
@@ -18,7 +31,8 @@ class AntecedentesController < ApplicationController
 		#Alergias
 		@alergias = MedAlergias.joins('LEFT JOIN fi_personas_alergias as fpa ON med_alergias.id = fpa.alergia_id')
 													 .select('med_alergias.id, med_alergias.nombre, fpa.persona_id')
-													 .where('persona_id = ? or persona_id is null',@paciente.id)
+													 .where('persona_id = ? or ( persona_id is null AND med_alergias.comun is true )',@paciente.id)
+													 .order('med_alergias.nombre ASC')
 		#Alcohol
 		@test_audit = FiHabitosAlcohol.where('persona_id = ?', @paciente.id)
 		#Tabaco
@@ -37,7 +51,8 @@ class AntecedentesController < ApplicationController
   	if @persona_actividad_fisica.nil?
   		@persona_actividad_fisica = FiPersonaActividadFisica.new 
 			@persona = PerPersonas.find(@paciente.id)
-			@persona_actividad_fisica.persona = @persona
+			@persona_actividad_fisica.persona = @persona			
+			@persona_actividad_fisica.nivel_actividad = "Sin información"
 			@persona_actividad_fisica.save!
 		end
 		@segmento_actividad = @paciente.getSegmentoActividadFisica
@@ -47,6 +62,61 @@ class AntecedentesController < ApplicationController
 		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																				 .where('persona_id = ?',@paciente.id)
+		@personas_vacunas_otras = FiPersonasVacunas.joins('JOIN med_vacunas AS mv ON fi_personas_vacunas.vacuna_id = mv.id')
+																						 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,mv.tipo as edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
+																						 .where('persona_id = ? AND mv.tipo != ?',@paciente.id,'pni')
+		@grupo_etareo = @paciente.getGrupoEtareo(DateTime.current)
+		@agno = FiCalendarioVacunas.maximum('agno')	
+		case @grupo_etareo
+    when 'Recién nacido','Lactante'
+    	@partial_seguimiento = 'vacunas/lactante'
+			@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
+														.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
+														.where('edad in ("Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@paciente.id)
+														.order('fi_calendario_vacunas.id ASC')
+    when 'Pediatria' 
+      @partial_seguimiento = 'vacunas/pediatria'
+  		@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
+												.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
+												.where('edad in ("1° básico","4° básico","8° básico") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@paciente.id)
+												.order('fi_calendario_vacunas.id ASC')
+    when 'Adolescente','Adulto' 
+    when 'Adulto mayor'
+    	@partial_seguimiento = 'vacunas/adulto_mayor'
+			@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
+										.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
+										.where('edad in ("Adulto de 65 años") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@paciente.id)
+										.order('fi_calendario_vacunas.id ASC')
+    end	
+		@calendarios = {}
+
+		#Calendario - Vacunas														 		
+		@agnos = FiCalendarioVacunas.select('DISTINCT agno as agno')		
+		@agnos.each do |agno|
+			@calendarios[agno.agno] = {} 
+			@calendario_vacunas = FiCalendarioVacunas.where('agno = ?',agno.agno)
+			contador = -1
+			@calendario_vacunas.each do |calendario_vacuna|
+				contador = contador + 1
+				@calendarios[agno.agno][contador] = {}
+				@calendarios[agno.agno][contador]['id'] = calendario_vacuna.id				
+				@calendarios[agno.agno][contador]['nombre'] = calendario_vacuna.vacuna.nombre
+				@calendarios[agno.agno][contador]['edad'] = calendario_vacuna.edad
+				@calendarios[agno.agno][contador]['numero_vacuna'] = calendario_vacuna.numero_vacuna
+				@calendarios[agno.agno][contador]['protege_contra'] = calendario_vacuna.vacuna.protege_contra
+			end	
+		end
+
+		@otras_vacunas = MedVacunas.joins('LEFT JOIN fi_personas_vacunas as fpv ON fpv.vacuna_id = med_vacunas.id')
+																.select('fpv.persona_id, med_vacunas.id,med_vacunas.nombre,med_vacunas.tipo')
+																.where('tipo != ? AND (persona_id = ? OR persona_id is null)','pni',@paciente.id)	
+
+		#Buscador hora															 
+		@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
+		@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
+		@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')	
+  	@familiares = @paciente.getCercanos
+	
 
 	end
 

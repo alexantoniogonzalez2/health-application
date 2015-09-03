@@ -43,19 +43,19 @@ class AgendamientoController < ApplicationController
 
 		if params[:centros] != ''
 			if params[:especialidad] != '' and params[:especialista] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND agendamiento_estado_id != 2 ",params[:especialidad],params[:especialista])
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? ",params[:especialidad],params[:especialista])
 			elsif params[:especialidad] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND agendamiento_estado_id != 2 ",params[:especialidad] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ?",params[:especialidad] )
 			elsif params[:especialista] != '' 	
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND agendamiento_estado_id != 2 ",params[:especialista] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ?",params[:especialista] )
 			end
 		else	
 			if params[:especialidad] != '' and params[:especialista] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:especialista],params[:centros] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) ",params[:especialidad],params[:especialista],params[:centros] )
 			elsif params[:especialidad] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialidad],params[:centros] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) ",params[:especialidad],params[:centros] )
 			elsif params[:especialista] != '' 	
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? )  AND agendamiento_estado_id != 2 ",params[:especialista],params[:centros] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) ",params[:especialista],params[:centros] )
 			end
 		end
 
@@ -412,126 +412,168 @@ class AgendamientoController < ApplicationController
 	def agregarNuevaHora 	
 		
     @especialidad_prestador_profesional = PrePrestadorProfesionales.where(" prestador_id = ? AND profesional_id = ? AND especialidad_id = ?",params[:prestador_id],params[:profesional_id],params[:especialidad_id]).first
-    events=[]
-		@EstadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
-		@responsable= PerPersonas.where('user_id = ?',current_user.id).first
+    events = []
+		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
+		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
+		@accion_masiva = AgAccionMasiva.new
+		@accion_masiva.responsable = @responsable
+		@accion_masiva.especialidad_prestador_profesional = @especialidad_prestador_profesional					
+		@accion_masiva.estado = 'creada'
+		@accion_masiva.agendamientos_cancelados = 0
+		@accion_masiva.agendamientos_sin_cancelar = 0
+		@accion_masiva.save
+		contador = 0 
 
-		if params[:tipo]=='diario'
-			
-			fecha_comienzo=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
-			fecha_termino=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
-			step=params[:step]
+		if params[:tipo]=='diario'			
+			fecha_comienzo = DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
+			fecha_termino = DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
+			step = params[:step]
 			ActiveRecord::Base.transaction do
 				while fecha_comienzo < fecha_termino do
-					tmp_i=fecha_comienzo
-					tmp_f=fecha_comienzo+step.to_i.minutes
+					tmp_i = fecha_comienzo
+					tmp_f = fecha_comienzo + step.to_i.minutes
+					#Agregar filtro que permita validar que se pueda colocar esta hora o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
 
-					#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
-					#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
-
-					@Agendamiento=AgAgendamientos.new
-					@Agendamiento.fecha_comienzo=tmp_i
-					@Agendamiento.fecha_final=tmp_f
-					@Agendamiento.agendamiento_estado = @EstadoAgendamiento
-					@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
-					@Agendamiento.save
+					@agendamiento = AgAgendamientos.new
+					@agendamiento.fecha_comienzo = tmp_i
+					@agendamiento.fecha_final = tmp_f
+					@agendamiento.agendamiento_estado = @estadoAgendamiento
+					@agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional
+					@agendamiento.accion_masiva = @accion_masiva
+					@agendamiento.save
+					contador += 1
 
 					@agendamiento_log = AgAgendamientoLogEstados.new
 					@agendamiento_log.responsable = @responsable 
-					@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
-					@agendamiento_log.agendamiento = @Agendamiento
+					@agendamiento_log.agendamiento_estado = @estadoAgendamiento
+					@agendamiento_log.agendamiento = @agendamiento
 					@agendamiento_log.fecha = DateTime.current
 					@agendamiento_log.save
 
-					events << @Agendamiento.event
-
-					fecha_comienzo=tmp_f
-				end # end while
-			end #end transaction
+					events << @agendamiento.event
+					fecha_comienzo = tmp_f
+				end 
+			end 
 
 		elsif params[:tipo]=='comportamiento'
 
-			fecha_inicio=DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
-			fecha_final=DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
-			step=params[:step]
-			daysOfWeek=JSON.parse(params[:days])
-			hora_inicio=params[:hora_i]
-			hora_termino=params[:hora_t]
-			@responsable= PerPersonas.where('user_id = ?',current_user.id).first
+			fecha_inicio = DateTime.strptime(params[:date_i],'%Y-%m-%d %H:%M:%S.%L')
+			fecha_final = DateTime.strptime(params[:date_f],'%Y-%m-%d %H:%M:%S.%L')
+			step = params[:step]
+			daysOfWeek = JSON.parse(params[:days])
+			hora_inicio = params[:hora_i]
+			hora_termino = params[:hora_t]			
 
-			days=[]
-			d_i=fecha_inicio
-			d_f=fecha_final
+			days = []
+			d_i = fecha_inicio
+			d_f = fecha_final
 			while d_i < d_f do
 				tmp_i = d_i
 				tmp_f = d_i+1.days
-				if daysOfWeek[tmp_i.strftime("%w").to_i]
-					days << tmp_i
-				end
-
-				d_i=tmp_f
+				days << tmp_i if daysOfWeek[tmp_i.strftime("%w").to_i]
+				d_i = tmp_f
 			end
 
 			ActiveRecord::Base.transaction do
 				days.each do |d|
-
-					tmp=d.strftime("%Y-%m-%d")+" "+hora_inicio
-					d_i=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
-					tmp=d.strftime("%Y-%m-%d")+" "+hora_termino
-					d_f=DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
-					if d_f<=d_i
-						d_f=d_f+1.days
-					end
-
-
-					fecha_comienzo=d_i
-					fecha_termino=d_f
-
+					tmp = d.strftime("%Y-%m-%d")+" "+hora_inicio
+					d_i = DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
+					tmp = d.strftime("%Y-%m-%d")+" "+hora_termino
+					d_f = DateTime.strptime(tmp,"%Y-%m-%d %H:%M")
+					d_f = d_f + 1.days if d_f <= d_i						
+					fecha_comienzo = d_i
+					fecha_termino = d_f
+					
 					while fecha_comienzo < fecha_termino do
+						tmp_i = fecha_comienzo
+						tmp_f = fecha_comienzo + step.to_i.minutes
+						#Agregar filtro que permita validar que se pueda colocar esta hora o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
 
-						tmp_i=fecha_comienzo
-						tmp_f=fecha_comienzo+step.to_i.minutes
-
-						#Aquí debiera existir un filtro que permita validar que se pueda colocar esta hora
-						#o incluso fuera del paréntesis para que se rechacen todas las horas (de ser necesario)
-
-						@Agendamiento=AgAgendamientos.new
-						@Agendamiento.fecha_comienzo=tmp_i
-						@Agendamiento.fecha_final=tmp_f
-						@Agendamiento.agendamiento_estado=@EstadoAgendamiento
-						@Agendamiento.especialidad_prestador_profesional=@especialidad_prestador_profesional
-						@Agendamiento.save
+						@agendamiento = AgAgendamientos.new
+						@agendamiento.fecha_comienzo = tmp_i
+						@agendamiento.fecha_final = tmp_f
+						@agendamiento.agendamiento_estado = @estadoAgendamiento
+						@agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional
+						@agendamiento.accion_masiva = @accion_masiva
+						@agendamiento.save
+						contador += 1
 						
 						@agendamiento_log = AgAgendamientoLogEstados.new
 						@agendamiento_log.responsable = @responsable
-						@agendamiento_log.agendamiento_estado = @EstadoAgendamiento
-						@agendamiento_log.agendamiento = @Agendamiento
+						@agendamiento_log.agendamiento_estado = @estadoAgendamiento
+						@agendamiento_log.agendamiento = @agendamiento
 						@agendamiento_log.fecha = DateTime.current
 						@agendamiento_log.save
 
-						events << @Agendamiento.event
+						events << @agendamiento.event
+						fecha_comienzo = tmp_f
+					end 
+				end 
+			end			
 
-						fecha_comienzo=tmp_f
-					end #while
-				end #days.each
-			end #transaction
+		end
 
-			else
-				events << { 
-					'id'				=> 'err',
-					'title' 			=> 'No se pudo...',
-					'start' 			=> fecha_inicio.strftime("%Y-%m-%d %H:%M")+":00.0",
-					'end'				=> fecha_final.strftime("%Y-%m-%d %H:%M")+":00.0",
-					'allDay'			=> false,
-					'color'				=> 'red',
-					'textColor'			=> '#FFFFFF'
-				}
-			end
+		@accion_masiva.total_agendamientos = contador
+		@accion_masiva.save
 
 		respond_to do |format|
-			format.json { render json: events}
+			format.json { render json: events }
 		end
 	
-	end #Fin agregarNuevaHora
+	end 
+
+	def cargarCancelarAccion
+		agendamientos_cancelados = 0
+		agendamientos_sin_cancelar = 0
+		@accion_masiva = AgAccionMasiva.find(params[:accion_masiva])
+		@accion_masiva.agendamientos.each do |agendamiento|
+			agendamiento.agendamiento_estado.nombre == 'Hora disponible' ? agendamientos_cancelados += 1 : agendamientos_sin_cancelar += 1
+		end	
+		@accion_masiva.agendamientos_cancelados = agendamientos_cancelados
+		@accion_masiva.agendamientos_sin_cancelar = agendamientos_sin_cancelar
+		@accion_masiva.save
+
+		respond_to do |format|     
+    	format.js   {}
+    end	
+	end	
+
+	def cargarVistaSinCancelar
+		agendamientos_cancelados = 0
+		agendamientos_sin_cancelar = 0
+		@accion_masiva = AgAccionMasiva.find(params[:accion_masiva])
+		@accion_masiva.agendamientos.each do |agendamiento|
+			agendamiento.agendamiento_estado.nombre == 'Hora disponible' ? agendamientos_cancelados += 1 : agendamientos_sin_cancelar += 1
+		end	
+		@accion_masiva.agendamientos_cancelados = agendamientos_cancelados
+		@accion_masiva.agendamientos_sin_cancelar = agendamientos_sin_cancelar
+		@accion_masiva.save
+
+		respond_to do |format|     
+    	format.js   {}
+    end	
+	end	
+
+	def cancelarAccionMasiva
+		agendamientos_cancelados = 0
+		agendamientos_sin_cancelar = 0
+		@accion_masiva = AgAccionMasiva.find(params[:accion_masiva])
+		@accion_masiva.agendamientos.each do |agendamiento|
+			if agendamiento.agendamiento_estado.nombre == 'Hora disponible'
+				agendamientos_cancelados += 1
+				agendamiento.destroy
+			else
+				agendamientos_sin_cancelar += 1
+			end 
+		end
+		@accion_masiva.estado = agendamientos_sin_cancelar == 0 ? 'cancelada completa' : 'cancelada incompleta'
+		@accion_masiva.save
+
+		respond_to do |format|     
+    	format.js   {}    	
+    	format.json { render :json => { :success => true} }
+    end		
+
+	end	
 
 end

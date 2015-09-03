@@ -1,8 +1,6 @@
 $(document).ready(function() {
-
   $('select.select_especialidad_agregar').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
   $('select.select_especialista_agregar').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true });
-
 });
 
 $('.agregar_horas').click( function() {

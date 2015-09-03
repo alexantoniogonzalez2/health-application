@@ -5,10 +5,12 @@ class AgAgendamientos < ActiveRecord::Base
 	belongs_to :agendamiento_estado, :class_name => 'AgAgendamientoEstados'
   belongs_to :persona_diagnostico_control, :class_name => 'FiPersonaDiagnosticos'
   belongs_to :capitulo_cie10_control, :class_name => 'MedDiagnosticosCapitulos'
+  belongs_to :accion_masiva, :class_name => 'AgAccionMasiva'
   has_one :atencion_salud, :class_name => 'FiAtencionesSalud', :foreign_key => 'agendamiento_id'
   has_many :agendamiento_log_estados, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'agendamiento_id'
+  has_many :acciones_masivas, :class_name => 'AgAccionMasiva', :foreign_key => 'agendamiento_id'
   has_one :atencion_pagada, :class_name => 'PreAtencionesPagadas', :foreign_key => 'agendamiento_id'
-
+  
   def month(val)
     if val==1
       "Enero"
@@ -91,7 +93,7 @@ class AgAgendamientos < ActiveRecord::Base
       icon = "<i class='fa fa-child'></i>";
     end  
 
-    #Este parámetro es para no mostrar algún estado de agendamiento. Hay que modificar la función para que devuelva 'null' en tal caso y para sea leida correctamente en el controlador.
+    #Este parámetro (show) es para no mostrar algún estado de agendamiento. Hay que modificar la función para que devuelva 'null' en tal caso y para sea leida correctamente en el controlador.
     #Anteriormente se devolvía { } y fallaba.
     show=true 
     if show
@@ -317,7 +319,8 @@ class AgAgendamientos < ActiveRecord::Base
                                   :capitulo_cie10_control,
                                   :atencion_salud,  
                                   :agendamiento_log_estados,
-                                  :atenciones_pagadas )
+                                  :atenciones_pagadas,
+                                  :accion_masiva)
   end
 
 end

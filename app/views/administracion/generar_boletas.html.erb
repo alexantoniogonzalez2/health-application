@@ -64,12 +64,12 @@
       <tr>
       	<th>Id</th>
         <th>Fecha</th>
-        <th>Rut profesional</th> 
         <th>Profesional</th>
+        <th>Rut</th>         
         <th>Especialidad</th>
-        <th>Rut paciente</th> 
         <th>Paciente</th>
-        <th>Monto a pagar</th>         
+        <th>Rut</th>         
+        <th>Monto</th>         
       </tr>
     </thead>
     <tbody>      
@@ -77,11 +77,11 @@
         <tr>
         	<td><%= atencion_salud.atencion_pagada %></td>
           <td><%= atencion_salud.agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
-          <td><%= atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showRut %></td>
           <td><%= atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+          <td><%= atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showRut %></td>          
           <td><%= atencion_salud.agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>
-          <td><%= atencion_salud.persona.showRut %></td>  
-          <td><%= atencion_salud.persona.showName('%n%p%m') %></td>   
+          <td><%= atencion_salud.persona.showName('%n%p%m') %></td> 
+          <td><%= atencion_salud.persona.showRut %></td>            
        		<td><%= number_to_currency(atencion_salud.agendamiento.atencion_pagada.monto_pago_profesional, unit: "$ ", separator: '.') %></td>
         </tr>
       <% end %>  
