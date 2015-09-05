@@ -44,7 +44,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
   	var celular =  $('#telefono'+id).val();
     var codigo = $('#codigo'+id).val();
   	var fecha_nacimiento = $('#fecha'+id).val();
-    var sexo = $('input[name=sexo'+id+']:checked').val();
+    var sexo = $('#sexo'+id).find('input[name=sexo]:checked').val();
   	var otro = $('#otro'+id).val();
 
     if (typeof atencion_salud_id !== 'undefined') 
