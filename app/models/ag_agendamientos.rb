@@ -100,8 +100,8 @@ class AgAgendamientos < ActiveRecord::Base
       {
         'id'          => id,
         'title'       => '',
-        'start'       => fecha_comienzo.strftime("%Y-%m-%d")+"T"+fecha_comienzo.strftime("%H:%M:%S"),
-        'end'         => fecha_final.strftime("%Y-%m-%d")+"T"+fecha_final.strftime("%H:%M:%S"),
+        'start'       => fecha_comienzo.strftime("%Y-%m-%d")+"T"+fecha_comienzo.strftime("%H:%M:%S")+".196Z",
+        'end'         => fecha_final.strftime("%Y-%m-%d")+"T"+fecha_final.strftime("%H:%M:%S")+".196Z",
         'custom'      => custom,     
         'description' => description,
         'className'   => className,

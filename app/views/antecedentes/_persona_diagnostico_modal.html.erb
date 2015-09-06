@@ -13,7 +13,7 @@
             <div class="form-group">
               <div class="col-md-4">
                 <div class="checkbox" id="enf_cro_<%= p_d.id %>">
-                  <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica<input class="checkbox-der" type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> ></label>
+                  <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>"><input type="checkbox" name="checkboxes" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> > Enfermerdad crónica</label>
                 </div>                
               </div>
             </div>
@@ -42,7 +42,7 @@
                 <label class="control-label" for="radios">Estado de diagnóstico</label>                      
                 <% @estados_diagnostico.each do |e_d| %>  
                   <div class="radio">
-                    <label for="radios-<%= p_d.id%>-<%= e_d.id %>"><input type="radio" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> ><%= e_d.nombre %></label>
+                    <label for="radios-<%= p_d.id%>-<%= e_d.id %>"><input type="radio" name="radios-estado-<%= p_d.id%>" value="<%= e_d.id %>" id="radios-<%= p_d.id%>-<%= e_d.id %>" <% if p_d.estado_diagnostico.id ==  e_d.id  %> checked <% end %> > <%= e_d.nombre %></label>
                   </div> 
                 <% end %>                    
               </div>

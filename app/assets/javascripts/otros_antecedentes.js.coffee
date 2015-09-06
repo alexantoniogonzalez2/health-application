@@ -16,5 +16,11 @@ $("#guardar-ant-soc").click ->
       nivel_escolaridad : nivel_escolaridad
       atencion_salud_id : at_salud_id
     error: (jqXHR, textStatus, errorThrown) ->
-    success: (data, textStatus, jqXHR) -> $('#ant_soc').addClass 'active-ant'
+    success: (data, textStatus, jqXHR) -> 
+      $('#ant_soc').addClass 'active-ant'
+      $('#guardar-ant-soc-span').show 'hide'
+      setTimeout (->
+        $('#guardar-ant-soc-span').hide 'hide'
+        return
+      ), 2000
   return 

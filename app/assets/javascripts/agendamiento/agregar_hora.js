@@ -493,7 +493,7 @@ $(function(){
 				d_f=new Date(tmp);
 			}
 
-			if(j==0) $('#calendar').fullCalendar('gotoDate',days[j]);
+			if(j==0) $('#calendar').fullCalendar('gotoDate',$(form).find('input[name="di"]').val()+'T08:00:00.196Z');
 			
 			while(d_i < d_f)
 			{
@@ -634,7 +634,8 @@ $(function(){
 			d_f=new Date(d_f_s);
 			add_events=[];
 			i=0;
-			$('#calendar').fullCalendar('gotoDate',di[0],parseInt(di[1])-1,di[2]);
+			$('#calendar').fullCalendar('gotoDate',$(form).find('input[name="di"]').val()+'T08:00:00.196Z');
+
 			while(d_i < d_f)
 			{
 				tmp_i=d_i;
@@ -691,7 +692,7 @@ $(function(){
 	function Mostrar(){
 		$('#action button').unbind('click');
 		$('#form-container').toggle('slide', function(){
-			$('#action button').html('Ocultar >>');
+			$('#action button').html('Ocultar');
 			$('#action button').click(function(){
 				Esconder();
 			});
@@ -702,7 +703,7 @@ $(function(){
 	function Esconder(){
 		$('#action button').unbind('click');
 		$('#form-container').toggle('slide', function(){
-			$('#action button').html('Agregar horas <<');
+			$('#action button').html('Agregar horas');
 			$('#action button').click(function(){
 				Mostrar()
 			});

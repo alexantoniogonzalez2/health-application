@@ -47,10 +47,11 @@
 	<div>
 		<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 			<div class="form-group">
-				<div class="col-md-8">
+				<div class="col-md-6">
 			  </div>
-			  <div class="col-md-4">
-			  	<button id="guardar-ant-soc" type="button" name="button1id" class="btn btn-success">Guardar</button>		   	    
+			  <div class="col-md-6">
+			  	<span id="guardar-ant-soc-span">Antecedentes guardados!</span>
+			  	<button id="guardar-ant-soc" type="button" name="button1id" class="btn btn-success">Guardar antecedentes</button>		   	    
 			  </div>
 			</div>
 		<% end %>

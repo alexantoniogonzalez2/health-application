@@ -515,7 +515,7 @@ function guardarDiagnostico(pers_diag_aten_sal) {
       enf_cro: enf_cro,
       trat: trat
      },
-    success: function(response) { },
+    success: function(response) { $( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente."); }
   });
 

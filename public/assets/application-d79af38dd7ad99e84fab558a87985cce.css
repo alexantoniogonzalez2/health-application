@@ -17499,7 +17499,7 @@ input.datepicker, input.datepicker-disabled {
 }
 
 /* line 101, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
-#div_atenciones {
+#div_atenciones, #guardar-ant-soc-span {
   display: none;
 }
 
@@ -17516,23 +17516,15 @@ div.footer {
 /* line 105, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 label.checkbox-der {
   font-weight: bold !important;
-  /*margin-left: 0px !important;
-  padding-left: 0px !important;*/
 }
 
-/* line 111, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
-input.checkbox-der {
-  /*float: right !important;
-  margin-left: 10px !important;*/
-}
-
-/* line 116, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 107, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 a.btn-large {
   padding: 6px 12px !important;
   float: right;
 }
 
-/* line 121, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 112, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 h1.enc-ges {
   font-size: 16px;
   color: white;
@@ -17545,85 +17537,85 @@ h1.enc-ges {
   margin-bottom: 5px;
 }
 
-/* line 133, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 124, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.panel-group {
   margin-bottom: 5px !important;
 }
 
-/* line 134, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 125, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ges {
   margin-bottom: 0px;
 }
 
-/* line 135, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 126, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 p.texto_font_bajo {
   font-size: 13px;
   line-height: 1.25;
 }
 
-/* line 137, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 128, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 label.firma {
   text-decoration: overline;
   margin: auto;
   display: table;
 }
 
-/* line 143, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 134, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 label.pie_firma {
   margin: auto;
   display: table;
   font-weight: normal;
 }
 
-/* line 149, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 140, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.firma {
   padding-top: 40px;
 }
 
-/* line 151, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 142, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.panel-ges {
   padding: 15px 0px !important;
   font-size: 13px;
 }
 
-/* line 156, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 147, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.trat {
   padding-top: 26px !important;
 }
 
-/* line 157, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 148, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 label.trat {
   font-weight: normal !important;
 }
 
-/* line 158, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 149, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .form-ges {
   margin: 0px !important;
 }
 
-/* line 159, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 150, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .icon-eno, .icon-ges, .icon-con {
   color: green !important;
 }
 
-/* line 161, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 152, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-eno {
   display: inline-block;
   margin: 0px 0px 0px 0px !important;
 }
 
-/* line 166, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 157, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .fc-event-time {
   font-weight: bold !important;
   font-size: 12px !important;
 }
 
-/* line 170, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 161, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .fa-child {
   float: right;
 }
 
-/* line 171, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 162, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .not-ges {
   width: 250px !important;
   display: inline-block !important;
@@ -17631,7 +17623,7 @@ div.ajuste-eno {
   padding: 3px 6px !important;
 }
 
-/* line 177, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 168, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .not-ges2 {
   width: 150px !important;
   display: inline-block !important;
@@ -17639,25 +17631,25 @@ div.ajuste-eno {
   padding: 3px 6px !important;
 }
 
-/* line 183, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 174, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .select-ges {
   width: 150px !important;
   display: inline-block !important;
 }
 
-/* line 187, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 178, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ges-div {
   display: none;
   margin-top: 5px !important;
 }
 
-/* line 191, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 182, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .panel-ges2, .panel-int2 {
   margin: 10px 0px;
   padding: 0px;
 }
 
-/* line 195, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 186, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .a-ges {
   display: block;
   color: #2a6496 !important;
@@ -17666,23 +17658,23 @@ div.ajuste-eno {
   margin-bottom: 10px !important;
 }
 
-/* line 202, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 193, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .select-per {
   margin: 0px;
   padding: 5px 0px 15px 0px !important;
 }
 
-/* line 203, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 194, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-ges {
   padding: 0px !important;
 }
 
-/* line 204, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 195, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .colum-ajuste-eno {
   padding: 0px !important;
 }
 
-/* line 205, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 196, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 input.sem-ges, input.dias-rep {
   width: 50px;
   display: inline;
@@ -17691,30 +17683,30 @@ input.sem-ges, input.dias-rep {
   margin-top: 5px;
 }
 
-/* line 206, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 197, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 label.eno {
   padding-top: 7px;
 }
 
-/* line 207, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 198, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 span.eno {
   top: 4px;
   position: relative;
 }
 
-/* line 208, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 199, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 label.com-int {
   float: top;
 }
 
-/* line 209, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 200, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 #qtip-growl-container {
   position: fixed;
   top: 100px;
   right: 10px;
 }
 
-/* line 213, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 204, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 #qtip-growl-container .qtip {
   position: static;
   min-height: 0;
@@ -17722,50 +17714,50 @@ label.com-int {
   margin: 0 0 5px 0;
 }
 
-/* line 219, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 210, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.metricas {
   min-width: 400px;
   height: 200px;
   margin: 0 auto;
 }
 
-/* line 224, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 215, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ajus-pos-right {
   float: right;
   margin-left: 5px !important;
 }
 
-/* line 225, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 216, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ajus-padd-bott {
   padding-bottom: 10px;
 }
 
-/* line 226, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 217, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 input.ajuste-select {
   width: 400px !important;
 }
 
-/* line 228, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 219, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 a.select2-choice, a.select2-default {
   height: 30px !important;
 }
 
-/* line 229, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 220, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ajuste-margin-top {
   margin-top: 25px !important;
 }
 
-/* line 230, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 221, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .right {
   float: right;
 }
 
-/* line 231, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 222, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .left {
   float: left;
 }
 
-/* line 233, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 224, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;
@@ -17773,101 +17765,101 @@ a.select2-choice, a.select2-default {
   -o-text-overflow: ellipsis;
 }
 
-/* line 239, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 230, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ajuste-padding {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
 
-/* line 240, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 231, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ajuste-modal-header {
   padding: 15px 15px 5px 15px !important;
 }
 
-/* line 242, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 233, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .form-horizontal .form-group {
   margin-left: 0px !important;
   margin-right: 0px !important;
   margin-bottom: 5px;
 }
 
-/* line 248, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 239, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 small.help-block {
   min-width: 200px;
   position: relative !important;
 }
 
-/* line 249, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 240, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-height {
   min-height: 520px !important;
 }
 
-/* line 250, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 241, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .select_ocupacion {
   float: left !important;
   margin-bottom: 20px !important;
 }
 
-/* line 251, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 242, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-margin {
   margin-top: 5px !important;
 }
 
-/* line 252, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 243, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 #modal-agregar-persona {
   margin-left: 10px;
 }
 
-/* line 253, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 244, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-top {
   width: 90%;
   margin-top: 300px;
 }
 
-/* line 257, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 248, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.agregar-persona div div div.input-group {
   margin-top: 25px !important;
 }
-/* line 259, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 250, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.agregar-persona div div div.input-group div {
   display: block !important;
 }
-/* line 260, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 251, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.agregar-persona div div div.input-group input {
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 4px !important;
   border-top-left-radius: 0px;
   border-top-right-radius: 4px !important;
 }
-/* line 267, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 258, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.agregar-persona div div div.date {
   margin-top: 5px !important;
 }
 
-/* line 271, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 262, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.no-padding-right-left {
   padding-right: 0px !important;
   padding-left: 0px !important;
 }
 
-/* line 272, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 263, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-padding {
   padding-left: 10px !important;
 }
 
-/* line 273, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 264, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-left {
   padding-left: 100px !important;
 }
 
-/* line 274, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 265, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 span.ajuste-bottom {
   padding-left: 20px !important;
   position: relative !important;
   top: 26px !important;
 }
 
-/* line 275, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 266, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 span.ajuste-guion {
   padding-right: 5px;
   padding-left: 25px;
@@ -17877,14 +17869,14 @@ span.ajuste-guion {
   margin-top: 25px !important;
 }
 
-/* line 276, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 267, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 input.dv {
   width: 80% !important;
   border-bottom-left-radius: 4px !important;
   border-top-left-radius: 4px !important;
 }
 
-/* line 281, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 272, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 select.codigo, input.telefono, input.otra-relacion {
   border-bottom-left-radius: 4px !important;
   border-top-left-radius: 4px !important;
@@ -17892,91 +17884,91 @@ select.codigo, input.telefono, input.otra-relacion {
   border-top-right-radius: 4px !important;
 }
 
-/* line 287, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 278, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ajuste-row {
   padding-top: 15px !important;
 }
 
-/* line 288, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 279, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.otra-relacion-div {
   display: none;
 }
 
-/* line 289, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 280, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajuste-parentesco {
   margin-top: 25px !important;
 }
 
-/* line 290, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 281, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .ajuste-top-fecha {
   margin-top: 7px;
 }
 
-/* line 291, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 282, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.footer {
   width: 100%;
 }
 
-/* line 292, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 283, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 select.select_persona {
   width: 270px !important;
 }
 
-/* line 293, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 284, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajus-mar-top {
   margin-top: 15px;
 }
 
-/* line 294, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 285, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 input.ajuste-posicion {
   display: inline-block !important;
   width: 95%;
   float: right !important;
 }
 
-/* line 295, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 286, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.ajus-margen {
   margin: 0px;
 }
 
-/* line 296, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 287, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.float-right {
   float: right;
 }
 
-/* line 297, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 288, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 #ajuste-motivo {
   padding: 0px;
   margin: 0px 0px 10px 0px;
 }
 
-/* line 298, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 289, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 #modal-dialog-signos, #modal-dialog-antecedentes {
   width: 90%;
 }
 
-/* line 299, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 290, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 a.active-ant, a.active-ant:focus {
   background-color: #DFF6DF;
   color: #428bca;
 }
 
-/* line 300, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 291, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 div.margin-top {
   margin-top: 5px;
 }
 
-/* line 301, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 292, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 input.width_300 {
   width: 300px !important;
 }
 
-/* line 303, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 294, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .modal {
   overflow-y: auto;
 }
 
-/* line 304, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
+/* line 295, /home/alex/aplicacion_medica/app/assets/stylesheets/atenciones_salud.css.scss */
 .modal-open {
   overflow: auto;
 }

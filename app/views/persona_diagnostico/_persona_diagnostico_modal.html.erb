@@ -35,8 +35,7 @@
                   <div class="form-group">
                     <div class="col-md-4">
                       <div class="checkbox" id="enf_cro_<%= p_d.id %>">
-                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>">Enfermerdad crónica
-                          <input class="checkbox-der" type="checkbox" name="checkboxes" onchange="actualizarEnfCron(<%= p_d.id %>)" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> <%= disabled %> ></label>
+                        <label class="checkbox-der" for="checkboxes-cron-<%= p_d.id %>"><input class="checkbox-der" type="checkbox" name="checkboxes" onchange="actualizarEnfCron(<%= p_d.id %>)" id="checkboxes-cron-<%= p_d.id %>" <% if p_d.es_cronica %> checked="checked" <% end %> <%= disabled %> > Enfermerdad crónica</label>
                       </div>                
                     </div>
                   </div>
