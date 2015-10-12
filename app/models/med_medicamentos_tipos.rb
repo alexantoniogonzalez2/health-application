@@ -5,7 +5,7 @@ class MedMedicamentosTipos < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit( :id, :unidad, :medicamentos, :medicamento_metatipo )
+    params.require(:list).permit( :id, :nombre, :unidad, :medicamentos, :medicamento_metatipo )
   end
 
 end

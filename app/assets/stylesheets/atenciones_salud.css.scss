@@ -243,6 +243,11 @@ div.ajuste-margin { margin-top: 5px !important; }
 #modal-agregar-persona { margin-left: 10px;}
 div.ajuste-top { width: 90%; margin-top: 300px; } 
 div.agregar-persona {
+  div.row {
+    div.column{
+      padding-right: 10px !important; padding-left: 0px !important;
+    }
+  }
   div { 
     div {            
       div.input-group { 
@@ -260,10 +265,11 @@ div.agregar-persona {
   }
 }
 div.no-padding-right-left { padding-right: 0px !important; padding-left: 0px !important; }
+div.no-padding-top { padding-top: 0px !important; }
 div.ajuste-padding { padding-left: 10px !important; }
 div.ajuste-left { padding-left: 100px !important; }
 span.ajuste-bottom { padding-left: 20px !important; position: relative !important; top: 26px !important; }
-span.ajuste-guion { padding-right: 5px; padding-left: 25px; position: relative; float: left; top: 5px; margin-top: 25px !important }
+span.ajuste-guion { padding-right: 5px; position: relative; float: left; top: 5px; margin-top: 25px !important }
 input.dv {
   width: 80% !important;
   border-bottom-left-radius: 4px !important;
@@ -277,7 +283,7 @@ select.codigo, input.telefono, input.otra-relacion {
 }
 .ajuste-row { padding-top: 15px !important; }
 div.otra-relacion-div { display: none; }
-div.ajuste-parentesco { margin-top: 25px !important; }
+div.ajuste-parentesco { margin-top: 10px !important; }
 .ajuste-top-fecha { margin-top: 7px; }
 div.footer { width: 100%;}
 select.select_persona{  width: 270px !important; }
@@ -291,6 +297,6 @@ a.active-ant, a.active-ant:focus { background-color: $lightGreen; color: $blue;}
 div.margin-top { margin-top: 5px;}
 input.width_300 { width: 300px !important; }
 
-.modal { overflow-y: auto; }
-.modal-open { overflow: auto; }
+.modal { overflow-y: scroll !important; }
+.modal-open { overflow: scroll !important; }
 

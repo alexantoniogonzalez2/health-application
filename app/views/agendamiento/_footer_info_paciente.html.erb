@@ -1,0 +1,4 @@
+<% if ['Hora reservada'].include?(@agendamiento.estado.nombre) %>
+	<button type="button" class="btn btn-primary" onclick="confirmarHora(<%= @agendamiento.id %>)" >Confirmar hora</button>
+<% end %>
+<button type="button" class="btn btn-primary" onclick="cancelarHora(<%= @agendamiento.id %>)" >Cancelar hora</button>

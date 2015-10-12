@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-md-4"><label>Paciente</label></div><div class="col-md-8">: <%= @agendamiento.persona.showName('%n%p%m') %></div>
+</div>
+<div class="row">
+	<div class="col-md-4"><label>Persona que tomó la hora</label></div><div class="col-md-8">: <%= @agendamiento.quien_pide_hora.showName('%n%p%m') %></div>
+</div>
+<% if !@agendamiento.persona_diagnostico_control.nil? and @permisos['info_paciente_vista_admin']  %>
+	<div class="row">
+		<div class="col-md-4"><label>Motivo</label></div><div class="col-md-8">: <%= @agendamiento.persona_diagnostico_control.diagnostico.nombre %> (control de antecedente)</div>
+	</div>
+<% end %>
+<% if !@agendamiento.capitulo_cie10_control.nil? %>
+	<div class="row">
+		<div class="col-md-4"><label>Motivo</label></div><div class="col-md-8">: <%= @agendamiento.capitulo_cie10_control.nombre %> (nuevo motivo)</div>
+	</div>
+<% end %>

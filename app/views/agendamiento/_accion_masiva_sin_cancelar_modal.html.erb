@@ -25,7 +25,7 @@
 		        <% accion_masiva.agendamientos.each do |agendamiento| %>
 		          <tr>
 		            <td><%= agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>					            
-		            <td><%= agendamiento.agendamiento_estado.nombre %></td>   
+		            <td><%= agendamiento.estado.nombre %></td>   
 		            <td><%= agendamiento.atencion_salud.nil? ? '-' : agendamiento.atencion_salud.persona.showName('%n%p%m') %></td>
 		            <td><%= agendamiento.atencion_salud.nil? ? '-' : agendamiento.atencion_salud.persona.showRut %></td> 
 		          </tr>

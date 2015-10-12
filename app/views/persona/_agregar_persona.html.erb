@@ -1,30 +1,44 @@
 <form id="form-agregar-persona-<%= id %>" class="form-validator">
 
-<div class="container agregar-persona ">
+<div class="container agregar-persona">
   <div class="row">
-    <div class="form-group col-md-6 column">
+    <div class="form-group col-md-3 column">
+      <div class="input-group"> 
+        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+          <input id="rut<%= id %>" name="rut" class="label_better form-control" placeholder="RUT sin puntos (*)" data-new-placeholder="RUT:" data-bv-notempty="true" data-bv-notempty-message="El RUT es requerido" data-bv-digits='true' data-fv-digits-message="Ingresa solo números">  
+          <p class="help-block text-danger"></p>          
+      </div>
+      <small class="error-rut">El RUT ingresado no es válido</small>      
+    </div>
+    <div class="col-md-1 column ajuste-pad-left">
+      <span class='ajuste-guion'> - </span>
+      <div class="input-group">
+        <input id="dv<%= id %>" name="dv" class="form-control dv" maxlength="1">
+      </div>
+    </div>
+    <div class="form-group col-md-4 column">
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
         <input id='nombre<%= id %>' name='nombre' class="label_better form-control" placeholder="Ingresar nombre (*)" data-new-placeholder="Nombre:"  data-position="top" data-bv-notempty="true" data-bv-notempty-message="El nombre es requerido" >
         <p class="help-block text-danger"></p>
       </div>
     </div>
-    <div class="form-group col-md-6 column">
+    <div class="form-group col-md-4 column">
       <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <span class="input-group-addon"><i class="fa fa-mars"></i></span>
         <input id='apellido_paterno<%= id %>' name='apellido_paterno' class="label_better form-control" placeholder="Ingresar apellido paterno (*)" data-position="top" data-new-placeholder="Apellido paterno:" data-bv-notempty="true" data-bv-notempty-message="El apellido paterno es requerido" >
         <p class="help-block text-danger"></p>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="form-group col-md-6 column">
+    <div class="form-group col-md-4 column">
       <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <span class="input-group-addon"><i class="fa fa-venus"></i></span>
         <input id='apellido_materno<%= id %>' name='apellido_materno' class="label_better form-control" placeholder="Ingresar apellido materno" data-position="top" data-new-placeholder="Apellido materno:">
       </div>
     </div>
-    <div class="form-group col-md-6 column">
+    <div class="form-group col-md-4 column ajuste-div-sexo">
       <span class="ajuste-sexo2">Sexo (*):</span>
       <div id='sexo<%= id %>' class="form-group ajuste-sexo3">        
           <label class="radio-inline" for="radios-0<%= id %>">
@@ -37,76 +51,85 @@
           </label>        
       </div>
     </div>
-  </div>
-	<div class="row">
-    <div class="form-group col-md-6 column">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input id='email<%= id %>' name='email' class="label_better form-control" placeholder="Ingresar correo electrónico (*)" data-position="top" data-new-placeholder="Correo electrónico:"  >
-        <p class="help-block text-danger"></p>
-      </div>
-    </div>
-    <div class="form-group col-md-4 column ajuste-pad-right">
-      <div class="input-group"> 
-        <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-        	<input id="rut<%= id %>" name="rut" class="label_better form-control" placeholder="Ingresar RUT sin puntos (*)" data-new-placeholder="RUT:" data-bv-notempty="true" data-bv-notempty-message="El RUT es requerido" data-bv-digits='true' data-fv-digits-message="Ingresa solo números">  
-          <p class="help-block text-danger"></p>          
-      </div>
-      <small class="error-rut">El RUT ingresado no es válido</small>      
-    </div>
-    <div class="col-md-1 column ajuste-pad-left ajuste-pad-right">      
-      <span class='ajuste-guion'> - </span> 
-    </div>
-    <div class="col-md-1 column ajuste-pad-left ajuste-pad-right">
-      <div class="input-group">
-        <input id="dv<%= id %>" name="dv" class="form-control dv" maxlength="1">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group col-md-6 column ajuste-top-fecha">
+    <div class="form-group col-md-4 column ajuste-top-fecha">
       <span class='pad-fecha'>Fecha de nacimiento:</span>      
       <input type='text' class="form-control fecha" id='fecha<%= id %>' placeholder='Ingresar fecha' />       
     </div>
-    <div class="form-group col-md-4 column">
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6 column">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+        <input id='email<%= id %>' name='email' class="label_better form-control" placeholder="Ingresar correo electrónico" data-position="top" data-new-placeholder="Correo electrónico:"  >
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
+    <div class="form-group col-md-3 column">
       <div class="input-group"> 
-          <input id="telefono<%= id %>" name="telefono" class="label_better form-control telefono" placeholder="Ingresar teléfono" data-new-placeholder="Teléfono:" data-bv-digits='true' >  
-          <p class="help-block text-danger"></p>          
+        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+        <input id="fijo<%= id %>" name="fijo" class="label_better form-control" placeholder="Teléfono fijo" data-new-placeholder="Teléfono fijo:" data-bv-digits='true' data-fv-digits-message="Ingresa solo números" maxlength="8" >  
+         <p class="help-block text-danger"></p>          
       </div>  
     </div>
-    <div class="col-md-2 column no-padding">
+    <div class="col-md-3 column no-padding">
       <div class="input-group">
         <select id="codigo<%= id %>" name="codigo" class="form-control codigo">
-          <option value="1" selected disabled>Tipo</option>
-          <option value="2">Celular</option>
-          <option value="3">Fijo 02</option>
+          <option value="1" selected>Código área</option>
+          <option value="2">2 Santiago </option>
+          <option value="58">58 Arica</option>
+          <option value="57">57 Iquique</option>
+          <option value="55">55 Antofagasta</option>
+          <option value="52">52 Copiapó</option>
+          <option value="51">51 La Serena</option>
+          <option value="53">53 Ovalle</option>
+          <option value="32">32 Valparaíso</option>
+          <option value="34">34 Los Andes</option>
+          <option value="33">33 Quillota</option>
+          <option value="35">35 San Antonio</option>
+          <option value="72">72 Rancagua</option>
+          <option value="75">75 Curicó</option>
+          <option value="71">71 Talca</option>
+          <option value="73">73 Linares</option>
+          <option value="41">41 Concepción</option>
+          <option value="42">42 Chillán</option>
+          <option value="43">43 Los Ángeles</option>
+          <option value="45">45 Temuco</option>
+          <option value="63">63 Valdivia</option>
+          <option value="64">64 Osorno</option>
+          <option value="65">65 Puerto Montt</option>
+          <option value="67">67 Coyhaique</option>
+          <option value="61">61 Punta Arenas</option>
         </select>
         <p class="help-block text-danger"></p> 
       </div>
-    </div>    
+    </div> 
   </div>
-
   <div class="row">
-    <div class="form-group col-md-8 ajuste-parentesco">
-      <span class="col-md-5 control-label">Parentesco o relación (*):</span>
-      <div class="col-md-7">
-        <select id="select-relacion<%= id %>" name="select_relacion" class="form-control select-relacion" data-bv-notempty="true" data-bv-notempty-message="Este campo es requerido">
-          <option value="" selected disabled>Seleccionar</option>
-          <option value="1">Padre</option>
-          <option value="2">Madre</option>
-          <option value="3">Hijo</option>
-          <option value="4">Hija</option>
-          <% if subgrupo == 'todos' %>
-            <option value="5">Otro</option>
-          <% end %>
-        </select>        
-      </div>
+    <div class="form-group col-md-4 column ajuste-parentesco">
+      <span class="control-label">Parentesco o relación (*):</span>
+      <select id="select-relacion<%= id %>" name="select_relacion" class="form-control select-relacion" data-bv-notempty="true" data-bv-notempty-message="Este campo es requerido">
+        <option value="" selected disabled>Seleccionar</option>
+        <option value="1">Padre</option>
+        <option value="2">Madre</option>
+        <option value="3">Hijo</option>
+        <option value="4">Hija</option>
+        <% if subgrupo == 'todos' %>
+          <option value="5">Otro</option>
+        <% end %>
+      </select>        
     </div>
-    <div class='col-md-4'>
+    <div class='col-md-4 column'>
       <div id='otro-div<%= id %>' class="input-group otra-relacion-div">       
         <input type='text' name="otra_relacion" class="label_better form-control otra-relacion" id='otro<%= id %>' placeholder='Ingresar relación' data-new-placeholder="Otra relación:" />
         <p class="help-block text-danger"></p>
       </div>
+    </div>
+    <div class="form-group col-md-4 column">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-mobile"></i></span> 
+        <input id="celular<%= id %>" name="celular" class="label_better form-control" placeholder="Ingresar celular" data-new-placeholder="Celular:" data-bv-digits='true' data-fv-digits-message="Ingresa solo números" maxlength="8" >  
+        <p class="help-block text-danger"></p>          
+      </div>  
     </div>
   </div>
   <div class='footer'>
@@ -119,4 +142,4 @@
 
 </form>
 
-<%= javascript_include_tag "persona" %>  
+<%= javascript_include_tag "persona" %> 

@@ -178,13 +178,13 @@ class AgendamientoController < ApplicationController
 	end
 
 	def pedirHoraEvento
-
-		#Posible problema por transacciones
+		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
 		@antecedente = params[:antecedente]
 		respuesta="0"
 		if params[:persona_hora].blank?
 			@persona = params[:paciente].blank? ? PerPersonas.where('user_id = ?',current_user.id).first : PerPersonas.find(params[:paciente])
 		else
+			@quien_pide_hora = @responsable
 			if params[:persona_hora] == "Para mi"
 				@persona = PerPersonas.where('user_id = ?',current_user.id).first				
 			else
@@ -192,19 +192,19 @@ class AgendamientoController < ApplicationController
 				@persona = PerPersonas.find(params[:persona_hora])
 			end	
 		end
-
-		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
-		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
+		
+		@agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora reservada").first
-		@Agendamiento.transaction do
-			if @Agendamiento.agendamiento_estado.nombre=='Hora disponible'
+		@agendamiento.transaction do
+			if @agendamiento.estado.nombre=='Hora disponible'
 				respuesta="1"
-				@Agendamiento.persona= @persona
-				@Agendamiento.agendamiento_estado= @EstadoAgendamiento
-				@Agendamiento.motivo_consulta_nuevo = params[:motivo]		
-				@Agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(@antecedente) unless @antecedente.blank?
-				@Agendamiento.capitulo_cie10_control = MedDiagnosticosCapitulos.find(params[:capitulo_cie_10]) unless params[:capitulo_cie_10].blank?
-				@Agendamiento.save
+				@agendamiento.persona = @persona
+				@agendamiento.quien_pide_hora = @quien_pide_hora 
+				@agendamiento.estado = @EstadoAgendamiento
+				@agendamiento.motivo_consulta_nuevo = params[:motivo]		
+				@agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(@antecedente) unless @antecedente.blank?
+				@agendamiento.capitulo_cie10_control = MedDiagnosticosCapitulos.find(params[:capitulo_cie_10]) unless params[:capitulo_cie_10].blank?
+				@agendamiento.save
 
 				@agendamiento_log = AgAgendamientoLogEstados.new
 				@agendamiento_log.responsable = @responsable
@@ -222,7 +222,6 @@ class AgendamientoController < ApplicationController
 
 	def cancelarHora
 
-		#Posible problema por transacciones
 		perm_paciente = false
 		respuesta="0"
 		@Agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
@@ -241,7 +240,7 @@ class AgendamientoController < ApplicationController
 		@Agendamiento.transaction do
 			respuesta="1"
 			@Agendamiento.persona=nil
-			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.estado=@EstadoAgendamiento
 			@Agendamiento.save			
 		end
 
@@ -264,7 +263,7 @@ class AgendamientoController < ApplicationController
 		
 		@Agendamiento.transaction do
 			respuesta="1"
-			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.estado=@EstadoAgendamiento
 			@Agendamiento.save			
 		end
 
@@ -288,7 +287,7 @@ class AgendamientoController < ApplicationController
 		@agendamiento.transaction do
 			respuesta = "1"
 			@agendamiento.fecha_llegada_paciente = DateTime.current 
-			@agendamiento.agendamiento_estado = @EstadoAgendamiento
+			@agendamiento.estado = @EstadoAgendamiento
 			@agendamiento.save			
 		end
 
@@ -334,7 +333,7 @@ class AgendamientoController < ApplicationController
 
 		@Agendamiento.transaction do
 			respuesta="1"
-			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.estado=@EstadoAgendamiento
 			@Agendamiento.save	
 
 		end
@@ -358,7 +357,7 @@ class AgendamientoController < ApplicationController
 
 		@Agendamiento.transaction do
 			respuesta="1"
-			@Agendamiento.agendamiento_estado=@EstadoAgendamiento
+			@Agendamiento.estado=@EstadoAgendamiento
 			@Agendamiento.save	
 
 		end
@@ -375,7 +374,6 @@ class AgendamientoController < ApplicationController
 
 	def detalleEvento
 		
-		tmp = '';
 		perm_paciente = false
 		perm_profesional = false
 		perm_admin_genera = tieneRol('Generar agendamientos')
@@ -383,29 +381,26 @@ class AgendamientoController < ApplicationController
 		perm_admin_recibe = tieneRol('Recibir pacientes')
 		perm_admin_bloquea = tieneRol('Bloquear horas')
 		perm_tomar_horas = tieneRol('Tomar horas')
-		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
-		
-		@Agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first	
-
-		if (@Agendamiento.persona)
-			perm_paciente = (@usuario.id == @Agendamiento.persona.id) || (@usuario.id == @Agendamiento.agendamiento_log_estados.where(agendamiento_estado: 3 ).first.responsable_id ) ? true : false 	
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first		
+		@agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
+		estado = @agendamiento.estado.nombre	
+		if @agendamiento.persona
+			perm_paciente = (@usuario.id == @agendamiento.persona.id) || (@usuario.id == @agendamiento.quien_pide_hora.id ) ? true : false 	
 		end 
-		if (@Agendamiento.especialidad_prestador_profesional)
-			perm_profesional = (@usuario.id == @Agendamiento.especialidad_prestador_profesional.profesional_id)? true : false 	
-		end 
-			
-		tmp<<@Agendamiento.detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_tomar_horas,perm_paciente,perm_profesional,@usuario.id)
-		
-		if tmp.length >0 
-			render :text=> tmp
-		else
-			flash[:tipo]="Agendamiento#detalleEvento"
-		
-			respond_to do |format|
-				format.html {render "application/errors",layout:false}
-			
-			end
+		if @agendamiento.especialidad_prestador_profesional
+			perm_profesional = (@usuario.id == @agendamiento.especialidad_prestador_profesional.profesional_id)? true : false 	
 		end
+
+		@permisos = Hash.new
+		@permisos['tomar_hora_paciente'] = (estado == 'Hora disponible' and !esAdministrativo and !esProfesionalSalud) ? true : false
+		@permisos['tomar_hora_admin'] = perm_tomar_horas
+		@permisos['info_paciente'] = (perm_paciente or perm_profesional) ? true : false 
+		@permisos['info_paciente_vista_admin'] =  ( (!['Hora disponible','Hora bloqueada' ].include?(estado)) and (perm_admin_confirma or perm_admin_recibe or perm_tomar_horas) ) ? true : false 
+
+		respond_to do |format|     
+    	format.js   {}    	
+    	format.json { render :json => { :success => true} }
+    end	 
 	
 	end
 
@@ -437,7 +432,7 @@ class AgendamientoController < ApplicationController
 					@agendamiento = AgAgendamientos.new
 					@agendamiento.fecha_comienzo = tmp_i
 					@agendamiento.fecha_final = tmp_f
-					@agendamiento.agendamiento_estado = @estadoAgendamiento
+					@agendamiento.estado = @estadoAgendamiento
 					@agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional
 					@agendamiento.accion_masiva = @accion_masiva
 					@agendamiento.save
@@ -492,7 +487,7 @@ class AgendamientoController < ApplicationController
 						@agendamiento = AgAgendamientos.new
 						@agendamiento.fecha_comienzo = tmp_i
 						@agendamiento.fecha_final = tmp_f
-						@agendamiento.agendamiento_estado = @estadoAgendamiento
+						@agendamiento.estado = @estadoAgendamiento
 						@agendamiento.especialidad_prestador_profesional = @especialidad_prestador_profesional
 						@agendamiento.accion_masiva = @accion_masiva
 						@agendamiento.save

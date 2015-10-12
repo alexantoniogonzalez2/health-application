@@ -158,7 +158,7 @@
 						<%= render :partial => "persona/seleccionar_persona", :locals => {:persona => p_d.persona, :id => 'int_'+p_d.id.to_s, :id_pre => id_pre, :clase => 'select_interconsulta', :subgrupo => 'todos'  } %>
 					</div>
 					<div class="col-md-4 column">
-						<a id="modal-agregar-persona" href="#modal-container-agregar-persona-int_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agregue una persona</a>
+						<a id="modal-agregar-persona" href="#modal-container-agregar-persona-int_<%= p_d.id.to_s %>" role="button" class="btn" data-toggle="modal">O agrega una persona</a>
 					</div>			
 				</div>
 			<% end %>
@@ -198,7 +198,7 @@
 					<button type="button" class="close" onclick="cerrarModalAgregarPersona('int_<%= p_d.id.to_s %>')" aria-hidden="true">×</button>
 					<h4 class="modal-title" id="myModalLabel">Agregar persona</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body no-padding-right-left">
 					<%= render :partial => "persona/agregar_persona", :locals => {:origen => p_d.id, :id => 'int_'+p_d.id.to_s, :subgrupo => 'todos' } %>
 				</div>
 				<div class="modal-footer"></div>

@@ -51,7 +51,7 @@ function actualizarEstado(pers_diag,e_d){
     $('input[name=radios-int-'+pers_diag+'][value=1]').prop('checked', false);
     $('input[name=radios-int-'+pers_diag+'][value=2]').prop('checked', false);
   }
-  guardarDiagnostico(pers_diag);
+  guardarDiagnostico(pers_diag,false);
 }
 function guardarDiagReabrir(pers_diag){
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
@@ -71,7 +71,7 @@ function guardarDiagReabrir(pers_diag){
   var pre_estado = $("label[for='radios-"+pers_diag+"-"+pre_e_d+"']").text();
   $('#reabrir-estado-diag-'+pers_diag).append("<span>Fecha: "+fecha_hora+" Estado anterior: "+pre_estado+" </span><br/>")
   
-  guardarDiagnostico(pers_diag);
+  guardarDiagnostico(pers_diag,false);
 }
 
 function agregarPropInt(pers_diag,value){
@@ -95,12 +95,12 @@ $('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
   estado_trat = (trat == 1) ? 2 : 1;
   $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
   $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
-  guardarDiagnostico(pers_diag);
+  guardarDiagnostico(pers_diag,false);
 
 });
 
 function actualizarEnfCron(pers_diag){
-  guardarDiagnostico(pers_diag);
+  guardarDiagnostico(pers_diag,false);
 }
 
 $('.modal-diag').on('show.bs.modal', function (e) {
@@ -207,7 +207,7 @@ $('#select_examen').select2({
 });
 
 $('#select_procedimiento').select2({
-  width: '380px',
+  width: '360px',
   minimumInputLength: 3,
   placeholder: "Seleccione un procedimiento",
   ajax: {
@@ -487,7 +487,7 @@ function actualizarDiagnostico(diag,pers_diag){
   $( "#modal-container-diag-"+pers_diag).modal('show');
 }
 
-function guardarDiagnostico(pers_diag_aten_sal) {
+function guardarDiagnostico(pers_diag_aten_sal,cerrar) {
 
   if (typeof atencion_salud_id !== 'undefined') 
     at_salud_id = atencion_salud_id;
@@ -515,7 +515,10 @@ function guardarDiagnostico(pers_diag_aten_sal) {
       enf_cro: enf_cro,
       trat: trat
      },
-    success: function(response) { $( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide'); },
+    success: function(response) { 
+      if (cerrar)  
+        $( "#modal-container-diag-"+pers_diag_aten_sal).modal('hide');
+    },
     error: function(xhr, status, error){ alert("No se pudo guardar el diagnóstico del paciente."); }
   });
 
@@ -534,7 +537,8 @@ function guardarMedicamento(pers_med, cerrar) {
       cantidad: $( "#cantidad-"+pers_med).val(),
       periodicidad: $( "#periodicidad-"+pers_med).val(),
       duracion: $( "#duracion-"+pers_med).val(),  
-      total: $( "#total-"+pers_med).val(),      
+      total: $( "#total-"+pers_med).val(),        
+      indicacion: $( "#indicacion-"+pers_med).val(),           
     },
     success: function(response) {
       if (cerrar) 
@@ -666,7 +670,7 @@ function guardarTexto(tipo_texto) {
   },
     success: function(response) { 
       $('#auto-' + tipo_texto ).show("hide");
-      setTimeout(function(){ $('#auto-' + tipo_texto ).hide("hide");},2000) 
+      setTimeout(function(){ $('#auto-' + tipo_texto ).hide("hide");},2000); 
     },
     error: function(xhr, status, error){ alert('No se pudo guardar la información de la atención de salud.'); }
   });

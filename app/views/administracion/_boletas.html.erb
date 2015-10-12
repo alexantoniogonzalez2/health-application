@@ -26,7 +26,13 @@
 	        <td><%= boleta_profesional.fecha_hasta.try(:strftime, "%Y-%m-%d") %></td>
 	     		<td><%= number_to_currency(boleta_profesional.monto, unit: "$ ", separator: '.') %></td>
 	     		<td><%= boleta_profesional.estado %></td>
-	     		<td><a id="bol-<%= boleta_profesional.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" class="load_atenciones">Ver atenciones</a></td>
+	     		<td>
+	     			<% if boleta_profesional.estado == "Anulada" %>
+	     				<span>-</span>
+	     			<% else %>
+	     				<a id="bol-<%= boleta_profesional.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" class="load_atenciones">Ver atenciones</a>
+	     			<% end %>
+	     		</td>
 	      </tr>
 	    <% end %>  
 	  </tbody>    

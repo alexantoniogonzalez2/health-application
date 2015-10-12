@@ -47,9 +47,7 @@ $(function(){
 
 		if (d_i>d_f) return false;
 		return true;
-	});
-
-	
+	});	
 
 	$.validator.addMethod("greaterThan1",function(value, element, params){
 		di=params[0].split('-');
@@ -523,7 +521,6 @@ $(function(){
 		}
 		$('#calendar').fullCalendar('addEventSource', add_events);
 
-
 		$('#comportamientoForm .status').html(link_loading);
 		$.ajax({
 			type: 'POST',
@@ -550,9 +547,7 @@ $(function(){
         		alert("No se pudo concretar la acción");
         	}
      });
-
 	}
-
 	});
 
 
@@ -678,15 +673,12 @@ $(function(){
 				    $('#diaForm .status').html('Completado!');
 				    $('#calendar').fullCalendar('removeEvents','tmp');
 				    $('#calendar').fullCalendar('addEventSource',response);
-				    // reRenderCalendar();
-
 	        	},
 	        	error: function(xhr, status, error){
 	        		alert("No se pudo concretar la acción");
 	        	}
 	       	});
 		}
-
 	});	
 
 	function Mostrar(){
@@ -696,8 +688,7 @@ $(function(){
 			$('#action button').click(function(){
 				Esconder();
 			});
-		});
-		
+		});		
 	}
 
 	function Esconder(){
@@ -710,19 +701,8 @@ $(function(){
 		});
 	}
 
-	function reRenderCalendar(){
-		tmp=$('#calendar').fullCalendar('getView').name;
-		$('#calendar').fullCalendar('changeView','month');
-		$('#calendar').fullCalendar('changeView','agendaWeek');
-		$('#calendar').fullCalendar('changeView','agendaDay');
-		$('#calendar').fullCalendar('changeView',tmp);
-	}
-
-
 	$('#action button').click(function(){
 		Mostrar();
 	});
-
-
 
 });

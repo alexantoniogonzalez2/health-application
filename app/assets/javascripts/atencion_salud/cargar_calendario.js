@@ -23,7 +23,7 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
     }
     else if (tipo === 'cron'){}
     else     
-      guardarDiagnostico(id);
+      guardarDiagnostico(id,false);
   }       
 });
 

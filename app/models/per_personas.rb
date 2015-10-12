@@ -7,6 +7,7 @@ class PerPersonas < ActiveRecord::Base
   has_many :prestador_administrativos, :class_name => 'PrePrestadorAdministrativos', :foreign_key => 'administrativo_id'	
   has_many :profesionales, :class_name => 'ProProfesionales', :foreign_key => 'profesional_id'  
   has_many :persona_agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'persona_id'
+  has_many :quien_pide_hora_agendamientos, :class_name => 'AgAgendamientos', :foreign_key => 'quien_pide_hora_id'
   has_many :responsable_agendamientos, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'responsable_id'
   has_many :responsable_boletas, :class_name => 'PreBoletas', :foreign_key => 'responsable_id'
   has_many :responsable_accion_masiva, :class_name => 'AgAccionMasiva', :foreign_key => 'responsable_id'
@@ -305,6 +306,11 @@ class PerPersonas < ActiveRecord::Base
     end  
 
     return @enfermedades_cronicas
+  end
+
+  def getEnfermedadesCronicas
+    @antecedentes = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1', id)
+    return @antecedentes 
   end 
 
   def getFamiliares
@@ -360,6 +366,7 @@ class PerPersonas < ActiveRecord::Base
                                     :profesionales,
                                     :profesional_agendamientos,
                                     :persona_agendamientos,
+                                    :quien_pide_hora_agendamientos,
                                     :admin_genera_agendamientos,
                                     :admin_confirma_agendamientos,
                                     :admin_recibe_agendamientos,

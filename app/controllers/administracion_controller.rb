@@ -37,9 +37,9 @@ class AdministracionController < ApplicationController
 		  		boleta_atencion.save
 		  	end
 				@boletas_creadas << [	boleta.id,
-															boleta.fecha.strftime("%Y-%m-%d"),
-															boleta.especialidad_prestador_profesional.profesional.showRut,
+															boleta.fecha.strftime("%Y-%m-%d"),															
 															boleta.especialidad_prestador_profesional.profesional.showName('%n%p%m'),
+															boleta.especialidad_prestador_profesional.profesional.showRut,
 															boleta.especialidad_prestador_profesional.especialidad.nombre,
 															boleta.fecha_desde.try(:strftime, "%Y-%m-%d"),
 															boleta.fecha_hasta.try(:strftime, "%Y-%m-%d"),
@@ -74,15 +74,15 @@ class AdministracionController < ApplicationController
 
 		@boletas_generadas.each do |bol_gen|
 			@boletas << [	bol_gen.id,
-										bol_gen.fecha.strftime("%Y-%m-%d %H:%M"),
-										bol_gen.especialidad_prestador_profesional.profesional.showRut,
+										bol_gen.fecha.strftime("%Y-%m-%d %H:%M"),										
 										bol_gen.especialidad_prestador_profesional.profesional.showName('%n%p%m'),
+										bol_gen.especialidad_prestador_profesional.profesional.showRut,
 										bol_gen.especialidad_prestador_profesional.especialidad.nombre,
 										bol_gen.fecha_desde.try(:strftime, "%Y-%m-%d"),
 										bol_gen.fecha_hasta.try(:strftime, "%Y-%m-%d"),
 										number_to_currency(bol_gen.monto, unit: "$ ", separator: '.'),
 										bol_gen.estado,
-										"<a id='bol-" << bol_gen.id.to_s << "' href='#' data-toggle='modal' data-target='#ver_atenciones_boleta' onclick='loadAtenciones(" << bol_gen.id.to_s << ")' >Ver atenciones</a>",
+										bol_gen.estado == 'Anulada' ? "<span>-</span>" : "<a id='bol-" << bol_gen.id.to_s << "' href='#' data-toggle='modal' data-target='#ver_atenciones_boleta' onclick='loadAtenciones(" << bol_gen.id.to_s << ")' >Ver atenciones</a>",
 										bol_gen.estado == 'Generada' ? ("<button id='anular-" << bol_gen.id.to_s << "' type='button' class='btn btn-xs btn-warning' onclick='anularBoleta(" << bol_gen.id.to_s << ")' >Anular boleta</button>") : "<span>-</span>" ]
 		end	
 

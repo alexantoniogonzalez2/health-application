@@ -1,0 +1,65 @@
+<fieldset class="padding-bottom">
+	<legend>Tomar hora</legend>
+	<div class="row">
+		<div class="col-md-3"><label>La hora es para</label></div>
+		<div class="col-md-9">:
+      <div id="div-sel-pac-<%= @agendamiento.id %>" class="prevent-break-line" >
+  			<select id="select_pac_<%= @agendamiento.id %>" class="select_paciente">
+  				<option></option>
+  				<% @pacientes = PerPersonas.all	%>
+  				<% @pacientes.each do |pac| %>
+  					<option value='<%= pac.id %>'><%= pac.showRut %> <%= pac.showName('%n%p%m') %></option>
+  				<% end %>
+  			</select>	<a id="modal-agregar-persona" href="#modal-container-agregar-persona-pac_<%= @agendamiento.id %>" role="button" class="btn" data-toggle="modal">O agrega una persona</a>
+      </div>
+		</div>
+	</div>
+  <div class="row margin-top">
+    <div class="col-md-3"><label>La hora es pedida por</label></div>
+    <div class="col-md-9">:
+      <div id="div-sel-ped-<%= @agendamiento.id %>" class="prevent-break-line" >
+        <select disabled id="select_ped_<%= @agendamiento.id %>" class="select_quien_pide">
+          <option></option>
+        </select> <a id="modal-agregar-persona" href="#modal-container-agregar-persona-ped_<%= @agendamiento.id %>" role="button" class="btn" data-toggle="modal">O agrega una persona</a>
+      </div>
+    </div>
+  </div>
+	<div class="row margin-top">
+		<div class="col-md-3"><label>Motivo de la consulta</label></div>
+		<div class="col-md-9">:
+			<div id="m_c_<%= @agendamiento.id %>">
+        <div class="radio">
+          <label for="radios-0">
+            <input type="radio" name="radios-motivo-<%= @agendamiento.id %>" id="radios-0" value="1" checked="checked"> Es nuevo
+          </label>
+        </div>
+        <div class="radio">
+          <label for="radios-1">
+            <input type="radio" name="radios-motivo-<%= @agendamiento.id %>" id="radios-1" value="2"> Desea controlar un antecedente
+          </label>
+        </div>
+      </div>
+      <% @capitulos = MedDiagnosticosCapitulos.all %>
+      <div id="div-sel-cap-<%= @agendamiento.id %>" class="prevent-break-line" >
+      	<select id="select-capitulo-<%= @agendamiento.id %>" name="selectbasic" class="select_capitulo">
+      		<option></option>
+      		<% @capitulos.each do |cap| %>
+      			<option value='<%= cap.id %>'><%= cap.nombre %></option>
+      		<% end %>
+      	</select>
+      </div>
+		</div>
+	</div>
+</fieldset>
+
+<div class="modal fade" id="modal-container-agregar-persona-pac_<%= @agendamiento.id %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body">
+				<%= render :partial => "persona/agregar_persona", :locals => {:origen => @agendamiento.id, :id => 'pac_'+@agendamiento.id.to_s, :subgrupo => 'todos' } %>
+			</div>
+		</div>		
+	</div>	
+</div>
+
+<%= javascript_include_tag "label_better" %> 

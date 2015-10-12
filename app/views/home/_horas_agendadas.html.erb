@@ -24,7 +24,7 @@
             No agendada.
           </td>  
         <% end %>                 
-        <td><%= agendamiento.agendamiento_estado.nombre %></td>
+        <td><%= agendamiento.estado.nombre %></td>
         <td>
           <% if  agendamiento.fecha_llegada_paciente %>
             <%= agendamiento.fecha_llegada_paciente.to_s(:time) %>
@@ -33,18 +33,18 @@
           <% end %>
         </td>                
         <td>
-          <% if agendamiento.agendamiento_estado_id == 7 %>
-            <%= button_to "Ver", {:controller => :atenciones_salud, :action => 'verAtencion', :id_atencion => getIdAtencion(agendamiento.id)}, :method => :post,class: "btn btn-xs btn-info" %><%= button_to "Reabrir", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => getIdAtencion(agendamiento.id)}, :method => :post,class: "btn btn-xs btn-warning" %>
-          <% elsif agendamiento.agendamiento_estado_id == 10 %> 
-            <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => getIdAtencion(agendamiento.id)}, :method => :post,class: "btn btn-xs btn-primary" %> 
+          <% if agendamiento.estado_id == 7 %>
+            <%= button_to "Ver", {:controller => :atenciones_salud, :action => 'verAtencion', :id_atencion => agendamiento.atencion_salud.id }, :method => :post,class: "btn btn-xs btn-info" %><%= button_to "Reabrir", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => agendamiento.atencion_salud.id }, :method => :post,class: "btn btn-xs btn-warning" %>
+          <% elsif agendamiento.estado_id == 10 %> 
+            <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => agendamiento.atencion_salud.id }, :method => :post,class: "btn btn-xs btn-primary" %> 
           <% elsif existeAtencion(agendamiento.id) %>
-            <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => getIdAtencion(agendamiento.id) }, :method => :post,class: "btn btn-xs btn-primary" %>
-          <% elsif agendamiento.agendamiento_estado_id == 5 %>    
+            <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => agendamiento.atencion_salud.id  }, :method => :post,class: "btn btn-xs btn-primary" %>
+          <% elsif agendamiento.estado_id == 5 %>    
             <%= button_to "Atender paciente", {:controller => :atenciones_salud,
             :action => 'crearAtencion', :id => agendamiento.id }, :method => :post,class: "btn btn-xs btn-success" %>
-          <% elsif agendamiento.agendamiento_estado_id == 2 %>
+          <% elsif agendamiento.estado_id == 2 %>
             <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="desbloquearHora(<%= agendamiento.id%>)">Desbloquear Hora</button>  
-          <% elsif agendamiento.agendamiento_estado_id == 1 %>  
+          <% elsif agendamiento.estado_id == 1 %>  
             <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-default" onclick="bloquearHora(<%= agendamiento.id%>)">Bloquear Hora</button>     
           <% end %>
         </td>

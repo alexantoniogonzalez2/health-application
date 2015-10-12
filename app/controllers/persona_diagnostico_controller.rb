@@ -409,7 +409,7 @@ class PersonaDiagnosticoController < ApplicationController
 			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 			@persona = @atencion_salud.persona
 			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
-			if @agendamiento.agendamiento_estado.nombre == 'Atención reabierta'
+			if @agendamiento.estado.nombre == 'Atención reabierta'
 				@reabrir_estado_diagnostico = FiReabrirEstadoDiagnostico.new
 				@reabrir_estado_diagnostico.persona_diagnostico_atencion_salud = @persona_diagnostico_atencion
 				@reabrir_estado_diagnostico.estado_diagnostico = @persona_diagnostico_atencion.estado_diagnostico

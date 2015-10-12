@@ -1,10 +1,14 @@
 <div class='container'>
-	<div class='row'><h4>Inicio</h4><!--
-		<div class='col-md-6 column'>
-			<h4>Últimas actualizaciones</h4>
+	<div class='row'><h4>Inicio</h4>
+		<div class='col-md-12 column'>
+			<h4>Horas agendadas</h4>
+				<% if @horas_agendadas.empty? %>	  		
+	  			No hay horas agendadas.
+	  		<% end %>
+	  		<% @horas_agendadas.each do |hora_agendada| %>
+	  			<%= render :partial => "agendamiento/hora_agendada", :locals => {:hora_agendada => hora_agendada } %>
+	  		<% end %>
 		</div>
-		<div class='col-md-6 column'>
-			<h4>Contenido</h4>
-		</div>-->	
+		
 	</div>
 </div>

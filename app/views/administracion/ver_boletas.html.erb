@@ -17,27 +17,13 @@
 			    </label>
 				</div>		   
     </div>
-    <div class='col-md-4'>
-      <div class="form-group">
-      	Desde:
-        <div class='input-group date' id='datetimepicker8'>
-          <input type='text' class="form-control" id='fecha_inicio_ver_boleta' name='date' placeholder='Seleccionar fecha' />
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-      </div>
+    <div class='col-md-4'>      
+      Desde:
+        <input type='text' class="form-control" id='fecha_inicio_ver_boleta' name='date' placeholder='Seleccionar fecha' />         
     </div>
     <div class='col-md-4'>
-      <div class="form-group">
-      	Hasta:
-        <div class='input-group date' id='datetimepicker9'>
-          <input type='text' class="form-control" id='fecha_hasta_ver_boleta' name='date' placeholder='Seleccionar fecha' />
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-      </div>
+      Hasta:
+        <input type='text' class="form-control" id='fecha_hasta_ver_boleta' name='date' placeholder='Seleccionar fecha' />        
     </div>
   </div>
   <div class='row'>
@@ -56,36 +42,42 @@
     <tr>
     	<th>Id</th>
       <th>Fecha</th>
-      <th>Rut profesional</th> 
       <th>Profesional</th>
+      <th>Rut</th>      
       <th>Especialidad</th>
-      <th>Fecha desde</th>
-      <th>Fecha hasta</th>       
+      <th>Desde</th>
+      <th>Hasta</th>       
       <th>Monto</th>
       <th>Estado</th>
-      <th>Ver atenciones</th>
-      <th>Anular boleta</th>  
+      <th>Atenciones</th>
+      <th>Anular</th>  
     </tr>
   </thead>
   <tbody>      
     <% @boletas.each do |boleta| %>
       <tr>
       	<td><%= boleta.id %></td>
-        <td><%= boleta.fecha.strftime("%Y-%m-%d") %></td>
-        <td><%= boleta.especialidad_prestador_profesional.profesional.showRut %></td>
+        <td><%= boleta.fecha.strftime("%Y-%m-%d") %></td>        
         <td><%= boleta.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+        <td><%= boleta.especialidad_prestador_profesional.profesional.showRut %></td>
         <td><%= boleta.especialidad_prestador_profesional.especialidad.nombre %></td>
         <td><%= boleta.fecha_desde.try(:strftime, "%Y-%m-%d") %></td>
         <td><%= boleta.fecha_hasta.try(:strftime, "%Y-%m-%d") %></td>
      		<td><%= number_to_currency(boleta.monto, unit: "$ ", separator: '.') %></td>
      		<td id="cell-<%= boleta.id %>"><%= boleta.estado %></td>
-     		<td><a id="bol-<%= boleta.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" onclick="loadAtenciones(<%= boleta.id%>)">Ver atenciones</a></td>
+     		<td>
+          <% if boleta.estado == "Anulada" %>
+            <span>-</span>  
+          <% else %>
+            <a id="bol-<%= boleta.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" onclick="loadAtenciones(<%= boleta.id%>)">Ver atenciones</a> 
+          <% end %>
+        </td>
         <td>
-        <% if boleta.estado == "Generada" %>  
-          <button id="anular-<%= boleta.id%>" type="button" class="btn btn-xs btn-warning" onclick="anularBoleta(<%= boleta.id%>)">Anular boleta</button>     
-        <% else %>
-          <span>-</span>
-        <% end %>
+          <% if boleta.estado == "Generada" %>  
+            <button id="anular-<%= boleta.id%>" type="button" class="btn btn-xs btn-warning" onclick="anularBoleta(<%= boleta.id%>)">Anular boleta</button>     
+          <% else %>
+            <span>-</span>
+          <% end %>
         </td>
       </tr>
     <% end %>  

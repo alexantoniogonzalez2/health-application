@@ -93,9 +93,9 @@ class PersonaMedicamentoController < ApplicationController
 		if params[:duracion] != ''
 			@fecha_inicio = DateTime.current
 			@fecha_final = DateTime.current + params[:duracion].to_i.days
-			@persona_medicamento.update( cantidad: params[:cantidad], periodicidad: params[:periodicidad], duracion: params[:duracion], total: params[:total], fecha_inicio: @fecha_inicio, fecha_final: @fecha_final )
+			@persona_medicamento.update( cantidad: params[:cantidad], periodicidad: params[:periodicidad], duracion: params[:duracion], total: params[:total], fecha_inicio: @fecha_inicio, fecha_final: @fecha_final, indicacion: params[:indicacion] )
 		else	
-  		@persona_medicamento.update( cantidad: params[:cantidad], periodicidad: params[:periodicidad], duracion: params[:duracion], total: params[:total] )
+  		@persona_medicamento.update( cantidad: params[:cantidad], periodicidad: params[:periodicidad], duracion: params[:duracion], total: params[:total], indicacion: params[:indicacion] )
   	end	
 
   	if @persona_medicamento.es_antecedente

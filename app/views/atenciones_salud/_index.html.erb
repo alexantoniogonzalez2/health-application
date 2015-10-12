@@ -28,11 +28,11 @@
             <td><%= atencion_salud.agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
             <td><%= atencion_salud.persona.showName('%n%p%m') %></td>
             <td><%= atencion_salud.persona.showRut %></td>
-            <td><%= atencion_salud.agendamiento.agendamiento_estado.nombre %></td>            
+            <td><%= atencion_salud.agendamiento.estado.nombre %></td>            
             <td>
-              <% if atencion_salud.agendamiento.agendamiento_estado_id == 6 %>
+              <% if atencion_salud.agendamiento.estado_id == 6 %>
                 <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'editarAtencion', :id => atencion_salud.id }, :method => :post,class: "btn btn-xs btn-primary" %>
-              <% elsif atencion_salud.agendamiento.agendamiento_estado_id == 10 %>
+              <% elsif atencion_salud.agendamiento.estado_id == 10 %>
                 <%= button_to "Continuar", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion =>  atencion_salud.id }, :method => :post,class: "btn btn-xs btn-primary" %>
               <% else %> 
                 <%= button_to "Ver", {:controller => :atenciones_salud, :action => 'verAtencion', :id_atencion => atencion_salud.id }, :method => :post,class: "btn btn-xs btn-info" %><%= button_to "Reabrir", {:controller => :atenciones_salud, :action => 'reabrirAtencion', :id_atencion => atencion_salud.id }, :method => :post,class: "btn btn-xs btn-warning" %>

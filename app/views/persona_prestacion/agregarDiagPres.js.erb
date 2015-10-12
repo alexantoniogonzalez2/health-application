@@ -1,11 +1,11 @@
-$('<div class="col-md-4 column"><label>Diagnósticos:</label></div>').appendTo("#div-diag-pres<%= @p_p.id %>");
+$('<div class="col-md-12 column"><label>Diagnósticos:</label>').appendTo("#div-diag-pres<%= @p_p.id %>");
 <% if !@persona_diagnostico.exists? %>
-	$("<div id='no-pres<%= @p_p.id %>' class='col-md-8 column'><p>No hay diagnósticos seleccionados.</p></div>").appendTo("#div-diag-pres<%= @p_p.id %>"); 
+	$("<div id='no-pres<%= @p_p.id %>'><p>No hay diagnósticos seleccionados.</p></div>").appendTo("#div-diag-pres<%= @p_p.id %>"); 
 <% else %>
 	$('#no-pres<%= @p_p.id %>').remove();
-	$('<div class="col-md-8 column"><div class="div-diag-cert">').appendTo("#div-diag-pres<%= @p_p.id %>");  
+	$('<div class="div-diag-cert">').appendTo("#div-diag-pres<%= @p_p.id %>");  
 		<% @persona_diagnostico.each do |p_d| %> 
 			$("<%= escape_javascript( render :partial => "persona_prestacion/persona_diagnostico", :locals => {:p_d => p_d, :p_p => @p_p.id, :tipo => @tipo } ) %>").appendTo("#div-diag-pres<%= @p_p.id %>");    
 		<% end %>
-	$('</div></div>').appendTo("#div-diag-pres<%= @p_p.id %>");
+	$('</div>').appendTo("#div-diag-pres<%= @p_p.id %>");
 <% end %>

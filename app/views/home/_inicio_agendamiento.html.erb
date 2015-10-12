@@ -4,18 +4,13 @@
 	  	<div id="acciones_masivas">
 	  		<% unless @acciones_masivas.empty? %>
 	  			<%= button_to "Actualizar", root_path, :method => :get,class: "btn btn-xs btn-success" %><br><br>
+	  		<% else %>
+	  			Sin actividad aún.
 	  		<% end %>
 	  		<% @acciones_masivas.each do |accion_masiva| %>
 	  			<%= render :partial => "agendamiento/accion_masiva", :locals => {:accion_masiva => accion_masiva } %>
 	  		<% end %>
 	  	</div>
 	  <% end %>	
-		<!--
-		<div class='col-md-6 column'>
-			<h4>Últimas actualizaciones</h4>
-		</div>
-		<div class='col-md-6 column'>
-			<h4>Contenido</h4>
-		</div>-->	
 	</div>
 </div>

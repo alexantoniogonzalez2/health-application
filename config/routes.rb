@@ -69,6 +69,7 @@ AplicacionMedica::Application.routes.draw do
   post '/cargar_personas', to: 'persona_diagnostico#cargarPersonas'
   post '/agregar_persona_notificacion', to: 'persona_diagnostico#agregarPersonaNotificacion'
   post '/agregar_persona', to: 'persona#agregarPersona'
+  post '/cargar_cercanos', to: 'persona#cargarCercanos'
   post '/agregar_info_interconsulta', to: 'persona_diagnostico#agregarInfoInterconsulta'
   post '/agregar_info_eno', to: 'persona_diagnostico#agregarInfoEno'
   post '/agregar_info_prestacion', to: 'persona_prestacion#agregarInfoPrestacion'  

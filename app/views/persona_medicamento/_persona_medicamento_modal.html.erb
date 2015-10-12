@@ -10,10 +10,10 @@
         <div class="container ajuste-med">
           <div class="row">
             <div class='col-md-5 column ajuste-med'>
-              <% if [1,2,3,4].include? persona_medicamento.medicamento.medicamento_tipo.id %>
+              <% if [1,2,3].include? persona_medicamento.medicamento.medicamento_tipo.medicamento_metatipo.id %>
                 <table>
                   <tr>
-                    <td><span>Ingerir</span></td>
+                    <td><span>Administrar</span></td>
                     <td><input id="cantidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.cantidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)" <%= disabled %> ></td>
                     <td><span class="text-med"><%= persona_medicamento.medicamento.medicamento_tipo.unidad %></span></td>
                   </tr>
@@ -32,7 +32,7 @@
                     <td><input disabled id="total-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.total %>" maxlength="4" size="4"></td>
                     <td><span class="text-med"><%= persona_medicamento.medicamento.medicamento_tipo.unidad %>.</span></td>
                   </tr>
-                  <% if persona_medicamento.medicamento.medicamento_tipo.id == 4 %>
+                  <% if persona_medicamento.medicamento.medicamento_tipo.medicamento_metatipo.id == 3 %>
                     <tr>
                       <td><span>Equivalente a:</span></td>
                       <td><input disabled id="total-ml-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.total/20 if persona_medicamento.total %>" maxlength="4" size="4"></td>
@@ -41,7 +41,8 @@
                   <% end %>
                 </table>
               <% else %>
-                Este tipo de medicamento no tiene posología.
+                <label>Indicación:</label>
+                  <textarea <%= disabled %> class="form-control" rows="3" id="indicacion-<%= persona_medicamento.id %>" ><%= persona_medicamento.indicacion %></textarea>
               <% end %>
             </div>
             <div class='col-md-7 column'>

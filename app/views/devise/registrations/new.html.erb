@@ -15,15 +15,15 @@
 	<div class="row">
     <div class="form-group col-md-6 column">
       <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
         <%= f.email_field :email, autofocus: true, :class => "label_better form-control", :placeholder => "Ingresa tu correo electrónico", :'data-position'=> "top", :'data-new-placeholder' => "Correo electrónico:", :'data-bv-notempty'=>"true", :'data-bv-notempty-message'=>"Tu correo electrónico es requerido" %>
         <p class="help-block text-danger"></p>
       </div>
     </div>
     <div class="form-group col-md-5  col-rut">
       <div class="input-group ajuste-rut"> 
-        <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
-        	<input id="rut" name="rut" class="label_better form-control" placeholder="Ingresa tu RUT sin puntos " data-new-placeholder="RUT:" data-bv-notempty="true" data-bv-notempty-message="Tu RUT es requerido" data-bv-digits='true' data-fv-digits-message="Ingreso solo números">  
+        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+        	<input id="rut" name="rut" class="label_better form-control" placeholder="Ingresa RUT sin puntos " data-new-placeholder="RUT:" data-bv-notempty="true" data-bv-notempty-message="Tu RUT es requerido" data-bv-digits='true' data-fv-digits-message="Ingreso solo números">  
           <p class="help-block text-danger"></p>          
       </div>
       <small class="error-rut">El RUT ingresado no es válido</small>      
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group col-md-6 column">
       <div class="input-group"> 
-        <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
         <%= f.password_field :password_confirmation, autocomplete: "off", :class => "label_better form-control", :placeholder => "Confirma tu contraseña", :'data-new-placeholder' => "Contraseña:", :minlength => 6 %>
           <p class="help-block text-danger"></p>
       </div>
@@ -59,7 +59,7 @@
     </div>
     <div class="form-group col-md-6 column">
       <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <span class="input-group-addon"><i class="fa fa-mars"></i></span>
         <input id='apellido_paterno' name='apellido_paterno' class="label_better form-control" placeholder="Ingresa tu apellido paterno" data-position="top" data-new-placeholder="Apellido paterno:" data-bv-notempty="true" data-bv-notempty-message="Tu apellido paterno es requerido" >
         <p class="help-block text-danger"></p>
       </div>
@@ -68,24 +68,18 @@
   <div class="row">
     <div class="form-group col-md-6 column">
       <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <span class="input-group-addon"><i class="fa fa-venus"></i></span>
         <input id='apellido_materno' name='apellido_materno' class="label_better form-control" placeholder="Ingresa tu apellido materno" data-position="top" data-new-placeholder="Apellido materno:" data-bv-notempty="true" data-bv-notempty-message="Tu apellido materno es requerido" >
         <p class="help-block text-danger"></p>
       </div>
     </div>
     <div class="form-group col-md-6 column">
-    <span class="ajuste-sexo">Sexo:</span>
-  		<div class="form-group ajuste-sexo">
-  		    <label class="radio-inline" for="radios-sex-0">
-  		      <input type="radio" name="sexo" id="radios-sex-0" value="1">
-  		      Masculino
-  		    </label> 
-  		    <label class="radio-inline" for="radios-sex-1">
-  		      <input type="radio" name="sexo" id="radios-sex-1" value="2">
-  		      Femenino
-  		    </label> 
-  		</div>
-    </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+        <input id='celular' name='celular' type="text" class="label_better form-control" placeholder="Ingresa tu celular (8 dígitos)" data-position="top" data-new-placeholder="Celular:" data-bv-digits='true' data-fv-digits-message="Ingresa solo números" maxlength="8" minlength="8">
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>    
   </div>
   <div class="row">
     <div class="form-group col-md-6 column">
@@ -97,9 +91,56 @@
     </div>
     <div class="form-group col-md-6 column">
       <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-        <input id='celular' name='celular' class="label_better form-control" placeholder="Ingresa tu celular (8 dígitos)" data-position="top" data-new-placeholder="Celular:" data-bv-digits='true' data-fv-digits-message="Ingreso solo números" maxlength="8">
+        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+        <input id='fijo' name='fijo' class="label_better form-control" placeholder="Ingresa tu teléfono fijo" data-position="top" data-new-placeholder="Teléfono fijo:" data-bv-digits='true' data-fv-digits-message="Ingresa solo números" maxlength="8">
         <p class="help-block text-danger"></p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-7 column">
+    <span class="ajuste-sexo">Sexo:</span>
+      <div class="form-group ajuste-sexo">
+          <label class="radio-inline" for="radios-sex-0">
+            <input type="radio" name="sexo" id="radios-sex-0" value="1">
+            Masculino
+          </label> 
+          <label class="radio-inline" for="radios-sex-1">
+            <input type="radio" name="sexo" id="radios-sex-1" value="2">
+            Femenino
+          </label> 
+      </div>
+    </div>
+    <div class="col-md-3 column no-padding">
+      <div class="input-group">
+        <select id="codigo" name="codigo" class="form-control codigo">
+          <option value="1" selected>Código área</option>
+          <option value="2">2 Santiago </option>
+          <option value="58">58 Arica</option>
+          <option value="57">57 Iquique</option>
+          <option value="55">55 Antofagasta</option>
+          <option value="52">52 Copiapó</option>
+          <option value="51">51 La Serena</option>
+          <option value="53">53 Ovalle</option>
+          <option value="32">32 Valparaíso</option>
+          <option value="34">34 Los Andes</option>
+          <option value="33">33 Quillota</option>
+          <option value="35">35 San Antonio</option>
+          <option value="72">72 Rancagua</option>
+          <option value="75">75 Curicó</option>
+          <option value="71">71 Talca</option>
+          <option value="73">73 Linares</option>
+          <option value="41">41 Concepción</option>
+          <option value="42">42 Chillán</option>
+          <option value="43">43 Los Ángeles</option>
+          <option value="45">45 Temuco</option>
+          <option value="63">63 Valdivia</option>
+          <option value="64">64 Osorno</option>
+          <option value="65">65 Puerto Montt</option>
+          <option value="67">67 Coyhaique</option>
+          <option value="61">61 Punta Arenas</option>
+        </select>
+        <p class="help-block text-danger"></p> 
       </div>
     </div>
   </div>

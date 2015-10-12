@@ -1,4 +1,4 @@
-// este código es para seguir validando la fecha después de cambios en el cuestionario
+//Se sigue validando la fecha después de cambios en el cuestionario
 var current = $('#datetimepicker1').val();
 function keep_checking() {
 
@@ -104,10 +104,26 @@ $('#new_user').bootstrapValidator({
     'user[email]': { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
     sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
     rut: { validators: { digits: { message: 'Ingresa solo números' } } },
-    celular: { validators: { digits: { message: 'Ingresa solo números' } } },
+    celular: { 
+      validators: {
+        digits: { message: 'Ingresa solo números' }, 
+        stringLength: { minlength: 8, maxlength: 8,message: 'Deben ser 8 dígitos en total' } 
+      } 
+    },
+    fijo: { validators: { digits: { message: 'Ingresa solo números' } } },
     'user[password]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres' }, notEmpty: { message: 'La contraseña es requerida' } } },
     'user[password_confirmation]': { validators: { stringLength: { message: 'Ingresa una contraseña de al menos 6 carácteres', notEmpty: { message: 'La contraseña es requerida' } } } },
-    date: { validators: { notEmpty: { message: 'La fecha de nacimiento es requerida' }, date: { format: 'YYYY-MM-DD', min: '1900-01-01', max: getFechaActual(),  message: 'Formato no válido o fecha incorrecta' } } }
+    date: { validators: { notEmpty: { message: 'La fecha de nacimiento es requerida' }, date: { format: 'YYYY-MM-DD', min: '1900-01-01', max: getFechaActual(),  message: 'Formato no válido o fecha incorrecta' } } },
+    codigo: {  validators: {
+                  callback: {
+                      message: 'Ingresa código de área',
+                      callback: function(value, validator, $field) {
+                        var telefono = $('#fijo').val();         
+                        return (telefono == '') ? true : (value != '1' );
+                      }
+                  }
+                }
+              }  
   }
 })
 

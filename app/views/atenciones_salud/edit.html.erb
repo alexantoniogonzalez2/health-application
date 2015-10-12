@@ -110,7 +110,7 @@
               <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
             <% end %>
             <% @ant_med_us.each do |p_d| %>     
-              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d } %>     
+              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'ver' } %>     
             <% end %>       
           </div>
           <a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a>

@@ -1,0 +1,48 @@
+<div class="modal-content" id="modal-content">
+	<div class="modal-header">		 
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id="myModalLabel"><%= @agendamiento.estado.nombre %></h4>
+	</div>
+	<div class="modal-body <% if @permisos['tomar_hora_paciente'] or @permisos['tomar_hora_admin'] %> ajuste-height-age <% end %>	">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4"><label>Recinto de salud</label></div><div class="col-md-8">: <%= @agendamiento.especialidad_prestador_profesional.prestador.nombre %></div>
+			</div>
+			<div class="row">
+				<div class="col-md-4"><label>Especialidad</label></div><div class="col-md-8">: <%= @agendamiento.especialidad_prestador_profesional.especialidad.nombre %></div>
+			</div>
+			<div class="row">
+				<div class="col-md-4"><label>Especialista</label></div><div class="col-md-8">: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%d%n%p%m') %></div>
+			</div>
+			<div class="row">
+				<div class="col-md-4"><label>Fecha y hora de inicio</label></div><div class="col-md-8">: <%= @agendamiento.fecha_comienzo.try(:strftime, '%Y-%m-%d %H:%M') %></div>
+			</div>
+			<div class="row">
+				<div class="col-md-4"><label>Fecha y hora de término</label></div><div class="col-md-8">:	<%= @agendamiento.fecha_final.try(:strftime, '%Y-%m-%d %H:%M') %>	</div>
+			</div>
+			<% if @permisos['tomar_hora_paciente'] %>
+				<%= render :partial => "form_tomar_hora_paciente", :locals => {:agendamiento => @agendamiento } %>
+			<% end %>
+			<% if @permisos['tomar_hora_admin'] %>
+				<%= render :partial => "form_tomar_hora_admin", :locals => {:agendamiento => @agendamiento } %>
+			<% end %>		
+			<% if @permisos['info_paciente'] or @permisos['info_paciente_vista_admin'] %>
+				<%= render :partial => "form_info_paciente", :locals => {:agendamiento => @agendamiento, :permisos => @permisos } %>
+			<% end %>	
+		</div>		
+	</div>
+	<div class="modal-footer">		 
+		<button type="button" class="btn btn-default" data-dismiss="modal">
+			Cerrar ventana
+		</button>
+		<% if @permisos['tomar_hora_paciente'] %>
+			<%= render :partial => "footer_tomar_hora_paciente", :locals => {:agendamiento => @agendamiento } %>
+		<% end %>	
+		<% if @permisos['info_paciente'] %>
+			<%= render :partial => "footer_info_paciente", :locals => {:agendamiento => @agendamiento } %>
+		<% end %>
+		<% if @permisos['info_paciente_vista_admin'] %>
+			<%= render :partial => "footer_info_paciente_vista_admin", :locals => {:agendamiento => @agendamiento } %>
+		<% end %>	
+	</div>
+</div>  

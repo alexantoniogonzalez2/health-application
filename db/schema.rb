@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
 
   create_table "ag_agendamientos", force: :cascade do |t|
     t.integer  "persona_id",                            limit: 4
+    t.integer  "quien_pide_hora_id",                    limit: 4
     t.datetime "fecha_comienzo"
     t.datetime "fecha_final"
     t.datetime "fecha_llegada_paciente"
@@ -46,7 +47,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.datetime "fecha_final_real"
     t.integer  "agendamiento_estado_id",                limit: 4
     t.integer  "especialidad_prestador_profesional_id", limit: 4
-    t.boolean  "motivo_consulta_nuevo",                 limit: 1
+    t.boolean  "motivo_consulta_nuevo"
     t.integer  "persona_diagnostico_control_id",        limit: 4
     t.integer  "capitulo_cie10_control_id",             limit: 4
     t.integer  "accion_masiva_id",                      limit: 4
@@ -62,7 +63,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.integer  "agendamiento_id",        limit: 4
     t.integer  "persona_id",             limit: 4
     t.integer  "tipo_ficha_id",          limit: 4
-    t.boolean  "es_cronica",             limit: 1
+    t.boolean  "es_cronica"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -89,11 +90,11 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.datetime "control"
     t.datetime "alta"
     t.integer  "atencion_salud_id", limit: 4
-    t.boolean  "para_trabajo",      limit: 1
-    t.boolean  "para_colegio",      limit: 1
-    t.boolean  "para_juzgado",      limit: 1
-    t.boolean  "para_carabinero",   limit: 1
-    t.boolean  "para_otros",        limit: 1
+    t.boolean  "para_trabajo"
+    t.boolean  "para_colegio"
+    t.boolean  "para_juzgado"
+    t.boolean  "para_carabinero"
+    t.boolean  "para_otros"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -257,7 +258,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.integer  "diagnostico_id",        limit: 4
     t.integer  "estado_diagnostico_id", limit: 4
     t.integer  "gesta_id",              limit: 4
-    t.boolean  "es_cronica",            limit: 1
+    t.boolean  "es_cronica"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -270,10 +271,10 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.text     "comentario",             limit: 65535
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
-    t.boolean  "es_cronica",             limit: 1
-    t.boolean  "en_tratamiento",         limit: 1
-    t.boolean  "primer_diagnostico",     limit: 1
-    t.boolean  "es_antecedente",         limit: 1
+    t.boolean  "es_cronica"
+    t.boolean  "en_tratamiento"
+    t.boolean  "primer_diagnostico"
+    t.boolean  "es_antecedente"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -290,7 +291,8 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.integer  "duracion",               limit: 4
     t.integer  "total",                  limit: 4
     t.integer  "persona_vacuna_id",      limit: 4
-    t.boolean  "es_antecedente",         limit: 1
+    t.boolean  "es_antecedente"
+    t.text     "indicacion",             limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -309,7 +311,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
   create_table "fi_persona_prestacion_diagnosticos", force: :cascade do |t|
     t.integer  "persona_prestacion_id",                 limit: 4
     t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
-    t.boolean  "para_interconsulta",                    limit: 1
+    t.boolean  "para_interconsulta"
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
   end
@@ -321,7 +323,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.integer  "prestador_id",      limit: 4
     t.string   "prestador_texto",   limit: 255
     t.datetime "fecha_prestacion"
-    t.boolean  "es_antecedente",    limit: 1
+    t.boolean  "es_antecedente"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -353,7 +355,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
 
   create_table "med_alergias", force: :cascade do |t|
     t.string   "nombre",     limit: 255
-    t.boolean  "comun",      limit: 1
+    t.boolean  "comun"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -377,8 +379,8 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.string   "descripcion",   limit: 255
     t.integer  "grupo_id",      limit: 4
     t.integer  "numero",        limit: 4
-    t.boolean  "frecuente",     limit: 1
-    t.boolean  "nodo_terminal", limit: 1
+    t.boolean  "frecuente"
+    t.boolean  "nodo_terminal"
     t.string   "genero",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -457,6 +459,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
   end
 
   create_table "med_medicamentos_tipos", force: :cascade do |t|
+    t.string   "nombre",                  limit: 255
     t.string   "unidad",                  limit: 255
     t.integer  "medicamento_metatipo_id", limit: 4
     t.datetime "created_at"
@@ -547,7 +550,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.datetime "fecha_termino"
     t.integer  "persona_id",    limit: 4
     t.integer  "ocupacion_id",  limit: 4
-    t.boolean  "es_actual",     limit: 1
+    t.boolean  "es_actual"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -679,7 +682,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
   create_table "pre_prestadores", force: :cascade do |t|
     t.integer  "rut",          limit: 4
     t.string   "nombre",       limit: 255
-    t.boolean  "es_centinela", limit: 1
+    t.boolean  "es_centinela"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -729,7 +732,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
   end
 
   create_table "pro_profesionales", force: :cascade do |t|
-    t.boolean  "validado",        limit: 1
+    t.boolean  "validado"
     t.integer  "profesional_id",  limit: 4
     t.integer  "especialidad_id", limit: 4
     t.integer  "institucion_id",  limit: 4

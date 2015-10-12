@@ -226,7 +226,7 @@ class AtencionesSaludController < ApplicationController
 	  permiso = true if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional
 		redirect_to :action => "sinPermiso" unless permiso
 
-		editar = true if @agendamiento.agendamiento_estado.nombre == "Paciente siendo atendido"
+		editar = true if @agendamiento.estado.nombre == "Paciente siendo atendido"
 		redirect_to :action => "sinEditar" unless editar
 
 	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
@@ -435,7 +435,7 @@ class AtencionesSaludController < ApplicationController
 	  @atencion_salud.save(:validate => false)
 
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
-		@agendamiento.agendamiento_estado = @estadoAgendamiento
+		@agendamiento.estado = @estadoAgendamiento
 		@agendamiento.fecha_comienzo_real = DateTime.current
 		@agendamiento.save
 
@@ -455,7 +455,7 @@ class AtencionesSaludController < ApplicationController
 		@atencion_salud = FiAtencionesSalud.find(params[:id_atencion])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Atención reabierta").first
-		@agendamiento.agendamiento_estado = @estadoAgendamiento
+		@agendamiento.estado = @estadoAgendamiento
 		@agendamiento.save	
   	redirect_to action: "show", id: params[:id_atencion]	
 	end
@@ -485,9 +485,9 @@ class AtencionesSaludController < ApplicationController
 
 		if params[:finalizar] == 'finalizar'
 			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
-			estado_actual = @agendamiento.agendamiento_estado_id
+			estado_actual = @agendamiento.estado_id
 			@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
-			@agendamiento.agendamiento_estado = @estadoAgendamiento
+			@agendamiento.estado = @estadoAgendamiento
 			@agendamiento.fecha_final_real = DateTime.current if estado_actual != 10 #Si fue reabierta no se guarda esa hora
 			@agendamiento.save
 		end	

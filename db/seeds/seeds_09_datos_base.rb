@@ -91,21 +91,6 @@ puts 'Tipos Ficha'
 TF1=FiFichaTipos.create! :nombre => "Tipo ficha general"
 TF2=FiFichaTipos.create! :nombre => "Tipo ficha control infantil"
 
-puts 'Metatipos de Medicamentos'
-MedMedicamentosMetatipos.create! :nombre => 'Comprimido'
-MedMedicamentosMetatipos.create! :nombre => 'Jarabe'
-MedMedicamentosMetatipos.create! :nombre => 'Gotas'
-MedMedicamentosMetatipos.create! :nombre => 'Pomadas'
-MedMedicamentosMetatipos.create! :nombre => 'Vacunas'
-
-puts 'Tipos de Medicamentos'
-MedMedicamentosTipos.create! :unidad => 'comprimidos', :medicamento_metatipo_id => 1
-MedMedicamentosTipos.create! :unidad => 'cápsulas', :medicamento_metatipo_id => 1
-MedMedicamentosTipos.create! :unidad => 'ml', :medicamento_metatipo_id => 2
-MedMedicamentosTipos.create! :unidad => 'gotas',:medicamento_metatipo_id => 3
-MedMedicamentosTipos.create! :unidad => 'crema',:medicamento_metatipo_id => 4
-MedMedicamentosTipos.create! :unidad => '', :medicamento_metatipo_id => 5
-
 puts 'Laboratorios'
 MedLaboratorios.create! :nombre => 'Laboratorio 1'
 
@@ -125,13 +110,6 @@ MedVacunas.create! :nombre => 'Antirrabica', :protege_contra => 'Rabia', :tipo =
 MedVacunas.create! :nombre => 'Contra Hepatitis A', :protege_contra => 'Hepatitis A', :tipo => 'Según Epidemiología'
 MedVacunas.create! :nombre => 'Contra Hepatitis B', :protege_contra => 'Hepatitis B', :tipo => 'Según Grupos Específicos'
 MedVacunas.create! :nombre => 'Anti-Influenza', :protege_contra => 'Influenza', :tipo => 'Campaña 2015'
-
-puts 'Medicamentos'
-MedMedicamentos.create! :nombre => 'Medicamentos en comprimidos', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 1, :cantidad => 12, :laboratorio_id => 1
-MedMedicamentos.create! :nombre => 'Medicamentos en cápsulas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 2, :cantidad => 20, :laboratorio_id => 1
-MedMedicamentos.create! :nombre => 'Medicamentos en jarabe', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 3, :cantidad => 100, :laboratorio_id => 1
-MedMedicamentos.create! :nombre => 'Medicamentos en gotas', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 4, :cantidad => 50, :laboratorio_id => 1
-MedMedicamentos.create! :nombre => 'Medicamentos en crema', :descripcion => 'descripcion', :codigo_isp => 'codigo', :medicamento_tipo_id => 5, :cantidad => 50, :laboratorio_id => 1
 
 puts 'Calendario Vacunas 2014'
 FiCalendarioVacunas.create! :edad => 'Recién nacido', :agno => 2014, :vacuna_id => 1

@@ -44,7 +44,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 #MySQL
-gem 'mysql2'
+gem 'mysql2' , '~> 0.3.18'
 
 #Devise
 gem 'devise'
@@ -61,7 +61,7 @@ gem "datejs-rails"
 gem "select2-rails"
 gem "r18n-core"
 gem "highcharts-rails"
-gem 'jquery-datatables-rails'
+gem 'jquery-datatables-rails', github: "rweng/jquery-datatables-rails"
 gem "font-awesome-rails"
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

@@ -2,7 +2,8 @@ class AgAgendamientos < ActiveRecord::Base
 
   belongs_to :especialidad_prestador_profesional, :class_name => 'PrePrestadorProfesionales'
 	belongs_to :persona, :class_name => 'PerPersonas'
-	belongs_to :agendamiento_estado, :class_name => 'AgAgendamientoEstados'
+  belongs_to :quien_pide_hora, :class_name => 'PerPersonas'
+	belongs_to :estado, :class_name => 'AgAgendamientoEstados'
   belongs_to :persona_diagnostico_control, :class_name => 'FiPersonaDiagnosticos'
   belongs_to :capitulo_cie10_control, :class_name => 'MedDiagnosticosCapitulos'
   belongs_to :accion_masiva, :class_name => 'AgAccionMasiva'
@@ -59,7 +60,7 @@ class AgAgendamientos < ActiveRecord::Base
   {
     'id' => id,
     'hora_comienzo' => fecha_comienzo.to_s(:time),
-    'estado' => agendamiento_estado.id
+    'estado' => estado.id
   }
   end 
 
@@ -71,12 +72,12 @@ class AgAgendamientos < ActiveRecord::Base
     grupo_etareo = ''
     className = 'no_disponible'
 
-    grupo_etareo = persona.getGrupoEtareo(fecha_comienzo) unless ['Hora disponible','Hora bloqueada'].include?(agendamiento_estado.nombre)
-    className = 'disponible' if agendamiento_estado.nombre == 'Hora disponible'
+    grupo_etareo = persona.getGrupoEtareo(fecha_comienzo) unless ['Hora disponible','Hora bloqueada'].include?(estado.nombre)
+    className = 'disponible' if estado.nombre == 'Hora disponible'
 
     description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
     description<<"</br>Hora: #{range('estimado')}"
-    custom<<"<b>"<<agendamiento_estado.nombre<<"</b>"
+    custom<<"<b>"<<estado.nombre<<"</b>"
 
     case grupo_etareo
     when 'Recién nacido'
@@ -136,7 +137,7 @@ class AgAgendamientos < ActiveRecord::Base
     informacion_antecedentes = ''
     elegir_paciente = ''
     info_cap = ''
-    estado = agendamiento_estado.nombre
+    estado = estado.nombre
 
     perm_publico = false
     perm_publico = true if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_admin_bloquea and !perm_tomar_horas and !perm_paciente and !perm_profesional and !esProfesionalSalud(id_usuario) 
@@ -153,13 +154,10 @@ class AgAgendamientos < ActiveRecord::Base
               <tr><td>Fecha y hora de término</td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
 
     if (perm_tomar_horas and estado == 'Hora disponible')
-      elegir_paciente = '<tr><td>Paciente:</td><td><div id="div-sel-pac-'<<id.to_s<<'"><select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="select_paciente" ><option></option>' 
+      elegir_paciente = '<tr><td>Paciente</td><td><div id="div-sel-pac-'<<id.to_s<<'">: <select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="select_paciente" ><option></option>' 
       @pacientes = PerPersonas.all
       selected = ''
-      @pacientes.each do |pac|        
-        #unless persona.nil?
-         # selected = ( pac.id == persona.id ) ? ' selected ' : ''
-        #end  
+      @pacientes.each do |pac|   
         elegir_paciente<<'<option value='<<pac.id.to_s<<selected<<'>'<<pac.showRut<<' '<<pac.showName('%n%p%m')<<'</option>'      
       end
       elegir_paciente<<'</select></div></td></tr>'    
@@ -193,12 +191,12 @@ class AgAgendamientos < ActiveRecord::Base
                   <div id="m_c_'<<id.to_s<<'">
                     <div class="radio">
                       <label for="radios-0">
-                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-0" value="1" checked="checked">Es nuevo
+                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-0" value="1" checked="checked"> Es nuevo
                       </label>
                     </div>
                     <div class="radio">
                       <label for="radios-1">
-                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-1" value="2">Desea controlar un antecedente
+                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-1" value="2"> Desea controlar un antecedente
                       </label>
                     </div>
                   </div>
@@ -212,13 +210,13 @@ class AgAgendamientos < ActiveRecord::Base
       persona_hora<<'<tr>
                 <td>La hora es para:</td>
                 <td>
-                  <div id="div-sel-per-'<<id.to_s<<'"><select id="select-persona-hora-'<<id.to_s<<'" class="select_persona_hora"><option></option><option>Para mi</option>'
+                  <div id="div-sel-per-'<<id.to_s<<'"><select id="select-persona-hora-'<<id.to_s<<'" class="select_persona_hora"><option></option><option> Para mi</option>'
                     selected = ''
                     @cercanos.each do |cercano|
                       #unless persona.nil?
                        # selected = cercano[0] == persona.id ? ' selected ' : ''
                       #end  
-                      persona_hora<<'<option value="'<<cercano[0].to_s<<'" '<<selected<<'>'<<cercano[1].dup << ' - '<< PerPersonas.find(cercano[0]).showName('%n%p%m') <<'</option> '      
+                      persona_hora<<'<option value="'<<cercano[0].to_s<<'" '<<selected<<'> '<<cercano[1].dup << ' - '<< PerPersonas.find(cercano[0]).showName('%n%p%m') <<'</option> '      
                     end
                     persona_hora<<'</select></div></td></tr><tr><td><br></td><td></td></tr>'
     end
@@ -307,12 +305,13 @@ class AgAgendamientos < ActiveRecord::Base
   def app_params
     params.require(:list).permit( :id,
                                   :persona,
+                                  :quien_pide_hora,
                                   :fecha_comienzo,
                                   :fecha_final,
                                   :fecha_llegada_paciente,
                                   :fecha_comienzo_real,
                                   :fecha_final_real,                                  
-                                  :agendamiento_estado,
+                                  :estado,
                                   :especialidad_prestador_profesional,
                                   :motivo_consulta_nuevo,
                                   :persona_diagnostico_control,

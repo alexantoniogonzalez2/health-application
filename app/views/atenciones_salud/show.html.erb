@@ -3,8 +3,8 @@
 	var atencion_salud_id=<%= @atencion_salud.id %>
   var id=<%= @id %>
 </script>
-<% load_ant = @agendamiento.agendamiento_estado.nombre == 'Atención reabierta' ? 'load_ant_reabrir' : 'load_ant_show' %>
-<% estado = @agendamiento.agendamiento_estado.nombre == 'Atención reabierta' ? 'reabrir' : 'show' %>
+<% load_ant = @agendamiento.estado.nombre == 'Atención reabierta' ? 'load_ant_reabrir' : 'load_ant_show' %>
+<% estado = @agendamiento.estado.nombre == 'Atención reabierta' ? 'reabrir' : 'show' %>
 <% texto_enc = estado == 'reabrir' ? ' - REABIERTA' : '' %>
 <% color = estado == 'reabrir' ? 'panel-warning' : 'panel-info' %>
 <input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
@@ -114,7 +114,7 @@
               <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
             <% end %>
             <% @ant_med_us.each do |p_d| %>     
-              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d } %>     
+              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'ver'} %>     
             <% end %>       
           </div> 
         </fieldset>

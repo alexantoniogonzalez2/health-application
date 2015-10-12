@@ -36,15 +36,20 @@ class PersonaController < ApplicationController
 				@persona_nueva.user = @user
 				@persona_nueva.save!
 
-				@telefono = TraTelefonos.new
-				@telefono.codigo = params[:codigo] == '2' ? '09' : '02'
-				@telefono.numero = params[:celular]
-				@telefono.save!
-				
-				@persona_telefono = PerPersonasTelefonos.new
-				@persona_telefono.persona = @persona_nueva
-				@persona_telefono.telefono = @telefono
-				@persona_telefono.save!		
+				unless params[:fijo].blank?
+					@telefono = TraTelefonos.create! :codigo => params[:codigo], :numero => params[:fijo]
+					@persona_telefono = PerPersonasTelefonos.new
+					@persona_telefono.persona = @persona_nueva
+					@persona_telefono.telefono = @telefono
+					@persona_telefono.save!	
+				end
+				unless params[:celular].blank?
+					@celular = TraTelefonos.create! :codigo => '9', :numero => params[:celular]								
+					@persona_celular = PerPersonasTelefonos.new
+					@persona_celular.persona = @persona_nueva
+					@persona_celular.telefono = @celular
+					@persona_celular.save!	
+				end		
 
 				@texto_relacion = ''
 				case params[:relacion]
@@ -112,5 +117,16 @@ class PersonaController < ApplicationController
 			end	
 		end	#end transaction		
 	end
+
+	def cargarCercanos
+		@cercanos = Hash.new
+		@paciente = PerPersonas.find(params[:persona_id])
+		@paciente.getCercanos.each do |cercano|
+			@cercanos[cercano[0]] = cercano[1].dup<<" - "<< PerPersonas.find(cercano[0]).showName('%n%p%m')
+		end 		
+		respond_to do |format|
+			format.json { render json: @cercanos	}
+		end		
+	end 	
 
 end

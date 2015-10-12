@@ -42,7 +42,7 @@ class HomeController < ApplicationController
 	 	respuesta = false
   	actualizaciones.each do |act|
   		respuesta = true
-  		if (act.agendamiento_estado.id == 5)
+  		if (act.estado.id == 5)
   			llegadas << act.format
   		end
   	end	
@@ -55,7 +55,7 @@ class HomeController < ApplicationController
 
 	def index		
 		if user_signed_in?
-			if tieneRol('Generar agendamientos') or tieneRol('Confirmar agendamientos') or tieneRol('Recibir pacientes') or tieneRol('Bloquear horas') or tieneRol('Generar estadísticas') or tieneRol('Tomar horas')
+			if esAdministrativo
 				@profesionales = PerPersonas.where("id IN (SELECT profesional_id FROM pre_prestador_profesionales WHERE prestador_id = ? )",getIdPrestador('administrativo'))	
 		  	@especialidades= ProEspecialidades.where("id IN (SELECT especialidad_id FROM pre_prestador_profesionales WHERE prestador_id= ? )",getIdPrestador('administrativo'))	
 		  	@atenciones_salud_para_boleta = FiAtencionesSalud
@@ -68,7 +68,7 @@ class HomeController < ApplicationController
 								  LEFT JOIN pre_boletas_atenciones_pagadas as pbap
 								  ON pap.id = pbap.atencion_pagada_id')
 					.select('fi_atenciones_salud.*,profesional_id,fecha_comienzo,pap.id as atencion_pagada')
-					.where('ag.agendamiento_estado_id = 7 AND pbap.id is null AND ppp.prestador_id = ? ',getIdPrestador('administrativo'))
+					.where('ag.estado_id = 7 AND pbap.id is null AND ppp.prestador_id = ? ',getIdPrestador('administrativo'))
 					.order('fecha_comienzo asc')
 
 				@lista_profesionales_para_boleta = @atenciones_salud_para_boleta.map {|atencion| atencion.profesional_id }
@@ -121,7 +121,7 @@ class HomeController < ApplicationController
 								  ON ag.id = pap.agendamiento_id
 								  LEFT JOIN pre_boletas_atenciones_pagadas as pbap
 								  ON pap.id = pbap.atencion_pagada_id')
-					.where('ppp.id = ? AND ag.agendamiento_estado_id = 7 AND pbap.id is null',@especialidad_prestador_profesional.id)
+					.where('ppp.id = ? AND ag.estado_id = 7 AND pbap.id is null',@especialidad_prestador_profesional.id)
 					.order('fecha_comienzo asc')
 
 				@boletas_profesional = PreBoletas.joins(:especialidad_prestador_profesional)
@@ -133,7 +133,11 @@ class HomeController < ApplicationController
 		  else
 				@acceso_especialista = false		
 				@acceso = true
-				@persona = PerPersonas.where('user_id = ?',current_user.id).first		
+				@persona = PerPersonas.where('user_id = ?',current_user.id).first	
+
+				#Inicio
+				@horas_agendadas = AgAgendamientos.where( "persona_id = ? ",@persona.id )
+	
 				#Antecedentes médicos		
 				@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
 																																						JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')

@@ -109,7 +109,7 @@ class PersonaMetricasController < ApplicationController
     @persona = PerPersonas.find (params[:persona_id])
 
     @datos_metrica.each do |d_p|
-      @datos << d_p.valor
+      @datos << d_p.valor.to_f
       @texto << d_p.showFecha
     end 
 

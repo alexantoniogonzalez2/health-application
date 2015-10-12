@@ -41,7 +41,7 @@
 
 <% unless @persona_diagnosticos.empty? %>
 	<% @persona_diagnosticos.each do |p_d| %>
-		<%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d } %>
+		<%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'edit' } %>
 	<% end %>
 <% end %>	
 

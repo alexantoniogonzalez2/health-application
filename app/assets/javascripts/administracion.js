@@ -22,6 +22,7 @@ else {
   $('#lista_boletas').DataTable({
     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],    
     "columnDefs":[ { "targets": [ 0 ], "visible": false }],
+    "order": [[ 1, "desc" ]],
     "language": {
       "lengthMenu": "Mostrar _MENU_ boletas por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
@@ -98,25 +99,25 @@ else {
 }
 
 $(function () {
-  $('#datetimepicker6').datetimepicker({
+  $('#fecha_inicio_boleta').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD'    
   });
-  $('#datetimepicker7').datetimepicker({
+  $('#fecha_hasta_boleta').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD'
   });
-  $("#datetimepicker6").on("dp.change", function (e) {
-    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+  $("#fecha_inicio_boleta").on("dp.change", function (e) {
+    $('#fecha_hasta_boleta').data("DateTimePicker").minDate(e.date);
   });
-  $("#datetimepicker7").on("dp.change", function (e) {
-    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+  $("#fecha_hasta_boleta").on("dp.change", function (e) {
+    $('#fecha_inicio_boleta').data("DateTimePicker").maxDate(e.date);
   });
 });
 
 $(document).ready(function() {
-  if ( $("#datetimepicker7").length > 0 ) 
-    $('#datetimepicker7').data("DateTimePicker").minDate(fecha_minima);
+  if ( $("#fecha_hasta_boleta").length > 0 ) 
+    $('#fecha_hasta_boleta').data("DateTimePicker").minDate(fecha_minima);
 });
 
 $('input[type=radio][name=radios-boletas]').click(function() {
@@ -237,19 +238,19 @@ $('input[type=radio][name=radios-ver-boletas]').click(function() {
 });
 
 $(function () {
-  $('#datetimepicker8').datetimepicker({
+  $('#fecha_inicio_ver_boleta').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD'    
   });
-  $('#datetimepicker9').datetimepicker({
+  $('#fecha_hasta_ver_boleta').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD'
   });
-  $("#datetimepicker8").on("dp.change", function (e) {
-    $('#datetimepicker9').data("DateTimePicker").minDate(e.date);
+  $("#fecha_inicio_ver_boleta").on("dp.change", function (e) {
+    $('#fecha_hasta_ver_boleta').data("DateTimePicker").minDate(e.date);
   });
-  $("#datetimepicker9").on("dp.change", function (e) {
-    $('#datetimepicker8').data("DateTimePicker").maxDate(e.date);
+  $("#fecha_hasta_ver_boleta").on("dp.change", function (e) {
+    $('#fecha_inicio_ver_boleta').data("DateTimePicker").maxDate(e.date);
   });
 });
 

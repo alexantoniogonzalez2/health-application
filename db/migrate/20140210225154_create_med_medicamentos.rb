@@ -6,8 +6,7 @@ class CreateMedMedicamentos < ActiveRecord::Migration
       t.string :codigo_isp
       t.integer :cantidad
       t.references :medicamento_tipo #medicamento_tipo_id
-      t.references :laboratorio #laboratorio_id
-      
+      t.references :laboratorio #laboratorio_id      
       t.timestamps
     end
   end

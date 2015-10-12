@@ -22,6 +22,7 @@ $(document).ready(function() {
   else {
     $('#lista_atenciones').DataTable({
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todas"]],
+      "order":[[ 0, "desc"]],
       "language": {
         "lengthMenu": "Mostrar _MENU_ atenciones por página",
         "zeroRecords": "La búsqueda no arrojó resultados.",

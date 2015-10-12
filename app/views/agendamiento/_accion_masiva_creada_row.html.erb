@@ -1,3 +1,3 @@
-<p id="accion_masiva<%= accion_masiva.id %>"> 
+<p id="accion_masiva<%= accion_masiva.id %>" class="accion-masiva"> 
 	<%= accion_masiva.created_at.strftime("%Y-%m-%d %H:%M") %> | Profesional: <%= accion_masiva.especialidad_prestador_profesional.profesional.showName('%n%p%m') %> | Especialidad: <%= accion_masiva.especialidad_prestador_profesional.especialidad.nombre %> | Agendamientos: <%= accion_masiva.total_agendamientos %> | <a href="#cancelar_accion" role="button" class="btn" data-toggle="modal" onclick="cargarCancelarAccion(<%= accion_masiva.id %>)">Cancelar</a>
 </p>
