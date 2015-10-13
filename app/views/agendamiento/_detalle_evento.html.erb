@@ -38,6 +38,9 @@
 		<% if @permisos['tomar_hora_paciente'] %>
 			<%= render :partial => "footer_tomar_hora_paciente", :locals => {:agendamiento => @agendamiento } %>
 		<% end %>	
+		<% if @permisos['tomar_hora_admin'] %>
+				<%= render :partial => "footer_tomar_hora_admin", :locals => {:agendamiento => @agendamiento } %>
+			<% end %>	
 		<% if @permisos['info_paciente'] %>
 			<%= render :partial => "footer_info_paciente", :locals => {:agendamiento => @agendamiento } %>
 		<% end %>

@@ -1,6 +1,6 @@
 $('#modal-container').on('show.bs.modal', function (e) {
 	$('select.select_paciente').select2({ width: '350px', placeholder: 'Selecciona un paciente', allowClear: true });
-	$('select.select_quien_pide').select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true  });
+	$('select.select_quien_pide').select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true });
 	$('select.select_capitulo').select2({ width: '350px', placeholder: 'Selecciona un motivo', allowClear: true });
 	$('select.select_antecedente').select2({ width: '350px', placeholder: 'Selecciona un antecedente', allowClear: true});
 	$('select.select_persona_hora').select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true});
@@ -25,26 +25,28 @@ $('#modal-container').on('show.bs.modal', function (e) {
 	$(".select_paciente").on("change", function(e) { 
 		var id = $(this).attr('id').substring(11);
 		var valor = $(this).select2('data');
-		$('#select_ped_'+id).select2('destroy');
-			$('#select_ped_'+id).select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true  });
-
-		//$('#select_ped_'+id).html('').select2({data: {id:null, text: null}});
+		$('#select_ped_'+id).select2("val", "");
+		$('#select_ped_'+id).find('option').remove();
+		$('#select_ped_'+id).append('<option></option>');
 
 		if (valor){
 			$('#select_ped_'+id).prop("disabled", false);
+			$('#link_ped_'+id).show();
 			$.ajax({
 				type: 'POST',
 				url: '/cargar_cercanos',
 				data: {	persona_id: $(this).select2('data').id },
 				success: function(response) {
+					$('#select_ped_'+id).append('<option>El mismo paciente</option>');
 					for (var prop in response) 
 						$('#select_ped_'+id).append('<option value='+prop+'>'+response[prop]+'</option>');
 				},
 				error: function(xhr, status, error){ alert("No se pudieron cargar las personas relacionadas al paciente."); }
 			}); 
 		}
-		else
+		else{
 			$('#select_ped_'+id).prop("disabled", true);
-
+			$('#link_ped_'+id).hide();
+		}
 	})
 })

@@ -6,7 +6,11 @@ class PersonaController < ApplicationController
 			@fam = Hash.new
 
 			if params[:atencion_salud_id] == 'persona'
-				@persona = PerPersonas.where('user_id = ?',current_user.id).first 
+				if (['ped'].include?(@iniciador[0..2])) 
+					@persona = PerPersonas.find(params[:paciente])
+				else
+					@persona = PerPersonas.where('user_id = ?',current_user.id).first
+				end	 
 			else 
 				@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 				@persona = @atencion_salud.persona
@@ -30,7 +34,7 @@ class PersonaController < ApplicationController
 				@persona_nueva.apellido_paterno = params[:apep]
 				@persona_nueva.apellido_materno = params[:apem]
 				@persona_nueva.rut = params[:rut]
-				@persona_nueva.genero =  params[:sexo] == '1' ? 'Masculino' : 'Femenino'
+				@persona_nueva.genero = params[:sexo] == '1' ? 'Masculino' : 'Femenino'
 				@persona_nueva.digito_verificador = params[:dv]
 				@persona_nueva.fecha_nacimiento = params[:fecha_nacimiento]
 				@persona_nueva.user = @user
@@ -98,15 +102,23 @@ class PersonaController < ApplicationController
 				@fam[@persona_nueva.id] = @texto_relacion	
 			end 
 					
-			if respuesta	
+			if respuesta
+				unless(@iniciador == 'fam')
+					if (['pac'].include?(@iniciador[0..2])) 
+						@texto = @persona_nueva.showRut<<' '<< @persona_nueva.showName('%n%p%m')
+					else
+						@texto = @texto_relacion << ' - ' << @persona_nueva.showName('%n%p%m')
+					end								
+				end 
+
 				if @iniciador == 'fam' 
 					respond_to do |format|
 						format.js { }		
 						format.json { }						
 					end
-				else	
+				else
 					respond_to do |format|
-						format.json { render :json => { :success => respuesta, :id => @persona_nueva.id, :text =>  @texto_relacion << ' - ' << @persona_nueva.showName('%n%p%m') }	}
+						format.json { render :json => { :success => respuesta, :id => @persona_nueva.id, :text =>  @texto }	}
 						format.js { }				
 					end
 				end	
@@ -115,8 +127,9 @@ class PersonaController < ApplicationController
 					format.json { render :json => { :success => respuesta }	}
 				end		
 			end	
+
 		end	#end transaction		
-	end
+	end #end method
 
 	def cargarCercanos
 		@cercanos = Hash.new

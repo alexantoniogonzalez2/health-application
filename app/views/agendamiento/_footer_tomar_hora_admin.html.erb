@@ -1,0 +1,4 @@
+<% if ['Hora disponible'].include?(@agendamiento.estado.nombre) %>
+	<button type="button" class="btn btn-primary" onclick="bloquearHora(<%= @agendamiento.id %>)" >Bloquear hora</button>
+<% end %>
+<button type="button" class="btn btn-primary" onclick="tomarHora(<%= @agendamiento.id %>)" >Tomar Hora</button>

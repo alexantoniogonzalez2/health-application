@@ -20,7 +20,7 @@
       <div id="div-sel-ped-<%= @agendamiento.id %>" class="prevent-break-line" >
         <select disabled id="select_ped_<%= @agendamiento.id %>" class="select_quien_pide">
           <option></option>
-        </select> <a id="modal-agregar-persona" href="#modal-container-agregar-persona-ped_<%= @agendamiento.id %>" role="button" class="btn" data-toggle="modal">O agrega una persona</a>
+        </select> <a id="link_ped_<%= @agendamiento.id %>" href="#modal-container-agregar-persona-ped_<%= @agendamiento.id %>" role="button" class="btn oculto" data-toggle="modal">O agrega una persona</a>
       </div>
     </div>
   </div>
@@ -60,6 +60,16 @@
 			</div>
 		</div>		
 	</div>	
+</div>
+
+<div class="modal fade" id="modal-container-agregar-persona-ped_<%= @agendamiento.id %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <%= render :partial => "persona/agregar_persona", :locals => {:origen => @agendamiento.id, :id => 'ped_'+@agendamiento.id.to_s, :subgrupo => 'todos' } %>
+      </div>
+    </div>    
+  </div>  
 </div>
 
 <%= javascript_include_tag "label_better" %> 

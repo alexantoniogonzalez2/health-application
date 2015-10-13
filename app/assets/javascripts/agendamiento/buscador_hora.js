@@ -339,17 +339,17 @@ function tomarHora(id_agend){
 	m_c = $('#m_c_'+id_agend).find('input[name=radios-motivo-'+id_agend+']:checked').val();	
 	s_m = $('#select-antecedente-'+id_agend).val();
 	s_c = $('#select-capitulo-'+id_agend).val();	
-	s_p = $('#select-paciente-'+id_agend).val();
+	s_p = $('#select_pac_'+id_agend).val();
+	s_qp = $('#select_ped_'+id_agend).val();
 	s_ph = $('#select_age_'+id_agend).val();	
-	console.log(s_p);
-	console.log(s_ph);		
+
 	if (s_p == '' || s_ph == '')
 		alert("Selecciona una persona para asignar la hora.");
 	else {	
 		$.ajax({
 			type: 'POST',
 			url: '/aux/pedirHoraEvento',
-			data: {	agendamiento_id: id_agend, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph },
+			data: {	agendamiento_id: id_agend, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp },
 			success: function(response) {
 				$('#buscadorHora').fullCalendar('removeEvents',id_agend)
 				response == "1" ? $('#modal-container').modal('hide')	:	alert("La hora ya fue tomada");
@@ -361,7 +361,7 @@ function tomarHora(id_agend){
 					error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
 				});
 			},
-			error: function(xhr, status, error){alert("No se pudieron cargar las horas de atención");	}
+			error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
 		});
 	}
 }

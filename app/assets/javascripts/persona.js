@@ -1,6 +1,5 @@
 $("form[id^='form-agregar-persona-'").submit(function (e) { return false; });
 
-
 $("form[id^='form-agregar-persona-'").bootstrapValidator({
 	fields: {
 		sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
@@ -59,6 +58,13 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
     else
       at_salud_id = 'persona';
 
+    var hook = id.substring(0,3);
+    if ( hook  == 'ped') {
+      var paciente = $('#select_pac_'+id.substring(4)).select2('data').id;
+    }
+    else
+      var paciente = '';
+
   	$.ajax({
       type: 'POST',
       url: '/agregar_persona',
@@ -78,6 +84,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
         sexo: sexo,
         otro: otro,
         iniciador: id,
+        paciente: paciente
       },
       success: function(response){
           if (id == 'fam'){
@@ -125,9 +132,7 @@ $.fn.bootstrapValidator.validators.validarRut = {
 	    if (dv == verificacion)
 	      respuesta = true;     
 	  } 
-
 	  return respuesta;
-
   }
 }
 

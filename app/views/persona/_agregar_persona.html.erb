@@ -106,17 +106,19 @@
   </div>
   <div class="row">
     <div class="form-group col-md-4 column ajuste-parentesco">
-      <span class="control-label">Parentesco o relación (*):</span>
-      <select id="select-relacion<%= id %>" name="select_relacion" class="form-control select-relacion" data-bv-notempty="true" data-bv-notempty-message="Este campo es requerido">
-        <option value="" selected disabled>Seleccionar</option>
-        <option value="1">Padre</option>
-        <option value="2">Madre</option>
-        <option value="3">Hijo</option>
-        <option value="4">Hija</option>
-        <% if subgrupo == 'todos' %>
-          <option value="5">Otro</option>
-        <% end %>
-      </select>        
+      <% unless(['age','pac'].include?(id[0..2])) %>
+        <span class="control-label">Parentesco o relación (*):</span>
+        <select id="select-relacion<%= id %>" name="select_relacion" class="form-control select-relacion" data-bv-notempty="true" data-bv-notempty-message="Este campo es requerido">
+          <option value="" selected disabled>Seleccionar</option>
+          <option value="1">Padre</option>
+          <option value="2">Madre</option>
+          <option value="3">Hijo</option>
+          <option value="4">Hija</option>
+          <% if subgrupo == 'todos' %>
+            <option value="5">Otro</option>
+          <% end %>
+        </select>
+      <% end %>        
     </div>
     <div class='col-md-4 column'>
       <div id='otro-div<%= id %>' class="input-group otra-relacion-div">       

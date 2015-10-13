@@ -182,7 +182,12 @@ class AgendamientoController < ApplicationController
 		@antecedente = params[:antecedente]
 		respuesta="0"
 		if params[:persona_hora].blank?
-			@persona = params[:paciente].blank? ? PerPersonas.where('user_id = ?',current_user.id).first : PerPersonas.find(params[:paciente])
+			@persona = PerPersonas.find(params[:paciente])
+			if params[:quien_pide_hora] == "El mismo paciente"
+				@quien_pide_hora= PerPersonas.find(params[:paciente])				
+			else
+				@quien_pide_hora = PerPersonas.find(params[:quien_pide_hora])
+			end	
 		else
 			@quien_pide_hora = @responsable
 			if params[:persona_hora] == "Para mi"
@@ -393,15 +398,14 @@ class AgendamientoController < ApplicationController
 
 		@permisos = Hash.new
 		@permisos['tomar_hora_paciente'] = (estado == 'Hora disponible' and !esAdministrativo and !esProfesionalSalud) ? true : false
-		@permisos['tomar_hora_admin'] = perm_tomar_horas
+		@permisos['tomar_hora_admin'] = (perm_tomar_horas and estado == 'Hora disponible') ? true : false
 		@permisos['info_paciente'] = (perm_paciente or perm_profesional) ? true : false 
 		@permisos['info_paciente_vista_admin'] =  ( (!['Hora disponible','Hora bloqueada' ].include?(estado)) and (perm_admin_confirma or perm_admin_recibe or perm_tomar_horas) ) ? true : false 
 
 		respond_to do |format|     
     	format.js   {}    	
     	format.json { render :json => { :success => true} }
-    end	 
-	
+    end	
 	end
 
 	def agregarNuevaHora 	
