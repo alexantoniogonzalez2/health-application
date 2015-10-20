@@ -26,7 +26,7 @@ class PersonaController < ApplicationController
 			@user = User.new
 			@user.email = correo
 			@user.password = "Random123"
-			respuesta = @user.save
+			respuesta = @user.save!
 
 			if respuesta
 				@persona_nueva = PerPersonas.new

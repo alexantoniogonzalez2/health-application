@@ -40,27 +40,29 @@ class AgendamientoController < ApplicationController
 	def buscarHoras
 		
 		events=[]
-
+		@limite = (esAdministrativo or esProfesionalSalud) ? 3.months.ago : Date.today
+		
 		if params[:centros] != ''
 			if params[:especialidad] != '' and params[:especialista] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? ",params[:especialidad],params[:especialista])
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND fecha_comienzo > ?",params[:especialidad],params[:especialista],@limite)
 			elsif params[:especialidad] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ?",params[:especialidad] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND fecha_comienzo > ?",params[:especialidad],@limite)
 			elsif params[:especialista] != '' 	
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ?",params[:especialista] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND fecha_comienzo > ?",params[:especialista],@limite)
 			end
 		else	
 			if params[:especialidad] != '' and params[:especialista] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) ",params[:especialidad],params[:especialista],params[:centros] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) AND fecha_comienzo > ?",params[:especialidad],params[:especialista],params[:centros],@limite)
 			elsif params[:especialidad] != ''
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) ",params[:especialidad],params[:centros] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.especialidad_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) AND fecha_comienzo > ?",params[:especialidad],params[:centros],@limite)
 			elsif params[:especialista] != '' 	
-				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) ",params[:especialista],params[:centros] )
+				@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ? AND pre_prestador_profesionales.prestador_id IN  ( ? ) AND fecha_comienzo > ?",params[:especialista],params[:centros],@limite)
 			end
 		end
 
+		icon = (esAdministrativo or esProfesionalSalud) ? true : false
 		@Fechas.each do |f|
-			events << f.event				
+			events << f.event(icon)			
 		end
 
 		respond_to do |f|
@@ -76,7 +78,7 @@ class AgendamientoController < ApplicationController
 		@Fechas=AgAgendamientos.joins(:especialidad_prestador_profesional).where("pre_prestador_profesionales.profesional_id = ?",@profesional.id)
 		
 		@Fechas.each do |f|
-			events << f.event				
+			events << f.event(true)				
 		end
 
 		respond_to do |f|
@@ -117,12 +119,13 @@ class AgendamientoController < ApplicationController
 
 
 	def mostrarEventos
-		
+		icon = (esAdministrativo or esProfesionalSalud) ? true : false
+
 		if params[:evento_id]
 			@Agendamiento=AgAgendamientos.where("id = ?",params[:evento_id]).first
 			events=[]
 
-			events << @Agendamiento.event
+			events << @Agendamiento.event(icon)
 			respond_to do |f|
 				f.json {render json:events}
 			end
@@ -134,7 +137,7 @@ class AgendamientoController < ApplicationController
 				#Filtrar por fechas si no quiere mostrarse todo (Puede ser algo como un año hacia adelante y un año hacia atrás)
 
 				@Fechas.each do |f|
-					events << f.event				
+					events << f.event(icon)				
 				end
 
 				respond_to do |f|
@@ -201,7 +204,9 @@ class AgendamientoController < ApplicationController
 		@agendamiento=AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora reservada").first
 		@agendamiento.transaction do
-			if @agendamiento.estado.nombre=='Hora disponible'
+			if DateTime.current > @agendamiento.fecha_comienzo
+				respuesta = "3"
+			elsif @agendamiento.estado.nombre=='Hora disponible'
 				respuesta="1"
 				@agendamiento.persona = @persona
 				@agendamiento.quien_pide_hora = @quien_pide_hora 
@@ -236,7 +241,7 @@ class AgendamientoController < ApplicationController
 
 		#Si fue cancelada por el mismo paciente queda inmediatamente disponible
 		if (@Agendamiento.persona)
-			perm_paciente = (@usuario.id == @Agendamiento.persona.id)? true : false 	
+			perm_paciente = (@usuario.id == @Agendamiento.quien_pide_hora.id)? true : false 	
 		end 		
 		if perm_paciente
 			@EstadoAgendamiento=AgAgendamientoEstados.where("nombre = ?","Hora disponible").first
@@ -379,6 +384,7 @@ class AgendamientoController < ApplicationController
 
 	def detalleEvento
 		
+		@content = params[:content].blank? ? 'modal-content-2' : params[:content]
 		perm_paciente = false
 		perm_profesional = false
 		perm_admin_genera = tieneRol('Generar agendamientos')
@@ -399,8 +405,9 @@ class AgendamientoController < ApplicationController
 		@permisos = Hash.new
 		@permisos['tomar_hora_paciente'] = (estado == 'Hora disponible' and !esAdministrativo and !esProfesionalSalud) ? true : false
 		@permisos['tomar_hora_admin'] = (perm_tomar_horas and estado == 'Hora disponible') ? true : false
-		@permisos['info_paciente'] = (perm_paciente or perm_profesional) ? true : false 
+		@permisos['info_paciente'] = ((!['Hora disponible','Hora bloqueada' ].include?(estado)) and (perm_paciente or perm_profesional)) ? true : false 
 		@permisos['info_paciente_vista_admin'] =  ( (!['Hora disponible','Hora bloqueada' ].include?(estado)) and (perm_admin_confirma or perm_admin_recibe or perm_tomar_horas) ) ? true : false 
+		@permisos['profesional'] = perm_profesional
 
 		respond_to do |format|     
     	format.js   {}    	
@@ -504,7 +511,7 @@ class AgendamientoController < ApplicationController
 						@agendamiento_log.fecha = DateTime.current
 						@agendamiento_log.save
 
-						events << @agendamiento.event
+						events << @agendamiento.event(true)
 						fecha_comienzo = tmp_f
 					end 
 				end 
@@ -574,5 +581,39 @@ class AgendamientoController < ApplicationController
     end		
 
 	end	
+
+		def cargarPersonas	
+
+		per = []  	
+		term = params[:q]
+
+		@personas = PerPersonas.where("rut LIKE ? OR concat(nombre,' ',apellido_paterno,' ',apellido_materno) LIKE ? ","%#{term}%","%#{term}%")
+
+		@personas.each do |p|
+			per << p.formato_personas			
+		end
+
+		respond_to do |format|
+			format.json { render json: per}
+		end
+				
+	end
+
+	def cargarPacientes		
+
+		per = []  	
+		term = params[:q]
+
+		@pacientes = PerPersonas.where("rut LIKE ? OR concat(nombre,' ',apellido_paterno,' ',apellido_materno) LIKE ? ","%#{term}%","%#{term}%")			
+		
+		@pacientes.each do |p|
+			per<< p.formato_personas			
+		end
+
+		respond_to do |format|
+			format.json { render json: per}
+		end
+				
+	end
 
 end

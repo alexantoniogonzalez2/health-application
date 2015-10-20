@@ -80,16 +80,16 @@
 				<div class="col-md-8 column">:
 					<div class="form-group ajuste-eno">
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-1">
-					  	<input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" onchange="radioAntVac(%=p_d.id%>,1)" value="1" <%= disabled %> /> Sí
+					  	<input <% if ant_vac == '1' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-1" onchange="radioAntVac(<%=p_d.id%>,1)" value="1" <%= disabled %> /> Sí
 					  </label> 
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-2">
-					  	<input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" onchange="radioAntVac(%=p_d.id%>,2)" value="2" <%= disabled %> /> No
+					  	<input <% if ant_vac == '2' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-2" onchange="radioAntVac(<%=p_d.id%>,2)" value="2" <%= disabled %> /> No
 					  </label> 
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-3">
-					  	<input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" onchange="radioAntVac(%=p_d.id%>,3)" value="3" <%= disabled %> /> Ignorado
+					  	<input <% if ant_vac == '3' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-3" onchange="radioAntVac(<%=p_d.id%>,3)" value="3" <%= disabled %> /> Ignorado
 					  </label> 
 					  <label class="radio-inline" for="radios-ant<%=p_d.id%>-4">
-					  	<input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-4" onchange="radioAntVac(%=p_d.id%>,4)" value="4" <%= disabled %> /> No corresponde
+					  	<input <% if ant_vac == '4' %> checked <% end %> type="radio" name="radios-ant<%=p_d.id%>" id="radios-ant<%=p_d.id%>-4" onchange="radioAntVac(<%=p_d.id%>,4)" value="4" <%= disabled %> /> No corresponde
 					  </label>
 					</div>
 				</div>
@@ -100,7 +100,7 @@
 				</div>
 				<div class="col-md-6 column">:
 					<% if tipo == 'edit' %>
-						<select id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio" onchange="selectConfirmacion(<%= p_d.id %>)">
+						<select id="select-pais-contagio<%= p_d.id%>" class="select-pais-contagio" onchange="selectPaisContagio(<%= p_d.id %>)">
 							<option></option>					
 							  <% @paises.each do |pais| %>
 							  	<option value="<%= pais.id %>"

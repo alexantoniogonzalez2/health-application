@@ -18,15 +18,15 @@ $('.select_ocupacion').select2({
     url: '/cargar_ocupaciones',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) { return { q: term }; },
-    results: function (data, page) { return { results: data };}
+    data: function (params) { return { q: params.term }; },
+    processResults: function (data, page) { return { results: data };}
   },
-  initSelection: function (element, callback) {
+  /*initSelection: function (element, callback) {
     var text = $(element).val();
     var id = $(element).attr('name');
     if (id !== "") {
       var data = { id: id, text: text };
       callback(data);       
     }
-  }
+  }*/
 });

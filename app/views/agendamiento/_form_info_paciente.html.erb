@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-md-4"><label>Persona que tomó la hora</label></div><div class="col-md-8">: <%= @agendamiento.quien_pide_hora.showName('%n%p%m') %></div>
 </div>
-<% if !@agendamiento.persona_diagnostico_control.nil? and @permisos['info_paciente_vista_admin']  %>
+<% if !@agendamiento.persona_diagnostico_control.nil? and @permisos['info_paciente']  %>
 	<div class="row">
 		<div class="col-md-4"><label>Motivo</label></div><div class="col-md-8">: <%= @agendamiento.persona_diagnostico_control.diagnostico.nombre %> (control de antecedente)</div>
 	</div>

@@ -17,7 +17,9 @@
               <label>Ocupación</label>
             </div>
             <div class="col-md-8 column">
-              <input type='hidden' class="select_ocupacion" id="select_ocupacion-<%= ocu.id %>" value="<%= ocu.ocupacion.nombre %>" name="<%= ocu.ocupacion.id %>" />
+              <select class="select_ocupacion" id="select_ocupacion-<%= ocu.id %>">
+                <option value="<%= ocu.ocupacion.id %>"><%= ocu.ocupacion.nombre %></option>
+              </select>
             </div>
           </div>
           <div class="row clearfix">

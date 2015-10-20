@@ -160,7 +160,6 @@ class PerPersonas < ActiveRecord::Base
     edad.to_s << texto_edad << ' ' << meses.to_s << texto_meses
   end
 
-
   def esProfesional(prestador_id)
     #Tomará sentido siempre que no exista un "deleted"
     @prestador=prestador_profesionales.where("prestador_id = ?", prestador_id).first
@@ -238,6 +237,14 @@ class PerPersonas < ActiveRecord::Base
     celular = personas_telefonos.joins(:telefono).select('tra_telefonos.codigo, tra_telefonos.numero').where('tra_telefonos.codigo = 9').first
     texto_celular = celular.nil? ? 'Sin información' : celular.codigo.to_s << ' ' << celular.numero.to_s 
     return texto_celular
+  end 
+
+  def getCorreo
+    correo = user.email
+    if correo.include? "@medracer.com"
+      correo = "Sin información"
+    end   
+    return correo
   end 
 
   def revisarDigitoVerificador #Calculo digito verificador

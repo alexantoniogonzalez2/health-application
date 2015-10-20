@@ -42,7 +42,7 @@
 				<div class="col-md-8 column">:
 					<% if tipo == 'edit' %>
 						<select id="select_especialidad_int<%= p_d.id %>" class="select_especialidad_interconsulta" onchange="selectEspecialidadInterconsulta(<%= p_d.id %>)">	
-							<option></option>					
+							<option></option>		
 						  <% @especialidades.each do |esp| %>
 						  	<option value="<%= esp.id %>" 
 						  		<% unless interconsulta.nil?
@@ -107,7 +107,7 @@
 				</div>
 				<div class="col-md-8 column">
 					<label class="com-int">Comentario:</label><span class="alert alert-info auto-int-comment" id="auto-int-<%= p_d.id %>">Autoguardado</span>
-					<textarea onkeyup="autoIntComment(<%= p_d.id%>)" class="form-control" rows="4" cols="50" <%= disabled %> ><%= unless interconsulta.nil?
+					<textarea id="int-comment-<%= p_d.id%>" onkeyup="autoIntComment(<%= p_d.id%>)" class="form-control" rows="4" cols="50" <%= disabled %> ><%= unless interconsulta.nil?
 					 interconsulta.comentario 
 					 end %></textarea>
 				</div>	

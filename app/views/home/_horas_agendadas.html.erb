@@ -43,9 +43,9 @@
             <%= button_to "Atender paciente", {:controller => :atenciones_salud,
             :action => 'crearAtencion', :id => agendamiento.id }, :method => :post,class: "btn btn-xs btn-success" %>
           <% elsif agendamiento.estado_id == 2 %>
-            <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="desbloquearHora(<%= agendamiento.id%>)">Desbloquear Hora</button>  
+            <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-warning" onclick="desbloquearHoraAgen(<%= agendamiento.id%>)">Desbloquear Hora</button>  
           <% elsif agendamiento.estado_id == 1 %>  
-            <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-default" onclick="bloquearHora(<%= agendamiento.id%>)">Bloquear Hora</button>     
+            <button id="agen<%= agendamiento.id%>" type="button" class="btn btn-xs btn-default" onclick="bloquearHoraAgen(<%= agendamiento.id%>)">Bloquear Hora</button>     
           <% end %>
         </td>
       </tr>

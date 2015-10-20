@@ -9,7 +9,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
   has_many :agendamientos_control, :class_name => 'AgAgendamientos', :foreign_key => 'persona_diagnostico_control_id'
   
   def getNotificacion (persona_diagnostico_id)
-    notificacion = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is not null',persona_diagnostico_id).order('fecha_notificacion DESC').first;
+    notificacion = FiNotificacionesGes.where('persona_diagnostico_atencion_salud_id = ?',persona_diagnostico_id).order('updated_at DESC').first;
     
     if notificacion.nil? 
       return nil
@@ -19,7 +19,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
   end
 
   def getInterconsulta (persona_diagnostico_id)
-    interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? and fecha_solicitud is not null',persona_diagnostico_id).order('fecha_solicitud DESC').first;
+    interconsulta = FiInterconsultas.where('persona_diagnostico_atencion_salud_id = ? ',persona_diagnostico_id).order('updated_at DESC').first;
     if interconsulta.nil?
       return nil
     else 
@@ -28,7 +28,7 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
   end
 
   def getNotificacionEno (persona_diagnostico_id)
-    notificacion_eno = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? and fecha_notificacion is not null',persona_diagnostico_id).order('fecha_notificacion DESC').first;
+    notificacion_eno = FiNotificacionesEno.where('persona_diagnostico_atencion_salud_id = ? ',persona_diagnostico_id).order('updated_at DESC').first;
     if notificacion_eno.nil?
       return nil
     else 

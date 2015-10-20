@@ -1,7 +1,7 @@
 function cargarMotivos(){
 
-	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
-	$('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true });
+	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true,theme: "bootstrap" });
+	$('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true,theme: "bootstrap" });
 
 	$('input[type=radio][name^=radios-motivo-]').change(function() {
 	  var id_agend = $(this).attr('name').substring(14);
@@ -39,8 +39,8 @@ if ( $("#iconos-leyenda").length > 0 ){
 }
 
 $(document).ready(function() {	
-	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
-	$('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true });
+	$('select.select_especialidad').select2({ width: '80%', allowClear: true, placeholder: 'Seleccione una especialidad'});
+	$('select.select_especialista').select2({ width: '80%', allowClear: true, placeholder: 'Seleccione un especialista'});
 });
 
 
@@ -61,7 +61,7 @@ $("#select_especialidad").on("change", function(e) {
     success: function(response) {
     	$('#select_especialista').val('');
     	$('#select_especialista').empty(); //remove all child nodes
-      var newOption = response
+      var newOption = response;
       $('#select_especialista').append(response);
     },
     error: function(xhr, status, error){ alert("Error al filtrar por especialidad.3"); }
@@ -104,17 +104,14 @@ $('#buscadorHora').fullCalendar({
 	defaultView: 'agendaWeek', 
 	axisFormat: 'H:mm',
   eventRender: function(event,element,view){
-
-		element.qtip({
-			
-			content: {text: event.description,title: event.custom },
-			style: {
-				classes: 'qtip-bootstrap',					
-			},
-			position: {
-			   viewport: $(window)
-			}
-		})
+		element.qtip({			
+			content: { text: event.description, title: event.custom },
+			style: { classes: 'qtip-bootstrap' },
+			position: { viewport: $(window)}
+		});
+		if (event.icon != '')
+			element.find("div.fc-content").append("<img class='ic-cal' src='" + event.icon +"'>");
+		
 	},
 	eventAfterRender: function(event, element, view) {
 		var span = element.find("span");
@@ -122,18 +119,11 @@ $('#buscadorHora').fullCalendar({
 		div.attr('data-start', span.text());
 	},
 	eventClick: function(calEvent, jsEvent, view){
-				
-		// Mostramos el detalle del evento
 		$.ajax({
 			type: 'POST',
 			url: '/aux/detalleEvento',
 			data: {	agendamiento_id: calEvent.id },
-			success: function(response) {
-
-				//$('#modal-content').html(response);
-	    	$('#modal-container').modal('show')	
-	    	motivo = cargarMotivos();
-			},
+			success: function(response) { $('#modal-container-2').modal('show');	motivo = cargarMotivos(); },
 			error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
 		});
 	}	
@@ -242,12 +232,13 @@ function cancelarHora(id_agend){
 		data: {	agendamiento_id: id_agend},
 		success: function(response) {
 			$('#buscadorHora').fullCalendar('removeEvents',id_agend);
-			response == "1" ? $('#modal-container').modal('hide') : alert("No se puede cancelar la hora");	
+			$('#calendar').fullCalendar('removeEvents',id_agend);
+			response == "1" ? $('[id^=modal-container-]').modal('hide') : alert("No se puede cancelar la hora");	
 			$.ajax({
 				type: 'POST',
 				url: '/aux/mostrarEventos',
 				data: { evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id },
-				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response); $('#calendar').fullCalendar('addEventSource',response);	},
 				error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
 			});
 		},
@@ -262,12 +253,13 @@ function bloquearHora(id_agend){
 		data: {	agendamiento_id: id_agend},
 		success: function(response) {
 			$('#buscadorHora').fullCalendar('removeEvents',id_agend);
-			response == "1" ?	$('#modal-container').modal('hide') :	alert("No se pudo bloquear la hora")
+			$('#calendar').fullCalendar('removeEvents',id_agend);
+			response == "1" ?	$('[id^=modal-container-]').modal('hide') :	alert("No se pudo bloquear la hora")
 			$.ajax({
 				type: 'POST',
 				url: '/aux/mostrarEventos',
 				data: {	evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id	},
-				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	$('#calendar').fullCalendar('addEventSource',response);},
 				error: function(xhr, status, error){	alert("Hubo un problema al bloquear la hora de atención.");	}
 			});
 		},
@@ -282,12 +274,13 @@ function desbloquearHora(id_agend){
 		data: {	agendamiento_id: id_agend},
 		success: function(response) {
 			$('#buscadorHora').fullCalendar('removeEvents',id_agend);
-			response=="1" ? $('#modal-container').modal('hide') :	alert("No se pudo desbloquear la hora");
+			$('#calendar').fullCalendar('removeEvents',id_agend);
+			response=="1" ? $('[id^=modal-container-]').modal('hide') :	alert("No se pudo desbloquear la hora");
 			$.ajax({
 				type: 'POST',
 				url: '/aux/mostrarEventos',
 				data: {	evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id	},
-				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	$('#calendar').fullCalendar('addEventSource',response); },
 				error: function(xhr, status, error){	alert("Hubo un problema al desbloquear la hora de atención.");	}
 			});
 		},
@@ -302,12 +295,13 @@ function confirmarHora(id_agend){
  		data: {	agendamiento_id: id_agend},
 		success: function(response) {
 			$('#buscadorHora').fullCalendar('removeEvents',id_agend);
-			response=="1" ? $('#modal-container').modal('hide') : alert("No se puede confirmar la hora");
+			$('#calendar').fullCalendar('removeEvents',id_agend);
+			response=="1" ? $('[id^=modal-container-]').modal('hide') : alert("No se puede confirmar la hora");
 			$.ajax({
 				type: 'POST',
 				url: '/aux/mostrarEventos',
 				data: {	evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id	},
-				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response); $('#calendar').fullCalendar('addEventSource',response);	},
 				error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención");}
 			});
 		},
@@ -322,12 +316,13 @@ function marcarLlegada(id_agend){
 		data: {	agendamiento_id: id_agend	},
 		success: function(response) {
 			$('#buscadorHora').fullCalendar('removeEvents',id_agend);
-			response=="1" ?  $('#modal-container').modal('hide') : alert("No se puede confirmar la hora");
+			$('#calendar').fullCalendar('removeEvents',id_agend);
+			response=="1" ? $('[id^=modal-container-]').modal('hide'): alert("No se puede confirmar la hora");
 			$.ajax({
 				type: 'POST',
 				url: '/aux/mostrarEventos',
 				data: {	evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id },
-				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response); $('#calendar').fullCalendar('addEventSource',response);	},
 				error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
 			});
 		},
@@ -345,19 +340,27 @@ function tomarHora(id_agend){
 
 	if (s_p == '' || s_ph == '')
 		alert("Selecciona una persona para asignar la hora.");
+	else if (s_p != '' && s_qp == '' )
+		alert("Selecciona quien pide la hora.");
 	else {	
 		$.ajax({
 			type: 'POST',
 			url: '/aux/pedirHoraEvento',
 			data: {	agendamiento_id: id_agend, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp },
 			success: function(response) {
-				$('#buscadorHora').fullCalendar('removeEvents',id_agend)
-				response == "1" ? $('#modal-container').modal('hide')	:	alert("La hora ya fue tomada");
+				$('#buscadorHora').fullCalendar('removeEvents',id_agend);
+				$('#calendar').fullCalendar('removeEvents',id_agend);
+				if (response == "1") 
+					$('[id^=modal-container-]').modal('hide');
+				else if (response == "2")
+				 	alert("La hora ya fue tomada");
+				else if (response == "3")
+				 	alert("La hora de inicio de esta hora ya pasó."); 
 				$.ajax({
 					type: 'POST',
 					url: '/aux/mostrarEventos',
 					data: {	evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id	},
-					success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	},
+					success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	$('#calendar').fullCalendar('addEventSource',response);},
 					error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
 				});
 			},

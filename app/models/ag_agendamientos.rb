@@ -64,7 +64,7 @@ class AgAgendamientos < ActiveRecord::Base
   }
   end 
 
-  def event
+  def event(param_icon)
     description = ''
     custom = ''
     icon = ''
@@ -79,20 +79,22 @@ class AgAgendamientos < ActiveRecord::Base
     description<<"</br>Hora: #{range('estimado')}"
     custom<<"<b>"<<estado.nombre<<"</b>"
 
-    case grupo_etareo
-    when 'Recién nacido'
-      icon = "<i class='fa fa-child'></i>";      
-    when 'Lactante'
-      icon = "<i class='fa fa-child'></i>";
-    when 'Pediatria'
-      icon = "<i class='fa fa-child'></i>";
-    when 'Adolescente'
-      icon = "<i class='fa fa-child'></i>";
-    when 'Adulto'
-      icon = "<i class='fa fa-child'></i>";
-    when 'Adulto mayor'
-      icon = "<i class='fa fa-child'></i>";
-    end  
+    if param_icon
+      case grupo_etareo
+      when 'Recién nacido'
+        icon = "/assets/pacifier.png')";      
+      when 'Lactante'
+        icon = "/assets/bottle.png')";
+      when 'Pediatria'
+        icon = "/assets/soccer.png";
+      when 'Adolescente'
+        icon = "/assets/adolescente.png)";
+      when 'Adulto'
+        icon = "/assets/adulto.png";
+      when 'Adulto mayor'
+        icon = "/assets/sticky.png";
+      end
+    end    
 
     #Este parámetro (show) es para no mostrar algún estado de agendamiento. Hay que modificar la función para que devuelva 'null' en tal caso y para sea leida correctamente en el controlador.
     #Anteriormente se devolvía { } y fallaba.
@@ -115,179 +117,6 @@ class AgAgendamientos < ActiveRecord::Base
     if val=='extendido' and dt
       dt.strftime('%H:%M del %d') + " de " + month(dt.strftime('%m').to_i) + " de " + dt.strftime('%Y')
     end
-  end
-
-  def detalleHTML(perm_admin_genera,perm_admin_confirma,perm_admin_recibe,perm_admin_bloquea,perm_tomar_horas,perm_paciente,perm_profesional,id_usuario) #los parámetros corresponden a permisos
-
-    show=false
-    detalle = ''
-    detalle2 = ''
-    tomar_hora =''
-    reabrir =''
-    bloquear = ''
-    info_paciente = ''
-    llegada_paciente =''
-    confirmar =''
-    cancelar =''
-    hora_llegada =''
-    hora_inicio_atencion =''
-    hora_termino_atencion =''
-    motivo = ''
-    persona_hora = ''
-    informacion_antecedentes = ''
-    elegir_paciente = ''
-    info_cap = ''
-    estado = estado.nombre
-
-    perm_publico = false
-    perm_publico = true if !perm_admin_genera and !perm_admin_confirma and !perm_admin_recibe and !perm_admin_bloquea and !perm_tomar_horas and !perm_paciente and !perm_profesional and !esProfesionalSalud(id_usuario) 
-
-    detalle<<'<div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' 
-
-    detalle<<"<h4 class='modal-title' id='myModalLabel'>"<<estado<<"</h4> </div>
-              <div class='modal-body'><table>
-              <tr><td>Recinto de salud</td><td>: #{especialidad_prestador_profesional.prestador.nombre}</td></tr>
-              <tr><td>Especialidad</td><td>: #{especialidad_prestador_profesional.especialidad.nombre}</td></tr>
-              <tr><td>Especialista</td><td>: #{especialidad_prestador_profesional.profesional.showName('%d%n%p%m')}</td></tr>
-              <tr><td>Fecha y hora de inicio</td><td>: #{dateTimeFormat(fecha_comienzo,'extendido')}</td></tr>
-              <tr><td>Fecha y hora de término</td><td>: #{dateTimeFormat(fecha_final,'extendido')}</td></tr>"
-
-    if (perm_tomar_horas and estado == 'Hora disponible')
-      elegir_paciente = '<tr><td>Paciente</td><td><div id="div-sel-pac-'<<id.to_s<<'">: <select id="select-paciente-'<<id.to_s<<'" name="selectbasic" class="select_paciente" ><option></option>' 
-      @pacientes = PerPersonas.all
-      selected = ''
-      @pacientes.each do |pac|   
-        elegir_paciente<<'<option value='<<pac.id.to_s<<selected<<'>'<<pac.showRut<<' '<<pac.showName('%n%p%m')<<'</option>'      
-      end
-      elegir_paciente<<'</select></div></td></tr>'    
-    end 
-
-    if estado == 'Hora disponible' and ( perm_publico or perm_tomar_horas )          
-      info_cap = '<tr><td></td><td><div id="div-sel-cap-'<<id.to_s<<'"><select id="select-capitulo-'<<id.to_s<<'" name="selectbasic" class="select_capitulo"><option></option>' 
-      @capitulos = MedDiagnosticosCapitulos.all
-      @capitulos.each do |cap|
-        info_cap<<'<option value='<<cap.id.to_s<<'>'<<cap.nombre<<'</option>'      
-      end
-      info_cap<<'</select></div></td></tr>'
-    end            
-
-    if estado == 'Hora disponible' and (perm_publico or perm_tomar_horas)
-      # De existir, carga los antecedentes del paciente
-      @antecedentes = FiPersonaDiagnosticos.where('persona_id = ? and es_cronica = 1', id_usuario)     
-      unless @antecedentes.empty?
-        informacion_antecedentes = '<tr><td></td><td><div id="div-sel-ant-'<<id.to_s<<'" class="oculto"><select id="select-antecedente-'<<id.to_s<<'" name="selectbasic" class="select_antecedente"><option></option>'      
-        @antecedentes.each do |ant|
-          informacion_antecedentes<<'<option value='<<ant.id.to_s<<'>'<<ant.diagnostico.nombre<<'</option>'      
-        end
-        informacion_antecedentes<<'</select></div></td></tr>'
-      end
-    end 
-    
-    if estado == 'Hora disponible' and (perm_publico or perm_tomar_horas)
-      motivo<<'<tr>
-                <td>El motivo de consulta es:</td>
-                <td>
-                  <div id="m_c_'<<id.to_s<<'">
-                    <div class="radio">
-                      <label for="radios-0">
-                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-0" value="1" checked="checked"> Es nuevo
-                      </label>
-                    </div>
-                    <div class="radio">
-                      <label for="radios-1">
-                        <input type="radio" name="radios-motivo-'<<id.to_s<<'" id="radios-1" value="2"> Desea controlar un antecedente
-                      </label>
-                    </div>
-                  </div>
-                </td>
-              </tr>'      
-    end
-
-    if estado == 'Hora disponible' and perm_publico
-      @persona = PerPersonas.find(id_usuario)        
-      @cercanos = @persona.getCercanos        
-      persona_hora<<'<tr>
-                <td>La hora es para:</td>
-                <td>
-                  <div id="div-sel-per-'<<id.to_s<<'"><select id="select-persona-hora-'<<id.to_s<<'" class="select_persona_hora"><option></option><option> Para mi</option>'
-                    selected = ''
-                    @cercanos.each do |cercano|
-                      #unless persona.nil?
-                       # selected = cercano[0] == persona.id ? ' selected ' : ''
-                      #end  
-                      persona_hora<<'<option value="'<<cercano[0].to_s<<'" '<<selected<<'> '<<cercano[1].dup << ' - '<< PerPersonas.find(cercano[0]).showName('%n%p%m') <<'</option> '      
-                    end
-                    persona_hora<<'</select></div></td></tr><tr><td><br></td><td></td></tr>'
-    end
-              
-    #los elementos se configuran si se cumplen los permisos                
-    if perm_admin_bloquea or perm_profesional
-      reabrir = "<button class='btn btn-primary desbloquear-hora'>Desbloquear Hora</button>"
-    end  
-    if (perm_admin_bloquea or perm_profesional) and (estado == 'Hora disponible')
-      bloquear =  "<button class='btn btn-primary bloquear-hora'>Bloquear hora</button>"
-    end  
-    if estado == 'Hora disponible' and ( perm_tomar_horas or perm_publico )
-       tomar_hora = "<button class='btn btn-primary pedir-hora'>Tomar hora</button>"
-    end   
-    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional 
-      if estado != 'Hora disponible' and estado != 'Hora bloqueada'     
-        info_paciente<<"<tr><td>Paciente</td><td>: #{persona.showName('%n%p%m')}</td></tr>"
-        if !persona_diagnostico_control.nil?
-          info_paciente<<"<tr><td>Motivo</td><td>: #{persona_diagnostico_control.diagnostico.nombre} (control de antecedente)</td></tr>" 
-        elsif !capitulo_cie10_control.nil?
-          info_paciente<<"<tr><td>Motivo</td><td>: #{capitulo_cie10_control.nombre} (nuevo motivo)</td></tr>"
-        end      
-      end
-    end 
-    if perm_admin_recibe 
-      llegada_paciente<<"<button class='btn btn-primary marcar-llegada'>Realizar ingreso del paciente</button>"  
-    end                  
-    if perm_admin_confirma or perm_paciente
-      confirmar<<"<button class='btn btn-primary confirmar-hora'>Confirmar hora</button>"  
-    end 
-    if perm_admin_confirma or perm_paciente  
-      cancelar<<"<button class='btn btn-primary cancelar-hora'>Cancelar hora</button>" 
-    end
-    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional
-      if estado == 'Paciente en espera' or estado == 'Paciente atendido'            
-        hora_llegada = "<tr><td>Fecha y hora de llegada paciente</td><td>:  #{dateTimeFormat(fecha_llegada_paciente,'extendido')}</td></tr>"
-      end         
-    end
-    if perm_admin_genera or perm_admin_confirma or perm_admin_recibe or perm_paciente or perm_profesional 
-      if estado == 'Paciente atendido'         
-        hora_inicio_atencion = "<tr><td>Fecha y hora de inicio atención</td><td>: #{dateTimeFormat(fecha_comienzo_real,'extendido')}</td></tr>"
-        hora_termino_atencion = "<tr><td>Fecha y hora de término atención</td><td>: #{dateTimeFormat(fecha_final_real,'extendido')}</td></tr>" 
-      end  
-    end      
-      
-    case estado
-      when 'Hora reservada' 
-        detalle<<info_paciente
-      when 'Hora confirmada' 
-        detalle<<info_paciente                           
-      when 'Paciente en espera'  
-        detalle<<info_paciente<<hora_llegada
-      when 'Paciente atendido'  
-        detalle<<info_paciente<<hora_llegada<<hora_inicio_atencion<<hora_termino_atencion
-    end   
-
-    detalle<<elegir_paciente<<persona_hora<<motivo<<informacion_antecedentes<<info_cap<<"</table><div id='ingreso-#{id}'></div></div><div class='modal-footer'>"
-
-    case estado
-      when 'Hora disponible'
-        detalle<<tomar_hora<<bloquear
-      when 'Hora bloqueada'        
-        detalle<<reabrir
-      when 'Hora reservada' 
-        detalle<<llegada_paciente<<confirmar<<cancelar
-      when 'Hora confirmada' 
-        detalle<<llegada_paciente<<cancelar 
-    end   
-
-    detalle<<'</div>'
-  
   end
 
   def esProfesionalSalud(usuario_id)

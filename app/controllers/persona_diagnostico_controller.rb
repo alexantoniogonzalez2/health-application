@@ -21,23 +21,6 @@ class PersonaDiagnosticoController < ApplicationController
 				
 	end
 
-	def cargarPersonas	
-
-		per = []  	
-		term = params[:q]
-
-		@personas = PerPersonas.where("rut LIKE ? OR concat(nombre,' ',apellido_paterno,' ',apellido_materno) LIKE ? ","%#{term}%","%#{term}%")
-
-		@personas.each do |p|
-			per << p.formato_personas			
-		end
-
-		respond_to do |format|
-			format.json { render json: per}
-		end
-				
-	end
-
 	def agregarInfoEno
 
 		fecha = ''
@@ -106,7 +89,7 @@ class PersonaDiagnosticoController < ApplicationController
 				unless params[:valor].blank? 
 					@persona = PerPersonas.find(params[:valor])
 					nombre = @persona.showName('%n%p%m')
-					correo = @persona.user.email
+					correo = @persona.getCorreo
 					celular = @persona.getCelular
 					telefono = @persona.getTelefonoFijo
 					rut = @persona.showRut
@@ -115,6 +98,7 @@ class PersonaDiagnosticoController < ApplicationController
 				@prestador = PrePrestadores.find(params[:valor])
 			when 'especialidad'
 				@especialidad = ProEspecialidades.find(params[:valor]) unless params[:valor].blank? 
+				@especialidad = '' if params[:valor].blank? 
 			when 'comentario'
 			when 'proposito'
 			when 'pres_des_tex'			
@@ -176,7 +160,7 @@ class PersonaDiagnosticoController < ApplicationController
 		unless params[:valor].blank? 
 			@persona = PerPersonas.find(params[:valor])
 			nombre = @persona.showName('%n%p%m')
-			correo = @persona.user.email
+			correo = @persona.getCorreo
 			celular = @persona.getCelular
 			telefono = @persona.getTelefonoFijo
 			rut = @persona.showRut

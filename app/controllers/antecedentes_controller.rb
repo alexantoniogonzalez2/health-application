@@ -115,8 +115,7 @@ class AntecedentesController < ApplicationController
 		@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')
 		@especialidades=ProEspecialidades.where("id in (select especialidad_id from pre_prestador_profesionales)").order('nombre')
 		@prestadores=PrePrestadores.where("id in (select prestador_id from pre_prestador_profesionales)").order('nombre')	
-  	@familiares = @paciente.getCercanos
-	
+  	@familiares = @paciente.getCercanos	
 
 	end
 
@@ -200,11 +199,13 @@ class AntecedentesController < ApplicationController
 
 		@ant = params[:ant]
 		@tipo = params[:tipo]
-		@acceso = true
+		@acceso = false
 		@atencion_salud = FiAtencionesSalud.find(params[:at_sal])
 		@persona = PerPersonas.find(params[:persona_id])
-		@profesional = PerPersonas.where('user_id = ?',current_user.id).first
-		@acceso = false if @atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.id != @profesional.id
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first
+		if @atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.id == @usuario.id or @usuario == @atencion_salud.persona 
+			@acceso = true 
+		end	
 
 		case params[:ant]
 		when 'med'

@@ -60,7 +60,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
 
     var hook = id.substring(0,3);
     if ( hook  == 'ped') {
-      var paciente = $('#select_pac_'+id.substring(4)).select2('data').id;
+      var paciente = $('#select_pac_'+id.substring(4)).val();
     }
     else
       var paciente = '';

@@ -84,7 +84,9 @@
               </div>
               <div class="row clearfix footer">
                 <div class="col-md-12 column">
-                  <button type="button" onclick="actualizarDiagnostico(<%= p_d.diagnostico.id %>,<%= p_d.id%>)" class="btn btn-primary">Actualizar Diagnóstico</button> 
+                  <% if tipo == 'edit' %>
+                    <button type="button" onclick="actualizarDiagnostico(<%= p_d.diagnostico.id %>,<%= p_d.id%>)" class="btn btn-primary">Actualizar Diagnóstico</button> 
+                  <% end %>
                   <button type="button" onclick="cerrarDiagnosticoAnterior(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
                 </div>                  
               </div>

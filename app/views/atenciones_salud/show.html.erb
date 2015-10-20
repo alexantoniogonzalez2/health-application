@@ -111,7 +111,7 @@
           </div>
           <div id="antecedentes-modal-div" >
             <% @ant_med_at.each do |p_d| %>
-              <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+              <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'show'} %>
             <% end %>
             <% @ant_med_us.each do |p_d| %>     
               <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'ver'} %>     
@@ -130,7 +130,7 @@
         </div>
         <div id="diag_ant-modal-div" >
           <% @persona_diagnostico_anteriores.each do |p_d| %>
-             <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico} %>
+             <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'show'} %>
           <% end %>      
         </div>
         <div id="ajuste-motivo">

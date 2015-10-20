@@ -1,4 +1,15 @@
-<% if ['Hora reservada'].include?(@agendamiento.estado.nombre) %>
-	<button type="button" class="btn btn-primary" onclick="confirmarHora(<%= @agendamiento.id %>)" >Confirmar hora</button>
-<% end %>
-<button type="button" class="btn btn-primary" onclick="cancelarHora(<%= @agendamiento.id %>)" >Cancelar hora</button>
+<% if @permisos['profesional'] %>
+	<% if ['Hora disponible'].include?(@agendamiento.estado.nombre) %>
+		<button type="button" class="btn btn-primary" onclick="bloquearHora(<%= @agendamiento.id %>)" >Bloquear hora</button>
+	<% end %>
+	<% if ['Hora bloqueada'].include?(@agendamiento.estado.nombre) %>
+		<button type="button" class="btn btn-primary" onclick="desbloquearHora(<%= @agendamiento.id %>)" >Desbloquear hora</button>
+	<% end %>
+<% else %>
+	<% if ['Hora reservada'].include?(@agendamiento.estado.nombre) %>
+		<button type="button" class="btn btn-primary" onclick="confirmarHora(<%= @agendamiento.id %>)" >Confirmar hora</button>
+	<% end %>
+	<% if ['Hora reservada','Hora confirmada'].include?(@agendamiento.estado.nombre) %>
+		<button type="button" class="btn btn-primary" onclick="cancelarHora(<%= @agendamiento.id %>)" >Cancelar hora</button>
+	<% end %>	
+<% end %>	

@@ -1,4 +1,4 @@
-<div class="modal-content" id="modal-content">
+<div class="modal-content" id="<%= @content %>">
 	<div class="modal-header">		 
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h4 class="modal-title" id="myModalLabel"><%= @agendamiento.estado.nombre %></h4>
@@ -41,8 +41,8 @@
 		<% if @permisos['tomar_hora_admin'] %>
 				<%= render :partial => "footer_tomar_hora_admin", :locals => {:agendamiento => @agendamiento } %>
 			<% end %>	
-		<% if @permisos['info_paciente'] %>
-			<%= render :partial => "footer_info_paciente", :locals => {:agendamiento => @agendamiento } %>
+		<% if @permisos['info_paciente'] or @permisos['profesional'] %>
+			<%= render :partial => "footer_info_paciente", :locals => {:agendamiento => @agendamiento, :permisos => @permisos } %>
 		<% end %>
 		<% if @permisos['info_paciente_vista_admin'] %>
 			<%= render :partial => "footer_info_paciente_vista_admin", :locals => {:agendamiento => @agendamiento } %>

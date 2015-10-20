@@ -156,25 +156,24 @@ function autoIntPdt(p_d){
   contador_int_pdt = setTimeout(function(){ autoguardarPrestadorDestinoTexto(p_d) },2000); 
 }
 
-$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true });
-$('select.select_prestadores').select2({ width: '80%', placeholder: 'Seleccione un establecimiento', allowClear: true });
-$('select.select-conf-diag').select2({ width: '80%', placeholder: 'Seleccione un tipo de diagnóstico', allowClear: true });
+$('select.select_especialidad').select2({ width: '80%', placeholder: 'Selecciona una especialidad', allowClear: true });
+$('select.select_prestadores').select2({ width: '80%', placeholder: 'Selecciona un establecimiento', allowClear: true });
+$('select.select-conf-diag').select2({ width: '80%', placeholder: 'Selecciona un tipo de diagnóstico', allowClear: true });
 
 
 $('#select_diagnostico').select2({
   width: '380px',
+  style: 'float: right',
   minimumInputLength: 3,
-  placeholder: "Seleccione un diagnóstico",
-
+  placeholder: "Selecciona un diagnóstico",
   ajax: {
     url: '/cargar_diagnosticos',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) {
-      return { q: term, diag_no_frec: diagnosticoNoFrecuente('#diag-no-frec') };
-    },
-    results: function (data, page) { return { results: data }; }
-  }
+    data: function (params) { return { q: params.term, page: params.page, diag_no_frec: diagnosticoNoFrecuente('#diag-no-frec') }; },
+    processResults: function (data, page) { return { results: data }; }   
+  },
+  cache: true
 });
 
 $('.select_diag').select2({
@@ -186,10 +185,10 @@ $('.select_diag').select2({
     url: '/cargar_diagnosticos',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) {
-      return { q: term, diag_no_frec: diagnosticoNoFrecuente('#diag-no-frec-' + $(this).attr('id').substring(12)) };
+    data: function (params) {
+      return { q: params.term, diag_no_frec: diagnosticoNoFrecuente('#diag-no-frec-' + $(this).attr('id').substring(12)) };
     },
-    results: function (data, page) { return { results: data }; }
+    processResults: function (data, page) { return { results: data }; }
   }
 });
 
@@ -201,8 +200,8 @@ $('#select_examen').select2({
     url: '/cargar_prestaciones',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) { return { q: term, tipo: 'examen' }; },
-    results: function (data, page) { return { results: data }; }
+    data: function (params) { return { q: params.term, page: params.page, tipo: 'examen' }; },
+    processResults: function (data, page) { return { results: data }; },
   }
 });
 
@@ -214,8 +213,8 @@ $('#select_procedimiento').select2({
     url: '/cargar_prestaciones',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) { return { q: term, tipo: 'procedimiento'}; },
-    results: function (data, page) { return { results: data }; }
+    data: function (params) { return { q: params.term, tipo: 'procedimiento'}; },
+    processResults: function (data, page) { return { results: data }; }
   }
 });
 
@@ -227,14 +226,15 @@ $('#select_medicamento').select2({
     url: '/cargar_medicamentos',
     dataType: 'json',
     type: 'POST',
-    data: function (term, page) { return { q: term }; },
-    results: function (data, page) { return { results: data }; }
+    data: function (params) { return { q: params.term }; },
+    processResults: function (data, page) { return { results: data }; }
   }
 });
 
 $("#select_diagnostico").on("change", function(e) { 
-  var value = $("#select_diagnostico").select2('data').id; 
-  agregarDiagnostico(value);
+  var value = $("#select_diagnostico").val(); 
+  if (value != null)
+    agregarDiagnostico(value);
 })
 
 $('.select_diag').on("change", function(e) { 
@@ -256,7 +256,7 @@ $('.cambiar_antecedente_cro').click(function() {
 
 $(".select_prestadores").on("change", function(e) { 
   var pd = $(this).attr('id').substring(22);   
-  value = $("#select_prestadores_int"+pd).select2('data') != null ? $("#select_prestadores_int"+pd).select2('data').id : null;    
+  value = $("#select_prestadores_int"+pd).val();;    
   $.ajax({
     type: 'POST',
     url: '/agregar_info_interconsulta',
@@ -274,7 +274,7 @@ function selectPersonaIntNot(p_d,tipo){
   var url = '/agregar_info_interconsulta';
   if (tipo == "not_")
     url = '/agregar_persona_notificacion';   
-  value = $("#select_"+tipo+p_d).select2('data') != null ? $("#select_"+tipo+p_d).select2('data').id : null;   
+  value = $("#select_"+tipo+p_d).val();
   $.ajax({
     type: 'POST',
     url: url,
@@ -291,7 +291,7 @@ function selectPersonaIntNot(p_d,tipo){
 }
 
 function selectEspecialidadInterconsulta(p_d){ 
-  value = $("#select_especialidad_int"+p_d).select2('data') != null ? $("#select_especialidad_int"+p_d).select2('data').id : null;    
+  value = $("#select_especialidad_int"+p_d).val();    
   $.ajax({
     type: 'POST',
     url: '/agregar_info_interconsulta',
@@ -307,69 +307,69 @@ function selectEspecialidadInterconsulta(p_d){
 
 $("#select_examen").on("change", function(e) { 
 
-  var value = $("#select_examen").select2('data').id;
-  
-  $.ajax({
-    type: 'POST',
-    url: '/agregar_prestacion',
-    data: {
-      persona_id: persona_id,
-      prestacion_id: value,
-      atencion_salud_id: atencion_salud_id,
-      tipo: 'examen'
-    },
-    success: function(response) { $("#select_examen").select2("val", ""); },
-    error: function(xhr, status, error){ alert("No se pudo agregar el examen del paciente."); }
-  });   
+  var value = $("#select_examen").val();
 
+  if (value != ''){  
+    $.ajax({
+      type: 'POST',
+      url: '/agregar_prestacion',
+      data: {
+        persona_id: persona_id,
+        prestacion_id: value,
+        atencion_salud_id: atencion_salud_id,
+        tipo: 'examen'
+      },
+      success: function(response) { $("#select_examen").select2("val", ""); },
+      error: function(xhr, status, error){ alert("No se pudo agregar el examen del paciente."); }
+    }); 
+  }
 })
 
 $("#select_procedimiento").on("change", function(e) { 
 
-  var value = $("#select_procedimiento").select2('data').id;
-  var text = $("#select_procedimiento").select2('data').text;
-  
-  $.ajax({
-    type: 'POST',
-    url: '/agregar_prestacion',
-    data: {
-      persona_id: persona_id,
-      prestacion_id: value,
-      atencion_salud_id: atencion_salud_id,
-      tipo: 'procedimiento'
-    },
-    success: function(response) { $("#select_procedimiento").select2("val", ""); },
-    error: function(xhr, status, error){ alert("No se pudo agregar el procedimiento o cirugía del paciente."); }
-  });  
-
+  var value = $("#select_procedimiento").val();
+  if (value != ''){ 
+    $.ajax({
+      type: 'POST',
+      url: '/agregar_prestacion',
+      data: {
+        persona_id: persona_id,
+        prestacion_id: value,
+        atencion_salud_id: atencion_salud_id,
+        tipo: 'procedimiento'
+      },
+      success: function(response) { $("#select_procedimiento").select2("val", ""); },
+      error: function(xhr, status, error){ alert("No se pudo agregar el procedimiento o cirugía del paciente."); }
+    });
+  }
 })
 
 $("#select_medicamento").on("change", function(e) { 
 
-  var value = $("#select_medicamento").select2('data').id;
-  var text = $("#select_medicamento").select2('data').text;
+  var value = $("#select_medicamento").val();
   
-  $.ajax({
-    type: 'POST',
-    url: '/agregar_medicamento',
-    data: {
-      persona_id: persona_id,
-      medicamento_id: value,
-      atencion_salud_id: atencion_salud_id,
-    },
-    success: function(response) { $("#select_medicamento").select2("val", ""); },
-    error: function(xhr, status, error){ alert("No se pudo agregar el medicamento del paciente."); }
-  });  
-
+  if (value != ''){ 
+    $.ajax({
+      type: 'POST',
+      url: '/agregar_medicamento',
+      data: {
+        persona_id: persona_id,
+        medicamento_id: value,
+        atencion_salud_id: atencion_salud_id,
+      },
+      success: function(response) { $("#select_medicamento").select2("val", ""); },
+      error: function(xhr, status, error){ alert("No se pudo agregar el medicamento del paciente."); }
+    });  
+  }
 })
 
 function selectPaisContagio(p_d){
-  var value = $("#select-pais-contagio"+p_d).select2('data').id;
+  var value = $("#select-pais-contagio"+p_d).val();
   agregarInfoEno(p_d,value,'pais');
 }
 
 function selectConfirmacion(p_d){
-  var value = $("#select-confirmacion"+p_d).select2('data').id;
+  var value = $("#select-confirmacion"+p_d).val();
   agregarInfoEno(p_d,value,'confirmacion');
 }
 
@@ -382,12 +382,12 @@ function radiosEmb(p_d,value){
 }
 
 function radiosTbc(p_d,value){
-  agregarInfoEno(pd,value,'tbc');
+  agregarInfoEno(p_d,value,'tbc');
 }
 
 function semGes(p_d){
-  var value =$('#semanas-'+pd).val();
-  agregarInfoEno(pd,value,'sem_emb'); 
+  var value =$('#semanas-'+p_d).val();
+  agregarInfoEno(p_d,value,'sem_emb'); 
 }
 
 $("#alergias").submit(function (e) { return false; });
@@ -420,7 +420,6 @@ function diagnosticoNoFrecuente(id){
 }
 
 function agregarDiagnostico(diag_id){
- 
   $.ajax({
     type: 'POST',
     url: '/agregar_diagnostico',

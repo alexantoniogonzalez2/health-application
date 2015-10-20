@@ -1,3 +1,5 @@
+$.fn.select2.defaults.set('language', 'es');
+
 //Se sigue validando la fecha después de cambios en el cuestionario
 var current = $('#datetimepicker1').val();
 function keep_checking() {
@@ -340,3 +342,53 @@ $.calculaDigitoVerificador = function (rut) {
   // en caso contrario retorna el numero
   return rest === 11 ? 0 : rest === 10 ? "K" : rest;
 };
+
+if ( $.fn.dataTable.isDataTable( '#lista_agendamientos' ) ) { }
+else {
+  $('#lista_agendamientos').DataTable({
+    "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "Todas"]],
+    "order": [[ 0, "desc" ]],
+    "language": {
+      "lengthMenu": "Mostrar _MENU_ horas por página",
+      "zeroRecords": "La búsqueda no arrojó resultados.",
+      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ horas",
+      "infoEmpty": "No hay horas que mostrar",
+      "infoFiltered": "(filtradas de un total de _MAX_)",
+      "search": "Búsqueda",
+      "oPaginate": {
+        "sPrevious": "Página anterior",
+        "sNext": "Página siguiente"
+      }
+    }
+  });
+}
+
+if ( $.fn.dataTable.isDataTable( '#lista_atenciones_realizadas' ) ) { }
+else {
+  $('#lista_atenciones_realizadas').DataTable({
+    "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "Todas"]],
+    "order": [[ 0, "desc" ]],
+    "language": {
+      "lengthMenu": "Mostrar _MENU_ atenciones de salud por página",
+      "zeroRecords": "La búsqueda no arrojó resultados.",
+      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ atenciones de salud",
+      "infoEmpty": "No hay atenciones de salud que mostrar",
+      "infoFiltered": "(filtradas de un total de _MAX_)",
+      "search": "Búsqueda",
+      "oPaginate": {
+        "sPrevious": "Página anterior",
+        "sNext": "Página siguiente"
+      }
+    }
+  });
+}
+
+function cargarDetalleAgend(agend_id){
+  $.ajax({
+    type: 'POST',
+    url: '/aux/detalleEvento',
+    data: { agendamiento_id: agend_id, content: 'modal-content-1' },
+    success: function(response) { $('#modal-container-1').modal('show'); },
+    error: function(xhr, status, error){  alert("No se pudieron cargar las horas de atención"); }
+  });
+}

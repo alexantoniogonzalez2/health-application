@@ -26,15 +26,14 @@ class AtencionesSaludController < ApplicationController
 
 	def show
 		permiso = false
-
-		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
-		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@usuario.id).first
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona = @agendamiento.persona
 
-	  permiso = true if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional
-	  permiso = true if @profesional == @persona
+	  permiso = true if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional 
+	  permiso = true if @usuario == @persona
 		redirect_to :action => "sinPermiso" unless permiso		
 
 		@fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
@@ -221,13 +220,22 @@ class AtencionesSaludController < ApplicationController
 		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
 		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first		
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
-	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)		 
+	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
 
-	  permiso = true if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional
-		redirect_to :action => "sinPermiso" unless permiso
-
-		editar = true if @agendamiento.estado.nombre == "Paciente siendo atendido"
-		redirect_to :action => "sinEditar" unless editar
+	  if @agendamiento.estado.nombre == "Paciente siendo atendido"
+	  	editar = true 
+	  else 
+	  	action = "sinEditar"	
+	  end	
+	  if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional 
+	  	permiso = true 
+	  else 
+	  	action = "sinPermiso" 
+	  end		
+		
+		unless permiso or editar
+			redirect_to :action => action
+		end	
 
 	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
 	  @fecha_final_atencion = @agendamiento.fecha_final_real
@@ -749,7 +757,4 @@ class AtencionesSaludController < ApplicationController
 	                  :persona_metricas,
 	                  :tipo_ficha)
 	  end	 
-
-
-
 end

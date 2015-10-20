@@ -29,7 +29,7 @@
 						</div>
 						<div class="col-md-9 column">	 
 					    <select id="select_especialidad" name="select_especialidad"  class="select_especialidad"  >
-					      <option></option>
+					    	 <option></option>
 					      <% @especialidades.each do |e| %>
 				          <option value="<%= e.id%>"><%= e.nombre %></option>
 				        <% end %>
@@ -60,22 +60,13 @@
 <!-- div principal que carga el calendario-->
 <div id='buscadorHora'></div>
 
-<% if esProfesionalSalud %>
-	<div id="iconos-leyenda" class="container">
-		<div class="row clearfix">
-			<div class="col-md-2 column"><i class='fa fa-child'></i> Recién nacido</div>
-			<div class="col-md-2 column"><i class='fa fa-child'></i> Lactante</div>
-			<div class="col-md-2 column"><i class='fa fa-child'></i> Pediatría</div>
-			<div class="col-md-2 column"><i class='fa fa-child'></i> Adolescente</div>
-			<div class="col-md-2 column"><i class='fa fa-child'></i> Adulto</div>
-			<div class="col-md-2 column"><i class='fa fa-child'></i> Adulto mayor</div>		
-		</div>
-	</div>
-<% end %>
+<% if (esProfesionalSalud or esAdministrativo )%>
+	<%= render :partial => "agendamiento/leyenda_agendamiento" %>
+<% end %> 
 
-<div class="modal fade" id="modal-container" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-container-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg3">
-    <div class="modal-content" id="modal-content"></div>          
+    <div class="modal-content" id="modal-content-2"></div>          
   </div>        
 </div> 
 

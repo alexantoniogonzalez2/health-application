@@ -167,7 +167,7 @@ $('#select_diagnostico_ant').select2
       { results: data }
 
 $('#select_diagnostico_ant').on 'change', (e) ->
-  value = $('#select_diagnostico_ant').select2('data').id
+  value = $('#select_diagnostico_ant').val()
   if typeof atencion_salud_id != 'undefined'
     at_salud_id = atencion_salud_id
   else

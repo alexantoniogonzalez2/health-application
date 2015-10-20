@@ -129,6 +129,7 @@
                 </div>
                 <div class="row clearfix">
                   <div class="col-md-12 column">
+                    <button type="button" class="btn btn-success ajus-pos-right">Guardar Interconsulta</button>
                     <%= link_to 'Descargar Interconsulta', descargar_interconsulta_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
                   </div>
                 </div>                
@@ -144,7 +145,8 @@
                     </div>
                   </div>
                   <div class="row clearfix">
-                    <div class="col-md-12 column">         
+                    <div class="col-md-12 column">
+                      <button type="button" class="btn btn-success ajus-pos-right">Guardar Constancia GES</button>         
                       <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%>
                     </div>
                   </div>                
@@ -161,7 +163,8 @@
                     </div>
                   </div>
                   <div class="row clearfix">
-                    <div class="col-md-12 column">              
+                    <div class="col-md-12 column">
+                      <button type="button" class="btn btn-success ajus-pos-right">Guardar Notificación Obligatoria</button>              
                       <%= link_to 'Descargar Notificación Obligatoria', descargar_notificacion_obligatoria_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
                     </div>
                   </div>                

@@ -66,7 +66,6 @@ AplicacionMedica::Application.routes.draw do
   post '/ver_atencion', to: 'atenciones_salud#verAtencion'
   post '/editar_atencion', to: 'atenciones_salud#editarAtencion'
   post '/cargar_diagnosticos', to: 'persona_diagnostico#cargarDiagnosticos'
-  post '/cargar_personas', to: 'persona_diagnostico#cargarPersonas'
   post '/agregar_persona_notificacion', to: 'persona_diagnostico#agregarPersonaNotificacion'
   post '/agregar_persona', to: 'persona#agregarPersona'
   post '/cargar_cercanos', to: 'persona#cargarCercanos'
@@ -131,6 +130,7 @@ AplicacionMedica::Application.routes.draw do
   post '/cargar_cancelar_accion', to: 'agendamiento#cargarCancelarAccion'
   post '/cargar_vista_sin_cancelar', to: 'agendamiento#cargarVistaSinCancelar'
   post '/cancelar_accion_masiva', to: 'agendamiento#cancelarAccionMasiva'
+  post '/cargar_pacientes', to: 'agendamiento#cargarPacientes'
 
   #Home
   post '/actualizar_atenciones', to: 'home#actualizarAtenciones'

@@ -2,13 +2,78 @@
 	<div class='row'><h4>Inicio</h4>
 		<div class='col-md-12 column'>
 			<h4>Horas agendadas</h4>
-				<% if @horas_agendadas.empty? %>	  		
-	  			No hay horas agendadas.
-	  		<% end %>
-	  		<% @horas_agendadas.each do |hora_agendada| %>
-	  			<%= render :partial => "agendamiento/hora_agendada", :locals => {:hora_agendada => hora_agendada } %>
-	  		<% end %>
-		</div>
-		
+			<% if @horas_agendadas.empty? %>	  		
+  			No hay horas agendadas.
+  		<% else %>
+	  		<table id="lista_agendamientos" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+			    <thead>
+			      <tr>
+			        <th>Fecha</th>
+			        <th>Lugar</th>
+			        <th>Profesional</th>
+			        <th>Especialidad</th>
+			        <th>Paciente</th>
+			        <th>Pidió la hora</th>         
+			        <th>Ver</th>         
+			      </tr>
+			    </thead>
+			    <tbody>      
+			      <% @horas_agendadas.each do |hora_agendada| %>
+			        <tr>
+			          <td><%= hora_agendada.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
+			          <td><%= hora_agendada.especialidad_prestador_profesional.prestador.nombre %></td>
+			          <td><%= hora_agendada.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+			          <td><%= hora_agendada.especialidad_prestador_profesional.especialidad.nombre %></td>
+			          <td><%= hora_agendada.persona.showName('%n%p%m') %></td>
+			          <td><%= hora_agendada.quien_pide_hora.showName('%n%p%m') %></td> 			                     
+			       		<td><a href="#" onclick="cargarDetalleAgend(<%= hora_agendada.id %>)" >Ver</a></td>
+			        </tr>
+			      <% end %>  
+			    </tbody>
+			  </table>
+  		<% end %>
+		</div>		
+	</div>
+	<div class='row'>
+		<div class='col-md-12 column'>
+			<h4>Atenciones de salud</h4>
+			<% if @atenciones_realizadas.empty? %>	  		
+  			No hay atenciones de salud realizadas.
+  		<% else %>
+	  		<table id="lista_atenciones_realizadas" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+			    <thead>
+			      <tr>
+			        <th>Fecha</th>
+			        <th>Lugar</th>
+			        <th>Profesional</th>
+			        <th>Especialidad</th>
+			        <th>Paciente</th>       
+			        <th>Ver</th>         
+			      </tr>
+			    </thead>
+			    <tbody>      
+			      <% @atenciones_realizadas.each do |atencion_realizada| %>
+			        <tr>
+			          <td><%= atencion_realizada.agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>
+			          <td><%= atencion_realizada.agendamiento.especialidad_prestador_profesional.prestador.nombre %></td>
+			          <td><%= atencion_realizada.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+			          <td><%= atencion_realizada.agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>
+			          <td><%= atencion_realizada.agendamiento.persona.showName('%n%p%m') %></td>			                     
+			       		<td><%= link_to 'Ver atención', atenciones_salud_path(atencion_realizada.id) %></td>
+			        </tr>
+			      <% end %>  
+			    </tbody>
+			  </table>
+  		<% end %>
+		</div>		
 	</div>
 </div>
+
+<div class="modal fade" id="modal-container-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg3">
+    <div class="modal-content" id="modal-content-1"></div>          
+  </div>        
+</div> 
+
+
+<%= javascript_include_tag "home" %>	

@@ -136,7 +136,10 @@ class HomeController < ApplicationController
 				@persona = PerPersonas.where('user_id = ?',current_user.id).first	
 
 				#Inicio
-				@horas_agendadas = AgAgendamientos.where( "persona_id = ? ",@persona.id )
+				@horas_agendadas = AgAgendamientos.where( "persona_id = ? and estado_id in (2,3,4,5,6,8,9) ",@persona.id )
+				@atenciones_realizadas = FiAtencionesSalud
+					.joins('JOIN ag_agendamientos AS ag ON fi_atenciones_salud.agendamiento_id = ag.id')
+					.where('fi_atenciones_salud.persona_id = ? and ag.estado_id in (7,10)',@persona.id )
 	
 				#Antecedentes médicos		
 				@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id

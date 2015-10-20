@@ -8,7 +8,7 @@ class MedDiagnosticos < ActiveRecord::Base
   belongs_to :grupo, :class_name => 'MedDiagnosticosGrupos'
 
   def formato_lista
-    { 'id' => id,'text' => codigo_cie10 + ' ' + nombre }
+    { :id => id,:text => codigo_cie10 + ' ' + nombre }
   end  
 
   def esAuge(p_d)

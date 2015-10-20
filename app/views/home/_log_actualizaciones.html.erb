@@ -12,7 +12,7 @@
           <% @actualizaciones.each do |actualizacion| %>
             <tr>
               <td><%= actualizacion.fecha.to_s(:time) %></td>
-              <td><%= actualizacion.estado.nombre %></td> 
+              <td><%= actualizacion.agendamiento_estado.nombre %></td> 
               <td><%= actualizacion.responsable.showName('%n%p%m') %> </td>
               <td><%= actualizacion.fecha_comienzo ? actualizacion.fecha_comienzo.to_s(:time) : 'No agendada' %></td>     
               <td><%= actualizacion.persona_id ? PerPersonas.find(actualizacion.persona_id).showName('%n%p%m') : '-' %> </td> 

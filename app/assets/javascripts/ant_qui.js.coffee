@@ -6,14 +6,13 @@ $('#select_procedimiento_ant').select2
     url: '/cargar_prestaciones'
     dataType: 'json'
     type: 'POST'
-    data: (term, page) ->
-      { q: term, tipo: 'procedimiento' }
-    results: (data, page) ->
+    data: (params) ->
+      { q: params.term, tipo: 'procedimiento' }
+    processResults: (data, page) ->
       { results: data }
 
 $('#select_procedimiento_ant').on 'change', (e) ->
-  value = $('#select_procedimiento_ant').select2('data').id
-  text = $('#select_procedimiento_ant').select2('data').text
+  value = $('#select_procedimiento_ant').val()
   if typeof atencion_salud_id != 'undefined'
     at_salud_id = atencion_salud_id
   else

@@ -35,11 +35,13 @@ class HabitosAlcoholController < ApplicationController
     	format.json { render :json => { :success => true } }
 		end		
 	end
+=begin	
 	def show
 		@test_audit = FiHabitosAlcohol.find(params[:id])
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
-		unless @test_audit.persona.id == usuario.id 
+		unless @test_audit.persona.id == @usuario.id 
 			render :text => 'No tiene permisos para ver esta página.'<<params[:id]
 		end	
-	end	
+	end
+=end		
 end

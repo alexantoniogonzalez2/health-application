@@ -6,10 +6,6 @@ class AgAgendamientoLogEstados < ActiveRecord::Base
 
 	private
   def app_params
-    params.require(:list).permit( :id,
-    															:fecha,
-                                  :responsable,
-                                  :agendamiento_estado,
-                                  :agendamiento)
+    params.require(:list).permit(:id, :fecha, :responsable, :agendamiento_estado, :agendamiento)
   end
 end
