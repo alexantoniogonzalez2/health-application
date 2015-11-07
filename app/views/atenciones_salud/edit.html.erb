@@ -82,7 +82,7 @@
             </div>  
           </div>
 
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div id="modal-dialog-antecedentes" class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-body ajuste-height">
@@ -115,7 +115,7 @@
           </div>
           <a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a>
 
-          <div class="modal fade" id="modal-container-ant-med" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="modal-container-ant-med" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header ajuste-modal-header">
@@ -166,7 +166,7 @@
         <textarea id='anamnesis' class = "form-control" rows='2' cols='50'><%= @atencion_salud.anamnesis %></textarea>
         <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a> | <a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
         <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :tipo => 'edit'} %>
-        <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr => @presion, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr => @car_presion, :car_p_sat => @car_sat, :tipo => 'edit'} %>
+        <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr_am => @presion_am, :p_pr_sis => @presion_sis,:p_pr_dias => @presion_dias, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr_am => @car_presion_am, :car_p_pr_sis => @car_presion_sis,:car_p_pr_dias => @car_presion_dias,:car_p_sat => @car_sat, :tipo => 'edit'} %>
         <br><label>Examen físico</label><span id="auto-examen" >Autoguardado</span>
         <textarea id='examen_fisico' class = "form-control" rows='2' cols='50'><%= @atencion_salud.examen_fisico %></textarea>       
       </div>
@@ -174,7 +174,7 @@
 
         <label>Diagnóstico</label>
         <select id="select_diagnostico" class="float-right">
-           <!--<option value="3620194" selected="selected">select2/select2</option>-->
+          <option></option>
         </select>
         <div class="checkbox ajus-margen">
           <label for="diag-no-frec">

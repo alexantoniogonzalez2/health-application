@@ -4,10 +4,10 @@
 			Agendamientos totales: <%= @accion_masiva.total_agendamientos %>
 		</div>	
 		<div class="col-md-4 column">	
-			Agendamientos eliminados: <%= @accion_masiva.agendamientos_cancelados %>
+			Agendamientos eliminados: <%= @accion_masiva.agendamientos_eliminados %>
 		</div>
 		<div class="col-md-4 column">	
-			Sin eliminar: <%= @accion_masiva.agendamientos_sin_cancelar %>
+			Sin eliminar: <%= @accion_masiva.agendamientos_sin_eliminar %>
 		</div>
 	</div>
 	<div class="row">
@@ -26,8 +26,8 @@
 		          <tr>
 		            <td><%= agendamiento.fecha_comienzo.strftime("%Y-%m-%d %H:%M") %></td>					            
 		            <td><%= agendamiento.estado.nombre %></td>   
-		            <td><%= agendamiento.atencion_salud.nil? ? '-' : agendamiento.atencion_salud.persona.showName('%n%p%m') %></td>
-		            <td><%= agendamiento.atencion_salud.nil? ? '-' : agendamiento.atencion_salud.persona.showRut %></td> 
+		            <td><%= agendamiento.persona.nil? ? '-' : agendamiento.persona.showName('%n%p%m') %></td>
+		            <td><%= agendamiento.persona.nil? ? '-' : agendamiento.persona.showRut %></td> 
 		          </tr>
 		        <% end %>     
 		      </tbody> 

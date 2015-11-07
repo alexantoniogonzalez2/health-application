@@ -1,6 +1,6 @@
 <tr id='tr-med-<%= p_m.id %>'>
   <td><%= p_m.created_at.strftime('%Y-%m-%d %H:%M') %></td> 
-  <td><%= p_m.persona_diagnostico.nil? ? '-' : p_m.persona_diagnostico.diagnostico.nombre %></td>              
+  <td><%= p_m.getDiagnosticos %></td>              
   <td><%= p_m.medicamento.nombre %></td>
   <td><%= p_m.getPosologia %></td>
   <td><%= p_m.fecha_inicio.nil? ? '-' : p_m.fecha_inicio.strftime('%Y-%m-%d') %></td>

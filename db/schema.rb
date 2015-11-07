@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827013308) do
+ActiveRecord::Schema.define(version: 20151106003128) do
 
   create_table "ag_accion_masiva", force: :cascade do |t|
     t.string   "estado",                                limit: 255
     t.integer  "responsable_id",                        limit: 4
     t.integer  "especialidad_prestador_profesional_id", limit: 4
     t.integer  "total_agendamientos",                   limit: 4
-    t.integer  "agendamientos_cancelados",              limit: 4
-    t.integer  "agendamientos_sin_cancelar",            limit: 4
+    t.integer  "agendamientos_eliminados",              limit: 4
+    t.integer  "agendamientos_sin_eliminar",            limit: 4
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.datetime "fecha_llegada_paciente"
     t.datetime "fecha_comienzo_real"
     t.datetime "fecha_final_real"
-    t.integer  "agendamiento_estado_id",                limit: 4
+    t.integer  "estado_id",                             limit: 4
     t.integer  "especialidad_prestador_profesional_id", limit: 4
     t.boolean  "motivo_consulta_nuevo"
     t.integer  "persona_diagnostico_control_id",        limit: 4
@@ -264,35 +264,43 @@ ActiveRecord::Schema.define(version: 20150827013308) do
   end
 
   create_table "fi_persona_diagnosticos_atenciones_salud", force: :cascade do |t|
-    t.integer  "prioridad",              limit: 4
-    t.integer  "persona_diagnostico_id", limit: 4
-    t.integer  "atencion_salud_id",      limit: 4
-    t.integer  "estado_diagnostico_id",  limit: 4
-    t.text     "comentario",             limit: 65535
+    t.integer  "prioridad",               limit: 4
+    t.integer  "persona_diagnostico_id",  limit: 4
+    t.integer  "atencion_salud_id",       limit: 4
+    t.integer  "estado_diagnostico_id",   limit: 4
+    t.text     "comentario",              limit: 65535
     t.datetime "fecha_inicio"
     t.datetime "fecha_termino"
     t.boolean  "es_cronica"
     t.boolean  "en_tratamiento"
     t.boolean  "primer_diagnostico"
     t.boolean  "es_antecedente"
+    t.boolean  "es_ultima_actualizacion"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "fi_persona_medicamento_diagnosticos", force: :cascade do |t|
+    t.integer  "persona_medicamento_id",                limit: 4
+    t.integer  "persona_diagnostico_atencion_salud_id", limit: 4
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   create_table "fi_persona_medicamentos", force: :cascade do |t|
     t.datetime "fecha_inicio"
     t.datetime "fecha_final"
-    t.integer  "persona_id",             limit: 4
-    t.integer  "medicamento_id",         limit: 4
-    t.integer  "persona_diagnostico_id", limit: 4
-    t.integer  "atencion_salud_id",      limit: 4
-    t.integer  "cantidad",               limit: 4
-    t.integer  "periodicidad",           limit: 4
-    t.integer  "duracion",               limit: 4
-    t.integer  "total",                  limit: 4
-    t.integer  "persona_vacuna_id",      limit: 4
+    t.integer  "persona_id",         limit: 4
+    t.integer  "medicamento_id",     limit: 4
+    t.integer  "atencion_salud_id",  limit: 4
+    t.integer  "cantidad",           limit: 4
+    t.integer  "periodicidad",       limit: 4
+    t.integer  "duracion",           limit: 4
+    t.integer  "total",              limit: 4
+    t.integer  "persona_vacuna_id",  limit: 4
     t.boolean  "es_antecedente"
-    t.text     "indicacion",             limit: 65535
+    t.text     "indicacion",         limit: 65535
+    t.integer  "via_administracion", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -438,6 +446,7 @@ ActiveRecord::Schema.define(version: 20150827013308) do
     t.string   "descripcion",         limit: 255
     t.string   "codigo_isp",          limit: 255
     t.integer  "cantidad",            limit: 4
+    t.boolean  "es_nombre_farmaco"
     t.integer  "medicamento_tipo_id", limit: 4
     t.integer  "laboratorio_id",      limit: 4
     t.datetime "created_at"

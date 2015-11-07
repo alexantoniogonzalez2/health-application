@@ -116,6 +116,7 @@ AplicacionMedica::Application.routes.draw do
   get '/agendamiento/buscadorHora', to: 'agendamiento#buscadorHora', :as => :agendamientoBuscadorHora
   post '/cargarTodos', to: 'agendamiento#cargarTodos', :as => :agendamientoCargarTodos
   post '/filtrar_profesionales', to: 'agendamiento#filtrarProfesionales', :as => :filtrarProfesionales
+  post '/filtrar_especialidad', to: 'agendamiento#filtrarEspecialidad'
   post '/buscar_horas', to: 'agendamiento#buscarHoras', :as => :buscarHoras
   post '/buscar_horas_profesional', to: 'agendamiento#buscarHorasProfesional'
   post '/aux/formNuevaHora', to: 'agendamiento#agregarNuevaHora', :as => :agregarHora

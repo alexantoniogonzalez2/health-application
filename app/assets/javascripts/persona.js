@@ -6,7 +6,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
 		email: { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
 		rut: { validators: { digits: { message: 'Ingresa solo números' } } },
 		rut: { validators: { validarRut: { message: 'El RUT ingresado no es válido' } } },
-    telefono: { validators: { digits: { message: 'Ingresa solo números' } } },
+    fijo: { validators: { digits: { message: 'Ingresa solo números' } } },
     otra_relacion: {  validators: {
                         callback: {
                             message: 'Especificar otra relación',
@@ -20,7 +20,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
                   },
     codigo: {  validators: {
                     callback: {
-                        message: 'Especificar tipo de teléfono',
+                        message: 'Especificar código de área',
                         callback: function(value, validator, $field) {
                             var hook = $field[0].id.substring(6);
                             var telefono = $('#form-agregar-persona-'+hook).find('[name="fijo"]').val(); 
@@ -141,3 +141,9 @@ $(".select-relacion").on("change", function(e) {
   value = $(this).val();
   (value == '5') ? $("#otro-div"+id).show() : $("#otro-div"+id).hide();      
 })
+
+$('input[id^=fecha]').datetimepicker({
+    locale: 'es',
+    format: 'YYYY-MM-DD',
+    viewMode: 'years',
+});

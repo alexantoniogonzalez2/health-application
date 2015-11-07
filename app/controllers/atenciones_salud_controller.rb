@@ -77,7 +77,8 @@ class AtencionesSaludController < ApplicationController
 	  					fpdas.en_tratamiento,
 	  					fpdas.primer_diagnostico")
 	  	.where('fi_persona_diagnosticos.persona_id = ? AND fpdas.atencion_salud_id != ? 
-	  					AND fpdas.es_cronica = 0 AND fpdas.es_antecedente = 0 AND ag_agendamientos.fecha_comienzo_real < ?', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
+	  					AND fpdas.es_cronica = 0 AND fpdas.es_antecedente = 0 AND ag_agendamientos.fecha_comienzo_real < ?
+	  					AND fpdas.es_ultima_actualizacion = 1', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
 
 	  @ant_med_at = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
@@ -118,17 +119,21 @@ class AtencionesSaludController < ApplicationController
 	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
 
 	  @persona_estatura = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],1).first
-	  @persona_peso = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],2).first
+	  @persona_peso_am = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],2).first
 	  @persona_presion = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],3).first
 	  @persona_imc= FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],4).first
 	  @persona_frec_car = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],5).first
 	  @persona_frec_res = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],6).first
 	  @persona_temp = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],7).first
 	  @persona_sat= FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],8).first
+	  @persona_presion_sis = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],9).first
+	  @persona_presion_dias = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],10).first
 
 	  @estatura = @persona_estatura ? @persona_estatura.valor : ''
 	  @peso = @persona_peso ? @persona_peso.valor : ''
-	  @presion = @persona_presion ? @persona_presion.valor : ''
+	  @presion_sis = @persona_presion_sis ? @persona_presion_sis.valor : ''
+	  @presion_dias = @persona_presion_dias ? @persona_presion_dias.valor : ''
+	  @presion_am = @persona_presion_am ? @persona_presion_am.valor : ''
 	  @imc = @persona_imc ? @persona_imc.valor : ''
 	  @frec_car = @persona_frec_car ? @persona_frec_car.valor : ''
 	  @frec_res = @persona_frec_res ? @persona_frec_res.valor : ''
@@ -138,7 +143,9 @@ class AtencionesSaludController < ApplicationController
 	  @car_frec_res = @persona_frec_res ? @persona_frec_res.caracteristica : ''
 	  @car_temp = @persona_temp ? @persona_temp.caracteristica : ''
 	  @car_sat = @persona_sat ? @persona_sat.caracteristica : ''
-	  @car_presion = @persona_presion ? @persona_presion.caracteristica : ''
+	  @car_presion_sis = @persona_presion_sis ? @persona_presion_sis.caracteristica : ''
+	  @car_presion_dias = @persona_presion_dias ? @persona_presion_dias.caracteristica : ''
+	  @car_presion_am = @persona_presion_am ? @persona_presion_am.caracteristica : ''
  
 	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id,params[:id]).order('created_at')
   	@class_med = @persona_medicamentos_ant.blank? ? '' : 'active-ant'	
@@ -290,7 +297,8 @@ class AtencionesSaludController < ApplicationController
 	  					fpdas.en_tratamiento,
 	  					fpdas.primer_diagnostico")
 	  	.where('fi_persona_diagnosticos.persona_id = ? AND fpdas.atencion_salud_id != ? 
-	  					AND fpdas.es_cronica = 0 AND fpdas.es_antecedente = 0 AND ag_agendamientos.fecha_comienzo_real < ?', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
+	  					AND fpdas.es_cronica = 0 AND fpdas.es_antecedente = 0 AND ag_agendamientos.fecha_comienzo_real < ?
+	  					AND fpdas.es_ultima_actualizacion = 1', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
 
 	  @ant_med_at = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
@@ -338,16 +346,20 @@ class AtencionesSaludController < ApplicationController
 
 	  @persona_estatura = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],1).first
 	  @persona_peso = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],2).first
-	  @persona_presion = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],3).first
+	  @persona_presion_am = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],3).first
 	  @persona_imc= FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],4).first
 	  @persona_frec_car = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],5).first
 	  @persona_frec_res = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],6).first
 	  @persona_temp = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],7).first
 	  @persona_sat= FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],8).first
+	  @persona_presion_sis = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],9).first
+	  @persona_presion_dias = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],10).first
 
 	  @estatura = @persona_estatura ? @persona_estatura.valor : ''
 	  @peso = @persona_peso ? @persona_peso.valor : ''
-	  @presion = @persona_presion ? @persona_presion.valor : ''
+	  @presion_am = @persona_presion_am ? @persona_presion_am.valor : ''
+	  @presion_sis = @persona_presion_sis ? @persona_presion_sis.valor : ''
+	  @presion_dias = @persona_presion_dias ? @persona_presion_dias.valor : ''
 	  @imc = @persona_imc ? @persona_imc.valor : ''
 	  @frec_car = @persona_frec_car ? @persona_frec_car.valor : ''
 	  @frec_res = @persona_frec_res ? @persona_frec_res.valor : ''
@@ -357,7 +369,9 @@ class AtencionesSaludController < ApplicationController
 	  @car_frec_res = @persona_frec_res ? @persona_frec_res.caracteristica : ''
 	  @car_temp = @persona_temp ? @persona_temp.caracteristica : ''
 	  @car_sat = @persona_sat ? @persona_sat.caracteristica : ''
-	  @car_presion = @persona_presion ? @persona_presion.caracteristica : ''
+	  @car_presion_am = @persona_presion_am ? @persona_presion_am.caracteristica : ''
+	  @car_presion_sis = @persona_presion_sis ? @persona_presion_sis.caracteristica : ''
+	  @car_presion_dias = @persona_presion_dias ? @persona_presion_dias.caracteristica : ''
  
 	  @persona_medicamentos_ant = FiPersonaMedicamentos.where('persona_id = ? AND ( atencion_salud_id != ? OR es_antecedente is not null )',@persona.id,params[:id]).order('created_at')
   	@class_med = @persona_medicamentos_ant.blank? ? '' : 'active-ant'	
@@ -548,7 +562,7 @@ class AtencionesSaludController < ApplicationController
 						  ON ag.id = pap.agendamiento_id
 						  LEFT JOIN pre_boletas_atenciones_pagadas as pbap
 						  ON pap.id = pbap.atencion_pagada_id')
-			.where('ag.agendamiento_estado_id = 7 AND pbap.id is null AND ppp.prestador_id = ? AND fecha_comienzo BETWEEN ? AND ?',getIdPrestador('administrativo'),@fecha_inicial,@fecha_final)
+			.where('ag.estado_id = 7 AND pbap.id is null AND ppp.prestador_id = ? AND fecha_comienzo BETWEEN ? AND ?',getIdPrestador('administrativo'),@fecha_inicial,@fecha_final)
 			.order('fecha_comienzo asc')
 
 		if params[:todos_profesionales] == '1'

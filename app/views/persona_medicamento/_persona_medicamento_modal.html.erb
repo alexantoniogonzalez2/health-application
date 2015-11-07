@@ -46,6 +46,16 @@
               <% end %>
             </div>
             <div class='col-md-7 column'>
+              <label>Vía de administración:</label>
+              <select id="select-via-administracion<%= persona_medicamento.id %>" class="select-via-administracion" <%= disabled %> >
+                <option></option>
+                <option value="1" <% if persona_medicamento.via_administracion == 1 %> selected <% end %> >Oral</option>
+                <option value="2" <% if persona_medicamento.via_administracion == 2 %> selected <% end %> >Endovenoso</option>
+                <option value="3" <% if persona_medicamento.via_administracion == 3 %> selected <% end %> >Rectal</option>
+                <option value="4" <% if persona_medicamento.via_administracion == 4 %> selected <% end %> >Vaginal</option>
+                <option value="5" <% if persona_medicamento.via_administracion == 5 %> selected <% end %> >Subcutánea</option>
+                <option value="6" <% if persona_medicamento.via_administracion == 6 %> selected <% end %> >Tópico</option>
+              </select><br/><br/>
               <label>Fecha inicio (estimada):</label> <%= persona_medicamento.fecha_inicio.nil? ? DateTime.current.strftime('%Y-%m-%d') : persona_medicamento.fecha_inicio.strftime('%Y-%m-%d') %><br/>
               <label>Fecha término (estimada):</label> <span id="fec-med-est-<%= persona_medicamento.id %>"><%= persona_medicamento.fecha_final.strftime('%Y-%m-%d') unless persona_medicamento.fecha_final.nil?  %></span>                         
             </div>
@@ -70,3 +80,5 @@
     </div>            
   </div>        
 </div>
+
+<%= javascript_include_tag "persona_medicamento" %>

@@ -8,7 +8,7 @@ function guardarAntOcupacion(id) {
 function guardarOcupacion(tipo,id){
   var f_i = $('#f_i_ocu-' + id ).datepicker("getDate");
   var f_f = $('#f_f_ocu-' + id ).datepicker("getDate");
-  var value = $("#select_ocupacion-" + id ).select2('data').id;
+  var value = $("#select_ocupacion-" + id ).val();
   var ocu_act = $('#ocupacion-actual-' + id).is(':checked');
   if (typeof atencion_salud_id !== 'undefined') { }
   else { atencion_salud_id = 'persona'; } 
@@ -27,7 +27,7 @@ function validarFecha(id){
   $('#alert-fecha-ocu-' + id).hide();
   $('#alert-fecha-inicio-ocu-' + id).hide();
   $('#alert-fecha-final-ocu-' + id).hide();
-  var value = $("#select_ocupacion-" + id ).select2('data') != null ? $("#select_ocupacion-" + id ).select2('data').id : null;
+  var value = $("#select_ocupacion-" + id ).val();
   var f_i = $('#f_i_ocu-' + id).datepicker("getDate");
   var f_f = $('#f_f_ocu-' + id).datepicker("getDate");
   var ocu_act = $('#ocupacion-actual-' + id).is(':checked');
@@ -68,7 +68,7 @@ $('.ocupacion-actual').change(function() {
 
 });
 
-$( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
+$( ".datepicker" ).attr("placeholder", "Selecciona una fecha").datepicker({
   showOtherMonths: true,
   selectOtherMonths: true,
   changeMonth: true,
@@ -82,14 +82,14 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
 $('.select_ocupacion').select2({
   width: '100%',
   minimumInputLength: 3,
-  placeholder: "Seleccione una ocupación",
+  placeholder: "Selecciona una ocupación",
   allowClear: true,
   ajax: {
     url: '/cargar_ocupaciones',
     dataType: 'json',
     type: 'POST',
-    processResults: function (params) { return { q: params.term }; },
-    results: function (data, page) { return { results: data };}
+    data: function (params) { return { q: params.term }; },
+    processResults: function (data, page) { return { results: data };}
   },
   /*initSelection: function (element, callback) {
     var text = $(element).val();

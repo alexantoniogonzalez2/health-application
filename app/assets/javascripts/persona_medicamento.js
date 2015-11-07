@@ -1,0 +1,1 @@
+$('select.select-via-administracion').select2({ width: '80%', placeholder: 'Selecciona vía de administración', allowClear: true });

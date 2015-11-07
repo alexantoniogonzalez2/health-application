@@ -1,7 +1,7 @@
 function cargarMotivos(){
 
-	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Seleccione una especialidad', allowClear: true,theme: "bootstrap" });
-	$('select.select_especialista').select2({ width: '80%', placeholder: 'Seleccione un especialista', allowClear: true,theme: "bootstrap" });
+	$('select.select_especialidad').select2({ width: '80%', placeholder: 'Selecciona una especialidad', allowClear: true });
+	$('select.select_especialista').select2({ width: '80%', placeholder: 'Selecciona un especialista', allowClear: true});
 
 	$('input[type=radio][name^=radios-motivo-]').change(function() {
 	  var id_agend = $(this).attr('name').substring(14);
@@ -39,8 +39,8 @@ if ( $("#iconos-leyenda").length > 0 ){
 }
 
 $(document).ready(function() {	
-	$('select.select_especialidad').select2({ width: '80%', allowClear: true, placeholder: 'Seleccione una especialidad'});
-	$('select.select_especialista').select2({ width: '80%', allowClear: true, placeholder: 'Seleccione un especialista'});
+	$('select.select_especialidad').select2({ width: '80%', allowClear: true, placeholder: 'Selecciona una especialidad'});
+	$('select.select_especialista').select2({ width: '80%', allowClear: true, placeholder: 'Selecciona un especialista'});
 });
 
 
@@ -259,7 +259,11 @@ function bloquearHora(id_agend){
 				type: 'POST',
 				url: '/aux/mostrarEventos',
 				data: {	evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id	},
-				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	$('#calendar').fullCalendar('addEventSource',response);},
+				success: function(response) {	
+					$('#buscadorHora').fullCalendar('addEventSource',response);
+					$('#calendar').fullCalendar('addEventSource',response); 
+					actualizar_atenciones();
+				},
 				error: function(xhr, status, error){	alert("Hubo un problema al bloquear la hora de atención.");	}
 			});
 		},
@@ -280,7 +284,11 @@ function desbloquearHora(id_agend){
 				type: 'POST',
 				url: '/aux/mostrarEventos',
 				data: {	evento_id: id_agend, especialidad_id: especialidad_id, profesional_id: profesional_id, prestador_id: prestador_id	},
-				success: function(response) {	$('#buscadorHora').fullCalendar('addEventSource',response);	$('#calendar').fullCalendar('addEventSource',response); },
+				success: function(response) {	
+					$('#buscadorHora').fullCalendar('addEventSource',response);
+					$('#calendar').fullCalendar('addEventSource',response);
+					actualizar_atenciones();
+				},
 				error: function(xhr, status, error){	alert("Hubo un problema al desbloquear la hora de atención.");	}
 			});
 		},

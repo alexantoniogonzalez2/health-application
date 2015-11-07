@@ -64,7 +64,7 @@
         <td><%= boleta.fecha_desde.try(:strftime, "%Y-%m-%d") %></td>
         <td><%= boleta.fecha_hasta.try(:strftime, "%Y-%m-%d") %></td>
      		<td><%= number_to_currency(boleta.monto, unit: "$ ", separator: '.') %></td>
-     		<td id="cell-<%= boleta.id %>"><%= boleta.estado %></td>
+     		<td><%= boleta.estado %></td>
      		<td>
           <% if boleta.estado == "Anulada" %>
             <span>-</span>  

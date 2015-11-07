@@ -1,5 +1,4 @@
 function bloquearHoraAgen(agen) {	
-  console.log('hola');
   parent = $("#agen"+agen).parent();    
   $.ajax({
     type: 'POST',

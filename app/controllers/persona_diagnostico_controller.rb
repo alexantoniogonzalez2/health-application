@@ -212,6 +212,8 @@ class PersonaDiagnosticoController < ApplicationController
 					@persona_diagnostico.es_cronica = 0		
 					@persona_diagnostico.save!
 					@primer_diagnostico = 1				
+				else
+					FiPersonaDiagnosticosAtencionesSalud.where('persona_diagnostico_id = ?',@persona_diagnostico.id).update_all(:es_ultima_actualizacion => 0)
 				end	
 				@persona_diagnostico_atencion = FiPersonaDiagnosticosAtencionesSalud.new
 				@persona_diagnostico_atencion.persona_diagnostico_id = @persona_diagnostico.id
@@ -222,6 +224,7 @@ class PersonaDiagnosticoController < ApplicationController
 				@persona_diagnostico_atencion.es_cronica = @persona_diagnostico.es_cronica
 				@persona_diagnostico_atencion.en_tratamiento = 0
 				@persona_diagnostico_atencion.es_antecedente = 0
+				@persona_diagnostico_atencion.es_ultima_actualizacion = 1
 				@persona_diagnostico_atencion.primer_diagnostico = @primer_diagnostico
 				@persona_diagnostico_atencion.save
 
@@ -333,10 +336,9 @@ class PersonaDiagnosticoController < ApplicationController
   	@persona_diagnostico_id = @persona_diagnostico_atencion.persona_diagnostico.id
 
   	#Se borra eventual asociación con medicamentos
-  	@persona_medicamentos = FiPersonaMedicamentos.where('persona_diagnostico_id = ?', @persona_diagnostico_id )
-  	@persona_medicamentos.each do |p_m|
-			p_m.persona_diagnostico = nil
-			p_m.save!			
+  	@persona_medicamentos_diagnosticos = FiPersonaMedicamentoDiagnosticos.where('persona_diagnostico_atencion_salud_id = ?', @persona_diagnostico_atencion.id )
+  	@persona_medicamentos_diagnosticos.each do |p_m|
+			p_m.destroy				
 		end
 
 		#Se borra eventual asociación con certificados

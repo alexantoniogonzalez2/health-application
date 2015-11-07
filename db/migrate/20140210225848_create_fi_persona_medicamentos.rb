@@ -5,7 +5,6 @@ class CreateFiPersonaMedicamentos < ActiveRecord::Migration
       t.datetime :fecha_final
       t.references :persona 	#persona_id
       t.references :medicamento 	#medicamento_id
-      t.references :persona_diagnostico 	#persona_diagnostico_id
       t.references :atencion_salud 	#atencion_salud_id
       t.integer :cantidad
       t.integer :periodicidad
@@ -13,7 +12,8 @@ class CreateFiPersonaMedicamentos < ActiveRecord::Migration
       t.integer :total
       t.references :persona_vacuna #persona_vacuna_id
       t.boolean :es_antecedente 
-      t.text :indicacion      
+      t.text :indicacion
+      t.integer :via_administracion      
       t.timestamps
     end
   end

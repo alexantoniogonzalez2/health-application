@@ -12,6 +12,7 @@ class CreateFiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Migration
       t.boolean :en_tratamiento  
       t.boolean :primer_diagnostico 
       t.boolean :es_antecedente
+      t.boolean :es_ultima_actualizacion
       t.timestamps
     end
   end

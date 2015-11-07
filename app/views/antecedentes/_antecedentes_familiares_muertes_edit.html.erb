@@ -31,8 +31,8 @@
             </div>
             <div class='column col-md-4'>   
               <div class="checkbox padding-left">
-                <label for="diag-no-frec-afm-<%= deceso['id'] %>">
-                  <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-<%= deceso['id'] %>" value='1' > Incluir diagnósticos no frecuentes
+                <label for="no-frec-ant-fam-mue-<%= deceso['id'] %>">
+                  <input type="checkbox" name="checkboxes" id="no-frec-ant-fam-mue-<%= deceso['id'] %>" value='1' > Incluir diagnósticos no frecuentes
                 </label>
               </div>
             </div>
@@ -51,7 +51,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" onclick="cerrarModalAntFamMue(<%= deceso['id'] %>)">Cerrar ventana</button>
-        <button type="button" id="agregar-ant-fam-mue-<%= deceso['id'] %>" class="btn btn-success cambiar_antecedente">Cambiar antecedente</button>
+        <button type="button" id="agregar-ant-fam-mue-<%= deceso['id'] %>" class="btn btn-success" onclick="cambiarAntecedente(<%= deceso['id'] %>)">Cambiar antecedente</button>
       </div>
     </div>            
   </div>        

@@ -1,6 +1,6 @@
 $(function() {
 
-    $('#tabpanel-peso, #tabpanel-estatura, #tabpanel-presion, #tabpanel-IMC, #tabpanel-frec_car,#tabpanel-frec_res,#tabpanel-temp,#tabpanel-sat').bind('click', function (e) {
+    $('#tabpanel-peso, #tabpanel-estatura, #tabpanel-presion_am, #tabpanel-presion_sis,#tabpanel-presion_dias, #tabpanel-IMC, #tabpanel-frec_car,#tabpanel-frec_res,#tabpanel-temp,#tabpanel-sat').bind('click', function (e) {
       
       id = this.id;
       tipo = id.substring(9);
@@ -12,7 +12,7 @@ $(function() {
           persona_id: $('#persona_id').val() ,
           tipo: tipo
         },
-        success: function(response) {   
+        success: function(response) { 
           cargarGrafico(response,tipo);
         },
         error: function(xhr, status, error){ alert("No se pudo actualizar los gráficos métricas o signos vitales del paciente.");   }
@@ -46,7 +46,7 @@ function cargarGrafico (data,tipo){
         }]
       },
       tooltip: {
-        valueSuffix: ' kg'
+        valueSuffix: ' '+data.unidad
       },
       legend: {
         layout: 'vertical',

@@ -1,7 +1,7 @@
 <% disabled = (@tipo == 'edit' ) ? '' : 'disabled' %>
 <div class="radio diag-med-<%= p_d.id %>">
   <label for="pd_med_<%= p_d.id%>-<%= med %>" >
-    <input type="radio" name="rad-med-<%= med %>" onchange="act_med_diag(<%= med %>)" id="pd_med_<%= p_d.id%>-<%= med %>" value="<%= p_d.id%>" <% if p_d.id == pe_di %> checked <% end %> <%= disabled %> >
+    <input type="checkbox" name="rad-med-<%= med %>" onchange="act_med_diag(<%= med %>,<%= p_d.id %>)" id="pd_med_<%= p_d.id%>-<%= med %>" value="<%= p_d.id%>" <% if p_d.paraMedicamento(med,p_d.id)  %> checked="checked" <% end %> <%= disabled %> >
     <%= p_d.diagnostico.codigo_cie10 + ' ' + p_d.diagnostico.nombre %>
   </label>
 </div>

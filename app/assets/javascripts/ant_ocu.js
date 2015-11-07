@@ -1,4 +1,4 @@
-$( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
+$( ".datepicker" ).attr("placeholder", "Selecciona una fecha").datepicker({
   showOtherMonths: true,
   selectOtherMonths: true,
   changeMonth: true,
@@ -6,13 +6,14 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
   dateFormat: 'yy-mm-dd',
   dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
   showButtonPanel: true, 
+  yearRange: '1915:2017',
   onSelect: function(date) { }       
 });
 
 $('.select_ocupacion').select2({
   width: '100%',
   minimumInputLength: 3,
-  placeholder: "Seleccione una ocupación",
+  placeholder: "Selecciona una ocupación",
   allowClear: true,
   ajax: {
     url: '/cargar_ocupaciones',
@@ -21,12 +22,5 @@ $('.select_ocupacion').select2({
     data: function (params) { return { q: params.term }; },
     processResults: function (data, page) { return { results: data };}
   },
-  /*initSelection: function (element, callback) {
-    var text = $(element).val();
-    var id = $(element).attr('name');
-    if (id !== "") {
-      var data = { id: id, text: text };
-      callback(data);       
-    }
-  }*/
+  
 });

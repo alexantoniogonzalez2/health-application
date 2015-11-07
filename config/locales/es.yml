@@ -126,7 +126,7 @@ es:
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
   helpers:
     select:
-      prompt: Por favor seleccione
+      prompt: Por favor selecciona
     submit:
       create: Crear %{model}
       submit: Guardar %{model}

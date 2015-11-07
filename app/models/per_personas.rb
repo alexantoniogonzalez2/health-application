@@ -153,7 +153,7 @@ class PerPersonas < ActiveRecord::Base
     edad = age
     dob = fecha_nacimiento 
     now = Time.now.utc.to_date
-    meses =  now.month > dob.month ?  now.month - dob.month : 12 - dob.month + now.month   
+    meses =  now.month >= dob.month ?  now.month - dob.month : 12 - dob.month + now.month   
     meses =  meses - 1 if dob.day >= now.day
     texto_edad = edad == 1 ? ' año' : ' años'
     texto_meses = meses == 1 ? ' mes' : ' meses'

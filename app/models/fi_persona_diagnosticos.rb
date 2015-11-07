@@ -4,7 +4,6 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
 	belongs_to :diagnostico, :class_name => 'MedDiagnosticos'
 	belongs_to :estado_diagnostico, :class_name => 'MedDiagnosticoEstados'
 	belongs_to :gesta, :class_name => 'FiGestas'
-	has_many :persona_medicamentos, :class_name => 'FiPersonaMedicamentos', :foreign_key => 'persona_diagnostico_id' , dependent: :destroy
 	has_many :persona_diagnosticos_atencion_salud, :class_name => 'FiPersonaDiagnosticosAtencionesSalud', :foreign_key => 'persona_diagnostico_id', dependent: :destroy 
   has_many :agendamientos_control, :class_name => 'AgAgendamientos', :foreign_key => 'persona_diagnostico_control_id'
   
@@ -55,6 +54,15 @@ class FiPersonaDiagnosticos < ActiveRecord::Base
   def paraPrestacion (p_p,p_d)
     persona_prestacion_diagnostico = FiPersonaPrestacionDiagnosticos.where('persona_prestacion_id = ? AND persona_diagnostico_atencion_salud_id = ?',p_p,p_d).first
     if persona_prestacion_diagnostico
+      return true
+    else 
+      return false
+    end  
+  end 
+
+  def paraMedicamento (p_m,p_d)
+    persona_medicamento_diagnostico = FiPersonaMedicamentoDiagnosticos.where('persona_medicamento_id = ? AND persona_diagnostico_atencion_salud_id = ?',p_m,p_d).first
+    if persona_medicamento_diagnostico
       return true
     else 
       return false

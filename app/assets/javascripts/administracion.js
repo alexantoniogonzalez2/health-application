@@ -167,7 +167,7 @@ $('#filtrar-atenciones').click(function() {
     )
   }
   if (profesionales.length == 0 && todos_profesionales == 2)
-    alert('Seleccione un profesional.');  
+    alert('Selecciona un profesional.');  
   else if ( fecha_inicio != '' || fecha_final != '') {
     $('#msg_boletas').html('');
     $.ajax({
@@ -186,7 +186,7 @@ $('#filtrar-atenciones').click(function() {
 
   } 
   else
-    alert('Seleccione un parámetro de búsqueda.'); 
+    alert('Selecciona un parámetro de búsqueda.'); 
   
 });
 
@@ -270,7 +270,7 @@ $('#filtrar-boletas').click(function() {
     )
   }
   if (profesionales.length == 0 && todos_profesionales == 2)
-    alert('Seleccione un profesional.');  
+    alert('Selecciona un profesional.');  
   else if ( fecha_inicio != '' || fecha_final != '' || todos_profesionales == 1 || (todos_profesionales == 2 && profesionales.length != 0 ) ) {
     $.ajax({
       type: 'POST',
@@ -288,7 +288,7 @@ $('#filtrar-boletas').click(function() {
 
   } 
   else
-    alert('Seleccione un parámetro de búsqueda.');  
+    alert('Selecciona un parámetro de búsqueda.');  
 });
 
 function loadAtenciones(boleta){
@@ -311,9 +311,19 @@ function anularBoleta(boleta_id){
     url: '/anular_boleta',
     data: { boleta: boleta_id },
     success: function(response){ 
-        var table = $('#lista_boletas').DataTable();
-        var cell = table.cell('#cell-'+boleta_id);
-        cell.data('Anulada').draw();
+      var table = $('#lista_boletas').DataTable();
+      var indexes = table.rows().eq( 0 ).filter( function (rowIdx) {
+        return table.cell( rowIdx, 0 ).data() === boleta_id ? true : false;
+      } );
+      //console.log(indexes);
+      table.cell( indexes[0], 8 ).data('Anulada').draw();
+      table.cell( indexes[0], 9 ).data('-').draw();
+      table.cell( indexes[0], 10 ).data('-').draw();
+     
+
+
+        //var cell = table.cell('#cell-'+boleta_id);
+        //cell.data('Anulada').draw();
     },
     error: function(xhr, status, error){ alert("Se produjo un error al anular la boleta."); }
   });

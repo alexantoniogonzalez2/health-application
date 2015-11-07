@@ -78,14 +78,16 @@ ED2 = MedDiagnosticoEstados.create! :nombre => "Sospecha"
 ED3 = MedDiagnosticoEstados.create! :nombre => "Descartado"
 
 puts 'Métricas'
-FiMetricas.create! :nombre => "Estatura", :unidad => "centimetros"
-FiMetricas.create! :nombre => "Peso", :unidad => "kilogramos"
-FiMetricas.create! :nombre => "Presion", :unidad => "mb"
-FiMetricas.create! :nombre => "IMC", :unidad => "kilogramos/metros2"
+FiMetricas.create! :nombre => "Estatura", :unidad => "cm"
+FiMetricas.create! :nombre => "Peso", :unidad => "kg"
+FiMetricas.create! :nombre => "Presión arterial media", :unidad => "mm Hg"
+FiMetricas.create! :nombre => "IMC", :unidad => "k/m"
 FiMetricas.create! :nombre => "Frecuencia cardiaca", :unidad => "latidos por minuto"
 FiMetricas.create! :nombre => "Frecuencia respiratoria", :unidad => "respiraciones por minuto"
-FiMetricas.create! :nombre => "Temperatura", :unidad => "grados celcius"
-FiMetricas.create! :nombre => "Saturación", :unidad => "porcentaje"
+FiMetricas.create! :nombre => "Temperatura", :unidad => "C°"
+FiMetricas.create! :nombre => "Saturación", :unidad => "%"
+FiMetricas.create! :nombre => "Presión arterial sistólica", :unidad => "mm Hg"
+FiMetricas.create! :nombre => "Presión arterial diastólica", :unidad => "mm Hg"
 
 puts 'Tipos Ficha'
 TF1=FiFichaTipos.create! :nombre => "Tipo ficha general"

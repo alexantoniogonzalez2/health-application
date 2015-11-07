@@ -10,6 +10,7 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
   has_many :interconsultas, :class_name => 'FiInterconsultas', :foreign_key => 'persona_diagnostico_atencion_salud_id'
   has_many :certificado_diagnosticos, :class_name => 'FiCertificadoDiagnosticos', :foreign_key => 'persona_diagnostico_atencion_salud_id'
   has_many :persona_prestacion_diagnosticos, :class_name => 'FiPersonaPrestacionDiagnosticos', :foreign_key => 'persona_diagnostico_atencion_salud_id'
+  has_many :persona_medicamento_diagnosticos, :class_name => 'FiPersonaMedicamentoDiagnostico', :foreign_key => 'persona_diagnostico_atencion_salud_id'
   has_many :reabrir_estado_diagnostico, :class_name => 'FiReabrirEstadoDiagnostico', :foreign_key => 'persona_diagnostico_atencion_salud_id'
 
   def editarEnReabrir
@@ -39,7 +40,9 @@ class FiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Base
                                  :es_antecedente,
                                  :certificado_diagnosticos,
                                  :persona_prestacion_diagnosticos,
+                                 :persona_medicamento_diagnosticos,
                                  :reabrir_estado_diagnostico,
+                                 :es_ultima_actualizacion,
                                  :created_at)
   end
 								

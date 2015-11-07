@@ -28,7 +28,7 @@ calculaActMod = ->
   preg_15 = $('#input-act-fis-15').val()
   return preg_5*preg_6 + preg_8*preg_9 + preg_14*preg_15
 
-actualizarDiagnostico = (edad) ->
+actualizarDiagnosticoActFis = (edad) ->
   act_vig = calculaActVig()
   act_mod = calculaActMod()
   total_equi = act_vig*2 + act_mod
@@ -79,7 +79,7 @@ ocultarPreguntas = (valor,pregunta) ->
     guardarActividad( 0, preg_2 )
     id_diag = $('span[name=diag_act_fis]').attr "id"
     edad = id_diag.substring(13)
-    actualizarDiagnostico(edad) unless edad == 'sin_info' 
+    actualizarDiagnosticoActFis(edad) unless edad == 'sin_info' 
     
 calculaAct = ->
   act_vig = calculaActVig()
@@ -106,13 +106,13 @@ $(document).ready ->
   calculaAct()
   id_diag = $('span[name=diag_act_fis]').attr "id"
   edad = id_diag.substring(13) unless !id_diag?
-  actualizarDiagnostico(edad) unless edad == 'sin_info'
+  actualizarDiagnosticoActFis(edad) unless edad == 'sin_info'
   $('span[name=diag_act_fis]').html('falta agregar la edad') if edad == 'sin_info' 
   $('input[id^=input-act-fis-]').keyup ->
     calculaAct()
     id_diag = $('span[name=diag_act_fis]').attr "id"
     edad = id_diag.substring(13)
-    actualizarDiagnostico(edad) unless edad == 'sin_info'
+    actualizarDiagnosticoActFis(edad) unless edad == 'sin_info'
     return 
   $('input[type=radio][name^=rad-act-fis-]').change ->
     id = $(this).attr "name"
@@ -156,14 +156,14 @@ $("#form_act_fis")
 $('#select_diagnostico_ant').select2
   width: '380px'
   minimumInputLength: 3
-  placeholder: 'Seleccione un diagnostico'
+  placeholder: 'Selecciona un diagnostico'
   ajax:
     url: '/cargar_diagnosticos'
     dataType: 'json'
     type: 'POST'
-    data: (term, page) ->
-      { q: term, diag_no_frec: diagnosticoNoFrecuente('#new-diag-no-frec-ant') }
-    results: (data, page) ->
+    data: (params) ->
+      { q: params.term, diag_no_frec: diagnosticoNoFrecuente('#new-diag-no-frec-ant') }
+    processResults: (data, page) ->
       { results: data }
 
 $('#select_diagnostico_ant').on 'change', (e) ->

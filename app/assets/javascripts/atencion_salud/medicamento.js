@@ -1,4 +1,4 @@
-function actualizarDiagnosticos(med,tipo){
+function actualizarDiagnosticosMedicamentos(med,tipo){
 
   $('#div-diagnosticos-'+med).empty();
   $.ajax({

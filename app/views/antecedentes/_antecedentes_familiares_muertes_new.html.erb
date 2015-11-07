@@ -1,4 +1,4 @@
-<div class="modal-body">
+<div class="modal-body" id="modal-container-ant-fam-mue-new">
 	<div class="container ajustado">
     <div class="row clearfix">
       <div class="col-md-8 column">
@@ -11,14 +11,14 @@
     <div class='row padding-top'>
       <div class='column col-md-8'>        
         <label>Diagnóstico</label>:
-        <select id="select_diag-afm-new" class='select_diag float-right'>
+        <select id="select_diag-afm-new" class='select_diag float-right' >
           <option></option>
         </select>  
       </div>  
       <div class='column col-md-4'> 
         <div class="checkbox padding-left">
-          <label for="diag-no-frec-afm-new">
-            <input type="checkbox" name="checkboxes" id="diag-no-frec-afm-new" value="1"> Incluir diagnósticos no frecuentes
+          <label for="no-frec-ant-fam-mue-new">
+            <input type="checkbox" name="checkboxes" id="no-frec-ant-fam-mue-new" value="1"> Incluir diagnósticos no frecuentes
           </label>
         </div>
       </div>
@@ -49,3 +49,5 @@
     </div>    
   </div>  
 </div>
+
+<%= javascript_include_tag "ant_fam" %>

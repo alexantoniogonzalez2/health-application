@@ -5,8 +5,8 @@ class OcuOcupaciones < ActiveRecord::Base
 
 	def formato_ocupaciones
   {
-    'id'        => id,
-    'text'      => nombre     
+    :id        => id,
+    :text     => nombre     
   }
 	end
 

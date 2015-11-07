@@ -1,9 +1,9 @@
 class FiPersonaMedicamentos < ActiveRecord::Base
 	belongs_to :persona, :class_name => 'PerPersonas'
 	belongs_to :medicamento, :class_name => 'MedMedicamentos'
-	belongs_to :persona_diagnostico, :class_name => 'FiPersonaDiagnosticos'
 	belongs_to :atencion_salud, :class_name => 'FiAtencionesSalud'
-  belongs_to :persona_vacuna, :class_name => 'FiPersonasVacunas'
+  belongs_to :persona_vacuna, :class_name => 'FiPersonasVacunas'  
+  has_many :persona_medicamento_diagnosticos, :class_name => 'FiPersonaMedicamentoDiagnosticos', :foreign_key => 'persona_medicamento_id'
   
   def getPosologia
     posologia = '-'
@@ -24,9 +24,17 @@ class FiPersonaMedicamentos < ActiveRecord::Base
     respuesta = false if created_at > fecha_comienzo and created_at < fecha_final
     return respuesta
   end  
+
+  def getDiagnosticos
+    diagnosticos = []
+    persona_medicamento_diagnosticos.each do |p_m_d|
+      diagnosticos << p_m_d.persona_diagnostico_atencion_salud.persona_diagnostico.diagnostico.nombre
+    end
+    diagnosticos.any? ? diagnosticos.join(' | ') : '-'
+  end  
   
   private
   def app_params
-    params.require(:list).permit(:id,:persona,:medicamento,:persona_diagnostico,:persona_vacuna,:fecha_final,:fecha_inicio,:atencion_salud,:cantidad,:periodicidad,:duracion,:total,:es_antecedente,:indicacion,:created_at)
+    params.require(:list).permit(:id,:persona,:medicamento,:persona_vacuna,:fecha_final,:fecha_inicio,:atencion_salud,:cantidad,:periodicidad,:duracion,:total,:es_antecedente,:indicacion,:via_administracion,:persona_medicamento_diagnosticos,:created_at)
   end
 end

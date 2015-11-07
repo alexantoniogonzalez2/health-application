@@ -1,7 +1,7 @@
 $('#select_medicamento_ant').select2
   width: '380px'
   minimumInputLength: 3
-  placeholder: 'Seleccione un medicamento'
+  placeholder: 'Selecciona un medicamento'
   ajax:
     url: '/cargar_medicamentos'
     dataType: 'json'

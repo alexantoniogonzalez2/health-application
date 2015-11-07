@@ -159,7 +159,7 @@ $(function(){
 	    todayHighlight: true,
 	    autoclose: true,
 	    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-	    minDate: '0',
+	    minDate: '0',	  
 	});
 
 	$('#diaForm input[name="di"]').change(function(){
@@ -236,8 +236,6 @@ $(function(){
 	},
 	errorPlacement: '',
 	submitHandler: function(form){
-
-		console.log("Ok");
 
 		$('#calendar').fullCalendar('removeEvents','tmp');
 		$('#calendar').fullCalendar('removeEvents','err');

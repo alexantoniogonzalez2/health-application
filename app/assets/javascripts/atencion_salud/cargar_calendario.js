@@ -1,7 +1,7 @@
 $(".datepicker").attr( 'readOnly' , 'true' );
 $(".datepicker-disabled" ).attr( 'readOnly' , 'true' );
 
-$( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
+$( ".datepicker" ).attr("placeholder", "Selecciona una fecha").datepicker({
   showOtherMonths: true,
   selectOtherMonths: true,
   changeMonth: true,
@@ -9,6 +9,7 @@ $( ".datepicker" ).attr("placeholder", "Seleccione una fecha").datepicker({
   dateFormat: 'yy-mm-dd',
   dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
   showButtonPanel: true, 
+  yearRange: '1915:2017',
   onSelect: function(dateText) {
     var id = this.name.substring(4);
     var tipo = this.name.substring(0,4); 
@@ -64,8 +65,8 @@ $('.fecha').datetimepicker({
 $('select.select_especialidad_interconsulta').select2({ width: '80%', placeholder: 'Selecciona una especialidad', allowClear: true });
 $('select.select_especialidad_interconsulta_ant').select2({ width: '80%', placeholder: 'Selecciona una especialidad', disabled: true });
 $('select.select_persona').select2({ width: '60%', placeholder: 'Selecciona una persona', allowClear: true });
-$('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Seleccione un país de contagio', allowClear: true });
-$('select.select-confirmacion').select2({ width: '80%', placeholder: 'Seleccione una opción', allowClear: true });
+$('select.select-pais-contagio').select2({ width: '80%', placeholder: 'Selecciona un país de contagio', allowClear: true });
+$('select.select-confirmacion').select2({ width: '80%', placeholder: 'Selecciona una opción', allowClear: true });
 $(document).ready(function() {
   $('.icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.' }})
   $('.icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})

@@ -1,7 +1,7 @@
 $('#select_procedimiento_ant').select2
   width: '380px'
   minimumInputLength: 3
-  placeholder: 'Seleccione un procedimiento'
+  placeholder: 'Selecciona un procedimiento'
   ajax:
     url: '/cargar_prestaciones'
     dataType: 'json'

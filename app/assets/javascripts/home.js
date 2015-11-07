@@ -347,7 +347,7 @@ if ( $.fn.dataTable.isDataTable( '#lista_agendamientos' ) ) { }
 else {
   $('#lista_agendamientos').DataTable({
     "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "Todas"]],
-    "order": [[ 0, "desc" ]],
+    "order": [[ 0, "asc" ]],
     "language": {
       "lengthMenu": "Mostrar _MENU_ horas por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",

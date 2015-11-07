@@ -37,6 +37,14 @@ class AgendamientoController < ApplicationController
 		render :text =>resp	
 	end
 
+	def filtrarEspecialidad
+		resp = ""
+		@prestador_id = getIdPrestador('administrativo')		
+		@especialidad = PrePrestadorProfesionales.select('especialidad_id').where("profesional_id = ? AND prestador_id = ?",params[:especialista],@prestador_id)
+	  resp = @especialidad.length > 1 ? 'multiples' : @especialidad.first.especialidad_id 
+		render :text => resp	
+	end
+
 	def buscarHoras
 		
 		events=[]
@@ -405,6 +413,7 @@ class AgendamientoController < ApplicationController
 		@permisos = Hash.new
 		@permisos['tomar_hora_paciente'] = (estado == 'Hora disponible' and !esAdministrativo and !esProfesionalSalud) ? true : false
 		@permisos['tomar_hora_admin'] = (perm_tomar_horas and estado == 'Hora disponible') ? true : false
+		@permisos['admin_bloquea'] =  ((['Hora disponible','Hora bloqueada' ].include?(estado)) and (perm_admin_bloquea)) ? true : false 
 		@permisos['info_paciente'] = ((!['Hora disponible','Hora bloqueada' ].include?(estado)) and (perm_paciente or perm_profesional)) ? true : false 
 		@permisos['info_paciente_vista_admin'] =  ( (!['Hora disponible','Hora bloqueada' ].include?(estado)) and (perm_admin_confirma or perm_admin_recibe or perm_tomar_horas) ) ? true : false 
 		@permisos['profesional'] = perm_profesional
@@ -425,8 +434,8 @@ class AgendamientoController < ApplicationController
 		@accion_masiva.responsable = @responsable
 		@accion_masiva.especialidad_prestador_profesional = @especialidad_prestador_profesional					
 		@accion_masiva.estado = 'creada'
-		@accion_masiva.agendamientos_cancelados = 0
-		@accion_masiva.agendamientos_sin_cancelar = 0
+		@accion_masiva.agendamientos_eliminados = 0
+		@accion_masiva.agendamientos_sin_eliminar = 0
 		@accion_masiva.save
 		contador = 0 
 
@@ -456,7 +465,7 @@ class AgendamientoController < ApplicationController
 					@agendamiento_log.fecha = DateTime.current
 					@agendamiento_log.save
 
-					events << @agendamiento.event
+					events << @agendamiento.event(true)
 					fecha_comienzo = tmp_f
 				end 
 			end 
@@ -529,14 +538,14 @@ class AgendamientoController < ApplicationController
 	end 
 
 	def cargarCancelarAccion
-		agendamientos_cancelados = 0
-		agendamientos_sin_cancelar = 0
+		agendamientos_eliminados = 0
+		agendamientos_sin_eliminar = 0
 		@accion_masiva = AgAccionMasiva.find(params[:accion_masiva])
 		@accion_masiva.agendamientos.each do |agendamiento|
-			agendamiento.agendamiento_estado.nombre == 'Hora disponible' ? agendamientos_cancelados += 1 : agendamientos_sin_cancelar += 1
+			agendamiento.estado.nombre == 'Hora disponible' ? agendamientos_eliminados += 1 : agendamientos_sin_eliminar += 1
 		end	
-		@accion_masiva.agendamientos_cancelados = agendamientos_cancelados
-		@accion_masiva.agendamientos_sin_cancelar = agendamientos_sin_cancelar
+		@accion_masiva.agendamientos_eliminados = agendamientos_eliminados
+		@accion_masiva.agendamientos_sin_eliminar = agendamientos_sin_eliminar
 		@accion_masiva.save
 
 		respond_to do |format|     
@@ -545,14 +554,14 @@ class AgendamientoController < ApplicationController
 	end	
 
 	def cargarVistaSinCancelar
-		agendamientos_cancelados = 0
-		agendamientos_sin_cancelar = 0
+		agendamientos_eliminados = 0
+		agendamientos_sin_eliminar = 0
 		@accion_masiva = AgAccionMasiva.find(params[:accion_masiva])
 		@accion_masiva.agendamientos.each do |agendamiento|
-			agendamiento.agendamiento_estado.nombre == 'Hora disponible' ? agendamientos_cancelados += 1 : agendamientos_sin_cancelar += 1
+			agendamiento.estado.nombre == 'Hora disponible' ? agendamientos_eliminados += 1 : agendamientos_sin_eliminar += 1
 		end	
-		@accion_masiva.agendamientos_cancelados = agendamientos_cancelados
-		@accion_masiva.agendamientos_sin_cancelar = agendamientos_sin_cancelar
+		@accion_masiva.agendamientos_eliminados = agendamientos_eliminados if @accion_masiva.estado == 'creada'
+		@accion_masiva.agendamientos_sin_eliminar = agendamientos_sin_eliminar
 		@accion_masiva.save
 
 		respond_to do |format|     
@@ -561,19 +570,21 @@ class AgendamientoController < ApplicationController
 	end	
 
 	def cancelarAccionMasiva
-		agendamientos_cancelados = 0
-		agendamientos_sin_cancelar = 0
+		agendamientos_eliminados = 0
+		agendamientos_sin_eliminar = 0
 		@accion_masiva = AgAccionMasiva.find(params[:accion_masiva])
 		@accion_masiva.agendamientos.each do |agendamiento|
-			if agendamiento.agendamiento_estado.nombre == 'Hora disponible'
-				agendamientos_cancelados += 1
+			if agendamiento.estado.nombre == 'Hora disponible'
+				agendamientos_eliminados += 1
 				agendamiento.destroy
 			else
-				agendamientos_sin_cancelar += 1
+				agendamientos_sin_eliminar += 1
 			end 
 		end
-		@accion_masiva.estado = agendamientos_sin_cancelar == 0 ? 'cancelada completa' : 'cancelada incompleta'
-		@accion_masiva.save
+		@accion_masiva.estado = agendamientos_sin_eliminar == 0 ? 'cancelada completa' : 'cancelada incompleta'
+		@accion_masiva.agendamientos_eliminados = agendamientos_eliminados
+		@accion_masiva.agendamientos_sin_eliminar = agendamientos_sin_eliminar
+		@accion_masiva.save!
 
 		respond_to do |format|     
     	format.js   {}    	

@@ -19,7 +19,7 @@ class MedMedicamentos < ActiveRecord::Base
 
   private
   def app_params
-    params.require(:list).permit(:id,:nombre,:descripcion,:codigo_isp,:medicamento_tipo,:cantidad,:laboratorio,:persona_medicamentos,:medicamento_componente,:vacunas_medicamentos)
+    params.require(:list).permit(:id,:nombre,:descripcion,:codigo_isp,:medicamento_tipo,:cantidad,:laboratorio,:persona_medicamentos,:medicamento_componente,:vacunas_medicamentos,:es_nombre_farmaco)
   end
 
 end

@@ -176,31 +176,15 @@ $('#select_diagnostico').select2({
   cache: true
 });
 
-$('.select_diag').select2({
-  allowClear: true,
-  width: '60%',
-  minimumInputLength: 3,
-  placeholder: "Selecciona un diagnóstico",
-  ajax: {
-    url: '/cargar_diagnosticos',
-    dataType: 'json',
-    type: 'POST',
-    data: function (params) {
-      return { q: params.term, diag_no_frec: diagnosticoNoFrecuente('#diag-no-frec-' + $(this).attr('id').substring(12)) };
-    },
-    processResults: function (data, page) { return { results: data }; }
-  }
-});
-
 $('#select_examen').select2({
   width: '380px',
   minimumInputLength: 3,
-  placeholder: "Seleccione un examen",
+  placeholder: "Selecciona un examen",
   ajax: {
     url: '/cargar_prestaciones',
     dataType: 'json',
     type: 'POST',
-    data: function (params) { return { q: params.term, page: params.page, tipo: 'examen' }; },
+    data: function (params) { return { q: params.term, tipo: 'examen' }; },
     processResults: function (data, page) { return { results: data }; },
   }
 });
@@ -208,7 +192,7 @@ $('#select_examen').select2({
 $('#select_procedimiento').select2({
   width: '360px',
   minimumInputLength: 3,
-  placeholder: "Seleccione un procedimiento",
+  placeholder: "Selecciona un procedimiento",
   ajax: {
     url: '/cargar_prestaciones',
     dataType: 'json',
@@ -221,7 +205,7 @@ $('#select_procedimiento').select2({
 $('#select_medicamento').select2({
   width: '380px',
   minimumInputLength: 3,
-  placeholder: "Seleccione un medicamento",
+  placeholder: "Selecciona un medicamento",
   ajax: {
     url: '/cargar_medicamentos',
     dataType: 'json',
@@ -232,8 +216,8 @@ $('#select_medicamento').select2({
 });
 
 $("#select_diagnostico").on("change", function(e) { 
-  var value = $("#select_diagnostico").val(); 
-  if (value != null)
+  var value = $("#select_diagnostico").val();
+  if (value != '')
     agregarDiagnostico(value);
 })
 
@@ -244,10 +228,9 @@ $('.select_diag').on("change", function(e) {
     guardarAntecedenteFamiliarMuerte(id,false);  
 })
 
-$('.cambiar_antecedente').click(function() {
-  var id = $(this).attr('id').substring(20); 
-  guardarAntecedenteFamiliarMuerte(id,true);  
-});
+function cambiarAntecedente(id){  
+  guardarAntecedenteFamiliarMuerte(id,true); 
+}
 
 $('.cambiar_antecedente_cro').click(function() {
   var id = $(this).attr('id').substring(20); 
@@ -414,6 +397,11 @@ $('input[id^=fecha-afm]').on("dp.change", function (e) {
     guardarAntecedenteFamiliarMuerte(id,false);
 });
 
+$('input[id^=control]').on("dp.change", function (e) {
+  var id = $(this).attr('id').substring(7);
+  actualizarFechaAlta(id);
+});
+
 function diagnosticoNoFrecuente(id){
   var check_no_frec = $(id).is(':checked');  
   return check_no_frec;
@@ -537,7 +525,8 @@ function guardarMedicamento(pers_med, cerrar) {
       periodicidad: $( "#periodicidad-"+pers_med).val(),
       duracion: $( "#duracion-"+pers_med).val(),  
       total: $( "#total-"+pers_med).val(),        
-      indicacion: $( "#indicacion-"+pers_med).val(),           
+      indicacion: $( "#indicacion-"+pers_med).val(),
+      via_administracion: $("#select-via-administracion"+pers_med).val(),           
     },
     success: function(response) {
       if (cerrar) 
@@ -600,47 +589,76 @@ function calcularIMC(pers_aten) {
   var peso = $( "#peso-"+pers_aten).val();
   var estatura = $( "#estatura-"+pers_aten).val()/100;
   var imc = peso/(estatura*estatura);
-  $("#imc-" + pers_aten).val(imc);  
+  if (isNumeric(peso) && isNumeric(estatura))
+    $("#imc-" + pers_aten).val(Math.round(imc * 100) / 100 );
+}
+
+function calcularPAM(pers_aten) {
+  var sis = $( "#presion-sis-"+pers_aten).val();
+  var dias = $( "#presion-dias-"+pers_aten).val();
+  var pam = parseFloat(dias) + (sis-dias)/3;
+  if (isNumeric(sis) && isNumeric(dias))
+    $("#presion-am-" + pers_aten).val(Math.round(pam * 100) / 100 );
 }
 
 function guardarMetricas(pers_aten) {
-  $.ajax({
-    type: 'POST',
-    url: '/guardar_metricas',
-    data: {
-      atencion_salud_id: pers_aten,
-      persona_id: persona_id,
-      peso: $( "#peso-"+pers_aten).val(),
-      estatura: $( "#estatura-"+pers_aten).val(),
-      imc: $( "#imc-"+pers_aten).val(),  
-      presion: $( "#presion-"+pers_aten).val(),      
-    },
-    success: function(response) { $( "#modal-container-metricas").modal('hide'); },
-    error: function(xhr, status, error){ alert("No se pudo guardar las métricas del paciente.");   }
-  });
+  var peso = $("#peso-"+pers_aten).val();
+  var estatura = $("#estatura-"+pers_aten).val();
+  var imc = $("#imc-"+pers_aten).val();
+  if (isNumeric(peso) && isNumeric(estatura) && isNumeric(imc)){    
+    $.ajax({
+      type: 'POST',
+      url: '/guardar_metricas',
+      data: {
+        atencion_salud_id: pers_aten,
+        persona_id: persona_id,
+        peso: peso,
+        estatura: estatura,
+        imc: imc,     
+      },
+      success: function(response) { /*$( "#modal-container-metricas").modal('hide');*/ },
+      error: function(xhr, status, error){ alert("No se pudo guardar las métricas del paciente.");   }
+    });
+  } else
+    alert("No se pudo guardar las métricas del paciente. Problema con el formato.");  
 }
 
 function guardarSignos(pers_aten) {
-  $.ajax({
-    type: 'POST',
-    url: '/guardar_signos',
-    data: {
-      atencion_salud_id: pers_aten,
-      persona_id: persona_id,
-      frec_car: $( "#frec_car-"+pers_aten).val(),
-      frec_res: $( "#frec_res-"+pers_aten).val(),
-      temp: $( "#temp-"+pers_aten).val(),  
-      presion: $( "#presion-"+pers_aten).val(),  
-      sat: $( "#sat-"+pers_aten).val(),
-      car_frec_car: $( "#car_frec_car-"+pers_aten).val(),
-      car_frec_res: $( "#car_frec_res-"+pers_aten).val(),
-      car_temp: $( "#car_temp-"+pers_aten).val(),  
-      car_presion: $( "#car_presion-"+pers_aten).val(),  
-      car_sat: $( "#car_sat-"+pers_aten).val(),      
-    },
-    success: function(response) { $( "#modal-container-signos").modal('hide'); },
-    error: function(xhr, status, error){ alert("No se pudo guardar los signos vitales del paciente.");   }
-  });
+  var frec_car = $( "#frec_car-"+pers_aten).val();
+  var frec_res = $( "#frec_res-"+pers_aten).val();
+  var temp = $( "#temp-"+pers_aten).val();  
+  var presion_am = $( "#presion-am-"+pers_aten).val();
+  var presion_dias = $( "#presion-dias-"+pers_aten).val();
+  var presion_sis = $( "#presion-sis-"+pers_aten).val();
+  var sat = $( "#sat-"+pers_aten).val();
+  if (isNumeric(frec_car) && isNumeric(frec_res) && isNumeric(temp) && isNumeric(presion_am) && isNumeric(presion_dias) && isNumeric(presion_sis) && isNumeric(sat)){  
+    $.ajax({
+      type: 'POST',
+      url: '/guardar_signos',
+      data: {
+        atencion_salud_id: pers_aten,
+        persona_id: persona_id,
+        frec_car: frec_car,
+        frec_res: frec_res,
+        temp: temp,  
+        presion_am: presion_am,
+        presion_dias: presion_dias,
+        presion_sis: presion_sis,
+        sat: sat,
+        car_frec_car: $( "#car_frec_car-"+pers_aten).val(),
+        car_frec_res: $( "#car_frec_res-"+pers_aten).val(),
+        car_temp: $( "#car_temp-"+pers_aten).val(),  
+        car_presion_am: $( "#car_presion-am-"+pers_aten).val(),
+        car_presion_sis: $( "#car_presion-sis-"+pers_aten).val(), 
+        car_presion_dias: $( "#car_presion-dias-"+pers_aten).val(),   
+        car_sat: $( "#car_sat-"+pers_aten).val(),      
+      },
+      success: function(response) { /*$( "#modal-container-signos").modal('hide');*/ },
+      error: function(xhr, status, error){ alert("No se pudo guardar los signos vitales del paciente.");   }
+    });
+  } else
+    alert("No se pudo guardar los signos del paciente. Problema con el formato.");  
+
 }
 
 function guardarTexto(tipo_texto) {
@@ -837,12 +855,12 @@ window.createGrowl = function(persistent,message) {
   });
 }
 
-function act_med_diag(med){
-  var diag = $('input[name=rad-med-'+med+']:checked').val();
+function act_med_diag(med,p_d){
+  var value = $('#pd_med_'+p_d+'-'+med).is(':checked');
   $.ajax({
     type: 'POST',
     url: '/actualizar_diag_med',
-    data: { med: med, diag: diag},
+    data: { med: med, p_d: p_d, valor: value},
     success: function(response){ },
     error: function(xhr, status, error){ alert("Se produjo un error al guardar la información."); }
   }); 
@@ -864,7 +882,7 @@ function formatDate(date){
 }
 
 function guardarAntecedenteFamiliarMuerte(id,cerrar){
-  var diag = $("#select_diag-afm-"+id).select2('data') != null ? $("#select_diag-afm-"+id).select2('data').id : null; 
+  var diag = $("#select_diag-afm-"+id).val(); 
   var fecha = $('#fecha-afm-'+id).val();
   var parentesco = $('#par-afm-'+id).text();
   var at_salud_id;
@@ -899,7 +917,7 @@ function guardarAntecedenteFamiliarMuerte(id,cerrar){
       error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
     });
   } else {
-    alert('Seleccione un familiar y un diagnóstico');
+    alert('Selecciona un familiar y un diagnóstico');
   }  
 }
 
@@ -913,7 +931,7 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
   var at_salud_id;
   var tipo = 'guardar';
   var per_ant;
-  var diag = $('#select_diag-cro-'+id).select2('data') != null ? $('#select_diag-cro-'+id).select2('data').id : null;
+  var diag = $('#select_diag-cro-'+id).val();
   var enf_cro = $('#check-enf-cron-'+id).is(':checked'); 
   var fecha_ini = $('#fecha-afc-ini-'+id).val();
   var fecha_fin = $('#fecha-afc-ter-'+id).val();
@@ -945,12 +963,16 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
       error: function(xhr, status, error){ alert("No se pudo editar el antecedente."); }
     });
   } else {
-    alert('Seleccione un familiar y un diagnóstico');
+    alert('Selecciona un familiar y un diagnóstico');
   }
 }
 
 $('#finalizar').click(function() {
-  guardarAtencion("finalizar");
+  var diagnosticos = $('#diagnostico-div').children('a').length;
+  if (diagnosticos == 0)
+    alert('Ingresa al menos un diagnóstico.')
+  else
+    guardarAtencion("finalizar");
 });
 
 $('#guardar').click(function() {
@@ -1048,4 +1070,17 @@ function act_pres_int(p_p,p_d){
     success: function(response){ },
     error: function(xhr, status, error){ alert("No se pudo guardar la información de la interconsulta"); }
   }); 
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function actualizarFechaAlta(certificado_id){
+  var dias_reposo = $('#dias_reposo'+certificado_id).val();
+  var fecha_control = $('#control'+certificado_id).val();
+  var d = new moment(fecha_control);
+  d.add(dias_reposo,"days");
+  if (dias_reposo != '' && fecha_control != '')
+     $('#alta'+certificado_id).data("DateTimePicker").date(d); 
 }

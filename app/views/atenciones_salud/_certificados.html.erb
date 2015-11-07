@@ -77,7 +77,7 @@
                     <label>Días de reposo</label>
                   </div>
                   <div class="col-md-8 column">:
-                    <input id="dias_reposo<%= certificado.id %>" type="integer" class="form-control dias-rep" maxlength="2" size="2" value="<%= certificado.dias_reposo %>" <%= disabled %> />
+                    <input id="dias_reposo<%= certificado.id %>" type="integer" onkeyup="actualizarFechaAlta(<%= certificado.id %>)" class="form-control dias-rep" maxlength="2" size="2" value="<%= certificado.dias_reposo %>" <%= disabled %> />
                   </div>
                 </div>
                 <div class="row clearfix">
@@ -85,7 +85,7 @@
                     <label>Fecha control</label>
                   </div>
                   <div class="col-md-8 column">:
-                    <input id="control<%= certificado.id %>" type="text" class="form-control fecha-mes" placeholder='Ingresar fecha' value='<%= certificado.control.try(:strftime, '%Y-%m-%d') %>' <%= disabled %> />
+                    <input id="control<%= certificado.id %>" type="text" class="form-control fecha-mes" placeholder='Ingresar fecha' value='<%= certificado.control.nil? ? @agendamiento.fecha_comienzo.strftime("%Y-%m-%d") : certificado.control.strftime("%Y-%m-%d") %>' <%= disabled %> />
                   </div>
                 </div> 
                 <div class="row clearfix">

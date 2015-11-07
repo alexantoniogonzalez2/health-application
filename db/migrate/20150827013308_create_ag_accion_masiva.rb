@@ -5,8 +5,8 @@ class CreateAgAccionMasiva < ActiveRecord::Migration
     	t.references :responsable #responsable_id
       t.references :especialidad_prestador_profesional #especialidad_prestador_profesional_id
     	t.integer :total_agendamientos
-    	t.integer :agendamientos_cancelados
-    	t.integer :agendamientos_sin_cancelar
+    	t.integer :agendamientos_eliminados
+    	t.integer :agendamientos_sin_eliminar
       t.timestamps null: false
     end
   end

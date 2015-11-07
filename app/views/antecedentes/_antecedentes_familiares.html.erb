@@ -1,7 +1,7 @@
 <% if @acceso %>
 	<h4>Antecedentes familiares</h4>
 	<h5>Muertes</h5>
-
+<div id="search-modal">
 	<table class="table table-striped table-hover table-condensed">
 		<thead class="ajust-head">
       <tr class="info" ><th class="col-sm-2">Persona</th><th class="col-sm-1">Parentesco</th><th class="col-sm-2">Diagnóstico</th><th class="col-sm-1">Fecha deceso</th><th class="col-sm-1">Editar</th</tr>
@@ -41,7 +41,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" onclick="cerrarModalAntFamMue('new')">Cerrar ventana</button>
-						<button type="button" id="agregar-ant-fam-mue-new" class="btn btn-success cambiar_antecedente">Agregar antecedente</button>
+						<button type="button" id="agregar-ant-fam-mue-new" class="btn btn-success" onclick="cambiarAntecedente('new')">Agregar antecedente</button>
 					</div>
 				</div>			
 			</div>		
@@ -96,7 +96,7 @@
 			</div>		
 		</div>
 	<% end %>
-	
+</div>	
 <% else %>
 	<%= render :partial => "layouts/permiso" %>
 <% end %>  

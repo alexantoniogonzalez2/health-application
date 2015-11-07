@@ -5,6 +5,7 @@ class CreateMedMedicamentos < ActiveRecord::Migration
       t.string :descripcion
       t.string :codigo_isp
       t.integer :cantidad
+      t.boolean :es_nombre_farmaco
       t.references :medicamento_tipo #medicamento_tipo_id
       t.references :laboratorio #laboratorio_id      
       t.timestamps
