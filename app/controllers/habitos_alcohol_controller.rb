@@ -35,6 +35,30 @@ class HabitosAlcoholController < ApplicationController
     	format.json { render :json => { :success => true } }
 		end		
 	end
+	def guardarHabitoAlcoholResumen
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end	
+
+		@habito_alcohol_resumen = FiHabitosAlcoholResumen.where('persona_id = ?',@persona.id).first	
+		@habito_alcohol_resumen = FiHabitosAlcoholResumen.new unless @habito_alcohol_resumen
+		@habito_alcohol_resumen.persona = @persona
+
+		case params[:campo]
+		when 'fre' then @habito_alcohol_resumen.frecuencia = params[:valor]
+		when 'tip' then @habito_alcohol_resumen.tipo = params[:valor]
+		when 'can' then @habito_alcohol_resumen.cantidad = params[:valor]	
+		end
+		@habito_alcohol_resumen.save!
+
+		respond_to do |format|
+			format.json { render :json => { :success => true } }
+		end	
+		
+	end
 =begin	
 	def show
 		@test_audit = FiHabitosAlcohol.find(params[:id])

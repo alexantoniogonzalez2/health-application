@@ -35,6 +35,7 @@ class AntecedentesController < ApplicationController
 													 .order('med_alergias.nombre ASC')
 		#Alcohol
 		@test_audit = FiHabitosAlcohol.where('persona_id = ?', @paciente.id)
+		@habito_alcohol_resumen = FiHabitosAlcoholResumen.where('persona_id = ?',@paciente.id).first
 		#Tabaco
 		@total_consumo = 0
 		@consumo = FiHabitosTabaco.where('persona_id = ?', @paciente.id)
@@ -58,6 +59,9 @@ class AntecedentesController < ApplicationController
 		@segmento_actividad = @paciente.getSegmentoActividadFisica
 		@edad_act_fis = @paciente.age()
 		@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
+
+		@persona_actividad_fisica_resumen = FiPersonaActividadFisicaResumen.where('persona_id = ?',@paciente.id).first
+
 		#Vacunas
 		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
@@ -195,6 +199,30 @@ class AntecedentesController < ApplicationController
 		end		
 	end
 
+	def guardarActividadFisicaResumen
+		if params[:atencion_salud_id] == 'persona'
+			@persona = PerPersonas.where('user_id = ?',current_user.id).first 
+		else 
+			@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+			@persona = @atencion_salud.persona
+		end
+		@persona_actividad_fisica_resumen = FiPersonaActividadFisicaResumen.where('persona_id = ?',@persona.id).first	
+		@persona_actividad_fisica_resumen = FiPersonaActividadFisicaResumen.new unless @persona_actividad_fisica_resumen
+		@persona_actividad_fisica_resumen.persona = @persona
+
+		case params[:campo]
+		when 'fre' then @persona_actividad_fisica_resumen.frecuencia = params[:valor]
+		when 'tie' then @persona_actividad_fisica_resumen.tiempo = params[:valor]
+		when 'int' then @persona_actividad_fisica_resumen.intensidad = params[:valor]	
+		end
+		@persona_actividad_fisica_resumen.save!
+
+		respond_to do |format|
+			format.json { render :json => { :success => true } }
+		end	
+
+	end	
+
 	def cargarAntecedentes
 
 		@ant = params[:ant]
@@ -283,8 +311,10 @@ class AntecedentesController < ApplicationController
 			@edad_act_fis = @persona.age()
 			@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
 			@partial = 'antecedentes/actividad_fisica'
+			@persona_actividad_fisica_resumen = FiPersonaActividadFisicaResumen.where('persona_id = ?',@persona.id).first
 		when 'hab_alc'
 			@test_audit = FiHabitosAlcohol.where('persona_id = ?', @persona.id )
+			@habito_alcohol_resumen = FiHabitosAlcoholResumen.where('persona_id = ?',@persona.id).first
 			@partial = 'habitos_alcohol/index'
 		when 'hab_tab'
   		@total_consumo = 0

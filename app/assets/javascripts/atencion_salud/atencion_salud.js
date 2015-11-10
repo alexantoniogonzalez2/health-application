@@ -113,7 +113,6 @@ $('.modal-diag').on('show.bs.modal', function (e) {
   pre_comentario = $('#comentario_'+id_mod).val();
 })
 
-
 $('#motivo_consulta').keyup( function(e) {
   if (typeof contador_mot === 'undefined') { } 
   else { clearTimeout(contador_mot);}

@@ -52,3 +52,70 @@ $('#button1id').on 'click' , =>
 			alertMessage i
 	if valid			
 		saveTest()
+
+
+guardarHabitoAlcoholResumen = (tipo_texto) ->
+  if typeof atencion_salud_id != 'undefined'
+    at_salud_id = atencion_salud_id
+  else
+    at_salud_id = 'persona'
+  switch tipo_texto
+    when 'fre'
+      texto = $('#hab_alc_fre').val()
+    when 'tip'
+      texto = $('#hab_alc_tip').val()
+    when 'can'
+      texto = $('#hab_alc_can').val()  
+  $.ajax
+    type: 'POST'
+    url: '/guardar_habito_alcohol_resumen'
+    data:
+      atencion_salud_id: atencion_salud_id
+      campo: tipo_texto
+      valor: texto
+    success: (response) ->
+      $('#auto-hab_alc_' + tipo_texto).show 'hide'
+      setTimeout (->
+        $('#auto-hab_alc_' + tipo_texto).hide 'hide'
+        return
+      ), 2000
+      return
+    error: (xhr, status, error) ->
+      alert 'No se pudo guardar este antecedente'
+      return
+  return
+
+root = exports ? this 
+
+$('#hab_alc_fre').keyup (e) ->
+  if typeof root.contador_hab_alc_fre == 'undefined'
+  else
+    clearTimeout root.contador_hab_alc_fre
+
+  root.contador_hab_alc_fre = setTimeout((->
+    guardarHabitoAlcoholResumen 'fre'
+    return
+  ), 2000)
+  return
+
+$('#hab_alc_tip').keyup (e) ->
+  if typeof root.contador_hab_alc_tip == 'undefined'
+  else
+    clearTimeout root.contador_hab_alc_tip
+
+  root.contador_hab_alc_tip = setTimeout((->
+    guardarHabitoAlcoholResumen 'tip'
+    return
+  ), 2000)
+  return
+
+$('#hab_alc_can').keyup (e) ->
+  if typeof root.contador_hab_alc_can == 'undefined'
+  else
+    clearTimeout root.contador_hab_alc_can
+
+  root.contador_hab_alc_can = setTimeout((->
+    guardarHabitoAlcoholResumen 'can'
+    return
+  ), 2000)
+  return

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106003128) do
+ActiveRecord::Schema.define(version: 20151108234449) do
 
   create_table "ag_accion_masiva", force: :cascade do |t|
     t.string   "estado",                                limit: 255
@@ -132,6 +132,15 @@ ActiveRecord::Schema.define(version: 20151106003128) do
     t.datetime "updated_at"
   end
 
+  create_table "fi_habitos_alcohol_resumen", force: :cascade do |t|
+    t.integer  "persona_id", limit: 4
+    t.string   "frecuencia", limit: 255
+    t.string   "tipo",       limit: 255
+    t.string   "cantidad",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "fi_habitos_drogas", force: :cascade do |t|
     t.integer  "persona_id",      limit: 4
     t.datetime "fecha_test_dast"
@@ -234,6 +243,15 @@ ActiveRecord::Schema.define(version: 20151106003128) do
     t.integer  "P15",             limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "fi_persona_actividad_fisica_resumen", force: :cascade do |t|
+    t.integer  "persona_id", limit: 4
+    t.string   "frecuencia", limit: 255
+    t.string   "tiempo",     limit: 255
+    t.string   "intensidad", limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "fi_persona_antecedentes_ginecologicos", force: :cascade do |t|

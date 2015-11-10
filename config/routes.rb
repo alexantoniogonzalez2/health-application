@@ -32,6 +32,7 @@ AplicacionMedica::Application.routes.draw do
   post '/habitos_alcohol', to: 'habitos_alcohol#create'   
   get '/habitos_alcohol/index', to: 'habitos_alcohol#index', :as => :habitos_alcohol_index  
   get '/habitos_alcohol/:id', to: 'habitos_alcohol#show'
+  post '/guardar_habito_alcohol_resumen', to: 'habitos_alcohol#guardarHabitoAlcoholResumen'  
 
   #Habitos tabaco
   get '/habitos_tabaco/new', to: 'habitos_tabaco#new', :as => :habitos_tabaco_new
@@ -50,7 +51,8 @@ AplicacionMedica::Application.routes.draw do
   post '/desbloquear_hora', to: 'agendamiento#desbloquearHora', :as => :desbloquearHora
 
   #Actividad física
-  post '/actividad_fisica', to: 'antecedentes#guardarActividadFisica' 
+  post '/guardar_actividad_fisica', to: 'antecedentes#guardarActividadFisica'
+  post '/guardar_actividad_fisica_resumen', to: 'antecedentes#guardarActividadFisicaResumen'  
 
   #Modulo atencion salud
   resources :atenciones_salud

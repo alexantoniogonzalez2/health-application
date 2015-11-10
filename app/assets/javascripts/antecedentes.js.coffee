@@ -1,9 +1,11 @@
-﻿guardarActividad = (valor,pregunta) ->
+﻿root = exports ? this 
+
+guardarActividad = (valor,pregunta) ->
   if typeof atencion_salud_id != 'undefined'
     at_salud_id = atencion_salud_id
   else
     at_salud_id = 'persona'
-  $.ajax '/actividad_fisica',
+  $.ajax '/guardar_actividad_fisica',
     type: 'POST'
     data:
       valor : valor
@@ -180,3 +182,73 @@ $('#select_diagnostico_ant').on 'change', (e) ->
       diagnostico_id: value
     error: (jqXHR, textStatus, errorThrown) ->       
     success: (data, textStatus, jqXHR) ->
+
+$('#act_fis_int').on 'change', (e) ->
+  value = $('#act_fis_int').val()
+  if typeof atencion_salud_id != 'undefined'
+    at_salud_id = atencion_salud_id
+  else
+    at_salud_id = 'persona'
+  $.ajax
+    type: 'POST'
+    url: '/guardar_actividad_fisica_resumen'
+    data:
+      atencion_salud_id: at_salud_id
+      campo: 'int'
+      valor: value
+    error: (jqXHR, textStatus, errorThrown) ->       
+    success: (data, textStatus, jqXHR) ->
+
+guardarActividadFisicaResumen = (tipo_texto) ->
+  if typeof atencion_salud_id != 'undefined'
+    at_salud_id = atencion_salud_id
+  else
+    at_salud_id = 'persona'
+  switch tipo_texto
+    when 'fre'
+      texto = $('#act_fis_fre').val()
+    when 'tie'
+      texto = $('#act_fis_tie').val()
+  $.ajax
+    type: 'POST'
+    url: '/guardar_actividad_fisica_resumen'
+    data:
+      atencion_salud_id: atencion_salud_id
+      campo: tipo_texto
+      valor: texto
+    success: (response) ->
+      $('#auto-act_fis_' + tipo_texto).show 'hide'
+      setTimeout (->
+        $('#auto-act_fis_' + tipo_texto).hide 'hide'
+        return
+      ), 2000
+      return
+    error: (xhr, status, error) ->
+      alert 'No se pudo guardar este antecedente'
+      return
+  return
+
+root = exports ? this 
+
+$('#act_fis_fre').keyup (e) ->
+  if typeof root.contador_act_fis_fre == 'undefined'
+  else
+    clearTimeout root.contador_act_fis_fre
+
+  root.contador_act_fis_fre = setTimeout((->
+    guardarActividadFisicaResumen 'fre'
+    return
+  ), 2000)
+  return
+
+$('#act_fis_tie').keyup (e) ->
+  if typeof root.contador_act_fis_tie == 'undefined'
+  else
+    clearTimeout root.contador_act_fis_tie
+
+  root.contador_act_fis_tie = setTimeout((->
+    guardarActividadFisicaResumen 'tie'
+    return
+  ), 2000)
+  return
+

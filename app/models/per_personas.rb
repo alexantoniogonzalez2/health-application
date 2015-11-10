@@ -25,10 +25,12 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas_habitos_tabaco, :class_name => 'FiHabitosTabaco', :foreign_key => 'persona_id'
   has_many :personas_habitos_drogas, :class_name => 'FiHabitosDrogas', :foreign_key => 'persona_id'
   has_many :personas_habitos_alcohol, :class_name => 'FiHabitosAlcohol', :foreign_key => 'persona_id'
+  has_many :personas_habitos_alcohol_resumen, :class_name => 'FiHabitosAlcoholResumen', :foreign_key => 'persona_id'
   has_many :personas_vacunas, :class_name => 'FiPersonasVacunas', :foreign_key => 'persona_id'
   has_many :personas_conocimiento_ges, :class_name => 'FiNotificacionesGes', :foreign_key => 'persona_conocimiento_id'
   has_many :personas_conocimiento_int, :class_name => 'FiInterconsultas', :foreign_key => 'persona_conocimiento_id'
   has_one :persona_actividad_fisica, :class_name => 'FiPersonaActividadFisica', :foreign_key => 'persona_id'
+  has_one :persona_actividad_fisica_resumen, :class_name => 'FiPersonaActividadFisica', :foreign_key => 'persona_id'
   has_one :persona_antecedentes_ginecologicos, :class_name => 'FiPersonaAntecedentesGinecologicos', :foreign_key => 'persona_id'
   has_many :personas, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_id'
   has_many :personas_relaciones, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_relacion_id'  
@@ -393,10 +395,12 @@ class PerPersonas < ActiveRecord::Base
                                     :personas_habitos_tabaco,
                                     :personas_habitos_drogas,
                                     :personas_habitos_alcohol,
+                                    :personas_habitos_alcohol_resumen,
                                     :personas_vacunas,
                                     :personas_conocimiento_ges,
                                     :personas_conocimiento_int,
                                     :persona_actividad_fisica,
+                                    :persona_actividad_fisica_resumen,
                                     :personas,
                                     :personas_relaciones,
                                     :pais_nacionalidad,

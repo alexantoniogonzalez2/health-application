@@ -2,6 +2,30 @@
 <% disabled = (@tipo == 'reabrir' or @tipo == 'edit' or !@atencion_salud) ? '' : 'disabled' %>
 <h4>Antecedentes actividad física</h4>
 
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 column">
+			<label>Frecuencia: </label><span id="auto-act_fis_fre" >Autoguardado</span>
+			<input id="act_fis_fre" type="text" class="form-control input-md" value='<%= @persona_actividad_fisica_resumen.try(:frecuencia) %>'>
+			<span class="help-block">Por semana</span>			 
+		</div>
+		<div class="col-md-4 column">
+			<label>Tiempo: </label><span id="auto-act_fis_tie" >Autoguardado</span>  
+			<input id="act_fis_tie" type="text" class="form-control input-md" value='<%= @persona_actividad_fisica_resumen.try(:tiempo) %>'>
+			<span class="help-block">En promedio por cada actividad</span>			
+		</div>
+		<div class="col-md-4 column">
+			<label>Intensidad: </label>
+			<select id="act_fis_int" class="form-control">
+				<option value="" selected disabled>Seleccionar intensidad</option>
+      	<option value="1" <% if @persona_actividad_fisica_resumen.try(:intensidad) == '1' %> selected <% end %> >Suave</option>
+      	<option value="2" <% if @persona_actividad_fisica_resumen.try(:intensidad) == '2' %> selected <% end %> >Moderada</option>      	
+      	<option value="3" <% if @persona_actividad_fisica_resumen.try(:intensidad) == '3' %> selected <% end %> >Intensa</option>
+    </select>
+		</div>
+	</div>
+</div> 
+
 <%=	case @segmento_actividad
 		when 'Niño menor a 5 años' then render :template => "antecedentes/recomendaciones_actividad_fisica/0_5"
 		when 'Niño' then render :template => "antecedentes/recomendaciones_actividad_fisica/5_17"

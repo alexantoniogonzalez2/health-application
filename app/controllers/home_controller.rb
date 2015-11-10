@@ -170,6 +170,7 @@ class HomeController < ApplicationController
 															 .order('med_alergias.nombre ASC')
 				#Alcohol
 				@test_audit = FiHabitosAlcohol.where('persona_id = ?', @persona.id)
+				@habito_alcohol_resumen = FiHabitosAlcoholResumen.where('persona_id = ?',@persona.id).first
 				#Tabaco
 				@total_consumo = 0
 				@consumo = FiHabitosTabaco.where('persona_id = ?', @persona.id)
@@ -193,6 +194,8 @@ class HomeController < ApplicationController
 				@segmento_actividad = @persona.getSegmentoActividadFisica
 				@edad_act_fis = @persona.age()
 				@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
+
+				@persona_actividad_fisica_resumen = FiPersonaActividadFisicaResumen.where('persona_id = ?',@persona.id).first
 
 				#Vacunas
 				@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')

@@ -1,4 +1,25 @@
 <% if @acceso %>
+	<h4>Hábitos alcohol</h4>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 column">
+					<label>Frecuencia: </label><span id="auto-hab_alc_fre" >Autoguardado</span>	
+					<input id="hab_alc_fre" type="text" class="form-control input-md" value='<%= @habito_alcohol_resumen.try(:frecuencia) %>'>
+					<span class="help-block">Por semana</span> 
+				</div>
+				<div class="col-md-4 column">
+					<label>Tipo: </label><span id="auto-hab_alc_tip" >Autoguardado</span> 	
+					<input id="hab_alc_tip" type="text" class="form-control input-md" value='<%= @habito_alcohol_resumen.try(:tipo) %>'>
+					<span class="help-block">Ej.: destilado, cerveza, vino, etc.</span> 
+				</div>
+				<div class="col-md-4 column">
+					<label>Cantidad: </label><span id="auto-hab_alc_can" >Autoguardado</span> 
+					<input id="hab_alc_can" type="text" class="form-control input-md" value='<%= @habito_alcohol_resumen.try(:cantidad) %>'>
+					<span class="help-block">Ej.: vasos, litros, etc.</span> 
+				</div>
+			</div>
+		</div> 
+
 	<h4>Test AUDIT realizados</h4>
 		<table class="table table-striped table-hover table-condensed">
 			<thead class="ajust-head">
