@@ -39,14 +39,15 @@ $('.panel-ges2').on('hidden.bs.collapse', function() {
 function actualizarEstado(pers_diag,e_d){
   
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
-  (e_d == 1) ? $( '#checkboxes-trat-div-'+pers_diag).show() : $( '#checkboxes-trat-div-'+pers_diag).hide();
  
-  if(e_d == 1) { 
+  if(e_d == 1) {
+  $( '#checkboxes-trat-div-'+pers_diag).show(); 
     estado_trat = (trat == 1) ? 2 : 1; 
     $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
     $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
   }
   else { 
+    $( '#checkboxes-trat-div-'+pers_diag).hide();
     $('input[name=radios-ges-'+pers_diag+']').prop('checked', false);
     $('input[name=radios-int-'+pers_diag+'][value=1]').prop('checked', false);
     $('input[name=radios-int-'+pers_diag+'][value=2]').prop('checked', false);
@@ -56,13 +57,14 @@ function actualizarEstado(pers_diag,e_d){
 function guardarDiagReabrir(pers_diag){
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   e_d = $('input[type=radio][name=radios-estado-'+pers_diag+']:checked').val();
-  (e_d == 1) ? $( '#checkboxes-trat-div-'+pers_diag).show() : $( '#checkboxes-trat-div-'+pers_diag).hide(); 
   if(e_d == 1) { 
+    $( '#checkboxes-trat-div-'+pers_diag).show(); 
     estado_trat = (trat == 1) ? 2 : 1; 
     $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
     $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
   }
   else { 
+    $( '#checkboxes-trat-div-'+pers_diag).hide(); 
     $('input[name=radios-ges-'+pers_diag+']').prop('checked', false);
     $('input[name=radios-int-'+pers_diag+'][value=1]').prop('checked', false);
     $('input[name=radios-int-'+pers_diag+'][value=2]').prop('checked', false);
@@ -88,7 +90,13 @@ function agregarPropInt(pers_diag,value){
   });
 }
 
+function guardarInterconsulta(pers_diag){
+  var value = $("input:radio[name=radios-int-"+pers_diag+"]").val();
+  agregarPropInt(pers_diag,value);  
+}
+
 $('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
+  
   var pers_diag = $(this).attr('id').substring(16);
   trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
   
@@ -378,6 +386,11 @@ $('input[id^=fecha]').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD',
     viewMode: 'years',
+});
+
+$('.agno').datetimepicker({
+    locale: 'es',
+    format: 'YYYY'
 });
 
 $('.fecha-mes').datetimepicker({
@@ -843,7 +856,7 @@ window.createGrowl = function(persistent,message) {
         render: function(event, api) {
           if(!api.options.show.persistent) {
               $(this).bind('mouseover mouseout', function(e) {
-                var lifespan = 5000;
+                var lifespan = 20000;
                 clearTimeout(api.timer);
                 if (e.type !== 'mouseover') { api.timer = setTimeout(function() { api.hide(e) }, lifespan); }
               })
@@ -966,17 +979,17 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
   }
 }
 
-$('#finalizar').click(function() {
+function accionFinalizarAtencion(){
   var diagnosticos = $('#diagnostico-div').children('a').length;
   if (diagnosticos == 0)
-    alert('Ingresa al menos un diagnóstico.')
+    alert('Ingresa al menos un diagnóstico. Paciente sano: Z718.')
   else
     guardarAtencion("finalizar");
-});
+}
 
-$('#guardar').click(function() {
+function accionGuardarAtencion(){
   guardarAtencion("guardar");
-});
+}
 
 function guardarAtencion(action){
     
@@ -1083,3 +1096,11 @@ function actualizarFechaAlta(certificado_id){
   if (dias_reposo != '' && fecha_control != '')
      $('#alta'+certificado_id).data("DateTimePicker").date(d); 
 }
+
+$('[id^=link-certificado]').click(function() {
+  var id = $(this).attr('id').substring(16);
+  var value =$('#control'+id).val();
+  if (value != '')
+    agregarInfoCertificado('control',value,id);
+})
+

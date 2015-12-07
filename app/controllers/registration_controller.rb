@@ -15,7 +15,7 @@ class RegistrationController < Devise::RegistrationsController
 		@persona.fecha_nacimiento = params[:date]
 		@persona.rut = params[:rut]
 		@persona.digito_verificador = params[:dv]
-		@persona.genero = params[:sexo] == 1 ? 'Masculino' : 'Femenino'
+		@persona.genero = params[:sexo] == '1' ? 'Masculino' : 'Femenino'
 		@user.valid?
 		if @user.errors.blank?
 			@user.save

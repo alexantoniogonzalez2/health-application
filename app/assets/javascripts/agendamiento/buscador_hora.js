@@ -9,6 +9,7 @@ function cargarMotivos(){
 	  if (m_c == '1' ){
 	  	
 	  	$('#div-sel-ant-'+id_agend).hide();
+	  	$('#select-antecedente-'+id_agend).val('').trigger('change');
 	  	$('#div-sel-cap-'+id_agend).show();	  	
 	  } 
 	  else {
@@ -16,6 +17,7 @@ function cargarMotivos(){
 	  	$('#div-sel-ant-'+id_agend).show();
 	  	if($('#div-sel-ant-'+id_agend).length ){	  		
 	  		$('#div-sel-cap-'+id_agend).hide();
+	  		$('#select-capitulo-'+id_agend).val('').trigger('change');
 			} else { $('#div-sel-cap-'+id_agend).show(); };
 	  
 	  };
@@ -46,6 +48,16 @@ $(document).ready(function() {
 
 $("#select_especialidad").on("change", function(e) { 
 
+	var centros_seleccionados = new Array();
+	var fieldset = document.getElementById("checkbox_centros");  
+  if (fieldset != null){
+	  var cent_sel = fieldset.getElementsByTagName("input");	
+	  for (var i=1;i<cent_sel.length;i++){
+			if( cent_sel[i].checked )			
+				centros_seleccionados.push(cent_sel[i].value); 	
+		}
+	}
+
   var value = $("#select_especialidad").val();
   if (value != '' )
   	addLittleSpinner('cargando-especialistas');
@@ -55,9 +67,7 @@ $("#select_especialidad").on("change", function(e) {
   $.ajax({
     type: 'POST',
     url: '/filtrar_profesionales',
-    data: {
-      especialidad: value,     
-    },
+    data: { especialidad: value, centros: centros_seleccionados },
     success: function(response) {
     	$('#select_especialista').val('');
     	$('#select_especialista').empty(); //remove all child nodes
@@ -109,8 +119,9 @@ $('#buscadorHora').fullCalendar({
 			style: { classes: 'qtip-bootstrap' },
 			position: { viewport: $(window)}
 		});
-		if (event.icon != '')
-			element.find("div.fc-content").append("<img class='ic-cal' src='" + event.icon +"'>");
+		if (event.icon != '')	
+			element.find("div.fc-content").append("<img class='" + event.classIcon +"'' src='" + event.icon +"'>");
+
 		
 	},
 	eventAfterRender: function(event, element, view) {
@@ -131,6 +142,7 @@ $('#buscadorHora').fullCalendar({
 })
 
 function actualizarCentro(){	
+	$('#buscadorHora').fullCalendar('removeEvents');
 
 	var centros_seleccionados = new Array();
 	var fieldset = document.getElementById("checkbox_centros")
@@ -147,22 +159,22 @@ function actualizarCentro(){
 	var especialidad = $("#select_especialidad").val();
 	var especialista = $("#select_especialista").val();	
 		
-	if(especialidad != '' || especialista != ''){
+	if(especialidad != null || especialista != null){
 		
 		$("#select_especialista").prop("disabled", true);		
 		$.ajax({
 	    type: 'POST',
 	    url: '/buscar_horas',
 	    data: { centros: centros_seleccionados, especialidad: especialidad, especialista: especialista },
-	    success: function(response) {																		    	
-	    	  $('#buscadorHora').fullCalendar('addEventSource',response);	    	  
-	    	  $("#select_especialista").prop("disabled", false);
-	    	  $('#cargando-especialistas').html('');	    	 
+	    success: function(response) {																    	
+    	  $('#buscadorHora').fullCalendar('addEventSource',response);	    	  
+    	  $("#select_especialista").prop("disabled", false);
+    	  $('#cargando-especialistas').html('');	    	 
 	    },
 	    error: function(xhr, status, error){ alert("Error al filtrar por especialidad.4"); }
 	  }); 		
 	}
-	else{	/*alert('Selecciona una especialidad o un especialista.'); */}
+	else {	/*alert('Selecciona una especialidad o un especialista.'); */}
 }
 
 function actualizarTodosLosCentros(){
@@ -188,7 +200,7 @@ $(document).ready(
 	  	var $childCheckboxes = $(this).find('input.childCheckBox'),
 	  	no_checked = $childCheckboxes.filter(':checked').length;
 	  	if($childCheckboxes.length == no_checked){
-	   	 $(this).find('.parentCheckBox').prop('checked',true);
+	   		$(this).find('.parentCheckBox').prop('checked',true);
 	 		}
 		});	    
 	  $('input.childCheckBox').change(function() {

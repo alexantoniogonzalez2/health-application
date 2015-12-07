@@ -2,7 +2,7 @@
 
 <table id="tabla-persona-vacunas" class="table table-striped table-hover table-condensed">
   <thead>
-    <tr class="info"><th class="col-sm-1">Edad/Tipo</th><th class="col-sm-1">Vacuna</th><th class="col-sm-1">Fecha</th><th class="col-sm-1">Atención de salud</th></tr>
+    <tr class="info"><th class="col-sm-1">Edad/Tipo</th><th class="col-sm-1">Vacuna</th><th class="col-sm-1">Fecha vacunación/ registro</th><th class="col-sm-1">Atención de salud</th></tr>
   </thead>
   <tbody id='body-persona-vacuna'>
     <% if @personas_vacunas.blank? and @personas_vacunas_otras.blank? %>
@@ -18,8 +18,8 @@
   </tbody>    
 </table>
 
-<%= render :partial => @partial_seguimiento, :locals => {:calendario_vacunas_persona => @calendario_vacunas_persona } unless @partial_seguimiento.blank? %> 
-<%= render :partial => 'vacunas/seg_otras_vacunas', :locals => {:otras_vacunas => @otras_vacunas } %> 
+<%= render :partial => @partial_seguimiento, :locals => {:calendario_vacunas_persona => @calendario_vacunas_persona,:persona_id => persona_id } unless @partial_seguimiento.blank? %> 
+<%= render :partial => 'vacunas/seg_otras_vacunas', :locals => {:otras_vacunas => @otras_vacunas,:persona_id => persona_id } %> 
 
 <%= javascript_include_tag "vacunas" %>
 

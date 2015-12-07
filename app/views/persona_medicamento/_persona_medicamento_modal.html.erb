@@ -13,7 +13,7 @@
               <% if [1,2,3].include? persona_medicamento.medicamento.medicamento_tipo.medicamento_metatipo.id %>
                 <table>
                   <tr>
-                    <td><span>Administrar</span></td>
+                    <td><span>Administración de</span></td>
                     <td><input id="cantidad-<%= persona_medicamento.id %>" type="text" class="form-control medicamento" value="<%= persona_medicamento.cantidad %>" maxlength="4" size="4" onkeyup="calcularTotalMedicamentos(<%= persona_medicamento.id %>)" <%= disabled %> ></td>
                     <td><span class="text-med"><%= persona_medicamento.medicamento.medicamento_tipo.unidad %></span></td>
                   </tr>

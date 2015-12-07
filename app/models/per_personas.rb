@@ -95,11 +95,11 @@ class PerPersonas < ActiveRecord::Base
       edad = age
       if edad < 5  
         'Niño menor a 5 años'
-      elsif edad > 5 and edad < 18  
+      elsif edad >= 5 and edad < 18  
         'Niño'
-      elsif edad > 18 and edad < 65 
+      elsif edad >= 18 and edad < 65 
         'Adulto' 
-      elsif edad > 65
+      elsif edad >= 65
         'Adulto mayor'
       end    
     else
@@ -220,6 +220,10 @@ class PerPersonas < ActiveRecord::Base
 
   def getPrevisionSalud
     persona_prevision = personas_previsiones_salud.where('fecha_termino > ? OR fecha_termino IS NULL', DateTime.current).first
+    #A falta de I-Med, se agrega una previsión "Sin información"
+    unless persona_prevision
+      persona_prevision = PerPersonasPrevisionesSalud.create! :persona_id => id, :prevision_salud_id => 3
+    end
     return persona_prevision.prevision_salud
   end
 

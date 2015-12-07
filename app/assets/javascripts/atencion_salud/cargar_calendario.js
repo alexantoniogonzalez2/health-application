@@ -52,6 +52,11 @@ $.datepicker.regional['es'] = {
 };
 $.datepicker.setDefaults($.datepicker.regional['es']);
 
+$('.agno').datetimepicker({
+    locale: 'es',
+    format: 'YYYY'
+});
+
 $('.fecha-mes').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD'
@@ -71,4 +76,5 @@ $(document).ready(function() {
   $('.icon-eno').qtip({ content: { text: 'Fecha de primeros síntomas o de primera consulta.' }})
   $('.icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
   $('.icon-int').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
+  $('.icon-estado').qtip({ content: { text: 'Campo relacionado con estado del diagnósito, en tab Diagnósito.' }})
 });

@@ -1,12 +1,24 @@
-<h2>Resend confirmation instructions</h2>
+<div class="container ajuste-signin">    
+  <div class="intro-text2">
+    <h2 class="heading">Reenviar instrucciones de confirmación</h2>    
+      <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: {:id => 'reenviar', :class => 'form-validator form-horizontal', method: :post }) do |f| %>
+      	<div id="reenviar-error" class="alert alert-danger feedback" role="alert">
+  			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  			  <span class="sr-only">Error:</span>
+  			  <span id ="span-reenviar"><%= devise_error_messages! %></span>
+  			</div>
+        <div class="form-group ajuste-recuperar">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <%= f.email_field :email, :class => "form-control" %>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+      	<%= f.submit "Reenviar instrucciones", class: "btn btn-large btn-primary btn-block" %><br>
+        <%= link_to "Crear una cuenta", new_registration_path(:user) %> |  
+        <%= link_to "Iniciar sesión", new_session_path(:user) %><br>
+      <% end %>
+  </div>
+</div>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
-
-  <div><%= f.submit "Resend confirmation instructions" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<%= javascript_include_tag "home" %>

@@ -1,3 +1,9 @@
-<p id="accion_masiva<%= accion_masiva.id %>" class="accion-masiva"> 	
-	<%= accion_masiva.created_at.strftime("%Y-%m-%d %H:%M") %> | Profesional: <%= accion_masiva.especialidad_prestador_profesional.profesional.showName('%n%p%m') %> | Especialidad: <%= accion_masiva.especialidad_prestador_profesional.especialidad.nombre %> | Agendamientos sin eliminar: <%= accion_masiva.agendamientos_sin_eliminar %> | <a href="#vista_sin_cancelar" role="button" class="btn" data-toggle="modal" onclick="cargarVistaSinCancelar(<%= accion_masiva.id %>)">Ver agendamientos</a>
-</p>
+<tr id="accion_masiva<%= accion_masiva.id %>">
+	<td>Eliminación incompleta</td>
+	<td><%= accion_masiva.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+	<td><%= accion_masiva.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td>
+	<td><%= accion_masiva.especialidad_prestador_profesional.especialidad.nombre %></td>
+	<td><%= accion_masiva.total_agendamientos %></td>
+	<td><%= accion_masiva.agendamientos_eliminados %></td>
+	<td><a href="#vista_sin_cancelar" role="button" class="btn" data-toggle="modal" onclick="cargarVistaSinCancelar(<%= accion_masiva.id %>)">Ver agendamientos</a></td>
+</tr>

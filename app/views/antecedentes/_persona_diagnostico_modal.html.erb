@@ -53,8 +53,10 @@
           </div>
           <div class="row clearfix footer">
             <div class="col-md-12 column">
-              <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>,true)" class="btn btn-success ajus-pos-right">Guardar</button>
-              <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger ajus-pos-right" id="bc<%= p_d.id%>"> Eliminar diagnóstico</button>
+              <% if tipo == 'edit' %>
+                <button type="button" onclick="guardarDiagnostico(<%= p_d.id%>,true)" class="btn btn-success ajus-pos-right">Guardar</button>
+                <button type="button" onclick="eliminarDiagnostico(<%= p_d.id%>)" class="btn btn-danger ajus-pos-right" id="bc<%= p_d.id%>"> Eliminar diagnóstico</button>
+              <% end %>  
               <button type="button" onclick="cerrarModalDiag(<%= p_d.id%>)" class="btn btn-default ajus-pos-right" >Cerrar ventana</button> 
             </div>                  
           </div>

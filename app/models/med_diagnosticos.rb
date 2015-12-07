@@ -53,11 +53,13 @@ class MedDiagnosticos < ActiveRecord::Base
       if ed.tipo_vigilancia == 'Centinela'
         persona_diagnostico_atencion_salud = FiPersonaDiagnosticosAtencionesSalud.find(p_d)
         atencion_salud = persona_diagnostico_atencion_salud.atencion_salud
-        agendamiento = atencion_salud.agendamiento
-        especialidad_prestador_profesional = agendamiento.especialidad_prestador_profesional
-        prestador = especialidad_prestador_profesional.prestador
-        es_centinela = prestador.es_centinela
-        esENO = true if es_centinela             
+        if atencion_salud
+          agendamiento = atencion_salud.agendamiento
+          especialidad_prestador_profesional = agendamiento.especialidad_prestador_profesional
+          prestador = especialidad_prestador_profesional.prestador
+          es_centinela = prestador.es_centinela
+          esENO = true if es_centinela
+        end              
       else
         esENO = true
       end        
@@ -77,11 +79,13 @@ class MedDiagnosticos < ActiveRecord::Base
       if ed.tipo_vigilancia == 'Centinela'
         persona_diagnostico_atencion_salud = FiPersonaDiagnosticosAtencionesSalud.find(p_d)
         atencion_salud = persona_diagnostico_atencion_salud.atencion_salud
-        agendamiento = atencion_salud.agendamiento
-        especialidad_prestador_profesional = agendamiento.especialidad_prestador_profesional
-        prestador = especialidad_prestador_profesional.prestador
-        es_centinela = prestador.es_centinela
-        texto << { 'text' => 'Tipo de vigilancia: ' + ed.tipo_vigilancia + ' | ' + 'Frecuencia de notificación: ' + ed.frecuencia_notificacion } if es_centinela             
+        if atencion_salud
+          agendamiento = atencion_salud.agendamiento
+          especialidad_prestador_profesional = agendamiento.especialidad_prestador_profesional
+          prestador = especialidad_prestador_profesional.prestador
+          es_centinela = prestador.es_centinela
+          texto << { 'text' => 'Tipo de vigilancia: ' + ed.tipo_vigilancia + ' | ' + 'Frecuencia de notificación: ' + ed.frecuencia_notificacion } if es_centinela
+        end              
       else
         @text_temp = ''
         @text_temp << 'Tipo de vigilancia: ' + ed.tipo_vigilancia + ' | ' unless ed.tipo_vigilancia.nil?

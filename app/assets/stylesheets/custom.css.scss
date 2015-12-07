@@ -194,7 +194,8 @@ input.ajuste-cen-der {
 div.ajuste-padding2 { padding-left: 0px; padding-right: 0px;}
 span.ajus-fl-left {float: left; }
 .no-padding { padding: 0px !important; }
-/*.help-block { color: #a94442; }*/
+.help-block { color: #a94442; }
+.help-block-gray { color: #737373; display: block; margin-top: 5px; margin-bottom: 10px; }
 .fc-event { border: 1px solid $verylightGray;} 
 
 table.print { 
@@ -223,7 +224,7 @@ label.print { display: block; text-align: center; }
 td.firma { padding-top: 60px !important ; }
 .logo-bottom { vertical-align: text-bottom; }
 .div-bottom { position: absolute; bottom: -1020px; right:0px; }
-.div-bottom2 { position: absolute; bottom: -2045px; right:0px; }
+.div-bottom2 { position: absolute; bottom: -2035px; right:0px; }
 td.enc_tab_int { background-color: #444; color: white; text-align: center; text-transform: uppercase; }
 
 table.print2 { 
@@ -250,7 +251,7 @@ table.print4 {
   td.uppercase { text-transform: uppercase; }
 }
 
-input.fecha, input.fecha-mes {
+input.fecha, input.fecha-mes, input.agno {
   display: inline-block;
   width: 150px;
   height: 30px;
@@ -271,6 +272,7 @@ form.button_to { display: inline-block; padding-right: 3px;}
 .padding-top { padding-top: 10px; }
 
 div.menu-inicial {
+  padding-bottom: 10px;
   > div {
     div.col-md-3 { padding-right: 0px; }
     div.col-md-9 { padding-right: 0px; padding-left: 0px; }

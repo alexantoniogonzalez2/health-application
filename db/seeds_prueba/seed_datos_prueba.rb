@@ -86,6 +86,7 @@ puts 'Previsiones de Salud'
 PerPrevisionesSalud.create! :nombre => 'Fonasa'
 PerPrevisionesSalud.create! :nombre => 'Isapre 1'
 PerPrevisionesSalud.create! :nombre => 'Isapre 2'
+PerPrevisionesSalud.create! :nombre => 'Sin información'
 
 puts 'Personas - Previsiones de Salud'
 PerPersonasPrevisionesSalud.create! :persona_id => 1, :prevision_salud_id => 1, :fecha_inicio => '2013-01-01', :fecha_termino => '2013-12-31'
@@ -167,3 +168,4 @@ PP6.save
 
 PreReglaPagos.create! :tipo => 'prestador', :prestador => C1, :porcentaje => 0.3 , :fecha_inicio => '2014-01-01'
 PreReglaPagos.create! :tipo => 'profesional', :especialidad_prestador_profesional => PP1 , :porcentaje => 0.4, :fecha_inicio => '2014-01-01' 
+PreReglaPagos.create! :tipo => 'prestador', :prestador => C2, :porcentaje => 0.4 , :fecha_inicio => '2014-01-01'

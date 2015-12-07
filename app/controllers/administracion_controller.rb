@@ -44,9 +44,10 @@ class AdministracionController < ApplicationController
 															boleta.fecha_desde.try(:strftime, "%Y-%m-%d"),
 															boleta.fecha_hasta.try(:strftime, "%Y-%m-%d"),
 															number_to_currency(boleta.monto, unit: "$ ", separator: '.'),
+															number_to_currency(boleta.monto*0.1, unit: "$ ", separator: '.'),
 															boleta.estado,
-															"<a id='bol-" << boleta.id.to_s << "' href='#' data-toggle='modal' data-target='#ver_atenciones_boleta' onclick='loadAtenciones(" << boleta.id.to_s << ")'>Ver atenciones</a>",
-															boleta.estado == 'Generada' ? ("<button id='anular-" << boleta.id.to_s << "' type='button' class='btn btn-xs btn-warning' onclick='anularBoleta(" << boleta.id.to_s << ")' >Anular boleta</button>") : "<span>-</span>" ]
+															"<a id='bol-" << boleta.id.to_s << "' href='#' data-toggle='modal' data-target='#ver_atenciones_boleta' onclick='loadAtenciones(" << boleta.id.to_s << ")'>Ver</a>",
+															boleta.estado == 'Generada' ? ("<button id='anular-" << boleta.id.to_s << "' type='button' class='btn btn-xs btn-warning' onclick='anularBoleta(" << boleta.id.to_s << ")' >Anular</button>") : "<span>-</span>" ]
 
 
 			end	#end transaction
@@ -81,9 +82,10 @@ class AdministracionController < ApplicationController
 										bol_gen.fecha_desde.try(:strftime, "%Y-%m-%d"),
 										bol_gen.fecha_hasta.try(:strftime, "%Y-%m-%d"),
 										number_to_currency(bol_gen.monto, unit: "$ ", separator: '.'),
+										number_to_currency(bol_gen.monto*0.1, unit: "$ ", separator: '.'),
 										bol_gen.estado,
-										bol_gen.estado == 'Anulada' ? "<span>-</span>" : "<a id='bol-" << bol_gen.id.to_s << "' href='#' data-toggle='modal' data-target='#ver_atenciones_boleta' onclick='loadAtenciones(" << bol_gen.id.to_s << ")' >Ver atenciones</a>",
-										bol_gen.estado == 'Generada' ? ("<button id='anular-" << bol_gen.id.to_s << "' type='button' class='btn btn-xs btn-warning' onclick='anularBoleta(" << bol_gen.id.to_s << ")' >Anular boleta</button>") : "<span>-</span>" ]
+										bol_gen.estado == 'Anulada' ? "<span>-</span>" : "<a id='bol-" << bol_gen.id.to_s << "' href='#' data-toggle='modal' data-target='#ver_atenciones_boleta' onclick='loadAtenciones(" << bol_gen.id.to_s << ")' >Ver</a>",
+										bol_gen.estado == 'Generada' ? ("<button id='anular-" << bol_gen.id.to_s << "' type='button' class='btn btn-xs btn-warning' onclick='anularBoleta(" << bol_gen.id.to_s << ")' >Anular</button>") : "<span>-</span>" ]
 		end	
 
 		render :json => @boletas

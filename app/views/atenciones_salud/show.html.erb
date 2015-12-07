@@ -111,7 +111,7 @@
           </div>
           <div id="antecedentes-modal-div" >
             <% @ant_med_at.each do |p_d| %>
-              <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'show'} %>
+              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'show'} %>
             <% end %>
             <% @ant_med_us.each do |p_d| %>     
               <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'ver'} %>     
@@ -140,7 +140,7 @@
         <textarea class = "form-control"  cols='50' disabled ><%= @atencion_salud.anamnesis %></textarea>
         <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a> | <a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
         <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :tipo => 'show'} %>
-        <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr_am => @presion_am, :p_pr_sis => @presion_sis,:p_pr_dias => @presion_dias, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr_am => @car_presion_am, :car_p_pr_sis => @car_presion_sis,:car_p_pr_dias => @car_presion_dias,:car_p_sat => @car_sat, :tipo => 'edit'} %>
+        <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr_am => @presion_am, :p_pr_sis => @presion_sis,:p_pr_dias => @presion_dias, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr_am => @car_presion_am, :car_p_pr_sis => @car_presion_sis,:car_p_pr_dias => @car_presion_dias,:car_p_sat => @car_sat, :tipo => 'show'} %>
         <br><label>Examen físico</label>
         <textarea class="form-control" cols='50' disabled ><%= @atencion_salud.examen_fisico %></textarea>       
       </div>
@@ -202,10 +202,10 @@
           <%= render :partial => "certificados", :locals => {:id => @atencion_salud.id , :certificado => @certificado, :tipo => 'show' } %>
         </fieldset>
         <% if estado == 'reabrir' %>
-          <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
+          <button id='finalizar' name='finalizar' onclick="accionFinalizarAtencion()" class='btn btn-primary ajus-pos-right'>Finalizar atención</button>
         <% end %>
         Hora comienzo real: <%= @agendamiento.fecha_comienzo_real.strftime('%H:%M') %><br>
-        Hora final real: <%= @agendamiento.fecha_final_real.strftime('%H:%M') %>
+        Hora final real: <%= @agendamiento.fecha_final_real.try(:strftime, '%H:%M') %>
       </div>
     </div> <!--Cierre div row -->    
   </div> <!--Cierre div panel-body -->
@@ -218,3 +218,4 @@
 <%= javascript_include_tag "antecedentes" %>
 <%= javascript_include_tag "atencion_salud/certificado" %>
 <%= javascript_include_tag "atenciones_salud" %>
+<%= javascript_include_tag "atencion_salud/graficos_metricas" %>

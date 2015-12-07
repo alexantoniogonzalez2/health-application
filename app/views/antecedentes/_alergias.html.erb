@@ -9,14 +9,14 @@
 			 	  <% @alergias.each do |a| %>
 					  <div class="checkbox">
 					    <label for="checkboxes-aler-<%= a.id %>">
-					    	<input type="checkbox" name="checkboxes-alergia" id="checkboxes-aler-<%= a.id %>" <%= disabled %> <% if a.persona_id %> checked="checked" <% end %> > <%= a.nombre %>
+					    	<input type="checkbox" name="checkboxes-alergia" id="checkboxes-aler-<%= a.id %>" <%= disabled %> <%= 'checked' unless a.personas_alergias.where('persona_id = "?"',persona_id).first.nil? %> > <%= a.nombre %>
 					    </label>
 						</div>
 					<% end %>	
 				</div>					
 		</div>
 		<div class='col-md-8 ajuste-alergia'>
-			<% if @tipo == 'edit' or !@atencion_salud %>
+			<% if @tipo == 'edit' or @tipo == 'reabrir' or !@atencion_salud %>
 				<form id="alergias" class="form-validator" method="POST">
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textinput">Otras alergias:</label>  

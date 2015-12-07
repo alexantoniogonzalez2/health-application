@@ -132,7 +132,7 @@
                     <% if tipo == 'edit' %>
                       <button type="button" class="btn btn-success ajus-pos-right">Guardar Interconsulta</button>
                     <% end %>  
-                    <%= link_to 'Descargar Interconsulta', descargar_interconsulta_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%> 
+                    <%= link_to 'Descargar Interconsulta', descargar_interconsulta_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large',:onclick => 'guardarInterconsulta('<<p_d.id.to_s<<')' %> 
                   </div>
                 </div>                
               </div> <!--Cierre container -->
@@ -151,7 +151,7 @@
                       <% if tipo == 'edit' %>
                         <button type="button" class="btn btn-success ajus-pos-right">Guardar Constancia GES</button>
                       <% end %>            
-                      <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%>
+                      <%= link_to 'Descargar Constancia GES', descargar_constancia_ges_path(:id => p_d.id, :ag => @agendamiento.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large' %>
                     </div>
                   </div>                
                 </div> 

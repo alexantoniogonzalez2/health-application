@@ -25,6 +25,11 @@ if (($('#span-recuperar').text()).trim() ){
   $('#recuperar-error').show(); 
 }
 
+if (($('#span-reenviar').text()).trim() ){
+  $('#reenviar-error').css( "display", "block !important");
+  $('#reenviar-error').show(); 
+}
+
 if (($('#span-cuenta').text()).trim() ){
   $('#cuenta-error').css( "display", "block !important");
   $('#cuenta-error').show(); 
@@ -147,8 +152,8 @@ $('#contactForm').bootstrapValidator({
       type: 'POST',
       url: '/enviar_correo_contacto',
       data: { nombre: nombre, correo: correo, telefono: telefono, mensaje: mensaje },
-      success: function(response) { alert('enviado'); },
-      error: function(xhr, status, error ){ 'Hubo un problema al enviar el correo.' }
+      success: function(response) { alert('Su correo fue enviado.'); },
+      error: function(xhr, status, error ){ alert('Hubo un problema al enviar el correo.'); }
     });
   }
 });
@@ -301,16 +306,13 @@ if ($('#horas-agendadas').length || $('#atencion-salud').length ){
 	    type: 'POST',
 	    url: '/revisar_actualizaciones',
 	    data: {  },
-	    success: function(response) { 
-	    	
+	    success: function(response) { 	    	
 	    	if (response.respuesta){
 	    		actualizar_atenciones();
 	    		if ( $('#atencion-salud').length ){
-
-						for (var index = 0; index < response.llegadas.length; ++index) {
+            for (var index = 0; index < response.llegadas.length; ++index) {
 						    createGrowl(false,'Llegó paciente de las '+response.llegadas[index].hora_comienzo);
-						}
-	    			
+						}	    			
 	    		}
 	    	}	
 	    },
@@ -351,9 +353,9 @@ else {
     "language": {
       "lengthMenu": "Mostrar _MENU_ horas por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
-      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ horas",
+      "info": "_START_ a _END_ de _TOTAL_",
       "infoEmpty": "No hay horas que mostrar",
-      "infoFiltered": "(filtradas de un total de _MAX_)",
+      "infoFiltered": "(filtradas de _MAX_)",
       "search": "Búsqueda",
       "oPaginate": {
         "sPrevious": "Página anterior",
@@ -371,9 +373,9 @@ else {
     "language": {
       "lengthMenu": "Mostrar _MENU_ atenciones de salud por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
-      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ atenciones de salud",
+      "info": "_START_ a _END_ de _TOTAL_",
       "infoEmpty": "No hay atenciones de salud que mostrar",
-      "infoFiltered": "(filtradas de un total de _MAX_)",
+      "infoFiltered": "(filtradas de _MAX_)",
       "search": "Búsqueda",
       "oPaginate": {
         "sPrevious": "Página anterior",

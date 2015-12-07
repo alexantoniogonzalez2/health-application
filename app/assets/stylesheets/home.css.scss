@@ -63,10 +63,15 @@ div.intro-text, div.intro-text2, div.intro-text3, div.intro-text4 {
 	}
 }
 
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-background-color: white !important;
-
+div.intro-text2 {
+  form {    
+    div.checkbox { 
+      margin-left: 180px;
+    } 
+  }
 }
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { background-color: white !important; }
 
 div.intro-text { form { div.input-group { margin: auto; width: 50%; margin-top: 30px; } } }
 div.intro-text2 { form { div.input-group { margin: auto; width: 50%; margin-top: 0px; } } }

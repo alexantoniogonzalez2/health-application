@@ -145,7 +145,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
-          <%= link_to 'Descargar certificado', descargar_certificado_path(:id => certificado.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large'%>        
+          <%= link_to 'Descargar certificado', descargar_certificado_path(:id => certificado.id, :format => :pdf) , :method => :post, :class => 'btn btn-primary btn-large', :id => 'link-certificado'<<certificado.id.to_s %>        
         </div>
       </div>      
     </div>    

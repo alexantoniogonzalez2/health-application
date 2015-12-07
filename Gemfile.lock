@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: git://github.com/rweng/jquery-datatables-rails.git
-  revision: a2fafcb2c78d817c5ad849d834ed259a1b43c269
+  revision: 9eee0a1975b5a22e50bdc73fcca7db7f8a12c143
   specs:
     jquery-datatables-rails (3.3.0)
       actionpack (>= 3.1)
@@ -142,7 +142,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.6.1)
     mini_portile (0.6.2)
-    minitest (5.8.1)
+    minitest (5.8.2)
     momentjs-rails (2.10.3)
       railties (>= 3.1)
     multi_json (1.11.2)
@@ -191,7 +191,7 @@ GEM
     rdoc (4.2.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
-    sass (3.4.18)
+    sass (3.4.19)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
@@ -277,3 +277,6 @@ DEPENDENCIES
   uglifier
   wicked_pdf
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6

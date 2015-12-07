@@ -81,7 +81,7 @@ puts 'Métricas'
 FiMetricas.create! :nombre => "Estatura", :unidad => "cm"
 FiMetricas.create! :nombre => "Peso", :unidad => "kg"
 FiMetricas.create! :nombre => "Presión arterial media", :unidad => "mm Hg"
-FiMetricas.create! :nombre => "IMC", :unidad => "k/m"
+FiMetricas.create! :nombre => "IMC", :unidad => "k/m2"
 FiMetricas.create! :nombre => "Frecuencia cardiaca", :unidad => "latidos por minuto"
 FiMetricas.create! :nombre => "Frecuencia respiratoria", :unidad => "respiraciones por minuto"
 FiMetricas.create! :nombre => "Temperatura", :unidad => "C°"

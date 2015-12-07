@@ -1,6 +1,9 @@
 <% if p_d.es_antecedente == 1 or p_d.es_antecedente == true %>
 	<a href="#modal-container-diag-<%= p_d.id%>" data-toggle="modal" class="list-group-item" id="pd_ant<%= p_d.id%>" >
-		<p class="list-group-item-text ajuste2 ellipsis"><%= p_d.codigo_cie10 + ' ' + p_d.nombre %></p><span class='ajuste'> (hace <%= distance_of_time_in_words(DateTime.current,p_d.fecha_inicio) %>)</span>
+		<p class="list-group-item-text ajuste2 ellipsis"><%= p_d.codigo_cie10 + ' ' + p_d.nombre %></p>
+		<% unless distance_of_time_in_words(DateTime.current,p_d.fecha_inicio).include? 'minuto' %>
+			<span class='ajuste'>(hace <%= distance_of_time_in_words(DateTime.current,p_d.fecha_inicio) %>)</span>
+		<% end %>
 		<% if MedDiagnosticos.find(p_d.diagnostico_id).esAuge(p_d.id) %>	
 			<span class="alert alert-success boton-auge" >AUGE</span>		
 		<% end %>

@@ -136,10 +136,10 @@ class HomeController < ApplicationController
 				@persona = PerPersonas.where('user_id = ?',current_user.id).first	
 
 				#Inicio
-				@horas_agendadas = AgAgendamientos.where( "persona_id = ? and estado_id in (2,3,4,5,6,8,9) ",@persona.id )
+				@horas_agendadas = AgAgendamientos.where("(persona_id = ? OR quien_pide_hora_id = ?) AND estado_id in (2,3,4,5,6,8,9) ",@persona.id,@persona.id)
 				@atenciones_realizadas = FiAtencionesSalud
 					.joins('JOIN ag_agendamientos AS ag ON fi_atenciones_salud.agendamiento_id = ag.id')
-					.where('fi_atenciones_salud.persona_id = ? and ag.estado_id in (7,10)',@persona.id )
+					.where('(fi_atenciones_salud.persona_id = ? OR ag.quien_pide_hora_id = ?) AND ag.estado_id in (7,10)',@persona.id,@persona.id)
 	
 				#Antecedentes médicos		
 				@persona_diagnosticos = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id
@@ -163,11 +163,10 @@ class HomeController < ApplicationController
 				@persona_prestaciones = FiPersonaPrestaciones.joins(:prestacion).where('persona_id = ? AND subgrupo_id BETWEEN ? and ?',@persona.id,min,max) if @acceso
 				#Medicamentos	
 				@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? ',@persona.id) if @acceso
-				#Alergias
-				@alergias = MedAlergias.joins('LEFT JOIN fi_personas_alergias as fpa ON med_alergias.id = fpa.alergia_id')
-															 .select('med_alergias.id, med_alergias.nombre, fpa.persona_id')
-															 .where('persona_id = ? or ( persona_id is null AND med_alergias.comun is true )',@persona.id)
-															 .order('med_alergias.nombre ASC')
+				#Alergias				
+				@persona_alergias_personales = FiPersonasAlergias.where('persona_id = ? ',@persona.id)
+				@alergias_personales = @persona_alergias_personales.map { |persona_alergias_personal| persona_alergias_personal.alergia.id unless persona_alergias_personal.alergia.comun  } 
+				@alergias = MedAlergias.where('comun is true or id IN (?)',@alergias_personales).order(nombre: :asc)
 				#Alcohol
 				@test_audit = FiHabitosAlcohol.where('persona_id = ?', @persona.id)
 				@habito_alcohol_resumen = FiHabitosAlcoholResumen.where('persona_id = ?',@persona.id).first
@@ -206,28 +205,23 @@ class HomeController < ApplicationController
 																						 .where('persona_id = ? AND mv.tipo != ?',@persona.id,'pni')
 
 				@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)
-				@agno = FiCalendarioVacunas.maximum('agno')												
+				@agno = FiCalendarioVacunas.maximum('agno')	
+				@array_grupo = []													
 				case @grupo_etareo
 		    when 'Recién nacido','Lactante'
 		    	@partial_seguimiento = 'vacunas/lactante'
-    			@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-																.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-																.where('edad in ("Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@persona.id)
-																.order('fi_calendario_vacunas.id ASC')
+					@array_grupo = ["Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses"]
 		    when 'Pediatria' 
 		      @partial_seguimiento = 'vacunas/pediatria'
-      		@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-														.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-														.where('edad in ("1° básico","4° básico","8° básico") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@persona.id)
-														.order('fi_calendario_vacunas.id ASC')
+		      @array_grupo = ["1° básico","4° básico","8° básico"]
 		    when 'Adolescente','Adulto' 
 		    when 'Adulto mayor'
 		    	@partial_seguimiento = 'vacunas/adulto_mayor'
-    			@calendario_vacunas_persona = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-												.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-												.where('edad in ("Adulto de 65 años") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@persona.id)
-												.order('fi_calendario_vacunas.id ASC')
+					@array_grupo = ["Adulto de 65 años"]
 		    end	
+
+		    @calendario_vacunas_persona = FiCalendarioVacunas.where('edad in (?) AND agno = ? ',@array_grupo,@agno).order(id: :asc)
+
 				@calendarios = {}
 
 				#Calendario - Vacunas														 		
@@ -247,9 +241,7 @@ class HomeController < ApplicationController
 					end	
 				end
 
-				@otras_vacunas = MedVacunas.joins('LEFT JOIN fi_personas_vacunas as fpv ON fpv.vacuna_id = med_vacunas.id')
-																		.select('fpv.persona_id, med_vacunas.id,med_vacunas.nombre,med_vacunas.tipo')
-																		.where('tipo != ? AND (persona_id = ? OR persona_id is null)','pni',@persona.id)	
+				@otras_vacunas = MedVacunas.where('tipo != ?','pni')	
 
 				#Buscador hora															 
 				@profesionales=PerPersonas.where("id in (select profesional_id from pre_prestador_profesionales)").order('nombre,apellido_paterno,apellido_materno')

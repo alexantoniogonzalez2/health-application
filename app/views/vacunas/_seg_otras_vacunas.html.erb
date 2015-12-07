@@ -9,7 +9,7 @@
         <td><%= otra_vacuna.nombre %></td>
         <td>
           <label class="calendario-vacunas">
-            <input type="checkbox" id="check-vac-otras-<%= otra_vacuna.id %>" <%= 'checked' unless otra_vacuna.persona_id.nil? %> <%= disabled %> >
+            <input type="checkbox" id="check-vac-otras-<%= otra_vacuna.id %>" <%= 'checked' unless otra_vacuna.personas_vacunas.where('persona_id = "?"',persona_id).first.nil? %> <%= disabled %> >
           </label>
         </td>
       </tr>

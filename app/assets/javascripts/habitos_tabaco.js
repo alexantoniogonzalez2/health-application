@@ -1,17 +1,17 @@
 function guardarConsumoTabaco(id) {
 	var tipo = $('#guardar-consumo-'+id).attr('name');
-	var f_i = $('#f_i-'+id).datepicker("getDate");
-	var f_f = $('#f_f-'+id).datepicker("getDate");
+	var f_i = $('#fecha-inicio-tabaco-'+id).val();
+	var f_f = $('#fecha-final-tabaco-'+id).val();
 	var cigarrosDia = $("#cigarros-dia-"+id).val();
 	var paquetesAgno = $("#paquetes-agno-"+id).val()
 	if (cigarrosDia < 1)
 		$("#alert-cigarros-dia-"+id).show();
-  if (f_i == null) 
+  if (f_i == '') 
 		$("#alert-fecha-inicio-"+id).show();
-	if (f_f == null)
+	if (f_f == '')
 		$("#alert-fecha-final-"+id).show() 
 	
-	if (cigarrosDia < 1 || f_i == null || f_f == null )
+	if (cigarrosDia < 1 || f_i == '' || f_f == '')
 	  valid =  false;
 	else
 		valid =  true;
@@ -19,19 +19,6 @@ function guardarConsumoTabaco(id) {
 	if (valid)
 		guardarConsumo(f_i,f_f,cigarrosDia,paquetesAgno,tipo,id);
 }
-$(".datepicker").attr("placeholder", "Selecciona una fecha").datepicker({
-  showOtherMonths: true,
-  selectOtherMonths: true,
-  changeMonth: true,
-  changeYear: true,
-  dateFormat: 'yy-mm-dd',
-  dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-  showButtonPanel: true,    
-  yearRange: '1915:2017',
-  onSelect: function(dateText) {
-    calcularPaquetes($(this).attr('id').substring(4));
-  }
-});
 
 $("input[id^=cigarros-dia-]").keyup(function() {
   var id;
@@ -39,14 +26,7 @@ $("input[id^=cigarros-dia-]").keyup(function() {
   calcularPaquetes(id);
 });
 
-function alertMessage(id){
-  $('#alert-fecha-' + id).show();
-  $("#paquetes-agno-" + id).val('');
-  $('#f_f-' + id).datepicker('setDate', null);
-};
-
 function hideMessage(id){
-  $('#alert-fecha-' + id).hide();
   $('#alert-fecha-inicio-' + id).hide();
   $('#alert-fecha-final-' + id).hide();
   $('#alert-cigarros-dia-' + id).hide();
@@ -56,15 +36,11 @@ function calcularPaquetes(id){
   var cigarrosDia, f_f, f_i, paquetesAgno;
   hideMessage(id);
   cigarrosDia = $("#cigarros-dia-" + id).val();
-  f_i = $('#f_i-' + id).datepicker("getDate");
-  f_f = $('#f_f-' + id).datepicker("getDate");
-  if (!(f_i === null || f_f === null)) {
-    if (f_i > f_f) {
-      alertMessage(id);
-    } else {
-      paquetesAgno = (cigarrosDia / 20 * (f_f - f_i) / (86400000 * 365)).toFixed(2);
-      $("#paquetes-agno-" + id).val(paquetesAgno);
-    }
+  f_i = $("#fecha-inicio-tabaco-"+id).val();
+  f_f = $("#fecha-final-tabaco-"+id).val();
+  if (!(f_i == '' || f_f === '')) {    
+    paquetesAgno = (cigarrosDia / 20 * (f_f - f_i +1) ).toFixed(2);
+    $("#paquetes-agno-" + id).val(paquetesAgno);    
   }
 };
 

@@ -213,7 +213,7 @@ guardarActividadFisicaResumen = (tipo_texto) ->
     type: 'POST'
     url: '/guardar_actividad_fisica_resumen'
     data:
-      atencion_salud_id: atencion_salud_id
+      atencion_salud_id: at_salud_id
       campo: tipo_texto
       valor: texto
     success: (response) ->

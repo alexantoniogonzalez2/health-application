@@ -25,7 +25,7 @@
       <label>Rut</label>: <%= @agendamiento.persona.showRut %><br>
       <label>Previsión de salud</label>: <%= @agendamiento.persona.getPrevision %><br>
       <label>Domicilio</label>: <%= @agendamiento.persona.getDomicilio %><br>
-      <label>Correo electrónico</label>: <%= @agendamiento.persona.user.email %><br>
+      <label>Correo electrónico</label>: <%= @agendamiento.persona.getCorreo %><br>
       <label>Telefono fijo</label>: <%= @agendamiento.persona.getTelefonoFijo %><br>     
       <label>Celular</label>: <%= @agendamiento.persona.getCelular %>
     </td>
@@ -62,11 +62,16 @@
 </table>  
 
 En caso que la persona que tomó conocimiento no sea el paciente, identificar:   
-<br>
-<label>Nombre</label>: <span id="ges_nombre_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.showName('%n%p%m') %></span><br>
-<label>Rut</label>: <span id="ges_rut_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.showRut %></span><br>
-<label>Correo electrónico</label>: <span id="ges_correo_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.user.email %></span><br>  
-<label>Celular</label>: <span id="ges_celular_<%= p_d.id %>"><%= persona_notificacion.nil? ? '' : persona_notificacion.getCelular %></span>
+<table>
+  <tr>
+    <td><label>Nombre</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.showName('%n%p%m') %></td>
+    <td><label> Rut</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.showRut %></td>
+  </tr>
+  <tr>
+    <td><label>Correo electrónico</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.user.email %></td>
+    <td><label> Celular</label>: <%= persona_notificacion.nil? ? '' : ' '<<persona_notificacion.getCelular %></td>
+  </tr>
+</table>
 
 <div class="div-bottom">
   <p>Generado en 
@@ -74,14 +79,11 @@ En caso que la persona que tomó conocimiento no sea el paciente, identificar:
   www.medracer.com
   </p>
 </div>
-
-<br><br><br><br><br><br><br><br>
-
+<br><br>
 <h6 class="uppercase">Problemas de Salud Garantizados según Decreto Supremo N°4, de 2013</h6>
 <ol class="print">  
-  <%= render :partial => "atenciones_salud/lista_ges" %>
+  <%= render :partial => "atenciones_salud/lista_ges.html.erb" %>
 </ol>
-
 <div class="div-bottom2">
   <p>Generado en 
   <%= wicked_pdf_image_tag 'logo_medracer_small.png', :class => 'logo-bottom' %>

@@ -5,9 +5,9 @@ else {
     "language": {
       "lengthMenu": "Mostrar _MENU_ atenciones por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
-      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ atenciones de salud",
+      "info": "_START_ a _END_ de _TOTAL_",
       "infoEmpty": "No hay atenciones que mostrar",
-      "infoFiltered": "(filtrados de un total de _MAX_)",
+      "infoFiltered": "(filtrados de _MAX_)",
       "search": "Búsqueda",
       "oPaginate": {
         "sPrevious": "Página anterior",
@@ -26,14 +26,74 @@ else {
     "language": {
       "lengthMenu": "Mostrar _MENU_ boletas por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
-      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ boletas",
+      "info": "_START_ a _END_ de _TOTAL_",
       "infoEmpty": "No hay boletas que mostrar",
-      "infoFiltered": "(filtrados de un total de _MAX_)",
+      "infoFiltered": "(filtrados de _MAX_)",
       "search": "Búsqueda",
       "oPaginate": {
         "sPrevious": "Página anterior",
         "sNext": "Página siguiente"
       }
+    },
+    "footerCallback": function ( row, data, start, end, display ) {
+      var api = this.api(), data;
+
+      // Remove the formatting to get integer data for summation
+      var intVal = function ( i ) {
+        return typeof i === 'string' ?
+          i.replace(/[\$.]/g, '')*1 :
+          typeof i === 'number' ?
+            i : 0;
+      };
+      
+      var count = api
+              .column( 0 )
+              .data()
+              .length;
+
+      if (count > 0){ 
+
+        // Total over all pages
+        sii = api
+            .column( 8 )
+            .data()
+            .reduce( function (a, b) {
+              return intVal(a) + intVal(b);
+            } );
+
+        // Total over this page
+        siiTotal = api
+            .column( 8, { search: 'applied'} )
+            .data()
+            .reduce( function (a, b) {
+              return intVal(a) + intVal(b);
+            }, 0 );       
+        // Total over all pages
+        total = api
+            .column( 7 )
+            .data()
+            .reduce( function (a, b) {
+              return intVal(a) + intVal(b);
+            } );
+
+        // Total over this page
+        pageTotal = api
+            .column( 7, { search: 'applied'} )
+            .data()
+            .reduce( function (a, b) {
+              return intVal(a) + intVal(b);
+            }, 0 );
+
+        // Update footer
+        $( api.column( 3 ).footer() ).html(
+            '$ '+pageTotal.toLocaleString().replace(',','.') +' (de un total de $ '+ total.toLocaleString().replace(',','.') +')'
+        );
+        // Update footer
+        $( api.column( 8 ).footer() ).html(
+            '$ '+siiTotal.toLocaleString().replace(',','.') +' (de un total de $ '+ sii.toLocaleString().replace(',','.') +')'
+        );
+      }
+      
     }
   });
 }
@@ -46,9 +106,9 @@ else {
     "language": {
       "lengthMenu": "Mostrar _MENU_ atenciones por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
-      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ atenciones de salud",
+      "info": "_START_ a _END_ de _TOTAL_",
       "infoEmpty": "No hay atenciones que mostrar",
-      "infoFiltered": "(filtrados de un total de _MAX_)",
+      "infoFiltered": "(filtrados de _MAX_)",
       "search": "Búsqueda",
       "oPaginate": {
         "sPrevious": "Página anterior",
@@ -139,9 +199,9 @@ else {
     "language": {
       "lengthMenu": "Mostrar _MENU_ boletas por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
-      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ boletas",
+      "info": "_START_ a _END_ de _TOTAL_",
       "infoEmpty": "No hay boletas que mostrar",
-      "infoFiltered": "(filtrados de un total de _MAX_)",
+      "infoFiltered": "(filtrados de _MAX_)",
       "search": "Búsqueda",
       "oPaginate": {
         "sPrevious": "Página anterior",
@@ -215,8 +275,7 @@ $('#generar-boletas').click(function() {
           .rows.add(response)
           .draw();
 
-        $('#msg_boletas').html('Boletas creadas: ' + response.length +' <a href="#ver_boletas" role="tab" data-toggle="tab">Ver boletas</a>'); 
-
+        $('#msg_boletas').html('Boletas creadas: ' + response.length +' <a href="#ver_boletas" onclick="changeTab()" role="tab" data-toggle="tab">Ver boletas</a>');
       },
       error: function(xhr, status, error){ alert("Se produjo un error al cargar los antecedentes."); }
     });
@@ -225,6 +284,8 @@ $('#generar-boletas').click(function() {
   }                            
 
 })
+
+function changeTab(){ $('.nav-antecedentes a[href="#ver_boletas"]').tab('show'); }  
 
 $('input[type=radio][name=radios-ver-boletas]').click(function() {
   
@@ -285,16 +346,13 @@ $('#filtrar-boletas').click(function() {
       },
       error: function(xhr, status, error){ alert("Se produjo un error al cargar las boletas."); }
     });
-
   } 
   else
     alert('Selecciona un parámetro de búsqueda.');  
 });
 
 function loadAtenciones(boleta){
-  //$('.load_atenciones').click(function() {
   addSpinner('contenido-ver-atenciones-boleta');
-  //var boleta = $(this).attr('id').substring(4);
   $.ajax({
     type: 'POST',
     url: '/cargar_atenciones_boleta',
@@ -302,7 +360,6 @@ function loadAtenciones(boleta){
     success: function(response){ },
     error: function(xhr, status, error){ alert("Se produjo un error al cargar las atenciones."); }
   });
- // });
 }
 
 function anularBoleta(boleta_id){         
@@ -311,19 +368,17 @@ function anularBoleta(boleta_id){
     url: '/anular_boleta',
     data: { boleta: boleta_id },
     success: function(response){ 
+      var row;
       var table = $('#lista_boletas').DataTable();
       var indexes = table.rows().eq( 0 ).filter( function (rowIdx) {
-        return table.cell( rowIdx, 0 ).data() === boleta_id ? true : false;
+        if (table.cell( rowIdx, 0 ).data() === boleta_id ){
+          row = rowIdx;
+        }
+        //return table.cell( rowIdx, 0 ).data() === boleta_id ? true : false;
       } );
-      //console.log(indexes);
-      table.cell( indexes[0], 8 ).data('Anulada').draw();
-      table.cell( indexes[0], 9 ).data('-').draw();
-      table.cell( indexes[0], 10 ).data('-').draw();
-     
-
-
-        //var cell = table.cell('#cell-'+boleta_id);
-        //cell.data('Anulada').draw();
+      table.cell( row, 9).data('Anulada').draw();
+      table.cell( row, 10 ).data('-').draw();
+      table.cell( row, 11 ).data('-').draw();
     },
     error: function(xhr, status, error){ alert("Se produjo un error al anular la boleta."); }
   });

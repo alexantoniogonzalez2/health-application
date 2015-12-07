@@ -49,12 +49,12 @@
 					<div class="form-group form-ges" id="ges_<%= p_d.id %>">						
 				    <div class="radio">
 				      <label for="radios-conf-<%= p_d.id%>">
-				      	<input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="1" id="radios-conf-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0 %> checked <% end %> <%= disabled %> /> Confirmación diagnóstica
+				      	<input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="1" id="radios-conf-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0 %> checked <% end %> <%= disabled %> /> Confirmación diagnóstica <span class="glyphicon glyphicon-info-sign icon-estado"></span>
 				      </label>
 				    </div> 						
 				    <div class="radio">
 				      <label for="radios-trat-<%= p_d.id%>">
-				      	<input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="2" id="radios-trat-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %> <%= disabled %> /> Paciente en tratamiento
+				      	<input type="radio" name="radios-ges-<%= p_d.id%>" disabled value="2" id="radios-trat-<%= p_d.id%>" <% if p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1 %> checked <% end %> <%= disabled %> /> Paciente en tratamiento <span class="glyphicon glyphicon-info-sign icon-estado"></span>
 				      </label>
 				    </div> 						
 					</div>

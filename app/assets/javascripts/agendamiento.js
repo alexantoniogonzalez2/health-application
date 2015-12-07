@@ -49,6 +49,9 @@ $('#modal-container-1, #modal-container-2, #modal-container-3').on('show.bs.moda
 				url: '/cargar_cercanos',
 				data: {	persona_id: $(this).val() },
 				success: function(response) {
+					$('#select_ped_'+id).select2("val", "");
+					$('#select_ped_'+id).find('option').remove();
+					$('#select_ped_'+id).append('<option></option>');
 					$('#select_ped_'+id).append('<option>El mismo paciente</option>');
 					for (var prop in response) 
 						$('#select_ped_'+id).append('<option value='+prop+'>'+response[prop]+'</option>');

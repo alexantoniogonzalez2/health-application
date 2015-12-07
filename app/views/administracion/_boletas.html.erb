@@ -11,9 +11,11 @@
 	      <th>Especialidad</th>
 	      <th>Fecha desde</th>
 	      <th>Fecha hasta</th>       
+	      <th>Total</th>
+	      <th>SII</th>
 	      <th>Monto</th>
 	      <th>Estado</th>
-	      <th>Ver atenciones</th> 
+	      <th>A. Salud</th> 
 	    </tr>
 	  </thead>
 	  <tbody>      
@@ -25,12 +27,14 @@
 	        <td><%= boleta_profesional.fecha_desde.try(:strftime, "%Y-%m-%d") %></td>
 	        <td><%= boleta_profesional.fecha_hasta.try(:strftime, "%Y-%m-%d") %></td>
 	     		<td><%= number_to_currency(boleta_profesional.monto, unit: "$ ", separator: '.') %></td>
+	     		<td><%= number_to_currency(boleta_profesional.monto*0.1, unit: "$ ", separator: '.') %></td>
+	     		<td><%= number_to_currency(boleta_profesional.monto*0.9, unit: "$ ", separator: '.') %></td>
 	     		<td><%= boleta_profesional.estado %></td>
 	     		<td>
 	     			<% if boleta_profesional.estado == "Anulada" %>
 	     				<span>-</span>
 	     			<% else %>
-	     				<a id="bol-<%= boleta_profesional.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" class="load_atenciones">Ver atenciones</a>
+	     				<a id="bol-<%= boleta_profesional.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_boleta" onclick="loadAtenciones(<%= boleta_profesional.id %>)" >Ver atenciones</a>
 	     			<% end %>
 	     		</td>
 	      </tr>

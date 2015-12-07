@@ -1,4 +1,6 @@
 <% disabled = (tipo == 'edit' ) ? '' : 'disabled' %>
+<% clase =  p_p.es_antecedente ? 'agno' : 'fecha-mes' %>
+
 <div class="modal fade" id="modal-container-pres-<%= p_p.id %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -13,7 +15,7 @@
               <label>Fecha prestación</label>
             </div>
             <div class="col-md-8 column">:
-              <input name="f_p_<%= p_p.id%>" class="form-control fecha-mes" type="text" value="<%= p_p.getFechaPrestacion %>" <%= disabled %> >
+              <input name="f_p_<%= p_p.id%>" class="form-control <%= clase %>" type="text" value="<%= p_p.getFechaPrestacion(clase) %>" <%= disabled %> >
             </div>
           </div>
           <div class="row clearfix margin-top">
@@ -37,6 +39,6 @@
     </div>            
   </div>        
 </div>
+
 <%= javascript_include_tag "atencion_salud/cargar_calendario" %>
 <%= javascript_include_tag "atencion_salud/cargar_select_procedimiento" %>
-

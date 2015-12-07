@@ -1,6 +1,12 @@
+
+<% if tipo
+			@tipo = 'edit' if tipo == 'edit'
+		end		
+%>
+
 <tr id="tr-hab-tab-<%= cons.id %>">
-	<td><%= cons.fecha_inicio.strftime('%Y-%m-%d') %></td>
-	<td><%= cons.fecha_final.strftime('%Y-%m-%d') %></td>
+	<td><%= cons.fecha_inicio.strftime('%Y') %></td>
+	<td><%= cons.fecha_final.strftime('%Y') %></td>
 	<td><%= cons.cigarros_por_dia %></td>
 	<td><%= number_to_human(cons.paquetes_agno, precision: 2, separator: ',') %></td>
 	<td>

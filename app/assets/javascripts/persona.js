@@ -3,9 +3,12 @@ $("form[id^='form-agregar-persona-'").submit(function (e) { return false; });
 $("form[id^='form-agregar-persona-'").bootstrapValidator({
 	fields: {
 		sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
+    fecha_nacimiento: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
 		email: { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
-		rut: { validators: { digits: { message: 'Ingresa solo números' } } },
-		rut: { validators: { validarRut: { message: 'El RUT ingresado no es válido' } } },
+		rut: { validators: { 
+      digits: { message: 'Ingresa solo números' } ,
+      validarRut: { message: 'El RUT ingresado no es válido' } 
+    }},
     fijo: { validators: { digits: { message: 'Ingresa solo números' } } },
     otra_relacion: {  validators: {
                         callback: {
@@ -105,7 +108,11 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
               $("#select_"+id).val(response.id);            
               $("#select_"+id).trigger("change");
               $('#form-agregar-persona-'+id).bootstrapValidator('resetForm',true);          
-              cerrarModalAgregarPersona(id);            	 
+              cerrarModalAgregarPersona(id);   
+              if (id == 'cro' || id == 'afm'){
+                var id_alter = (id == 'cro') ? 'afm' : 'cro';
+                $("#select_"+id_alter).append('<option value='+response.id+'>'+response.text+'</option>');
+              }         	 
             } else
               alert("Ya existe ese correo electrónico en la base de datos."); 
         }

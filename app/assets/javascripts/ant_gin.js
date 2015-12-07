@@ -4,13 +4,18 @@ $('input[id^=fecha]').datetimepicker({
     viewMode: 'years',
 });
 
+$('.agno').datetimepicker({
+    locale: 'es',
+    format: 'YYYY'
+});
+
 $('input[id^=ant-gin-]').change(function() {
   var id = $(this).attr('id').substring(8);
   var value = $(this).val();
   guardarAntecedentesGinecologicos(id, value);
 });
 
-$('input[id^=fecha-gin-]').on("dp.change", function (e) {
+$('input[id^=fecha-gin-],input[id^=gin-fecha-]').on("dp.change", function (e) {
   var id = $(this).attr('id').substring(10);
   var value = $(this).val();
   guardarAntecedentesGinecologicos(id, value); 

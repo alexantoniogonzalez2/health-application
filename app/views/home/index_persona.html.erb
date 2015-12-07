@@ -28,8 +28,8 @@
 			  <div class="tab-pane" id="ant_quir"><%= render :partial => "antecedentes/antecedentes_quirurgicos",:locals => { :tipo => 'edit' } %></div>
 			  <% if @persona.genero == 'Femenino' %><div class="tab-pane" id="ant_gine"><%= render :partial => "antecedentes/antecedentes_ginecologicos" %></div><% end %>
 			  <div class="tab-pane" id="medicamentos"><%= render :partial => "antecedentes/medicamentos",:locals => { :tipo => 'edit' } %></div>
-			  <div class="tab-pane" id="alergias"><%= render :partial => "antecedentes/alergias" %></div>
-			  <div class="tab-pane" id="vacunas"><%= render :template => "vacunas/index" %></div>
+			  <div class="tab-pane" id="alergias"><%= render :partial => "antecedentes/alergias",:locals => { :persona_id => @persona.id } %></div>
+			  <div class="tab-pane" id="vacunas"><%= render :template => "vacunas/index",:locals => { :persona_id => @persona.id } %></div>
 			  <div class="tab-pane" id="actividad_fisica"><%= render :partial => "antecedentes/actividad_fisica" %></div>
 			  <div class="tab-pane" id="habitos_alcohol"><%= render :partial => "habitos_alcohol/index" %></div>
 			  <div class="tab-pane" id="habitos_tabaco"><%= render :partial => "habitos_tabaco/index" %></div>

@@ -85,22 +85,22 @@
 					<div class="form-group form-ges" id="int_<%= p_d.id %>">
 				    <div class="radio">
 				      <label for="radios-int-1-<%= p_d.id%>">
-				      	<input type="radio" disabled onchange="agregarPropInt(<%= p_d.id %>,1)" id="radios-int-1-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %> <%= disabled %> /> Diagnóstico
-				      </label>
+				      	<input type="radio" disabled value="1" onchange="agregarPropInt(<%= p_d.id %>,1)" id="radios-int-1-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 1 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 0) %> checked <% end %> <%= disabled %> /> Diagnóstico <span class="glyphicon glyphicon-info-sign icon-estado"></span>
+				      </label>				      
 				    </div>					
 				    <div class="radio">
 				      <label for="radios-int-2-<%= p_d.id%>">
-				      	<input type="radio" disabled onchange="agregarPropInt(<%= p_d.id %>,2)" id="radios-int-2-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %> <%= disabled %> /> Paciente en tratamiento
+				      	<input type="radio" disabled value="2" onchange="agregarPropInt(<%= p_d.id %>,2)" id="radios-int-2-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 2 or (p_d.estado_diagnostico.id == 1 and p_d.en_tratamiento == 1) %> checked <% end %> <%= disabled %> /> Paciente en tratamiento <span class="glyphicon glyphicon-info-sign icon-estado"></span>
 				      </label>
 				    </div> 						
 				    <div class="radio">
 				      <label for="radios-int-3-<%= p_d.id%>">
-				      	<input type="radio" onchange="agregarPropInt(<%= p_d.id %>,3)" id="radios-int-3-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 3 %> checked <% end %> <%= disabled %> /> Seguimiento
+				      	<input type="radio" value="3" onchange="agregarPropInt(<%= p_d.id %>,3)" id="radios-int-3-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 3 %> checked <% end %> <%= disabled %> /> Seguimiento
 				      </label>
 				    </div>				
 				    <div class="radio">
 				      <label for="radios-int-4-<%= p_d.id%>">
-				      	<input type="radio" onchange="agregarPropInt(<%= p_d.id %>,4)" id="radios-int-4-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 4 %> checked <% end %> <%= disabled %> /> Otro
+				      	<input type="radio" value="4" onchange="agregarPropInt(<%= p_d.id %>,4)" id="radios-int-4-<%= p_d.id %>" name="radios-int-<%= p_d.id %>" <% if prop == 4 %> checked <% end %> <%= disabled %> /> Otro
 				      </label>
 				    </div> 
 					</div>

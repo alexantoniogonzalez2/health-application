@@ -4,6 +4,21 @@ class FiPersonaMedicamentos < ActiveRecord::Base
 	belongs_to :atencion_salud, :class_name => 'FiAtencionesSalud'
   belongs_to :persona_vacuna, :class_name => 'FiPersonasVacunas'  
   has_many :persona_medicamento_diagnosticos, :class_name => 'FiPersonaMedicamentoDiagnosticos', :foreign_key => 'persona_medicamento_id'
+
+  def getViaAdministracion
+    respuesta = ''
+    respuesta = 'Vía de administración: ' unless via_administracion.nil?
+    case via_administracion
+    when 1 then respuesta<<'Oral'
+    when 2 then respuesta<<'Endovenoso'
+    when 3 then respuesta<<'Rectal'
+    when 4 then respuesta<<'Vaginal'
+    when 5 then respuesta<<'Subcutánea'
+    when 6 then respuesta<<'Tópico'
+    end  
+
+    return respuesta
+  end  
   
   def getPosologia
     posologia = '-'
@@ -12,7 +27,8 @@ class FiPersonaMedicamentos < ActiveRecord::Base
       posologia = cantidad.to_s<<' '<<unidad<<' cada '<<periodicidad.to_s<<' horas durante '<<duracion.to_s<<' día(s). Total: '<<total.to_s<<' '<<unidad
       if medicamento.medicamento_tipo.id == 4
         posologia<<' ('<<(total/20).to_s<<' ml)' 
-      end 
+      end
+      posologia<<'. ' 
     end  
     return posologia
   end

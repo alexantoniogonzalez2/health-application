@@ -10,7 +10,7 @@ class HabitosTabacoController < ApplicationController
 	def new 
 	end
 	def create
-		@tipo = params[:tipo]	
+		@tipo_accion = params[:tipo]	
 		if params[:atencion_salud_id] == 'persona'
 			@persona = PerPersonas.where('user_id = ?',current_user.id).first	
 		else 
@@ -18,18 +18,18 @@ class HabitosTabacoController < ApplicationController
 			@persona = @atencion_salud.persona
 		end	
 
-		case params[:tipo]
+		case @tipo_accion
 		when 'ingresar'
 			@cons = FiHabitosTabaco.new
 			@cons.persona = @persona
-			@cons.fecha_inicio =  params[:f_i]
-			@cons.fecha_final = params[:f_f]
+			@cons.fecha_inicio = DateTime.new(params[:f_i].to_i , 1, 1)
+			@cons.fecha_final = DateTime.new(params[:f_f].to_i , 1, 1)
 			@cons.cigarros_por_dia = params[:cigarrosDia]
 			@cons.paquetes_agno = params[:paquetesAgno].to_f			
 		when 'editar'
 			@cons = FiHabitosTabaco.find(params[:id])
-			@cons.fecha_inicio =  params[:f_i]
-			@cons.fecha_final = params[:f_f]
+			@cons.fecha_inicio = DateTime.new(params[:f_i].to_i , 1, 1)
+			@cons.fecha_final = DateTime.new(params[:f_f].to_i , 1, 1)
 			@cons.cigarros_por_dia = params[:cigarrosDia]
 			@cons.paquetes_agno = params[:paquetesAgno].to_f			
 		end

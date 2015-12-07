@@ -70,7 +70,7 @@ guardarHabitoAlcoholResumen = (tipo_texto) ->
     type: 'POST'
     url: '/guardar_habito_alcohol_resumen'
     data:
-      atencion_salud_id: atencion_salud_id
+      atencion_salud_id: at_salud_id
       campo: tipo_texto
       valor: texto
     success: (response) ->

@@ -1,5 +1,5 @@
 <tr id='tr-med-<%= p_m.id %>'>
-  <td><%= p_m.created_at.strftime('%Y-%m-%d %H:%M') %></td> 
+  <td><%= p_m.created_at.strftime('%Y-%m-%d') %></td> 
   <td><%= p_m.getDiagnosticos %></td>              
   <td><%= p_m.medicamento.nombre %></td>
   <td><%= p_m.getPosologia %></td>
@@ -7,7 +7,7 @@
   <td><%= p_m.fecha_final.nil? ? '-' : p_m.fecha_final.strftime('%Y-%m-%d')  %></td> 
   <td>
   <% if p_m.es_antecedente and p_m.atencion_salud.nil? %>
-    <% if p_m.persona_id.eql? PerPersonas.where('user_id = ?',current_user.id).first.id %>  
+    <% if p_m.persona_id.eql? PerPersonas.where('user_id = ?',current_user.id).first.id and @tipo == 'edit' %>  
       <a href="#modal-container-med-<%= p_m.id %>" data-toggle="modal" id="pm<%= p_m.id %>" >Editar</a>
     <% else %>
       Añadido por paciente.

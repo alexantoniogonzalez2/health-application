@@ -12,10 +12,10 @@
 					<div class="div-centros">
 						<label>Centros médicos</label>
 				  	<fieldset id="checkbox_centros">
-				  		 <div class="checkbox"><label for="parentCheckBox" ><input type="checkbox" class="parentCheckBox" id="parentCheckBox" checked onchange="actualizarTodosLosCentros();">Todos los centros</label></div>				    
+				  		 <div class="checkbox"><label for="parentCheckBox" ><input type="checkbox" class="parentCheckBox" id="parentCheckBox" onchange="actualizarTodosLosCentros();">Todos los centros</label></div>				    
 							<div class="div_checkbox_centros">
 				  		<% @prestadores.each do |p| %>  				  
-				     		<div class="checkbox"><label><input type="checkbox" name="centros_option[]" class="childCheckBox" checked value="<%= p.id%>" onchange="actualizarCentro();" > <%= p.nombre %></label></div>					
+				     		<div class="checkbox"><label><input type="checkbox" name="centros_option[]" class="childCheckBox" value="<%= p.id%>" onchange="actualizarCentro();" > <%= p.nombre %></label></div>					
 				  		<% end %>
 				  		</div>
 				  	</fieldset>

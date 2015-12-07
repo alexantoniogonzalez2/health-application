@@ -40,7 +40,7 @@
 				      <label class="tabaco">Fecha inicio</label>
 				    </div>
 				    <div class="col-md-8 column">
-				      <input id="f_i-<%= cons.id %>" class="datepicker tabaco" type="text" value="<%= cons.fecha_inicio.strftime('%Y-%m-%d') %>" >
+				      <input id="fecha-inicio-tabaco-<%= cons.id %>" class="form-control agno tabaco" type="text" value="<%= cons.fecha_inicio.strftime('%Y') %>" >
 				    </div>
 				  </div>
 
@@ -55,7 +55,7 @@
 				      <label class="tabaco">Fecha final</label>
 				    </div>
 				    <div class="col-md-8 column">
-				      <input id="f_f-<%= cons.id %>" class="datepicker tabaco" type="text" value="<%= cons.fecha_final.strftime('%Y-%m-%d') %>" >
+				      <input id="fecha-final-tabaco-<%= cons.id %>" class="form-control agno tabaco" type="text" value="<%= cons.fecha_final.strftime('%Y') %>" >
 				    </div>
 				  </div>
 
@@ -66,7 +66,7 @@
 							  <label class="col-md-4 control-label" for="appendedtext">Paquetes año</label>
 							  <div class="col-md-4">
 							    <div class="input-group">
-							      <input id="paquetes-agno-<%= cons.id %>" value="<%= number_to_human(cons.paquetes_agno, precision: 2, separator: ',') %>" name="appendedtext" class="form-control ajuste" placeholder="Cantidad de " disabled type="text">
+							      <input id="paquetes-agno-<%= cons.id %>" value="<%= number_to_human(cons.paquetes_agno, precision: 2, separator: ',') %>" name="appendedtext" class="form-control ajuste" placeholder="Cantidad" disabled type="text">
 							      <span class="input-group-addon">paquetes año</span>
 							    </div>			   
 							  </div>

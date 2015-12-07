@@ -132,7 +132,7 @@ $(function(){
 			});
 			;
 			if (event.icon != '')
-				element.find("div.fc-content").append("<img class='ic-cal' src='" + event.icon +"'>");
+				element.find("div.fc-content").append("<img class='" + event.classIcon +"'' src='" + event.icon +"'>");
 		},
 		eventAfterRender: function(event, element, view) {
 			var span = element.find("span");

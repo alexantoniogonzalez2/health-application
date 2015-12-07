@@ -94,7 +94,10 @@ class AgAgendamientos < ActiveRecord::Base
       when 'Adulto mayor'
         icon = "/assets/sticky.png";
       end
-    end    
+    end   
+
+    minutos = ((fecha_final - fecha_comienzo).to_i)/60
+    classIcon = minutos > 25 ? 'ic-cal' : 'ic-cal-small' 
 
     #Este parámetro (show) es para no mostrar algún estado de agendamiento. Hay que modificar la función para que devuelva 'null' en tal caso y para sea leida correctamente en el controlador.
     #Anteriormente se devolvía { } y fallaba.
@@ -108,7 +111,8 @@ class AgAgendamientos < ActiveRecord::Base
         'custom'      => custom,     
         'description' => description,
         'className'   => className,
-        'icon'        => icon         
+        'icon'        => icon,
+        'classIcon'   => classIcon         
       }    
     end
   end

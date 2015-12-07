@@ -2,15 +2,18 @@ class PersonaDiagnosticoController < ApplicationController
 
 	 def cargarDiagnosticos		
 
-		diag = []  	
 		term = params[:q]
+		words = term.split(' ')
+		words.map! {|word| "nombre like '%"<<word<<"%'" }			
+		sql_term = words.join(' AND ')
 
 		if params[:diag_no_frec] == 'true'
-			@diagnosticos = MedDiagnosticos.where("nodo_terminal = 1 AND (nombre LIKE ? OR codigo_cie10 LIKE ? )", "%#{term}%", "%#{term}%")
+			@diagnosticos = MedDiagnosticos.where("nodo_terminal = 1 AND ( ("<<sql_term<<") OR codigo_cie10 LIKE ? )", "%#{term}%")
 		else
-			@diagnosticos = MedDiagnosticos.where("nodo_terminal = 1 AND frecuente = ? AND (nombre LIKE ? OR codigo_cie10 LIKE ?) ", true, "%#{term}%", "%#{term}%")
+			@diagnosticos = MedDiagnosticos.where("nodo_terminal = 1 AND frecuente = ? AND ( ("<<sql_term<<") OR codigo_cie10 LIKE ?) ", true, "%#{term}%")
 		end			
 		
+		diag = []  	
 		@diagnosticos.each do |f|
 			diag << f.formato_lista			
 		end
@@ -660,7 +663,8 @@ class PersonaDiagnosticoController < ApplicationController
           render :pdf => nombre,
                  :template => "persona_diagnostico/constancia_ges.pdf.erb", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :agendamiento => @agendamiento, :persona => @persona } ,
                  :disposition => 'attachment',
-                 :encoding => "utf8"          
+                 :encoding => "utf8" ,
+                 :page => 2         
  					 end               
 		end
 

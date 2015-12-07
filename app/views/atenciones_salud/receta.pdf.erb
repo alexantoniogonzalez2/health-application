@@ -37,7 +37,7 @@
     <td colspan="2"><label>Domicilio</label>: <%= @agendamiento.persona.getDomicilio %></td>
   </tr>
   <tr>
-    <td><label>Correo electrónico</label>:  <%= @agendamiento.persona.user.email %></td>
+    <td><label>Correo electrónico</label>:  <%= @agendamiento.persona.getCorreo %></td>
     <td><label>Telefono fijo</label>: <%= @agendamiento.persona.getTelefonoFijo %></td>
     <td><label>Celular</label>: <%= @agendamiento.persona.getCelular %></td>
   </tr>  
@@ -52,10 +52,12 @@
       <% @persona_medicamento.each do |p_m| %>
         <label><%= p_m.medicamento.nombre %></label> (tipo: <%= p_m.medicamento.medicamento_tipo.nombre %>)<br>
         <% if [1,2,3].include? p_m.medicamento.medicamento_tipo.medicamento_metatipo.id %>
-      	  <%= p_m.getPosologia %><br><br>
+      	  <%= p_m.getPosologia %>
         <% else %>
-          <%= p_m.indicacion %><br><br>
+          <%= p_m.indicacion %>
         <% end %>
+        <%= p_m.getViaAdministracion %>        
+        <br><br>
       <% end %> 
     </td>
   </tr>     

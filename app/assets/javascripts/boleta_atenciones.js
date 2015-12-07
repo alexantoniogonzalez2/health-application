@@ -5,9 +5,9 @@ else {
     "language": {
       "lengthMenu": "Mostrar _MENU_ atenciones por página",
       "zeroRecords": "La búsqueda no arrojó resultados.",
-      "info": "Mostrando _START_ a _END_ de un total de _TOTAL_ atenciones",
+      "info": "_START_ a _END_ de _TOTAL_",
       "infoEmpty": "No hay atenciones que mostrar",
-      "infoFiltered": "(filtrados de un total de _MAX_)",
+      "infoFiltered": "(filtrados de _MAX_)",
       "search": "Búsqueda",
       "oPaginate": {
         "sPrevious": "Página anterior",

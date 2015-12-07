@@ -6,10 +6,10 @@ class FiPersonaPrestaciones < ActiveRecord::Base
   belongs_to :prestador, :class_name => 'PrePrestadores'
   has_many :persona_prestacion_diagnosticos, :class_name => 'FiPersonaPrestacionDiagnosticos', :foreign_key => 'persona_prestacion_id'
 
-  def getFechaPrestacion
+  def getFechaPrestacion(formato)
     fecha_formato = ''
     if fecha_prestacion
-      fecha_formato = fecha_prestacion.strftime('%Y-%m-%d')
+      fecha_formato = (formato == 'fecha-mes') ? fecha_prestacion.strftime('%Y-%m-%d') : fecha_prestacion.strftime('%Y')
     end
     return fecha_formato  
   end

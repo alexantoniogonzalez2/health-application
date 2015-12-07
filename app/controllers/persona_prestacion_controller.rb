@@ -6,9 +6,7 @@ class PersonaPrestacionController < ApplicationController
 		@prestadores = PrePrestadores.all
 		
 		if persona_prestacion_actual
-
-			render :json => { :success => false }		
-
+			render :json => { :success => false }	
 		else 
 			
 			@persona_prestacion = FiPersonaPrestaciones.new
@@ -32,7 +30,7 @@ class PersonaPrestacionController < ApplicationController
 		end  	
 	end
 
-		def agregarPrestacionAntecedentes		
+	def agregarPrestacionAntecedentes		
 
 		@prestadores = PrePrestadores.all			
 		@persona_prestacion = FiPersonaPrestaciones.new
@@ -68,8 +66,10 @@ class PersonaPrestacionController < ApplicationController
 
 	def cargarPrestaciones		
 
-		term= params[:q]
-		pres=[]
+		term = params[:q]
+		words = term.split(' ')
+		words.map! {|word| "med_prestaciones.nombre like '%"<<word<<"%'" }			
+		sql_term = words.join(' AND ')		
 		
 		if params[:tipo] == 'examen'
 			min  = 1
@@ -80,8 +80,9 @@ class PersonaPrestacionController < ApplicationController
 		end		
 
 		#se puede mejorar consulta para filtrar por grupos 3 y 4 en vez de filtrar por los subgrupos	
-		@prestaciones = MedPrestaciones.joins(:subgrupo).where("med_prestaciones.nombre LIKE ? AND med_prestaciones_subgrupos.id BETWEEN ? and ? ", "%#{term}%",min,max)
+		@prestaciones = MedPrestaciones.joins(:subgrupo).where(sql_term<<" AND med_prestaciones_subgrupos.id BETWEEN ? and ? ",min,max)
 		
+		pres = []
 		@prestaciones.each do |f|
 			pres << f.formato_prestaciones			
 		end
@@ -137,7 +138,11 @@ class PersonaPrestacionController < ApplicationController
 		@persona_prestacion = FiPersonaPrestaciones.find(params[:p_p])
 		case params[:param]
 			when 'fecha'
-				@persona_prestacion.fecha_prestacion = params[:valor] 
+				if params[:valor].length == 4  
+					@persona_prestacion.fecha_prestacion = DateTime.new(params[:valor].to_i , 1, 1)
+				else	
+					@persona_prestacion.fecha_prestacion = params[:valor] 
+				end	
 			when 'prestador'
 				@persona_prestacion.prestador_texto = params[:valor]  
 		end

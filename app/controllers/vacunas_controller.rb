@@ -5,31 +5,26 @@ class VacunasController < ApplicationController
 		@personas_vacunas = FiPersonasVacunas.joins('JOIN fi_calendario_vacunas AS fcv ON fi_personas_vacunas.vacuna_id = fcv.vacuna_id AND (fi_personas_vacunas.numero_vacuna = fcv.numero_vacuna OR (fi_personas_vacunas.numero_vacuna is null and fcv.numero_vacuna is null  ))')
 																				 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,fcv.edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
 																				 .where('persona_id = ?',@persona.id)
-		 
-		@agno = FiCalendarioVacunas.maximum('agno')
-		@calendario_vacunas_lactante = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-																		.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-																		.where('edad in ("Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@persona.id)
-																		.order('fi_calendario_vacunas.id ASC')
-		@calendario_vacunas_pediatricas = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-																.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-																.where('edad in ("1° básico","4° básico","8° básico") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@persona.id)
-																.order('fi_calendario_vacunas.id ASC')
-		@calendario_vacunas_adulto_mayor = FiCalendarioVacunas.joins('LEFT JOIN fi_personas_vacunas AS fpv ON fi_calendario_vacunas.vacuna_id = fpv.vacuna_id AND (fi_calendario_vacunas.numero_vacuna = fpv.numero_vacuna OR (fi_calendario_vacunas.numero_vacuna is null and fpv.numero_vacuna is null  ))')
-														.select('fi_calendario_vacunas.id,fi_calendario_vacunas.vacuna_id,fi_calendario_vacunas.edad,fpv.persona_id,fpv.fecha')
-														.where('edad in ("Adulto de 65 años") AND agno = ? AND (persona_id = ? OR persona_id is null)',@agno,@persona.id)
-														.order('fi_calendario_vacunas.id ASC')
+		@personas_vacunas_otras = FiPersonasVacunas.joins('JOIN med_vacunas AS mv ON fi_personas_vacunas.vacuna_id = mv.id')
+																						 .select('fi_personas_vacunas.id,fi_personas_vacunas.vacuna_id,mv.tipo as edad,fi_personas_vacunas.fecha,fi_personas_vacunas.atencion_salud_id')	
+																						 .where('persona_id = ? AND mv.tipo != ?',@persona.id,'pni')
 														
-		@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)												
+		@grupo_etareo = @persona.getGrupoEtareo(DateTime.current)
+		@agno = FiCalendarioVacunas.maximum('agno')
+		@array_grupo = []																									
 		case @grupo_etareo
     when 'Recién nacido','Lactante'
-    	@partial_seguimiento = 'lactante'
+    	@partial_seguimiento = 'lactante'    	
+			@array_grupo = ["Recién nacido","2 meses","4 meses","6 meses","12 meses","18 meses"]
     when 'Pediatria' 
       @partial_seguimiento = 'pediatria'
+		  @array_grupo = ["1° básico","4° básico","8° básico"]
     when 'Adolescente','Adulto' 
     when 'Adulto mayor'
     	@partial_seguimiento = 'adulto_mayor'
+    	@array_grupo = ["Adulto de 65 años"]
     end
+    @calendario_vacunas_persona = FiCalendarioVacunas.where('edad in (?) AND agno = ? ',@array_grupo,@agno).order(id: :asc)
 	end	
 	def calendario
 		@calendarios = {}
