@@ -63,7 +63,7 @@ gem "r18n-core"
 gem "highcharts-rails"
 gem 'jquery-datatables-rails', github: "rweng/jquery-datatables-rails"
 gem "font-awesome-rails"
-gem 'wicked_pdf'
+gem 'wicked_pdf', '0.11.0'
 gem 'wkhtmltopdf-binary'
 gem 'bootstrap-validator-rails'
 gem 'label_better_rails'

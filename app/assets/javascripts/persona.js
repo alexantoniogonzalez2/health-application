@@ -122,7 +122,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
   }
 })
 .on('keyup', 'input[name="dv"]', function(e) { $('#form-agregar-persona-'+$(this).attr('id').substring(2)).bootstrapValidator('revalidateField', 'rut'); })
-.on('keyup', 'input[name="fijo"]', function(e) { $('#form-agregar-persona-'+$(this).attr('id').substring(4)).bootstrapValidator('revalidateField', 'codigo'); }); ;       
+.on('keyup', 'input[name="fijo"]', function(e) { $('#form-agregar-persona-'+$(this).attr('id').substring(4)).bootstrapValidator('revalidateField', 'codigo'); });      
 
 $.fn.bootstrapValidator.validators.validarRut = {
   
@@ -153,4 +153,9 @@ $('input[id^=fecha]').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD',
     viewMode: 'years',
+});
+
+$("input[name=fecha_nacimiento]").on("dp.change", function (e) {  
+  id = $(this).attr('id').substring(5);
+  $('#form-agregar-persona-'+id).bootstrapValidator('revalidateField', 'fecha_nacimiento'); 
 });

@@ -275,7 +275,7 @@ DEPENDENCIES
   turbolinks
   tzinfo-data
   uglifier
-  wicked_pdf
+  wicked_pdf (= 0.11.0)
   wkhtmltopdf-binary
 
 BUNDLED WITH
