@@ -371,7 +371,7 @@ function anularBoleta(boleta_id){
       var row;
       var table = $('#lista_boletas').DataTable();
       var indexes = table.rows().eq( 0 ).filter( function (rowIdx) {
-        if (table.cell( rowIdx, 0 ).data() === boleta_id ){
+        if (table.cell( rowIdx, 0 ).data() == boleta_id ){
           row = rowIdx;
         }
         //return table.cell( rowIdx, 0 ).data() === boleta_id ? true : false;
