@@ -1,5 +1,6 @@
 <% disabled = tipo == 'edit' ? '' : 'disabled' %>
 <% disabled_est_diag = (tipo == 'reabrir' or tipo == 'edit') ? '' : 'disabled' %>
+<% class_oculto =  p_d.estado_diagnostico.id == 1 ? '' : 'oculto' %> 
 <div class="modal fade modal-diag" id="modal-container-diag-<%= p_d.id%>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -69,18 +70,16 @@
                           </div> 
                         <% end %>                    
                     </div>
-                  </div>
-                  <% if p_d.primer_diagnostico and p_d.estado_diagnostico.id == 1 %>         
-                    <div id="checkboxes-trat-div-<%= p_d.id %>" class="col-md-9 column">
-                      <div class="form-group trat">                      
-                        <div class="checkbox" id="trat_<%= p_d.id %>">
-                          <label class="checkbox-der trat" for="checkboxes-trat-<%= p_d.id %>">
-                            <input type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" <% if p_d.en_tratamiento == 1%> checked="checked" <% end %> <%= disabled %> /> No es el primer diagnóstico o el paciente ya estaba en tratamiento
-                          </label>
-                        </div>                      
-                      </div>
+                  </div>                          
+                  <div id="checkboxes-trat-div-<%= p_d.id %>" class="col-md-9 column <%= class_oculto %>">
+                    <div class="form-group trat">                      
+                      <div class="checkbox" id="trat_<%= p_d.id %>">
+                        <label class="checkbox-der trat" for="checkboxes-trat-<%= p_d.id %>">
+                          <input type="checkbox" name="checkboxes" id="checkboxes-trat-<%= p_d.id %>" <% if p_d.en_tratamiento == 1%> checked="checked" <% end %> <%= disabled %> /> No es el primer diagnóstico o el paciente ya estaba en tratamiento
+                        </label>
+                      </div>                      
                     </div>
-                  <% end %>  
+                  </div>                  
                 </div>
                 <div class="row clearfix"> 
                 <% if tipo == 'reabrir' %>                  
@@ -88,7 +87,7 @@
                     <button type="button" onclick="guardarDiagReabrir(<%= p_d.id%>)" class="btn btn-xs btn-success">Guardar nuevo estado</button>
                   </div>
                 <% end %>
-                <% if p_d.tieneCambioEstado ( p_d.id ) %>    
+                <% if p_d.tieneCambioEstado ( p_d.id ) or tipo == 'reabrir' %>    
                   <div class="col-md-10 column">
                     Historial de cambios:
                     <fieldset>

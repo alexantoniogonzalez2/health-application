@@ -4,12 +4,15 @@
   var link_loading = '<%= image_tag("loading.gif", alt: "Rails") %>'	
   var id=<%= @id %>
 </script>
+
+<% if @agendamiento.estado.nombre == "Paciente siendo atendido" %> 
+
 <input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
 
 <div id="atencion-salud" class="panel panel-success">
   <div class="panel-heading">
     <h3 class="panel-title">
-      <label>Atención de Salud </label>
+      <label>Atención de Salud</label>
       <span class='right'>Fecha: <%= @agendamiento.fecha_comienzo.strftime("%Y-%m-%d") %> Hora: <%= @agendamiento.fecha_comienzo.strftime('%H:%M') %> Profesional: <%= @agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></span>
     </h3>
   </div>
@@ -151,7 +154,7 @@
             No hay diagnósticos recientes.
           <% end %>  
           <% @persona_diagnostico_anteriores.each do |p_d| %>
-            <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+            <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d, :tipo => 'edit'} %>
           <% end %>
         </div>
         <div id="diag_ant-modal-div" >
@@ -184,7 +187,7 @@
         </div>
         <div class="list-group" name="diagnostico-div" id="diagnostico-div">	
           <% @persona_diagnostico.each do |p_d| %>
-            <%= render :partial => "persona_diagnostico/persona_diagnostico", :locals => {:p_d => p_d} %>
+            <%= render :partial => "persona_diagnostico/persona_diagnostico", :locals => {:p_d => p_d, :tipo => 'edit'} %>
           <% end %>
       	</div>
         <div id="diag_modal-div" >
@@ -270,3 +273,7 @@
 <%= javascript_include_tag "antecedentes" %>
 <%= javascript_include_tag "atencion_salud/certificado" %>
 <%= javascript_include_tag "atenciones_salud" %>
+
+<% else %>
+  <%= render :partial => "layouts/no_editar" %>
+<% end %>

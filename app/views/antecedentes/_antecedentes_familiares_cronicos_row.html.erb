@@ -1,7 +1,7 @@
 <tr id='tr-ant-fam-cro-<%= ant_enf_cro['datos'].id %>'>
 	<td><%= ant_enf_cro['datos'].persona.showName('%n%p%m') %></td>
 	<td><%= ant_enf_cro['parentesco'] %></td>
-	<td><%= ant_enf_cro['datos'].diagnostico.nombre %></td>
+	<td><%= ant_enf_cro['datos'].diagnostico.try(:nombre) %></td>
 	<td><%= ant_enf_cro['datos'].fecha_inicio.strftime('%Y-%m-%d') %></td>
 	<td><%= ant_enf_cro['datos'].fecha_termino.try(:strftime, '%Y-%m-%d') %></td>
 	<td>

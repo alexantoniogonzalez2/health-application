@@ -114,7 +114,7 @@
               <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'show'} %>
             <% end %>
             <% @ant_med_us.each do |p_d| %>     
-              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'ver'} %>     
+              <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'show'} %>     
             <% end %>       
           </div> 
         </fieldset>
@@ -125,7 +125,7 @@
             No hay diagnósticos recientes.
           <% end %>  
           <% @persona_diagnostico_anteriores.each do |p_d| %>
-            <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+            <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d, :tipo => 'show'} %>
           <% end %>
         </div>
         <div id="diag_ant-modal-div" >
@@ -148,7 +148,7 @@
         <label>Diagnóstico</label>
         <div class="list-group" name="diagnostico-div" id="diagnostico-div">	
           <% @persona_diagnostico.each do |p_d| %>
-            <%= render :partial => "persona_diagnostico/persona_diagnostico", :locals => {:p_d => p_d} %>
+            <%= render :partial => "persona_diagnostico/persona_diagnostico", :locals => {:p_d => p_d, :tipo =>'show'} %>
           <% end %>
       	</div>
         <div id="diag_modal-div" >

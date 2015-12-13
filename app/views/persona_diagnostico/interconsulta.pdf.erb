@@ -8,8 +8,9 @@
 		unless @interconsulta.persona_conocimiento.nil? 
 			nombre = @interconsulta.persona_conocimiento.showName('%n%p%m')
 			rut = @interconsulta.persona_conocimiento.showRut
-			correo = @interconsulta.persona_conocimiento.user.email 
+			correo = @interconsulta.persona_conocimiento.getCorreo
 			celular = @interconsulta.persona_conocimiento.getCelular
+			fijo = @interconsulta.persona_conocimiento.getTelefonoFijo
 		end
 	end	
 %>
@@ -63,7 +64,8 @@
 		<td><label>Rut</label>: <%= rut %></td>
 	</tr>
 	<tr>		
-		<td colspan="2"><label>Correo electrónico</label>: <%= correo %></td>
+		<td><label>Correo electrónico</label>: <%= correo %></td>
+		<td><label>Telefono fijo</label>: <%= fijo %>
 		<td><label>Celular</label>: <%= celular %>
 	</tr>
 </table>
@@ -80,7 +82,7 @@
 	</tr>
 	<tr>
 		<td width="70%"><span class="print">Confirmación Diagnóstica</span>:	<%= p_d.diagnostico.nombre %></td>
-		<td width="30%"><span class="print">Código CIE10</span>:	<%= p_d.diagnostico.codigo_cie10 %></td>
+		<td width="30%"><span class="print">Código CIE10</span>: <%= p_d.diagnostico.codigo_cie10 %></td>
 	</tr>
 	<tr>
 		<td colspan="2" >

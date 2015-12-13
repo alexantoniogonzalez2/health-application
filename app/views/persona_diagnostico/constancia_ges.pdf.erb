@@ -64,12 +64,13 @@
 En caso que la persona que tomó conocimiento no sea el paciente, identificar:   
 <table>
   <tr>
-    <td><label>Nombre</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.showName('%n%p%m') %></td>
-    <td><label> Rut</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.showRut %></td>
+    <td colspan="2" ><label>Nombre</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.showName('%n%p%m') %></td>
+    <td class="padding-left"><label>Rut</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.showRut %></td>
   </tr>
   <tr>
-    <td><label>Correo electrónico</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.user.email %></td>
-    <td><label> Celular</label>: <%= persona_notificacion.nil? ? '' : ' '<<persona_notificacion.getCelular %></td>
+    <td><label>Correo electrónico</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.getCorreo %></td>
+    <td class="padding-left"><label>Celular</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.getCelular %></td>
+    <td class="padding-left"><label>Telefono fijo</label>: <%= persona_notificacion.nil? ? '' : persona_notificacion.getTelefonoFijo %></td>
   </tr>
 </table>
 

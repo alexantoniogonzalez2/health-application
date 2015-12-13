@@ -91,21 +91,9 @@ function agregarPropInt(pers_diag,value){
 }
 
 function guardarInterconsulta(pers_diag){
-  var value = $("input:radio[name=radios-int-"+pers_diag+"]").val();
+  var value = $('input:radio[name=radios-int-'+pers_diag+']:checked').val();
   agregarPropInt(pers_diag,value);  
 }
-
-$('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
-  
-  var pers_diag = $(this).attr('id').substring(16);
-  trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
-  
-  estado_trat = (trat == 1) ? 2 : 1;
-  $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
-  $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
-  guardarDiagnostico(pers_diag,false);
-
-});
 
 function actualizarEnfCron(pers_diag){
   guardarDiagnostico(pers_diag,false);
@@ -1103,4 +1091,3 @@ $('[id^=link-certificado]').click(function() {
   if (value != '')
     agregarInfoCertificado('control',value,id);
 })
-

@@ -80766,7 +80766,7 @@ function anularBoleta(boleta_id){
       var row;
       var table = $('#lista_boletas').DataTable();
       var indexes = table.rows().eq( 0 ).filter( function (rowIdx) {
-        if (table.cell( rowIdx, 0 ).data() === boleta_id ){
+        if (table.cell( rowIdx, 0 ).data() == boleta_id ){
           row = rowIdx;
         }
         //return table.cell( rowIdx, 0 ).data() === boleta_id ? true : false;
@@ -82622,21 +82622,9 @@ function agregarPropInt(pers_diag,value){
 }
 
 function guardarInterconsulta(pers_diag){
-  var value = $("input:radio[name=radios-int-"+pers_diag+"]").val();
+  var value = $('input:radio[name=radios-int-'+pers_diag+']:checked').val();
   agregarPropInt(pers_diag,value);  
 }
-
-$('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
-  
-  var pers_diag = $(this).attr('id').substring(16);
-  trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
-  
-  estado_trat = (trat == 1) ? 2 : 1;
-  $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
-  $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
-  guardarDiagnostico(pers_diag,false);
-
-});
 
 function actualizarEnfCron(pers_diag){
   guardarDiagnostico(pers_diag,false);
@@ -83634,7 +83622,6 @@ $('[id^=link-certificado]').click(function() {
   if (value != '')
     agregarInfoCertificado('control',value,id);
 })
-
 ;
 $(".datepicker").attr( 'readOnly' , 'true' );
 $(".datepicker-disabled" ).attr( 'readOnly' , 'true' );
@@ -83715,6 +83702,18 @@ $(document).ready(function() {
   $('.icon-ges').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
   $('.icon-int').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
   $('.icon-estado').qtip({ content: { text: 'Campo relacionado con estado del diagnósito, en tab Diagnósito.' }})
+});
+
+$('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
+  
+  var pers_diag = $(this).attr('id').substring(16);
+  trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
+  
+  estado_trat = (trat == 1) ? 2 : 1;
+  $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+  $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+  guardarDiagnostico(pers_diag,false);
+
 });
 $('select.select_prestadores_proc').select2({ width: '80%', placeholder: 'Selecciona un establecimiento', allowClear: true });
 $('select.select_prestadores_proc').on("change", function(e) { 
@@ -83833,7 +83832,7 @@ function cargarGrafico (data,tipo){
 
 
 ;
-$(function() {
+/*$(function() {
 
   $('.panel_interconsulta').bind('click', function (e) {
     
@@ -83853,15 +83852,15 @@ $(function() {
     agregarPresInt(p_d,'ant');
     
   });
-});
+});*/
 
-function agregarPresInt(p_d,tipo){
 
+function agregarPresInt(p_d,tipo_diag,tipo){
   $('#int_diag'+p_d).empty();
   $.ajax({
     type: 'POST',
     url: '/agregar_pres_int',
-    data: { p_d: p_d, tipo: tipo },
+    data: { p_d: p_d, tipo_diag: tipo_diag, tipo: tipo },
     success: function(response) { },
     error: function(xhr, status, error){ }
   });
@@ -84919,7 +84918,7 @@ $("form[id^='form-agregar-persona-'").bootstrapValidator({
   }
 })
 .on('keyup', 'input[name="dv"]', function(e) { $('#form-agregar-persona-'+$(this).attr('id').substring(2)).bootstrapValidator('revalidateField', 'rut'); })
-.on('keyup', 'input[name="fijo"]', function(e) { $('#form-agregar-persona-'+$(this).attr('id').substring(4)).bootstrapValidator('revalidateField', 'codigo'); }); ;       
+.on('keyup', 'input[name="fijo"]', function(e) { $('#form-agregar-persona-'+$(this).attr('id').substring(4)).bootstrapValidator('revalidateField', 'codigo'); });      
 
 $.fn.bootstrapValidator.validators.validarRut = {
   
@@ -84950,6 +84949,11 @@ $('input[id^=fecha]').datetimepicker({
     locale: 'es',
     format: 'YYYY-MM-DD',
     viewMode: 'years',
+});
+
+$("input[name=fecha_nacimiento]").on("dp.change", function (e) {  
+  id = $(this).attr('id').substring(5);
+  $('#form-agregar-persona-'+id).bootstrapValidator('revalidateField', 'fecha_nacimiento'); 
 });
 (function() {
 

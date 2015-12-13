@@ -78,3 +78,15 @@ $(document).ready(function() {
   $('.icon-int').qtip({ content: { text: 'Parentesco o relación con el paciente.' }})
   $('.icon-estado').qtip({ content: { text: 'Campo relacionado con estado del diagnósito, en tab Diagnósito.' }})
 });
+
+$('input[type=checkbox][id^=checkboxes-trat-]').change(function() {
+  
+  var pers_diag = $(this).attr('id').substring(16);
+  trat = $('#trat_'+pers_diag).find('input[name=checkboxes]').is(':checked');
+  
+  estado_trat = (trat == 1) ? 2 : 1;
+  $('input[name=radios-ges-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+  $('input[name=radios-int-'+pers_diag+'][value=' + estado_trat + ']').prop('checked', true);
+  guardarDiagnostico(pers_diag,false);
+
+});

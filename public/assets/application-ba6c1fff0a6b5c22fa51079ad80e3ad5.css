@@ -18562,7 +18562,7 @@ label.uppercase {
 /* line 247, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 ol.print {
   line-height: 1;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 /* line 248, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
@@ -18661,6 +18661,11 @@ div.ajuste-div-sexo {
 #iconos-leyenda {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
+}
+
+/* line 287, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+td.padding-left {
+  padding-left: 10px;
 }
 /* line 5, /Users/alex/aplicacion_medica/app/assets/stylesheets/habitos_alcohol.css.scss */
 label[checked] {

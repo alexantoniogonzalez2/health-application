@@ -95,8 +95,9 @@ class PersonaPrestacionController < ApplicationController
 
 	def eliminarPrestacion		
 		@persona_prestacion = FiPersonaPrestaciones.find(params[:persona_prestacion_id])
+		FiPersonaPrestacionDiagnosticos.where(:persona_prestacion => @persona_prestacion.id).destroy_all
   	@persona_prestacion.destroy 
-
+  	
   	render :json => { :success => true }	
 	end
 

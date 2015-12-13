@@ -20,7 +20,7 @@
           </div>
           <div class='row'>
             <div class='column col-md-12'>
-              <label>Diagnóstico</label>: <%= ant_enf_cro['datos'].diagnostico.nombre %>
+              <label>Diagnóstico</label>: <%= ant_enf_cro['datos'].diagnostico.try(:nombre) %>
             </div>
           </div> 
           <div class="row clearfix">

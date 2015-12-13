@@ -2,13 +2,13 @@
 	$("<p id='no-pres-int<%= @p_d %>'>No hay prestaciones seleccionadas.</p>").appendTo("#int_diag<%= @p_d %>"); 
 <% else %>
 	$('#no-pres-int<%= @p_d %>').remove();
-	<% if params[:tipo] == 'act' %>
+	<% if params[:tipo_diag] == 'act' %>
 		<% @persona_prestacion.each do |p_p| %> 
-			$("<%= escape_javascript( render :partial => "persona_diagnostico/persona_prestacion_interconsulta", :locals => {:p_d => @p_d, :p_p => p_p } ) %>").appendTo("#int_diag<%= @p_d %>") ;    
+			$("<%= escape_javascript( render :partial => "persona_diagnostico/persona_prestacion_interconsulta", :locals => {:p_d => @p_d, :p_p => p_p, :tipo => @tipo } ) %>").appendTo("#int_diag<%= @p_d %>") ;    
 		<% end %>
 	<% else %>
 		<% @persona_prestacion.each do |p_p| %> 
-			$("<%= escape_javascript( render :partial => "persona_diagnostico/anterior/persona_prestacion_interconsulta_anterior", :locals => {:p_d => @p_d, :p_p => p_p } ) %>").appendTo("#int_diag<%= @p_d %>") ;    
+			$("<%= escape_javascript( render :partial => "persona_diagnostico/anterior/persona_prestacion_interconsulta_anterior", :locals => {:p_d => @p_d, :p_p => p_p, :tipo => @tipo } ) %>").appendTo("#int_diag<%= @p_d %>") ;    
 		<% end %>
 	<% end %>	
 <% end %>

@@ -674,6 +674,7 @@ class PersonaDiagnosticoController < ApplicationController
 		@persona_prestacion = FiPersonaPrestacionDiagnosticos.where('persona_diagnostico_atencion_salud_id = ?',params[:p_d])
 	  @p_d = 	params[:p_d]
 	  @tipo = params[:tipo]
+	  @tipo_diag = params[:tipo_diag]
 	  
 		respond_to do |format|     
     	format.js   {}

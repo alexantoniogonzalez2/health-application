@@ -1,7 +1,11 @@
+<% 	if tipo
+		@tipo = 'edit' if tipo == 'edit'
+	end	%>
+
 <% disabled = (@tipo == 'edit' ) ? '' : 'disabled' %>
 <div id="pres-int-<%= p_p.id %>" class="checkbox">
   <label for="pr-in-<%= p_p.id%>-<%= p_d %>" >
     <input type="checkbox" name="check-pres-int" <%= disabled %> onchange="act_pres_int(<%= p_p.id %>,<%= p_d%>)" id="pr-in-<%= p_p.id %>-<%= p_d %>"  <% if p_p.para_interconsulta %> checked="checked" <% end %> >
-    <%= p_p.persona_prestacion.prestacion.nombre %>hola
+    <%= p_p.persona_prestacion.prestacion.nombre %>
   </label>
 </div>

@@ -243,7 +243,7 @@ table.print3 {
 }
 .no-margin-top { margin-top: 0px; }
 label.uppercase { margin-top: 10px; }
-ol.print { line-height: 1; font-size: 12px; }
+ol.print { line-height: 1; font-size: 11px; }
 table.print4 { 
   font-size: 14px;
   width: 100%; 
@@ -263,7 +263,7 @@ div.div-diag-cert { display: inline;}
 .bold { font-weight: bold !important; }
 
 /*Fix problema de borde izquierdo de select3 al colocar float:right y inline-block; */
-.select2-choice, .select2-default {overflow: visible !important; }
+.select2-choice, .select2-default { overflow: visible !important; }
 
 .margin-right { margin-right: 10px;}
 
@@ -283,3 +283,4 @@ div.ajuste-div-sexo { padding-top: 10px !important; margin-bottom: 5px !importan
 .prevent-break-line { position: relative; display: inline-block; }
 .padding-bottom { padding-bottom: 15px !important; }
 #iconos-leyenda { padding-top: 10px !important; padding-bottom: 10px !important; }
+td.padding-left { padding-left: 10px; }

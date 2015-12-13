@@ -125,6 +125,7 @@ PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_
 PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R5
 PrePrestadorAdministrativos.create! :prestador=> C1, :administrativo => A, :rol_administrativo => R6
 PrePrestadorAdministrativos.create! :prestador=> C2, :administrativo => B, :rol_administrativo => R1
+PrePrestadorAdministrativos.create! :prestador=> C2, :administrativo => B, :rol_administrativo => R3
 
 #Profesionales
 puts 'Relación Persona-Profesión'
