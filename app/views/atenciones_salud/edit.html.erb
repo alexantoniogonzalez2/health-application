@@ -163,7 +163,7 @@
           <% end %>      
         </div>
         <div id="ajuste-motivo">
-          <label>Motivo de consulta:</label><input id='motivo_consulta' type='text' class="form-control ajuste-motivo" value="<%= @atencion_salud.motivo_consulta %>">
+          <label>Motivo de consulta:</label><input id='motivo_consulta' type='text' class="form-control ajuste-motivo" value="<%= @atencion_salud.motivo_consulta %>"><span id="auto-motivo" >Autoguardado</span>
         </div>
         <label>Anamnesis</label><span id="auto-anamnesis" >Autoguardado</span>
         <textarea id='anamnesis' class = "form-control" rows='2' cols='50'><%= @atencion_salud.anamnesis %></textarea>

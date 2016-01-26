@@ -341,7 +341,7 @@ body.home {
   text-align: center;
   background-attachment: fixed !important;
   background-image: asset-data-url("bg1.jpg");
-  -webkit-transition:background-image 1s ease-in; 
+  -webkit-transition:background-image 1s ease-out; 
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;

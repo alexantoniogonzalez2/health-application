@@ -224,6 +224,8 @@ function ajuste_label_better (label_better_id) {
   btn.parent().find(".lb_label").addClass("active");
 }
 
+var act_background_image = "bg7";
+
 $(window).scroll(function() {
   var height = $(window).scrollTop();
 
@@ -234,31 +236,37 @@ $(window).scroll(function() {
     $("a.active").addClass( 'active-ajuste' );
   }
   else {
-  	$(".navbar-fixed-top").addClass( 'navbar-ajuste' );
-  	$(".navbar-fixed-top").removeClass( 'navbar-ajuste2' );
-  	$("a").removeClass( 'active-ajuste' );
+    $(".navbar-fixed-top").addClass( 'navbar-ajuste' );
+    $(".navbar-fixed-top").removeClass( 'navbar-ajuste2' );
+    $("a").removeClass( 'active-ajuste' );
   }   
       
   $('section').each(function(i) {
-  	var position = $(this).position().top;
-    if ( position <= height + 50 ) {   	
+    var position = $(this).position().top;
+    if ( position <= height + 50 ) {    
         $('.navbar-fixed-top a.active').removeClass('active');
         $('.navbar-fixed-top a').eq(i).addClass('active');        
     }
-    if ( 0 <= height &&  height < 580 )
-    	$('.home').css("background-image", "url(../assets/bg1.jpg)");
-    if ( 580 <= height &&  height < 1300 )
-      $('.home').css("background-image", "url(../assets/bg2.jpg)");
-    if ( 1300 <= height &&  height < 2020 )
-    	$('.home').css("background-image", "url(../assets/bg3.jpg)");
-    if ( 2020 <= height &&  height < 2660 )	
-    	$('.home').css("background-image", "url(../assets/bg4.jpg)");
-    if ( 2660 <= height &&  height < 3490 )	
-    	$('.home').css("background-image", "url(../assets/bg5.jpg)");
-    if ( 3490 <= height )	
-    	$('.home').css("background-image", "url(../assets/bg6.jpg)");
-    
   });
+
+  if ( 0 <= height &&  height < 580 )
+    background_image = "bg1";
+  if ( 580 <= height &&  height < 1300 )
+    background_image = "bg2";
+  if ( 1300 <= height &&  height < 2020 )
+    background_image = "bg3";
+  if ( 2020 <= height &&  height < 2660 )     
+    background_image = "bg4";
+  if ( 2660 <= height &&  height < 3490 )    
+     background_image = "bg5"; 
+  if ( 3490 <= height )    
+    background_image = "bg6";
+
+  if (act_background_image != background_image ){ 
+    act_background_image = background_image; 
+    $('.home').fadeTo('slow', 0.8, function(){ $(this).css('background-image', "url(../assets/"+background_image+".jpg)"); }).fadeTo('slow', 1);  
+  }
+
 });
 
 $(".label_better").label_better({

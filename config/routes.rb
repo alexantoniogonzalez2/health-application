@@ -83,7 +83,6 @@ AplicacionMedica::Application.routes.draw do
   post '/eliminar_medicamento', to: 'persona_medicamento#eliminarMedicamento'
   post '/guardar_medicamento', to: 'persona_medicamento#guardarMedicamento'
   post '/guardar_metricas', to: 'persona_metricas#guardarMetricas'
-  post '/guardar_signos', to: 'persona_metricas#guardarSignos'
   post '/cargar_datos_metricas', to: 'persona_metricas#cargarDatosMetricas'
   post '/guardar_texto', to: 'atenciones_salud#guardarTexto'
   post '/autoguardar_comentario', to: 'persona_diagnostico#autoguardarComentario'

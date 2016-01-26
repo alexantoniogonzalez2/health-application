@@ -591,6 +591,10 @@ function calcularIMC(pers_aten) {
   var imc = peso/(estatura*estatura);
   if (isNumeric(peso) && isNumeric(estatura))
     $("#imc-" + pers_aten).val(Math.round(imc * 100) / 100 );
+  else
+    $("#imc-" + pers_aten).val('');  
+
+  guardarMetrica(pers_aten,'imc');
 }
 
 function calcularPAM(pers_aten) {
@@ -599,66 +603,37 @@ function calcularPAM(pers_aten) {
   var pam = parseFloat(dias) + (sis-dias)/3;
   if (isNumeric(sis) && isNumeric(dias))
     $("#presion-am-" + pers_aten).val(Math.round(pam * 100) / 100 );
+  else 
+    $("#presion-am-" + pers_aten).val('');
+
+  guardarMetrica(pers_aten,'presion-am');
 }
 
-function guardarMetricas(pers_aten) {
-  var peso = $("#peso-"+pers_aten).val();
-  var estatura = $("#estatura-"+pers_aten).val();
-  var imc = $("#imc-"+pers_aten).val();
-  if (isNumeric(peso) && isNumeric(estatura) && isNumeric(imc)){    
+function guardarMetrica(pers_aten,metrica) {
+  var valor_metrica = $("#"+metrica+"-"+pers_aten).val();
+  var caracteristica = $("#car_"+metrica+"-"+pers_aten).val();
+  if (isNumeric(valor_metrica) || valor_metrica == ''){ 
+    
+    if (metrica == 'peso' || metrica == 'estatura')
+      calcularIMC(pers_aten);
+    if (metrica == 'presion-sis' || metrica == 'presion-dias')
+      calcularPAM(pers_aten);
+   
     $.ajax({
       type: 'POST',
       url: '/guardar_metricas',
       data: {
         atencion_salud_id: pers_aten,
         persona_id: persona_id,
-        peso: peso,
-        estatura: estatura,
-        imc: imc,     
+        metrica: metrica,
+        valor_metrica: valor_metrica,
+        caracteristica: caracteristica
       },
-      success: function(response) { /*$( "#modal-container-metricas").modal('hide');*/ },
-      error: function(xhr, status, error){ alert("No se pudo guardar las métricas del paciente.");   }
+      success: function(response) { },
+      error: function(xhr, status, error){ alert("No se pudo guardar la métrica o signo vital del paciente.");   }
     });
   } else
-    alert("No se pudo guardar las métricas del paciente. Problema con el formato.");  
-}
-
-function guardarSignos(pers_aten) {
-  var frec_car = $( "#frec_car-"+pers_aten).val();
-  var frec_res = $( "#frec_res-"+pers_aten).val();
-  var temp = $( "#temp-"+pers_aten).val();  
-  var presion_am = $( "#presion-am-"+pers_aten).val();
-  var presion_dias = $( "#presion-dias-"+pers_aten).val();
-  var presion_sis = $( "#presion-sis-"+pers_aten).val();
-  var sat = $( "#sat-"+pers_aten).val();
-  if (isNumeric(frec_car) && isNumeric(frec_res) && isNumeric(temp) && isNumeric(presion_am) && isNumeric(presion_dias) && isNumeric(presion_sis) && isNumeric(sat)){  
-    $.ajax({
-      type: 'POST',
-      url: '/guardar_signos',
-      data: {
-        atencion_salud_id: pers_aten,
-        persona_id: persona_id,
-        frec_car: frec_car,
-        frec_res: frec_res,
-        temp: temp,  
-        presion_am: presion_am,
-        presion_dias: presion_dias,
-        presion_sis: presion_sis,
-        sat: sat,
-        car_frec_car: $( "#car_frec_car-"+pers_aten).val(),
-        car_frec_res: $( "#car_frec_res-"+pers_aten).val(),
-        car_temp: $( "#car_temp-"+pers_aten).val(),  
-        car_presion_am: $( "#car_presion-am-"+pers_aten).val(),
-        car_presion_sis: $( "#car_presion-sis-"+pers_aten).val(), 
-        car_presion_dias: $( "#car_presion-dias-"+pers_aten).val(),   
-        car_sat: $( "#car_sat-"+pers_aten).val(),      
-      },
-      success: function(response) { /*$( "#modal-container-signos").modal('hide');*/ },
-      error: function(xhr, status, error){ alert("No se pudo guardar los signos vitales del paciente.");   }
-    });
-  } else
-    alert("No se pudo guardar los signos del paciente. Problema con el formato.");  
-
+    alert("No se pudo guardar la métrica o signo vital del paciente. Problema con el formato.");  
 }
 
 function guardarTexto(tipo_texto) {
@@ -1073,7 +1048,8 @@ function act_pres_int(p_p,p_d){
 }
 
 function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
+
+  return ( !isNaN(parseFloat(n)) && isFinite(n) && !(n.length == 0) );
 }
 
 function actualizarFechaAlta(certificado_id){

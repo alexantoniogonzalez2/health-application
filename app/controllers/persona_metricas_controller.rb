@@ -2,100 +2,51 @@ class PersonaMetricasController < ApplicationController
 	
 	def guardarMetricas		
 
+    valor_metrica = params[:valor_metrica]
 		fecha = DateTime.current 
+    case params['metrica']
+    when 'estatura'
+      metrica_id = 1
+    when 'peso'
+      metrica_id = 2
+    when 'presion-am'
+      metrica_id = 3
+    when 'imc'
+      metrica_id = 4 
+    when 'frec-car'
+      metrica_id = 5
+    when 'frec-res'
+      metrica_id = 6
+    when 'temp'
+      metrica_id = 7
+    when 'sat'
+      metrica_id = 8
+    when 'presion-sis'
+      metrica_id = 9
+    when 'presion-dias'
+      metrica_id = 10          
+    end
 
-  	@persona_estatura = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],1).first
-  	if @persona_estatura 
-  		@persona_estatura.update( valor: params[:estatura], fecha: fecha )
-  	else 
-  		@persona_estatura = FiPersonaMetricas.new( valor: params[:estatura], fecha: fecha , persona_id: params[:persona_id], metrica_id: 1, atencion_salud_id: params[:atencion_salud_id])
-  		@persona_estatura.save
-  	end	
+    if ([1,2,4].include?(metrica_id))
+      caracteristica = ''
+    else 
+      caracteristica = params['caracteristica']
+    end 
 
-  	@persona_peso = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],2).first
-  	if @persona_peso 
-  		@persona_peso.update( valor: params[:peso], fecha: fecha )
-  	else 
-  		@persona_peso = FiPersonaMetricas.new( valor: params[:peso], fecha: fecha , persona_id: params[:persona_id], metrica_id: 2, atencion_salud_id: params[:atencion_salud_id])
-  		@persona_peso.save
-  	end	
+  	@persona_caracteristica = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],metrica_id).first
 
-  	@persona_imc = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],4).first
-  	if @persona_imc 
-  		@persona_imc.update( valor: params[:imc], fecha: fecha )
+    if @persona_caracteristica 
+  		@persona_caracteristica.update( valor: valor_metrica, fecha: fecha, caracteristica: caracteristica )
   	else 
-  		@persona_imc = FiPersonaMetricas.new( valor: params[:imc], fecha: fecha , persona_id: params[:persona_id], metrica_id: 4, atencion_salud_id: params[:atencion_salud_id])
-  		@persona_imc.save
-  	end	
+  		@persona_caracteristica = FiPersonaMetricas.new( valor: valor_metrica, fecha: fecha , persona_id: params[:persona_id], metrica_id: metrica_id, atencion_salud_id: params[:atencion_salud_id], caracteristica: caracteristica )
+  		@persona_caracteristica.save
+  	end
+
+    @persona_caracteristica.destroy if valor_metrica == '' and caracteristica == ''
   	
   	render :json => { :success => true }	
 	
 	end
-
-
-  def guardarSignos   
-
-    fecha = DateTime.current 
-
-    @persona_frec_car = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],5).first
-    if @persona_frec_car 
-      @persona_frec_car.update( valor: params[:frec_car], fecha: fecha, caracteristica: params[:car_frec_car] )
-    else 
-      @persona_frec_car = FiPersonaMetricas.new( valor: params[:frec_car], fecha: fecha , persona_id: params[:persona_id], metrica_id: 5, atencion_salud_id: params[:atencion_salud_id], caracteristica: params[:car_frec_car] )
-      @persona_frec_car.save
-    end 
-
-    @persona_frec_res = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],6).first
-    if @persona_frec_res 
-      @persona_frec_res.update( valor: params[:frec_res], fecha: fecha, caracteristica: params[:car_frec_res]  )
-    else 
-      @persona_frec_res = FiPersonaMetricas.new( valor: params[:frec_res], fecha: fecha , persona_id: params[:persona_id], metrica_id: 6, atencion_salud_id: params[:atencion_salud_id], caracteristica: params[:car_frec_res] )
-      @persona_frec_res.save
-    end 
-
-    @persona_temp = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],7).first
-    if @persona_temp 
-      @persona_temp.update( valor: params[:temp], fecha: fecha, caracteristica: params[:car_temp] )
-    else 
-      @persona_temp = FiPersonaMetricas.new( valor: params[:temp], fecha: fecha , persona_id: params[:persona_id], metrica_id: 7, atencion_salud_id: params[:atencion_salud_id], caracteristica: params[:car_temp] )
-      @persona_temp.save
-    end 
-
-    @persona_presion_am = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],3).first
-    if @persona_presion_am 
-      @persona_presion_am.update( valor: params[:presion_am], fecha: fecha, caracteristica: params[:car_presion_am]  )
-    else 
-      @persona_presion_am = FiPersonaMetricas.new( valor: params[:presion_am], fecha: fecha , persona_id: params[:persona_id], metrica_id: 3, atencion_salud_id: params[:atencion_salud_id], caracteristica: params[:car_presion_am] )
-      @persona_presion_am.save
-    end 
-
-    @persona_sat = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],8).first
-    if @persona_sat 
-      @persona_sat.update( valor: params[:sat], fecha: fecha, caracteristica: params[:car_sat])
-    else 
-      @persona_sat = FiPersonaMetricas.new( valor: params[:sat], fecha: fecha , persona_id: params[:persona_id], metrica_id: 8, atencion_salud_id: params[:atencion_salud_id], caracteristica: params[:car_sat])
-      @persona_sat.save
-    end 
-
-    @persona_presion_sis = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],9).first
-    if @persona_presion_sis 
-      @persona_presion_sis.update( valor: params[:presion_sis], fecha: fecha, caracteristica: params[:car_presion_sis]  )
-    else 
-      @persona_presion_sis = FiPersonaMetricas.new( valor: params[:presion_sis], fecha: fecha , persona_id: params[:persona_id], metrica_id: 9, atencion_salud_id: params[:atencion_salud_id], caracteristica: params[:car_presion_sis] )
-      @persona_presion_sis.save
-    end 
-
-    @persona_presion_dias = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:atencion_salud_id],10).first
-    if @persona_presion_dias 
-      @persona_presion_dias.update( valor: params[:presion_dias], fecha: fecha, caracteristica: params[:car_presion_dias]  )
-    else 
-      @persona_presion_dias = FiPersonaMetricas.new( valor: params[:presion_dias], fecha: fecha , persona_id: params[:persona_id], metrica_id: 10, atencion_salud_id: params[:atencion_salud_id], caracteristica: params[:car_presion_dias] )
-      @persona_presion_dias.save
-    end 
-    
-    render :json => { :success => true }  
-  
-  end
 
 	def cargarDatosMetricas
 
@@ -125,22 +76,47 @@ class PersonaMetricasController < ApplicationController
     @datos = []
     @texto = []
 
-		@datos_metrica = FiPersonaMetricas.where("metrica_id = ? AND persona_id = ?",metrica_id,params[:persona_id])
+    metrica = FiMetricas.find(metrica_id)
+    metrica_nombre =  metrica.nombre
     @persona = PerPersonas.find (params[:persona_id])
 
-    @datos_metrica.each do |d_p|
-      @datos << d_p.valor.to_f
-      @texto << d_p.showFecha
-    end 
+    if metrica_id == 3
+      @datos_1 = []
+      @datos_2 = []
+      @datos_3 = []
+      @atenciones = FiPersonaMetricas.select('distinct(atencion_salud_id)').where("metrica_id IN (3,9,10) AND persona_id = ?",params[:persona_id])
+      @atenciones.each do |atencion|
+        @dato_metrica_1 = FiPersonaMetricas.where("metrica_id = 3 AND persona_id = ? AND atencion_salud_id = ?",params[:persona_id], atencion.atencion_salud_id).first
+        @dato_metrica_2 = FiPersonaMetricas.where("metrica_id = 9 AND persona_id = ? AND atencion_salud_id = ?",params[:persona_id], atencion.atencion_salud_id).first
+        @dato_metrica_3 = FiPersonaMetricas.where("metrica_id = 10 AND persona_id = ? AND atencion_salud_id = ?",params[:persona_id], atencion.atencion_salud_id).first
+        @fecha_texto = FiPersonaMetricas.where("metrica_id in (3,9,10) AND persona_id = ? AND atencion_salud_id = ?",params[:persona_id], atencion.atencion_salud_id).first
+          
+        dato_1 = (@dato_metrica_1 == nil) ? '' : (@dato_metrica_1.valor == nil ? '' : @dato_metrica_1.valor.to_f)  
+        @datos_1 << dato_1
+        dato_2 = (@dato_metrica_2 == nil) ? '' : (@dato_metrica_2.valor == nil ? '' : @dato_metrica_2.valor.to_f)  
+        @datos_2 << dato_2 
+        dato_3 = (@dato_metrica_3 == nil) ? '' : (@dato_metrica_3.valor == nil ? '' : @dato_metrica_3.valor.to_f)  
+        @datos_3 << dato_3   
+     
 
-    metrica = FiMetricas.find(metrica_id)
+        @texto << @fecha_texto.showFecha
+      end 
+      @datos = [@datos_2,@datos_1,@datos_3]
+      metrica_nombre = [['Presión sistólica'],['Presión arterial media'],['Presión diastólica']]
+    else
+      @datos_metrica = FiPersonaMetricas.where("metrica_id = ? AND persona_id = ?",metrica_id,params[:persona_id])      
+      @datos_metrica.each do |d_p|
+        @datos << d_p.valor.to_f
+        @texto << d_p.showFecha
+      end 
+    end 
 
    	respond_to do |format|     
     	format.json { render json: {
                                     :datos => @datos,
                                     :texto => @texto,
                                     :paciente => @persona.showName('%n%p%m'),
-                                    :nombre_metrica => metrica.nombre,
+                                    :nombre_metrica => metrica_nombre,
                                     :unidad => metrica.unidad
                                   } 
                   }

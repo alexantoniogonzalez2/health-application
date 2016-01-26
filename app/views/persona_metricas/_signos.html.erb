@@ -21,13 +21,7 @@
               <a id="tabpanel-frec_res" href="#panel-frec_res" data-toggle="tab">Frec. respitaroria</a>
             </li>
             <li>
-              <a id="tabpanel-presion_sis" href="#panel-presion_sis" data-toggle="tab">Presión sistólica</a>
-            </li>
-            <li>
-              <a id="tabpanel-presion_dias" href="#panel-presion_dias" data-toggle="tab">Presión diastólica</a>
-            </li>
-            <li>
-              <a id="tabpanel-presion_am" href="#panel-presion_am" data-toggle="tab">Presión arterial media</a>
+              <a id="tabpanel-presion_am" href="#panel-presion_am" data-toggle="tab">Presión</a>
             </li>
             <li>
               <a id="tabpanel-temp" href="#panel-temp" data-toggle="tab">Temperatura</a>
@@ -39,68 +33,62 @@
           <div class="tab-content">
             <div class="tab-pane active" id="panel-signos">   
             <br><br>         
-              <table>
-                <tr>
-                  <th>Signo vital</th>
-                  <th>Valor</th>
-                  <th>Unidad</th>
-                  <th>Característica</th>
-                </tr>
-                <tr>
-                  <td><span>Frecuencia cardiaca</span></td>
-                  <td><input id="frec_car-<%= id %>" type="text" class="form-control metrica" value="<%= p_fc %>" maxlength="4" size="4" <%= disabled %> /></td>
-                  <td><span class="text-med">latidos por minuto</span></td>
-                  <td><input id="car_frec_car-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_fc %>" maxlength="60" size="60" <%= disabled %> /></td>
-                </tr>
-                <tr>
-                  <td><span>Frecuencia respiratoria</span></td>
-                  <td><input id="frec_res-<%= id %>" type="text" class="form-control metrica" value="<%= p_fr %>" maxlength="4" size="4" <%= disabled %> /></td>
-                  <td><span class="text-med">respiraciones por minuto</span></td>
-                  <td><input id="car_frec_res-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_fr %>" maxlength="60" size="60" <%= disabled %> /></td>
-                </tr>
-                <tr>
-                  <td><span>Presión sistólica</span></td>
-                  <td><input id="presion-sis-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr_sis %>" maxlength="4" size="4" onkeyup="calcularPAM(<%= id %>)" <%= disabled %> /></td>
-                  <td><span class="text-med">mm Hg</span></td> 
-                  <td><input id="car_presion-sis-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_pr_sis %>" maxlength="60" size="60" <%= disabled %> /></td>
-                </tr>
-                <tr>
-                  <td><span>Presión diastólica</span></td>
-                  <td><input id="presion-dias-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr_dias %>" maxlength="4" size="4" onkeyup="calcularPAM(<%= id %>)" <%= disabled %> /></td>
-                  <td><span class="text-med">mm Hg</span></td>
-                  <td><input id="car_presion-dias-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_pr_dias %>" maxlength="60" size="60" <%= disabled %> /></td>
-                </tr>
-                <tr>
-                  <td><span>Presión arterial media</span></td>
-                  <td><input disabled id="presion-am-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr_am %>" maxlength="4" size="4" <%= disabled %> /></td>
-                  <td><span class="text-med">mm Hg</span></td>
-                  <td><input id="car_presion-am-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_pr_am %>" maxlength="60" size="60" <%= disabled %> /></td>
-                </tr>
-                <tr>
-                  <td><span>Temperatura</span></td>
-                  <td><input id="temp-<%= id %>" type="text" class="form-control metrica" value="<%= p_t %>" maxlength="4" size="4" <%= disabled %> /></td>
-                  <td><span class="text-med">C° (ej.: 36.5)</span></td>
-                  <td><input id="car_temp-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_t %>" maxlength="60" size="60" <%= disabled %> /></td>
-                </tr>
-                <tr>
-                  <td><span>Saturación</span></td>
-                  <td><input id="sat-<%= id %>" type="text" class="form-control metrica" value="<%= p_sat %>" maxlength="4" size="4" <%= disabled %> /></td>
-                  <td><span class="text-med">%</span></td>
-                  <td><input id="car_sat-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_sat %>" maxlength="60" size="60" <%= disabled %> /></td>
-                </tr>
-              </table>              
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-3 column"><label>Signo vital</label></div>
+                  <div class="col-md-2 column"><label>Valor</label></div>
+                  <div class="col-md-3 column"><label>Unidad</label></div>
+                  <div class="col-md-4 column"><label>Característica</label></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 column padding-top-5"><span>Frecuencia cardiaca</span></div>
+                  <div class="col-md-2 column"><input id="frec-car-<%= id %>" type="text" class="form-control metrica" value="<%= p_fc %>" maxlength="4" size="4" onkeyup="guardarMetrica(<%= id %>,'frec-car')" <%= disabled %> /></div>
+                  <div class="col-md-3 column padding-top-5"><span class="text-med">latidos por minuto</span></div>
+                  <div class="col-md-4 column"><input id="car_frec-car-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_fc %>" maxlength="60" size="60" onkeyup="guardarMetrica(<%= id %>,'frec-car')" <%= disabled %> /></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 column padding-top-5"><span>Frecuencia respiratoria</span></div>
+                  <div class="col-md-2 column"><input id="frec-res-<%= id %>" type="text" class="form-control metrica" value="<%= p_fr %>" maxlength="4" size="4" onkeyup="guardarMetrica(<%= id %>,'frec-res')" <%= disabled %> /></div>
+                  <div class="col-md-3 column padding-top-5"><span class="text-med">respiraciones/minuto</span></div>
+                  <div class="col-md-4 column"><input id="car_frec-res-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_fr %>" maxlength="60" size="60" onkeyup="guardarMetrica(<%= id %>,'frec-res')" <%= disabled %> /></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 column padding-top-5"><span>Presión sistólica</span></div>
+                  <div class="col-md-2 column"><input id="presion-sis-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr_sis %>" maxlength="4" size="4" onkeyup="guardarMetrica(<%= id %>,'presion-sis')" <%= disabled %> /></div>
+                  <div class="col-md-3 column padding-top-5"><span class="text-med">mm Hg</span></div> 
+                  <div class="col-md-4 column"><input id="car_presion-sis-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_pr_sis %>" maxlength="60" size="60" onkeyup="guardarMetrica(<%= id %>,'presion-sis')" <%= disabled %> /></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 column padding-top-5"><span>Presión diastólica</span></div>
+                  <div class="col-md-2 column"><input id="presion-dias-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr_dias %>" maxlength="4" size="4" onkeyup="guardarMetrica(<%= id %>,'presion-dias')" <%= disabled %> /></div>
+                  <div class="col-md-3 column padding-top-5"><span class="text-med">mm Hg</span></div>
+                  <div class="col-md-4 column"><input id="car_presion-dias-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_pr_dias %>" maxlength="60" size="60" onkeyup="guardarMetrica(<%= id %>,'presion-dias')" <%= disabled %> /></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 column padding-top-5"><span>Presión arterial media</span></div>
+                  <div class="col-md-2 column"><input disabled id="presion-am-<%= id %>" type="text" class="form-control medicamento" value="<%= p_pr_am %>" maxlength="4" size="4" onkeyup="guardarMetrica(<%= id %>,'presion-am')" <%= disabled %> /></div>
+                  <div class="col-md-3 column padding-top-5"><span class="text-med">mm Hg</span></div>
+                  <div class="col-md-4 column"><input id="car_presion-am-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_pr_am %>" maxlength="60" size="60" onkeyup="guardarMetrica(<%= id %>,'presion-am')" <%= disabled %> /></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 column padding-top-5"><span>Temperatura</span></div>
+                  <div class="col-md-2 column"><input id="temp-<%= id %>" type="text" class="form-control metrica" value="<%= p_t %>" maxlength="4" size="4" onkeyup="guardarMetrica(<%= id %>,'temp')" <%= disabled %> /></div>
+                  <div class="col-md-3 column padding-top-5"><span class="text-med">C° (ej.: 36.5)</span></div>
+                  <div class="col-md-4 column"><input id="car_temp-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_t %>" maxlength="60" size="60" onkeyup="guardarMetrica(<%= id %>,'temp')" <%= disabled %> /></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 column padding-top-5"><span>Saturación</span></div>
+                  <div class="col-md-2 column"><input id="sat-<%= id %>" type="text" class="form-control metrica" value="<%= p_sat %>" maxlength="4" size="4" onkeyup="guardarMetrica(<%= id %>,'sat')" <%= disabled %> /></div>
+                  <div class="col-md-3 column padding-top-5"><span class="text-med">%</span></div>
+                  <div class="col-md-4 column"><input id="car_sat-<%= id %>" type="text" class="form-control metrica" value="<%= car_p_sat %>" maxlength="60" size="60" onkeyup="guardarMetrica(<%= id %>,'sat')"<%= disabled %> /></div>
+                </div>
+              </div>              
             </div>
             <div class="tab-pane" id="panel-frec_car">              
               <div id="grafico_frec_car" class="metricas" ></div>         
             </div>
             <div class="tab-pane" id="panel-frec_res">              
               <div id="grafico_frec_res" class="metricas"></div>            
-            </div>
-            <div class="tab-pane" id="panel-presion_sis">              
-              <div id="grafico_presion_sis" class="metricas"></div>            
-            </div>
-            <div class="tab-pane" id="panel-presion_dias">              
-              <div id="grafico_presion_dias" class="metricas"></div>            
             </div>
             <div class="tab-pane" id="panel-presion_am">              
               <div id="grafico_presion_am" class="metricas"></div>            
@@ -115,10 +103,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
-        <% if tipo == 'edit' %>
-          <button type="button" onclick="guardarSignos(<%= id %>)" class="btn btn-success">Guardar signos vitales</button>
-        <% end %>  
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>        
       </div>
     </div>      
   </div>    

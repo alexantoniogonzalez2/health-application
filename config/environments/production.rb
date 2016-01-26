@@ -59,12 +59,11 @@ AplicacionMedica::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
-  # config.assets.precompile += %w( home.js )
-  # config.assets.precompile += %w( agendamiento/buscador_hora.js )
-  # config.assets.precompile += %w( agendamiento.js )
-  # config.assets.precompile += %w( atenciones_salud.js )
-  # config.assets.precompile += %w( administracion.js )
+   config.assets.precompile += %w( home.js )
+   config.assets.precompile += %w( agendamiento/buscador_hora.js )
+   config.assets.precompile += %w( agendamiento.js )
+   config.assets.precompile += %w( atenciones_salud.js )
+   config.assets.precompile += %w( administracion.js )
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

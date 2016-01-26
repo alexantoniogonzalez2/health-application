@@ -25,28 +25,43 @@
             </li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="panel-metricas">            
-              <table>
-                <tr>
-                  <td><span>Estatura</span></td>
-                  <td>
-                    <input id="estatura-<%= id %>" type="text" class="form-control metrica" value="<%= p_e %>" maxlength="5" size="5" onkeyup="calcularIMC(<%= id %>)" <%= disabled %> />
-                  </td>
-                  <td><span class="text-med">centimetros (punto como separador de decimal)</span></td>
-                </tr>
-                <tr>
-                  <td><span>Peso</span></td>
-                  <td>
-                    <input id="peso-<%= id %>" type="text" class="form-control metrica" value="<%= p_p %>" maxlength="5" size="5" onkeyup="calcularIMC(<%= id %>)" <%= disabled %> />
-                  </td>
-                  <td><span class="text-med">kilos (punto como separador de decimal)</span></td>
-                </tr>
-                <tr>
-                  <td><span>IMC</span></td>
-                  <td><input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>" maxlength="5" size="5" /></td>
-                  <td><span class="text-med">kilos/metros2</span></td>
-                </tr>
-              </table>              
+            <div class="tab-pane active" id="panel-metricas">
+              <br>            
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-2 column padding-top-5">
+                    <span>Estatura</span>
+                  </div>
+                  <div class="col-md-2 column">
+                    <input id="estatura-<%= id %>" type="text" class="form-control metrica" value="<%= p_e %>" maxlength="5" size="5" onkeyup="guardarMetrica(<%= id %>,'estatura')" <%= disabled %> />
+                  </div>
+                  <div class="col-md-8 column padding-top-5">
+                    <span class="text-med">centímetros (punto como separador de decimal)</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 column padding-top-5">
+                    <span>Peso</span>
+                  </div>
+                  <div class="col-md-2 column">
+                    <input id="peso-<%= id %>" type="text" class="form-control metrica" value="<%= p_p %>" maxlength="5" size="5" onkeyup="guardarMetrica(<%= id %>,'peso')" <%= disabled %> />
+                  </div>
+                  <div class="col-md-8 column padding-top-5">
+                    <span class="text-med">kilos (punto como separador de decimal)</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2 column padding-top-5">
+                    <span>IMC</span>
+                  </div>
+                  <div class="col-md-2 column">
+                    <input disabled id="imc-<%= id %>" type="text" class="form-control metrica" value="<%= p_imc %>" maxlength="5" size="5" />
+                  </div>
+                  <div class="col-md-8 column padding-top-5">
+                    <span class="text-med">kilos/metros2</span>
+                  </div>
+                </div>
+              </div>              
             </div>
             <div class="tab-pane" id="panel-estatura">              
               <div id="grafico_estatura" class="metricas" ></div>         
@@ -62,9 +77,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
-        <% if tipo == 'edit' %>
-          <button type="button" onclick="guardarMetricas(<%= id %>)" class="btn btn-success">Guardar métricas</button>
-        <% end %>
       </div>
     </div>      
   </div>    
