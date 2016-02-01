@@ -10,7 +10,7 @@ class CreateAgAgendamientos < ActiveRecord::Migration
       t.datetime :fecha_final_real      #fecha_final_real      
       t.references :estado              #estado_id
       t.references :especialidad_prestador_profesional  #especialidad_prestador_profesional_id
-      t.boolean :motivo_consulta_nuevo
+      t.integer :motivo_consulta
       t.references :persona_diagnostico_control #persona_diagnostico_control_id
       t.references :capitulo_cie10_control #capitulo_cie10_control_id
       t.references :accion_masiva             #accion_masiva_id

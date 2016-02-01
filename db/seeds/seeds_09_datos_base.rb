@@ -1,3 +1,11 @@
+puts 'Ciudades-comunas'
+TraRegiones.create! :nombre => "Región Metropolitana"
+TraCiudades.create! :nombre => "Santiago"
+TraComunas.create! :nombre => "San Miguel"
+TraComunas.create! :nombre => "San Joaquín"
+TraRegionesComunas.create! :region_id => 1, :comuna_id => 1
+TraRegionesComunas.create! :region_id => 1, :comuna_id => 2
+
 puts 'Prestaciones para atención'
 MPG = MedPrestacionesGrupos.create! :nombre => 'Grupo atenciones de salud', :descripcion => ''
 MPS = MedPrestacionesSubgrupos.create! :grupo => MPG, :nombre => 'Subgrupo atenciones de salud', :descripcion => ''
@@ -47,6 +55,7 @@ ProEspecialidades.create! :nombre => "Psiquiatría", :prestacion => MP19
 ProEspecialidades.create! :nombre => "Reumatología", :prestacion => MP20
 ProEspecialidades.create! :nombre => "Traumatología", :prestacion => MP21
 ProEspecialidades.create! :nombre => "Urología", :prestacion => MP22
+EDen = ProEspecialidades.create! :nombre => "Dental", :prestacion => MP22
 
 
 puts 'Rol Administrativo'
@@ -59,6 +68,7 @@ R6 = PreRolAdministrativos.create! :nombre => "Tomar horas"
 
 puts 'Institución'
 I = ProInstituciones.create! :nombre => "Pontificia Universidad Católica de Chile"
+IDen = ProInstituciones.create! :nombre => "Institución Dental"
 
 puts 'Estados Agendamientos'
 AgAgendamientoEstados.create! :nombre => "Hora disponible" #Estado inicial cuando un Dr esta disponible en un lugar para ciertas horas
@@ -71,6 +81,7 @@ AgAgendamientoEstados.create! :nombre => "Paciente atendido" #La atención se re
 AgAgendamientoEstados.create! :nombre => "Hora cancelada"
 AgAgendamientoEstados.create! :nombre => "Paciente no llegó"
 AgAgendamientoEstados.create! :nombre => "Atención reabierta"  
+AgAgendamientoEstados.create! :nombre => "Hora eliminada" 
 
 puts 'Estados Diagnóstico'
 ED1 = MedDiagnosticoEstados.create! :nombre => "Confirmado"
@@ -92,6 +103,7 @@ FiMetricas.create! :nombre => "Presión arterial diastólica", :unidad => "mm Hg
 puts 'Tipos Ficha'
 TF1=FiFichaTipos.create! :nombre => "Tipo ficha general"
 TF2=FiFichaTipos.create! :nombre => "Tipo ficha control infantil"
+TF3=FiFichaTipos.create! :nombre => "Tipo ficha dental"
 
 puts 'Laboratorios'
 MedLaboratorios.create! :nombre => 'Laboratorio 1'

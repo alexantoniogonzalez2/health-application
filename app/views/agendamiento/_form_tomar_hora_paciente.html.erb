@@ -16,38 +16,49 @@
 	<div class="row margin-top">
 		<div class="col-md-3"><label>Motivo de la consulta</label></div>
 		<div class="col-md-9">:
-			<div id="m_c_<%= @agendamiento.id %>">
-        <div class="radio">
-          <label for="radios-0">
-            <input type="radio" name="radios-motivo-<%= @agendamiento.id %>" id="radios-0" value="1" checked="checked"> Es nuevo
-          </label>
+      <% if @agendamiento.especialidad_prestador_profesional.especialidad.nombre != "Dental" %>
+  			<div id="m_c_<%= @agendamiento.id %>">
+          <div class="radio">
+            <label for="radios-0">
+              <input type="radio" name="radios-motivo-<%= @agendamiento.id %>" id="radios-0" value="1" checked="checked"> Es nuevo
+            </label>
+          </div>
+          <div class="radio">
+            <label for="radios-1">
+              <input type="radio" name="radios-motivo-<%= @agendamiento.id %>" id="radios-1" value="2"> Desea controlar un antecedente
+            </label>
+          </div>
         </div>
-        <div class="radio">
-          <label for="radios-1">
-            <input type="radio" name="radios-motivo-<%= @agendamiento.id %>" id="radios-1" value="2"> Desea controlar un antecedente
-          </label>
+        <% @antecedentes = @usuario.getEnfermedadesCronicas %>
+        <% unless @antecedentes.empty? %>
+        	<div id="div-sel-ant-<%= @agendamiento.id %>" class="oculto">
+        		<select id="select-antecedente-<%= @agendamiento.id %>" name="selectbasic" class="select_antecedente">
+        			<option></option>
+        			<% @antecedentes.each do |ant| %>
+      					<option value="<%= ant.id %>"><%= ant.diagnostico.nombre %></option>
+      				<% end %>	
+      			</select>
+      		</div>	
+        <% end %>
+        <% @capitulos = MedDiagnosticosCapitulos.all %>
+        <div id="div-sel-cap-<%= @agendamiento.id %>" class="prevent-break-line" >
+        	<select id="select-capitulo-<%= @agendamiento.id %>" name="selectbasic" class="select_capitulo">
+        		<option></option>
+        		<% @capitulos.each do |cap| %>
+        			<option value='<%= cap.id %>'><%= cap.nombre %></option>
+        		<% end %>
+        	</select>
         </div>
-      </div>
-      <% @antecedentes = @usuario.getEnfermedadesCronicas %>
-      <% unless @antecedentes.empty? %>
-      	<div id="div-sel-ant-<%= @agendamiento.id %>" class="oculto">
-      		<select id="select-antecedente-<%= @agendamiento.id %>" name="selectbasic" class="select_antecedente">
-      			<option></option>
-      			<% @antecedentes.each do |ant| %>
-    					<option value="<%= ant.id %>"><%= ant.diagnostico.nombre %></option>
-    				<% end %>	
-    			</select>
-    		</div>	
+      <% else %>
+        <select id="select-motivo-dental-<%= @agendamiento.id %>" name="selectbasic" class="motivo_dental">
+          <option></option>
+          <option value='1'>Diagnóstico/Primera visita</option>
+          <option value='2'>1era sesión tratamiento</option>
+          <option value='3'>2nda sesión tratamiento</option>
+          <option value='4'>3era sesión tratamiento</option>
+          <option value='5'>4ta sesión tratamiento</option>          
+        </select>
       <% end %>
-      <% @capitulos = MedDiagnosticosCapitulos.all %>
-      <div id="div-sel-cap-<%= @agendamiento.id %>" class="prevent-break-line" >
-      	<select id="select-capitulo-<%= @agendamiento.id %>" name="selectbasic" class="select_capitulo">
-      		<option></option>
-      		<% @capitulos.each do |cap| %>
-      			<option value='<%= cap.id %>'><%= cap.nombre %></option>
-      		<% end %>
-      	</select>
-      </div>
 		</div>
 	</div>
 </fieldset>

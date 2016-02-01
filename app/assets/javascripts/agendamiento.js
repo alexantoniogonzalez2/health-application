@@ -1,6 +1,7 @@
 $('#modal-container-1, #modal-container-2, #modal-container-3').on('show.bs.modal', function (e) {
 	$('select.select_quien_pide').select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true });
 	$('select.select_capitulo').select2({ width: '350px', placeholder: 'Selecciona un motivo', allowClear: true });
+	$('select.motivo_dental').select2({ width: '350px', placeholder: 'Selecciona un motivo', allowClear: true });
 	$('select.select_antecedente').select2({ width: '350px', placeholder: 'Selecciona un antecedente', allowClear: true});
 	$('select.select_persona_hora').select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true});
 	$('.select_paciente').select2({ 

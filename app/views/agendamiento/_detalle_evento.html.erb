@@ -43,7 +43,10 @@
 		<% end %>
 		<% if @permisos['admin_bloquea'] %>
 				<%= render :partial => "footer_admin_bloquea", :locals => {:agendamiento => @agendamiento } %>
-		<% end %>	
+		<% end %>
+		<% if @permisos['admin_genera'] %>
+				<%= render :partial => "footer_admin_elimina", :locals => {:agendamiento => @agendamiento } %>
+		<% end %>		
 		<% if @permisos['info_paciente'] or @permisos['profesional'] %>
 			<%= render :partial => "footer_info_paciente", :locals => {:agendamiento => @agendamiento, :permisos => @permisos } %>
 		<% end %>

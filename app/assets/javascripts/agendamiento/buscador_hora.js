@@ -99,8 +99,8 @@ $('#buscadorHora').fullCalendar({
 	lang: 'es',
 	allDaySlot: false,
 	slotMinutes: 30,
-	minTime: '08:00:00',
-	maxTime: '20:00:00',
+	minTime: '09:00:00',
+	maxTime: '21:00:00',
 	height: 'auto',
 	selectable: true,
 	buttonText: {
@@ -356,7 +356,9 @@ function tomarHora(id_agend){
 	s_c = $('#select-capitulo-'+id_agend).val();	
 	s_p = $('#select_pac_'+id_agend).val();
 	s_qp = $('#select_ped_'+id_agend).val();
-	s_ph = $('#select_age_'+id_agend).val();	
+	s_ph = $('#select_age_'+id_agend).val();
+
+	motivo_dental = $('#select-motivo-dental-'+id_agend).val();	
 
 	if (s_p == '' || s_ph == '')
 		alert("Selecciona una persona para asignar la hora.");
@@ -366,7 +368,7 @@ function tomarHora(id_agend){
 		$.ajax({
 			type: 'POST',
 			url: '/aux/pedirHoraEvento',
-			data: {	agendamiento_id: id_agend, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp },
+			data: {	agendamiento_id: id_agend, motivo_dental: motivo_dental, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp },
 			success: function(response) {
 				$('#buscadorHora').fullCalendar('removeEvents',id_agend);
 				$('#calendar').fullCalendar('removeEvents',id_agend);
@@ -387,4 +389,18 @@ function tomarHora(id_agend){
 			error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
 		});
 	}
+}
+
+function eliminarHora(id_agend){
+	$.ajax({
+		type: 'POST',
+		url: '/eliminarHora',
+		data: {	agendamiento_id: id_agend},
+		success: function(response) {
+			$('#buscadorHora').fullCalendar('removeEvents',id_agend);
+			$('#calendar').fullCalendar('removeEvents',id_agend);
+			response == "1" ? $('[id^=modal-container-]').modal('hide') : alert("No se puede eliminar la hora");	
+		},
+		error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
+	});	 				
 }

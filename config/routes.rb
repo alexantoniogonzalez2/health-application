@@ -123,8 +123,10 @@ AplicacionMedica::Application.routes.draw do
   post '/aux/formNuevaHora', to: 'agendamiento#agregarNuevaHora', :as => :agregarHora
   post '/aux/mostrarEventos', to: 'agendamiento#mostrarEventos', :as => :showEventos
   post '/aux/detalleEvento', to: 'agendamiento#detalleEvento', :as => :detalleEvento
+  post '/modificar_evento', to: 'agendamiento#modificarEvento'
   post '/aux/pedirHoraEvento', to: 'agendamiento#pedirHoraEvento', :as => :pedirHoraEvento
   post '/aux/cancelarHora', to: 'agendamiento#cancelarHora', :as => :cancelarHora
+  post '/eliminarHora', to: 'agendamiento#eliminarHora'
   post '/aux/confirmarHora', to: 'agendamiento#confirmarHora', :as => :confirmarHora
   post '/aux/marcarLlegada', to: 'agendamiento#marcarLlegada', :as => :marcarLlegada
   post '/aux/buscarHoraFormActualizar', to:'agendamiento#showFormBusquedaActualizar', :as => :agendaShowFormBusquedaRefresh

@@ -2,13 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$azul_evento: #3a87ad;
+$disponible: #5bc0de;
 $rojo_evento: #ee5f5b;
+$cancelada: #f0ad4e;
+$confirmada: #b92c28;
+$cancelada: #777;
+$atendido: #3a87ad;
 
-.container { 
-	width: 800px;
-	margin: 0 auto;
-}
+.container { width: 800px; margin: 0 auto; }
 
 #calendar { 
 	position: relative;
@@ -24,44 +25,26 @@ $rojo_evento: #ee5f5b;
   z-index: 10;
 }
 
-#action {
-	float: right;
-}
+#action { float: right; }
+.div-form-buscar-hora {	padding-top: 15px; }
+.div_checkbox_centros {	padding-left : 20px; }
+.row-buscar-hora{	width: 500px; }
 
-.div-form-buscar-hora {
-	padding-top: 15px;
-}
-
-.div_checkbox_centros {
-	padding-left : 20px;
-}
-
-.row-buscar-hora{
-	width: 500px;
-
-}
 .div-centros{
 	width: 250px;
 	margin-left:auto;
   margin-right:auto;
 }
 
-.disponible,
-.fc-agenda .disponible .fc-event-inner,
-.disponible a {
-    background-color: $azul_evento;
-    color: white;        
-}
+.disponible, .fc-agenda .disponible .fc-event-inner, .disponible a { background-color: $disponible; color: white; }
+.no_disponible, .fc-agenda .no_disponible .fc-event-inner, .no_disponible a { background-color: $rojo_evento; color: white; }  
+.bloqueada, .fc-agenda .bloqueada .fc-event-inner, .bloqueada a { background-color: $cancelada; color: white; } 
+.atendido, .fc-agenda .atendido .fc-event-inner, .atendido a { background-color: $atendido; color: white; }
+.confirmada, .fc-agenda .confirmada .fc-event-inner, .confirmada a { background-color: $confirmada; color: white; }  
+.cancelada, .fc-agenda .cancelada .fc-event-inner, .cancelada a { background-color: $cancelada; color: white; }  
 
-.no_disponible,
-.fc-agenda .no_disponible .fc-event-inner,
-.no_disponible a {
-    background-color: $rojo_evento; 
-    color: white;         
- }    
 div.oculto { display: none;}
 a.oculto { display: none; margin-left: 10px; }
-
 #diario > div.well, #comportamiento > div.well{ padding-top: 8px; margin-bottom: 0px; }
 .aj-button-top { margin-top: 5px !important; }
 

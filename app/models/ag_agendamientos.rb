@@ -72,11 +72,32 @@ class AgAgendamientos < ActiveRecord::Base
     grupo_etareo = ''
     className = 'no_disponible'
 
-    grupo_etareo = persona.getGrupoEtareo(fecha_comienzo) unless ['Hora disponible','Hora bloqueada'].include?(estado.nombre)
-    className = 'disponible' if estado.nombre == 'Hora disponible'
+    case estado.nombre
+    when 'Hora disponible'
+      className = 'disponible'
+    when 'Hora bloqueada'
+      className = 'bloqueada'
+    when 'Paciente atendido'
+      className = 'atendido'
+    when 'Hora confirmada'
+      className = 'confirmada'
+    end
 
-    description<<"Especialista: <b>#{especialidad_prestador_profesional.profesional.showName('%d%n%p')}</b>"
-    description<<"</br>Hora: #{range('estimado')}"
+    grupo_etareo = persona.getGrupoEtareo(fecha_comienzo) unless ['Hora disponible','Hora bloqueada','Hora eliminada'].include?(estado.nombre)    
+
+    description<<"<b>Especialista</b>: #{especialidad_prestador_profesional.profesional.showName('%d%n%p')}"
+    #description<<"</br>Hora: #{range('estimado')}"
+    if param_icon and ['Hora reservada','Hora confirmada','Paciente atendido','Paciente siendo atendido','Paciente en espera'].include?(estado.nombre)
+      description<<"<br><b>Paciente: </b>#{persona.showName('%d%n%p')}"
+      description<<"<br><b>Pidió la hora: </b>#{quien_pide_hora.showName('%d%n%p')}"
+      description<<"<br><b>Teléfono fijo: </b>#{quien_pide_hora.getTelefonoFijo}"
+      description<<"<br><b>Celular: </b>#{quien_pide_hora.getCelular}" 
+
+      unless motivo_consulta.nil?        
+        description<<"<br><b>Motivo: </b>"<<getMotivo 
+      end  
+    end   
+
     custom<<"<b>"<<estado.nombre<<"</b>"
 
     if param_icon
@@ -106,8 +127,8 @@ class AgAgendamientos < ActiveRecord::Base
       {
         'id'          => id,
         'title'       => '',
-        'start'       => fecha_comienzo.strftime("%Y-%m-%d")+"T"+fecha_comienzo.strftime("%H:%M:%S")+".196Z",
-        'end'         => fecha_final.strftime("%Y-%m-%d")+"T"+fecha_final.strftime("%H:%M:%S")+".196Z",
+        'start'       => fecha_comienzo.strftime("%Y-%m-%d")+"T"+fecha_comienzo.strftime("%H:%M:%S"),
+        'end'         => fecha_final.strftime("%Y-%m-%d")+"T"+fecha_final.strftime("%H:%M:%S"),
         'custom'      => custom,     
         'description' => description,
         'className'   => className,
@@ -131,7 +152,34 @@ class AgAgendamientos < ActiveRecord::Base
     else
       return false
     end
-  end  
+  end 
+
+  def getMotivo
+    if especialidad_prestador_profesional.especialidad.nombre == "Dental"
+      case motivo_consulta
+      when 1
+        motivo = 'Diagnóstico/Primera visita'
+      when 2
+        motivo = '1era sesión tratamiento'
+      when 3
+        motivo = '2nda sesión tratamiento'
+      when 4
+        motivo = '3era sesión tratamiento'
+      when 5
+        motivo = '4ta sesión tratamiento'
+      end
+    else
+      case motivo_consulta
+      when 1
+        motivo = 'Es nuevo'
+      when 2
+        motivo = 'Desea controlar un antecedente'
+      end
+    end
+
+    return motivo
+
+  end 
 
 
   private
@@ -146,7 +194,7 @@ class AgAgendamientos < ActiveRecord::Base
                                   :fecha_final_real,                                  
                                   :estado,
                                   :especialidad_prestador_profesional,
-                                  :motivo_consulta_nuevo,
+                                  :motivo_consulta,
                                   :persona_diagnostico_control,
                                   :capitulo_cie10_control,
                                   :atencion_salud,  

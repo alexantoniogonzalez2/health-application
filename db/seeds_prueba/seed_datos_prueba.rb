@@ -1,8 +1,4 @@
 puts 'Direcciones'
-TraRegiones.create! :nombre => "Región Metropolitana"
-TraCiudades.create! :nombre => "Santiago"
-TraComunas.create! :nombre => "San Miguel"
-TraRegionesComunas.create! :region_id => 1, :comuna_id => 1
 TraTelefonos.create! :codigo => 2, :numero => 22222222 
 TraTelefonos.create! :codigo => 9, :numero => 22222222 
 TraDirecciones.create! :calle => "Calle", :numero => 1111, :comuna_id => 1, :ciudad_id => 1, :pais_id => 46

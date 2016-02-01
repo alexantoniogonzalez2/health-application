@@ -99,8 +99,8 @@ $(function(){
 		lang: 'es',
 		allDaySlot: false,
 		slotMinutes: 15,
-		minTime: '08:00:00',
-		maxTime: '20:00:00',
+		minTime: '09:00:00',
+		maxTime: '21:00:00',
 		height: 'auto',
 		selectable: true,
 		buttonText: {
@@ -110,7 +110,51 @@ $(function(){
 	    day: 'Día'
 		},
 		firstDay: 1,
-		editable: false,
+		editable: true,
+		selectable: true,
+		selectHelper: true,
+			select: function(start, end) {
+				var eventData;
+				col='#A8A899';
+				txt='#FFFFFF';
+				
+					eventData = {
+						id: 'tmp',
+						title: '',
+						start: start,
+						end: end,
+						textColor: txt,
+						color: col
+					}
+					$('#calendar').fullCalendar('renderEvent', eventData, true);
+					$('#calendar').fullCalendar('unselect');
+				
+				$.ajax({
+					type: 'POST',
+					url: agregarHoraURL,
+					data: {
+						especialidad_id: especialidad_id,
+						profesional_id: profesional_id,
+						prestador_id: prestador_id,
+						start: start.format('YYYY-MM-DD HH:mm:ss'),
+						end: end.format('YYYY-MM-DD HH:mm:ss'),
+						tipo: 'directo'
+					},
+					success: function(response) {	
+						$('#calendar').fullCalendar('removeEvents','tmp');
+						$('#calendar').fullCalendar('addEventSource',response);
+						$.ajax({
+							type: 'POST',
+							url: detalleEvento,
+							data: {	agendamiento_id: response[0]['id'], content: 'modal-content-3' },
+							success: function(response) {	$('#modal-container-3').modal('show'); },
+							error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
+						});
+					},
+					error: function(xhr, status, error){	alert("No se pudo agregar la hora de atención");	}
+				});
+			},
+		eventLimit: true, // allow "more" link when too many events
 		defaultView: 'agendaWeek', 
 		axisFormat: 'H:mm',
 		events: cargarHoras(), 
@@ -125,16 +169,19 @@ $(function(){
 			lastT=jsEvent.timeStamp;
 		},
 		eventRender: function(event,element){
+
+			if (!(event.icon === undefined)){
+				if (!(event.icon.length == 0)){
+					element.find("div.fc-content").append("<img class='" + event.classIcon +"'' src='" + event.icon +"'>");
+				}
+			}
+		},
+		eventAfterRender: function(event, element, view) {
 			element.qtip({
 				content: { text: event.description, title: event.custom },
 				style: { classes: 'qtip-bootstrap' },
 				position: { viewport: $(window)	}
 			});
-			;
-			if (event.icon != '')
-				element.find("div.fc-content").append("<img class='" + event.classIcon +"'' src='" + event.icon +"'>");
-		},
-		eventAfterRender: function(event, element, view) {
 			var span = element.find("span");
 			var div = element.find(".fc-time");
 			div.attr('data-start', span.text());
@@ -146,6 +193,24 @@ $(function(){
 				data: {	agendamiento_id: calEvent.id, content: 'modal-content-3' },
 				success: function(response) {	$('#modal-container-3').modal('show'); },
 				error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
+			});
+		}, 
+		eventResize: function(calEvent, jsEvent, view){			
+			$.ajax({
+				type: 'POST',
+				url: '/modificar_evento',
+				data: {	agendamiento_id: calEvent.id, start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'), end: calEvent.end.format('YYYY-MM-DD HH:mm:ss'), tipo: 'resize'},
+				success: function(response) { },
+				error: function(xhr, status, error){	alert("No se pudo modificar la atención.");	}
+			});
+		},
+		eventDrop: function(calEvent, jsEvent, view){
+			$.ajax({
+				type: 'POST',
+				url: '/modificar_evento',
+				data: {	agendamiento_id: calEvent.id, start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'), end: calEvent.end.format('YYYY-MM-DD HH:mm:ss'), tipo: 'drop'},
+				success: function(response) { },
+				error: function(xhr, status, error){	alert("No se pudo modificar la atención.");	}
 			});
 		}
 	});
@@ -250,8 +315,6 @@ $(function(){
 			daysOfWeek[a]=$($(form).find('input[type="checkbox"]')[(a+6)%7]).is(':checked');
 		}
 
-		
-
 		d_inicio=di[0]+"-"+di[1]+"-"+di[2]+" 00:00:00.0";
 		d_final=dt[0]+"-"+dt[1]+"-"+dt[2]+" 23:59:59.0";
 
@@ -260,8 +323,7 @@ $(function(){
 
 		i=0;
 		days=[];
-		while(d_i < d_f)
-		{
+		while(d_i < d_f){
 			tmp_i=d_i;
 			tmp_f=new Date(tmp_i.getTime()+24*60*60*1000);
 			if(daysOfWeek[tmp_i.getDay()])
@@ -271,9 +333,7 @@ $(function(){
 
 		hi=$(form).find('input[name="hi"]').val().split(':');
 		ht=$(form).find('input[name="ht"]').val().split(':');
-
 		step=parseInt($(form).find('input[name="i"]').val());
-
 		add_events=[];
 		i=0;
 
@@ -282,8 +342,7 @@ $(function(){
 			d_i=new Date(tmp);
 			tmp=days[j].toString('yyyy-MM-dd')+" "+ht[0]+":"+ht[1]+":00.0";
 			d_f=new Date(tmp);
-			if(d_f<=d_i)
-			{
+			if(d_f<=d_i){
 				tmp_date=new Date(days[j].getTime()+24*60*60*1000);
 				tmp=tmp_date.toString('yyyy-MM-dd')+" "+ht[0]+":"+ht[1]+":00.0";
 				d_f=new Date(tmp);
@@ -291,29 +350,28 @@ $(function(){
 
 			if(j==0) $('#calendar').fullCalendar('gotoDate',$(form).find('input[name="di"]').val()+'T08:00:00.196Z');
 			
-			while(d_i < d_f)
-			{
+			while(d_i < d_f){
 
-			tmp_i=d_i;
-			tmp_f=new Date(tmp_i.getTime()+(step*60*1000));
-			col='#A8A899';
-			txt='#FFFFFF';
-			if(tmp_f>d_f){
-				tmp_f=d_f;
-				col='red';
+				tmp_i=d_i;
+				tmp_f=new Date(tmp_i.getTime()+(step*60*1000));
+				col='#A8A899';
 				txt='#FFFFFF';
-			}
+				if(tmp_f>d_f){
+					tmp_f=d_f;
+					col='red';
+					txt='#FFFFFF';
+				}
 
-			add_events[i++]={	
-					id: 'tmp',
-					title: '',
-					start: tmp_i, 
-					end: tmp_f,
-					color: col,
-					textColor: txt,
-					allDay:false
-				};
-			d_i=tmp_f;	
+				add_events[i++]={	
+						id: 'tmp',
+						title: '',
+						start: tmp_i, 
+						end: tmp_f,
+						color: col,
+						textColor: txt,
+						allDay:false
+					};
+				d_i=tmp_f;	
 			}
 
 		}
@@ -336,14 +394,11 @@ $(function(){
 				tipo: 'comportamiento'
 			},
 			success: function(response) {
-			    $('#comportamientoForm .status').html('Completado!');
-			    $('#calendar').fullCalendar('removeEvents','tmp');
-			    $('#calendar').fullCalendar('addEventSource',response);
-
-        	},
-        	error: function(xhr, status, error){
-        		alert("No se pudo concretar la acción");
-        	}
+		    $('#comportamientoForm .status').html('Completado!');
+		    $('#calendar').fullCalendar('removeEvents','tmp');
+		    $('#calendar').fullCalendar('addEventSource',response);
+       },
+      error: function(xhr, status, error){ alert("No se pudo concretar la acción");	}
      });
 	}
 	});
@@ -502,5 +557,4 @@ $(function(){
 	$('#action button').click(function(){
 		Mostrar();
 	});
-
 });

@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20151108234449) do
     t.datetime "fecha_final_real"
     t.integer  "estado_id",                             limit: 4
     t.integer  "especialidad_prestador_profesional_id", limit: 4
-    t.boolean  "motivo_consulta_nuevo"
+    t.integer  "motivo_consulta",                       limit: 4
     t.integer  "persona_diagnostico_control_id",        limit: 4
     t.integer  "capitulo_cie10_control_id",             limit: 4
     t.integer  "accion_masiva_id",                      limit: 4

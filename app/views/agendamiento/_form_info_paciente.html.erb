@@ -4,6 +4,15 @@
 <div class="row">
 	<div class="col-md-4"><label>Persona que tomó la hora</label></div><div class="col-md-8">: <%= @agendamiento.quien_pide_hora.showName('%n%p%m') %></div>
 </div>
+<div class="row">
+	<div class="col-md-4"><label>Telefono fijo</label></div><div class="col-md-8">: <%= @agendamiento.quien_pide_hora.getTelefonoFijo %></div>
+</div>
+<div class="row">
+	<div class="col-md-4"><label>Celular</label></div><div class="col-md-8">: <%= @agendamiento.quien_pide_hora.getCelular %></div>
+</div>
+<div class="row">
+	<div class="col-md-4"><label>Motivo</label></div><div class="col-md-8">: <%= @agendamiento.getMotivo unless @agendamiento.motivo_consulta.nil? %></div>
+</div>
 <% if !@agendamiento.persona_diagnostico_control.nil? and @permisos['info_paciente']  %>
 	<div class="row">
 		<div class="col-md-4"><label>Motivo</label></div><div class="col-md-8">: <%= @agendamiento.persona_diagnostico_control.diagnostico.nombre %> (control de antecedente)</div>

@@ -1,0 +1,3 @@
+<% if ['Hora disponible','Hora cancelada'].include?(@agendamiento.estado.nombre) %>
+	<button type="button" class="btn btn-primary" onclick="eliminarHora(<%= @agendamiento.id %>)" >Eliminar hora</button>
+<% end %>
