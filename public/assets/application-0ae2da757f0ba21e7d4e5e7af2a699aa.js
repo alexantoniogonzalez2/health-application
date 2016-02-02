@@ -80782,6 +80782,7 @@ function anularBoleta(boleta_id){
 $('#modal-container-1, #modal-container-2, #modal-container-3').on('show.bs.modal', function (e) {
 	$('select.select_quien_pide').select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true });
 	$('select.select_capitulo').select2({ width: '350px', placeholder: 'Selecciona un motivo', allowClear: true });
+	$('select.motivo_dental').select2({ width: '350px', placeholder: 'Selecciona un motivo', allowClear: true });
 	$('select.select_antecedente').select2({ width: '350px', placeholder: 'Selecciona un antecedente', allowClear: true});
 	$('select.select_persona_hora').select2({ width: '350px', placeholder: 'Selecciona una persona', allowClear: true});
 	$('.select_paciente').select2({ 
@@ -81019,8 +81020,8 @@ $(function(){
 		lang: 'es',
 		allDaySlot: false,
 		slotMinutes: 15,
-		minTime: '08:00:00',
-		maxTime: '20:00:00',
+		minTime: '09:00:00',
+		maxTime: '21:00:00',
 		height: 'auto',
 		selectable: true,
 		buttonText: {
@@ -81030,7 +81031,51 @@ $(function(){
 	    day: 'Día'
 		},
 		firstDay: 1,
-		editable: false,
+		editable: true,
+		selectable: true,
+		selectHelper: true,
+			select: function(start, end) {
+				var eventData;
+				col='#A8A899';
+				txt='#FFFFFF';
+				
+					eventData = {
+						id: 'tmp',
+						title: '',
+						start: start,
+						end: end,
+						textColor: txt,
+						color: col
+					}
+					$('#calendar').fullCalendar('renderEvent', eventData, true);
+					$('#calendar').fullCalendar('unselect');
+				
+				$.ajax({
+					type: 'POST',
+					url: agregarHoraURL,
+					data: {
+						especialidad_id: especialidad_id,
+						profesional_id: profesional_id,
+						prestador_id: prestador_id,
+						start: start.format('YYYY-MM-DD HH:mm:ss'),
+						end: end.format('YYYY-MM-DD HH:mm:ss'),
+						tipo: 'directo'
+					},
+					success: function(response) {	
+						$('#calendar').fullCalendar('removeEvents','tmp');
+						$('#calendar').fullCalendar('addEventSource',response);
+						$.ajax({
+							type: 'POST',
+							url: detalleEvento,
+							data: {	agendamiento_id: response[0]['id'], content: 'modal-content-3' },
+							success: function(response) {	$('#modal-container-3').modal('show'); },
+							error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
+						});
+					},
+					error: function(xhr, status, error){	alert("No se pudo agregar la hora de atención");	}
+				});
+			},
+		eventLimit: true, // allow "more" link when too many events
 		defaultView: 'agendaWeek', 
 		axisFormat: 'H:mm',
 		events: cargarHoras(), 
@@ -81045,16 +81090,19 @@ $(function(){
 			lastT=jsEvent.timeStamp;
 		},
 		eventRender: function(event,element){
+
+			if (!(event.icon === undefined)){
+				if (!(event.icon.length == 0)){
+					element.find("div.fc-content").append("<img class='" + event.classIcon +"'' src='" + event.icon +"'>");
+				}
+			}
+		},
+		eventAfterRender: function(event, element, view) {
 			element.qtip({
 				content: { text: event.description, title: event.custom },
 				style: { classes: 'qtip-bootstrap' },
 				position: { viewport: $(window)	}
 			});
-			;
-			if (event.icon != '')
-				element.find("div.fc-content").append("<img class='" + event.classIcon +"'' src='" + event.icon +"'>");
-		},
-		eventAfterRender: function(event, element, view) {
 			var span = element.find("span");
 			var div = element.find(".fc-time");
 			div.attr('data-start', span.text());
@@ -81066,6 +81114,24 @@ $(function(){
 				data: {	agendamiento_id: calEvent.id, content: 'modal-content-3' },
 				success: function(response) {	$('#modal-container-3').modal('show'); },
 				error: function(xhr, status, error){	alert("No se pudieron cargar las horas de atención");	}
+			});
+		}, 
+		eventResize: function(calEvent, jsEvent, view){			
+			$.ajax({
+				type: 'POST',
+				url: '/modificar_evento',
+				data: {	agendamiento_id: calEvent.id, start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'), end: calEvent.end.format('YYYY-MM-DD HH:mm:ss'), tipo: 'resize'},
+				success: function(response) { },
+				error: function(xhr, status, error){	alert("No se pudo modificar la atención.");	}
+			});
+		},
+		eventDrop: function(calEvent, jsEvent, view){
+			$.ajax({
+				type: 'POST',
+				url: '/modificar_evento',
+				data: {	agendamiento_id: calEvent.id, start: calEvent.start.format('YYYY-MM-DD HH:mm:ss'), end: calEvent.end.format('YYYY-MM-DD HH:mm:ss'), tipo: 'drop'},
+				success: function(response) { },
+				error: function(xhr, status, error){	alert("No se pudo modificar la atención.");	}
 			});
 		}
 	});
@@ -81170,8 +81236,6 @@ $(function(){
 			daysOfWeek[a]=$($(form).find('input[type="checkbox"]')[(a+6)%7]).is(':checked');
 		}
 
-		
-
 		d_inicio=di[0]+"-"+di[1]+"-"+di[2]+" 00:00:00.0";
 		d_final=dt[0]+"-"+dt[1]+"-"+dt[2]+" 23:59:59.0";
 
@@ -81180,8 +81244,7 @@ $(function(){
 
 		i=0;
 		days=[];
-		while(d_i < d_f)
-		{
+		while(d_i < d_f){
 			tmp_i=d_i;
 			tmp_f=new Date(tmp_i.getTime()+24*60*60*1000);
 			if(daysOfWeek[tmp_i.getDay()])
@@ -81191,9 +81254,7 @@ $(function(){
 
 		hi=$(form).find('input[name="hi"]').val().split(':');
 		ht=$(form).find('input[name="ht"]').val().split(':');
-
 		step=parseInt($(form).find('input[name="i"]').val());
-
 		add_events=[];
 		i=0;
 
@@ -81202,8 +81263,7 @@ $(function(){
 			d_i=new Date(tmp);
 			tmp=days[j].toString('yyyy-MM-dd')+" "+ht[0]+":"+ht[1]+":00.0";
 			d_f=new Date(tmp);
-			if(d_f<=d_i)
-			{
+			if(d_f<=d_i){
 				tmp_date=new Date(days[j].getTime()+24*60*60*1000);
 				tmp=tmp_date.toString('yyyy-MM-dd')+" "+ht[0]+":"+ht[1]+":00.0";
 				d_f=new Date(tmp);
@@ -81211,29 +81271,28 @@ $(function(){
 
 			if(j==0) $('#calendar').fullCalendar('gotoDate',$(form).find('input[name="di"]').val()+'T08:00:00.196Z');
 			
-			while(d_i < d_f)
-			{
+			while(d_i < d_f){
 
-			tmp_i=d_i;
-			tmp_f=new Date(tmp_i.getTime()+(step*60*1000));
-			col='#A8A899';
-			txt='#FFFFFF';
-			if(tmp_f>d_f){
-				tmp_f=d_f;
-				col='red';
+				tmp_i=d_i;
+				tmp_f=new Date(tmp_i.getTime()+(step*60*1000));
+				col='#A8A899';
 				txt='#FFFFFF';
-			}
+				if(tmp_f>d_f){
+					tmp_f=d_f;
+					col='red';
+					txt='#FFFFFF';
+				}
 
-			add_events[i++]={	
-					id: 'tmp',
-					title: '',
-					start: tmp_i, 
-					end: tmp_f,
-					color: col,
-					textColor: txt,
-					allDay:false
-				};
-			d_i=tmp_f;	
+				add_events[i++]={	
+						id: 'tmp',
+						title: '',
+						start: tmp_i, 
+						end: tmp_f,
+						color: col,
+						textColor: txt,
+						allDay:false
+					};
+				d_i=tmp_f;	
 			}
 
 		}
@@ -81256,14 +81315,11 @@ $(function(){
 				tipo: 'comportamiento'
 			},
 			success: function(response) {
-			    $('#comportamientoForm .status').html('Completado!');
-			    $('#calendar').fullCalendar('removeEvents','tmp');
-			    $('#calendar').fullCalendar('addEventSource',response);
-
-        	},
-        	error: function(xhr, status, error){
-        		alert("No se pudo concretar la acción");
-        	}
+		    $('#comportamientoForm .status').html('Completado!');
+		    $('#calendar').fullCalendar('removeEvents','tmp');
+		    $('#calendar').fullCalendar('addEventSource',response);
+       },
+      error: function(xhr, status, error){ alert("No se pudo concretar la acción");	}
      });
 	}
 	});
@@ -81422,7 +81478,6 @@ $(function(){
 	$('#action button').click(function(){
 		Mostrar();
 	});
-
 });
 function bloquearHoraAgen(agen) {	
   parent = $("#agen"+agen).parent();    
@@ -81547,8 +81602,8 @@ $('#buscadorHora').fullCalendar({
 	lang: 'es',
 	allDaySlot: false,
 	slotMinutes: 30,
-	minTime: '08:00:00',
-	maxTime: '20:00:00',
+	minTime: '09:00:00',
+	maxTime: '21:00:00',
 	height: 'auto',
 	selectable: true,
 	buttonText: {
@@ -81804,7 +81859,9 @@ function tomarHora(id_agend){
 	s_c = $('#select-capitulo-'+id_agend).val();	
 	s_p = $('#select_pac_'+id_agend).val();
 	s_qp = $('#select_ped_'+id_agend).val();
-	s_ph = $('#select_age_'+id_agend).val();	
+	s_ph = $('#select_age_'+id_agend).val();
+
+	motivo_dental = $('#select-motivo-dental-'+id_agend).val();	
 
 	if (s_p == '' || s_ph == '')
 		alert("Selecciona una persona para asignar la hora.");
@@ -81814,7 +81871,7 @@ function tomarHora(id_agend){
 		$.ajax({
 			type: 'POST',
 			url: '/aux/pedirHoraEvento',
-			data: {	agendamiento_id: id_agend, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp },
+			data: {	agendamiento_id: id_agend, motivo_dental: motivo_dental, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp },
 			success: function(response) {
 				$('#buscadorHora').fullCalendar('removeEvents',id_agend);
 				$('#calendar').fullCalendar('removeEvents',id_agend);
@@ -81835,6 +81892,20 @@ function tomarHora(id_agend){
 			error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
 		});
 	}
+}
+
+function eliminarHora(id_agend){
+	$.ajax({
+		type: 'POST',
+		url: '/eliminarHora',
+		data: {	agendamiento_id: id_agend},
+		success: function(response) {
+			$('#buscadorHora').fullCalendar('removeEvents',id_agend);
+			$('#calendar').fullCalendar('removeEvents',id_agend);
+			response == "1" ? $('[id^=modal-container-]').modal('hide') : alert("No se puede eliminar la hora");	
+		},
+		error: function(xhr, status, error){ alert("No se pudieron cargar las horas de atención"); }
+	});	 				
 }
 ;
 $(document).ready(function() {
@@ -83122,6 +83193,10 @@ function calcularIMC(pers_aten) {
   var imc = peso/(estatura*estatura);
   if (isNumeric(peso) && isNumeric(estatura))
     $("#imc-" + pers_aten).val(Math.round(imc * 100) / 100 );
+  else
+    $("#imc-" + pers_aten).val('');  
+
+  guardarMetrica(pers_aten,'imc');
 }
 
 function calcularPAM(pers_aten) {
@@ -83130,66 +83205,37 @@ function calcularPAM(pers_aten) {
   var pam = parseFloat(dias) + (sis-dias)/3;
   if (isNumeric(sis) && isNumeric(dias))
     $("#presion-am-" + pers_aten).val(Math.round(pam * 100) / 100 );
+  else 
+    $("#presion-am-" + pers_aten).val('');
+
+  guardarMetrica(pers_aten,'presion-am');
 }
 
-function guardarMetricas(pers_aten) {
-  var peso = $("#peso-"+pers_aten).val();
-  var estatura = $("#estatura-"+pers_aten).val();
-  var imc = $("#imc-"+pers_aten).val();
-  if (isNumeric(peso) && isNumeric(estatura) && isNumeric(imc)){    
+function guardarMetrica(pers_aten,metrica) {
+  var valor_metrica = $("#"+metrica+"-"+pers_aten).val();
+  var caracteristica = $("#car_"+metrica+"-"+pers_aten).val();
+  if (isNumeric(valor_metrica) || valor_metrica == ''){ 
+    
+    if (metrica == 'peso' || metrica == 'estatura')
+      calcularIMC(pers_aten);
+    if (metrica == 'presion-sis' || metrica == 'presion-dias')
+      calcularPAM(pers_aten);
+   
     $.ajax({
       type: 'POST',
       url: '/guardar_metricas',
       data: {
         atencion_salud_id: pers_aten,
         persona_id: persona_id,
-        peso: peso,
-        estatura: estatura,
-        imc: imc,     
+        metrica: metrica,
+        valor_metrica: valor_metrica,
+        caracteristica: caracteristica
       },
-      success: function(response) { /*$( "#modal-container-metricas").modal('hide');*/ },
-      error: function(xhr, status, error){ alert("No se pudo guardar las métricas del paciente.");   }
+      success: function(response) { },
+      error: function(xhr, status, error){ alert("No se pudo guardar la métrica o signo vital del paciente.");   }
     });
   } else
-    alert("No se pudo guardar las métricas del paciente. Problema con el formato.");  
-}
-
-function guardarSignos(pers_aten) {
-  var frec_car = $( "#frec_car-"+pers_aten).val();
-  var frec_res = $( "#frec_res-"+pers_aten).val();
-  var temp = $( "#temp-"+pers_aten).val();  
-  var presion_am = $( "#presion-am-"+pers_aten).val();
-  var presion_dias = $( "#presion-dias-"+pers_aten).val();
-  var presion_sis = $( "#presion-sis-"+pers_aten).val();
-  var sat = $( "#sat-"+pers_aten).val();
-  if (isNumeric(frec_car) && isNumeric(frec_res) && isNumeric(temp) && isNumeric(presion_am) && isNumeric(presion_dias) && isNumeric(presion_sis) && isNumeric(sat)){  
-    $.ajax({
-      type: 'POST',
-      url: '/guardar_signos',
-      data: {
-        atencion_salud_id: pers_aten,
-        persona_id: persona_id,
-        frec_car: frec_car,
-        frec_res: frec_res,
-        temp: temp,  
-        presion_am: presion_am,
-        presion_dias: presion_dias,
-        presion_sis: presion_sis,
-        sat: sat,
-        car_frec_car: $( "#car_frec_car-"+pers_aten).val(),
-        car_frec_res: $( "#car_frec_res-"+pers_aten).val(),
-        car_temp: $( "#car_temp-"+pers_aten).val(),  
-        car_presion_am: $( "#car_presion-am-"+pers_aten).val(),
-        car_presion_sis: $( "#car_presion-sis-"+pers_aten).val(), 
-        car_presion_dias: $( "#car_presion-dias-"+pers_aten).val(),   
-        car_sat: $( "#car_sat-"+pers_aten).val(),      
-      },
-      success: function(response) { /*$( "#modal-container-signos").modal('hide');*/ },
-      error: function(xhr, status, error){ alert("No se pudo guardar los signos vitales del paciente.");   }
-    });
-  } else
-    alert("No se pudo guardar los signos del paciente. Problema con el formato.");  
-
+    alert("No se pudo guardar la métrica o signo vital del paciente. Problema con el formato.");  
 }
 
 function guardarTexto(tipo_texto) {
@@ -83604,7 +83650,8 @@ function act_pres_int(p_p,p_d){
 }
 
 function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
+
+  return ( !isNaN(parseFloat(n)) && isFinite(n) && !(n.length == 0) );
 }
 
 function actualizarFechaAlta(certificado_id){
@@ -83750,7 +83797,10 @@ $(function() {
           tipo: tipo
         },
         success: function(response) { 
-          cargarGrafico(response,tipo);
+          if (tipo == 'presion_am')
+            cargarGraficoPresion(response,tipo);
+          else
+            cargarGrafico(response,tipo);
         },
         error: function(xhr, status, error){ alert("No se pudo actualizar los gráficos métricas o signos vitales del paciente.");   }
       });
@@ -83762,11 +83812,11 @@ function cargarGrafico (data,tipo){
  
   $('#grafico_'+tipo).highcharts({
       title: {
-        text: data.nombre_metrica +' Histórico',
+        text: ' Histórico: '+data.nombre_metrica ,
         x: -20 //center
       },
       subtitle: {
-        text: 'Nombre: '+data.paciente,
+        text: 'Paciente: '+data.paciente,
         x: -20
       },
       xAxis: {
@@ -83814,16 +83864,76 @@ function cargarGrafico (data,tipo){
             exportButton: {
                 enabled: false,
             }
-        },
-        
+        },        
     }
-
-
-
   });
+}
 
-
-
+function cargarGraficoPresion (data,tipo){
+ 
+  $('#grafico_'+tipo).highcharts({
+      title: {
+        text: 'Histórico: Presión arterial',
+        x: -20 //center
+      },
+      subtitle: {
+        text: 'Paciente: '+data.paciente,
+        x: -20
+      },
+      xAxis: {
+        categories: data.texto
+      },
+      yAxis: {
+        title: {
+          text: data.unidad
+        },
+        plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+        }]
+      },
+      tooltip: {
+        valueSuffix: ' '+data.unidad
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        borderWidth: 0
+      },
+      series: [{
+        name: data.nombre_metrica[0],
+        data: data.datos[0]
+      },{
+        name: data.nombre_metrica[1],
+        data: data.datos[1]
+      },{
+        name: data.nombre_metrica[2],
+        data: data.datos[2]
+      }],
+      credits: {
+        enabled: false
+      },
+      lang: {
+        downloadPNG: "Descargar gráfico en formato PNG",
+        downloadJPEG: "Descargar gráfico en formato JPEG",
+        downloadSVG: "Descargar gráfico en formato SVG",
+        downloadPDF: "Descargar gráfico en PDF",
+        contextButtonTitle: "Opciones para descargar gráfico",
+        decimalPoint: ',',
+        noData: "No hay datos para mostrar",
+        printChart: "Imprimir gráfico",
+        thousandsSep: "." 
+      } ,
+      exporting: {
+        buttons: {
+            exportButton: {
+                enabled: false,
+            }
+        },        
+    }
+  });
 }
     
 
@@ -84476,6 +84586,8 @@ function ajuste_label_better (label_better_id) {
   btn.parent().find(".lb_label").addClass("active");
 }
 
+var act_background_image = "bg7";
+
 $(window).scroll(function() {
   var height = $(window).scrollTop();
 
@@ -84486,31 +84598,37 @@ $(window).scroll(function() {
     $("a.active").addClass( 'active-ajuste' );
   }
   else {
-  	$(".navbar-fixed-top").addClass( 'navbar-ajuste' );
-  	$(".navbar-fixed-top").removeClass( 'navbar-ajuste2' );
-  	$("a").removeClass( 'active-ajuste' );
+    $(".navbar-fixed-top").addClass( 'navbar-ajuste' );
+    $(".navbar-fixed-top").removeClass( 'navbar-ajuste2' );
+    $("a").removeClass( 'active-ajuste' );
   }   
       
   $('section').each(function(i) {
-  	var position = $(this).position().top;
-    if ( position <= height + 50 ) {   	
+    var position = $(this).position().top;
+    if ( position <= height + 50 ) {    
         $('.navbar-fixed-top a.active').removeClass('active');
         $('.navbar-fixed-top a').eq(i).addClass('active');        
     }
-    if ( 0 <= height &&  height < 580 )
-    	$('.home').css("background-image", "url(../assets/bg1.jpg)");
-    if ( 580 <= height &&  height < 1300 )
-      $('.home').css("background-image", "url(../assets/bg2.jpg)");
-    if ( 1300 <= height &&  height < 2020 )
-    	$('.home').css("background-image", "url(../assets/bg3.jpg)");
-    if ( 2020 <= height &&  height < 2660 )	
-    	$('.home').css("background-image", "url(../assets/bg4.jpg)");
-    if ( 2660 <= height &&  height < 3490 )	
-    	$('.home').css("background-image", "url(../assets/bg5.jpg)");
-    if ( 3490 <= height )	
-    	$('.home').css("background-image", "url(../assets/bg6.jpg)");
-    
   });
+
+  if ( 0 <= height &&  height < 580 )
+    background_image = "bg1";
+  if ( 580 <= height &&  height < 1300 )
+    background_image = "bg2";
+  if ( 1300 <= height &&  height < 2020 )
+    background_image = "bg3";
+  if ( 2020 <= height &&  height < 2660 )     
+    background_image = "bg4";
+  if ( 2660 <= height &&  height < 3490 )    
+     background_image = "bg5"; 
+  if ( 3490 <= height )    
+    background_image = "bg6";
+
+  if (act_background_image != background_image ){ 
+    act_background_image = background_image; 
+    $('.home').fadeTo('slow', 0.8, function(){ $(this).css('background-image', "url(../assets/"+background_image+".jpg)"); }).fadeTo('slow', 1);  
+  }
+
 });
 
 $(".label_better").label_better({
