@@ -18418,7 +18418,15 @@ input.ajuste-motivo {
   height: 25px;
 }
 
-/* line 189, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 190, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+input.ajuste-motivo-dental {
+  display: inline-block;
+  width: 70%;
+  padding: 0px 6px;
+  height: 25px;
+}
+
+/* line 197, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 input.ajuste-cen-der {
   width: 95%;
   display: inline-block;
@@ -18426,28 +18434,28 @@ input.ajuste-cen-der {
   height: 25px;
 }
 
-/* line 195, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 203, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 div.ajuste-padding2 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-/* line 196, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 204, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 span.ajus-fl-left {
   float: left;
 }
 
-/* line 197, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 205, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .no-padding {
   padding: 0px !important;
 }
 
-/* line 198, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 206, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .help-block {
   color: #a94442;
 }
 
-/* line 199, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 207, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .help-block-gray {
   color: #737373;
   display: block;
@@ -18455,12 +18463,12 @@ span.ajus-fl-left {
   margin-bottom: 10px;
 }
 
-/* line 200, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 208, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .fc-event {
   border: 1px solid #ddd;
 }
 
-/* line 202, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 210, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print {
   width: 100%;
   font-size: 12px;
@@ -18470,7 +18478,7 @@ table.print {
   border-color: #ddd;
   border-style: solid;
 }
-/* line 210, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 218, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print td {
   border-color: #ddd;
   border-style: solid;
@@ -18479,66 +18487,66 @@ table.print td {
   border-width: 1px 1px 0 0;
 }
 
-/* line 219, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 227, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 h2.print {
   text-transform: uppercase;
   text-decoration: underline;
 }
 
-/* line 220, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 228, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 h5.uppercase, h6.uppercase, label.uppercase {
   text-transform: uppercase;
   font-weight: bold;
 }
 
-/* line 221, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 229, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 h6.uppercase {
   font-size: 16px;
   margin-bottom: 10px;
 }
 
-/* line 222, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 230, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 label.folio {
   display: block;
   float: right;
 }
 
-/* line 223, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 231, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 span.print {
   font-weight: bold;
 }
 
-/* line 224, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 232, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 label.print {
   display: block;
   text-align: center;
 }
 
-/* line 225, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 233, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 td.firma {
   padding-top: 60px !important;
 }
 
-/* line 226, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 234, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .logo-bottom {
   vertical-align: text-bottom;
 }
 
-/* line 227, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 235, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .div-bottom {
   position: absolute;
   bottom: -1020px;
   right: 0px;
 }
 
-/* line 228, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 236, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .div-bottom2 {
   position: absolute;
   bottom: -2035px;
   right: 0px;
 }
 
-/* line 229, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 237, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 td.enc_tab_int {
   background-color: #444;
   color: white;
@@ -18546,7 +18554,7 @@ td.enc_tab_int {
   text-transform: uppercase;
 }
 
-/* line 231, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 239, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print2 {
   font-size: 14px;
   width: 100%;
@@ -18554,54 +18562,54 @@ table.print2 {
   border: 1px solid black;
   margin-bottom: 15px;
 }
-/* line 237, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 245, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print2 td {
   padding: 10px;
 }
 
-/* line 239, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 247, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print3 {
   width: 100%;
   margin-bottom: 20px;
 }
-/* line 242, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 250, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print3 td {
   text-align: center;
 }
-/* line 243, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 251, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print3 td.overline {
   text-decoration: overline;
   font-weight: bold;
 }
 
-/* line 245, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 253, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .no-margin-top {
   margin-top: 0px;
 }
 
-/* line 246, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 254, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 label.uppercase {
   margin-top: 10px;
 }
 
-/* line 247, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 255, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 ol.print {
   line-height: 1;
   font-size: 11px;
 }
 
-/* line 248, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 256, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print4 {
   font-size: 14px;
   width: 100%;
   margin-bottom: 20px;
 }
-/* line 252, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 260, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 table.print4 td.uppercase {
   text-transform: uppercase;
 }
 
-/* line 255, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 263, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 input.fecha, input.fecha-mes, input.agno {
   display: inline-block;
   width: 150px;
@@ -18609,91 +18617,91 @@ input.fecha, input.fecha-mes, input.agno {
   margin-top: 1px;
 }
 
-/* line 262, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 270, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 div.div-diag-cert {
   display: inline;
 }
 
-/* line 264, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 272, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .bold {
   font-weight: bold !important;
 }
 
 /*Fix problema de borde izquierdo de select3 al colocar float:right y inline-block; */
-/* line 267, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 275, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .select2-choice, .select2-default {
   overflow: visible !important;
 }
 
-/* line 269, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 277, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .margin-right {
   margin-right: 10px;
 }
 
-/* line 271, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 279, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 form.button_to {
   display: inline-block;
   padding-right: 3px;
 }
 
-/* line 272, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 280, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .padding-left {
   padding-left: 10px;
 }
 
-/* line 273, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 281, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .padding-top {
   padding-top: 10px;
 }
 
-/* line 275, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 283, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 div.menu-inicial {
   padding-bottom: 10px;
 }
-/* line 278, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 286, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 div.menu-inicial > div div.col-md-3 {
   padding-right: 0px;
 }
-/* line 279, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 287, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 div.menu-inicial > div div.col-md-9 {
   padding-right: 0px;
   padding-left: 0px;
 }
 
-/* line 282, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 290, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 div.tab-inicial {
   min-height: 500px;
 }
 
-/* line 283, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 291, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 div.ajuste-div-sexo {
   padding-top: 10px !important;
   margin-bottom: 5px !important;
 }
 
-/* line 284, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 292, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .prevent-break-line {
   position: relative;
   display: inline-block;
 }
 
-/* line 285, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 293, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .padding-bottom {
   padding-bottom: 15px !important;
 }
 
-/* line 286, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 294, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 #iconos-leyenda {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
 }
 
-/* line 287, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 295, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 td.padding-left {
   padding-left: 10px;
 }
 
-/* line 288, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
+/* line 296, /Users/alex/aplicacion_medica/app/assets/stylesheets/custom.css.scss */
 .padding-top-5 {
   padding-top: 5px;
 }

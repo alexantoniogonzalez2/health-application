@@ -91,10 +91,11 @@ class AgAgendamientos < ActiveRecord::Base
       description<<"<br><b>Paciente: </b>#{persona.showName('%d%n%p')}"
       description<<"<br><b>Pidió la hora: </b>#{quien_pide_hora.showName('%d%n%p')}"
       description<<"<br><b>Teléfono fijo: </b>#{quien_pide_hora.getTelefonoFijo}"
-      description<<"<br><b>Celular: </b>#{quien_pide_hora.getCelular}" 
+      description<<"<br><b>Celular: </b>#{quien_pide_hora.getCelular}"
+      description<<"<br><b>Motivo: </b>"<<getMotivo 
 
-      unless motivo_consulta.nil?        
-        description<<"<br><b>Motivo: </b>"<<getMotivo 
+      unless comentario_motivo.blank?        
+        description<<"<br><b>Comentario: </b>"<<comentario_motivo 
       end  
     end   
 
@@ -155,6 +156,7 @@ class AgAgendamientos < ActiveRecord::Base
   end 
 
   def getMotivo
+    motivo = "Sin información" 
     if especialidad_prestador_profesional.especialidad.nombre == "Dental"
       case motivo_consulta
       when 1
@@ -167,6 +169,8 @@ class AgAgendamientos < ActiveRecord::Base
         motivo = '3era sesión tratamiento'
       when 5
         motivo = '4ta sesión tratamiento'
+      when 6
+        motivo = 'Control ortodoncia'
       end
     else
       case motivo_consulta
@@ -195,6 +199,7 @@ class AgAgendamientos < ActiveRecord::Base
                                   :estado,
                                   :especialidad_prestador_profesional,
                                   :motivo_consulta,
+                                  :comentario_motivo,
                                   :persona_diagnostico_control,
                                   :capitulo_cie10_control,
                                   :atencion_salud,  

@@ -51,14 +51,22 @@
         <select id="select-motivo-dental-<%= @agendamiento.id %>" name="selectbasic" class="motivo_dental">
           <option></option>
           <option value='1'>Diagnóstico/Primera visita</option>
+          <option value='6'>Control de ortodoncia</option> 
           <option value='2'>1era sesión tratamiento</option>
           <option value='3'>2nda sesión tratamiento</option>
           <option value='4'>3era sesión tratamiento</option>
-          <option value='5'>4ta sesión tratamiento</option>          
-        </select>
+          <option value='5'>4ta sesión tratamiento</option>
+        </select><br/>
       <% end %>
 		</div>
 	</div>
+  <% if @agendamiento.especialidad_prestador_profesional.especialidad.nombre == "Dental" %>
+    <div class="row margin-top">
+      <div class="col-md-3"><label>Comentario</label></div>
+      <div class="col-md-9">: <input id="comen-dental-<%= @agendamiento.id %>" type='text' class="form-control ajuste-motivo-dental" >
+      </div>         
+    </div>
+  <% end %>
 </fieldset>
 
 <div class="modal fade" id="modal-container-agregar-persona-pac_<%= @agendamiento.id %>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

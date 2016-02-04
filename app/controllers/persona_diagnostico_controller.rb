@@ -512,7 +512,7 @@ class PersonaDiagnosticoController < ApplicationController
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 
 	  nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' Notificación obligatoria ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+	  nombre.to_s << ' Notificación obligatoria ' << p_d.persona.showName('%n%p%m') << p_d.diagnostico.nombre 
 
 		respond_to do |format|
 			format.pdf do
@@ -591,7 +591,7 @@ class PersonaDiagnosticoController < ApplicationController
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 
 	  nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' Interconsulta ' << p_d.persona.showRut << p_d.diagnostico.nombre 
+	  nombre.to_s << ' Interconsulta ' << p_d.persona.showName('%n%p%m') << p_d.diagnostico.nombre 
 
 		respond_to do |format|
 			format.pdf do
@@ -656,7 +656,7 @@ class PersonaDiagnosticoController < ApplicationController
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 
 	  nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' Constancia GES' << p_d.persona.showRut << p_d.diagnostico.nombre 
+	  nombre.to_s << ' Constancia GES' << p_d.persona.showName('%n%p%m') << p_d.diagnostico.nombre 
 
 		respond_to do |format|
 			format.pdf do

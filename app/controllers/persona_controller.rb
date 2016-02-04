@@ -33,10 +33,12 @@ class PersonaController < ApplicationController
 				@persona_nueva.nombre = params[:nombre]
 				@persona_nueva.apellido_paterno = params[:apep]
 				@persona_nueva.apellido_materno = params[:apem]
-				@persona_nueva.rut = params[:rut]
-				@persona_nueva.genero = params[:sexo] == '1' ? 'Masculino' : 'Femenino'
-				@persona_nueva.digito_verificador = params[:dv]
-				@persona_nueva.fecha_nacimiento = params[:fecha_nacimiento]
+				unless params[:rut].blank?
+					@persona_nueva.rut = params[:rut]
+					@persona_nueva.digito_verificador = params[:dv]
+				end
+				@persona_nueva.genero = params[:sexo] == '1' ? 'Masculino' : 'Femenino'				
+				@persona_nueva.fecha_nacimiento = params[:fecha_nacimiento] unless params[:fecha_nacimiento].blank?
 				@persona_nueva.user = @user
 				@persona_nueva.save!
 
@@ -105,7 +107,7 @@ class PersonaController < ApplicationController
 			if respuesta
 				unless(@iniciador == 'fam')
 					if (['pac'].include?(@iniciador[0..2])) 
-						@texto = @persona_nueva.showRut<<' '<< @persona_nueva.showName('%n%p%m')
+						@texto = @persona_nueva.showRutParaListado<<' '<< @persona_nueva.showName('%n%p%m')
 					else
 						@texto = @texto_relacion << ' - ' << @persona_nueva.showName('%n%p%m')
 					end								

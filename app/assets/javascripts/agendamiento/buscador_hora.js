@@ -358,7 +358,8 @@ function tomarHora(id_agend){
 	s_qp = $('#select_ped_'+id_agend).val();
 	s_ph = $('#select_age_'+id_agend).val();
 
-	motivo_dental = $('#select-motivo-dental-'+id_agend).val();	
+	motivo_dental = $('#select-motivo-dental-'+id_agend).val();
+	c_dental = $('#comen-dental-'+id_agend).val();		
 
 	if (s_p == '' || s_ph == '')
 		alert("Selecciona una persona para asignar la hora.");
@@ -368,7 +369,7 @@ function tomarHora(id_agend){
 		$.ajax({
 			type: 'POST',
 			url: '/aux/pedirHoraEvento',
-			data: {	agendamiento_id: id_agend, motivo_dental: motivo_dental, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp },
+			data: {	agendamiento_id: id_agend, motivo_dental: motivo_dental, motivo: m_c,	antecedente: s_m,	capitulo_cie_10: s_c,	paciente: s_p, persona_hora: s_ph, quien_pide_hora: s_qp, c_dental: c_dental },
 			success: function(response) {
 				$('#buscadorHora').fullCalendar('removeEvents',id_agend);
 				$('#calendar').fullCalendar('removeEvents',id_agend);
@@ -377,7 +378,7 @@ function tomarHora(id_agend){
 				else if (response == "2")
 				 	alert("La hora ya fue tomada");
 				else if (response == "3")
-				 	alert("La hora de inicio de esta hora ya pasó."); 
+				 	alert("La hora de inicio de esta hora es de un día anterior."); 
 				$.ajax({
 					type: 'POST',
 					url: '/aux/mostrarEventos',

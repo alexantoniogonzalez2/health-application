@@ -218,14 +218,15 @@ class AgendamientoController < ApplicationController
 		@agendamiento = AgAgendamientos.where("id= ?",params[:agendamiento_id]).first
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Hora reservada").first
 		@agendamiento.transaction do
-			if DateTime.current > @agendamiento.fecha_comienzo
+			if @agendamiento.fecha_comienzo.to_date.past?
 				respuesta = "3"
 			elsif @agendamiento.estado.nombre=='Hora disponible'
 				respuesta="1"
 				@agendamiento.persona = @persona
 				@agendamiento.quien_pide_hora = @quien_pide_hora 
 				@agendamiento.estado = @estadoAgendamiento
-				@agendamiento.motivo_consulta = motivo	
+				@agendamiento.motivo_consulta = motivo
+				@agendamiento.comentario_motivo = params[:c_dental] unless params[:c_dental].blank?
 				@agendamiento.persona_diagnostico_control = FiPersonaDiagnosticos.find(@antecedente) unless @antecedente.blank?
 				@agendamiento.capitulo_cie10_control = MedDiagnosticosCapitulos.find(params[:capitulo_cie_10]) unless params[:capitulo_cie_10].blank?
 				@agendamiento.save

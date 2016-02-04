@@ -11,6 +11,7 @@ class CreateAgAgendamientos < ActiveRecord::Migration
       t.references :estado              #estado_id
       t.references :especialidad_prestador_profesional  #especialidad_prestador_profesional_id
       t.integer :motivo_consulta
+      t.text :comentario_motivo
       t.references :persona_diagnostico_control #persona_diagnostico_control_id
       t.references :capitulo_cie10_control #capitulo_cie10_control_id
       t.references :accion_masiva             #accion_masiva_id

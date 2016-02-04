@@ -617,7 +617,7 @@ class AtencionesSaludController < ApplicationController
 	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fcd.certificado_id = ?',@at_sal,@certificado.id)
 
 		nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' Certificado ' << @agendamiento.persona.showRut 
+	  nombre.to_s << ' Certificado ' << @agendamiento.persona.showName('%n%p%m')
 
 		respond_to do |format|
 			format.pdf do
@@ -650,7 +650,7 @@ class AtencionesSaludController < ApplicationController
 
 
 		nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' Indicaciones ' << @agendamiento.persona.showRut
+	  nombre.to_s << ' Indicaciones ' << @agendamiento.persona.showName('%n%p%m')
 
 		respond_to do |format|
 			format.pdf do
@@ -668,7 +668,7 @@ class AtencionesSaludController < ApplicationController
 		@agendamiento = AgAgendamientos.find(params[:ag])
 
 		nombre = l DateTime.current, format: :timestamp
-	  nombre.to_s << ' Receta ' << @agendamiento.persona.showRut
+	  nombre.to_s << ' Receta ' << @agendamiento.persona.showName('%n%p%m')
 
 	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
 

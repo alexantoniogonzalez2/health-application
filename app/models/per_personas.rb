@@ -42,7 +42,7 @@ class PerPersonas < ActiveRecord::Base
   def formato_personas
   {
     'id'        => id,
-    'text'      => number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador<<' '<<nombre<<' '<<apellido_paterno<<' '<<apellido_materno     
+    'text'      => showRutParaListado<<' '<<nombre<<' '<<apellido_paterno<<' '<<apellido_materno     
   }
   end
 
@@ -185,6 +185,8 @@ class PerPersonas < ActiveRecord::Base
           ret << apellido_paterno
         elsif c == "m" #apellido_materno
           ret << apellido_materno
+        end
+=begin
         elsif c== "d" #dr/dra
           if genero=="Masculino"
             ret << "Dr."
@@ -198,6 +200,8 @@ class PerPersonas < ActiveRecord::Base
             ret << "a"
           end
         end
+=end
+
       end
 
       ret.join(" ")
@@ -209,7 +213,15 @@ class PerPersonas < ActiveRecord::Base
   end 
 
   def showRut
-    return number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador 
+    texto_rut = "Sin información"
+    texto_rut = number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador if rut
+    return texto_rut
+  end 
+
+  def showRutParaListado
+    texto_rut = "Sin RUT"
+    texto_rut = number_with_delimiter(rut, delimiter: ".").to_s<<'-'<<digito_verificador if rut
+    return texto_rut
   end 
 
   def getPrevision
@@ -241,7 +253,7 @@ class PerPersonas < ActiveRecord::Base
 
   def getCelular
     celular = personas_telefonos.joins(:telefono).select('tra_telefonos.codigo, tra_telefonos.numero').where('tra_telefonos.codigo = 9').first
-    texto_celular = celular.nil? ? 'Sin información' : celular.codigo.to_s << ' ' << celular.numero.to_s 
+    texto_celular = celular.nil? ? 'Sin información' : celular.numero.to_s 
     return texto_celular
   end 
 

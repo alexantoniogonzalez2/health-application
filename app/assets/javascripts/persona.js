@@ -3,7 +3,7 @@ $("form[id^='form-agregar-persona-'").submit(function (e) { return false; });
 $("form[id^='form-agregar-persona-'").bootstrapValidator({
 	fields: {
 		sexo: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
-    fecha_nacimiento: { validators: { notEmpty: { message: 'Este campo es requerido' } } },
+    /*fecha_nacimiento: { validators: { notEmpty: { message: 'Este campo es requerido' } } },*/
 		email: { validators: { emailAddress: { message: 'Ingresa una dirección válida de correo electrónico' } } } ,
 		rut: { validators: { 
       digits: { message: 'Ingresa solo números' } ,
@@ -139,6 +139,8 @@ $.fn.bootstrapValidator.validators.validarRut = {
 	    if (dv == verificacion)
 	      respuesta = true;     
 	  } 
+    else
+      respuesta = true
 	  return respuesta;
   }
 }
