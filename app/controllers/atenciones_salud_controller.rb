@@ -1,4 +1,4 @@
-class AtencionesSaludController < ApplicationController
+ class AtencionesSaludController < ApplicationController
 
 	include ActionView::Helpers::NumberHelper
 	include ApplicationHelper
@@ -226,27 +226,16 @@ class AtencionesSaludController < ApplicationController
 
 	def edit
 		permiso = false
-		editar = false
-			
+		editar = false			
 		@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
 		@especialidad_prestador_profesional = PrePrestadorProfesionales.where("profesional_id = ? ",@profesional.id).first		
 		@atencion_salud = FiAtencionesSalud.find(params[:id])
 	  @agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
 
-	  if @agendamiento.estado.nombre == "Paciente siendo atendido"
-	  	editar = true 
-	  else 
-	  	action = "sinEditar"	
-	  end	
-	  if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional 
-	  	permiso = true 
-	  else 
-	  	action = "sinPermiso" 
-	  end		
-		
-		unless permiso or editar
-			redirect_to :action => action
-		end	
+	  if @agendamiento.estado.nombre == "Paciente siendo atendido" then editar = true else action = "sinEditar"	end	
+	  if @especialidad_prestador_profesional == @agendamiento.especialidad_prestador_profesional then permiso = true else action = "sinPermiso" end					
+		redirect_to :action => action unless permiso or editar
+
 
 	  @fecha_comienzo_atencion = @agendamiento.fecha_comienzo_real
 	  @fecha_final_atencion = @agendamiento.fecha_final_real
@@ -268,19 +257,28 @@ class AtencionesSaludController < ApplicationController
 				 Date.today,@especialidad_prestador_profesional,Date.today, Date.tomorrow )
 			.order(fecha: :desc)
 
-	  @persona_diagnostico = FiPersonaDiagnosticos
-	  	.joins(:persona_diagnosticos_atencion_salud)
-	  	.select("fi_persona_diagnosticos_atenciones_salud.id,
-	  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
-	  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
-	  					fi_persona_diagnosticos.diagnostico_id,
-	  					fi_persona_diagnosticos.persona_id,
-	  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
-	  					fi_persona_diagnosticos_atenciones_salud.comentario,
-	  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
-	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
-	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
-	  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 0',params[:id])
+		case @atencion_salud.tipo_ficha_id
+		when 1..2
+			@tipo_ficha = 'salud'
+		when 3
+			@tipo_ficha = 'dental'
+		end
+
+		unless @tipo_ficha == 'dental'
+		  @persona_diagnostico = FiPersonaDiagnosticos
+		  	.joins(:persona_diagnosticos_atencion_salud)
+		  	.select("fi_persona_diagnosticos_atenciones_salud.id,
+		  					fi_persona_diagnosticos_atenciones_salud.fecha_inicio,
+		  					fi_persona_diagnosticos_atenciones_salud.fecha_termino,
+		  					fi_persona_diagnosticos.diagnostico_id,
+		  					fi_persona_diagnosticos.persona_id,
+		  					fi_persona_diagnosticos_atenciones_salud.estado_diagnostico_id,
+		  					fi_persona_diagnosticos_atenciones_salud.comentario,
+		  					fi_persona_diagnosticos_atenciones_salud.es_cronica,
+		  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico,
+		  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento")
+		  	.where('fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 0',params[:id])
+	  end	
 	  
 	  @persona_diagnostico_anteriores = FiPersonaDiagnosticos
 	  	.joins('JOIN fi_persona_diagnosticos_atenciones_salud as fpdas ON 
@@ -341,16 +339,17 @@ class AtencionesSaludController < ApplicationController
 										.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.created_at < ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1 AND
 														fi_persona_diagnosticos_atenciones_salud.atencion_salud_id is null', @atencion_salud.persona.id,@fecha_final_atencion)
 	  						
-	  @diagnosticos = MedDiagnosticos.where('frecuente = ?',true)
 	  @estados_diagnostico = MedDiagnosticoEstados.all
 	  @prestadores = PrePrestadores.all
 	  @especialidades = ProEspecialidades.all
 	  @paises = TraPaises.all
-	  
-	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
-	  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
-	  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ? AND es_antecedente is null', params[:id],572)
-	  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
+
+	  unless @tipo_ficha == 'dental'	  
+		  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
+		  @persona_examen = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id <= ?', params[:id],571)
+		  @persona_procedimiento = FiPersonaPrestaciones.where('atencion_salud_id = ? AND prestacion_id >= ? AND es_antecedente is null', params[:id],572)
+		  @persona_medicamento = FiPersonaMedicamentos.where('atencion_salud_id = ? AND es_antecedente is null', params[:id])
+		end
 
 	  @persona_estatura = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],1).first
 	  @persona_peso = FiPersonaMetricas.where("atencion_salud_id = ? AND metrica_id = ?",params[:id],2).first
@@ -446,7 +445,13 @@ class AtencionesSaludController < ApplicationController
 			@certificado = FiCertificados.new
 			@certificado.atencion_salud = @atencion_salud 
 			@certificado.save!
-		end		
+		end
+
+		if @tipo_ficha == 'dental'
+			render 'edit_dental'
+		else
+			render 'edit'
+		end				
  	
 	end
 
@@ -459,9 +464,10 @@ class AtencionesSaludController < ApplicationController
 	def crearAtencion	
 
 		@agendamiento =  AgAgendamientos.find(params[:id])
+		tipo_ficha = @agendamiento.especialidad_prestador_profesional.especialidad.nombre == "Dental" ? 3 : 1			
 		@persona = @agendamiento.persona
 
-		@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => params[:id],:persona_id => @persona.id, :tipo_ficha_id => 1)				
+		@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => params[:id],:persona_id => @persona.id, :tipo_ficha_id => tipo_ficha)				
 	  @atencion_salud.save(:validate => false)
 
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente siendo atendido").first
