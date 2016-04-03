@@ -1,0 +1,102 @@
+/* colors */
+$blue: #428bca;
+$blueFooter: #B5DBFF;
+$lightBlue: #85D3F5;
+$mediumBlue: #D9EDF7;
+$lightGray: #444;
+$verylightGray: #ddd;
+$lightGreen: #DFF0D8;
+$white: white;
+
+div.dental {
+  div.tab-content {
+  	min-height: 370px;
+  }
+}
+
+.cara-dental { 
+	border: 1px solid black;
+	padding: 0px 1px;
+	position: relative;
+	font-size: 8px;
+}
+
+.distal { 
+	top: 13px;
+	left: 2px;
+}
+
+.vestibular {  }
+
+.mesial { 
+	top: 13px;
+	right: 2px;
+}
+
+.palatina { 
+	left: 7px;
+	top: 6px;
+}
+
+.oclusal { 
+	bottom: 7px; 
+	right: 7px;
+}
+
+.incisal { 
+	bottom: 7px;
+	right: 7px;
+	padding: 0px 3px; 
+}  
+
+.col-16 { 	
+  width: 40px;
+}
+
+div.odontograma {
+	div.row { 
+		div {
+			padding: 0px;
+			text-align: center;
+		}
+		div.col-md-1 {
+			label { 
+				margin-bottom: 0px;	
+				display: block;	
+				margin-top: 5px;		
+			}
+			img {
+				padding-top: 10px;
+			}
+		}
+	}
+	div.car-den {
+		padding-bottom: 10px;
+	}
+}
+
+img.img_dental {
+  border: 2px solid white;
+}
+
+img.img_dental:hover {
+	border-radius: 3px;
+  border: 2px solid $blueFooter;
+  cursor: pointer;
+}
+
+img.tooltip_dental {
+  border: 2px solid white;
+}
+
+img.tooltip_dental:hover {
+	border-radius: 3px;
+  border: 2px solid $blueFooter;
+  cursor: pointer;
+}
+
+
+/* CSS3+ styles */
+qtip-shadow{ } /* Adds a shadows to your tooltips */
+qtip-rounded{ } /* Adds a rounded corner to your tooltips */
+qtip-bootstrap{ } /* Bootstrap style */

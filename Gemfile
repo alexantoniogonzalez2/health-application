@@ -72,3 +72,5 @@ gem 'bootstrap3-datetimepicker-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'savon'
+gem 'angularjs-rails'
+gem 'angular-rails-templates'

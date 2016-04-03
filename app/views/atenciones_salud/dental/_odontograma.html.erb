@@ -1,0 +1,26 @@
+<div ng-app="odontogram" ng-controller="OdontogramController as odontogram" class="content odontograma">
+  <div class="row">   
+    <div ng-repeat="tooth in odontogram.tooths_12" class="col-16 col-md-1">
+      <tooth-image></tooth-image>
+      <tooth-panel></tooth-panel>
+      <tooth-name></tooth-name> 
+    </div>    
+    <div class="col-md-4"> Panel <p> {{ 4 + 6}}</p></div>   
+  </div>
+  <div class="row">
+    <div ng-repeat="tooth in odontogram.tooths_34" class="col-16 col-md-1">
+      <tooth-image></tooth-image>
+      <tooth-panel></tooth-panel>
+      <tooth-name></tooth-name> 
+    </div>
+  </div>
+</div>  
+
+<div id="tooltip_dental" class="hidden"> 
+  <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental">
+  <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental">
+  <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental">
+  <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental">
+  <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental">
+  <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental">
+</div>

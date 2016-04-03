@@ -1,0 +1,196 @@
+(function(){
+  var app = angular.module('odontogram', ['templates']);
+
+  app.controller('OdontogramController', function(){
+    this.tooths_12 = tooths_12;
+    this.tooths_34 = tooths_34;
+  });
+
+  app.directive('toothName', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-name.html'
+    }; 
+  });
+
+  app.directive('toothPanel', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-panel.html'
+    }; 
+  });
+
+  app.directive('toothImage', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-image.html'
+    }; 
+  });
+
+  var tooths_12 = [
+    {
+      name: '18',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_1/18.jpg") %>',
+    },
+    {
+      name: '17',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_1/17.jpg") %>',
+    },
+    {
+      name: '16',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_1/16.jpg") %>',
+    },
+    {
+      name: '15',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_1/15.jpg") %>',
+    },
+    {
+      name: '14',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_1/14.jpg") %>',
+    },
+    {
+      name: '13',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_1/13.jpg") %>',
+    },
+    {
+      name: '12',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_1/12.jpg") %>',
+    },
+    {
+      name: '11',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_1/11.jpg") %>',
+    },
+    {
+      name: '21',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_2/21.jpg") %>',
+    },
+    {
+      name: '22',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_2/22.jpg") %>',
+    },
+    {
+      name: '23',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_2/23.jpg") %>',
+    },
+    {
+      name: '24',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_2/24.jpg") %>',
+    },
+    {
+      name: '25',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_2/25.jpg") %>',
+    },
+    {
+      name: '26',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_2/26.jpg") %>',
+    },
+    {
+      name: '27',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_2/27.jpg") %>',
+    },
+    {
+      name: '28',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_2/28.jpg") %>',
+    }
+  ];
+
+  var tooths_34 = [
+    {
+      name: '48',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_4/48.jpg") %>',
+    },
+    {
+      name: '47',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_4/47.jpg") %>',
+    },
+    {
+      name: '46',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_4/46.jpg") %>',
+    },
+    {
+      name: '45',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_4/45.jpg") %>',
+    },
+    {
+      name: '44',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_4/44.jpg") %>',
+    },
+    {
+      name: '43',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_4/43.jpg") %>',
+    },
+    {
+      name: '42',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_4/42.jpg") %>',
+    },
+    {
+      name: '41',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_4/41.jpg") %>',
+    },
+    {
+      name: '31',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_3/31.jpg") %>',
+    },
+    {
+      name: '32',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_3/32.jpg") %>',
+    },
+    {
+      name: '33',
+      cara_dental: true,
+      image: '<%= image_url("dental/od_3/33.jpg") %>',
+    },
+    {
+      name: '34',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_3/34.jpg") %>',
+    },
+    {
+      name: '35',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_3/35.jpg") %>',
+    },
+    {
+      name: '36',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_3/36.jpg") %>',
+    },
+    {
+      name: '37',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_3/37.jpg") %>',
+    },
+    {
+      name: '38',
+      cara_dental: false,
+      image: '<%= image_url("dental/od_3/38.jpg") %>',
+    }
+  ];
+
+})();

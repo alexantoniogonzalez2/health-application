@@ -298,7 +298,6 @@ select.float-right { float:right; }
 a.active-ant, a.active-ant:focus { background-color: $lightGreen; color: $blue;}
 div.margin-top { margin-top: 5px;}
 input.width_300 { width: 300px !important; }
-
 .modal { overflow-y: scroll !important; }
 .modal-open { overflow: scroll !important; }
-
+.done-true { text-decoration: line-through; color: grey; }

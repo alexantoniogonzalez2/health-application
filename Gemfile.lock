@@ -59,6 +59,11 @@ GEM
     akami (1.3.1)
       gyoku (>= 0.4.0)
       nokogiri
+    angular-rails-templates (0.2.0)
+      railties (>= 3.1)
+      sprockets (~> 2)
+      tilt
+    angularjs-rails (1.4.8)
     arel (6.0.3)
     autoprefixer-rails (6.0.2)
       execjs
@@ -246,6 +251,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  angular-rails-templates
+  angularjs-rails
   bootstrap-sass
   bootstrap-validator-rails
   bootstrap3-datetimepicker-rails
