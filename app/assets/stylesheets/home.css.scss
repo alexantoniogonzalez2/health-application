@@ -2,11 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/* colors */
-$blue: #428bca;
-$blueFooter: #B5DBFF;
-$lightBlue: #85D3F5;
-$lightGray: #999;
+@import "colors";
 
 .logo { width: 40%; padding-top: 7px; }
 .logo-top { float: left; padding-top: 5px; }
@@ -45,7 +41,6 @@ div.intro-text, div.intro-text2, div.intro-text3, div.intro-text4 {
 		margin: auto;
 		div.checkbox { 
 			text-align: left;
-			/*margin-left: 180px;*/
 			width: 150px;
 			label { padding-left: 0px; }
 		}	

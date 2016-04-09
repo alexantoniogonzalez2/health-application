@@ -2,11 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$lightGreen: #DFF6DF;
-$blue: #428bca;
-$blueFooter: #B5DBFF;
-$lightBlue: #85D3F5;
-$mediumBlue: #D9EDF7;
+@import "colors";
+
 /* formulario de atención de salud */
 
 #submit {	float: right; }

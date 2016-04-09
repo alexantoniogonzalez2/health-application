@@ -1,12 +1,4 @@
-/* colors */
-$blue: #428bca;
-$blueFooter: #B5DBFF;
-$lightBlue: #85D3F5;
-$mediumBlue: #D9EDF7;
-$lightGray: #444;
-$verylightGray: #ddd;
-$lightGreen: #DFF0D8;
-$white: white;
+@import "colors";
 
 html { overflow-y: scroll; }
 html, body.aplicacion { 
@@ -293,3 +285,9 @@ div.ajuste-div-sexo { padding-top: 10px !important; margin-bottom: 5px !importan
 #iconos-leyenda { padding-top: 10px !important; padding-bottom: 10px !important; }
 td.padding-left { padding-left: 10px; }
 .padding-top-5 { padding-top: 5px; }
+
+.btn-group-vertical {
+  .btn {
+    text-align: left;
+  }
+}

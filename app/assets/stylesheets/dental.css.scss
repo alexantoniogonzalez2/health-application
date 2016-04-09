@@ -1,12 +1,9 @@
-/* colors */
-$blue: #428bca;
-$blueFooter: #B5DBFF;
-$lightBlue: #85D3F5;
-$mediumBlue: #D9EDF7;
-$lightGray: #444;
-$verylightGray: #ddd;
-$lightGreen: #DFF0D8;
-$white: white;
+@import "colors";
+
+/* CSS3+ styles */
+qtip-shadow{ } /* Adds a shadows to your tooltips */
+qtip-rounded{ } /* Adds a rounded corner to your tooltips */
+qtip-bootstrap{ } /* Bootstrap style */
 
 div.dental {
   div.tab-content {
@@ -19,6 +16,7 @@ div.dental {
 	padding: 0px 1px;
 	position: relative;
 	font-size: 8px;
+	cursor: pointer;
 }
 
 .distal { 
@@ -54,49 +52,70 @@ div.dental {
 }
 
 div.odontograma {
-	div.row { 
-		div {
-			padding: 0px;
-			text-align: center;
-		}
-		div.col-md-1 {
-			label { 
-				margin-bottom: 0px;	
-				display: block;	
-				margin-top: 5px;		
+	width: 650px;
+	float: left;
+	margin-right: 20px;
+	div.content{
+		div.row { 
+			div {
+				padding: 0px;
+				text-align: center;
 			}
-			img {
-				padding-top: 10px;
+			div.col-md-1 {
+				label { 
+					margin-bottom: 0px;	
+					display: block;	
+					margin-top: 5px;		
+				}
+				img {
+					padding-top: 10px;
+				}
 			}
 		}
-	}
-	div.car-den {
-		padding-bottom: 10px;
+		div.car-den {
+			padding-bottom: 10px;
+		}
 	}
 }
 
-img.img_dental {
+img.img_dental,img.tooltip_dental {
   border: 2px solid white;
 }
 
-img.img_dental:hover {
+img.img_dental:hover, img.tooltip_dental:hover {
 	border-radius: 3px;
   border: 2px solid $blueFooter;
   cursor: pointer;
 }
 
-img.tooltip_dental {
-  border: 2px solid white;
+img.ausente {
+	opacity: 0.3;
 }
 
-img.tooltip_dental:hover {
-	border-radius: 3px;
-  border: 2px solid $blueFooter;
-  cursor: pointer;
+div.diag-dental {
+	display: table-row;
+	width: 150px;
+	button > span.glyphicon {
+		margin-left: 7px;
+	}
 }
 
+.caries {
+	color: $caries;
+}
 
-/* CSS3+ styles */
-qtip-shadow{ } /* Adds a shadows to your tooltips */
-qtip-rounded{ } /* Adds a rounded corner to your tooltips */
-qtip-bootstrap{ } /* Bootstrap style */
+.composite {
+	color: $composite;
+}
+
+.amalgama {
+	color: $amalgama;
+}
+
+.sellante {
+	color: $sellante;
+}
+
+.incrustacion {
+	color: $incrustacion;
+}

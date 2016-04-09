@@ -2,7 +2,10 @@
 $('.img_dental').each(function() { // Notice the .each() loop, discussed below
     $(this).qtip({
     		show: 'click',
-    		hide: 'click',
+    		hide: {
+                fixed: true,
+                delay: 300
+        },
         content: {
           text: $( "#tooltip_dental" ).html(),
           button: true
@@ -11,12 +14,11 @@ $('.img_dental').each(function() { // Notice the .each() loop, discussed below
 	   		style: {
 	        classes: 'qtip-rounded qtip-bootstrap'
 	    	},
-	    	 position: {
-             target: 'mouse', // Use the mouse position as the position origin
-             adjust: {
-                 // Don't adjust continuously the mouse, just use initial position
-                 mouse: false
-             } 
-         }
+	    	position: {
+	        target: 'mouse', // Use the mouse position as the position origin
+	        adjust: {
+	          mouse: false
+	        } 
+	      },
     });
 });

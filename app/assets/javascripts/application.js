@@ -21,6 +21,7 @@
 //= require highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/modules/exporting
+//= require bootstrap
 //= require bootstrapValidator.min
 //= require bootstrap-datetimepicker
 //= require bootstrap-sprockets

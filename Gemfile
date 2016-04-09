@@ -48,16 +48,11 @@ gem 'mysql2' , '~> 0.3.18'
 
 #Devise
 gem 'devise'
-
-#Bootstrap
 gem "jquery-ui-rails"
 gem "jquery-validation-rails"
 gem 'rails3-jquery-autocomplete'
 gem "fullcalendar-rails"
 gem "datejs-rails"
-#gem "jquery-qtip2-rails"
-#gem 'qtip2-rails'
-#gem 'qtip2-jquery-rails'
 gem "select2-rails"
 gem "r18n-core"
 gem "highcharts-rails"
