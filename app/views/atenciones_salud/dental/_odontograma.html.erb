@@ -1,44 +1,39 @@
 <div ng-app="odontogram" ng-controller="OdontogramController as odontogram" class="odontograma">
   <div class="content">
     <div class="row">   
-      <div ng-repeat="tooth in odontogram.tooths_12" class="col-16 col-md-1">
+      <div ng-repeat="tooth in odontogram.tooths" class="col-16 col-md-1">
         <tooth-image></tooth-image>
         <tooth-panel></tooth-panel>
         <tooth-name></tooth-name> 
       </div>   
     </div>
-    <div class="row">
-      <div ng-repeat="tooth in odontogram.tooths_34" class="col-16 col-md-1">
-        <tooth-image></tooth-image>
-        <tooth-panel></tooth-panel>
-        <tooth-name></tooth-name> 
-      </div>
-    </div>
   </div>
+
+  <div>
+  <label>Tabla de diagnósticos:</label>
+  <div class="btn-group-vertical diag-dental" role="group">
+    <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(1) }" ng-click="odontogram.selectDiag(1)">
+      <i class="fa fa-square-o sano"></i> Sano
+    </button>
+    <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(2) }" ng-click="odontogram.selectDiag(2)">
+      <i class="fa fa-square caries"></i> Caries
+    </button>
+    <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(3) }" ng-click="odontogram.selectDiag(3)">
+      <i class="fa fa-square composite"></i> Composite
+    </button>
+    <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(4) }" ng-click="odontogram.selectDiag(4)">
+      <i class="fa fa-square sellante"></i> Sellante
+    </button>
+    <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(5) }" ng-click="odontogram.selectDiag(5)">
+      <i class="fa fa-square amalgama"></i> Amalgama
+    </button>
+    <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(6) }" ng-click="odontogram.selectDiag(6)">
+      <i class="fa fa-square incrustacion"></i> Incrustación
+    </button>
+  </div>
+  </div>
+
 </div>  
-
-<label>Tabla de diagnósticos:</label>
-<div class="btn-group-vertical diag-dental" role="group">
-  <button type="button" class="btn btn-default">
-    <i class="fa fa-square-o"></i> Sano
-  </button>
-  <button type="button" class="btn btn-default">
-    <i class="fa fa-square caries"></i> Caries
-  </button>
-  <button type="button" class="btn btn-default">
-    <i class="fa fa-square composite"></i> Composite
-  </button>
-  <button type="button" class="btn btn-default">
-    <i class="fa fa-square sellante"></i> Sellante
-  </button>
-  <button type="button" class="btn btn-default">
-    <i class="fa fa-square amalgama"></i> Amalgama
-  </button>
-  <button type="button" class="btn btn-default">
-    <i class="fa fa-square incrustacion"></i> Incrustación
-  </button>
-</div>
-
 
 <div id="tooltip_dental" class="hidden"> 
   <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental ausente" data-toggle="tooltip" title="Pieza ausente" >

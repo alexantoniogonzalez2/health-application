@@ -52,10 +52,10 @@ div.dental {
 }
 
 div.odontograma {
-	width: 650px;
-	float: left;
-	margin-right: 20px;
 	div.content{
+		width: 650px;
+		float: left;
+		margin-right: 20px;
 		div.row { 
 			div {
 				padding: 0px;
@@ -98,6 +98,10 @@ div.diag-dental {
 	button > span.glyphicon {
 		margin-left: 7px;
 	}
+}
+
+.sano {
+	
 }
 
 .caries {

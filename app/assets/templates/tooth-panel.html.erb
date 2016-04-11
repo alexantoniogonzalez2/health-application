@@ -1,6 +1,6 @@
-<span class="cara-dental distal">D</span>
-<span class="cara-dental vestibular">V</span>
-<span class="cara-dental mesial">M</span><br>
-<span class="cara-dental palatina">P</span>
-<span ng-show="tooth.cara_dental" class="cara-dental incisal">I</span>
-<span ng-hide="tooth.cara_dental" class="cara-dental oclusal">O</span>
+<span class="cara-dental distal" ng-click="odontogram.setDiag(tooth.name)">D</span>
+<span class="cara-dental vestibular" ng-click="odontogram.setDiag(tooth.name)">V</span>
+<span class="cara-dental mesial" ng-click="odontogram.setDiag(tooth.name)">M</span><br>
+<span class="cara-dental palatina" ng-click="odontogram.setDiag(tooth.name)">P</span>
+<span ng-show="tooth.cara_dental" class="cara-dental incisal" ng-click="odontogram.setDiag(tooth.name)">I</span>
+<span ng-hide="tooth.cara_dental" class="cara-dental oclusal" ng-click="odontogram.setDiag(tooth.name)">O</span>
