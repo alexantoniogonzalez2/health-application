@@ -100,26 +100,50 @@ div.diag-dental {
 	}
 }
 
-.sano {
-	
+.diag_sano {
+	color: $black;
 }
 
-.caries {
+.diag_caries {
 	color: $caries;
 }
 
-.composite {
+.diag_composite {
 	color: $composite;
 }
 
-.amalgama {
+.diag_amalgama {
 	color: $amalgama;
 }
 
-.sellante {
+.diag_sellante {
 	color: $sellante;
 }
 
-.incrustacion {
+.diag_incrustacion {
 	color: $incrustacion;
+}
+
+.sano {
+	background-color: none;
+}
+
+.caries {
+	background-color: $caries;
+}
+
+.composite {
+	background-color: $composite;
+}
+
+.amalgama {
+	background-color: $amalgama;
+}
+
+.sellante {
+	background-color: $sellante;
+}
+
+.incrustacion {
+	background-color: $incrustacion;
 }
