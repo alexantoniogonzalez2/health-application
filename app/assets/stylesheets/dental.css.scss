@@ -1,10 +1,5 @@
 @import "colors";
 
-/* CSS3+ styles */
-qtip-shadow{ } /* Adds a shadows to your tooltips */
-qtip-rounded{ } /* Adds a rounded corner to your tooltips */
-qtip-bootstrap{ } /* Bootstrap style */
-
 div.dental {
   div.tab-content {
   	min-height: 370px;
@@ -57,17 +52,15 @@ div.odontograma {
 		float: left;
 		margin-right: 20px;
 		div.row { 
-			div {
+			div.col-md-1 {
 				padding: 0px;
 				text-align: center;
-			}
-			div.col-md-1 {
 				label { 
 					margin-bottom: 0px;	
 					display: block;	
 					margin-top: 5px;		
 				}
-				img {
+				img.img_dental {
 					padding-top: 10px;
 				}
 			}
@@ -146,4 +139,33 @@ div.diag-dental {
 
 .incrustacion {
 	background-color: $incrustacion;
+}
+
+div.tooltip_dental {  
+  z-index: 2;
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  border: $blueFooter 2px;
+  border-style: solid;
+  padding: 10px;
+  left: 20px;
+  top: 60px;
+}
+
+div.flex {
+	display: flex;
+}
+
+.extraccion {	   
+	content: url(dental/otros/extra.png);
+}
+
+.normal {	 
+	
+}
+
+div.carac {
+	position: absolute;
+  top: 35px;
 }

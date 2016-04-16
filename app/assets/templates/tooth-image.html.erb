@@ -1,3 +1,2 @@
-<img ng-src="{{tooth.image}}" class="img_dental">
-
-<%= javascript_include_tag "atencion_salud/dental" %>
+<img id="{{tooth.name}}" ng-src="{{tooth.image}}" class="img_dental" ng-click="odontogram.showTooltip($event,tooth)">
+<div class="carac" ng-class="tooth.caracteristica"></div>

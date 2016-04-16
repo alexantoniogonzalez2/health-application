@@ -1,7 +1,7 @@
 (function(){
   var app = angular.module('odontogram', ['templates']);
 
-  app.controller('OdontogramController', function(){
+  app.controller('OdontogramController', function($filter){
     this.tooths = tooths;
     this.diag = 1;
 
@@ -9,35 +9,27 @@
       this.diag = setDiag;
     };
 
-    this.setDiag = function(tooth,tipo_cara) {
-      console.log(this.diag);
-      console.log(tipo_cara);
-      console.log(tooth);
+    this.setDiag = function(tooth,tipo_cara){      
+      var diagnosticos = ['sano','caries','composite','sellante','amalgama','incrustacion'];
+      tooth[tipo_cara] = diagnosticos[this.diag-1];
+    };
 
-      switch(this.diag) {
-        case 1:
-          tooth[tipo_cara] = 'sano'
-          break;
-        case 2:
-          tooth[tipo_cara] = 'caries'
-          break;
-        case 3:
-          tooth[tipo_cara] = 'composite'
-          break;
-        case 4:
-          tooth[tipo_cara] = 'sellante'
-          break;
-        case 5:
-          tooth[tipo_cara] = 'amalgama'
-          break;
-        case 6:
-          tooth[tipo_cara] = 'incrustacion'
-          break;
-      }
+    this.setCarac = function(tipo_carac,event){      
+      var id = angular.element(event.target).parent().parent().find("img").attr('id');
+      tooth= $filter('filter')(tooths, function (d) {return d.name === id;})[0];
+      tooth.caracteristica = tipo_carac;
+      $( "#tooltip_dental" ).hide();
     };
 
     this.isSelected = function(checkDiag){
       return this.diag === checkDiag;
+    };
+
+    this.showTooltip = function(event) {      
+      angular.element(event.target).parent().append($( "#tooltip_dental" )); 
+      $( "#tooltip_dental" ).addClass('flex');
+      $( "#tooltip_dental" ).removeClass('hidden');
+      $( "#tooltip_dental" ).show(); 
     };
 
   });
@@ -62,6 +54,7 @@
       templateUrl: 'tooth-image.html'
     }; 
   });
+
   var tooths = [
     {
       name: '18',
@@ -72,6 +65,7 @@
       diag_mesial: 'caries',
       diag_palatina: 'caries',
       diag_central: 'caries',
+      caracteristica: 'extraccion', 
     },
     {
       name: '17',
@@ -82,6 +76,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '16',
@@ -92,6 +87,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '15',
@@ -102,6 +98,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '14',
@@ -112,6 +109,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '13',
@@ -122,6 +120,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '12',
@@ -132,6 +131,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '11',
@@ -142,6 +142,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '21',
@@ -152,6 +153,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '22',
@@ -162,6 +164,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '23',
@@ -172,6 +175,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '24',
@@ -182,6 +186,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '25',
@@ -192,6 +197,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '26',
@@ -202,6 +208,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '27',
@@ -212,6 +219,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '28',
@@ -222,6 +230,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '48',
@@ -232,6 +241,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '47',
@@ -242,6 +252,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '46',
@@ -252,6 +263,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '45',
@@ -262,6 +274,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '44',
@@ -272,6 +285,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '43',
@@ -282,6 +296,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '42',
@@ -292,6 +307,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '41',
@@ -302,6 +318,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '31',
@@ -312,6 +329,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '32',
@@ -322,6 +340,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '33',
@@ -332,6 +351,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '34',
@@ -342,6 +362,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '35',
@@ -352,6 +373,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '36',
@@ -362,6 +384,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '37',
@@ -372,6 +395,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     },
     {
       name: '38',
@@ -382,6 +406,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
+      caracteristica: 'normal',
     }
   ];
 
