@@ -1,8 +1,14 @@
 (function(){
   var app = angular.module('odontogram', ['templates']);
 
-  app.controller('OdontogramController', function($filter){
-    this.tooths = tooths;
+  app.controller('OdontogramController', ['$http','$filter', function($http, $filter){
+    
+    var odontogram = this;
+    odontogram.tooths = [];
+    $http.get('/cargar_odontograma').success(function(data){
+      odontogram.tooths = data;
+    });
+
     this.diag = 1;
 
     this.selectDiag = function(setDiag) {
@@ -10,14 +16,18 @@
     };
 
     this.setDiag = function(tooth,tipo_cara){      
-      var diagnosticos = ['sano','caries','composite','sellante','amalgama','incrustacion'];
-      tooth[tipo_cara] = diagnosticos[this.diag-1];
+      var diagnosticos = ['sano','caries','composite','sellante','amalgama','incrustacion','corona'];
+      $http.post('/guardar_diagnostico_dental',{ tipo_cara: tipo_cara, tooth: tooth.name, atencion_salud_id: atencion_salud_id }).success(function(){
+        tooth[tipo_cara] = diagnosticos[this.diag-1];
+      });      
     };
 
-    this.setCarac = function(tipo_carac,event){      
+    this.setCarac = function(tipo_carac,event){
       var id = angular.element(event.target).parent().parent().find("img").attr('id');
-      tooth= $filter('filter')(tooths, function (d) {return d.name === id;})[0];
-      tooth.caracteristica = tipo_carac;
+      tooth = $filter('filter')(odontogram.tooths, function (d) {return d.name === id;})[0];
+      $http.post('/guardar_caracteristica_dental',{ tipo_carac: tipo_carac, tooth: id, atencion_salud_id: atencion_salud_id }).success(function(){
+        tooth.caracteristica = tipo_carac;
+      });
       $( "#tooltip_dental" ).hide();
     };
 
@@ -32,7 +42,7 @@
       $( "#tooltip_dental" ).show(); 
     };
 
-  });
+  } ]);
 
   app.directive('toothName', function(){ 
     return {
@@ -76,7 +86,7 @@
       diag_mesial: 'sano',
       diag_palatina: 'sano',
       diag_central: 'sano',
-      caracteristica: 'normal',
+      caracteristica: 'ausente',
     },
     {
       name: '16',

@@ -81,7 +81,7 @@ img.img_dental:hover, img.tooltip_dental:hover {
   cursor: pointer;
 }
 
-img.ausente {
+img.ausente, .ausente {
 	opacity: 0.3;
 }
 
@@ -117,6 +117,10 @@ div.diag-dental {
 	color: $incrustacion;
 }
 
+.diag_corona {
+	color: $corona;
+}
+
 .sano {
 	background-color: none;
 }
@@ -141,8 +145,12 @@ div.diag-dental {
 	background-color: $incrustacion;
 }
 
+.corona {
+	background-color: $corona;
+}
+
 div.tooltip_dental {  
-  z-index: 2;
+  z-index: 3;
   position: absolute;
   background-color: white;
   border-radius: 5px;
@@ -157,15 +165,23 @@ div.flex {
 	display: flex;
 }
 
-.extraccion {	   
-	content: url(dental/otros/extra.png);
+div.extraccion {	   
+	content: url(dental/otros/extraccion.jpg);
 }
 
-.normal {	 
-	
+div.implante {	   
+	content: url(dental/otros/implante.jpg);	
 }
+
+div.endodoncia {	   
+	content: url(dental/otros/endodoncia.jpg);	
+}
+
+.normal {	}
 
 div.carac {
 	position: absolute;
-  top: 35px;
+	cursor: pointer;
+  top: 15px;
+  right: 5px;
 }
