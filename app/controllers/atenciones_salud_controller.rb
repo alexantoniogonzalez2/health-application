@@ -1,8 +1,8 @@
  class AtencionesSaludController < ApplicationController
 
+ 	include ApplicationHelper
 	include ActionView::Helpers::NumberHelper
-	include ApplicationHelper
-		
+
 	def new		
 		@atencion_salud = FiAtencionesSalud.new
 	end
@@ -767,372 +767,62 @@
 
 	end	
 
-	def cargarOdontograma	
+	def loadOdontogram
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 
-		@tooths = [
-    {
-      name: '18',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/18.jpg'),
-      diag_distal: 'caries',
-      diag_vestibular: 'caries',
-      diag_mesial: 'caries',
-      diag_palatina: 'caries',
-      diag_central: 'caries',
-      caracteristica: 'extraccion', 
-    },
-    {
-      name: '17',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/17.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'ausente',
-    },
-    {
-      name: '16',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/16.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '15',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/15.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '14',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/14.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '13',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/13.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '12',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/12.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '11',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_1/11.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '21',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/21.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '22',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/22.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '23',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/23.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '24',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/24.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '25',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/25.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '26',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/26.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '27',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/27.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '28',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_2/28.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '48',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/48.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '47',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/47.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '46',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/46.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '45',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/45.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '44',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/44.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '43',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/43.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '42',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/42.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '41',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_4/41.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '31',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/31.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '32',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/32.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '33',
-      cara_dental: true,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/33.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '34',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/34.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '35',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/35.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '36',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/36.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '37',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/37.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '38',
-      cara_dental: false,
-      image: ActionController::Base.helpers.asset_path('dental/od_3/38.jpg'),
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    }
-  ]
-	
+	  #validacion de seguridad
+
+	  @tooths = @persona.getOdontograma	
 		render :json => @tooths
-
 	end	
 
-	def guardarCaracteristicaDental
+	def saveDentalCharacteristic
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+	  caracteristicas = {'normal' => 8, 'ausente' => 9, 'endondoncia' => 10, 'extraccion' => 11, 'implante' => 12}
+	  caracteristica_id = caracteristicas[params[:tipo_carac]]
+
+	  @diagnostico = FdDiagnosticos.where('pieza_dental_id = ? AND atencion_salud_id = ? AND zona is null',@pieza_dental,@atencion_salud.id ).first
+	  if @diagnostico
+	  	@diagnostico.tipo_diagnostico_id = caracteristica_id
+	  	@diagnostico.save!
+	  else 
+	  	FdDiagnosticos.create! :pieza_dental => @pieza_dental, :tipo_diagnostico_id => caracteristica_id, :fecha => DateTime.current, :responsable => @usuario, :atencion_salud => @atencion_salud  
+	  end
+
 		render :json => { :success => true } 
 	end 
 
-	def guardarDiagnosticoDental
+	def saveDentalDiagnosis
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+
+	  @diagnostico = FdDiagnosticos.where('pieza_dental_id = ? AND zona = ? AND atencion_salud_id = ?',@pieza_dental,params[:tipo_cara][5..-1],@atencion_salud.id ).first
+	  if @diagnostico
+	  	@diagnostico.tipo_diagnostico_id = params[:diagnostico]
+	  	@diagnostico.save!
+	  else 
+	  	FdDiagnosticos.create! :pieza_dental => @pieza_dental, :tipo_diagnostico_id => params[:diagnostico], :zona => params[:tipo_cara][5..-1], :fecha => DateTime.current, :responsable => @usuario, :atencion_salud => @atencion_salud  
+	  end
+
 		render :json => { :success => true } 
 	end 
 

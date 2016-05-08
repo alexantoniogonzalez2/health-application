@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151108234449) do
+ActiveRecord::Schema.define(version: 20160429224648) do
 
   create_table "ag_accion_masiva", force: :cascade do |t|
     t.string   "estado",                                limit: 255
@@ -54,6 +54,40 @@ ActiveRecord::Schema.define(version: 20151108234449) do
     t.integer  "accion_masiva_id",                      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "fd_diagnosticos", force: :cascade do |t|
+    t.integer  "pieza_dental_id",     limit: 4
+    t.integer  "tipo_diagnostico_id", limit: 4
+    t.string   "zona",                limit: 255
+    t.datetime "fecha"
+    t.integer  "responsable_id",      limit: 4
+    t.integer  "atencion_salud_id",   limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "fd_piezas_dentales", force: :cascade do |t|
+    t.integer  "persona_id",     limit: 4
+    t.integer  "tipo_diente_id", limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "fd_tipos_diagnosticos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "fd_tipos_dientes", force: :cascade do |t|
+    t.string   "nomenclatura",   limit: 255
+    t.integer  "primer_digito",  limit: 4
+    t.integer  "segundo_digito", limit: 4
+    t.string   "descripcion",    limit: 255
+    t.string   "tipo_denticion", limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "fi_atenciones_salud", force: :cascade do |t|

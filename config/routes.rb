@@ -108,9 +108,9 @@ AplicacionMedica::Application.routes.draw do
   post '/actualizar_diag_certificado', to: 'atenciones_salud#actualizarDiagCertificado'
   post '/actualizar_diag_prestacion', to: 'persona_prestacion#actualizarDiagPrestacion'
   post '/actualizar_diag_prestacion_int', to: 'persona_prestacion#actualizarDiagPrestacionInt'
-  get '/cargar_odontograma', to: 'atenciones_salud#cargarOdontograma'
-  post '/guardar_caracteristica_dental', to: 'atenciones_salud#guardarCaracteristicaDental'
-  post '/guardar_diagnostico_dental', to: 'atenciones_salud#guardarDiagnosticoDental'
+  get '/load_odontogram', to: 'atenciones_salud#loadOdontogram'
+  post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
+  post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
   
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

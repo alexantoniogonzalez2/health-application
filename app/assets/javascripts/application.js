@@ -33,6 +33,7 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require angular
+//= require ng-rails-csrf
 //= require angular-rails-templates
 //= require_tree ../templates
 //= require_tree .

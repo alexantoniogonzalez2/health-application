@@ -1,38 +1,39 @@
 (function(){
-  var app = angular.module('odontogram', ['templates']);
+  var app = angular.module('odontogram', ['templates', 'ng-rails-csrf']);
 
   app.controller('OdontogramController', ['$http','$filter', function($http, $filter){
     
     var odontogram = this;
     odontogram.tooths = [];
-    $http.get('/cargar_odontograma').success(function(data){
+    $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
       odontogram.tooths = data;
     });
 
-    this.diag = 1;
+    var diag = this;
+    diag = 1;
 
-    this.selectDiag = function(setDiag) {
-      this.diag = setDiag;
+    this.selectDiagnosis = function(setDiag) {
+      diag = setDiag;
     };
 
-    this.setDiag = function(tooth,tipo_cara){      
+    this.setDiagnosis = function(tooth,tipo_cara){   
       var diagnosticos = ['sano','caries','composite','sellante','amalgama','incrustacion','corona'];
-      $http.post('/guardar_diagnostico_dental',{ tipo_cara: tipo_cara, tooth: tooth.name, atencion_salud_id: atencion_salud_id }).success(function(){
-        tooth[tipo_cara] = diagnosticos[this.diag-1];
-      });      
+      $http.post('/save_dental_diagnosis',{ tipo_cara: tipo_cara, tooth: tooth.name, atencion_salud_id: atencion_salud_id, diagnostico: diag }).success(function(){        
+        tooth[tipo_cara] = diagnosticos[diag-1];        
+      }); 
     };
 
-    this.setCarac = function(tipo_carac,event){
+    this.setCharacteristic = function(tipo_carac,event){
       var id = angular.element(event.target).parent().parent().find("img").attr('id');
       tooth = $filter('filter')(odontogram.tooths, function (d) {return d.name === id;})[0];
-      $http.post('/guardar_caracteristica_dental',{ tipo_carac: tipo_carac, tooth: id, atencion_salud_id: atencion_salud_id }).success(function(){
+      $http.post('/save_dental_characteristic',{ tipo_carac: tipo_carac, tooth: id, atencion_salud_id: atencion_salud_id }).success(function(){
         tooth.caracteristica = tipo_carac;
       });
       $( "#tooltip_dental" ).hide();
     };
 
     this.isSelected = function(checkDiag){
-      return this.diag === checkDiag;
+      return diag === checkDiag;
     };
 
     this.showTooltip = function(event) {      
@@ -64,360 +65,5 @@
       templateUrl: 'tooth-image.html'
     }; 
   });
-
-  var tooths = [
-    {
-      name: '18',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_1/18.jpg") %>',
-      diag_distal: 'caries',
-      diag_vestibular: 'caries',
-      diag_mesial: 'caries',
-      diag_palatina: 'caries',
-      diag_central: 'caries',
-      caracteristica: 'extraccion', 
-    },
-    {
-      name: '17',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_1/17.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'ausente',
-    },
-    {
-      name: '16',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_1/16.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '15',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_1/15.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '14',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_1/14.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '13',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_1/13.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '12',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_1/12.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '11',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_1/11.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '21',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_2/21.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '22',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_2/22.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '23',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_2/23.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '24',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_2/24.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '25',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_2/25.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '26',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_2/26.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '27',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_2/27.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '28',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_2/28.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '48',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_4/48.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '47',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_4/47.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '46',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_4/46.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '45',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_4/45.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '44',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_4/44.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '43',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_4/43.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '42',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_4/42.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '41',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_4/41.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '31',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_3/31.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '32',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_3/32.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '33',
-      cara_dental: true,
-      image: '<%= image_url("dental/od_3/33.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '34',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_3/34.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '35',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_3/35.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '36',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_3/36.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '37',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_3/37.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    },
-    {
-      name: '38',
-      cara_dental: false,
-      image: '<%= image_url("dental/od_3/38.jpg") %>',
-      diag_distal: 'sano',
-      diag_vestibular: 'sano',
-      diag_mesial: 'sano',
-      diag_palatina: 'sano',
-      diag_central: 'sano',
-      caracteristica: 'normal',
-    }
-  ];
 
 })();

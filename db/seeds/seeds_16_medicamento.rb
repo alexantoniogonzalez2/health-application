@@ -1,6 +1,6 @@
 puts 'Medicamentos'
 medicamentos_list = [
-	['Bendamustina clorhidrato liofilizado para solucion para perfusion 100 mg.','','F-20991/14',23,183,1],
+['Bendamustina clorhidrato liofilizado para solucion para perfusion 100 mg.','','F-20991/14',23,183,1],
 ['OMEPRAZOL CÁPSULAS CON GRÁNULOS CON RECUBRIMIENTO ENTÉRICO 20 mg ','','F-20704/13',8,20,1],
 ['3-A OFTENO SOLUCIÓN OFTÁLMICA 0,1%','','F-1877/09',23,176,1],
 ['5-FLUOROURACILO SOLUCIÓN CONCENTRADA PARA PERFUSIÓN 250 mg/5 mL','','F-16019/12',23,184,1],

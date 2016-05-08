@@ -37,7 +37,6 @@ PerPersonasDirecciones.create! :persona => DD1, :direccion => Dir1
 PerPersonasDirecciones.create! :persona => DD2, :direccion => Dir1
 PerPersonasDirecciones.create! :persona => SD, :direccion => Dir1
 
-
 #Prestador (Clinica)
 puts 'Prestador 1'
 CLG = PrePrestadores.create! :nombre => "Centro Médico Los Galenos", :rut => 109000000, :es_centinela => false
@@ -70,4 +69,3 @@ RPDen2 = PrePrestadorProfesionales.create! :prestador => CLG, :profesional => DD
 
 PreReglaPagos.create! :tipo => 'profesional', :especialidad_prestador_profesional => RPDen1, :porcentaje => 0.4, :fecha_inicio => '2014-01-01'
 PreReglaPagos.create! :tipo => 'profesional', :especialidad_prestador_profesional => RPDen2, :porcentaje => 0.35, :fecha_inicio => '2014-01-01' 
-

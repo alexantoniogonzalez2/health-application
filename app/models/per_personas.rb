@@ -33,7 +33,9 @@ class PerPersonas < ActiveRecord::Base
   has_one :persona_actividad_fisica_resumen, :class_name => 'FiPersonaActividadFisica', :foreign_key => 'persona_id'
   has_one :persona_antecedentes_ginecologicos, :class_name => 'FiPersonaAntecedentesGinecologicos', :foreign_key => 'persona_id'
   has_many :personas, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_id'
-  has_many :personas_relaciones, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_relacion_id'  
+  has_many :personas_relaciones, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_relacion_id' 
+  has_many :persona_piezas_dentales, :class_name => 'FdPiezasDentales', :foreign_key => 'persona_id'
+  has_many :responsable_diagnosticos, :class_name => 'FdDiagnosticos', :foreign_key => 'responsable_id'  
 
   belongs_to :user, :class_name => 'User'
   belongs_to :diagnostico_muerte, :class_name => 'MedDiagnosticos'
@@ -186,22 +188,6 @@ class PerPersonas < ActiveRecord::Base
         elsif c == "m" #apellido_materno
           ret << apellido_materno
         end
-=begin
-        elsif c== "d" #dr/dra
-          if genero=="Masculino"
-            ret << "Dr."
-          else
-            ret << "Dra."
-          end
-        elsif c== "s" #o/a
-          if genero=="Masculino"
-            ret << "o"
-          else
-            ret << "a"
-          end
-        end
-=end
-
       end
 
       ret.join(" ")
@@ -369,6 +355,32 @@ class PerPersonas < ActiveRecord::Base
     return @cercanos
   end 
 
+  def getOdontograma
+
+    @odontograma = []
+
+    generateOdontogram unless persona_piezas_dentales.present?
+
+    piezas_dentales = persona_piezas_dentales.where('tipo_diente_id BETWEEN 1 AND 32')
+    piezas_dentales.each do |pieza_dental|
+      @odontograma << pieza_dental.getEstado
+    end
+
+    return @odontograma
+
+  end
+
+  def generateOdontogram
+
+    tipos_dientes = FdTiposDientes.where('tipo_denticion = "permanente"')
+    ActiveRecord::Base.transaction do
+      tipos_dientes.each do |tipo_diente|
+        FdPiezasDentales.create! :persona_id => id, :tipo_diente => tipo_diente
+      end
+    end
+    
+  end
+
   private
   def app_params
     params.require(:persona).permit(:id,
@@ -420,7 +432,9 @@ class PerPersonas < ActiveRecord::Base
                                     :personas,
                                     :personas_relaciones,
                                     :pais_nacionalidad,
-                                    :persona_antecedentes_ginecologicos)
+                                    :persona_antecedentes_ginecologicos,
+                                    :persona_piezas_dentales,
+                                    :responsable_diagnosticos)
   end
 
 end

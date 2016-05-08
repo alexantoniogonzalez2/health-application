@@ -12,36 +12,36 @@
   <div>
     <label>Diagnósticos:</label>
     <div class="btn-group-vertical diag-dental" role="group">
-      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(1) }" ng-click="odontogram.selectDiag(1)">
+      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(1) }" ng-click="odontogram.selectDiagnosis(1)">
         <i class="fa fa-square-o diag_sano"></i> Sano
       </button>
-      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(2) }" ng-click="odontogram.selectDiag(2)">
+      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(2) }" ng-click="odontogram.selectDiagnosis(2)">
         <i class="fa fa-square diag_caries"></i> Caries
       </button>
-      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(3) }" ng-click="odontogram.selectDiag(3)">
+      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(3) }" ng-click="odontogram.selectDiagnosis(3)">
         <i class="fa fa-square diag_composite"></i> Composite
       </button>
-      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(4) }" ng-click="odontogram.selectDiag(4)">
+      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(4) }" ng-click="odontogram.selectDiagnosis(4)">
         <i class="fa fa-square diag_sellante"></i> Sellante
       </button>
-      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(5) }" ng-click="odontogram.selectDiag(5)">
+      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(5) }" ng-click="odontogram.selectDiagnosis(5)">
         <i class="fa fa-square diag_amalgama"></i> Amalgama
       </button>
-      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(6) }" ng-click="odontogram.selectDiag(6)">
+      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(6) }" ng-click="odontogram.selectDiagnosis(6)">
         <i class="fa fa-square diag_incrustacion"></i> Incrustación
       </button>
-      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(7) }" ng-click="odontogram.selectDiag(7)">
+      <button type="button" class="btn btn-default" ng-class="{ active: odontogram.isSelected(7) }" ng-click="odontogram.selectDiagnosis(7)">
         <i class="fa fa-square diag_corona"></i> Corona
       </button>
     </div>
   </div>
 
   <div id="tooltip_dental" class="tooltip_dental oculto">
-    <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Pieza normal" ng-click="odontogram.setCarac('normal',$event)">
-    <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental ausente" data-toggle="tooltip" title="Pieza ausente" ng-click="odontogram.setCarac('ausente',$event)">
-    <img src="<%= image_path('dental/otros/tooltip-endodoncia.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Endodoncia" ng-click="odontogram.setCarac('endodoncia',$event)" >
-    <img src="<%= image_path('dental/otros/tooltip-extraccion.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Indica extracción" ng-click="odontogram.setCarac('extraccion',$event)" >
-    <img src="<%= image_path('dental/otros/tooltip-implante.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Pieza con implante" ng-click="odontogram.setCarac('implante',$event)">
+    <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Pieza normal" ng-click="odontogram.setCharacteristic('normal',$event)">
+    <img src="<%= image_path('dental/od_1/11.jpg') %>" class="tooltip_dental ausente" data-toggle="tooltip" title="Pieza ausente" ng-click="odontogram.setCharacteristic('ausente',$event)">
+    <img src="<%= image_path('dental/otros/tooltip-endodoncia.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Endodoncia" ng-click="odontogram.setCharacteristic('endodoncia',$event)" >
+    <img src="<%= image_path('dental/otros/tooltip-extraccion.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Indica extracción" ng-click="odontogram.setCharacteristic('extraccion',$event)" >
+    <img src="<%= image_path('dental/otros/tooltip-implante.jpg') %>" class="tooltip_dental" data-toggle="tooltip" title="Pieza con implante" ng-click="odontogram.setCharacteristic('implante',$event)">
   </div>
 
 </div>  

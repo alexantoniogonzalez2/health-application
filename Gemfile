@@ -69,3 +69,4 @@ gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'savon'
 gem 'angularjs-rails'
 gem 'angular-rails-templates'
+gem 'ng-rails-csrf'
