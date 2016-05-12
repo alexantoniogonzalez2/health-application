@@ -190,25 +190,19 @@
               <%= render :partial => "atenciones_salud/dental/odontograma", :locals => {:id => @atencion_salud.id} %>                                 
             </div>
             <div class="tab-pane" id="panel-end">
-              <p>
-                Endodoncia.
-              </p>
+              <%= render :partial => "atenciones_salud/dental/endodoncia", :locals => {:id => @atencion_salud.id} %>
             </div>
             <div class="tab-pane" id="panel-per">
-              <p>
-                Periodoncia.
-              </p>
+              <%= render :partial => "atenciones_salud/dental/periodoncia", :locals => {:id => @atencion_salud.id} %>
             </div>
             <div class="tab-pane" id="panel-tra">
-              <p>
-                Tratamiento.
-              </p>
+              <%= render :partial => "atenciones_salud/dental/tratamiento", :locals => {:id => @atencion_salud.id} %>
             </div>
           </div>
         </div> 
        
       </div> <!--Cierre div row --> 
-      <div class="row">
+      <div class="row padding-top padding-bottom">
         <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right' onclick="accionFinalizarAtencion()" >Finalizar atención</button>
         <button id='guardar' class='btn btn-success ajus-pos-right' onclick="accionGuardarAtencion()" >Guardar atención</button>
       </div> 

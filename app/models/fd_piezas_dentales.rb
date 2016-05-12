@@ -19,9 +19,9 @@ class FdPiezasDentales < ActiveRecord::Base
   def getCaracteristica
   	caracteristica = 'normal'
   	carac = diagnosticos.where('zona is null').order('fecha').first
-  	textos = { 8 => 'normal', 9 => 'ausente', 10 => 'endondoncia', 11 => 'extraccion', 12 => 'implante'}
+  	textos = { 8 => 'normal', 9 => 'ausente', 10 => 'endodoncia', 11 => 'extraccion', 12 => 'implante'}
 
-  	if carac 
+  	if carac
   		caracteristica = textos[carac.tipo_diagnostico.id]
   	end
 

@@ -790,7 +790,7 @@
 	  #validacion de seguridad
 	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
 	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
-	  caracteristicas = {'normal' => 8, 'ausente' => 9, 'endondoncia' => 10, 'extraccion' => 11, 'implante' => 12}
+	  caracteristicas = {'normal' => 8, 'ausente' => 9, 'endodoncia' => 10, 'extraccion' => 11, 'implante' => 12}
 	  caracteristica_id = caracteristicas[params[:tipo_carac]]
 
 	  @diagnostico = FdDiagnosticos.where('pieza_dental_id = ? AND atencion_salud_id = ? AND zona is null',@pieza_dental,@atencion_salud.id ).first
