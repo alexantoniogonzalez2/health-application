@@ -1,0 +1,27 @@
+(function(){
+  angular.module('endodonticApp', ['templates', 'ng-rails-csrf'])
+    .controller('EndodonticController', ['$http','$filter', function($http, $filter) {
+      this.diagnosis = diagnosis;
+      
+    }])
+    .directive('diagnosisTest', function(){ 
+      return {
+        restrict: 'E',
+        templateUrl: 'diagnosis-test.html'
+      }; 
+    });
+
+  angular.element("#endodontic").ready(function() {
+    angular.bootstrap("#endodontic", ['endodonticApp']);
+  });
+
+  var diagnosis = [ 
+    {
+       name: '18'
+    },
+    {
+      name: '19'
+    }
+  ]
+
+})();
