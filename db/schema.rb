@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429224648) do
+ActiveRecord::Schema.define(version: 20160530222207) do
 
   create_table "ag_accion_masiva", force: :cascade do |t|
     t.string   "estado",                                limit: 255
@@ -67,11 +67,46 @@ ActiveRecord::Schema.define(version: 20160429224648) do
     t.datetime "updated_at",                      null: false
   end
 
+  create_table "fd_endodoncia", force: :cascade do |t|
+    t.integer  "atencion_salud_id",     limit: 4
+    t.integer  "pieza_dental_id",       limit: 4
+    t.integer  "comienzo_dolor",        limit: 4
+    t.integer  "dolor",                 limit: 4
+    t.integer  "intensidad",            limit: 4
+    t.boolean  "es_pulsatil"
+    t.boolean  "cede_con_analgesicos"
+    t.boolean  "duele_al_acostarse"
+    t.boolean  "es_posible_senalar"
+    t.boolean  "se_genera_con_calor"
+    t.boolean  "se_genera_con_frio"
+    t.boolean  "se_genera_con_dulce"
+    t.boolean  "se_genera_al_masticar"
+    t.text     "informacion_adicional", limit: 65535
+    t.text     "examen_extraoral",      limit: 65535
+    t.text     "examen_intraoral",      limit: 65535
+    t.text     "examen_radiologico",    limit: 65535
+    t.integer  "diagnostico",           limit: 4
+    t.text     "comentario",            limit: 65535
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
   create_table "fd_piezas_dentales", force: :cascade do |t|
     t.integer  "persona_id",     limit: 4
     t.integer  "tipo_diente_id", limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "fd_test_diagnostico", force: :cascade do |t|
+    t.integer  "pieza_dental_id", limit: 4
+    t.integer  "calor",           limit: 4
+    t.integer  "electrico",       limit: 4
+    t.integer  "percusion",       limit: 4
+    t.integer  "palpacion",       limit: 4
+    t.text     "observacion",     limit: 65535
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "fd_tipos_diagnosticos", force: :cascade do |t|

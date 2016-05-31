@@ -776,7 +776,7 @@
 
 	  #validacion de seguridad
 
-	  @tooths = @persona.getOdontograma	
+	  @tooths = @persona.getOdontograma(params[:tipo])	
 		render :json => @tooths
 	end	
 

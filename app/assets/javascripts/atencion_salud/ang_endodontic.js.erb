@@ -1,13 +1,58 @@
 (function(){
   angular.module('endodonticApp', ['templates', 'ng-rails-csrf'])
     .controller('EndodonticController', ['$http','$filter', function($http, $filter) {
+      
+      var endodontic = this;
+      endodontic.tooths = [];
+      $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id, tipo: 'default' } }).success(function(data){
+        endodontic.tooths = data;
+      });
+
       this.diagnosis = diagnosis;
+
+      this.showTooltip = function(event) {      
+        
+        $( "#tooltip_endodoncia" ).addClass('flex');
+        $( "#tooltip_endodoncia" ).removeClass('hidden');
+        $( "#tooltip_endodoncia" ).show(); 
+      };
+      this.selectTooth = function(event) {      
+        
+      };
+      this.saveEndodonticRadio = function(campo,valor) {   
+        console.log(valor); 
+        console.log(campo);  
+        
+      };
+      this.saveEndodonticCheckbox = function(campo,valor) {   
+        console.log(valor); 
+        console.log(campo);  
+        
+      };
       
     }])
     .directive('diagnosisTest', function(){ 
       return {
         restrict: 'E',
         templateUrl: 'diagnosis-test.html'
+      }; 
+    })
+    .directive('diagnosisTestPanel', function(){ 
+      return {
+        restrict: 'E',
+        templateUrl: 'diagnosis-test-panel.html'
+      }; 
+    })
+    .directive('tooltipEndodoncia', function(){ 
+      return {
+        restrict: 'E',
+        templateUrl: 'tooltip-endodoncia.html'
+      }; 
+    })
+    .directive('endodonciaSeleccion', function(){ 
+      return {
+        restrict: 'E',
+        templateUrl: 'endodoncia-seleccion.html'
       }; 
     });
 
@@ -22,6 +67,6 @@
     {
       name: '19'
     }
-  ]
+  ];
 
 })();

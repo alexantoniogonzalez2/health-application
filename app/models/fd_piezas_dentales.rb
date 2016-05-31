@@ -2,6 +2,8 @@ class FdPiezasDentales < ActiveRecord::Base
   belongs_to :persona, :class_name => 'PerPersonas'
   belongs_to :tipo_diente, :class_name => 'FdTiposDientes'
   has_many :diagnosticos, :class_name => 'FdDiagnosticos', :foreign_key => 'pieza_dental_id'
+  has_many :test_diagnostico, :class_name => 'FdTestDiagnostico', :foreign_key => 'pieza_dental_id'
+  has_many :endodoncia, :class_name => 'FdEndodoncia', :foreign_key => 'pieza_dental_id'
 
   def getDiagnostico(cara)
   	diagnostico = 'sano'
@@ -29,21 +31,29 @@ class FdPiezasDentales < ActiveRecord::Base
   	
   end
 
-  def getEstado
-    {
-      name: tipo_diente.nomenclatura,
-      cara_dental: [1,2,3].include?(tipo_diente.segundo_digito) ? true : false ,
-      image: ActionController::Base.helpers.asset_path('dental/od_'<<tipo_diente.primer_digito.to_s<<'/'<<tipo_diente.nomenclatura<<'.jpg'),
-      diag_distal: getDiagnostico('distal'),
-      diag_vestibular: getDiagnostico('vestibular'),
-      diag_mesial: getDiagnostico('mesial'),
-      diag_palatina: getDiagnostico('palatina'),
-      diag_central: getDiagnostico('central'),
-      caracteristica: getCaracteristica, 
-    }
+  def getEstado(tipo)
+    if tipo == 'default'
+       return {
+          name: tipo_diente.nomenclatura,
+          cara_dental: [1,2,3].include?(tipo_diente.segundo_digito) ? true : false ,
+          image: ActionController::Base.helpers.asset_path('dental/od_'<<tipo_diente.primer_digito.to_s<<'/'<<tipo_diente.nomenclatura<<'.jpg'),
+        }
+    else
+      return {
+          name: tipo_diente.nomenclatura,
+          cara_dental: [1,2,3].include?(tipo_diente.segundo_digito) ? true : false ,
+          image: ActionController::Base.helpers.asset_path('dental/od_'<<tipo_diente.primer_digito.to_s<<'/'<<tipo_diente.nomenclatura<<'.jpg'),
+          diag_distal: getDiagnostico('distal'),
+          diag_vestibular: getDiagnostico('vestibular'),
+          diag_mesial: getDiagnostico('mesial'),
+          diag_palatina: getDiagnostico('palatina'),
+          diag_central: getDiagnostico('central'),
+          caracteristica: getCaracteristica, 
+        }
+    end
   end
 
   def app_params
-    params.require(:list).permit(:id,:persona,:tipo_diente)
+    params.require(:list).permit(:id,:persona,:tipo_diente,:diagnosticos,:test_diagnostico,:endodoncia)
   end
 end

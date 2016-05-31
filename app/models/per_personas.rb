@@ -355,7 +355,7 @@ class PerPersonas < ActiveRecord::Base
     return @cercanos
   end 
 
-  def getOdontograma
+  def getOdontograma(tipo)
 
     @odontograma = []
 
@@ -363,7 +363,7 @@ class PerPersonas < ActiveRecord::Base
 
     piezas_dentales = persona_piezas_dentales.where('tipo_diente_id BETWEEN 1 AND 32')
     piezas_dentales.each do |pieza_dental|
-      @odontograma << pieza_dental.getEstado
+      @odontograma << pieza_dental.getEstado(tipo)
     end
 
     return @odontograma

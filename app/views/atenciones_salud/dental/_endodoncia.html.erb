@@ -1,96 +1,140 @@
 <div id="endodontic" ng-controller="EndodonticController as endodontic"  class="container">
 	<div class="row padding-bottom">
 		<label class="titulo">Pieza dental:</label>
-		<select id="select_endodoncia" class="select_endodoncia">
-      <option></option>
-      <option>11</option>
-    </select>
-	</div>
-	<div class="row padding-top">
+		<div class="content-tooltip" ng-mouseover="endodontic.showTooltip($event)">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"  ></span>
+			<div id="tooltip_endodoncia" class="tooltip_endodoncia oculto">
+			 	<div class="content">
+			    <div class="row"> 
+						<div ng-repeat="tooth in endodontic.tooths" class="col-16-tooltip col-md-1">
+			        <tooltip-endodoncia></tooltip-endodoncia>
+			      </div>  
+					</div>
+			  </div>
+			</div>
+		</div>
+		<endodoncia-seleccion></endodoncia-seleccion>
+	</div>	
+	<div class="row">
 		<div class="col-md-8 borde-derecho">
 			<div class="container no-padding">
 				<div class="row">
 					<div class="col-md-5"> 
-						<label class="no-margin">El dolor comenzó</label>:
-					  <div class="radio no-margin">
-					    <label for="radios-0"><input type="radio" name="radios" id="radios-0" value="1"> Hace menos de 2 días</label>
-						</div>
-					  <div class="radio no-margin">
-					    <label for="radios-1"><input type="radio" name="radios" id="radios-1" value="2"> Hace más de 2 días</label>
-						</div>
-						<label class="label-end">Intensidad</label>:
-					  <div class="radio no-margin">
-					    <label for="radios-0"><input type="radio" name="radios" id="radios-0" value="1"> Suave</label>
-						</div>
-					  <div class="radio no-margin">
-					    <label for="radios-1"><input type="radio" name="radios" id="radios-1" value="2"> Moderado</label>
-						</div>
-						<div class="radio no-margin">
-					    <label for="radios-1"><input type="radio" name="radios" id="radios-1" value="2"> Intenso</label>
-						</div>
-						<label class="label-end">El dolor es</label>:<br>
-						<label class="radio-inline" for="radios-0">
-				      <input type="radio" name="radios" id="radios-0" value="1"> Continuo
+						<label>El dolor comenzó hace</label>:<br>
+						<label class="radio-inline" for="com_dolor-0">
+				      <input type="radio" name="com_dolor" id="com_dolor-0" value="1" ng-change="endodontic.saveEndodontic('com_dolor',1)"> Más de 2 días
 				    </label> 
-				    <label class="radio-inline" for="radios-1">
-				      <input type="radio" name="radios" id="radios-1" value="2"> Intermitente
+				    <label class="radio-inline" for="com_dolor-1">
+				      <input type="radio" name="com_dolor" id="com_dolor-1" value="2" ng-change="endodontic.saveEndodontic('com_dolor',2)"> Menos de 2 días
+				    </label>
+						<label class="label-end">El dolor es</label>:<br>
+						<label class="radio-inline" for="dolor-0">
+				      <input type="radio" name="dolor" id="dolor-0" value="1"> Continuo
+				    </label> 
+				    <label class="radio-inline" for="dolor-1">
+				      <input type="radio" name="dolor" id="dolor-1" value="2"> Intermitente
+				    </label><br>
+						<label class="label-end">Intensidad</label>:<br>
+						<label class="radio-inline" for="inten-0">
+				      <input type="radio" name="inten" id="inten-0" value="1"> Suave
+				    </label> 
+				    <label class="radio-inline" for="inten-1">
+				      <input type="radio" name="inten" id="inten-1" value="2"> Moderado
+				    </label>
+				    <label class="radio-inline" for="inten-2">
+				      <input type="radio" name="inten" id="inten-2" value="3"> Intenso
 				    </label>
 					</div>
 					<div class="col-md-7">
-						<label>Otras características</label>:
+						<label>Características</label>:
 						<div class="checkbox">
-					    <label for="checkboxes-0"><input type="checkbox" name="checkboxes" id="checkboxes-0" value="1"> Duele al acostarse o inclinarse</label>
+					  	<label for="carac-0"><input type="checkbox" name="carac" id="carac-0" value="1"> Pulsátil</label>
 						</div>
-					  <div class="checkbox">
-					  	<label for="checkboxes-1"><input type="checkbox" name="checkboxes" id="checkboxes-1" value="2"> Pulsátil</label>
-						</div>						
 						<div class="checkbox">
-					    <label for="checkboxes-0"><input type="checkbox" name="checkboxes" id="checkboxes-0" value="1"> Es posible señalar con un dedo el diente con dolor</label>
+					  	<label for="carac-1"><input type="checkbox" name="carac" id="carac-1" value="2"> Cede con analgésicos</label>
 						</div>
-					  <div class="checkbox">
-					  	<label for="checkboxes-1"><input type="checkbox" name="checkboxes" id="checkboxes-1" value="2"> Cede con analgésicos</label>
+						<div class="checkbox">
+					    <label for="carac-2"><input type="checkbox" name="carac" id="carac-2" value="3"> Duele al acostarse o inclinarse</label>
+						</div>
+						<div class="checkbox">
+					    <label for="carac-3"><input type="checkbox" name="carac" id="carac-3" value="4"> Es posible señalar con un dedo el diente con dolor</label>
 						</div>
 						<label class="label-end">Generado por los siguientes estímulos</label>:<br>
-					  <label class="checkbox-inline" for="checkboxes-0">
-				      <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1"> Calor
+					  <label class="checkbox-inline" for="estim-0">
+				      <input type="checkbox" name="estim" id="estim-0" value="1"> Calor
 				    </label>
-				    <label class="checkbox-inline" for="checkboxes-1">
-				      <input type="checkbox" name="checkboxes" id="checkboxes-1" value="2"> Frío
+				    <label class="checkbox-inline" for="estim-1">
+				      <input type="checkbox" name="estim" id="estim-1" value="2"> Frío
 				    </label>
-				    <label class="checkbox-inline" for="checkboxes-2">
-				      <input type="checkbox" name="checkboxes" id="checkboxes-2" value="3"> Dulce
+				    <label class="checkbox-inline" for="estim-2">
+				      <input type="checkbox" name="estim" id="estim-2" value="3"> Dulce
 				    </label>
-				    <label class="checkbox-inline" for="checkboxes-3">
-				      <input type="checkbox" name="checkboxes" id="checkboxes-3" value="4"> Al masticar
-				    </label><br>
-						<label class="label-end">Comentario</label>
-						<textarea id='commentario-endodoncia' class="input-mini form-control" rows='2' cols='40'></textarea>	
+				    <label class="checkbox-inline" for="estim-3">
+				      <input type="checkbox" name="estim" id="estim-3" value="4"> Al masticar
+				    </label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label class="label-end">Información adicional</label>
+						<textarea id='inf-adi' class="input-mini form-control" rows='1' cols='40'></textarea>	
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<label>Examen extraoral</label>
-			<textarea id='commentario-endodoncia' class = "form-control" rows='2' cols='20'></textarea>
+			<textarea id='exa-ext' class="form-control" rows='2' cols='20'></textarea>
 			<label>Examen intraoral</label>
-			<textarea id='commentario-endodoncia' class = "form-control" rows='2' cols='20'></textarea>
+			<textarea id='exa-int' class="form-control" rows='2' cols='20'></textarea>
 			<label>Examen radiológico</label>
-			<textarea id='commentario-endodoncia' class = "form-control" rows='2' cols='20'></textarea>
+			<textarea id='exa-rad' class="form-control" rows='2' cols='20'></textarea>
 		</div>
 	</div>
 	<hr>
 	<div class="row">
-		<label>Pruebas de diagnóstico</label>
-	  <div ng-repeat="diagnosis in endodontic.diagnosis" class="container">
-      <diagnosis-test></diagnosis-test> 
-    </div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<label>Diagnóstico</label>
+		<div class="col-md-2 no-padding">
+			<label>Pieza dental</label>
 		</div>
-		<div class="col-md-6">
-			<label>Tratamiento</label>
+		<div class="col-md-2 no-padding">
+			<label>Calor</label>
+		</div>
+		<div class="col-md-2 no-padding">
+			<label>Eléctrico</label>
+		</div>
+		<div class="col-md-2 no-padding">
+			<label>Percusión</label>
+		</div>
+		<div class="col-md-2 no-padding">
+			<label>Palpación</label>
+		</div>
+		<div class="col-md-2 no-padding">
+			<label>Observación</label>
+		</div>
+	</div>
+  <div ng-repeat="diagnosis in endodontic.diagnosis" class="container">
+    <diagnosis-test></diagnosis-test> 
+  </div>
+	<hr>
+	<div class="row">
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-4">
+			<label>Diagnóstico</label><br>
+				<select class="select-diag-endo">
+					<option></option>
+		      <option value="1">Pulpitis reversible</option>
+		      <option value="2">Pulpitis irreversible aguda (sintomática)</option>
+		      <option value="3">Pulpitis reversible crónica (asintomática)</option>
+		      <option value="4">Pulpitis hiperclásica (polipo pulpar)</option>
+		      <option value="5">Reabsorción dentinaria interna</option>
+		      <option value="6">Calcificación pulpar</option>
+		      <option value="7">Necrosis pulpar</option>
+		    </select>
+		</div>
+		<div class="col-md-4">
+			<label>Comentario</label>
+			<textarea id='com-endodoncia' class="form-control" rows='2' cols='20'></textarea>
 		</div>
 	</div>
 </div>

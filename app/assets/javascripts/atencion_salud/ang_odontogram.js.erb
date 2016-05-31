@@ -1,11 +1,10 @@
 (function(){
   var app = angular.module('odontogram', ['templates', 'ng-rails-csrf']);
-
   app.controller('OdontogramController', ['$http','$filter', function($http, $filter){
     
     var odontogram = this;
     odontogram.tooths = [];
-    $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+    $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id, tipo: 'persona' } }).success(function(data){
       odontogram.tooths = data;
     });
 
