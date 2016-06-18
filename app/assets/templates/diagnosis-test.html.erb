@@ -1,20 +1,20 @@
 <div class="row">
 	<div class="col-md-2 no-padding">
-		Pieza dental
+		{{ diagnosis.name }} 
 	</div>
 	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel></diagnosis-test-panel> 
+		<diagnosis-test-panel valor="diagnosis.calor" tipo="'calor'"></diagnosis-test-panel> 
 	</div>
 	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel></diagnosis-test-panel> 
+		<diagnosis-test-panel valor="diagnosis.electrico" tipo="'electrico'"></diagnosis-test-panel> 
 	</div>
 	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel></diagnosis-test-panel> 
+		<diagnosis-test-panel valor="diagnosis.percusion" tipo="'percusion'"></diagnosis-test-panel> 
 	</div>
 	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel></diagnosis-test-panel> 
+		<diagnosis-test-panel valor="diagnosis.palpacion" tipo="'palpacion'"></diagnosis-test-panel> 
 	</div>
-	<div class="col-md-2 no-padding">
+	<div class="col-md-2 no-padding"> 
 		<textarea id='commentario-endodoncia' class="input-mini form-control" rows='1'></textarea>	
 	</div>
 </div>

@@ -1,35 +1,41 @@
 (function(){
   angular.module('endodonticApp', ['templates', 'ng-rails-csrf'])
-    .controller('EndodonticController', ['$http','$filter', function($http, $filter) {
-      
-      var endodontic = this;
-      endodontic.tooths = [];
-      $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id, tipo: 'default' } }).success(function(data){
-        endodontic.tooths = data;
-      });
-
+    .controller('EndodonticController', ['$scope', function($scope) {
+      $scope.endo = {
+        com_dolor: '2',
+        dolor: '2',
+        inten: '3',
+        carac1: true,
+        carac2: false,
+        carac3: true,
+        carac4: false,
+        estim1: true,
+        estim2: false,
+        estim3: true,
+        estim4: false,
+        inf_adi: 'hola hola',
+        exa_ext: 'extra',
+        exa_int: 'intra',
+        exa_rad: 'rad',
+      };
+    }])
+    .controller('GeneralEndodonticController', ['$http','$filter', function($http, $filter) {      
+      var general = this;
+      general.tooths = [];
       this.diagnosis = diagnosis;
 
-      this.showTooltip = function(event) {      
-        
+      $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id, tipo: 'default' } }).success(function(data){
+        general.tooths = data;
+      });
+
+      this.showTooltip = function(event) {   
         $( "#tooltip_endodoncia" ).addClass('flex');
         $( "#tooltip_endodoncia" ).removeClass('hidden');
         $( "#tooltip_endodoncia" ).show(); 
       };
-      this.selectTooth = function(event) {      
-        
+      this.selectTooth = function(event) {   
+
       };
-      this.saveEndodonticRadio = function(campo,valor) {   
-        console.log(valor); 
-        console.log(campo);  
-        
-      };
-      this.saveEndodonticCheckbox = function(campo,valor) {   
-        console.log(valor); 
-        console.log(campo);  
-        
-      };
-      
     }])
     .directive('diagnosisTest', function(){ 
       return {
@@ -40,7 +46,21 @@
     .directive('diagnosisTestPanel', function(){ 
       return {
         restrict: 'E',
-        templateUrl: 'diagnosis-test-panel.html'
+        scope: {
+          valor: '=',
+          tipo: '='
+        },
+        templateUrl: 'diagnosis-test-panel.html',
+        link: function(scope, element, attrs) {
+                scope.setTest = function(tipo,valor) {
+                  console.log(element);
+                  console.log(tipo);
+                  console.log(valor);
+                  
+
+                };
+            }
+        
       }; 
     })
     .directive('tooltipEndodoncia', function(){ 
@@ -62,11 +82,18 @@
 
   var diagnosis = [ 
     {
-       name: '18'
+      name: '18',
+      calor: '1',
+      electrico: '2',
+      percusion: '3',
+      palpacion: '4'
     },
     {
-      name: '19'
+      name: '19',
+      calor: '4',
+      electrico: '3',
+      percusion: '2',
+      palpacion: '1'
     }
   ];
-
 })();

@@ -111,6 +111,7 @@ AplicacionMedica::Application.routes.draw do
   get '/load_odontogram', to: 'atenciones_salud#loadOdontogram'
   post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
   post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
+  post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'
   
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

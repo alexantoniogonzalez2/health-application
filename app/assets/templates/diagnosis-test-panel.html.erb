@@ -1,14 +1,14 @@
-<div class="btn-group" data-toggle="buttons">
-  <label class="btn btn-success btn-xs">
-    <input type="radio" name="options" id="option1" autocomplete="off" checked>-
+<div class="btn-group" data-toggle="buttons"> 
+  <div class="btn btn-success btn-xs" ng-class="{'active' : valor == '1'}" ng-click="setTest(tipo,1)">
+    <input type="radio" value="1">-
+  </div>
+  <label class="btn btn-warning btn-xs" ng-class="{'active' : valor == '2'}" ng-click="setTest(tipo,2)">
+    <input type="radio" value="2">O
   </label>
-  <label class="btn btn-warning btn-xs">
-    <input type="radio" name="options" id="option2" autocomplete="off">O
+  <label class="btn btn-danger btn-xs" ng-class="{'active' : valor == '3'}" ng-click="setTest(tipo,3)">
+    <input type="radio" value="3">+
   </label>
-  <label class="btn btn-danger btn-xs">
-    <input type="radio" name="options" id="option3" autocomplete="off">+
-  </label>
-  <label class="btn btn-default btn-xs active">
-    <input type="radio" name="options" id="option3" autocomplete="off">N/R
+  <label class="btn btn-default btn-xs" ng-class="{'active' : valor == '4'}" ng-click="setTest(tipo,4)">
+    <input type="radio" value="4">N/R
   </label>
 </div>

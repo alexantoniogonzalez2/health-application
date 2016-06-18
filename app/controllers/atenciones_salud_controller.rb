@@ -826,6 +826,10 @@
 		render :json => { :success => true } 
 	end 
 
+	def agregarInfoEndodoncia
+		
+	end
+
 	private
 	  def app_params
 	    params.require(:atencion_salud).permit(:agendamiento,

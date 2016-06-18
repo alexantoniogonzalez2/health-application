@@ -1,4 +1,4 @@
-<div id="endodontic" ng-controller="EndodonticController as endodontic"  class="container">
+<div id="endodontic" ng-controller="GeneralEndodonticController as endodontic"  class="container">
 	<div class="row padding-bottom">
 		<label class="titulo">Pieza dental:</label>
 		<div class="content-tooltip" ng-mouseover="endodontic.showTooltip($event)">
@@ -15,80 +15,80 @@
 		</div>
 		<endodoncia-seleccion></endodoncia-seleccion>
 	</div>	
-	<div class="row">
+	<div class="row" ng-controller="EndodonticController">
 		<div class="col-md-8 borde-derecho">
 			<div class="container no-padding">
 				<div class="row">
 					<div class="col-md-5"> 
-						<label>El dolor comenzó hace</label>:<br>
+					  <label>El dolor comenzó hace</label>:<br>
 						<label class="radio-inline" for="com_dolor-0">
-				      <input type="radio" name="com_dolor" id="com_dolor-0" value="1" ng-change="endodontic.saveEndodontic('com_dolor',1)"> Más de 2 días
+				      <input type="radio" id="com_dolor-0" value="1" ng-model="endo.com_dolor"> Más de 2 días
 				    </label> 
 				    <label class="radio-inline" for="com_dolor-1">
-				      <input type="radio" name="com_dolor" id="com_dolor-1" value="2" ng-change="endodontic.saveEndodontic('com_dolor',2)"> Menos de 2 días
-				    </label>
+				      <input type="radio" id="com_dolor-1" value="2" ng-model="endo.com_dolor"> Menos de 2 días
+				    </label>					 
 						<label class="label-end">El dolor es</label>:<br>
 						<label class="radio-inline" for="dolor-0">
-				      <input type="radio" name="dolor" id="dolor-0" value="1"> Continuo
+				      <input type="radio" id="dolor-0" value="1" ng-model="endo.dolor"> Continuo
 				    </label> 
 				    <label class="radio-inline" for="dolor-1">
-				      <input type="radio" name="dolor" id="dolor-1" value="2"> Intermitente
+				      <input type="radio" id="dolor-1" value="2" ng-model="endo.dolor"> Intermitente
 				    </label><br>
 						<label class="label-end">Intensidad</label>:<br>
 						<label class="radio-inline" for="inten-0">
-				      <input type="radio" name="inten" id="inten-0" value="1"> Suave
+				      <input type="radio" id="inten-0" value="1" ng-model="endo.inten"> Suave
 				    </label> 
 				    <label class="radio-inline" for="inten-1">
-				      <input type="radio" name="inten" id="inten-1" value="2"> Moderado
+				      <input type="radio" id="inten-1" value="2" ng-model="endo.inten"> Moderado
 				    </label>
 				    <label class="radio-inline" for="inten-2">
-				      <input type="radio" name="inten" id="inten-2" value="3"> Intenso
+				      <input type="radio" id="inten-2" value="3" ng-model="endo.inten"> Intenso
 				    </label>
 					</div>
 					<div class="col-md-7">
 						<label>Características</label>:
 						<div class="checkbox">
-					  	<label for="carac-0"><input type="checkbox" name="carac" id="carac-0" value="1"> Pulsátil</label>
+					  	<label for="carac-0"><input type="checkbox" id="carac-0" ng-model="endo.carac1"> Pulsátil</label>
 						</div>
 						<div class="checkbox">
-					  	<label for="carac-1"><input type="checkbox" name="carac" id="carac-1" value="2"> Cede con analgésicos</label>
+					  	<label for="carac-1"><input type="checkbox" id="carac-1" ng-model="endo.carac2"> Cede con analgésicos</label>
 						</div>
 						<div class="checkbox">
-					    <label for="carac-2"><input type="checkbox" name="carac" id="carac-2" value="3"> Duele al acostarse o inclinarse</label>
+					    <label for="carac-2"><input type="checkbox" id="carac-2" ng-model="endo.carac3"> Duele al acostarse o inclinarse</label>
 						</div>
 						<div class="checkbox">
-					    <label for="carac-3"><input type="checkbox" name="carac" id="carac-3" value="4"> Es posible señalar con un dedo el diente con dolor</label>
+					    <label for="carac-3"><input type="checkbox" id="carac-3" ng-model="endo.carac4"> Es posible señalar con un dedo el diente con dolor</label>
 						</div>
 						<label class="label-end">Generado por los siguientes estímulos</label>:<br>
 					  <label class="checkbox-inline" for="estim-0">
-				      <input type="checkbox" name="estim" id="estim-0" value="1"> Calor
+				      <input type="checkbox" id="estim-0" ng-model="endo.estim1"> Calor
 				    </label>
 				    <label class="checkbox-inline" for="estim-1">
-				      <input type="checkbox" name="estim" id="estim-1" value="2"> Frío
+				      <input type="checkbox" id="estim-1" ng-model="endo.estim2"> Frío
 				    </label>
 				    <label class="checkbox-inline" for="estim-2">
-				      <input type="checkbox" name="estim" id="estim-2" value="3"> Dulce
+				      <input type="checkbox" id="estim-2" ng-model="endo.estim3"> Dulce
 				    </label>
 				    <label class="checkbox-inline" for="estim-3">
-				      <input type="checkbox" name="estim" id="estim-3" value="4"> Al masticar
+				      <input type="checkbox" id="estim-3" ng-model="endo.estim4"> Al masticar
 				    </label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<label class="label-end">Información adicional</label>
-						<textarea id='inf-adi' class="input-mini form-control" rows='1' cols='40'></textarea>	
+						<textarea id='inf-adi' class="input-mini form-control" rows='1' cols='40' ng-model="endo.inf_adi"></textarea>	
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<label>Examen extraoral</label>
-			<textarea id='exa-ext' class="form-control" rows='2' cols='20'></textarea>
+			<textarea id='exa-ext' class="form-control" rows='2' cols='20' ng-model="endo.exa_ext">></textarea>
 			<label>Examen intraoral</label>
-			<textarea id='exa-int' class="form-control" rows='2' cols='20'></textarea>
+			<textarea id='exa-int' class="form-control" rows='2' cols='20' ng-model="endo.exa_int"></textarea>
 			<label>Examen radiológico</label>
-			<textarea id='exa-rad' class="form-control" rows='2' cols='20'></textarea>
+			<textarea id='exa-rad' class="form-control" rows='2' cols='20' ng-model="endo.exa_rad"></textarea>
 		</div>
 	</div>
 	<hr>
