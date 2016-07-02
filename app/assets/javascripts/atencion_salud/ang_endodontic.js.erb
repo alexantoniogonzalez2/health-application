@@ -2,6 +2,8 @@
   angular.module('endodonticApp', ['templates', 'ng-rails-csrf'])
     .controller('EndodonticController', ['$scope', function($scope) {
       $scope.endo = {
+        name: '17',
+        image: "/assets/dental/od_1/17.jpg"
         com_dolor: '2',
         dolor: '2',
         inten: '3',
@@ -19,22 +21,36 @@
         exa_rad: 'rad',
       };
     }])
-    .controller('GeneralEndodonticController', ['$http','$filter', function($http, $filter) {      
-      var general = this;
-      general.tooths = [];
-      this.diagnosis = diagnosis;
+    .controller('GeneralEndodonticController', ['$http','$filter', '$scope', function($http, $filter,$scope) {  
 
+      $scope.general = this;      
+      $scope.general.tooths = [];
       $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id, tipo: 'default' } }).success(function(data){
-        general.tooths = data;
+        $scope.general.tooths = data;
+      });
+      $scope.general.diagnosis = []; 
+      $http.get('/load_diagnosis', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
+        $scope.general.diagnosis = data;
       });
 
-      this.showTooltip = function(event) {   
-        $( "#tooltip_endodoncia" ).addClass('flex');
-        $( "#tooltip_endodoncia" ).removeClass('hidden');
-        $( "#tooltip_endodoncia" ).show(); 
-      };
-      this.selectTooth = function(event) {   
+      this.selectTooth = function(event) {  
+        var id = angular.element(event.target).parent().parent().parent().parent().parent().parent()[0]['id'];
+        var new_id = angular.element(event.target)[0]['id'];
+        diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === id;})[0];
+        diag.name = new_id;
+        diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
+        $( "#tooltip_test" ).hide(); 
+        /* Validar que no sea la misma*/
 
+      };
+      this.changeTooth = function(event) {   
+
+      };
+      this.showTooltipEnd = function(event,tooltip) {
+        $( "#"+tooltip ).addClass('flex');
+        $( "#"+tooltip ).removeClass('hidden');
+        $( "#"+tooltip ).show(); 
+        angular.element(event.target).parent().append($( "#"+tooltip ));
       };
     }])
     .directive('diagnosisTest', function(){ 
@@ -43,26 +59,25 @@
         templateUrl: 'diagnosis-test.html'
       }; 
     })
-    .directive('diagnosisTestPanel', function(){ 
+    .directive('diagnosisTestPanel', ['$filter',function($filter){ 
       return {
         restrict: 'E',
         scope: {
           valor: '=',
-          tipo: '='
+          tipo: '=',
+          name: '=',
+          general: '=',
+          tagFilter: '=filter'
         },
         templateUrl: 'diagnosis-test-panel.html',
         link: function(scope, element, attrs) {
-                scope.setTest = function(tipo,valor) {
-                  console.log(element);
-                  console.log(tipo);
-                  console.log(valor);
-                  
-
+                scope.setTest = function(tipo,valor,name,general) {
+                  var found = $filter('filter')(general.diagnosis, {name: name}, true);
+                  found[0][tipo] = valor;
                 };
-            }
-        
+            }        
       }; 
-    })
+    }])
     .directive('tooltipEndodoncia', function(){ 
       return {
         restrict: 'E',
@@ -80,20 +95,4 @@
     angular.bootstrap("#endodontic", ['endodonticApp']);
   });
 
-  var diagnosis = [ 
-    {
-      name: '18',
-      calor: '1',
-      electrico: '2',
-      percusion: '3',
-      palpacion: '4'
-    },
-    {
-      name: '19',
-      calor: '4',
-      electrico: '3',
-      percusion: '2',
-      palpacion: '1'
-    }
-  ];
 })();

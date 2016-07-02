@@ -1,17 +1,17 @@
-<div id="endodontic" ng-controller="GeneralEndodonticController as endodontic"  class="container">
+<div id="endodontic" ng-controller="GeneralEndodonticController as endodontic" class="container">
+	<div id="tooltip_endodoncia" class="tooltip_endodoncia oculto">
+	 	<div class="content">
+	    <div class="row">
+				<div ng-repeat="tooth in endodontic.tooths" class="col-16-tooltip col-md-1">
+	        <tooltip-endodoncia></tooltip-endodoncia>
+	      </div>  
+			</div>
+	  </div>
+	</div>
 	<div class="row padding-bottom">
 		<label class="titulo">Pieza dental:</label>
-		<div class="content-tooltip" ng-mouseover="endodontic.showTooltip($event)">
-			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"  ></span>
-			<div id="tooltip_endodoncia" class="tooltip_endodoncia oculto">
-			 	<div class="content">
-			    <div class="row"> 
-						<div ng-repeat="tooth in endodontic.tooths" class="col-16-tooltip col-md-1">
-			        <tooltip-endodoncia></tooltip-endodoncia>
-			      </div>  
-					</div>
-			  </div>
-			</div>
+		<div class="content-tooltip" >
+			<span class="glyphicon glyphicon-chevron-right glyphicon-1" aria-hidden="true" ng-mouseover="endodontic.showTooltipEnd($event,'tooltip_endodoncia')"></span>
 		</div>
 		<endodoncia-seleccion></endodoncia-seleccion>
 	</div>	
@@ -84,7 +84,7 @@
 		</div>
 		<div class="col-md-4">
 			<label>Examen extraoral</label>
-			<textarea id='exa-ext' class="form-control" rows='2' cols='20' ng-model="endo.exa_ext">></textarea>
+			<textarea id='exa-ext' class="form-control" rows='2' cols='20' ng-model="endo.exa_ext"></textarea>
 			<label>Examen intraoral</label>
 			<textarea id='exa-int' class="form-control" rows='2' cols='20' ng-model="endo.exa_int"></textarea>
 			<label>Examen radiológico</label>
@@ -92,24 +92,26 @@
 		</div>
 	</div>
 	<hr>
-	<div class="row">
-		<div class="col-md-2 no-padding">
-			<label>Pieza dental</label>
-		</div>
-		<div class="col-md-2 no-padding">
-			<label>Calor</label>
-		</div>
-		<div class="col-md-2 no-padding">
-			<label>Eléctrico</label>
-		</div>
-		<div class="col-md-2 no-padding">
-			<label>Percusión</label>
-		</div>
-		<div class="col-md-2 no-padding">
-			<label>Palpación</label>
-		</div>
-		<div class="col-md-2 no-padding">
-			<label>Observación</label>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-1 ajus-pad-end-2">
+				<label>Pieza dental</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Calor</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Eléctrico</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Percusión</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Palpación</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Observación</label>
+			</div>
 		</div>
 	</div>
   <div ng-repeat="diagnosis in endodontic.diagnosis" class="container">
@@ -136,6 +138,15 @@
 			<label>Comentario</label>
 			<textarea id='com-endodoncia' class="form-control" rows='2' cols='20'></textarea>
 		</div>
+	</div>
+	<div id="tooltip_test" class="tooltip_test oculto">
+	 	<div class="content">
+	    <div class="row">
+				<div ng-repeat="tooth in endodontic.tooths" class="col-16-tooltip col-md-1">
+	        <tooltip-endodoncia></tooltip-endodoncia>
+	      </div>  
+			</div>
+	  </div>
 	</div>
 </div>
 

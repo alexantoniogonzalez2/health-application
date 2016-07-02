@@ -780,6 +780,28 @@
 		render :json => @tooths
 	end	
 
+	def loadDiagnosis
+		
+		render :json => [{
+			name: '18',
+      image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'18'<<'.jpg'),
+      calor: 1,
+      electrico: 2,
+      percusion: 3,
+      palpacion: 4,
+      observacion: "Observacion 1"
+    },
+    {
+    	name: '17',
+      image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'17'<<'.jpg'),
+      calor: 4,
+      electrico: 3,
+      percusion: 2,
+      palpacion: 1,
+      observacion: "Observacion 2"
+    }]
+	end	
+
 	def saveDentalCharacteristic
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])

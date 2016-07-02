@@ -1,20 +1,27 @@
 <div class="row">
-	<div class="col-md-2 no-padding">
-		{{ diagnosis.name }} 
+	<div class="col-md-1 no-padding ajus-end" id="{{diagnosis.name}}">
+		<img id="{{diagnosis.name}}" ng-src="{{diagnosis.image}}" class="end-test" ng-click="endodontic.changeTooth($event)">
+		<span class="end"> {{diagnosis.name}} </span>
+		<span class="glyphicon glyphicon-chevron-right glyphicon-2" aria-hidden="true" ng-mouseover="endodontic.showTooltipEnd($event,'tooltip_test')"></span>
 	</div>
-	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel valor="diagnosis.calor" tipo="'calor'"></diagnosis-test-panel> 
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.calor" tipo="'calor'" name="diagnosis.name" filter="tagFilter" general="general"></diagnosis-test-panel> 
 	</div>
-	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel valor="diagnosis.electrico" tipo="'electrico'"></diagnosis-test-panel> 
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.electrico" tipo="'electrico'" name="diagnosis.name" filter="tagFilter" general="general"></diagnosis-test-panel> 
 	</div>
-	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel valor="diagnosis.percusion" tipo="'percusion'"></diagnosis-test-panel> 
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.percusion" tipo="'percusion'" name="diagnosis.name" filter="tagFilter" general="general"></diagnosis-test-panel> 
 	</div>
-	<div class="col-md-2 no-padding">
-		<diagnosis-test-panel valor="diagnosis.palpacion" tipo="'palpacion'"></diagnosis-test-panel> 
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.palpacion" tipo="'palpacion'" name="diagnosis.name" filter="tagFilter" general="general"></diagnosis-test-panel> 
 	</div>
-	<div class="col-md-2 no-padding"> 
-		<textarea id='commentario-endodoncia' class="input-mini form-control" rows='1'></textarea>	
+	<div class="col-md-2 ajus-pad-end"> 
+		<textarea id='comentario-endodoncia' class="input-mini form-control" rows='1' ng-model="diagnosis.observacion" general="general"></textarea>	
+	</div>
+	<div class="col-md-1 ajus-pad-end"> 
+		<label>Eliminar</label>
 	</div>
 </div>
+
+<%= javascript_include_tag "atencion_salud/dental" %>

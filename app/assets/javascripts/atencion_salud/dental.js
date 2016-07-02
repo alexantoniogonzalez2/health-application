@@ -7,7 +7,15 @@ $("#tooltip_endodoncia").mouseleave(function() {
 });
 
 $(".content-tooltip").mouseleave(function() {
-  	$( "#tooltip_endodoncia" ).hide();
+  $( "#tooltip_endodoncia" ).hide();
+});
+
+$("#tooltip_test").mouseleave(function() {
+  $( "#tooltip_test" ).hide(); 
+});
+
+$(".ajus-end").mouseleave(function() {
+  $( "#tooltip_test" ).hide(); 
 });
 
 $('select.select-diag-endo').select2({ width: "100%",placeholder: 'Selecciona un diagnóstico', allowClear: true });

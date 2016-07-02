@@ -46,6 +46,10 @@ div.dental {
   width: 40px;
 }
 
+.col-11 { 	
+  width: 140px;
+}
+
 .col-16-tooltip { 	
   width: 25px;
   padding-right: 0px;
@@ -229,25 +233,48 @@ img.end, img.end_sel {
 	height: 45px;
 }
 
-div.tooltip_endodoncia {  
+img.end-test {
+	margin-left: 5px;
+	height: 30px;
+}
+
+div.tooltip_endodoncia, div.tooltip_test  {  
   z-index: 3;
   position: absolute;
   background-color: white;
   border-radius: 5px;
   border: $blueFooter 2px;
   border-style: solid;
-  padding: 10px;
-  top: 190px;
-  left: 267px;
-  width: 430px;
+  padding: 8px !important;
+  width: 420px;
 }
 
-span.glyphicon-chevron-right {
-	padding: 10px;
+div.tooltip_endodoncia {  
+	top: 202px;
+	left: 260px; 
+}
+
+div.tooltip_test { 
+	top: 0px;
+	left: 85px; 
+}
+
+span.glyphicon-1 {
+	padding: 10px 6px;
 	margin-left: 10px !important;
 	border-radius: 3px;
   border: 1px solid $verylightGray;
   cursor: pointer;
+}
+
+span.glyphicon-2 {
+	border-radius: 3px;
+  border: 1px solid $verylightGray;
+  cursor: pointer;
+  position: absolute;
+  padding: 3px 2px;
+  margin-left: 45px !important;
+  margin-top: 5px;
 }
 
 div.endodoncia-seleccion {
@@ -262,4 +289,19 @@ div.endodoncia-seleccion {
 
 div.content-tooltip {
 	display: inline-block;
+}
+
+div.ajus-pad-end {
+	padding: 3px 0px 0px 30px;
+}
+
+div.ajus-pad-end-2 {
+	padding: 3px 0px 0px 0px;
+}
+
+span.end {
+	position: absolute;
+  padding-top: 7px;
+  padding-left: 10px;
+  font-weight: bold;
 }
