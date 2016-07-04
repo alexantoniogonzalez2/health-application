@@ -1,26 +1,5 @@
 (function(){
   angular.module('endodonticApp', ['templates', 'ng-rails-csrf'])
-    .controller('EndodonticController', ['$scope', function($scope) {
-      $scope.endo = {
-        name: '17',
-        image: "/assets/dental/od_1/17.jpg"
-        com_dolor: '2',
-        dolor: '2',
-        inten: '3',
-        carac1: true,
-        carac2: false,
-        carac3: true,
-        carac4: false,
-        estim1: true,
-        estim2: false,
-        estim3: true,
-        estim4: false,
-        inf_adi: 'hola hola',
-        exa_ext: 'extra',
-        exa_int: 'intra',
-        exa_rad: 'rad',
-      };
-    }])
     .controller('GeneralEndodonticController', ['$http','$filter', '$scope', function($http, $filter,$scope) {  
 
       $scope.general = this;      
@@ -32,16 +11,29 @@
       $http.get('/load_diagnosis', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
         $scope.general.diagnosis = data;
       });
+      $scope.endo = this;
+      $http.get('/load_endodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
+        $scope.endo = data;
+      });
 
       this.selectTooth = function(event) {  
         var id = angular.element(event.target).parent().parent().parent().parent().parent().parent()[0]['id'];
         var new_id = angular.element(event.target)[0]['id'];
-        diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === id;})[0];
-        diag.name = new_id;
-        diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
-        $( "#tooltip_test" ).hide(); 
-        /* Validar que no sea la misma*/
 
+        if (id.match("^pieza_dental_") ){
+          tooth = $filter('filter')($scope.general.tooths, function (d) {return d.name === new_id;})[0];
+          $scope.endo.name = new_id;
+          $scope.endo.descripcion = tooth.descripcion;
+          $scope.endo.image ="/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
+          $( "#tooltip_endodoncia" ).hide();
+
+        } else {
+          diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === id;})[0];
+           /* Validar que no sea la misma*/
+          diag.name = new_id;
+          diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
+          $( "#tooltip_test" ).hide();
+        }
       };
       this.changeTooth = function(event) {   
 

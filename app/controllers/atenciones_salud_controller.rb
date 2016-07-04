@@ -802,6 +802,31 @@
     }]
 	end	
 
+	def loadEndodontic
+
+		render :json => {
+        name: '17',
+        descripcion: 'Primer incisivo superior',
+        image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'17'<<'.jpg'),
+        com_dolor: '2',
+        dolor: '2',
+        inten: '3',
+        carac1: true,
+        carac2: false,
+        carac3: true,
+        carac4: false,
+        estim1: true,
+        estim2: false,
+        estim3: true,
+        estim4: false,
+        inf_adi: 'hola hola',
+        exa_ext: 'extra',
+        exa_int: 'intra',
+        exa_rad: 'rad',
+      };
+
+	end
+
 	def saveDentalCharacteristic
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])

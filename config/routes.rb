@@ -110,6 +110,7 @@ AplicacionMedica::Application.routes.draw do
   post '/actualizar_diag_prestacion_int', to: 'persona_prestacion#actualizarDiagPrestacionInt'
   get '/load_odontogram', to: 'atenciones_salud#loadOdontogram'
   get '/load_diagnosis', to: 'atenciones_salud#loadDiagnosis'
+  get '/load_endodontic', to: 'atenciones_salud#loadEndodontic'
   post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
   post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
   post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'

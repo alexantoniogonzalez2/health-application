@@ -1,5 +1,5 @@
 <div class="endodoncia-seleccion">
-	<label>18</label>
-	<%= image_tag('dental/otros/blank.jpg', :class => "end_sel") %>
+	<img ng-src="{{endo.image}}" class="end">
+	<label>{{ endo.name }}</label>
 </div>
-<span>Texto texto texto</span>
+<span>{{ endo.descripcion }}</span>

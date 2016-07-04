@@ -35,12 +35,14 @@ class FdPiezasDentales < ActiveRecord::Base
     if tipo == 'default'
        return {
           name: tipo_diente.nomenclatura,
+          descripcion: tipo_diente.descripcion,
           cara_dental: [1,2,3].include?(tipo_diente.segundo_digito) ? true : false ,
           image: ActionController::Base.helpers.asset_path('dental/od_'<<tipo_diente.primer_digito.to_s<<'/'<<tipo_diente.nomenclatura<<'.jpg'),
         }
     else
       return {
           name: tipo_diente.nomenclatura,
+          descripcion: tipo_diente.descripcion,
           cara_dental: [1,2,3].include?(tipo_diente.segundo_digito) ? true : false ,
           image: ActionController::Base.helpers.asset_path('dental/od_'<<tipo_diente.primer_digito.to_s<<'/'<<tipo_diente.nomenclatura<<'.jpg'),
           diag_distal: getDiagnostico('distal'),
