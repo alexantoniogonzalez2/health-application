@@ -1,6 +1,6 @@
 (function(){
   angular.module('endodonticApp', ['templates', 'ng-rails-csrf'])
-    .controller('GeneralEndodonticController', ['$http','$filter', '$scope', function($http, $filter,$scope) {  
+    .controller('GeneralEndodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
 
       $scope.general = this;      
       $scope.general.tooths = [];
@@ -16,6 +16,37 @@
         $scope.endo = data;
       });
 
+      var timeout = null;
+      var saveUpdates = function() {
+        console.log($scope);
+        // .... save data to server
+
+      };
+      var debounceSaveUpdates = function(newVal, oldVal) {
+        if (newVal != oldVal) {
+          if (timeout) {
+            $timeout.cancel(timeout)
+          }
+          timeout = $timeout(saveUpdates, 1000);  
+        }
+      };
+      $scope.$watch('endo.com_dolor', debounceSaveUpdates);
+      $scope.$watch('endo.dolor', debounceSaveUpdates);
+      $scope.$watch('endo.inten', debounceSaveUpdates);
+      $scope.$watch('endo.carac1', debounceSaveUpdates);
+      $scope.$watch('endo.carac2', debounceSaveUpdates);
+      $scope.$watch('endo.carac3', debounceSaveUpdates);
+      $scope.$watch('endo.carac4', debounceSaveUpdates);
+      $scope.$watch('endo.estim1', debounceSaveUpdates);
+      $scope.$watch('endo.estim2', debounceSaveUpdates);
+      $scope.$watch('endo.estim3', debounceSaveUpdates);
+      $scope.$watch('endo.estim4', debounceSaveUpdates);
+      $scope.$watch('endo.inf_adi', debounceSaveUpdates);
+      $scope.$watch('endo.exa_ext', debounceSaveUpdates);
+      $scope.$watch('endo.exa_int', debounceSaveUpdates);
+      $scope.$watch('endo.exa_rad', debounceSaveUpdates);
+      
+
       this.selectTooth = function(event) {  
         var id = angular.element(event.target).parent().parent().parent().parent().parent().parent()[0]['id'];
         var new_id = angular.element(event.target)[0]['id'];
@@ -29,14 +60,33 @@
 
         } else {
           diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === id;})[0];
-           /* Validar que no sea la misma*/
           diag.name = new_id;
           diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
           $( "#tooltip_test" ).hide();
         }
       };
-      this.changeTooth = function(event) {   
-
+      this.deleteTest = function(item) {  
+        $("#test-aux").append($( "#tooltip_test"));
+        var index = $scope.general.diagnosis.indexOf(item);
+        $scope.general.diagnosis.splice(index, 1);
+      };
+      this.addTest = function() { 
+        test = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === '';})[0];
+        if (test == null){
+          var tooth = {
+            name: '',
+            image: "/assets/dental/otros/blank.jpg",
+            calor: 4,
+            electrico: 4,
+            percusion: 4,
+            palpacion: 4,
+            observacion: ""
+          };
+          $scope.general.diagnosis.push(tooth);          
+        }
+        else {
+          alert('Seleccione una pieza dental para agregar más pruebas.');
+        }
       };
       this.showTooltipEnd = function(event,tooltip) {
         $( "#"+tooltip ).addClass('flex');

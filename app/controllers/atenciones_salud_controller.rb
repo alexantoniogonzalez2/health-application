@@ -823,6 +823,8 @@
         exa_ext: 'extra',
         exa_int: 'intra',
         exa_rad: 'rad',
+        com_endodoncia: 'comentario',
+        diag: '3'
       };
 
 	end

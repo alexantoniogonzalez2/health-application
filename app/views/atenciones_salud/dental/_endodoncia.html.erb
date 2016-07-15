@@ -117,13 +117,14 @@
   <div ng-repeat="diagnosis in endodontic.diagnosis" class="container">
     <diagnosis-test></diagnosis-test> 
   </div>
+  <a href="#" class="link-end" ng-click="endodontic.addTest()">Agregar información de otra pieza dental</a>
 	<hr>
 	<div class="row">
 		<div class="col-md-4">
 		</div>
 		<div class="col-md-4">
 			<label>Diagnóstico</label><br>
-				<select class="select-diag-endo">
+				<select class="select-diag-endo" ng-model="endo.diag" value="endo.diag">
 					<option></option>
 		      <option value="1">Pulpitis reversible</option>
 		      <option value="2">Pulpitis irreversible aguda (sintomática)</option>
@@ -136,7 +137,7 @@
 		</div>
 		<div class="col-md-4">
 			<label>Comentario</label>
-			<textarea id='com-endodoncia' class="form-control" rows='2' cols='20'></textarea>
+			<textarea id='com_endodoncia' class="form-control" rows='2' cols='20' ng-model="endo.com_endodoncia"></textarea>
 		</div>
 	</div>
 	<div id="tooltip_test" class="tooltip_test oculto">
@@ -148,6 +149,7 @@
 			</div>
 	  </div>
 	</div>
+	<div id="test-aux"></div>
 </div>
 
 <%= javascript_include_tag "atencion_salud/dental" %>
