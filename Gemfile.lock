@@ -63,6 +63,7 @@ GEM
       railties (>= 3.1)
       sprockets (~> 2)
       tilt
+    angular-ui-select-rails (0.12.1.1)
     angularjs-rails (1.4.8)
     arel (6.0.3)
     autoprefixer-rails (6.3.6)
@@ -252,6 +253,7 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
+  angular-ui-select-rails (~> 0.12.1.1)
   angularjs-rails
   bootstrap-sass
   bootstrap-validator-rails

@@ -21,7 +21,6 @@
 //= require highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/modules/exporting
-//= require bootstrap
 //= require bootstrapValidator.min
 //= require bootstrap-datetimepicker
 //= require bootstrap-sprockets
@@ -33,6 +32,7 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require angular
+//= require angular-ui-select
 //= require ng-rails-csrf
 //= require angular-rails-templates
 //= require_tree ../templates

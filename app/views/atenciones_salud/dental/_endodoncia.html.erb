@@ -124,16 +124,14 @@
 		</div>
 		<div class="col-md-4">
 			<label>Diagnóstico</label><br>
-				<select class="select-diag-endo" ng-model="endo.diag" value="endo.diag">
-					<option></option>
-		      <option value="1">Pulpitis reversible</option>
-		      <option value="2">Pulpitis irreversible aguda (sintomática)</option>
-		      <option value="3">Pulpitis reversible crónica (asintomática)</option>
-		      <option value="4">Pulpitis hiperclásica (polipo pulpar)</option>
-		      <option value="5">Reabsorción dentinaria interna</option>
-		      <option value="6">Calcificación pulpar</option>
-		      <option value="7">Necrosis pulpar</option>
-		    </select>
+			<ui-select ng-model="selected.value" theme="select2" class="select-diag-endo">
+		    <ui-select-match allow-clear="true" placeholder="Selecciona un diagnóstico" >
+		       <span ng-bind="$select.selected.name"></span>
+		    </ui-select-match>
+		    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+		       <span ng-bind="item.name"></span>
+		    </ui-select-choices>
+			</ui-select>
 		</div>
 		<div class="col-md-4">
 			<label>Comentario</label>

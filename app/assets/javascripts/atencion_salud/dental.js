@@ -17,5 +17,3 @@ $("#tooltip_test").mouseleave(function() {
 $(".ajus-end").mouseleave(function() {
   $( "#tooltip_test" ).hide(); 
 });
-
-$('select.select-diag-endo').select2({ width: "100%",placeholder: 'Selecciona un diagnóstico', allowClear: true });
