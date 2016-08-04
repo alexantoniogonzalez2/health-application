@@ -114,6 +114,13 @@ AplicacionMedica::Application.routes.draw do
   post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
   post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
   post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'
+  post '/save_endodontic', to: 'atenciones_salud#saveEndodontic'
+  post '/save_diagnosis', to: 'atenciones_salud#saveDiagnosis'
+  post '/delete_test', to: 'atenciones_salud#deleteTest'
+  post '/add_test', to: 'atenciones_salud#addTest'
+  post '/select_tooth', to: 'atenciones_salud#selectTooth'
+  post '/set_test', to: 'atenciones_salud#setTest'
+
   
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

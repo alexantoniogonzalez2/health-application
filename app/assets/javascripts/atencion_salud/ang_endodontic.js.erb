@@ -27,45 +27,46 @@
       });
 
       var timeout = null;
-      var saveUpdate = function(parameterName,newValue) {
-        if (parameterName == 'selected'){
+      var saveUpdate = function(parameterName,newValue,oldValue) {
+        if (oldValue !== undefined ){
+          if (parameterName == 'selected'){
+            newValue = newValue['id'];
+          }
+          if (parameterName == 'diagnosis'){
+            for (var i in $scope.general.diagnosis) {
+              $http.post('/save_diagnosis',{ param: $scope.general.diagnosis[i].name, value: $scope.general.diagnosis[i].observacion, at_salud_id: atencion_salud_id }).success(function(){ });
+            }
 
+          } else {
+            $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+          }
         }
-        if (parameterName == 'diagnosis'){
-
-        } else {
-          
-        }
-
-        console.log(parameterName + ' :' + newValue);
-        // .... save data to server
-
       };
-      var debounceSaveUpdates = function(parameterName,newValue) {
+      var debounceSaveUpdates = function(parameterName,newValue,oldValue) {
         if (timeout) { $timeout.cancel(timeout); }
         timeout = $timeout(function(){
-          saveUpdate(parameterName,newValue);
+          saveUpdate(parameterName,newValue,oldValue);
         },2000); 
       };
 
-      $scope.$watch('endo.com_dolor', function (newValue, oldValue) { saveUpdate('com_dolor', newValue); });
-      $scope.$watch('endo.dolor', function (newValue, oldValue) { saveUpdate('dolor', newValue); });
-      $scope.$watch('endo.inten', function (newValue, oldValue) { saveUpdate('inten', newValue); });
-      $scope.$watch('endo.carac1', function (newValue, oldValue) { saveUpdate('carac1', newValue); });
-      $scope.$watch('endo.carac2', function (newValue, oldValue) { saveUpdate('carac2', newValue); });
-      $scope.$watch('endo.carac3', function (newValue, oldValue) { saveUpdate('carac3', newValue); });
-      $scope.$watch('endo.carac4', function (newValue, oldValue) { saveUpdate('carac4', newValue); });
-      $scope.$watch('endo.estim1', function (newValue, oldValue) { saveUpdate('estim1', newValue); });
-      $scope.$watch('endo.estim2', function (newValue, oldValue) { saveUpdate('estim2', newValue); });
-      $scope.$watch('endo.estim3', function (newValue, oldValue) { saveUpdate('estim3', newValue); });
-      $scope.$watch('endo.estim4', function (newValue, oldValue) { saveUpdate('estim4', newValue); });
-      $scope.$watch('selected.value', function (newValue, oldValue) { saveUpdate('selected', newValue); });
-      $scope.$watch('endo.inf_adi', function (newValue, oldValue) { debounceSaveUpdates('inf_adi', newValue); });
-      $scope.$watch('endo.exa_ext', function (newValue, oldValue) { debounceSaveUpdates('exa_ext', newValue); });
-      $scope.$watch('endo.exa_int', function (newValue, oldValue) { debounceSaveUpdates('exa_int', newValue); });
-      $scope.$watch('endo.exa_rad', function (newValue, oldValue) { debounceSaveUpdates('exa_rad', newValue); });
-      $scope.$watch('endo.com_endodoncia', function (newValue, oldValue) { debounceSaveUpdates('com_endodoncia', newValue); });
-      $scope.$watch('general.diagnosis', function (newValue, oldValue) { debounceSaveUpdates('diagnosis', newValue); },true);
+      $scope.$watch('endo.com_dolor', function (newValue, oldValue) { saveUpdate('com_dolor', newValue, oldValue); });
+      $scope.$watch('endo.dolor', function (newValue, oldValue) { saveUpdate('dolor', newValue, oldValue); });
+      $scope.$watch('endo.inten', function (newValue, oldValue) { saveUpdate('inten', newValue, oldValue); });
+      $scope.$watch('endo.carac1', function (newValue, oldValue) { saveUpdate('carac1', newValue, oldValue); });
+      $scope.$watch('endo.carac2', function (newValue, oldValue) { saveUpdate('carac2', newValue, oldValue); });
+      $scope.$watch('endo.carac3', function (newValue, oldValue) { saveUpdate('carac3', newValue, oldValue); });
+      $scope.$watch('endo.carac4', function (newValue, oldValue) { saveUpdate('carac4', newValue, oldValue); });
+      $scope.$watch('endo.estim1', function (newValue, oldValue) { saveUpdate('estim1', newValue, oldValue); });
+      $scope.$watch('endo.estim2', function (newValue, oldValue) { saveUpdate('estim2', newValue, oldValue); });
+      $scope.$watch('endo.estim3', function (newValue, oldValue) { saveUpdate('estim3', newValue, oldValue); });
+      $scope.$watch('endo.estim4', function (newValue, oldValue) { saveUpdate('estim4', newValue, oldValue); });
+      $scope.$watch('selected.value', function (newValue, oldValue) { saveUpdate('selected', newValue, oldValue); });
+      $scope.$watch('endo.inf_adi', function (newValue, oldValue) { debounceSaveUpdates('inf_adi', newValue, oldValue); });
+      $scope.$watch('endo.exa_ext', function (newValue, oldValue) { debounceSaveUpdates('exa_ext', newValue, oldValue); });
+      $scope.$watch('endo.exa_int', function (newValue, oldValue) { debounceSaveUpdates('exa_int', newValue, oldValue); });
+      $scope.$watch('endo.exa_rad', function (newValue, oldValue) { debounceSaveUpdates('exa_rad', newValue, oldValue); });
+      $scope.$watch('endo.com_endodoncia', function (newValue, oldValue) { debounceSaveUpdates('com_endodoncia', newValue, oldValue); });
+      $scope.$watch('general.diagnosis', function (newValue, oldValue) { debounceSaveUpdates('diagnosis', newValue, oldValue); },true);
       
       this.selectTooth = function(event) {  
         var id = angular.element(event.target).parent().parent().parent().parent().parent().parent()[0]['id'];
@@ -77,17 +78,22 @@
           $scope.endo.descripcion = tooth.descripcion;
           $scope.endo.image ="/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
           $( "#tooltip_endodoncia" ).hide();
+          $http.post('/select_tooth',{ param: new_id, at_salud_id: atencion_salud_id }).success(function(){ });
+
 
         } else {
           diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === id;})[0];
           diag.name = new_id;
           diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
           $( "#tooltip_test" ).hide();
+          $http.post('/add_test',{ param: new_id, at_salud_id: atencion_salud_id }).success(function(){ });
+
         }
       };
       this.deleteTest = function(item) {  
         $("#test-aux").append($( "#tooltip_test"));
         var index = $scope.general.diagnosis.indexOf(item);
+        $http.post('/delete_test',{ param: item.name, at_salud_id: atencion_salud_id }).success(function(){ });
         $scope.general.diagnosis.splice(index, 1);
       };
       this.addTest = function() { 
@@ -121,7 +127,7 @@
         templateUrl: 'diagnosis-test.html'
       }; 
     })
-    .directive('diagnosisTestPanel', ['$filter',function($filter){ 
+    .directive('diagnosisTestPanel', ['$filter','$http',function($filter,$http){ 
       return {
         restrict: 'E',
         scope: {
@@ -136,6 +142,7 @@
                 scope.setTest = function(tipo,valor,name,general) {
                   var found = $filter('filter')(general.diagnosis, {name: name}, true);
                   found[0][tipo] = valor;
+                  $http.post('/set_test',{ tipo: tipo, valor: valor, name: name, at_salud_id: atencion_salud_id}).success(function(){ });
                 };
             }        
       }; 

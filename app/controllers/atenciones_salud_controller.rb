@@ -803,7 +803,6 @@
 	end	
 
 	def loadEndodontic
-
 		render :json => {
         name: '17',
         descripcion: 'Primer incisivo superior',
@@ -826,8 +825,38 @@
         com_endodoncia: 'comentario',
         diag: '3'
       };
-
 	end
+
+	def saveEndodontic
+
+		render :json => { :success => true } 
+	end
+
+	def saveDiagnosis
+
+		render :json => { :success => true } 
+	end
+
+	def addTest
+
+		render :json => { :success => true } 
+	end
+
+	def deleteTest
+
+		render :json => { :success => true } 
+	end
+
+	def selectTooth
+
+		render :json => { :success => true } 
+	end
+
+	def setTest
+
+		render :json => { :success => true } 
+	end
+
 
 	def saveDentalCharacteristic
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
