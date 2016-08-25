@@ -448,6 +448,12 @@
 		end
 
 		if @tipo_ficha == 'dental'
+			@endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+			unless @endodoncia
+				@endodoncia =  FdEndodoncia.new
+				@endodoncia.atencion_salud = @atencion_salud 
+				@endodoncia.save!
+			end
 			render 'edit_dental'
 		else
 			render 'edit'
@@ -783,6 +789,7 @@
 	def loadDiagnosis
 		
 		render :json => [{
+			id: '18',
 			name: '18',
       image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'18'<<'.jpg'),
       calor: 1,
@@ -792,6 +799,7 @@
       observacion: "Observacion 1"
     },
     {
+    	id: '17',
     	name: '17',
       image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'17'<<'.jpg'),
       calor: 4,
@@ -807,53 +815,133 @@
         name: '17',
         descripcion: 'Primer incisivo superior',
         image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'17'<<'.jpg'),
-        com_dolor: '2',
+        comienzo_dolor: '2',
         dolor: '2',
-        inten: '3',
-        carac1: true,
-        carac2: false,
-        carac3: true,
-        carac4: false,
-        estim1: true,
-        estim2: false,
-        estim3: true,
-        estim4: false,
-        inf_adi: 'hola hola',
-        exa_ext: 'extra',
-        exa_int: 'intra',
-        exa_rad: 'rad',
-        com_endodoncia: 'comentario',
-        diag: '3'
+        intensidad: '3',
+        es_pulsatil: true,
+        cede_con_analgesicos: false,
+        duele_al_acostarse: true,
+        es_posible_senalar: false,
+        se_genera_con_calor: true,
+        se_genera_con_frio: false,
+        se_genera_con_dulce: true,
+        se_genera_al_masticar: false,
+        informacion_adicional: 'hola hola',
+        examen_extraoral: 'extra',
+        examen_intraoral: 'intra',
+        examen_radiologico: 'rad',
+        comentario: 'comentario',
+        diag: '0'
       };
 	end
 
 	def saveEndodontic
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  #validacion de seguridad
+
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  @endodoncia[params[:param]] = params[:value]
+	  @endodoncia.save!
 
 		render :json => { :success => true } 
 	end
 
 	def saveDiagnosis
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:param]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first 
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  @test_diagnostico = FdTestDiagnostico.where('endodoncia_id = ? AND pieza_dental_id = ?',@endodoncia.id,@pieza_dental.id).first
+	  @test_diagnostico.observacion = params[:value]
+	  @test_diagnostico.save!
 		render :json => { :success => true } 
 	end
 
 	def addTest
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:id]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first if @tipo_diente
+	  @tipo_diente_new = FdTiposDientes.where('nomenclatura = ?', params[:new_id]).first
+	  @pieza_dental_new = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente_new.id).first
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+
+	  @test_diagnostico = FdTestDiagnostico.where('endodoncia_id = ? AND pieza_dental_id = ?',@endodoncia.id,@pieza_dental.id).first if @pieza_dental
+	  unless @test_diagnostico
+	  	@test_diagnostico = FdTestDiagnostico.new
+	  	@test_diagnostico.endodoncia = @endodoncia
+	  end
+	  @test_diagnostico.pieza_dental = @pieza_dental_new
+	  @test_diagnostico.save!
 
 		render :json => { :success => true } 
 	end
 
 	def deleteTest
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:param]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first 
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  @test_diagnostico = FdTestDiagnostico.where('endodoncia_id = ? AND pieza_dental_id = ?',@endodoncia.id,@pieza_dental.id).first
+	  @test_diagnostico.destroy
+
 
 		render :json => { :success => true } 
 	end
 
 	def selectTooth
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:param]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  @endodoncia.pieza_dental = @pieza_dental
+	  @endodoncia.save!
 
 		render :json => { :success => true } 
 	end
 
 	def setTest
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:name]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first 
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  @test_diagnostico = FdTestDiagnostico.where('endodoncia_id = ? AND pieza_dental_id = ?',@endodoncia.id,@pieza_dental.id).first
+	  @test_diagnostico[params[:tipo]] = params[:valor]
+	  @test_diagnostico.save!
 		render :json => { :success => true } 
 	end
 

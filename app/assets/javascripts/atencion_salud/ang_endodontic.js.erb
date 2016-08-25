@@ -2,6 +2,7 @@
   angular.module('endodonticApp', ['templates', 'ng-rails-csrf', 'ui.select'])
     .controller('GeneralEndodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
 
+      var contador = 0;
       $scope.general = this;      
       $scope.general.tooths = [];
       $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id, tipo: 'default' } }).success(function(data){
@@ -9,7 +10,22 @@
       });
       $scope.general.diagnosis = []; 
       $http.get('/load_diagnosis', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
-        $scope.general.diagnosis = data;
+        if(data.length == 0){
+          var new_tooth = {
+            id: 'test0',
+            name: "",
+            image: "/assets/dental/otros/blank.jpg",
+            calor: 4,
+            electrico: 4,
+            percusion: 4,
+            palpacion: 4,
+            observacion: ""
+          };
+          $scope.general.diagnosis.push(new_tooth);  
+
+        }
+        else
+          $scope.general.diagnosis = data;
       });
       $scope.itemArray = [
         {id: 1, name: 'Pulpitis reversible'},
@@ -27,45 +43,55 @@
       });
 
       var timeout = null;
+      var parameter = null;
       var saveUpdate = function(parameterName,newValue,oldValue) {
-        if (oldValue !== undefined ){
-          if (parameterName == 'selected'){
-            newValue = newValue['id'];
+        if (parameterName == 'diagnostico'){
+          if (oldValue !== undefined && newValue !== undefined ){}
+          else {
+            if (newValue !== undefined )
+              newValue = newValue['id'];
+            else
+              newValue = 0;
+
+            $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
           }
+        }
+        else if (oldValue !== undefined ){
           if (parameterName == 'diagnosis'){
             for (var i in $scope.general.diagnosis) {
-              $http.post('/save_diagnosis',{ param: $scope.general.diagnosis[i].name, value: $scope.general.diagnosis[i].observacion, at_salud_id: atencion_salud_id }).success(function(){ });
+              if ($scope.general.diagnosis[i].name != "")
+                $http.post('/save_diagnosis',{ param: $scope.general.diagnosis[i].name, value: $scope.general.diagnosis[i].observacion, at_salud_id: atencion_salud_id }).success(function(){ });
             }
-
           } else {
             $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
           }
         }
       };
       var debounceSaveUpdates = function(parameterName,newValue,oldValue) {
-        if (timeout) { $timeout.cancel(timeout); }
+        if (timeout && (parameter == parameterName)) { $timeout.cancel(timeout); }
+        parameter = parameterName;
         timeout = $timeout(function(){
           saveUpdate(parameterName,newValue,oldValue);
         },2000); 
       };
 
-      $scope.$watch('endo.com_dolor', function (newValue, oldValue) { saveUpdate('com_dolor', newValue, oldValue); });
+      $scope.$watch('endo.comienzo_dolor', function (newValue, oldValue) { saveUpdate('comienzo_dolor', newValue, oldValue); });
       $scope.$watch('endo.dolor', function (newValue, oldValue) { saveUpdate('dolor', newValue, oldValue); });
-      $scope.$watch('endo.inten', function (newValue, oldValue) { saveUpdate('inten', newValue, oldValue); });
-      $scope.$watch('endo.carac1', function (newValue, oldValue) { saveUpdate('carac1', newValue, oldValue); });
-      $scope.$watch('endo.carac2', function (newValue, oldValue) { saveUpdate('carac2', newValue, oldValue); });
-      $scope.$watch('endo.carac3', function (newValue, oldValue) { saveUpdate('carac3', newValue, oldValue); });
-      $scope.$watch('endo.carac4', function (newValue, oldValue) { saveUpdate('carac4', newValue, oldValue); });
-      $scope.$watch('endo.estim1', function (newValue, oldValue) { saveUpdate('estim1', newValue, oldValue); });
-      $scope.$watch('endo.estim2', function (newValue, oldValue) { saveUpdate('estim2', newValue, oldValue); });
-      $scope.$watch('endo.estim3', function (newValue, oldValue) { saveUpdate('estim3', newValue, oldValue); });
-      $scope.$watch('endo.estim4', function (newValue, oldValue) { saveUpdate('estim4', newValue, oldValue); });
-      $scope.$watch('selected.value', function (newValue, oldValue) { saveUpdate('selected', newValue, oldValue); });
-      $scope.$watch('endo.inf_adi', function (newValue, oldValue) { debounceSaveUpdates('inf_adi', newValue, oldValue); });
-      $scope.$watch('endo.exa_ext', function (newValue, oldValue) { debounceSaveUpdates('exa_ext', newValue, oldValue); });
-      $scope.$watch('endo.exa_int', function (newValue, oldValue) { debounceSaveUpdates('exa_int', newValue, oldValue); });
-      $scope.$watch('endo.exa_rad', function (newValue, oldValue) { debounceSaveUpdates('exa_rad', newValue, oldValue); });
-      $scope.$watch('endo.com_endodoncia', function (newValue, oldValue) { debounceSaveUpdates('com_endodoncia', newValue, oldValue); });
+      $scope.$watch('endo.intensidad', function (newValue, oldValue) { saveUpdate('intensidad', newValue, oldValue); });
+      $scope.$watch('endo.es_pulsatil', function (newValue, oldValue) { saveUpdate('es_pulsatil', newValue, oldValue); });
+      $scope.$watch('endo.cede_con_analgesicos', function (newValue, oldValue) { saveUpdate('cede_con_analgesicos', newValue, oldValue); });
+      $scope.$watch('endo.duele_al_acostarse', function (newValue, oldValue) { saveUpdate('duele_al_acostarse', newValue, oldValue); });
+      $scope.$watch('endo.es_posible_senalar', function (newValue, oldValue) { saveUpdate('es_posible_senalar', newValue, oldValue); });
+      $scope.$watch('endo.se_genera_con_calor', function (newValue, oldValue) { saveUpdate('se_genera_con_calor', newValue, oldValue); });
+      $scope.$watch('endo.se_genera_con_frio', function (newValue, oldValue) { saveUpdate('se_genera_con_frio', newValue, oldValue); });
+      $scope.$watch('endo.se_genera_con_dulce', function (newValue, oldValue) { saveUpdate('se_genera_con_dulce', newValue, oldValue); });
+      $scope.$watch('endo.se_genera_al_masticar', function (newValue, oldValue) { saveUpdate('se_genera_al_masticar', newValue, oldValue); });
+      $scope.$watch('endo.informacion_adicional', function (newValue, oldValue) { debounceSaveUpdates('informacion_adicional', newValue, oldValue); });
+      $scope.$watch('endo.examen_extraoral', function (newValue, oldValue) { debounceSaveUpdates('examen_extraoral', newValue, oldValue); });
+      $scope.$watch('endo.examen_intraoral', function (newValue, oldValue) { debounceSaveUpdates('examen_intraoral', newValue, oldValue); });
+      $scope.$watch('endo.examen_radiologico', function (newValue, oldValue) { debounceSaveUpdates('examen_radiologico', newValue, oldValue); });
+      $scope.$watch('selected.value', function (newValue, oldValue) { saveUpdate('diagnostico', newValue, oldValue); });
+      $scope.$watch('endo.comentario', function (newValue, oldValue) { debounceSaveUpdates('comentario', newValue, oldValue); });
       $scope.$watch('general.diagnosis', function (newValue, oldValue) { debounceSaveUpdates('diagnosis', newValue, oldValue); },true);
       
       this.selectTooth = function(event) {  
@@ -79,40 +105,45 @@
           $scope.endo.image ="/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
           $( "#tooltip_endodoncia" ).hide();
           $http.post('/select_tooth',{ param: new_id, at_salud_id: atencion_salud_id }).success(function(){ });
-
-
         } else {
-          diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === id;})[0];
-          diag.name = new_id;
-          diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
-          $( "#tooltip_test" ).hide();
-          $http.post('/add_test',{ param: new_id, at_salud_id: atencion_salud_id }).success(function(){ });
-
+          diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.id === id;})[0];
+          diag_check = $filter('filter')($scope.general.diagnosis, function (d) {return d.id === new_id;})[0];
+          if (diag_check){
+            alert("Ya existe una fila de información para esta pieza dental.");
+          }
+          else {
+            diag.name = new_id;
+            diag.id = new_id;
+            diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
+            $( "#tooltip_test" ).hide();
+            $http.post('/add_test',{ new_id: new_id, id: id, at_salud_id: atencion_salud_id }).success(function(){ });
+            /* PARA EL CASO EN SE ESTÉ SETEANDO UNA FILA QUE ESTABA SIN PIEZA DENTAL, DADO QUE NO SE HIZO NADA EN SETTEST (AUNQUE HUBIERAN CAMBIOS) 
+            SE DEBERÍA GUARDAR TODOS LOS ESTADOS DE LA FILA*/
+          }
         }
       };
       this.deleteTest = function(item) {  
         $("#test-aux").append($( "#tooltip_test"));
         var index = $scope.general.diagnosis.indexOf(item);
-        $http.post('/delete_test',{ param: item.name, at_salud_id: atencion_salud_id }).success(function(){ });
+        if (!(item.id.match("^test"))) 
+          $http.post('/delete_test',{ param: item.name, at_salud_id: atencion_salud_id }).success(function(){ });
         $scope.general.diagnosis.splice(index, 1);
       };
+      var contador = 0;
       this.addTest = function() { 
-        test = $filter('filter')($scope.general.diagnosis, function (d) {return d.name === '';})[0];
-        if (test == null){
-          var tooth = {
-            name: '',
-            image: "/assets/dental/otros/blank.jpg",
-            calor: 4,
-            electrico: 4,
-            percusion: 4,
-            palpacion: 4,
-            observacion: ""
-          };
-          $scope.general.diagnosis.push(tooth);          
-        }
-        else {
-          alert('Seleccione una pieza dental para agregar más pruebas.');
-        }
+        contador++;
+        var tooth = {
+          id: 'test'+contador,
+          name: "",
+          image: "/assets/dental/otros/blank.jpg",
+          calor: 4,
+          electrico: 4,
+          percusion: 4,
+          palpacion: 4,
+          observacion: ""
+        };
+        $scope.general.diagnosis.push(tooth);          
+        
       };
       this.showTooltipEnd = function(event,tooltip) {
         $( "#"+tooltip ).addClass('flex');
@@ -140,6 +171,7 @@
         templateUrl: 'diagnosis-test-panel.html',
         link: function(scope, element, attrs) {
                 scope.setTest = function(tipo,valor,name,general) {
+                  /* REVISAR CASO EN QUE SE GUARDA UN TEST CON UNA PIEZA DENTAL VACÍA, NO SE DEBERÍA GUARDAR NADA, REVISAR SI ESTÁ BIEN QUE BUSQUE POR NAME EN VEZ DE ID*/
                   var found = $filter('filter')(general.diagnosis, {name: name}, true);
                   found[0][tipo] = valor;
                   $http.post('/set_test',{ tipo: tipo, valor: valor, name: name, at_salud_id: atencion_salud_id}).success(function(){ });

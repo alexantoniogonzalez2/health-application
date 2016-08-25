@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20160530222207) do
   end
 
   create_table "fd_test_diagnostico", force: :cascade do |t|
+    t.integer  "endodoncia_id",   limit: 4
     t.integer  "pieza_dental_id", limit: 4
     t.integer  "calor",           limit: 4
     t.integer  "electrico",       limit: 4
