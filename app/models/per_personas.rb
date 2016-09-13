@@ -370,6 +370,21 @@ class PerPersonas < ActiveRecord::Base
 
   end
 
+  def getIndice(tipo,periodoncia)
+
+    @indice = []
+
+    generateOdontogram unless persona_piezas_dentales.present?
+
+    piezas_dentales = persona_piezas_dentales.where('tipo_diente_id BETWEEN 1 AND 32')
+    piezas_dentales.each do |pieza_dental|
+      @indice<< pieza_dental.getEstadoIndice(tipo,periodoncia)
+    end
+
+    return @indice
+
+  end
+
   def generateOdontogram
 
     tipos_dientes = FdTiposDientes.where('tipo_denticion = "permanente"')

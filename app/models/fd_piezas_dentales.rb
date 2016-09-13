@@ -4,6 +4,28 @@ class FdPiezasDentales < ActiveRecord::Base
   has_many :diagnosticos, :class_name => 'FdDiagnosticos', :foreign_key => 'pieza_dental_id'
   has_many :test_diagnostico, :class_name => 'FdTestDiagnostico', :foreign_key => 'pieza_dental_id'
   has_many :endodoncia, :class_name => 'FdEndodoncia', :foreign_key => 'pieza_dental_id'
+  has_many :periodoncia_indices, :class_name => 'FdPeriodonciaIndices', :foreign_key => 'pieza_dental_id'
+
+  def getEstadoIndice(tipo,periodoncia)
+    estado_indice = periodoncia_indices.where('indice = ? AND periodoncia_id = ?',tipo,periodoncia).first
+    unless estado_indice
+      estado_indice = FdPeriodonciaIndices.new
+      estado_indice.periodoncia_id = periodoncia
+      estado_indice.pieza_dental_id = id
+      estado_indice.indice = tipo
+      estado_indice.save!
+    end
+
+    return {
+      id: tipo_diente.nomenclatura,
+      grupo: tipo_diente.grupo,
+      vestibular: estado_indice.vestibular,
+      mesial: estado_indice.mesial,
+      palatino: estado_indice.palatino,
+      distal: estado_indice.distal,
+    }
+
+  end
 
   def getDiagnostico(cara)
   	diagnostico = 'sano'
@@ -56,6 +78,6 @@ class FdPiezasDentales < ActiveRecord::Base
   end
 
   def app_params
-    params.require(:list).permit(:id,:persona,:tipo_diente,:diagnosticos,:test_diagnostico,:endodoncia)
+    params.require(:list).permit(:id,:persona,:tipo_diente,:diagnosticos,:test_diagnostico,:endodoncia,:periodoncia_indices)
   end
 end

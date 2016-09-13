@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530222207) do
+ActiveRecord::Schema.define(version: 20160909005531) do
 
   create_table "ag_accion_masiva", force: :cascade do |t|
     t.string   "estado",                                limit: 255
@@ -89,6 +89,26 @@ ActiveRecord::Schema.define(version: 20160530222207) do
     t.text     "comentario",            limit: 65535
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+  end
+
+  create_table "fd_periodoncia_indices", force: :cascade do |t|
+    t.integer  "periodoncia_id",  limit: 4
+    t.integer  "pieza_dental_id", limit: 4
+    t.integer  "vestibular",      limit: 4
+    t.integer  "mesial",          limit: 4
+    t.integer  "palatino",        limit: 4
+    t.integer  "distal",          limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "fd_periodoncias", force: :cascade do |t|
+    t.integer  "atencion_salud_id", limit: 4
+    t.text     "observacion",       limit: 65535
+    t.text     "diagnostico",       limit: 65535
+    t.text     "tratamiento",       limit: 65535
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "fd_piezas_dentales", force: :cascade do |t|

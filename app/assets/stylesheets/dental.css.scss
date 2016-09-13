@@ -4,6 +4,11 @@ div.dental {
   div.tab-content {
   	min-height: 370px;
   }
+  div.row {
+  	div.col-md-2 {
+  		padding-right: 0px;
+  	}
+  }
 }
 
 .cara-dental { 
@@ -46,8 +51,18 @@ div.dental {
   width: 40px;
 }
 
+.col-32 { 	
+  width: 30px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
 .col-11 { 	
   width: 140px;
+}
+
+.col-11-per { 	
+  width: 1000px;
 }
 
 .col-16-tooltip { 	
@@ -313,4 +328,15 @@ a.link-end {
 
 .select-diag-endo {
 	min-width: 300px;
+}
+
+.indice {
+  padding: 6px 5px;
+  margin-bottom: 3px;
+  height: 20px;
+  width: 20px;
+} 
+
+div.borde-der-per {
+	border-right: 1px solid #ccc;
 }

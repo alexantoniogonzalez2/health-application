@@ -1,0 +1,32 @@
+(function(){
+  angular.module('periodonticApp', ['templates', 'ng-rails-csrf', 'ui.select'])
+    .controller('PeriodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
+
+      $scope.indicegingival = this;      
+      $scope.indicegingival = [];
+      $http.get('/load_indice', { params: { atencion_salud_id: atencion_salud_id, tipo: 'gingival' } }).success(function(data){
+        for (i=1; i<7; i++) 
+				  $scope.indicegingival[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
+      });
+      $scope.indicehigiene = this;      
+      $scope.indicehigiene = [];
+      $http.get('/load_indice', { params: { atencion_salud_id: atencion_salud_id, tipo: 'higiene' } }).success(function(data){
+        for (i=1; i<7; i++) 
+				  $scope.indicehigiene[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
+      });
+
+    }])
+    .directive('indiceDental', function(){ 
+      return {
+        restrict: 'E',
+        templateUrl: 'indice-dental.html'
+      }; 
+    })
+
+
+
+  angular.element("#periodontic").ready(function() {
+    angular.bootstrap("#periodontic", ['periodonticApp']);
+  });
+
+})();

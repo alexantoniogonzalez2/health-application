@@ -15,14 +15,13 @@
             id: 'test0',
             name: "",
             image: "/assets/dental/otros/blank.jpg",
-            calor: 4,
-            electrico: 4,
-            percusion: 4,
-            palpacion: 4,
+            calor: null,
+            electrico: null,
+            percusion: null,
+            palpacion: null,
             observacion: ""
           };
           $scope.general.diagnosis.push(new_tooth);  
-
         }
         else
           $scope.general.diagnosis = data;
@@ -44,6 +43,7 @@
 
       var timeout = null;
       var parameter = null;
+
       var saveUpdate = function(parameterName,newValue,oldValue) {
         if (parameterName == 'diagnostico'){
           if (oldValue !== undefined && newValue !== undefined ){}
@@ -67,6 +67,7 @@
           }
         }
       };
+
       var debounceSaveUpdates = function(parameterName,newValue,oldValue) {
         if (timeout && (parameter == parameterName)) { $timeout.cancel(timeout); }
         parameter = parameterName;
@@ -117,8 +118,13 @@
             diag.image = "/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
             $( "#tooltip_test" ).hide();
             $http.post('/add_test',{ new_id: new_id, id: id, at_salud_id: atencion_salud_id }).success(function(){ });
-            /* PARA EL CASO EN SE ESTÉ SETEANDO UNA FILA QUE ESTABA SIN PIEZA DENTAL, DADO QUE NO SE HIZO NADA EN SETTEST (AUNQUE HUBIERAN CAMBIOS) 
-            SE DEBERÍA GUARDAR TODOS LOS ESTADOS DE LA FILA*/
+            if (id.match("^test")){
+              $http.post('/set_test',{ tipo: 'calor', valor: diag.calor, id: new_id, at_salud_id: atencion_salud_id}).success(function(){ });
+              $http.post('/set_test',{ tipo: 'electrico', valor: diag.electrico, id: new_id, at_salud_id: atencion_salud_id}).success(function(){ });
+              $http.post('/set_test',{ tipo: 'percusion', valor: diag.percusion, id: new_id, at_salud_id: atencion_salud_id}).success(function(){ });
+              $http.post('/set_test',{ tipo: 'palpacion', valor: diag.palpacion, id: new_id, at_salud_id: atencion_salud_id}).success(function(){ });
+              $http.post('/set_test',{ tipo: 'observacion', valor: diag.observacion, id: new_id, at_salud_id: atencion_salud_id}).success(function(){ });
+            }
           }
         }
       };
@@ -136,10 +142,10 @@
           id: 'test'+contador,
           name: "",
           image: "/assets/dental/otros/blank.jpg",
-          calor: 4,
-          electrico: 4,
-          percusion: 4,
-          palpacion: 4,
+          calor: null,
+          electrico: null,
+          percusion: null,
+          palpacion: null,
           observacion: ""
         };
         $scope.general.diagnosis.push(tooth);          
@@ -164,17 +170,17 @@
         scope: {
           valor: '=',
           tipo: '=',
-          name: '=',
+          id: '=',
           general: '=',
           tagFilter: '=filter'
         },
         templateUrl: 'diagnosis-test-panel.html',
         link: function(scope, element, attrs) {
-                scope.setTest = function(tipo,valor,name,general) {
-                  /* REVISAR CASO EN QUE SE GUARDA UN TEST CON UNA PIEZA DENTAL VACÍA, NO SE DEBERÍA GUARDAR NADA, REVISAR SI ESTÁ BIEN QUE BUSQUE POR NAME EN VEZ DE ID*/
-                  var found = $filter('filter')(general.diagnosis, {name: name}, true);
+                scope.setTest = function(tipo,valor,id,general) {                  
+                  var found = $filter('filter')(general.diagnosis, {id: id}, true);
                   found[0][tipo] = valor;
-                  $http.post('/set_test',{ tipo: tipo, valor: valor, name: name, at_salud_id: atencion_salud_id}).success(function(){ });
+                  if (!(id.match("^test")))
+                    $http.post('/set_test',{ tipo: tipo, valor: valor, id: id, at_salud_id: atencion_salud_id}).success(function(){ });
                 };
             }        
       }; 

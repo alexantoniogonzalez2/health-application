@@ -454,6 +454,12 @@
 				@endodoncia.atencion_salud = @atencion_salud 
 				@endodoncia.save!
 			end
+			@periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
+			unless @periodoncia
+				@periodoncia =  FdPeriodoncias.new
+				@periodoncia.atencion_salud = @atencion_salud 
+				@periodoncia.save!
+			end
 			render 'edit_dental'
 		else
 			render 'edit'
@@ -781,57 +787,54 @@
 	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 
 	  #validacion de seguridad
-
 	  @tooths = @persona.getOdontograma(params[:tipo])	
 		render :json => @tooths
 	end	
 
 	def loadDiagnosis
-		
-		render :json => [{
-			id: '18',
-			name: '18',
-      image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'18'<<'.jpg'),
-      calor: 1,
-      electrico: 2,
-      percusion: 3,
-      palpacion: 4,
-      observacion: "Observacion 1"
-    },
-    {
-    	id: '17',
-    	name: '17',
-      image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'17'<<'.jpg'),
-      calor: 4,
-      electrico: 3,
-      percusion: 2,
-      palpacion: 1,
-      observacion: "Observacion 2"
-    }]
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  #validacion de seguridad
+
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+		@diagnosis = @endodoncia.getDiagnosis
+		render :json => @diagnosis
 	end	
 
 	def loadEndodontic
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  #validacion de seguridad
+
+	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  image = @endodoncia.pieza_dental.nil? ? '' : ActionController::Base.helpers.asset_path('dental/od_'<<@endodoncia.pieza_dental.tipo_diente.primer_digito.to_s<<'/'<<@endodoncia.pieza_dental.tipo_diente.nomenclatura<<'.jpg')
 		render :json => {
-        name: '17',
-        descripcion: 'Primer incisivo superior',
-        image: ActionController::Base.helpers.asset_path('dental/od_'<<'1'<<'/'<<'17'<<'.jpg'),
-        comienzo_dolor: '2',
-        dolor: '2',
-        intensidad: '3',
-        es_pulsatil: true,
-        cede_con_analgesicos: false,
-        duele_al_acostarse: true,
-        es_posible_senalar: false,
-        se_genera_con_calor: true,
-        se_genera_con_frio: false,
-        se_genera_con_dulce: true,
-        se_genera_al_masticar: false,
-        informacion_adicional: 'hola hola',
-        examen_extraoral: 'extra',
-        examen_intraoral: 'intra',
-        examen_radiologico: 'rad',
-        comentario: 'comentario',
-        diag: '0'
+        name: @endodoncia.pieza_dental.try(:tipo_diente).try(:nomenclatura),
+        descripcion:  @endodoncia.pieza_dental.try(:tipo_diente).try(:descripcion),
+        image: image,
+        comienzo_dolor: @endodoncia.comienzo_dolor,
+        dolor: @endodoncia.dolor,
+        intensidad: @endodoncia.intensidad,
+        es_pulsatil: @endodoncia.es_pulsatil,
+        cede_con_analgesicos: @endodoncia.cede_con_analgesicos,
+        duele_al_acostarse: @endodoncia.duele_al_acostarse,
+        es_posible_senalar: @endodoncia.es_posible_senalar,
+        se_genera_con_calor: @endodoncia.se_genera_con_calor,
+        se_genera_con_frio: @endodoncia.se_genera_con_frio,
+        se_genera_con_dulce: @endodoncia.se_genera_con_dulce,
+        se_genera_al_masticar: @endodoncia.se_genera_al_masticar,
+        informacion_adicional: @endodoncia.informacion_adicional,
+        examen_extraoral: @endodoncia.examen_extraoral,
+        examen_intraoral: @endodoncia.examen_intraoral,
+        examen_radiologico: @endodoncia.examen_radiologico,
+        comentario: @endodoncia.comentario,
+        diag: @endodoncia.diagnostico
       };
 	end
 
@@ -936,7 +939,7 @@
 	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 
 	  #validacion de seguridad
-	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:name]).first
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:id]).first
 	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first 
 	  @endodoncia = FdEndodoncia.where('atencion_salud_id = ?',@atencion_salud.id).first
 	  @test_diagnostico = FdTestDiagnostico.where('endodoncia_id = ? AND pieza_dental_id = ?',@endodoncia.id,@pieza_dental.id).first
@@ -992,7 +995,21 @@
 		render :json => { :success => true } 
 	end 
 
-	def agregarInfoEndodoncia
+	def loadIndice
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
+		@indice = @persona.getIndice(params[:tipo],@periodoncia.id)
+		render :json => @indice
+		
+	end
+
+	def loadPeriodontic
 		
 	end
 

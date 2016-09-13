@@ -108,9 +108,13 @@ AplicacionMedica::Application.routes.draw do
   post '/actualizar_diag_certificado', to: 'atenciones_salud#actualizarDiagCertificado'
   post '/actualizar_diag_prestacion', to: 'persona_prestacion#actualizarDiagPrestacion'
   post '/actualizar_diag_prestacion_int', to: 'persona_prestacion#actualizarDiagPrestacionInt'
+  
+  #Dental
   get '/load_odontogram', to: 'atenciones_salud#loadOdontogram'
   get '/load_diagnosis', to: 'atenciones_salud#loadDiagnosis'
   get '/load_endodontic', to: 'atenciones_salud#loadEndodontic'
+  get '/load_indice', to: 'atenciones_salud#loadIndice'
+  get '/load_periodontic', to: 'atenciones_salud#loadPeriodontic'
   post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
   post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
   post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'
@@ -121,7 +125,6 @@ AplicacionMedica::Application.routes.draw do
   post '/select_tooth', to: 'atenciones_salud#selectTooth'
   post '/set_test', to: 'atenciones_salud#setTest'
 
-  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
   get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda

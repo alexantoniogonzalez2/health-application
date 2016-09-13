@@ -6,7 +6,7 @@ class CreateFdTiposDientes < ActiveRecord::Migration
       t.integer :segundo_digito
       t.string :descripcion
       t.string :tipo_denticion
-
+      t.integer :grupo
       t.timestamps null: false
     end
   end

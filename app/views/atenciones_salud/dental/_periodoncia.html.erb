@@ -1,0 +1,72 @@
+<div id="periodontic" ng-controller="PeriodonticController as periodontic" class="container no-padding">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-6">
+			<label>Índice higiene</label>
+		</div>
+		<div class="col-md-5">
+			<label>Índice gingival</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1">
+			<br>
+			<label>Vestibular</label><br>
+			<label>Mesial</label><br>
+			<label>Palatino</label><br>
+			<label>Distal</label><br>
+		</div>
+		<div class="col-md-11 col-11-per">
+		  <div ng-repeat="indice in indicegingival[1]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[2]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[3]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[1]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[2]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[3]" class="col-32 col-md-1">
+		    <indice-dental></indice-dental>
+		  </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1">
+			<br>
+			<label>Vestibular</label><br>
+			<label>Mesial</label><br>
+			<label>Palatino</label><br>
+			<label>Distal</label><br>
+		</div>
+		<div class="col-md-11 col-11-per">
+			<div ng-repeat="indice in indicegingival[4]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[5]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[6]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[4]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[5]" class="col-32 col-md-1" ng-class="{ 'borde-der-per': $last }">
+		    <indice-dental></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[6]" class="col-32 col-md-1">
+		    <indice-dental></indice-dental>
+		  </div>
+	  </div>
+	</div>
+</div>
+
+<%= javascript_include_tag "atencion_salud/dental" %>
