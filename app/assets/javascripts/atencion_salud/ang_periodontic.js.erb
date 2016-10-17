@@ -15,18 +15,76 @@
 				  $scope.indicehigiene[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
       });
 
+      $scope.indicegrupogingival = this;      
+      $scope.indicegrupogingival = [];
+      $scope.indicegrupohigiene = this;      
+      $scope.indicegrupohigiene = [];
+
+
+      this.getTotalIndice = function(indice) {
+        tipoindice = (indice == 'gingival' ? $scope.indicegrupogingival : $scope.indicegrupohigiene);
+        var total = 0;
+        var contador = 0;
+        for(var i = 1; i <= tipoindice.length; i++){
+          if (tipoindice[i] != 0 && tipoindice[i] != '-' && tipoindice[i]  !== undefined){
+            total += tipoindice[i];
+            contador++;
+          }
+        }
+        totalindice = (contador > 0 ? parseFloat(Math.round(total/contador * 100) / 100).toFixed(2) : '-');
+        return totalindice ;
+      };
+
     }])
-    .directive('indiceDental', function(){ 
+
+    .directive('indiceDental', ['$filter','$http',function($filter,$http){ 
       return {
         restrict: 'E',
-        templateUrl: 'indice-dental.html'
+        scope: {
+          indice: '=',
+          tipo: '='
+        },
+        templateUrl: 'indice-dental.html',
+        link: function(scope, element, attrs) {
+                scope.saveIndice = function(indice,tipo,cara) {
+                  $http.post('/save_indice',{ cara: cara, tipo: tipo, tooth: indice.id, valor: indice[cara], at_salud_id: atencion_salud_id}).success(function(){ }); 
+                };
+            }        
       }; 
-    })
+    }])
+    .directive('indiceGrupo', ['$filter','$http',function($filter,$http){ 
+      return {
+        restrict: 'E',
+        scope: {
+          grupo: '=',
+          indice: '=',
+          indicegrupo: '=',
+        },
+        templateUrl: 'indice-grupo.html',
+        link: function(scope, element, attrs) {
+                scope.getTotalIndiceGrupo = function(grupo,indice,indicegrupo) {                  
+                  var total = 0;
+                  var contador = 0;
+                  var totalindicegrupo = 0.0;
+                  if ( indice[grupo] !== undefined){
+                    for(var i = 0; i < indice[grupo].length; i++){
+                        indice_diente = (indice[grupo][i].vestibular + indice[grupo][i].mesial + indice[grupo][i].palatino + indice[grupo][i].distal)/4;
+                        if (indice_diente !=0 ){
+                          total += indice_diente;
+                          contador++;
+                        }
+                    }
+                    totalindicegrupo = isNaN(total/contador) ? '-' : total/contador;
+                    indicegrupo[grupo] =  totalindicegrupo ;
+                    return  isNaN(total/contador) ? '-' : parseFloat(Math.round(total/contador*100)/100).toFixed(2);
+                  }
+                };
+            }        
+      }; 
+    }]);
 
-
-
-  angular.element("#periodontic").ready(function() {
-    angular.bootstrap("#periodontic", ['periodonticApp']);
-  });
+    angular.element("#periodontic").ready(function() {
+      angular.bootstrap("#periodontic", ['periodonticApp']);
+    });
 
 })();

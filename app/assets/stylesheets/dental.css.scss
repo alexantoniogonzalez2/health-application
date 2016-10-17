@@ -53,16 +53,40 @@ div.dental {
 
 .col-32 { 	
   width: 30px;
-  padding-right: 5px;
-  padding-left: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align:center;
+}
+
+.col-32-5 { 	
+  width: 150px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align:center;
+}
+
+.col-32-6 { 	
+  width: 187px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align:center;
 }
 
 .col-11 { 	
   width: 140px;
 }
 
+.col-3 { 	
+  width: 500px;
+  text-align: center;
+}
+
 .col-11-per { 	
-  width: 1000px;
+  width: 980px;
+  margin-right: 0px; 
+  margin-left: 0px;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 .col-16-tooltip { 	
@@ -298,7 +322,7 @@ div.endodoncia-seleccion {
   border: 1px dashed;
 	display: inline-block;
 	padding: 0px 5px;
-	margin-right: 10px;
+	padding-right: 10px;
 	width: 65px;
 	height: 47px;
 }
@@ -331,12 +355,53 @@ a.link-end {
 }
 
 .indice {
-  padding: 6px 5px;
+  padding: 6px 2px 6px 2px;
   margin-bottom: 3px;
   height: 20px;
-  width: 20px;
+  width: 28px;
 } 
 
-div.borde-der-per {
+.borde-der-per-aj {
+	margin-right: 2px;
+	width: 31px;
 	border-right: 1px solid #ccc;
+}
+
+.borde-der-per {
+	border-right: 1px solid #ccc;
+}
+
+.margin-right-per {
+	margin-right: 15px;
+}
+
+.borde-der-per-aj-in {
+	padding-right: 10px;
+	border-right: 1px solid #ccc;
+}
+
+.ajuste-perio {
+	width: 98px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+#periodontic {
+	div.row {
+		div.ajust-width {
+			padding-right: 5px;
+			width: 105px;
+		}
+	}
+}
+
+.ind-general {
+  width: 50px;
+  display: inline;
+  margin-top: 10px;
+}
+
+.ajust-label{
+  margin-top: 15px;
+  margin-left: 40px;
 }

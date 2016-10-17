@@ -1009,6 +1009,28 @@
 		
 	end
 
+	def saveIndice
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
+
+	  @periodonciaindice = FdPeriodonciaIndices.where('pieza_dental_id = ? AND periodoncia_id = ? and indice = ?',@pieza_dental,@periodoncia,params[:tipo]).first
+
+	  @periodonciaindice[params[:cara]] = params[:valor]
+	  @periodonciaindice.save!
+	
+
+		render :json => { :success => true } 
+
+	end
+
 	def loadPeriodontic
 		
 	end

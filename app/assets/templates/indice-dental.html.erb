@@ -1,5 +1,5 @@
 <label>{{ indice.id }}</label>
-<input id="replyNumber" min="1" class="form-control input-sm indice" maxlength="1"/>
-<input id="replyNumber" min="1" class="form-control input-sm indice" />
-<input id="replyNumber" min="1" class="form-control input-sm indice" />
-<input id="replyNumber" min="1" class="form-control input-sm indice" />
+<input min="1" type="number" max="4" class="form-control input-sm indice" maxlength="1" ng-model="indice.vestibular" onkeypress="return isNumber(event)" ng-change="saveIndice(indice,tipo,'vestibular')" />
+<input min="1" type="number" max="4" class="form-control input-sm indice" maxlength="1" ng-model="indice.mesial" onkeypress="return isNumber(event)" ng-change="saveIndice(indice,tipo,'mesial')" />
+<input min="1" type="number" max="4" class="form-control input-sm indice" maxlength="1" ng-model="indice.palatino" onkeypress="return isNumber(event)" ng-change="saveIndice(indice,tipo,'palatino')" />
+<input min="1" type="number" max="4" class="form-control input-sm indice" maxlength="1" ng-model="indice.distal" onkeypress="return isNumber(event)" ng-change="saveIndice(indice,tipo,'distal')" />
