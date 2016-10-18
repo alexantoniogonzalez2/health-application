@@ -15,11 +15,37 @@
 				  $scope.indicehigiene[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
       });
 
+      $scope.periodoncia = this;      
+      $scope.periodoncia = [];
+      $http.get('/load_periodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
+        $scope.periodoncia = data;
+      });
+
       $scope.indicegrupogingival = this;      
       $scope.indicegrupogingival = [];
       $scope.indicegrupohigiene = this;      
       $scope.indicegrupohigiene = [];
 
+      var timeout = null;
+      var parameter = null;
+
+      var saveUpdate = function(parameterName,newValue,oldValue) {
+        if (oldValue !== undefined){
+          $http.post('/save_periodontic',{ param: parameterName, valor: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+        }
+      };
+
+      var debounceSaveUpdates = function(parameterName,newValue,oldValue) {
+        if (timeout && (parameter == parameterName)) { $timeout.cancel(timeout); }
+        parameter = parameterName;
+        timeout = $timeout(function(){
+          saveUpdate(parameterName,newValue,oldValue);
+        },2000); 
+      };
+
+      $scope.$watch('periodoncia.observacion', function (newValue, oldValue) { debounceSaveUpdates('observacion', newValue, oldValue); });
+      $scope.$watch('periodoncia.diagnostico', function (newValue, oldValue) { debounceSaveUpdates('diagnostico', newValue, oldValue); });
+      $scope.$watch('periodoncia.tratamiento', function (newValue, oldValue) { debounceSaveUpdates('tratamiento', newValue, oldValue); });
 
       this.getTotalIndice = function(indice) {
         tipoindice = (indice == 'gingival' ? $scope.indicegrupogingival : $scope.indicegrupohigiene);

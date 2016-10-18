@@ -1026,13 +1026,36 @@
 	  @periodonciaindice[params[:cara]] = params[:valor]
 	  @periodonciaindice.save!
 	
-
 		render :json => { :success => true } 
 
 	end
 
 	def loadPeriodontic
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  render :json => @periodoncia
 		
+	end
+
+	def savePeriodontic
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+
+	  #validacion de seguridad
+	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
+	  @periodoncia[params[:param]] = params[:valor]
+	  @periodoncia.save!
+	
+	  render :json => { :success => true } 
 	end
 
 	private

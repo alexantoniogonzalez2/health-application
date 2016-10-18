@@ -125,6 +125,7 @@ AplicacionMedica::Application.routes.draw do
   post '/select_tooth', to: 'atenciones_salud#selectTooth'
   post '/set_test', to: 'atenciones_salud#setTest'
   post '/save_indice', to: 'atenciones_salud#saveIndice'
+  post '/save_periodontic', to: 'atenciones_salud#savePeriodontic'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
