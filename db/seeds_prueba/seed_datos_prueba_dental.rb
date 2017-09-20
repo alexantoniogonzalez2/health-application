@@ -13,16 +13,16 @@ UD4 = User.create! :email => 'administrativo_dental@gmail.com', :password => '12
 
 #Pacientes
 puts 'Pacientes'
-PD1 = PerPersonas.create! :rut => 10000000, :digito_verificador => 'K', :nombre => 'Juan José', :apellido_paterno => 'Zamur', :apellido_materno => 'Zamur', :genero=> 'Masculino', :user => UD1
+PD1 = PerPersonas.create! :rut => 10000000, :digito_verificador => 'K', :nombre => 'Juan José', :apellido_paterno => 'Zamur', :apellido_materno => 'Zamur', :genero=> 'Masculino', :fecha_nacimiento => '1984-10-23', :user => UD1
 
 #Profesionales
 puts 'Doctores'
-DD1 = PerPersonas.create! :rut => 10555891, :digito_verificador => '0', :nombre => 'Óscar', :apellido_paterno => 'Lagos', :apellido_materno => 'Yañez', :genero=> 'Masculino', :user => UD2
-DD2 = PerPersonas.create! :rut => 8123374, :digito_verificador => '8', :nombre => 'María Inés', :apellido_paterno => 'Dubó', :genero=> 'Masculino', :user => UD3
+DD1 = PerPersonas.create! :rut => 10555891, :digito_verificador => '0', :nombre => 'Óscar', :apellido_paterno => 'Lagos', :apellido_materno => 'Yañez', :genero=> 'Masculino', :fecha_nacimiento => '1984-10-23', :user => UD2
+DD2 = PerPersonas.create! :rut => 8123374, :digito_verificador => '8', :nombre => 'María Inés', :apellido_paterno => 'Dubó', :genero=> 'Masculino', :fecha_nacimiento => '1984-10-23', :user => UD3
 
 #Administrativo
 puts 'Secretarias'
-SD = PerPersonas.create! :rut => 8821592, :digito_verificador => '3', :nombre => 'Bernarda', :apellido_paterno => 'Saldías', :apellido_materno => 'González', :genero => 'Femenino', :user => UD4
+SD = PerPersonas.create! :rut => 8821592, :digito_verificador => '3', :nombre => 'Bernarda', :apellido_paterno => 'Saldías', :apellido_materno => 'González', :genero => 'Femenino', :fecha_nacimiento => '1984-10-23', :user => UD4
 
 
 puts 'Personas-telefono'
@@ -57,10 +57,8 @@ PrePrestadorAdministrativos.create! :prestador=> CLG, :administrativo => SD, :ro
 
 #Profesionales
 puts 'Relación Persona-Profesión'
-ProProfesionales.create! :validado => true, :profesional => D1, :especialidad => EDen, :institucion => IDen
-ProProfesionales.create! :validado => true, :profesional => D2, :especialidad => EDen, :institucion => IDen
-ProProfesionales.create! :validado => true, :profesional => D3, :especialidad => EDen, :institucion => IDen
-ProProfesionales.create! :validado => true, :profesional => D4, :especialidad => EDen, :institucion => IDen
+ProProfesionales.create! :validado => true, :profesional => DD1, :especialidad => EDen, :institucion => IDen
+ProProfesionales.create! :validado => true, :profesional => DD2, :especialidad => EDen, :institucion => IDen
 
 # Centro 1
 puts 'Relación Prestador-Profesional'

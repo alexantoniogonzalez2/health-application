@@ -4,10 +4,12 @@ namespace :agendamiento do
   task crear_agendamientos: :environment do
 		crearAgendamientos('10:00','12:00',"Hora disponible",1)
 		crearAgendamientos('11:00','13:00',"Hora disponible",2)
-		crearAgendamientos('12:00','14:00',"Paciente en espera",1)
-		crearAgendamientos('13:00','15:00',"Paciente en espera",2)
-		crearAgendamientos('11:00','13:00',"Paciente atendido",1) 
-		crearAgendamientos('11:00','13:00',"Paciente atendido",2)
+		crearAgendamientos('12:00','13:00',"Paciente en espera",1)
+		crearAgendamientos('13:00','14:00',"Paciente en espera",2)
+		crearAgendamientos('11:00','12:00',"Paciente atendido",1) 
+		crearAgendamientos('11:00','12:00',"Paciente atendido",2)
+		crearAgendamientos('10:00','12:00',"Hora disponible",6)
+		crearAgendamientos('11:00','13:00',"Hora disponible",7)
   end
 
   def crearAgendamientos (hora_inicio,hora_termino,estado,esp_pre_pro)
@@ -17,7 +19,7 @@ namespace :agendamiento do
 			fecha_inicio = fecha_final - 1.week
 		else
 			fecha_inicio = DateTime.current
-			fecha_final = fecha_inicio + 1.month
+			fecha_final = fecha_inicio + 2.month
 		end
 		
 		step = 30
