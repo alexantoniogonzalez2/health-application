@@ -1,5 +1,6 @@
 (function(){
   angular.module('endodonticApp', ['templates', 'ng-rails-csrf', 'ui.select'])
+
     .controller('GeneralEndodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
 
       var contador = 0;
@@ -41,10 +42,13 @@
         $scope.selected = { value: $scope.itemArray[$scope.endo.diag-1] };
       });
 
+   
+
       var timeout = null;
       var parameter = null;
 
       var saveUpdate = function(parameterName,newValue,oldValue) {
+       
         if (parameterName == 'diagnostico'){
           if (oldValue !== undefined && newValue !== undefined ){}
           else {
@@ -52,9 +56,10 @@
               newValue = newValue['id'];
             else
               newValue = 0;
-
-            $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
           }
+
+          $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+          
         }
         else if (oldValue !== undefined ){
           if (parameterName == 'diagnosis'){
@@ -196,7 +201,7 @@
         restrict: 'E',
         templateUrl: 'endodoncia-seleccion.html'
       }; 
-    });
+    })
 
   angular.element("#endodontic").ready(function() {
     angular.bootstrap("#endodontic", ['endodonticApp']);

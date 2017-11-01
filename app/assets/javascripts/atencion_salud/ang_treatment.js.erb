@@ -1,0 +1,22 @@
+(function(){
+  angular.module('treatmentApp', ['templates', 'ng-rails-csrf', 'ui.select'])
+    .controller('TreatmentController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) { 
+
+
+
+
+
+    }])
+    .directive('glosaEndo', function(){ 
+      return {
+        restrict: 'E',
+        templateUrl: 'glosa-endo.html'
+      }; 
+    });
+
+
+    angular.element("#treatment").ready(function() {
+      angular.bootstrap("#treatment", ['treatmentApp']);
+    });
+
+})();

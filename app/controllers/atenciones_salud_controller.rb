@@ -1052,7 +1052,7 @@
 
 	  #validacion de seguridad
 	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
-	  @periodoncia[params[:param]] = params[:valor]
+	  @periodoncia[params[:param]] = params[:value]
 	  @periodoncia.save!
 	
 	  render :json => { :success => true } 

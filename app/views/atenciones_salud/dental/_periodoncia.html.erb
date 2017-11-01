@@ -1,6 +1,6 @@
 <div id="periodontic" ng-controller="PeriodonticController as periodontic" class="container no-padding">
 	<div class="row">
-		<div class="col-md-1">
+		<div class="col-md-1 ajust-width">
 		</div>
 		<div class="col-md-1 col-3 borde-der-per">
 			<label>Índice gingival</label>
@@ -114,26 +114,30 @@
 		</div>
 	</div>
 	<div class="row padding-top">
-		<div class="col-md-2">
+		<div class="col-md-3">
 			<label class="ajust-label">Índice gingival: </label><br>
 			<label class="ajust-label">Índice higiene: </label>
 		</div>
 		<div class="col-md-1">
-			<input disabled class="form-control input-sm ind-general" value="{{ periodontic.getTotalIndice('gingival') }}"/>
+			<input disabled class="form-control input-sm ind-general" value="{{ periodontic.getTotalIndice('gingival') }}"/><br/>
 			<input disabled class="form-control input-sm ind-general" value="{{ periodontic.getTotalIndice('higiene') }}"/>
 		</div>
-		<div class="col-md-3">
-			<label>Otras observaciones</label>
-			<textarea id='otras_observaciones' class="form-control" rows='2' cols='20' ng-model="periodoncia.observacion"></textarea>
+		<div class="col-md-4">
+			<label>Diagnóstico</label><br>
+			<ui-select ng-model="selected.value" theme="select2" class="select-diag-endo">
+		    <ui-select-match allow-clear="true" placeholder="Selecciona un diagnóstico" >
+		       <span ng-bind="$select.selected.name"></span>
+		    </ui-select-match>
+		    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+		       <span ng-bind="item.name"></span>
+		    </ui-select-choices>
+			</ui-select>
 		</div>
-		<div class="col-md-3">
-			<label>Diagnóstico</label>
-			<textarea id='diagnostico' class="form-control" rows='2' cols='20' ng-model="periodoncia.diagnostico"></textarea>
+		<div class="col-md-4">
+			<label>Comentario</label>
+			<textarea id='comentario' class="form-control" rows='2' cols='20' ng-model="periodoncia.comentario"></textarea>
 		</div>
-		<div class="col-md-3">
-			<label>Tratamiento</label>
-			<textarea id='tratamiento' class="form-control" rows='2' cols='20' ng-model="periodoncia.tratamiento"></textarea>
-		</div>
+
 	</div>
 </div>
 

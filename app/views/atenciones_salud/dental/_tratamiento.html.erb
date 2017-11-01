@@ -1,0 +1,28 @@
+<div id="treatment" ng-controller="TreatmentController as treatment" class="container no-padding">
+	<div class="row">
+		<fieldset>
+			<legend>Endodoncia</legend>
+			<div ng-repeat="glosa_endo in treatment.glosa_endo" class="container">
+    		<glosa-endo></glosa-endo> 
+  		</div>
+		</fieldset>
+
+
+	</div>
+	<div class="row">
+		<fieldset>
+			<legend>Periodoncia</legend>
+		</fieldset>
+
+	</div>
+	<div class="row">
+
+	</div>
+	<div class="row">
+			hola {{ 2 + 2}}
+
+	</div>
+
+</div>
+
+<%= javascript_include_tag "atencion_salud/dental" %>

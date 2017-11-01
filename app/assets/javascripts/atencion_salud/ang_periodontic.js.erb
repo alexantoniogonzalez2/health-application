@@ -17,8 +17,18 @@
 
       $scope.periodoncia = this;      
       $scope.periodoncia = [];
+      $scope.itemArray = [
+        {id: 1, name: 'Gingivitis aguda'},
+        {id: 2, name: 'Gingivitis crónica'},
+        {id: 3, name: 'Periodontitis aguda'},
+        {id: 4, name: 'Periodontitis crónica'},
+        {id: 5, name: 'Periodontosis'},
+        {id: 6, name: 'Otras enfermedades periodontales'},
+        {id: 7, name: 'Enfermedad del periodonto, no especificada'},
+      ];
       $http.get('/load_periodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
         $scope.periodoncia = data;
+        $scope.selected = { value: $scope.itemArray[$scope.periodoncia.diagnostico-1] };
       });
 
       $scope.indicegrupogingival = this;      
@@ -30,7 +40,17 @@
       var parameter = null;
 
       var saveUpdate = function(parameterName,newValue,oldValue) {
-        if (oldValue !== undefined){
+        if (parameterName == 'diagnostico'){
+          if (oldValue !== undefined && newValue !== undefined ){}
+          else {
+            if (newValue !== undefined )
+              newValue = newValue['id'];
+            else
+              newValue = 0; 
+          }
+          $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+        }
+        else if (oldValue !== undefined){
           $http.post('/save_periodontic',{ param: parameterName, valor: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
         }
       };
@@ -43,9 +63,8 @@
         },2000); 
       };
 
-      $scope.$watch('periodoncia.observacion', function (newValue, oldValue) { debounceSaveUpdates('observacion', newValue, oldValue); });
-      $scope.$watch('periodoncia.diagnostico', function (newValue, oldValue) { debounceSaveUpdates('diagnostico', newValue, oldValue); });
-      $scope.$watch('periodoncia.tratamiento', function (newValue, oldValue) { debounceSaveUpdates('tratamiento', newValue, oldValue); });
+      $scope.$watch('periodoncia.comentario', function (newValue, oldValue) { debounceSaveUpdates('comentario', newValue, oldValue); });
+      $scope.$watch('selected.value', function (newValue, oldValue) { saveUpdate('diagnostico', newValue, oldValue); });
 
       this.getTotalIndice = function(indice) {
         tipoindice = (indice == 'gingival' ? $scope.indicegrupogingival : $scope.indicegrupohigiene);
