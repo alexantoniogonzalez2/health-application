@@ -344,7 +344,7 @@ body.home {
   -o-background-size: cover;
 }
 
-section {
+section.index {
     padding: 100px 0;
     height: 900px;
 }
@@ -368,7 +368,7 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
-    section {
+    section.index {
         padding: 100px 0;
     }
 }

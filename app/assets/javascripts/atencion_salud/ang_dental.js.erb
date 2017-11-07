@@ -1,0 +1,34 @@
+(function(){
+  var app = angular.module('dental', ['templates', 'ng-rails-csrf','treatment','periodontic','endodontic','odontogram']);
+
+  app.service('odontogramService', function() {
+    var odontogramList = [];
+
+    var addOdontogram = function(newObj) {
+        odontogramList.push(newObj);
+    };
+
+    var getOdontogram = function(){
+        return odontogramList;
+    };
+
+    return {
+      addOdontogram: addOdontogram,
+      getOdontogram: getOdontogram
+    };
+
+  });
+
+  app.controller('PanelController', ['$http','$filter', function($http, $filter){
+
+    this.tab = 1;
+    this.selectTab = function(setTab) { this.tab = setTab; };
+    this.isSelected = function(checkTab){
+      return this.tab === checkTab;
+    };
+    
+
+  } ]);
+
+
+})();

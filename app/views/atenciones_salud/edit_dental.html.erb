@@ -26,181 +26,191 @@
       </div>    
       <div class="row">
 
-        <div class="tabbable">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#panel-ant" data-toggle="tab">Antecedentes</a></li>
-            <li><a href="#panel-odon" data-toggle="tab">Odontograma</a></li>
-            <li><a href="#panel-end" data-toggle="tab">Endodoncia</a></li>
-            <li><a href="#panel-per" data-toggle="tab">Periodoncia</a></li>
-            <li><a href="#panel-tra" data-toggle="tab">Tratamiento</a></li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="panel-ant">
+        <div ng-app="dental" >
 
-              <div class="container no-padding">
-                <div class="row">
-                  <div class="col-md-6 no-padding">
+          <section ng-controller="PanelController as panel">
+            <ul class="nav nav-pills">
+              <li ng-class="{ active: panel.isSelected(1) }">
+                <a href ng-click="panel.selectTab(1)">Antecedentes</a>
+              </li>
+              <li ng-class="{ active: panel.isSelected(2)}">
+                <a href ng-click="panel.selectTab(2)">Odontograma</a>
+              </li>
+              <li ng-class="{ active: panel.isSelected(3)}">
+                <a href ng-click="panel.selectTab(3)">Endodoncia</a>  
+              </li>
+              <li ng-class="{ active: panel.isSelected(4)}">
+                <a href ng-click="panel.selectTab(4)">Periodoncia</a>  
+              </li>
+              <li ng-class="{ active: panel.isSelected(5)}">
+                <a href ng-click="panel.selectTab(5)">Tratamiento</a>  
+              </li>
+            </ul>
+              <div class="panel" ng-show="panel.isSelected(1)">
+                <div class="container no-padding">
+                  <div class="row">
+                    <div class="col-md-6 no-padding">
 
-                    <fieldset>
-                      <legend>Antecedentes</legend>
-                      <div class"container">
-                        <div class="row clearfix">
-                          <div class="list-group col-md-4 column ajuste-ant">
-                            <a id="med" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_med %>">
-                              <i class="fa fa-archive fa-fw fa-lg"></i>Medicamentos
-                            </a>
-                            <a id="ale" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_alergias %>">
-                              <i class="fa fa-shield fa-fw fa-lg"></i>Alergias
-                            </a>
-                            <a id="vac" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_vacunas %>">
-                              <i class="fa fa-eyedropper fa-fw fa-lg"></i>Vacunas
-                            </a>
-                            <a id="ant_qui" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_ant_pro %>">
-                              <i class="fa fa-heartbeat fa-fw fa-lg"></i>Antecedentes quirúrgicos
-                            </a>
-                          </div>
-                          <div class="list-group col-md-4 column ajuste-ant">
-                            <a id="act_fis" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_act_fis %>">
-                              <i class="fa fa-soccer-ball-o fa-fw fa-lg"></i>Actividad física
-                            </a>
-                            <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_alcohol %>">
-                              <i class="fa fa-beer fa-fw fa-lg"></i>Hábitos de alcohol
-                            </a>
-                            <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_tabaco %>">
-                              <i class="fa fa-magic fa-fw fa-lg"></i>Hábitos de tabaco
-                            </a>
-                            <% if @agendamiento.persona.genero == 'Femenino' %>
-                              <a id="ant_gin" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_gin %>">
-                                <i class="fa fa-venus fa-fw fa-lg"></i>Antecedentes ginecológicos
+                      <fieldset>
+                        <legend>Antecedentes</legend>
+                        <div class"container">
+                          <div class="row clearfix">
+                            <div class="list-group col-md-4 column ajuste-ant">
+                              <a id="med" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_med %>">
+                                <i class="fa fa-archive fa-fw fa-lg"></i>Medicamentos
                               </a>
-                            <% end%>
-                          </div> 
-                          <div class="list-group col-md-4 column ajuste-ant2">
-                            <a id="ant_fam" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_ant_fam %>">
-                              <i class="fa fa-users fa-fw fa-lg"></i>Antecedentes familiares
-                            </a>
-                            <a id="ant_soc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_sociales %>">
-                              <i class="fa fa-institution fa-fw fa-lg"></i>Antecedentes sociales
-                            </a>
-                            <a id="ant_lab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_ocupaciones %>">
-                              <i class="fa fa-money fa-fw fa-lg"></i>Antecedentes laborales
-                            </a>
+                              <a id="ale" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_alergias %>">
+                                <i class="fa fa-shield fa-fw fa-lg"></i>Alergias
+                              </a>
+                              <a id="vac" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_vacunas %>">
+                                <i class="fa fa-eyedropper fa-fw fa-lg"></i>Vacunas
+                              </a>
+                              <a id="ant_qui" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_ant_pro %>">
+                                <i class="fa fa-heartbeat fa-fw fa-lg"></i>Antecedentes quirúrgicos
+                              </a>
+                            </div>
+                            <div class="list-group col-md-4 column ajuste-ant">
+                              <a id="act_fis" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_act_fis %>">
+                                <i class="fa fa-soccer-ball-o fa-fw fa-lg"></i>Actividad física
+                              </a>
+                              <a id="hab_alc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_alcohol %>">
+                                <i class="fa fa-beer fa-fw fa-lg"></i>Hábitos de alcohol
+                              </a>
+                              <a id="hab_tab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_tabaco %>">
+                                <i class="fa fa-magic fa-fw fa-lg"></i>Hábitos de tabaco
+                              </a>
+                              <% if @agendamiento.persona.genero == 'Femenino' %>
+                                <a id="ant_gin" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_gin %>">
+                                  <i class="fa fa-venus fa-fw fa-lg"></i>Antecedentes ginecológicos
+                                </a>
+                              <% end%>
+                            </div> 
+                            <div class="list-group col-md-4 column ajuste-ant2">
+                              <a id="ant_fam" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_ant_fam %>">
+                                <i class="fa fa-users fa-fw fa-lg"></i>Antecedentes familiares
+                              </a>
+                              <a id="ant_soc" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_sociales %>">
+                                <i class="fa fa-institution fa-fw fa-lg"></i>Antecedentes sociales
+                              </a>
+                              <a id="ant_lab" href="#" data-toggle="modal" data-target="#myModal" class="ellipsis list-group-item load_ant <%= @class_ocupaciones %>">
+                                <i class="fa fa-money fa-fw fa-lg"></i>Antecedentes laborales
+                              </a>
+                            </div>
+                          </div>  
+                        </div>
+
+                        <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div id="modal-dialog-antecedentes" class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body ajuste-height">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <div id='contenido-ant-edit'></div>        
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
+
+                        <label>Antecedentes médicos</label>
+                        <div class="list-group" name="antecedentes-div" id="antecedentes-div">  
+                          <% @ant_med_at.each do |p_d| %>
+                            <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+                          <% end %>
+                          <% @ant_med_us.each do |p_d| %>
+                            <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+                          <% end %>
+                        </div>
+                        <div id="antecedentes-modal-div" >
+                          <% @ant_med_at.each do |p_d| %>
+                            <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'edit'} %>
+                          <% end %>
+                          <% @ant_med_us.each do |p_d| %>
+                            <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'ver' } %>     
+                          <% end %>       
+                        </div>
+                        <a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a>
+
+                        <div class="modal fade" id="modal-container-ant-med" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header ajuste-modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4>Agregar otro antecedente médico</h4>
+                              </div>
+                              <div class="modal-body ajuste-height">
+                                <div class='container agregar-med'>
+                                  <div class='row'>
+                                    <div class='col-md-6 column'>
+                                      <select id="select_diagnostico_ant" class="ajuste-select" ></select><br><br>
+                                        <div class="checkbox">
+                                          <label for="new-diag-no-frec-ant">
+                                            <input type="checkbox" name="checkboxes" id="new-diag-no-frec-ant" value="1">
+                                            Incluir diagnósticos no frecuentes
+                                          </label>
+                                        </div>      
+                                    </div>
+                                  </div>
+                                </div>                         
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+                              </div>
+                            </div>
                           </div>
                         </div>  
-                      </div>
+                      </fieldset>
+                      
+                    </div>
+                    <div class="col-md-6">
 
-                      <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div id="modal-dialog-antecedentes" class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-body ajuste-height">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                              <div id='contenido-ant-edit'></div>        
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div> 
-
-                      <label>Antecedentes médicos</label>
-                      <div class="list-group" name="antecedentes-div" id="antecedentes-div">  
-                        <% @ant_med_at.each do |p_d| %>
-                          <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
-                        <% end %>
-                        <% @ant_med_us.each do |p_d| %>
-                          <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d} %>
+                      <label>Diagnósticos recientes</label>
+                      <div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">
+                        <% if @persona_diagnostico_anteriores.blank? %>
+                          No hay diagnósticos recientes.
+                        <% end %>  
+                        <% @persona_diagnostico_anteriores.each do |p_d| %>
+                          <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d, :tipo => 'edit'} %>
                         <% end %>
                       </div>
-                      <div id="antecedentes-modal-div" >
-                        <% @ant_med_at.each do |p_d| %>
-                          <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'edit'} %>
-                        <% end %>
-                        <% @ant_med_us.each do |p_d| %>
-                          <%= render :partial => "antecedentes/persona_diagnostico_modal", :locals => {:p_d => p_d, :tipo => 'ver' } %>     
-                        <% end %>       
+                      <div id="diag_ant-modal-div" >
+                        <% @persona_diagnostico_anteriores.each do |p_d| %>
+                          <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'edit'} %>
+                        <% end %>      
                       </div>
-                      <a id="modal-ant-med" href="#modal-container-ant-med" role="button" class="btn" data-toggle="modal">Agregar otro antecedente médico</a>
-
-                      <div class="modal fade" id="modal-container-ant-med" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header ajuste-modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                              <h4>Agregar otro antecedente médico</h4>
-                            </div>
-                            <div class="modal-body ajuste-height">
-                              <div class='container agregar-med'>
-                                <div class='row'>
-                                  <div class='col-md-6 column'>
-                                    <select id="select_diagnostico_ant" class="ajuste-select" ></select><br><br>
-                                      <div class="checkbox">
-                                        <label for="new-diag-no-frec-ant">
-                                          <input type="checkbox" name="checkboxes" id="new-diag-no-frec-ant" value="1">
-                                          Incluir diagnósticos no frecuentes
-                                        </label>
-                                      </div>      
-                                  </div>
-                                </div>
-                              </div>                         
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>  
-                    </fieldset>
-                    
-                  </div>
-                  <div class="col-md-6">
-
-                    <label>Diagnósticos recientes</label>
-                    <div class="list-group" name="diagnostico-anterior-div" id="diagnostico-anterior-div">
-                      <% if @persona_diagnostico_anteriores.blank? %>
-                        No hay diagnósticos recientes.
-                      <% end %>  
-                      <% @persona_diagnostico_anteriores.each do |p_d| %>
-                        <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior", :locals => {:p_d => p_d, :tipo => 'edit'} %>
-                      <% end %>
+                      <div id="ajuste-motivo">
+                        <label>Motivo de consulta:</label>
+                          <input id='motivo_consulta' type='text' class="form-control ajuste-motivo" value="<%= @atencion_salud.motivo_consulta %>" /><span id="auto-motivo" >Autoguardado</span>
+                      </div>
+                      <label>Anamnesis</label><span id="auto-anamnesis" >Autoguardado</span>
+                      <textarea id='anamnesis' class = "form-control" rows='2' cols='50'><%= @atencion_salud.anamnesis %></textarea>
+                        <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a> | <a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
+                        <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :tipo => 'edit'} %>
+                        <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr_am => @presion_am, :p_pr_sis => @presion_sis,:p_pr_dias => @presion_dias, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr_am => @car_presion_am, :car_p_pr_sis => @car_presion_sis,:car_p_pr_dias => @car_presion_dias,:car_p_sat => @car_sat, :tipo => 'edit'} %>
+                        <br><label>Examen físico</label><span id="auto-examen" >Autoguardado</span>
+                      <textarea id='examen_fisico' class = "form-control" rows='2' cols='50'><%= @atencion_salud.examen_fisico %></textarea>
+                      
                     </div>
-                    <div id="diag_ant-modal-div" >
-                      <% @persona_diagnostico_anteriores.each do |p_d| %>
-                        <%= render :partial => "persona_diagnostico/anterior/persona_diagnostico_anterior_modal", :locals => {:p_d => p_d, :e_d => @estados_diagnostico, :tipo => 'edit'} %>
-                      <% end %>      
-                    </div>
-                    <div id="ajuste-motivo">
-                      <label>Motivo de consulta:</label>
-                        <input id='motivo_consulta' type='text' class="form-control ajuste-motivo" value="<%= @atencion_salud.motivo_consulta %>" /><span id="auto-motivo" >Autoguardado</span>
-                    </div>
-                    <label>Anamnesis</label><span id="auto-anamnesis" >Autoguardado</span>
-                    <textarea id='anamnesis' class = "form-control" rows='2' cols='50'><%= @atencion_salud.anamnesis %></textarea>
-                      <a id="modal-metricas" href="#modal-container-metricas" role="button" class="btn" data-toggle="modal">Métricas</a> | <a id="modal-signos" href="#modal-container-signos" role="button" class="btn" data-toggle="modal">Signos vitales</a>
-                      <%= render :partial => "persona_metricas/metricas", :locals => {:id => @atencion_salud.id, :p_e => @estatura, :p_p => @peso, :p_imc => @imc, :tipo => 'edit'} %>
-                      <%= render :partial => "persona_metricas/signos", :locals => {:id => @atencion_salud.id, :p_fc => @frec_car, :p_fr => @frec_res, :p_t => @temp, :p_pr_am => @presion_am, :p_pr_sis => @presion_sis,:p_pr_dias => @presion_dias, :p_sat => @sat, :car_p_fc => @car_frec_car, :car_p_fr => @car_frec_res, :car_p_t => @car_temp, :car_p_pr_am => @car_presion_am, :car_p_pr_sis => @car_presion_sis,:car_p_pr_dias => @car_presion_dias,:car_p_sat => @car_sat, :tipo => 'edit'} %>
-                      <br><label>Examen físico</label><span id="auto-examen" >Autoguardado</span>
-                    <textarea id='examen_fisico' class = "form-control" rows='2' cols='50'><%= @atencion_salud.examen_fisico %></textarea>
-                    
                   </div>
                 </div>
               </div>
+              <div class="panel" ng-show="panel.isSelected(2)">
+                <%= render :partial => "atenciones_salud/dental/odontograma", :locals => {:id => @atencion_salud.id} %>  
+              </div>
+              <div class="panel" ng-show="panel.isSelected(3)">
+                <%= render :partial => "atenciones_salud/dental/endodoncia", :locals => {:id => @atencion_salud.id} %>
+              </div>
+              <div class="panel" ng-show="panel.isSelected(4)">
+                <%= render :partial => "atenciones_salud/dental/periodoncia", :locals => {:id => @atencion_salud.id} %>
+              </div>
+              <div class="panel" ng-show="panel.isSelected(5)">
+                <%= render :partial => "atenciones_salud/dental/tratamiento", :locals => {:id => @atencion_salud.id} %>
+              </div>
 
-            </div>
-            <div class="tab-pane" id="panel-odon">
-              <%= render :partial => "atenciones_salud/dental/odontograma", :locals => {:id => @atencion_salud.id} %>                                 
-            </div>
-            <div class="tab-pane" id="panel-end">
-              <%= render :partial => "atenciones_salud/dental/endodoncia", :locals => {:id => @atencion_salud.id} %>
-            </div>
-            <div class="tab-pane" id="panel-per">
-              <%= render :partial => "atenciones_salud/dental/periodoncia", :locals => {:id => @atencion_salud.id} %>
-            </div>
-            <div class="tab-pane" id="panel-tra">
-              <%= render :partial => "atenciones_salud/dental/tratamiento", :locals => {:id => @atencion_salud.id} %>
-            </div>
-          </div>
+
         </div> 
-       
+
       </div> <!--Cierre div row --> 
       <div class="row padding-top padding-bottom">
         <button id='finalizar' name='finalizar' class='btn btn-primary ajus-pos-right' onclick="accionFinalizarAtencion()" >Finalizar atención</button>

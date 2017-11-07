@@ -1,135 +1,131 @@
 (function(){
-  angular.module('periodonticApp', ['templates', 'ng-rails-csrf', 'ui.select'])
-    .controller('PeriodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
+  var app = angular.module('periodontic', ['templates', 'ng-rails-csrf', 'ui.select']);
+  
+  app.controller('PeriodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
 
-      $scope.indicegingival = this;      
-      $scope.indicegingival = [];
-      $http.get('/load_indice', { params: { atencion_salud_id: atencion_salud_id, tipo: 'gingival' } }).success(function(data){
-        for (i=1; i<7; i++) 
-				  $scope.indicegingival[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
-      });
-      $scope.indicehigiene = this;      
-      $scope.indicehigiene = [];
-      $http.get('/load_indice', { params: { atencion_salud_id: atencion_salud_id, tipo: 'higiene' } }).success(function(data){
-        for (i=1; i<7; i++) 
-				  $scope.indicehigiene[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
-      });
-
-      $scope.periodoncia = this;      
-      $scope.periodoncia = [];
-      $scope.itemArray = [
-        {id: 1, name: 'Gingivitis aguda'},
-        {id: 2, name: 'Gingivitis crónica'},
-        {id: 3, name: 'Periodontitis aguda'},
-        {id: 4, name: 'Periodontitis crónica'},
-        {id: 5, name: 'Periodontosis'},
-        {id: 6, name: 'Otras enfermedades periodontales'},
-        {id: 7, name: 'Enfermedad del periodonto, no especificada'},
-      ];
-      $http.get('/load_periodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
-        $scope.periodoncia = data;
-        $scope.selected = { value: $scope.itemArray[$scope.periodoncia.diagnostico-1] };
-      });
-
-      $scope.indicegrupogingival = this;      
-      $scope.indicegrupogingival = [];
-      $scope.indicegrupohigiene = this;      
-      $scope.indicegrupohigiene = [];
-
-      var timeout = null;
-      var parameter = null;
-
-      var saveUpdate = function(parameterName,newValue,oldValue) {
-        if (parameterName == 'diagnostico'){
-          if (oldValue !== undefined && newValue !== undefined ){}
-          else {
-            if (newValue !== undefined )
-              newValue = newValue['id'];
-            else
-              newValue = 0; 
-          }
-          $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
-        }
-        else if (oldValue !== undefined){
-          $http.post('/save_periodontic',{ param: parameterName, valor: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
-        }
-      };
-
-      var debounceSaveUpdates = function(parameterName,newValue,oldValue) {
-        if (timeout && (parameter == parameterName)) { $timeout.cancel(timeout); }
-        parameter = parameterName;
-        timeout = $timeout(function(){
-          saveUpdate(parameterName,newValue,oldValue);
-        },2000); 
-      };
-
-      $scope.$watch('periodoncia.comentario', function (newValue, oldValue) { debounceSaveUpdates('comentario', newValue, oldValue); });
-      $scope.$watch('selected.value', function (newValue, oldValue) { saveUpdate('diagnostico', newValue, oldValue); });
-
-      this.getTotalIndice = function(indice) {
-        tipoindice = (indice == 'gingival' ? $scope.indicegrupogingival : $scope.indicegrupohigiene);
-        var total = 0;
-        var contador = 0;
-        for(var i = 1; i <= tipoindice.length; i++){
-          if (tipoindice[i] != 0 && tipoindice[i] != '-' && tipoindice[i]  !== undefined){
-            total += tipoindice[i];
-            contador++;
-          }
-        }
-        totalindice = (contador > 0 ? parseFloat(Math.round(total/contador * 100) / 100).toFixed(2) : '-');
-        return totalindice ;
-      };
-
-    }])
-
-    .directive('indiceDental', ['$filter','$http',function($filter,$http){ 
-      return {
-        restrict: 'E',
-        scope: {
-          indice: '=',
-          tipo: '='
-        },
-        templateUrl: 'indice-dental.html',
-        link: function(scope, element, attrs) {
-                scope.saveIndice = function(indice,tipo,cara) {
-                  $http.post('/save_indice',{ cara: cara, tipo: tipo, tooth: indice.id, valor: indice[cara], at_salud_id: atencion_salud_id}).success(function(){ }); 
-                };
-            }        
-      }; 
-    }])
-    .directive('indiceGrupo', ['$filter','$http',function($filter,$http){ 
-      return {
-        restrict: 'E',
-        scope: {
-          grupo: '=',
-          indice: '=',
-          indicegrupo: '=',
-        },
-        templateUrl: 'indice-grupo.html',
-        link: function(scope, element, attrs) {
-                scope.getTotalIndiceGrupo = function(grupo,indice,indicegrupo) {                  
-                  var total = 0;
-                  var contador = 0;
-                  var totalindicegrupo = 0.0;
-                  if ( indice[grupo] !== undefined){
-                    for(var i = 0; i < indice[grupo].length; i++){
-                        indice_diente = (indice[grupo][i].vestibular + indice[grupo][i].mesial + indice[grupo][i].palatino + indice[grupo][i].distal)/4;
-                        if (indice_diente !=0 ){
-                          total += indice_diente;
-                          contador++;
-                        }
-                    }
-                    totalindicegrupo = isNaN(total/contador) ? '-' : total/contador;
-                    indicegrupo[grupo] =  totalindicegrupo ;
-                    return  isNaN(total/contador) ? '-' : parseFloat(Math.round(total/contador*100)/100).toFixed(2);
-                  }
-                };
-            }        
-      }; 
-    }]);
-
-    angular.element("#periodontic").ready(function() {
-      angular.bootstrap("#periodontic", ['periodonticApp']);
+    $scope.indicegingival = this;      
+    $scope.indicegingival = [];
+    $http.get('/load_indice', { params: { atencion_salud_id: atencion_salud_id, tipo: 'gingival' } }).success(function(data){
+      for (i=1; i<7; i++) 
+			  $scope.indicegingival[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
     });
+    $scope.indicehigiene = this;      
+    $scope.indicehigiene = [];
+    $http.get('/load_indice', { params: { atencion_salud_id: atencion_salud_id, tipo: 'higiene' } }).success(function(data){
+      for (i=1; i<7; i++) 
+			  $scope.indicehigiene[i] = $filter('filter')(data, function (d) {return d.grupo === i;});
+    });
+
+    $scope.periodoncia = this;      
+    $scope.periodoncia = [];
+    $scope.itemArray = [
+      {id: 1, name: 'Gingivitis aguda'},
+      {id: 2, name: 'Gingivitis crónica'},
+      {id: 3, name: 'Periodontitis aguda'},
+      {id: 4, name: 'Periodontitis crónica'},
+      {id: 5, name: 'Periodontosis'},
+      {id: 6, name: 'Otras enfermedades periodontales'},
+      {id: 7, name: 'Enfermedad del periodonto, no especificada'},
+    ];
+    $http.get('/load_periodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
+      $scope.periodoncia = data;
+      $scope.selected = { value: $scope.itemArray[$scope.periodoncia.diagnostico-1] };
+    });
+
+    $scope.indicegrupogingival = this;      
+    $scope.indicegrupogingival = [];
+    $scope.indicegrupohigiene = this;      
+    $scope.indicegrupohigiene = [];
+
+    var timeout = null;
+    var parameter = null;
+
+    var saveUpdate = function(parameterName,newValue,oldValue) {
+      if (parameterName == 'diagnostico'){
+        if (oldValue !== undefined && newValue !== undefined ){}
+        else {
+          if (newValue !== undefined )
+            newValue = newValue['id'];
+          else
+            newValue = 0; 
+        }
+        $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+      }
+      else if (oldValue !== undefined){
+        $http.post('/save_periodontic',{ param: parameterName, valor: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+      }
+    };
+
+    var debounceSaveUpdates = function(parameterName,newValue,oldValue) {
+      if (timeout && (parameter == parameterName)) { $timeout.cancel(timeout); }
+      parameter = parameterName;
+      timeout = $timeout(function(){
+        saveUpdate(parameterName,newValue,oldValue);
+      },2000); 
+    };
+
+    $scope.$watch('periodoncia.comentario', function (newValue, oldValue) { debounceSaveUpdates('comentario', newValue, oldValue); });
+    $scope.$watch('selected.value', function (newValue, oldValue) { saveUpdate('diagnostico', newValue, oldValue); });
+
+    this.getTotalIndice = function(indice) {
+      tipoindice = (indice == 'gingival' ? $scope.indicegrupogingival : $scope.indicegrupohigiene);
+      var total = 0;
+      var contador = 0;
+      for(var i = 1; i <= tipoindice.length; i++){
+        if (tipoindice[i] != 0 && tipoindice[i] != '-' && tipoindice[i]  !== undefined){
+          total += tipoindice[i];
+          contador++;
+        }
+      }
+      totalindice = (contador > 0 ? parseFloat(Math.round(total/contador * 100) / 100).toFixed(2) : '-');
+      return totalindice ;
+    };
+
+  }]);
+  app.directive('indiceDental', ['$filter','$http',function($filter,$http){ 
+    return {
+      restrict: 'E',
+      scope: {
+        indice: '=',
+        tipo: '='
+      },
+      templateUrl: 'indice-dental.html',
+      link: function(scope, element, attrs) {
+              scope.saveIndice = function(indice,tipo,cara) {
+                $http.post('/save_indice',{ cara: cara, tipo: tipo, tooth: indice.id, valor: indice[cara], at_salud_id: atencion_salud_id}).success(function(){ }); 
+              };
+          }        
+    }; 
+  }]);
+  app.directive('indiceGrupo', ['$filter','$http',function($filter,$http){ 
+    return {
+      restrict: 'E',
+      scope: {
+        grupo: '=',
+        indice: '=',
+        indicegrupo: '=',
+      },
+      templateUrl: 'indice-grupo.html',
+      link: function(scope, element, attrs) {
+              scope.getTotalIndiceGrupo = function(grupo,indice,indicegrupo) {                  
+                var total = 0;
+                var contador = 0;
+                var totalindicegrupo = 0.0;
+                if ( indice[grupo] !== undefined){
+                  for(var i = 0; i < indice[grupo].length; i++){
+                      indice_diente = (indice[grupo][i].vestibular + indice[grupo][i].mesial + indice[grupo][i].palatino + indice[grupo][i].distal)/4;
+                      if (indice_diente !=0 ){
+                        total += indice_diente;
+                        contador++;
+                      }
+                  }
+                  totalindicegrupo = isNaN(total/contador) ? '-' : total/contador;
+                  indicegrupo[grupo] =  totalindicegrupo ;
+                  return  isNaN(total/contador) ? '-' : parseFloat(Math.round(total/contador*100)/100).toFixed(2);
+                }
+              };
+          }        
+    }; 
+  }]);
 
 })();

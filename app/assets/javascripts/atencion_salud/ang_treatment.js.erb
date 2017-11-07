@@ -1,22 +1,17 @@
 (function(){
-  angular.module('treatmentApp', ['templates', 'ng-rails-csrf', 'ui.select'])
-    .controller('TreatmentController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) { 
+  var app = angular.module('treatment', ['templates', 'ng-rails-csrf', 'ui.select']);
+  
+  app.controller('TreatmentController', ['$http','$filter', '$scope', '$timeout','odontogramService', function($http, $filter,$scope,$timeout,odontogramService) { 
 
+    $scope.odontogramList = odontogramService.getOdontogram();
 
+  }]);
+  app.directive('glosaEndo', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-endo.html'
+    }; 
+  });
 
-
-
-    }])
-    .directive('glosaEndo', function(){ 
-      return {
-        restrict: 'E',
-        templateUrl: 'glosa-endo.html'
-      }; 
-    });
-
-
-    angular.element("#treatment").ready(function() {
-      angular.bootstrap("#treatment", ['treatmentApp']);
-    });
 
 })();
