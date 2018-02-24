@@ -22,22 +22,23 @@ div.actividad-fisica {
 	}
 }
 .nav-pills > li > a { border-radius: 0px !important; }
-#nav-antecedentes  > li > a, .nav-pills > li.active > a, .nav-pills > li.hover > a { background-color: white !important; }
-#nav-antecedentes  > li > a { color: #444; }
+
+#nav-antecedentes  > li > a { color: #444; padding: 7px 0px 7px 15px !important; }
 #nav-antecedentes  > li.hover > a { color: $Blue; }
 #nav-antecedentes  > li.active > a { color: #444 ; font-weight: bold; right: 5px; color: #444; border-left: 5px solid $Blue; }
 #nav-antecedentes  > li:not(:hover)> a { color: #444 !important; }
-#nav-antecedentes > li > a { padding: 7px 0px 7px 15px !important ; }
+
+.nav-index-prof > li > a, #nav-index-prof > li.active > a, #nav-index-prof > li.hover > a { background-color: white !important; }
 
 div.alert-act { 
 	margin-bottom: 5px;
 	padding-left: 0px;
 	> ol { margin-bottom: 0px ;}
 }
+
 .has-feedback .form-control-feedback { top: 45px; right: 0; }
 .form-validator .has-feedback .form-control-feedback { top: 0; right: 15px; }
 
-#nav-antecedentes  > li.hover > a { color: #85D3F5; }
 div.agregar-med { margin-top: 20px; padding-left: 0px; padding-right: 0px; }
 div.ajuste-med { padding-left: 0px; padding-right: 0px;}
 div.ajuste-alergia { padding-top: 100px; }

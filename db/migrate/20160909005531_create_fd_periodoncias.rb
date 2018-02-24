@@ -3,7 +3,7 @@ class CreateFdPeriodoncias < ActiveRecord::Migration
     create_table :fd_periodoncias do |t|
     	t.references :atencion_salud
       t.text :comentario
-      t.integer :diagnostico
+      t.references :diagnostico
       t.timestamps null: false
     end
   end

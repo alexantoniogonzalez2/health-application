@@ -3,7 +3,7 @@ class FdPiezasDentales < ActiveRecord::Base
   belongs_to :tipo_diente, :class_name => 'FdTiposDientes'
   has_many :diagnosticos, :class_name => 'FdDiagnosticos', :foreign_key => 'pieza_dental_id'
   has_many :test_diagnostico, :class_name => 'FdTestDiagnostico', :foreign_key => 'pieza_dental_id'
-  has_many :endodoncia, :class_name => 'FdEndodoncia', :foreign_key => 'pieza_dental_id'
+  has_many :endodoncia, :class_name => 'FdEndodoncias', :foreign_key => 'pieza_dental_id'
   has_many :periodoncia_indices, :class_name => 'FdPeriodonciaIndices', :foreign_key => 'pieza_dental_id'
 
   def getEstadoIndice(tipo,periodoncia)

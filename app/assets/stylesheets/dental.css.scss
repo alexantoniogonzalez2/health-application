@@ -1,6 +1,8 @@
 @import "colors";
 
 div.dental {
+	padding-right: 5px; 
+	padding-left: 5px;
   div.tab-content {
   	min-height: 370px;
   }
@@ -405,4 +407,17 @@ a.link-end {
 .ajust-label{
   margin-top: 15px;
   margin-left: 40px;
+}
+
+.tabstyle {
+	border: 1px solid #ddd;
+	border-radius: 3px 3px 0 0;
+}
+
+.app-dental > section > div.panel {
+  padding: 10px 5px 10px 5px;
+  border-style: solid;
+  border: 1px solid #dddddd;
+  border-radius: 0px 4px 4px 4px;
+  min-height: 350px;
 }

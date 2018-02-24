@@ -392,7 +392,7 @@ class AgendamientoController < ApplicationController
 		@agendamiento_log.fecha = DateTime.current
 		@agendamiento_log.save
 
-		render :text=> respuesta
+		render :text => respuesta
 	end
 		
 	def desbloquearHora

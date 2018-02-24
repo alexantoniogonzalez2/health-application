@@ -4,6 +4,20 @@
   app.controller('TreatmentController', ['$http','$filter', '$scope', '$timeout','odontogramService', function($http, $filter,$scope,$timeout,odontogramService) { 
 
     $scope.odontogramList = odontogramService.getOdontogram();
+    //console.log( $scope.odontogramList);
+
+    $scope.noSanos = function(tooth) {
+      //console.log(tooth.caracteristica);
+      if (tooth.caracteristica != "normal" || tooth.diag_central != "sano" || tooth.diag_distal != "sano" || tooth.diag_mesial != "sano" || tooth.diag_palatina != "sano" || tooth.diag_vestibular != "sano"){
+        return true;
+      }
+      return false;
+    };
+
+    $scope.enPresupuesto = function(tooth) {
+     
+      return true;
+    };
 
   }]);
   app.directive('glosaEndo', function(){ 

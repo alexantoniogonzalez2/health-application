@@ -35,7 +35,8 @@ class PerPersonas < ActiveRecord::Base
   has_many :personas, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_id'
   has_many :personas_relaciones, :class_name => 'PerOtrasRelaciones', :foreign_key => 'persona_relacion_id' 
   has_many :persona_piezas_dentales, :class_name => 'FdPiezasDentales', :foreign_key => 'persona_id'
-  has_many :responsable_diagnosticos, :class_name => 'FdDiagnosticos', :foreign_key => 'responsable_id'  
+  has_many :responsable_diagnosticos, :class_name => 'FdDiagnosticos', :foreign_key => 'responsable_id' 
+  has_many :responsable_pagos, :class_name => 'FdPagos', :foreign_key => 'responsable_id' 
 
   belongs_to :user, :class_name => 'User'
   belongs_to :diagnostico_muerte, :class_name => 'MedDiagnosticos'
@@ -449,7 +450,8 @@ class PerPersonas < ActiveRecord::Base
                                     :pais_nacionalidad,
                                     :persona_antecedentes_ginecologicos,
                                     :persona_piezas_dentales,
-                                    :responsable_diagnosticos)
+                                    :responsable_diagnosticos,
+                                    :responsable_pagos)
   end
 
 end

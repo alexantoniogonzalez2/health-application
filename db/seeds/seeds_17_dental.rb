@@ -55,15 +55,43 @@ FdTiposDientes.create! :id => 51, :nomenclatura => '34', :primer_digito => 7, :s
 FdTiposDientes.create! :id => 52, :nomenclatura => '35', :primer_digito => 7, :segundo_digito => 5, :tipo_denticion => 'temporal', :descripcion => 'Segundo molar inferior izquierdo', :grupo => 1
 
 #Tipos diagnosticos
-FdTiposDiagnosticos.create! :id => 1, :nombre => 'Sano'
-FdTiposDiagnosticos.create! :id => 2, :nombre => 'Caries'
-FdTiposDiagnosticos.create! :id => 3, :nombre => 'Composite'
-FdTiposDiagnosticos.create! :id => 4, :nombre => 'Sellante'
-FdTiposDiagnosticos.create! :id => 5, :nombre => 'Amalgama'
-FdTiposDiagnosticos.create! :id => 6, :nombre => 'Incrustación'
-FdTiposDiagnosticos.create! :id => 7, :nombre => 'Corona'
-FdTiposDiagnosticos.create! :id => 8, :nombre => 'Pieza normal'
-FdTiposDiagnosticos.create! :id => 9, :nombre => 'Pieza ausente'
-FdTiposDiagnosticos.create! :id => 10, :nombre => 'Endodoncia'
-FdTiposDiagnosticos.create! :id => 11, :nombre => 'Indica extracción'
-FdTiposDiagnosticos.create! :id => 12, :nombre => 'Pieza con implante'
+FdTiposDiagnosticos.create! :id => 1, :nombre => 'Sano', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 2, :nombre => 'Caries', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 3, :nombre => 'Composite', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 4, :nombre => 'Sellante', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 5, :nombre => 'Amalgama', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 6, :nombre => 'Incrustación', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 7, :nombre => 'Corona', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 8, :nombre => 'Pieza normal', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 9, :nombre => 'Pieza ausente', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 10, :nombre => 'Endodoncia', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 11, :nombre => 'Indica extracción', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 12, :nombre => 'Pieza con implante', :tipo => 'odontograma'
+FdTiposDiagnosticos.create! :id => 13, :nombre => 'Pulpitis reversible', :tipo => 'endodoncia'
+FdTiposDiagnosticos.create! :id => 14, :nombre => 'Pulpitis irreversible aguda (sintomática)', :tipo => 'endodoncia'
+FdTiposDiagnosticos.create! :id => 15, :nombre => 'Pulpitis reversible crónica (asintomática)', :tipo => 'endodoncia'
+FdTiposDiagnosticos.create! :id => 16, :nombre => 'Pulpitis hiperclásica (polipo pulpar)', :tipo => 'endodoncia'
+FdTiposDiagnosticos.create! :id => 17, :nombre => 'Reabsorción dentinaria interna', :tipo => 'endodoncia'
+FdTiposDiagnosticos.create! :id => 18, :nombre => 'Calcificación pulpar', :tipo => 'endodoncia'
+FdTiposDiagnosticos.create! :id => 19, :nombre => 'Necrosis pulpar', :tipo => 'endodoncia'
+FdTiposDiagnosticos.create! :id => 20, :nombre => 'Gingivitis aguda', :tipo => 'periodoncia'
+FdTiposDiagnosticos.create! :id => 21, :nombre => 'Gingivitis crónica', :tipo => 'periodoncia'
+FdTiposDiagnosticos.create! :id => 22, :nombre => 'Periodontitis aguda', :tipo => 'periodoncia'
+FdTiposDiagnosticos.create! :id => 23, :nombre => 'Periodontitis crónica', :tipo => 'periodoncia'
+FdTiposDiagnosticos.create! :id => 24, :nombre => 'Periodontitis', :tipo => 'periodoncia'
+FdTiposDiagnosticos.create! :id => 25, :nombre => 'Otras enfermedades periodontales', :tipo => 'periodoncia'
+FdTiposDiagnosticos.create! :id => 26, :nombre => 'Enfermedad del periodonto, no especificada', :tipo => 'periodoncia'
+
+
+#Tratamientos
+FdTratamientos.create! :id => 1, :descripcion => 'Limpieza'
+FdTratamientos.create! :id => 2, :descripcion => 'Extracción'
+
+FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 1, :tipo_diagnostico_id => 2
+FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 2, :tipo_diagnostico_id => 2
+FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 2, :tipo_diagnostico_id => 11
+
+FdPrecios.create! :valor => 0, :fecha_inicio => '2017-01-01', :activo => true, :descripcion => 'Sin precio asignado'
+
+
+

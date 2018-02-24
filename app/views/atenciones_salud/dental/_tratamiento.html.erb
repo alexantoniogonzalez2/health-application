@@ -2,12 +2,12 @@
 	<div class="row">
 		<fieldset>
 			<legend>Endodoncia</legend>
-			{{  }}
-			<div ng-repeat="glosa_endo in treatment.glosa_endo" class="container">
-    		<glosa-endo></glosa-endo> 
+			<div ng-repeat="item in odontogramList" class="container">
+				<div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto">
+    			<glosa-endo></glosa-endo> 
+    		</div>
   		</div>
 		</fieldset>
-
 
 	</div>
 	<div class="row">
@@ -20,7 +20,7 @@
 
 	</div>
 	<div class="row">
-			hola {{ 2 + 2}}
+		
 
 	</div>
 

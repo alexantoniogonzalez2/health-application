@@ -10,6 +10,10 @@ namespace :agendamiento do
 		crearAgendamientos('11:00','12:00',"Paciente atendido",2)
 		crearAgendamientos('10:00','12:00',"Hora disponible",6)
 		crearAgendamientos('11:00','13:00',"Hora disponible",7)
+		crearAgendamientos('12:00','13:00',"Paciente en espera",6)
+		crearAgendamientos('13:00','14:00',"Paciente en espera",7)
+		crearAgendamientos('11:00','12:00',"Paciente atendido",6) 
+		crearAgendamientos('11:00','12:00',"Paciente atendido",7)
   end
 
   def crearAgendamientos (hora_inicio,hora_termino,estado,esp_pre_pro)

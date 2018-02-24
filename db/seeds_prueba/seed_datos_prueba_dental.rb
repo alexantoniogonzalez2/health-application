@@ -67,3 +67,6 @@ RPDen2 = PrePrestadorProfesionales.create! :prestador => CLG, :profesional => DD
 
 PreReglaPagos.create! :tipo => 'profesional', :especialidad_prestador_profesional => RPDen1, :porcentaje => 0.4, :fecha_inicio => '2014-01-01'
 PreReglaPagos.create! :tipo => 'profesional', :especialidad_prestador_profesional => RPDen2, :porcentaje => 0.35, :fecha_inicio => '2014-01-01' 
+
+FdPrecios.create! :prestador=> CLG, :tratamiento_id => 1, :valor => 10000, :fecha_inicio => '2017-01-01', :activo => true, :descripcion => 'Precio estándar'
+FdPrecios.create! :prestador=> CLG, :tratamiento_id => 2, :valor => 20000, :fecha_inicio => '2017-01-01', :activo => true, :descripcion => 'Precio estándar'

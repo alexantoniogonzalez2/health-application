@@ -1,6 +1,6 @@
-class CreateFdEndodoncia < ActiveRecord::Migration
+class CreateFdEndodoncias < ActiveRecord::Migration
   def change
-    create_table :fd_endodoncia do |t|
+    create_table :fd_endodoncias do |t|
     	t.references :atencion_salud
     	t.references :pieza_dental
     	t.integer :comienzo_dolor
@@ -18,8 +18,8 @@ class CreateFdEndodoncia < ActiveRecord::Migration
     	t.text :examen_extraoral
     	t.text :examen_intraoral
     	t.text :examen_radiologico
-    	t.integer :diagnostico
     	t.text :comentario
+        t.references :diagnostico
       t.timestamps null: false
     end
   end

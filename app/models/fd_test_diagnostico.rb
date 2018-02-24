@@ -1,7 +1,7 @@
 class FdTestDiagnostico < ActiveRecord::Base
 	self.table_name = "fd_test_diagnostico"
 	belongs_to :pieza_dental, :class_name => 'FdPiezasDentales'
-	belongs_to :endodoncia, :class_name => 'FdEndodoncia'
+	belongs_to :endodoncia, :class_name => 'FdEndodoncias'
 
 	def getEstado
 		{

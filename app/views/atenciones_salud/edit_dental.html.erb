@@ -26,23 +26,23 @@
       </div>    
       <div class="row">
 
-        <div ng-app="dental" >
+        <div ng-app="dental" class="app-dental">
 
           <section ng-controller="PanelController as panel">
             <ul class="nav nav-pills">
-              <li ng-class="{ active: panel.isSelected(1) }">
+              <li ng-class="{ active: panel.isSelected(1) }" class="tabstyle">
                 <a href ng-click="panel.selectTab(1)">Antecedentes</a>
               </li>
-              <li ng-class="{ active: panel.isSelected(2)}">
+              <li ng-class="{ active: panel.isSelected(2)}" class="tabstyle">
                 <a href ng-click="panel.selectTab(2)">Odontograma</a>
               </li>
-              <li ng-class="{ active: panel.isSelected(3)}">
+              <li ng-class="{ active: panel.isSelected(3)}" class="tabstyle">
                 <a href ng-click="panel.selectTab(3)">Endodoncia</a>  
               </li>
-              <li ng-class="{ active: panel.isSelected(4)}">
+              <li ng-class="{ active: panel.isSelected(4)}" class="tabstyle">
                 <a href ng-click="panel.selectTab(4)">Periodoncia</a>  
               </li>
-              <li ng-class="{ active: panel.isSelected(5)}">
+              <li ng-class="{ active: panel.isSelected(5)}" class="tabstyle">
                 <a href ng-click="panel.selectTab(5)">Tratamiento</a>  
               </li>
             </ul>

@@ -4,18 +4,10 @@
   app.service('odontogramService', function() {
     var odontogramList = [];
 
-    var addOdontogram = function(newObj) {
-        odontogramList.push(newObj);
-    };
+    var addOdontogram = function(newObj) { odontogramList.push(newObj); };
+    var getOdontogram = function(){ return odontogramList; };
 
-    var getOdontogram = function(){
-        return odontogramList;
-    };
-
-    return {
-      addOdontogram: addOdontogram,
-      getOdontogram: getOdontogram
-    };
+    return { addOdontogram: addOdontogram, getOdontogram: getOdontogram };
 
   });
 

@@ -28,13 +28,13 @@
         $scope.general.diagnosis = data;
     });
     $scope.itemArray = [
-      {id: 1, name: 'Pulpitis reversible'},
-      {id: 2, name: 'Pulpitis irreversible aguda (sintomática)'},
-      {id: 3, name: 'Pulpitis reversible crónica (asintomática)'},
-      {id: 4, name: 'Pulpitis hiperclásica (polipo pulpar)'},
-      {id: 5, name: 'Reabsorción dentinaria interna'},
-      {id: 6, name: 'Calcificación pulpar'},
-      {id: 7, name: 'Necrosis pulpar'},
+      {id: 13, name: 'Pulpitis reversible'},
+      {id: 14, name: 'Pulpitis irreversible aguda (sintomática)'},
+      {id: 15, name: 'Pulpitis reversible crónica (asintomática)'},
+      {id: 16, name: 'Pulpitis hiperclásica (polipo pulpar)'},
+      {id: 17, name: 'Reabsorción dentinaria interna'},
+      {id: 18, name: 'Calcificación pulpar'},
+      {id: 19, name: 'Necrosis pulpar'},
     ];
     $scope.endo = this;
     $http.get('/load_endodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
@@ -46,16 +46,15 @@
     var parameter = null;
 
     var saveUpdate = function(parameterName,newValue,oldValue) {
+      console.log('o'+oldValue+" n"+newValue);
      
       if (parameterName == 'diagnostico'){
-        if (oldValue !== undefined && newValue !== undefined ){}
-        else {
-          if (newValue !== undefined )
-            newValue = newValue['id'];
-          else
-            newValue = 0;
-        }
-
+        
+        if (newValue !== undefined )
+          newValue = newValue['id'];
+        else
+          newValue = 0;
+    
         $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
         
       }
@@ -108,7 +107,7 @@
         $scope.endo.descripcion = tooth.descripcion;
         $scope.endo.image ="/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
         $( "#tooltip_endodoncia" ).hide();
-        $http.post('/select_tooth',{ param: new_id, at_salud_id: atencion_salud_id }).success(function(){ });
+        $http.post('/select_tooth',{ param: new_id, at_salud_id: atencion_salud_id, diagnostico: $scope.selected.value.id }).success(function(){ });
       } else {
         diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.id === id;})[0];
         diag_check = $filter('filter')($scope.general.diagnosis, function (d) {return d.id === new_id;})[0];
