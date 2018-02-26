@@ -1,14 +1,15 @@
 (function(){
   var app = angular.module('treatment', ['templates', 'ng-rails-csrf', 'ui.select']);
   
-  app.controller('TreatmentController', ['$http','$filter', '$scope', '$timeout','odontogramService', function($http, $filter,$scope,$timeout,odontogramService) { 
+  app.controller('TreatmentController', ['$http','$filter','$scope','$timeout','odontogramService','endodonticService','periodonticService', function($http, $filter,$scope,$timeout,odontogramService,endodonticService,periodonticService) { 
 
     $scope.odontogramList = odontogramService.getOdontogram();
-    //console.log( $scope.odontogramList);
+    $scope.endodonticDiagnosis = endodonticService.getDiagnosis();
+    $scope.endodonticPiezaDental = endodonticService.getPiezaDental();
+    $scope.periodonticDiagnosis = periodonticService.getDiagnosis();
 
     $scope.noSanos = function(tooth) {
-      //console.log(tooth.caracteristica);
-      if (tooth.caracteristica != "normal" || tooth.diag_central != "sano" || tooth.diag_distal != "sano" || tooth.diag_mesial != "sano" || tooth.diag_palatina != "sano" || tooth.diag_vestibular != "sano"){
+      if (tooth.caracteristica == "ausente" || tooth.caracteristica == "extraccion" || tooth.diag_central == "caries" || tooth.diag_distal == "caries" || tooth.diag_mesial == "caries" || tooth.diag_palatina == "caries" || tooth.diag_vestibular == "caries"){
         return true;
       }
       return false;

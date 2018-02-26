@@ -1,7 +1,6 @@
 (function(){
   var app = angular.module('endodontic', ['templates', 'ng-rails-csrf', 'ui.select'])
-
-  app.controller('GeneralEndodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
+  app.controller('GeneralEndodonticController', ['$http','$filter','$scope','$timeout','endodonticService',function($http, $filter,$scope,$timeout,endodonticService) {  
 
     var contador = 0;
     $scope.general = this;      
@@ -39,23 +38,29 @@
     $scope.endo = this;
     $http.get('/load_endodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
       $scope.endo = data;
-      $scope.selected = { value: $scope.itemArray[$scope.endo.diag-1] };
+      endodonticService.addPiezaDental($scope.endo);
+      $scope.selected = { value: $scope.itemArray[$scope.endo.diag-13] }; //Agregar busqueda
+      endodonticService.addDiagnosis($scope.selected);
     });
 
     var timeout = null;
     var parameter = null;
 
     var saveUpdate = function(parameterName,newValue,oldValue) {
-      console.log('o'+oldValue+" n"+newValue);
      
       if (parameterName == 'diagnostico'){
+
+        if (!(newValue === undefined && oldValue === undefined)){
         
-        if (newValue !== undefined )
-          newValue = newValue['id'];
-        else
-          newValue = 0;
-    
-        $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+          if (newValue !== undefined )
+            newValue = newValue['id'];
+          else
+            newValue = 0;
+      
+          console.log($scope.selected);
+          $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+          console.log($scope.selected);
+        }
         
       }
       else if (oldValue !== undefined ){
@@ -107,7 +112,10 @@
         $scope.endo.descripcion = tooth.descripcion;
         $scope.endo.image ="/assets/dental/od_"+new_id[0]+"/"+new_id+".jpg";
         $( "#tooltip_endodoncia" ).hide();
-        $http.post('/select_tooth',{ param: new_id, at_salud_id: atencion_salud_id, diagnostico: $scope.selected.value.id }).success(function(){ });
+        var vDiag = 'undefined';
+        if ($scope.selected.value != undefined )
+          vDiag =  $scope.selected.value.id;
+        $http.post('/select_tooth',{ param: new_id, at_salud_id: atencion_salud_id, diagnostico: vDiag }).success(function(){ });
       } else {
         diag = $filter('filter')($scope.general.diagnosis, function (d) {return d.id === id;})[0];
         diag_check = $filter('filter')($scope.general.diagnosis, function (d) {return d.id === new_id;})[0];

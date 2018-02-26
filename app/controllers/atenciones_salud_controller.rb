@@ -822,13 +822,13 @@
 	  image = @endodoncia.pieza_dental.nil? ? '' : ActionController::Base.helpers.asset_path('dental/od_'<<@endodoncia.pieza_dental.tipo_diente.primer_digito.to_s<<'/'<<@endodoncia.pieza_dental.tipo_diente.nomenclatura<<'.jpg')
 		
 		if @endodoncia.pieza_dental.nil?
-			texto_pieza_dental = nil
+			texto_pieza_dental = "is null"
 		else
 			@pieza_dental = FdPiezasDentales.find(@endodoncia.pieza_dental.id)
-			texto_pieza_dental = @pieza_dental.id
+			texto_pieza_dental = "= " + @pieza_dental.id.to_s
 		end
-		@diagnostico = FdDiagnosticos.joins(:tipo_diagnostico).where("pieza_dental_id = ? AND atencion_salud_id = ? AND tipo = 'endodoncia'",texto_pieza_dental,@atencion_salud.id).first
-		diag_id = @diagnostico.id if @diagnostico
+		@diagnostico = FdDiagnosticos.joins(:tipo_diagnostico).where("pieza_dental_id "+texto_pieza_dental+" AND atencion_salud_id = ? AND tipo = 'endodoncia'",@atencion_salud.id).first
+		diag_id = @diagnostico.tipo_diagnostico_id if @diagnostico
 
 		render :json => {
         name: @endodoncia.pieza_dental.try(:tipo_diente).try(:nomenclatura),
@@ -870,11 +870,9 @@
 
 			if @endodoncia.pieza_dental.nil?
 				texto_pieza_dental = "is null"
-				#texto_tipo = "is null"
 			else
 				@pieza_dental = FdPiezasDentales.find(@endodoncia.pieza_dental.id)
 				texto_pieza_dental = "= " + @pieza_dental.id.to_s
-				#texto_tipo = "= 'endodoncia'"
 			end
 
 	  	if params[:value] == 0
@@ -885,14 +883,16 @@
 	  			@glos_prev.destroy! if @glos_prev
 	  			@diag.destroy!
 	  		end
-	  		@endodoncia.pieza_dental = nil
-	  		@endodoncia.save!
 	  	else
-			  @precio = FdPrecios
-			  					.joins('JOIN fd_tratamientos_tipos_diagnosticos as fdttd
-									 				ON fdttd.tratamiento_id = fd_precios.tratamiento_id')
-			  					.where('activo = 1 AND tipo_diagnostico_id = ? AND prestador_id = ? ',params[:value],@prestador.id).order(fecha_termino: :desc).first
-			  @precio = FdPrecios.find(1)	unless @precio
+			  @precio = FdPrecios.joins('JOIN fd_tratamientos_tipos_diagnosticos as fdttd ON fdttd.tratamiento_id = fd_precios.tratamiento_id')
+			  										.where('activo = 1 AND tipo_diagnostico_id = ? AND prestador_id = ? ',params[:value],@prestador.id).order(fecha_termino: :desc).first
+
+				if @precio
+			  	@tratamiento = FdTratamientos.find(@precio.tratamiento_id)
+			  else
+			  	@precio = FdPrecios.find(1)
+			  	@tratamiento = nil
+			  end	
 
 			  @diagnostico = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("pieza_dental_id "+texto_pieza_dental+" AND atencion_salud_id = ? AND tipo = 'endodoncia'",@atencion_salud.id).first
 			  if @diagnostico
@@ -906,12 +906,12 @@
 		  			@glosa_diag.diagnostico = @diagnostico
 		  			@glosa_diag.save!
 			  	else
-			  		@new_glosa = FdGlosas.create! :precio => @precio, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo"
+			  		@new_glosa = FdGlosas.create! :precio => @precio, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo", :tratamiento => @tratamiento
 			  		@new_glosa_diag = FdGlosasDiagnosticos.create! :diagnostico => @diagnostico, :glosa => @new_glosa
 			  	end
 			  else 
-			  	@new_diag = FdDiagnosticos.create! :pieza_dental_id => @endodoncia.pieza_dental, :tipo_diagnostico_id => params[:value], :fecha => DateTime.current, :responsable => @usuario, :atencion_salud => @atencion_salud  
-			  	@new_glosa = FdGlosas.create! :precio => @precio, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo"
+			  	@new_diag = FdDiagnosticos.create! :pieza_dental_id => @endodoncia.pieza_dental_id, :tipo_diagnostico_id => params[:value], :fecha => DateTime.current, :responsable => @usuario, :atencion_salud => @atencion_salud  
+			  	@new_glosa = FdGlosas.create! :precio => @precio, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo", :tratamiento => @tratamiento
 			  	@new_glosa_diag = FdGlosasDiagnosticos.create! :diagnostico => @new_diag, :glosa => @new_glosa 
 			  end
 
@@ -1000,9 +1000,6 @@
 	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:param]).first
 	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
 		@endodoncia = FdEndodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
-	  @endodoncia.pieza_dental = @pieza_dental
-	  @endodoncia.save!
-
 		@precio = FdPrecios.joins('JOIN fd_tratamientos_tipos_diagnosticos as fdttd ON fdttd.tratamiento_id = fd_precios.tratamiento_id')
 		  										.where('activo = 1 AND tipo_diagnostico_id = ? AND prestador_id = ? ',params[:diagnostico],@prestador.id).order(fecha_termino: :desc).first
 	  
@@ -1013,51 +1010,28 @@
 	  	@tratamiento = nil
 	  end	
 	 
-	 	# RREVISAR QUE ESTO FUNCIONE Y DIFERENCIAS CON SAVEDENTALCHARACTERISTIC, QUIZÁS NO ES NECESARIO EL TEXTO_PIEZA_DENTAL, DEBIERA TENER UNA FORMA DE DESSELECCIONAR
+	 	# Pieza dental null está pendiente de programación
   	if @endodoncia.pieza_dental.nil?
 			texto_pieza_dental = "is null"
-			texto_tipo = "is null"
 		else
-			texto_pieza_dental = "= " + @pieza_dental.id.to_s
-			texto_tipo = "= 'endodoncia'"
+			texto_pieza_dental = "= " + @endodoncia.pieza_dental_id.to_s
 		end
 
-  	if params[:diagnostico] == "undefined"
-  		@diag_prev = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("pieza_dental_id "+texto_pieza_dental+" AND atencion_salud_id = ? AND tipo "+texto_tipo,@atencion_salud.id).first
-  		if @diag_prev
-  			@diag = FdDiagnosticos.find(@diag_prev.id)
-  			@glos_prev = FdGlosas.find(@diag.glosa_id)
-  			@diag.destroy!
-  			@glosa_prev.destroy!
-  		end
-  		@endodoncia.pieza_dental = nil
-  		@endodoncia.save!
+		@endodoncia.pieza_dental = @pieza_dental
+		@endodoncia.save!
 
-  	else
-
-		  @diagnostico = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("pieza_dental_id "+texto_pieza_dental+" AND atencion_salud_id = ? AND tipo "+texto_tipo,@atencion_salud.id).first
+		unless params[:diagnostico] == "undefined"
+			#Se revisa si había un diagnostico para la pieza dental anterior, incluso si no había seleccionada
+		  @diagnostico = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("pieza_dental_id "+texto_pieza_dental+" AND atencion_salud_id = ? AND tipo = 'endodoncia'",@atencion_salud.id).first
 		  if @diagnostico
-		  	@diagnostico.tipo_diagnostico_id = params[:diagnostico]
+		  	@diagnostico.pieza_dental = @pieza_dental
 		  	@diagnostico.save!
-		  	@glosa = FdGlosas.joins(:glosas_diagnosticos).where('diagnostico_id = ? AND presupuesto_id = ?', @diagnostico.id, @presupuesto.id).first
-		  	if @glosa
-		  		@glosa.precio = @precio
-		  		@glosa.tratamiento = @tratamiento
-		  		@glosa.total = @precio.valor
-		  		@glosa_diag = FdGlosasDiagnosticos.where("glosa_id = ? ", @glosa.id).first
-	  			@glosa_diag.diagnostico = @diagnostico
-	  			@glosa_diag.save!
-		  	else
-		  		@new_glosa = FdGlosas.create! :precio => @precio, :tratamiento => @tratamiento, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo"
-		  		@new_glosa_diag = FdGlosasDiagnosticos.create! :diagnostico => @diagnostico, :glosa => @new_glosa
-		  	end
 		  else 
 		  	@new_diag = FdDiagnosticos.create! :pieza_dental_id => @endodoncia.pieza_dental, :tipo_diagnostico_id => params[:diagnostico], :fecha => DateTime.current, :responsable => @usuario, :atencion_salud => @atencion_salud  
 		  	@new_glosa = FdGlosas.create! :precio => @precio, :tratamiento => @tratamiento, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo"
 		  	@new_glosa_diag = FdGlosasDiagnosticos.create! :diagnostico => @new_diag, :glosa => @new_glosa 
-		  end
-
-		end 
+		  end		
+		end
 
 		render :json => { :success => true } 
 	end
@@ -1273,9 +1247,17 @@
 	  @persona = @agendamiento.persona
 	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 
+	  @diagnostico = FdDiagnosticos.joins(:tipo_diagnostico).where("atencion_salud_id = ? AND tipo = 'periodoncia'",@atencion_salud.id).first
+		diag_id = @diagnostico.tipo_diagnostico_id if @diagnostico
+
 	  #validacion de seguridad
 	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
-	  render :json => @periodoncia
+	  render :json => {
+        id: @periodoncia.id,
+        atencion_salud_id: @atencion_salud.id,
+        comentario: @periodoncia.comentario,
+        diagnostico: diag_id
+      };
 		
 	end
 
@@ -1285,10 +1267,53 @@
 		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona = @agendamiento.persona
 	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:at_salud_id]).first
 
 	  #validacion de seguridad
 	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
 	  if params[:param] == "diagnostico"
+	  	if params[:value] == 0
+	  		@diag_prev = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("atencion_salud_id = ? AND tipo = 'periodoncia'",@atencion_salud.id).first
+	  		if @diag_prev
+	  			@diag = FdDiagnosticos.find(@diag_prev.id)
+	  			@glos_prev = FdGlosas.joins(:glosas_diagnosticos).where("diagnostico_id = ? ",@diag_prev.id).first
+	  			@glos_prev.destroy! if @glos_prev
+	  			@diag.destroy!
+	  		end
+	  	else
+			  @precio = FdPrecios.joins('JOIN fd_tratamientos_tipos_diagnosticos as fdttd ON fdttd.tratamiento_id = fd_precios.tratamiento_id')
+			  										.where('activo = 1 AND tipo_diagnostico_id = ? AND prestador_id = ? ',params[:value],@prestador.id).order(fecha_termino: :desc).first
+
+				if @precio
+			  	@tratamiento = FdTratamientos.find(@precio.tratamiento_id)
+			  else
+			  	@precio = FdPrecios.find(1)
+			  	@tratamiento = nil
+			  end	
+
+			  @diagnostico = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("atencion_salud_id = ? AND tipo = 'periodoncia'",@atencion_salud.id).first
+			  if @diagnostico
+			  	@diagnostico.tipo_diagnostico_id = params[:value]
+			  	@diagnostico.save!
+			  	@glosa = FdGlosas.joins(:glosas_diagnosticos).where('diagnostico_id = ? AND presupuesto_id = ?', @diagnostico.id, @presupuesto.id).first
+			  	if @glosa
+			  		@glosa.precio = @precio
+			  		@glosa.total = @precio.valor
+			  		@glosa_diag = FdGlosasDiagnosticos.where("glosa_id = ? ", @glosa.id).first
+		  			@glosa_diag.diagnostico = @diagnostico
+		  			@glosa_diag.save!
+			  	else
+			  		@new_glosa = FdGlosas.create! :precio => @precio, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo", :tratamiento => @tratamiento
+			  		@new_glosa_diag = FdGlosasDiagnosticos.create! :diagnostico => @diagnostico, :glosa => @new_glosa
+			  	end
+			  else 
+			  	@new_diag = FdDiagnosticos.create! :tipo_diagnostico_id => params[:value], :fecha => DateTime.current, :responsable => @usuario, :atencion_salud => @atencion_salud  
+			  	@new_glosa = FdGlosas.create! :precio => @precio, :descuento => 0.0, :total => @precio.valor, :presupuesto => @presupuesto, :estado => "activo", :tratamiento => @tratamiento
+			  	@new_glosa_diag = FdGlosasDiagnosticos.create! :diagnostico => @new_diag, :glosa => @new_glosa 
+			  end
+
+			end
 
 	  else
 	  	@periodoncia[params[:param]] = params[:value]

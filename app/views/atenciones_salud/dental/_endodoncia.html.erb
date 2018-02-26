@@ -124,7 +124,7 @@
 		</div>
 		<div class="col-md-4">
 			<label>Diagnóstico</label><br>
-			<ui-select ng-model="selected.value" theme="select2" class="select-diag-endo">
+			<ui-select ng-model="selected.value"  class="select-diag-endo" theme="bootstrap">
 		    <ui-select-match allow-clear="true" placeholder="Selecciona un diagnóstico" >
 		       <span ng-bind="$select.selected.name"></span>
 		    </ui-select-match>
@@ -149,5 +149,3 @@
 	</div>
 	<div id="test-aux"></div>
 </div>
-
-<!--<%= javascript_include_tag "atencion_salud/dental" %>-->

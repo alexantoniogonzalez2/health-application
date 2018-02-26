@@ -1,7 +1,6 @@
 (function(){
-  var app = angular.module('periodontic', ['templates', 'ng-rails-csrf', 'ui.select']);
-  
-  app.controller('PeriodonticController', ['$http','$filter', '$scope', '$timeout', function($http, $filter,$scope,$timeout) {  
+  var app = angular.module('periodontic', ['templates', 'ng-rails-csrf','ui.select']);
+  app.controller('PeriodonticController', ['$http','$filter','$scope','$timeout','periodonticService',function($http, $filter,$scope,$timeout,periodonticService) {  
 
     $scope.indicegingival = this;      
     $scope.indicegingival = [];
@@ -19,17 +18,18 @@
     $scope.periodoncia = this;      
     $scope.periodoncia = [];
     $scope.itemArray = [
-      {id: 1, name: 'Gingivitis aguda'},
-      {id: 2, name: 'Gingivitis crónica'},
-      {id: 3, name: 'Periodontitis aguda'},
-      {id: 4, name: 'Periodontitis crónica'},
-      {id: 5, name: 'Periodontosis'},
-      {id: 6, name: 'Otras enfermedades periodontales'},
-      {id: 7, name: 'Enfermedad del periodonto, no especificada'},
+      {id: 20, name: 'Gingivitis aguda'},
+      {id: 21, name: 'Gingivitis crónica'},
+      {id: 22, name: 'Periodontitis aguda'},
+      {id: 23, name: 'Periodontitis crónica'},
+      {id: 24, name: 'Periodontosis'},
+      {id: 25, name: 'Otras enfermedades periodontales'},
+      {id: 26, name: 'Enfermedad del periodonto, no especificada'},
     ];
     $http.get('/load_periodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
       $scope.periodoncia = data;
-      $scope.selected = { value: $scope.itemArray[$scope.periodoncia.diagnostico-1] };
+      $scope.selected = { value: $scope.itemArray[$scope.periodoncia.diagnostico-20] };
+      periodonticService.addDiagnosis($scope.selected);
     });
 
     $scope.indicegrupogingival = this;      
@@ -42,17 +42,19 @@
 
     var saveUpdate = function(parameterName,newValue,oldValue) {
       if (parameterName == 'diagnostico'){
-        if (oldValue !== undefined && newValue !== undefined ){}
-        else {
+        if (!(newValue === undefined && oldValue === undefined)){
+    
           if (newValue !== undefined )
             newValue = newValue['id'];
           else
             newValue = 0; 
+
+          $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
         }
-        $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+        
       }
       else if (oldValue !== undefined){
-        $http.post('/save_periodontic',{ param: parameterName, valor: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+        $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
       }
     };
 

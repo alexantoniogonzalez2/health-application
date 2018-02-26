@@ -2,28 +2,61 @@
 	<div class="row">
 		<fieldset>
 			<legend>Endodoncia</legend>
+			<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
 			<div ng-repeat="item in odontogramList" class="container">
 				<div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto">
     			<glosa-endo></glosa-endo> 
     		</div>
+    		<div class="row">
+					<div class="col-md-3 no-padding" id="end-{{endodonticPiezaDental[0].name}}">
+						<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test">
+						<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
+						<span>{{endodonticPiezaDental[0].descripcion}} </span>
+					</div>
+					<div class="col-md-4 ajus-pad-end">
+						<span> {{ endodonticDiagnosis[0]["value"].name }} </span>
+					</div>
+					<div class="col-md-2 ajus-pad-end">
+						<span>Tratamiento</span>
+					</div>
+					<div class="col-md-2 ajus-pad-end">
+						<span>Valor</span>
+					</div>
+					<div class="col-md-1 ajus-pad-end"> 
+						<a href="#" ng-click="treatment.delete(endodonticPiezaDental[0].name)">Eliminar</a>
+					</div>
+				</div>
   		</div>
+
 		</fieldset>
 
 	</div>
 	<div class="row">
 		<fieldset>
 			<legend>Periodoncia</legend>
-		</fieldset>
+				<%= render :partial => "atenciones_salud/dental/head_periodoncia" %>
+				<div class="row">
+					<div class="col-md-5 ajus-pad-end">
+						<span> {{ periodonticDiagnosis[0]["value"].name }}
+					</div>
+					<div class="col-md-3 ajus-pad-end">
+						Tratamiento
+					</div>
+					<div class="col-md-2 ajus-pad-end">
+						Valor
+					</div>
+					<div class="col-md-2 ajus-pad-end"> 
+						<a href="#" ng-click="treatment.delete()">Eliminar</a>
+					</div>
+				</div>
 
+		</fieldset>	
 	</div>
 	<div class="row">
-
+		Subtotal
 	</div>
 	<div class="row">
-		
-
+		Total tratamiento
 	</div>
 
 </div>
-
-<%= javascript_include_tag "atencion_salud/dental" %>

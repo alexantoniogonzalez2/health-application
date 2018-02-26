@@ -11,8 +11,31 @@
 
   });
 
-  app.controller('PanelController', ['$http','$filter', function($http, $filter){
+  app.service('endodonticService', function() {
+    var endodonticDiagnosis = [];
+    var endodonticPiezaDental = [];
 
+    var addDiagnosis = function(newObj) { endodonticDiagnosis.push(newObj); };
+    var getDiagnosis = function(){ return endodonticDiagnosis; };
+    var addPiezaDental = function(newObj) { endodonticPiezaDental.push(newObj); };
+    var getPiezaDental = function(){ return endodonticPiezaDental; };
+
+    return { addDiagnosis: addDiagnosis, getDiagnosis: getDiagnosis, addPiezaDental: addPiezaDental, getPiezaDental: getPiezaDental };
+
+  });
+
+  app.service('periodonticService', function() {
+    var periodonticDiagnosis = [];
+
+    var addDiagnosis = function(newObj) { periodonticDiagnosis.push(newObj); };
+    var getDiagnosis = function(){ return periodonticDiagnosis; };
+
+    return { addDiagnosis: addDiagnosis, getDiagnosis: getDiagnosis };
+
+  });
+
+
+  app.controller('PanelController', ['$http','$filter', function($http, $filter){
     this.tab = 1;
     this.selectTab = function(setTab) { this.tab = setTab; };
     this.isSelected = function(checkTab){

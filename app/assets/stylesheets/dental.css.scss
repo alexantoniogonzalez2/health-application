@@ -1,5 +1,9 @@
 @import "colors";
 
+.ui-select-choices {
+	position: relative;
+	z-index: 1;
+}
 div.dental {
 	padding-right: 5px; 
 	padding-left: 5px;
@@ -261,7 +265,7 @@ div.borde-derecho {
 	.checkbox {
     margin-bottom: 4px !important;
 	}
-	.btn {
+	.btn-xs {
 		opacity: 0.5 !important;
 		margin-left: 0px;
 	}
@@ -293,7 +297,7 @@ div.tooltip_endodoncia, div.tooltip_test  {
 
 div.tooltip_endodoncia {  
 	top: 202px;
-	left: 260px; 
+	left: 245px; 
 }
 
 div.tooltip_test { 
