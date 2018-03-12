@@ -42,16 +42,30 @@ div.dental {
 	top: 6px;
 }
 
+.palatina-treat { 
+	left: 14px;
+	top: 6px;
+}
+
 .oclusal { 
 	bottom: 7px; 
 	right: 7px;
+}
+.oclusal-treat { 
+	bottom: 7px; 
+	//right: 7px;
 }
 
 .incisal { 
 	bottom: 7px;
 	right: 7px;
 	padding: 0px 3px; 
-}  
+} 
+.incisal-treat { 
+	bottom: 7px;
+	//right: 7px;
+	padding: 0px 3px; 
+}   
 
 .col-16 { 	
   width: 40px;
@@ -284,7 +298,7 @@ img.end-test {
 	min-width: 13px;
 }
 
-div.tooltip_endodoncia, div.tooltip_test  {  
+div.tooltip_endodoncia, div.tooltip_test, div.tooltip_tratamiento {  
   z-index: 3;
   position: absolute;
   background-color: white;
@@ -292,17 +306,24 @@ div.tooltip_endodoncia, div.tooltip_test  {
   border: $blueFooter 2px;
   border-style: solid;
   padding: 8px !important;
-  width: 420px;
 }
 
 div.tooltip_endodoncia {  
 	top: 202px;
 	left: 245px; 
+	width: 420px;
 }
 
-div.tooltip_test { 
-	top: 0px;
-	left: 85px; 
+div.tooltip_test {  
+	width: 420px;
+}
+
+div.tooltip_tratamiento {  
+	width: 800px; 
+	left: 405px;
+  margin-top: 22px;
+  font-size: 10px;
+  div.content { width: 800px; }
 }
 
 span.glyphicon-1 {
@@ -358,6 +379,10 @@ a.link-end {
 
 .select-diag-endo {
 	min-width: 300px;
+}
+
+.select-diag-treat {
+	min-width: 200px;
 }
 
 .indice {

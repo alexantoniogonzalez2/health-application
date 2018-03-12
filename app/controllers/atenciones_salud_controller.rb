@@ -891,7 +891,7 @@
 			  	@tratamiento = FdTratamientos.find(@precio.tratamiento_id)
 			  else
 			  	@precio = FdPrecios.find(1)
-			  	@tratamiento = nil
+			  	@tratamiento = FdTratamientos.find(1)
 			  end	
 
 			  @diagnostico = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("pieza_dental_id "+texto_pieza_dental+" AND atencion_salud_id = ? AND tipo = 'endodoncia'",@atencion_salud.id).first
@@ -1007,7 +1007,7 @@
 	  	@tratamiento = FdTratamientos.find(@precio.tratamiento_id)
 	  else
 	  	@precio = FdPrecios.find(1)
-	  	@tratamiento = nil
+	  	@tratamiento = FdTratamientos.find(1)
 	  end	
 	 
 	 	# Pieza dental null está pendiente de programación
@@ -1074,7 +1074,7 @@
 	  	@tratamiento = FdTratamientos.find(@precio.tratamiento_id)
 	  else
 	  	@precio = FdPrecios.find(1)
-	  	@tratamiento = nil
+	  	@tratamiento = FdTratamientos.find(1)
 	  end	
 	 
 	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
@@ -1148,7 +1148,7 @@
 	  	@tratamiento = FdTratamientos.find(@precio.tratamiento_id)
 	  else
 	  	@precio = FdPrecios.find(1)
-	  	@tratamiento = nil
+	  	@tratamiento = FdTratamientos.find(1)
 	  end	
 
 	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
@@ -1261,7 +1261,26 @@
 		
 	end
 
+	def loadTratamiento
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+
+	  @glosas = FdGlosas.select('fd_glosas.id,ftp.nomenclatura,fd_glosas.total,fd_glosas.descuento,ftd.nombre,ftd.tipo,ft.descripcion,fd_glosas.estado').
+	  									joins(:glosas_diagnosticos, :precio ,'INNER JOIN fd_diagnosticos AS fd ON fd_glosas_diagnosticos.diagnostico_id = fd.id','LEFT JOIN fd_piezas_dentales AS fpd ON fpd.id = fd.pieza_dental_id',
+	  												'LEFT JOIN fd_tipos_dientes AS ftp ON ftp.id = fpd.tipo_diente_id','INNER JOIN fd_tipos_diagnosticos AS ftd ON ftd.id = fd.tipo_diagnostico_id ',
+	  												'LEFT JOIN fd_tratamientos as ft ON ft.id = fd_glosas.tratamiento_id').where("presupuesto_id = ? ",@presupuesto.id)
+
+		render :json => @glosas
+		
+	end
+
 	def savePeriodontic
+		#validacion de seguridad pendiente
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
 		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
@@ -1270,7 +1289,7 @@
 	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:at_salud_id]).first
 
-	  #validacion de seguridad
+
 	  @periodoncia = FdPeriodoncias.where('atencion_salud_id = ?',@atencion_salud.id).first
 	  if params[:param] == "diagnostico"
 	  	if params[:value] == 0
@@ -1289,7 +1308,7 @@
 			  	@tratamiento = FdTratamientos.find(@precio.tratamiento_id)
 			  else
 			  	@precio = FdPrecios.find(1)
-			  	@tratamiento = nil
+			  	@tratamiento = FdTratamientos.find(1)
 			  end	
 
 			  @diagnostico = FdDiagnosticos.joins("LEFT JOIN fd_tipos_diagnosticos as fdtp ON fd_diagnosticos.tipo_diagnostico_id = fdtp.id ").where("atencion_salud_id = ? AND tipo = 'periodoncia'",@atencion_salud.id).first
@@ -1321,6 +1340,66 @@
 	  @periodoncia.save!
 	
 	  render :json => { :success => true } 
+	end
+
+	def deleteGlosa
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:at_salud_id]).first
+
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+
+	 	@glosa = FdGlosas.joins('JOIN fd_glosas_diagnosticos as fgd ON fgd.glosa_id = fd_glosas.id JOIN fd_diagnosticos AS fd ON fd.id = fgd.diagnostico_id JOIN fd_tipos_diagnosticos as ftd ON ftd.id = fd.tipo_diagnostico_id')
+	  										.where('presupuesto_id = ? AND pieza_dental_id = ? AND tipo = ? ', @presupuesto.id, @pieza_dental.id,params[:tipo]).first
+	  @glosa.estado = "eliminado"
+	  @glosa.save!
+
+	  render :json => { :success => true } 
+
+	end
+
+	def reintegrarGlosa
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:at_salud_id]).first
+
+	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
+	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+
+	 	@glosa = FdGlosas.joins('JOIN fd_glosas_diagnosticos as fgd ON fgd.glosa_id = fd_glosas.id JOIN fd_diagnosticos AS fd ON fd.id = fgd.diagnostico_id JOIN fd_tipos_diagnosticos as ftd ON ftd.id = fd.tipo_diagnostico_id')
+	  										.where('presupuesto_id = ? AND pieza_dental_id = ? AND tipo = ? ', @presupuesto.id, @pieza_dental.id,params[:tipo]).first
+	  @glosa.estado = "activo"
+	  @glosa.save!
+
+	  render :json => { :success => true } 
+
+	end
+
+	def loadGlosaTratamiento
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+
+	  @glosa_tratamiento = FdTratamientosTiposDiagnosticos.select('DISTINCT fd.tipo_diagnostico_id, descripcion, tratamiento_id as id').joins(:tratamiento,:tipo_diagnostico)
+	  											.joins("JOIN fd_diagnosticos as fd ON fd.tipo_diagnostico_id = fd_tratamientos_tipos_diagnosticos.tipo_diagnostico_id").where("atencion_salud_id = ? ",params[:atencion_salud_id])
+
+		render :json => @glosa_tratamiento 
+		
 	end
 
 	private

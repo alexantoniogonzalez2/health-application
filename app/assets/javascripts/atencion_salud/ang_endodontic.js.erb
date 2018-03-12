@@ -1,6 +1,6 @@
 (function(){
   var app = angular.module('endodontic', ['templates', 'ng-rails-csrf', 'ui.select'])
-  app.controller('GeneralEndodonticController', ['$http','$filter','$scope','$timeout','endodonticService',function($http, $filter,$scope,$timeout,endodonticService) {  
+  app.controller('GeneralEndodonticController', ['$http','$filter','$scope','$rootScope','$timeout','endodonticService',function($http, $filter,$scope,$rootScope,$timeout,endodonticService) {  
 
     var contador = 0;
     $scope.general = this;      
@@ -39,7 +39,7 @@
     $http.get('/load_endodontic', { params: { atencion_salud_id: atencion_salud_id} }).success(function(data){
       $scope.endo = data;
       endodonticService.addPiezaDental($scope.endo);
-      $scope.selected = { value: $scope.itemArray[$scope.endo.diag-13] }; //Agregar busqueda
+      $scope.selected = { value: $scope.itemArray[$scope.endo.diag-13] }; //Agregar busqueda bien hecha
       endodonticService.addDiagnosis($scope.selected);
     });
 
@@ -57,9 +57,9 @@
           else
             newValue = 0;
       
-          console.log($scope.selected);
-          $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
-          console.log($scope.selected);
+          $http.post('/save_endodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){
+            $rootScope.$broadcast('saveUpdateE', 'message');
+          });
         }
         
       }

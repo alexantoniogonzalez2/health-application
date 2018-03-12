@@ -1,6 +1,6 @@
 (function(){
   var app = angular.module('odontogram', ['templates', 'ng-rails-csrf']);
-  app.controller('OdontogramController', ['$http','$filter','$scope','odontogramService',function($http, $filter,$scope,odontogramService){
+  app.controller('OdontogramController', ['$http','$filter','$scope','$rootScope','odontogramService',function($http, $filter,$scope,$rootScope,odontogramService){
     
     var odontogram = this;
     odontogram.tooths = [];
@@ -19,7 +19,8 @@
     this.setDiagnosis = function(tooth,tipo_cara){   
       var diagnosticos = ['sano','caries','composite','sellante','amalgama','incrustacion','corona'];
       $http.post('/save_dental_diagnosis',{ tipo_cara: tipo_cara, tooth: tooth.name, atencion_salud_id: atencion_salud_id, diagnostico: diag }).success(function(){        
-        tooth[tipo_cara] = diagnosticos[diag-1];        
+        tooth[tipo_cara] = diagnosticos[diag-1]; 
+        $rootScope.$broadcast('setDiagnosis', 'message');       
       }); 
     };
 
@@ -28,6 +29,7 @@
       tooth = $filter('filter')(odontogram.tooths, function (d) {return d.name === id;})[0];
       $http.post('/save_dental_characteristic',{ tipo_carac: tipo_carac, tooth: id, atencion_salud_id: atencion_salud_id }).success(function(){
         tooth.caracteristica = tipo_carac;
+        $rootScope.$broadcast('setCharacteristic', 'message');       
       });
       $( "#tooltip_dental" ).hide();
     };

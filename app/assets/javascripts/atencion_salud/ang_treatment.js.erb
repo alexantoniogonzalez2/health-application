@@ -8,6 +8,14 @@
     $scope.endodonticPiezaDental = endodonticService.getPiezaDental();
     $scope.periodonticDiagnosis = periodonticService.getDiagnosis();
 
+    $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+      $scope.glosas = data;
+    });
+    $scope.$on('setDiagnosis', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
+    $scope.$on('saveUpdateE', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
+    $scope.$on('saveUpdateP', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
+    $scope.$on('setCharacteristic', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
+
     $scope.noSanos = function(tooth) {
       if (tooth.caracteristica == "ausente" || tooth.caracteristica == "extraccion" || tooth.diag_central == "caries" || tooth.diag_distal == "caries" || tooth.diag_mesial == "caries" || tooth.diag_palatina == "caries" || tooth.diag_vestibular == "caries"){
         return true;
@@ -15,10 +23,134 @@
       return false;
     };
 
+    $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+      $scope.glosa_tratamiento = data;
+      console.log($scope.glosa_tratamiento);
+
+    });
+/*
+    $scope.glosa_tratamiento = [
+      {id: 12, name: 'Pulpitis reversible'},
+      {id: 23, name: 'Pulpitis irreversible aguda (sintomática)'},
+      {id: 25, name: 'Pulpitis reversible crónica (asintomática)'},
+      {id: 16, name: 'Pulpitis hiperclásica (polipo pulpar)'},
+      {id: 17, name: 'Reabsorción dentinaria interna'},
+      {id: 18, name: 'Calcificación pulpar'},
+    ];*/
+    console.log($scope.glosa_tratamiento);
+    $scope.selected = { value: {id: 12, name: 'Pulpitis reversible'} }; //Agregar busqueda bien hecha
+
     $scope.enPresupuesto = function(tooth) {
-     
+      if($scope.glosas !== undefined  ){
+        tooth = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == tooth.name; })[0];
+        if (tooth.estado == "activo")
+          return true;
+      }
+      return false;
+    };
+    $scope.noEnPresupuesto = function(tooth) {
+      if($scope.glosas !== undefined  ){
+        tooth = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == tooth.name; })[0];
+        if (tooth.estado == "activo")
+          return false;
+      }
       return true;
     };
+    this.getValor = function(pieza_dental){
+      if($scope.glosas !== undefined  ){
+        glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        if (glosa !== undefined )
+          return glosa.total;
+      }
+      return "-";
+    };
+    this.getDiagnostico = function(pieza_dental,tipo){
+      if($scope.glosas !== undefined  ){
+        if (tipo == "odontograma")
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        else if (tipo == "periodoncia"){
+          if (pieza_dental !== undefined )
+            return pieza_dental;
+          else
+            return "Sin diagnóstico";
+        }
+        else
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.tipo == "endodoncia"; })[0];
+
+        if (glosa !== undefined )
+          return glosa.nombre;
+      }
+      return "Sin diagnóstico";
+    };
+    this.getTratamiento = function(pieza_dental){
+      if($scope.glosas !== undefined  ){
+        glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        if (glosa !== undefined )
+          return glosa.descripcion;
+      }
+      return "-";
+    };
+    this.showEndodontic = function(tipo){
+
+      var respuesta = false;
+      var estado = false;
+      var existe = false;
+
+      if($scope.glosas !== undefined && $scope.endodonticPiezaDental[0] !== undefined ){
+        tooth = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == $scope.endodonticPiezaDental[0].name; })[0];
+        if (tooth.estado == "activo")
+          estado = true;
+      }
+
+      if ($scope.endodonticPiezaDental[0] !== undefined && $scope.endodonticDiagnosis[0] !== undefined ){
+        if ( $scope.endodonticPiezaDental[0].descripcion != null  )
+          existe = true;
+        if ( $scope.endodonticDiagnosis[0]["value"] !== undefined )
+          if ( $scope.endodonticPiezaDental[0].descripcion != null || $scope.endodonticDiagnosis[0]["value"].name != "" )
+            existe = true;
+  
+      }
+      if (estado == true && existe == true)
+        return true
+
+      return false;
+    };
+    this.showPeriodontic = function(){
+
+      return true;
+    };
+    this.delete = function(pieza_dental,tipo){
+      glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental,tipo: tipo } );
+      angular.forEach(glosas, function(value, key) {
+        $http.post('/delete_glosa',{ tooth: pieza_dental, tipo: tipo, at_salud_id: atencion_salud_id }).success(function(){ });
+        value.estado = 'eliminado';
+      });
+      
+      return true;
+    };
+    this.reintegrar = function(pieza_dental,tipo){
+      glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental,tipo: tipo } );
+      angular.forEach(glosas, function(value, key) {
+        $http.post('/reintegrar_glosa',{ tooth: pieza_dental, tipo: tipo, at_salud_id: atencion_salud_id }).success(function(){ });
+        value.estado = 'activo';
+        $( "#tooltip_tratamiento" ).hide();
+      });
+      
+      return true;
+    };
+    this.hayEliminadas = function(){
+      glosas = $filter('filter')( $scope.glosas, { estado: 'eliminado' } );
+      if (glosas !== undefined)
+        if (glosas.length == 0 )
+          return false;
+      
+      return true;
+    };
+    this.showEliminadas = function(event){
+      $( "#tooltip_tratamiento" ).addClass('flex');
+      $( "#tooltip_tratamiento" ).removeClass('hidden');
+      $( "#tooltip_tratamiento" ).show();
+    }
 
   }]);
   app.directive('glosaEndo', function(){ 
@@ -27,6 +159,23 @@
       templateUrl: 'glosa-endo.html'
     }; 
   });
-
+  app.directive('glosaReintegrar', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-reintegrar.html'
+    }; 
+  });
+  app.directive('toothPanelTreatment', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-panel-treatment.html'
+    }; 
+  });
+  app.directive('treatment', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'treatment.html'
+    }; 
+  });
 
 })();

@@ -34,7 +34,6 @@
 
   });
 
-
   app.controller('PanelController', ['$http','$filter', function($http, $filter){
     this.tab = 1;
     this.selectTab = function(setTab) { this.tab = setTab; };
@@ -42,8 +41,6 @@
       return this.tab === checkTab;
     };
     
-
   } ]);
-
 
 })();

@@ -18,6 +18,15 @@ $(".ajus-end").mouseleave(function() {
   $( "#tooltip_test" ).hide(); 
 });
 
+$("#tooltip_tratamiento").mouseleave(function() {
+  $( "#tooltip_tratamiento" ).hide(); 
+});
+
+$(".content-tooltip-trat").mouseleave(function() {
+  $( "#tooltip_tratamiento" ).hide(); 
+});
+
+
 function isNumber(evt) {
   evt = (evt) ? evt : window.event;
   var charCode = (evt.which) ? evt.which : evt.keyCode;

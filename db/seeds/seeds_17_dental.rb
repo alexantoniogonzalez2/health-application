@@ -84,12 +84,13 @@ FdTiposDiagnosticos.create! :id => 26, :nombre => 'Enfermedad del periodonto, no
 
 
 #Tratamientos
-FdTratamientos.create! :id => 1, :descripcion => 'Limpieza'
-FdTratamientos.create! :id => 2, :descripcion => 'Extracción'
+FdTratamientos.create! :id => 1, :descripcion => 'Sin tratamiento'
+FdTratamientos.create! :id => 2, :descripcion => 'Limpieza'
+FdTratamientos.create! :id => 3, :descripcion => 'Extracción'
 
-FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 1, :tipo_diagnostico_id => 2
 FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 2, :tipo_diagnostico_id => 2
-FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 2, :tipo_diagnostico_id => 11
+FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 3, :tipo_diagnostico_id => 2
+FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 3, :tipo_diagnostico_id => 11
 
 FdPrecios.create! :valor => 0, :fecha_inicio => '2017-01-01', :activo => true, :descripcion => 'Sin precio asignado'
 

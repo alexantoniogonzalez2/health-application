@@ -1,6 +1,6 @@
 (function(){
   var app = angular.module('periodontic', ['templates', 'ng-rails-csrf','ui.select']);
-  app.controller('PeriodonticController', ['$http','$filter','$scope','$timeout','periodonticService',function($http, $filter,$scope,$timeout,periodonticService) {  
+  app.controller('PeriodonticController', ['$http','$filter','$scope','$rootScope','$timeout','periodonticService',function($http, $filter,$scope,$rootScope,$timeout,periodonticService) {  
 
     $scope.indicegingival = this;      
     $scope.indicegingival = [];
@@ -49,7 +49,9 @@
           else
             newValue = 0; 
 
-          $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ });
+          $http.post('/save_periodontic',{ param: parameterName, value: newValue, at_salud_id: atencion_salud_id }).success(function(){ 
+            $rootScope.$broadcast('saveUpdateP', 'message');
+          });
         }
         
       }

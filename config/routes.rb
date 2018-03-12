@@ -115,6 +115,9 @@ AplicacionMedica::Application.routes.draw do
   get '/load_endodontic', to: 'atenciones_salud#loadEndodontic'
   get '/load_indice', to: 'atenciones_salud#loadIndice'
   get '/load_periodontic', to: 'atenciones_salud#loadPeriodontic'
+  get '/load_treatment', to: 'atenciones_salud#loadTratamiento'
+  get '/load_indice', to: 'atenciones_salud#loadIndice'
+  get '/load_glosa_tratamiento', to: 'atenciones_salud#loadGlosaTratamiento'
   post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
   post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
   post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'
@@ -126,6 +129,8 @@ AplicacionMedica::Application.routes.draw do
   post '/set_test', to: 'atenciones_salud#setTest'
   post '/save_indice', to: 'atenciones_salud#saveIndice'
   post '/save_periodontic', to: 'atenciones_salud#savePeriodontic'
+  post '/delete_glosa', to: 'atenciones_salud#deleteGlosa'
+  post '/reintegrar_glosa', to: 'atenciones_salud#reintegrarGlosa'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

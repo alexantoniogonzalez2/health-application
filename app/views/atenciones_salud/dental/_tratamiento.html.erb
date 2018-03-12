@@ -1,29 +1,77 @@
 <div id="treatment" ng-controller="TreatmentController as treatment" class="container no-padding">
 	<div class="row">
+
+		<h4>Presupuesto Nº </h4>
+
+	<div class="row content-tooltip-trat">
+		<div id="tooltip_tratamiento" class="tooltip_tratamiento oculto ">
+		 	<div class="content ">
+		 		<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
+			
+				<div ng-repeat="item in odontogramList" class="container">
+					<div ng-repeat="glosa_endo in item | filter:noSanos | filter: noEnPresupuesto ">
+	    			<glosa-reintegrar ></glosa-reintegrar> 
+    			</div>
+
+	    		<div class="row" ng-hide="treatment.showEndodontic('general')">
+						<div class="col-md-4 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
+							<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
+							<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
+							<span>{{ endodonticPiezaDental[0].descripcion }} </span>
+							<span ng-hide="endodonticPiezaDental[0].name != null "> - </span>
+						</div>
+						<div class="col-md-3 ajus-pad-end">
+							<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
+						</div>
+						<div class="col-md-2 ajus-pad-end">
+							<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
+						</div>
+						<div class="col-md-1 ajus-pad-end">
+							<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+						</div>
+						<div class="col-md-1 ajus-pad-end">
+							<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+						</div>
+						<div class="col-md-1 ajus-pad-end"> 
+							<a href="#" ng-click="treatment.reintegrar(endodonticPiezaDental[0].name,'endodoncia')">Reintegrar</a>
+						</div>
+					</div>
+
+    		</div>
+		  </div>
+		</div>
+
+		<input class="btn btn-xs btn-warning right" type="submit" value="Agregar eliminadas" ng-show="treatment.hayEliminadas()" ng-mouseover="treatment.showEliminadas($event)">
+	</div>
+
 		<fieldset>
 			<legend>Endodoncia</legend>
 			<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
 			<div ng-repeat="item in odontogramList" class="container">
-				<div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto">
+				<div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto ">
     			<glosa-endo></glosa-endo> 
     		</div>
-    		<div class="row">
-					<div class="col-md-3 no-padding" id="end-{{endodonticPiezaDental[0].name}}">
-						<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test">
+    		<div class="row" ng-show="treatment.showEndodontic('general')">
+					<div class="col-md-4 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
+						<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
 						<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
-						<span>{{endodonticPiezaDental[0].descripcion}} </span>
+						<span>{{ endodonticPiezaDental[0].descripcion }} </span>
+						<span ng-hide="endodonticPiezaDental[0].name != null "> - </span>
 					</div>
-					<div class="col-md-4 ajus-pad-end">
-						<span> {{ endodonticDiagnosis[0]["value"].name }} </span>
-					</div>
-					<div class="col-md-2 ajus-pad-end">
-						<span>Tratamiento</span>
+					<div class="col-md-3 ajus-pad-end">
+						<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
 					</div>
 					<div class="col-md-2 ajus-pad-end">
-						<span>Valor</span>
+						<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
+					</div>
+					<div class="col-md-1 ajus-pad-end">
+						<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+					</div>
+					<div class="col-md-1 ajus-pad-end">
+						<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
 					</div>
 					<div class="col-md-1 ajus-pad-end"> 
-						<a href="#" ng-click="treatment.delete(endodonticPiezaDental[0].name)">Eliminar</a>
+						<a href="#" ng-click="treatment.delete(endodonticPiezaDental[0].name,'endodoncia')">Eliminar</a>
 					</div>
 				</div>
   		</div>
@@ -31,29 +79,34 @@
 		</fieldset>
 
 	</div>
-	<div class="row">
+
+	<div class="row" ng-show="treatment.showPeriodontic()" >
 		<fieldset>
 			<legend>Periodoncia</legend>
 				<%= render :partial => "atenciones_salud/dental/head_periodoncia" %>
 				<div class="row">
-					<div class="col-md-5 ajus-pad-end">
-						<span> {{ periodonticDiagnosis[0]["value"].name }}
+					<div class="col-md-4 ajus-pad-end">
+						<span> {{ treatment.getDiagnostico(periodonticDiagnosis[0]["value"].name, "periodoncia")}} </span>
 					</div>
 					<div class="col-md-3 ajus-pad-end">
-						Tratamiento
+						<span> - </span>
 					</div>
 					<div class="col-md-2 ajus-pad-end">
-						Valor
+						<span> - </span>
 					</div>
-					<div class="col-md-2 ajus-pad-end"> 
-						<a href="#" ng-click="treatment.delete()">Eliminar</a>
+					<div class="col-md-2 ajus-pad-end">
+						<span> - </span>
+					</div>
+					<div class="col-md-1 ajus-pad-end"> 
+						<a href="#" ng-click="treatment.deletePeriodoncia()">Eliminar</a>
 					</div>
 				</div>
 
 		</fieldset>	
 	</div>
 	<div class="row">
-		Subtotal
+		Subtotal 
+		{{ glosas }}
 	</div>
 	<div class="row">
 		Total tratamiento

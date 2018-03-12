@@ -154,9 +154,10 @@ th.fc-widget-header { font-weight: normal !important; }
 .checkbox input[type="checkbox"],
 .checkbox-inline input[type="checkbox"] { position: relative !important; }
 
+
 fieldset {
   border: 1px dashed #c0c0c0 !important;
-  margin: 0px 0px 10px 0px !important;
+  //margin: 0px 0px 10px 0px !important;
   padding: 5px 5px 2px 5px !important;
   border-radius: 6px;
 }
@@ -293,3 +294,4 @@ td.padding-left { padding-left: 10px; }
   }
 }
 .strong { font-weight: bold; }
+.table-cell {display: table-cell; }
