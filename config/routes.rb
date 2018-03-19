@@ -131,6 +131,7 @@ AplicacionMedica::Application.routes.draw do
   post '/save_periodontic', to: 'atenciones_salud#savePeriodontic'
   post '/delete_glosa', to: 'atenciones_salud#deleteGlosa'
   post '/reintegrar_glosa', to: 'atenciones_salud#reintegrarGlosa'
+  post '/update_treatment', to: 'atenciones_salud#updateTreatment'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

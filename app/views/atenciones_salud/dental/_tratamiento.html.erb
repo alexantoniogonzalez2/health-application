@@ -47,12 +47,12 @@
 		<fieldset>
 			<legend>Endodoncia</legend>
 			<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
-			<div ng-repeat="item in odontogramList" class="container">
+			<div ng-repeat="item in odontogramList" class="container no-padding">
 				<div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto ">
     			<glosa-endo></glosa-endo> 
     		</div>
-    		<div class="row" ng-show="treatment.showEndodontic('general')">
-					<div class="col-md-4 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
+    		<div class="row glosa-endo" ng-show="treatment.showEndodontic('general')">
+					<div class="col-md-3 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
 						<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
 						<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
 						<span>{{ endodonticPiezaDental[0].descripcion }} </span>
@@ -61,7 +61,7 @@
 					<div class="col-md-3 ajus-pad-end">
 						<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
 					</div>
-					<div class="col-md-2 ajus-pad-end">
+					<div class="col-md-3 ajus-pad-end">
 						<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
 					</div>
 					<div class="col-md-1 ajus-pad-end">
@@ -84,7 +84,7 @@
 		<fieldset>
 			<legend>Periodoncia</legend>
 				<%= render :partial => "atenciones_salud/dental/head_periodoncia" %>
-				<div class="row">
+				<div class="row glosa-endo">
 					<div class="col-md-4 ajus-pad-end">
 						<span> {{ treatment.getDiagnostico(periodonticDiagnosis[0]["value"].name, "periodoncia")}} </span>
 					</div>
@@ -104,12 +104,18 @@
 
 		</fieldset>	
 	</div>
-	<div class="row">
-		Subtotal 
+	<div class="row total-treat">
+		<div class="col-md-5"> </div>
+		<div class="col-md-4"> </div>
+		<div class="col-md-3">
+			<span class="strong">Subtotal: </span></br>
+			Descuento % </br>
+			<span class="strong">Total tratamiento: </span>
+		</div>
+		<!--{{ glosas }}-->
 		{{ glosas }}
+		{{ selected }}
 	</div>
-	<div class="row">
-		Total tratamiento
-	</div>
+
 
 </div>

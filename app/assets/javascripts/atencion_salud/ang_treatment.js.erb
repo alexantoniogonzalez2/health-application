@@ -8,8 +8,20 @@
     $scope.endodonticPiezaDental = endodonticService.getPiezaDental();
     $scope.periodonticDiagnosis = periodonticService.getDiagnosis();
 
+    $scope.selections = [];
     $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
       $scope.glosas = data;
+      //console.log($scope.glosas );
+
+      $scope.selected = []
+
+      angular.forEach($scope.glosas, function(value, key) {
+        //console.log(value);
+        //console.log(key);
+        // recorrer los diente e ir a buscar el diagnostico
+        $scope.selections.push({ id: value.id_tr, tipo_diagnostico_id: value.tipo_diag_id, descripcion: value.descripcion, nomenclatura: value.nomenclatura }) ;
+      });
+    console.log($scope.selections);
     });
     $scope.$on('setDiagnosis', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
     $scope.$on('saveUpdateE', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
@@ -25,9 +37,9 @@
 
     $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
       $scope.glosa_tratamiento = data;
-      console.log($scope.glosa_tratamiento);
-
+      //console.log($scope.glosa_tratamiento);
     });
+     
 /*
     $scope.glosa_tratamiento = [
       {id: 12, name: 'Pulpitis reversible'},
@@ -37,8 +49,8 @@
       {id: 17, name: 'Reabsorción dentinaria interna'},
       {id: 18, name: 'Calcificación pulpar'},
     ];*/
-    console.log($scope.glosa_tratamiento);
-    $scope.selected = { value: {id: 12, name: 'Pulpitis reversible'} }; //Agregar busqueda bien hecha
+
+    //$scope.selected = { value: {id: "", name: ""} }; //Agregar busqueda bien hecha
 
     $scope.enPresupuesto = function(tooth) {
       if($scope.glosas !== undefined  ){
@@ -82,8 +94,26 @@
       }
       return "Sin diagnóstico";
     };
+    this.getTipoDiagnostico = function(pieza_dental,tipo){
+      if($scope.glosas !== undefined ){
+        if (tipo == "odontograma")
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        else if (tipo == "periodoncia"){
+          if (pieza_dental !== undefined )
+            return pieza_dental;
+          else
+            return "Sin diagnóstico";
+        }
+        else
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.tipo == "endodoncia"; })[0];
+
+        if (glosa !== undefined )
+          return glosa.tipo_diag_id;
+      }
+      return "Sin diagnóstico";
+    };
     this.getTratamiento = function(pieza_dental){
-      if($scope.glosas !== undefined  ){
+      if($scope.glosas !== undefined ){
         glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
         if (glosa !== undefined )
           return glosa.descripcion;
@@ -129,7 +159,7 @@
       return true;
     };
     this.reintegrar = function(pieza_dental,tipo){
-      glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental,tipo: tipo } );
+      glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental, tipo: tipo } );
       angular.forEach(glosas, function(value, key) {
         $http.post('/reintegrar_glosa',{ tooth: pieza_dental, tipo: tipo, at_salud_id: atencion_salud_id }).success(function(){ });
         value.estado = 'activo';
@@ -150,7 +180,20 @@
       $( "#tooltip_tratamiento" ).addClass('flex');
       $( "#tooltip_tratamiento" ).removeClass('hidden');
       $( "#tooltip_tratamiento" ).show();
-    }
+    };
+    this.updateTreatment = function(idx){
+
+      console.log(idx, $scope.selections[idx]);
+      /*console.log($scope.selected);
+      glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental, tipo: tipo } );
+      angular.forEach(glosas, function(value, key) {
+        $http.post('/update_treatment',{ tooth: pieza_dental, tipo: tipo, at_salud_id: atencion_salud_id }).success(function(){ });
+        //value.estado = 'activo';
+        //$( "#tooltip_tratamiento" ).hide();
+      });
+      
+      return true;*/
+    };
 
   }]);
   app.directive('glosaEndo', function(){ 
@@ -176,6 +219,21 @@
       restrict: 'E',
       templateUrl: 'treatment.html'
     }; 
-  });
+  });/*
+  app.directive('treatmentSelector', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      glosa_endo: '='
+    },
+    templateUrl: 'treatment.html',
+    controller: function ($scope, $http) {
+      $scope.refreshAddresses = function(address) {
+        var params = {address: address, sensor: false};
+        return true;
+      };
+    }
+  };
+});*/
 
 })();

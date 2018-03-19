@@ -1270,7 +1270,7 @@
 	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
 
-	  @glosas = FdGlosas.select('fd_glosas.id,ftp.nomenclatura,fd_glosas.total,fd_glosas.descuento,ftd.nombre,ftd.tipo,ft.descripcion,fd_glosas.estado').
+	  @glosas = FdGlosas.select("DISTINCT fd_glosas.id,ftp.nomenclatura,fd_glosas.total,fd_glosas.descuento,ftd.id as tipo_diag_id, ftd.nombre,ftd.tipo,ft.id as 'id_tr',ft.descripcion,fd_glosas.estado").
 	  									joins(:glosas_diagnosticos, :precio ,'INNER JOIN fd_diagnosticos AS fd ON fd_glosas_diagnosticos.diagnostico_id = fd.id','LEFT JOIN fd_piezas_dentales AS fpd ON fpd.id = fd.pieza_dental_id',
 	  												'LEFT JOIN fd_tipos_dientes AS ftp ON ftp.id = fpd.tipo_diente_id','INNER JOIN fd_tipos_diagnosticos AS ftd ON ftd.id = fd.tipo_diagnostico_id ',
 	  												'LEFT JOIN fd_tratamientos as ft ON ft.id = fd_glosas.tratamiento_id').where("presupuesto_id = ? ",@presupuesto.id)
@@ -1401,6 +1401,9 @@
 		render :json => @glosa_tratamiento 
 		
 	end
+	def updateTreatment
+		render :json => { :success => true } 
+	end 
 
 	private
 	  def app_params
