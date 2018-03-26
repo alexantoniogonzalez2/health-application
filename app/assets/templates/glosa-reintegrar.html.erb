@@ -8,14 +8,14 @@
 		<span>{{ treatment.getDiagnostico(glosa_endo.name,"odontograma") }} </span>
 	</div>
 	<div class="col-md-3 ajus-pad-end">
-		<span>{{ treatment.getTratamiento(glosa_endo.name) }} </span>
+		<span>{{ getTratamiento(glosa_endo.name) }} </span>
 	</div>
+	<div class="col-md-2 ajus-pad-end">
+		<span>{{ treatment.getValor(glosa_endo.name) }} </span>
+	</div><!--
 	<div class="col-md-1 ajus-pad-end">
 		<span>{{ treatment.getValor(glosa_endo.name) }} </span>
-	</div>
-	<div class="col-md-1 ajus-pad-end">
-		<span>{{ treatment.getValor(glosa_endo.name) }} </span>
-	</div>
+	</div>-->
 	<div class="col-md-1 ajus-pad-end"> 
 		<a href="#" ng-click="treatment.reintegrar(glosa_endo.name,'odontograma')">Reintegrar</a>
 	</div>

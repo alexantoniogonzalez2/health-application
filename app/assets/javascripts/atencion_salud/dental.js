@@ -27,10 +27,19 @@ $(".content-tooltip-trat").mouseleave(function() {
 });
 
 
+function isNumberIndice(evt) {
+  evt = (evt) ? evt : window.event;
+  var charCode = (evt.which) ? evt.which : evt.keyCode;
+  if ((charCode >= 49 && charCode <= 52) || (charCode >= 97 && charCode <= 100 ) ) {
+      return true;
+  }
+  return false;
+}
+
 function isNumber(evt) {
   evt = (evt) ? evt : window.event;
   var charCode = (evt.which) ? evt.which : evt.keyCode;
-  if (charCode > 48 && charCode < 53 ) {
+  if ((charCode >= 48 && charCode <= 57) || (charCode >= 96 && charCode <= 105 ) ) {
       return true;
   }
   return false;

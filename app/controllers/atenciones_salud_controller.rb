@@ -464,6 +464,12 @@
 			unless @presupuesto
 				@presupuesto =  FdPresupuestos.new
 				@presupuesto.atencion_salud = @atencion_salud 
+				@presupuesto.estado = "propuesto"
+				@presupuesto.valor = 0
+				@presupuesto.descuento = 0
+				@presupuesto.total = 0
+				@presupuesto.pagado = 0
+				@presupuesto.pendiente = 0
 				@presupuesto.save!
 			end
 			render 'edit_dental'
@@ -1378,7 +1384,7 @@
 	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
 
 	 	@glosa = FdGlosas.joins('JOIN fd_glosas_diagnosticos as fgd ON fgd.glosa_id = fd_glosas.id JOIN fd_diagnosticos AS fd ON fd.id = fgd.diagnostico_id JOIN fd_tipos_diagnosticos as ftd ON ftd.id = fd.tipo_diagnostico_id')
-	  										.where('presupuesto_id = ? AND pieza_dental_id = ? AND tipo = ? ', @presupuesto.id, @pieza_dental.id,params[:tipo]).first
+	  										.where('presupuesto_id = ? AND pieza_dental_id = ? AND tipo = ? ', @presupuesto.id, @pieza_dental.id, params[:tipo] ).first
 	  @glosa.estado = "activo"
 	  @glosa.save!
 
@@ -1393,17 +1399,47 @@
 		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
 	  @persona = @agendamiento.persona
 	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
 
-	  @glosa_tratamiento = FdTratamientosTiposDiagnosticos.select('DISTINCT fd.tipo_diagnostico_id, descripcion, tratamiento_id as id').joins(:tratamiento,:tipo_diagnostico)
-	  											.joins("JOIN fd_diagnosticos as fd ON fd.tipo_diagnostico_id = fd_tratamientos_tipos_diagnosticos.tipo_diagnostico_id").where("atencion_salud_id = ? ",params[:atencion_salud_id])
+	  @glosa_tratamiento = FdTratamientosTiposDiagnosticos.select('DISTINCT fd_tratamientos_tipos_diagnosticos.id, fd.tipo_diagnostico_id, fd_tratamientos.descripcion, fd_tratamientos.id as tr_id,valor').joins(:tratamiento,:tipo_diagnostico)
+	  											.joins("JOIN fd_diagnosticos as fd ON fd.tipo_diagnostico_id = fd_tratamientos_tipos_diagnosticos.tipo_diagnostico_id JOIN fd_precios as fp ON fp.tratamiento_id = fd_tratamientos.id ")
+	  											.where("atencion_salud_id = ? AND activo = 1 AND prestador_id = ? ", params[:atencion_salud_id], @prestador.id )
 
 		render :json => @glosa_tratamiento 
 		
 	end
+
 	def updateTreatment
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:at_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:at_salud_id]).first
+
+	  @precio = FdPrecios.joins('JOIN fd_tratamientos_tipos_diagnosticos as fdttd ON fdttd.tratamiento_id = fd_precios.tratamiento_id')
+	  										.where('activo = 1 AND fdttd.tratamiento_id = ? AND prestador_id = ? ', params[:treatment], @prestador.id ).order(fecha_termino: :desc).first
+
+	  #Debiera estar el tratamiento pk lo está eligiendo,podría no estar el precio, se debería reprogramar la consulta aquí y en las otras funciones											
+	  @tratamiento = FdTratamientos.find(params[:treatment])
+	  @glosa = FdGlosas.find(params[:glosa_id])
+
+	  @glosa.tratamiento = @tratamiento
+	  @glosa.precio = @precio
+	  @glosa.total = @precio.valor
+	  @glosa.save!
+
 		render :json => { :success => true } 
 	end 
+
+	def loadPresupuesto
+		#validacion de seguridad pendiente
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+	  render :json => @presupuesto 
+	end
 
 	private
 	  def app_params

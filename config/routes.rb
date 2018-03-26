@@ -118,6 +118,7 @@ AplicacionMedica::Application.routes.draw do
   get '/load_treatment', to: 'atenciones_salud#loadTratamiento'
   get '/load_indice', to: 'atenciones_salud#loadIndice'
   get '/load_glosa_tratamiento', to: 'atenciones_salud#loadGlosaTratamiento'
+  get '/load_presupuesto', to: 'atenciones_salud#loadPresupuesto'
   post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
   post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
   post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'

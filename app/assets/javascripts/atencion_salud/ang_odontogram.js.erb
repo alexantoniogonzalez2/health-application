@@ -24,14 +24,22 @@
       }); 
     };
 
-    this.setCharacteristic = function(tipo_carac,event){
+    this.setCharacteristic = function(tipo_carac,event,tooth){
+      console.log(tipo_carac);
+      console.log(tooth);
       var id = angular.element(event.target).parent().parent().find("img").attr('id');
       tooth = $filter('filter')(odontogram.tooths, function (d) {return d.name === id;})[0];
+      console.log(tooth);
+      //console.log(odontogram.tooths);
       $http.post('/save_dental_characteristic',{ tipo_carac: tipo_carac, tooth: id, atencion_salud_id: atencion_salud_id }).success(function(){
         tooth.caracteristica = tipo_carac;
+         console.log(tooth);
+         //console.log(odontogram.tooths);
+
         $rootScope.$broadcast('setCharacteristic', 'message');       
       });
       $( "#tooltip_dental" ).hide();
+
     };
 
     this.isSelected = function(checkDiag){
