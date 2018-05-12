@@ -3,6 +3,6 @@ class FdPresupuestos < ActiveRecord::Base
 	has_many :glosas_presupuestos, :class_name => 'FdGlosasPresupuestos', :foreign_key => 'presupuesto_id'
 
 	def app_params
-    params.require(:list).permit(:id,:atencion_salud,:estado,:valor,:descuento,:total,:pagado,:pendiente,:glosas_presupuestos)
+    params.require(:list).permit(:id,:atencion_salud,:estado,:valor,:descuento,:total,:pagado,:pendiente,:glosas_presupuestos,:cuotas,:iguales)
   end
 end

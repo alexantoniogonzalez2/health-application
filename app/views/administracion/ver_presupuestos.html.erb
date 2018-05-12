@@ -1,0 +1,81 @@
+<h4>Ver presupuestos</h4>
+<br>
+
+<% if @presupuestos.blank? %> 
+  <p>No hay presupuestos generados.</p>
+<% else %> 
+
+<div id="presupuesto" ng-app="presupuesto" ng-controller="PresupuestoController as presupuesto" class="container">
+
+  <h5>Lista de presupuestos</h5> 
+  <table id="lista_presupuestos" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+      	<th>Id</th>
+        <th>Fecha</th>
+        <th>Profesional</th>
+        <th>Especialidad</th>
+        <th>Paciente</th>
+        <th>RUT</th>
+        <th>Total</th>
+        <th>Pagado</th>
+        <th>Estado</th>
+        <th>Pagos</th>
+        <th>Editar</th>  
+      </tr>
+    </thead>
+    <tbody >
+      <% @presupuestos.each do |presupuesto| %>
+        <tr>
+          <td><%= presupuesto.id %></td>
+          <td><%= presupuesto.created_at.strftime("%Y-%m-%d") %></td>        
+          <td><%= presupuesto.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+          <td><%= presupuesto.atencion_salud.agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>
+          <td><%= presupuesto.atencion_salud.agendamiento.persona.showName('%n%p%m') %></td> 
+          <td><%= presupuesto.atencion_salud.agendamiento.persona.showRut %></td> 
+          <td><%= number_to_currency(presupuesto.total, unit: "$ ", separator: '.') %></td>
+          <td><%= number_to_currency(presupuesto.pagado, unit: "$ ", separator: '.') %></td>
+          <td><%= presupuesto.estado %></td>
+          <td>
+            <% if presupuesto.estado == "Anulado" %>
+              <span>-</span>  
+            <% else %>
+              <a id="pres-<%= presupuesto.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_presupuesto" onclick="cargarPagos(<%= presupuesto.id%>)">Ver</a> 
+            <% end %>
+          </td>
+          <td>
+            <% if presupuesto.estado != "Anulado" %>  
+              <button id="anular-<%= presupuesto.id%>" type="button" class="btn btn-xs btn-warning" onclick="anularPresupuesto(<%= presupuesto.id%>)">Agregar pago</button>     
+            <% else %>
+              <span>-</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %> 
+    </tbody>    
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="ver_atenciones_presupuesto" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header ajuste-modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4>Esquema de pagos</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+            
+          </div>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<% end %>  
+
+<%= javascript_include_tag "ang_administracion" %>

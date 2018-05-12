@@ -464,7 +464,7 @@
 			unless @presupuesto
 				@presupuesto =  FdPresupuestos.new
 				@presupuesto.atencion_salud = @atencion_salud 
-				@presupuesto.estado = "propuesto"
+				@presupuesto.estado = "Propuesto"
 				@presupuesto.valor = 0
 				@presupuesto.descuento = 0
 				@presupuesto.total = 0
@@ -1439,6 +1439,24 @@
 		#validacion de seguridad pendiente
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
 	  render :json => @presupuesto 
+	end
+
+	def savePresupuesto
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
+	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+
+	  @presupuesto.valor = params[:valor]
+	  @presupuesto.descuento = params[:descuento]
+	  @presupuesto.total = params[:total]
+	  @presupuesto.save!
+
+	  render :json => { :success => true } 
 	end
 
 	private

@@ -17,9 +17,10 @@
       });
     });
 
+    $scope.presupuesto = this;
     $http.get('/load_presupuesto', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
       $scope.presupuesto = data;
-       $scope.presupuesto.descuento = parseFloat($scope.presupuesto.descuento);
+      $scope.presupuesto.descuento = parseFloat($scope.presupuesto.descuento);
     });
 
     $scope.$on('setDiagnosis', function (event, arg) {
@@ -191,7 +192,6 @@
         $http.post('/delete_glosa',{ tooth: pieza_dental, tipo: tipo, at_salud_id: atencion_salud_id }).success(function(){ });
         value.estado = 'eliminado';
       });
-      
       return true;
     };
     this.reintegrar = function(pieza_dental,tipo){
@@ -201,7 +201,7 @@
         value.estado = 'activo';
         $( "#tooltip_tratamiento" ).hide();
       });
-      
+
       return true;
     };
     this.hayEliminadas = function(){
@@ -228,10 +228,12 @@
       });
 
       $http.post('/update_treatment',{ tooth: pieza_dental, treatment: $scope.selections[idx].tr_id, at_salud_id: atencion_salud_id, glosa_id: glosa_id }).success(function(){ });
+
+      this.actualizarPresupuesto();
       //revisar si de debe actualizar glosa
 
     };
-    this.getSubTotal = function(){
+    this.actualizarSubTotal = function(){
 
       var total = 0
       glosas = $filter('filter')( $scope.glosas, { estado: "activo" } );
@@ -239,19 +241,32 @@
         total +=  value.total;
       });
 
-      return total
-      
-    };
-    this.getTotal = function(){
-      if ($scope.presupuesto !== undefined)
-        total = this.getSubTotal()*(100-$scope.presupuesto.descuento)/100;
-      else
-        total = this.getSubTotal();    
+      $scope.presupuesto.valor = total;  
+
       return total;
-    };
-    this.savePresupuesto = function(){
       
     };
+    this.actualizarPresupuesto = function(){
+      if ($scope.presupuesto !== undefined)
+        total = this.actualizarSubTotal()*(100-$scope.presupuesto.descuento)/100;
+      else
+        total = this.actualizarSubTotal(); 
+
+      $scope.presupuesto.total = total; 
+
+      $http.post('/save_presupuesto',{ atencion_salud_id: atencion_salud_id, descuento: $scope.presupuesto.descuento, total: total, valor: $scope.presupuesto.valor }).success(function(){ });  
+      
+    };
+    this.actualizarCuotas = function(){
+
+
+      console.log($scope.presupuesto);  
+
+      // $http.post('/save_cuotas',{ atencion_salud_id: atencion_salud_id, descuento: $scope.presupuesto.descuento, total: total, valor: $scope.presupuesto.valor }).success(function(){ });  
+      
+      
+    };
+
   }]);
   app.directive('glosaEndo', function(){ 
     return {

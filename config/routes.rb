@@ -133,6 +133,7 @@ AplicacionMedica::Application.routes.draw do
   post '/delete_glosa', to: 'atenciones_salud#deleteGlosa'
   post '/reintegrar_glosa', to: 'atenciones_salud#reintegrarGlosa'
   post '/update_treatment', to: 'atenciones_salud#updateTreatment'
+  post '/save_presupuesto', to: 'atenciones_salud#savePresupuesto'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
@@ -170,6 +171,11 @@ AplicacionMedica::Application.routes.draw do
   post '/filtrar_boletas', to: 'administracion#filtrarBoletas'
   post '/cargar_atenciones_boleta', to: 'administracion#cargarAtencionesBoleta'
   post '/anular_boleta', to: 'administracion#anularBoleta'
+
+  #Administración dental
+  get '/cargar_pagos', to: 'administracion#cargarPagos'
+
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

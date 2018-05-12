@@ -8,6 +8,8 @@ class CreateFdPresupuestos < ActiveRecord::Migration
       t.integer :total
       t.integer :pagado
       t.integer :pendiente
+      t.integer :cuotas, :default => 3
+      t.iguales :boolean, :default => 1
       t.timestamps null: false
     end
   end

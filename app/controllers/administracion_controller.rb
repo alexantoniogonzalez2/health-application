@@ -99,7 +99,7 @@ class AdministracionController < ApplicationController
 	end	
 
 	def anularBoleta
-		@atenciones = PreBoletasAtencionesPagadas.where('boleta_id = ?',params[:boleta])
+		@atenciones = PreBoletasAtencionesPagadas.where('boleta_id = ?',x)
 		@atenciones.each do |atencion|
 			atencion.destroy
 		end	
@@ -111,6 +111,15 @@ class AdministracionController < ApplicationController
 		end	
 
 	end	
+
+	def cargarPagos
+
+		# .where('pre_prestador_profesionales.prestador_id = ?',getIdPrestador('administrativo')
+
+		@pagos = FdPagos.where('presupuesto_id = ?', params[:presupeusto])
+
+		render :json => @presupuestos
+	end
 
 
 end

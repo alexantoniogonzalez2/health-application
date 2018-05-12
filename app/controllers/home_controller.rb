@@ -83,8 +83,11 @@ class HomeController < ApplicationController
 				@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 				@acciones_masivas = AgAccionMasiva.where('responsable_id = ?',@usuario.id).limit(20)
 
+				@presupuestos = FdPresupuestos.joins(:atencion_salud => :agendamiento )
+
 
 				render 'index_agendamiento'
+
 		  elsif esProfesionalSalud 
 		  	@profesional = PerPersonas.where('user_id = ?',current_user.id).first	
 		  	@hora_actual = DateTime.current

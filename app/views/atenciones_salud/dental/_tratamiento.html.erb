@@ -3,46 +3,46 @@
 
 		<h4>Presupuesto Nº {{ presupuesto.id }} </h4>
 
-	<div class="row content-tooltip-trat">
-		<div id="tooltip_tratamiento" class="tooltip_tratamiento oculto ">
-		 	<div class="content ">
-		 		<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
-			
-				<div ng-repeat="item in odontogramList" class="container">
-					<div ng-repeat="glosa_endo in item | filter:noSanos | filter: noEnPresupuesto ">
-	    			<glosa-reintegrar ></glosa-reintegrar> 
-    			</div>
+		<div class="row content-tooltip-trat">
+			<div id="tooltip_tratamiento" class="tooltip_tratamiento oculto ">
+			 	<div class="content ">
+			 		<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
+				
+					<div ng-repeat="item in odontogramList" class="container">
+						<div ng-repeat="glosa_endo in item | filter:noSanos | filter: noEnPresupuesto ">
+		    			<glosa-reintegrar ></glosa-reintegrar> 
+	    			</div>
 
-	    		<div class="row" ng-hide="treatment.showEndodontic('general')">
-						<div class="col-md-4 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
-							<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
-							<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
-							<span>{{ endodonticPiezaDental[0].descripcion }} </span>
-							<span ng-hide="endodonticPiezaDental[0].name != null "> - </span>
+		    		<div class="row" ng-hide="treatment.showEndodontic('general')">
+							<div class="col-md-4 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
+								<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
+								<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
+								<span>{{ endodonticPiezaDental[0].descripcion }} </span>
+								<span ng-hide="endodonticPiezaDental[0].name != null "> - </span>
+							</div>
+							<div class="col-md-3 ajus-pad-end">
+								<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
+							</div>
+							<div class="col-md-2 ajus-pad-end">
+								<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
+							</div>
+							<div class="col-md-1 ajus-pad-end">
+								<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+							</div>
+							<div class="col-md-1 ajus-pad-end">
+								<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+							</div>
+							<div class="col-md-1 ajus-pad-end"> 
+								<a href="#" ng-click="treatment.reintegrar(endodonticPiezaDental[0].name,'endodoncia')">Reintegrar</a>
+							</div>
 						</div>
-						<div class="col-md-3 ajus-pad-end">
-							<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
-						</div>
-						<div class="col-md-2 ajus-pad-end">
-							<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
-						</div>
-						<div class="col-md-1 ajus-pad-end">
-							<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
-						</div>
-						<div class="col-md-1 ajus-pad-end">
-							<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
-						</div>
-						<div class="col-md-1 ajus-pad-end"> 
-							<a href="#" ng-click="treatment.reintegrar(endodonticPiezaDental[0].name,'endodoncia')">Reintegrar</a>
-						</div>
-					</div>
 
-    		</div>
-		  </div>
+	    		</div>
+			  </div>
+			</div>
+
+			<input class="btn btn-xs btn-warning right" type="submit" value="Agregar eliminadas" ng-show="treatment.hayEliminadas()" ng-mouseover="treatment.showEliminadas($event)">
 		</div>
-
-		<input class="btn btn-xs btn-warning right" type="submit" value="Agregar eliminadas" ng-show="treatment.hayEliminadas()" ng-mouseover="treatment.showEliminadas($event)">
-	</div>
 
 		<fieldset>
 			<legend>Endodoncia</legend>
@@ -104,15 +104,49 @@
 
 		</fieldset>	
 	</div>
-	<div class="row total-treat">
-		<div class="col-md-5"> </div>
-		<div class="col-md-4"> </div>
-		<div class="col-md-3">
-			<span class="strong">Subtotal: {{ treatment.getSubTotal() }}</span></br>
-			<span>Descuento: </span><input min="0" type="number" max="99" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.descuento" onkeypress="return isNumber(event)" ng-change="savePresupuesto();" /><span>%</span></br>
-			<span class="strong">Total tratamiento: {{ treatment.getTotal() }}</span>
-		</div>
 
+	<div class="row total-treat">
+		<div class="col-md-4"> </div>
+		<div class="col-md-4">
+			<span class="strong right" contenteditable="true" ng-bind="presupuesto.valor | number:0" ></span><span class="strong right" >Subtotal: $ </span><br/><br/>
+			<p class="right">
+			<span class="strong">Descuento: </span><input min="0" type="number" max="99" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.descuento" onkeypress="return isNumber(event)" ng-change="treatment.actualizarPresupuesto();" /><span>%</span>
+			</p><br/><br/>
+			<span class="strong right" contenteditable="true" ng-bind="presupuesto.total | number:0"></span><span class="strong right" >Total: $ </span>
+		</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-3">
+			<span>Cuotas: </span><input min="1" type="number" max="12" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.cuotas" onkeypress="return isNumber(event)" ng-change="treatment.actualizarCuotas();" /><br/>
+			<label class="radio cuotas" for="dolor-0">
+	      <input type="radio" id="dolor-0" value="1" ng-model="presupuesto.iguales" class="cuotas" ng-change="treatment.actualizarCuotas();"> Iguales <span ng-show="presupuesto.iguales == 1">({{ presupuesto.cuotas}} cuotas de ${{ presupuesto.total/presupuesto.cuotas | number:0}})</span>
+	    </label> 
+	    <label class="radio cuotas" for="dolor-1">
+	      <input type="radio" id="dolor-1" value="0" ng-model="presupuesto.iguales" class="cuotas" ng-change="treatment.actualizarCuotas();"> Distribuir montos <a ng-hide="presupuesto.iguales == 1" href='#' data-toggle="modal" data-target="#ver_distribucion">Distribución</a> 
+	    </label><br/>
+		</div>
 	</div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="ver_distribucion" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header ajuste-modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4>Distribución de pagos</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+            
+          </div>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
+
+
+

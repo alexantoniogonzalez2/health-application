@@ -460,6 +460,16 @@ div.total-treat {
 }
 
 input.pres {
-	width:50px;
+	padding: 2px 2px;
+  width: 35px;
+  height: 25px;
 	display: inline-block;
+}
+
+input.cuotas {
+	margin-left: 0px !important;
+}
+
+label.cuotas {
+	font-weight: normal;
 }
