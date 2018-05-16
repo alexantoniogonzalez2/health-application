@@ -134,6 +134,7 @@ AplicacionMedica::Application.routes.draw do
   post '/reintegrar_glosa', to: 'atenciones_salud#reintegrarGlosa'
   post '/update_treatment', to: 'atenciones_salud#updateTreatment'
   post '/save_presupuesto', to: 'atenciones_salud#savePresupuesto'
+  post '/save_cuotas', to: 'atenciones_salud#saveCuotas'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

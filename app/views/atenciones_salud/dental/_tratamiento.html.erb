@@ -9,8 +9,10 @@
 			 		<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
 				
 					<div ng-repeat="item in odontogramList" class="container">
-						<div ng-repeat="glosa_endo in item | filter:noSanos | filter: noEnPresupuesto ">
-		    			<glosa-reintegrar ></glosa-reintegrar> 
+						<div ng-repeat="glosa_endo in item | filter:noSanos ">
+<!-- 													<div ng-repeat="glosa_endo in item | filter:noSanos | filter: noEnPresupuesto ">
+ -->
+		    			<glosa-reintegrar ng-show="noEnPresupuesto(glosa_endo)"></glosa-reintegrar> 
 	    			</div>
 
 		    		<div class="row" ng-hide="treatment.showEndodontic('general')">
@@ -48,8 +50,9 @@
 			<legend>Endodoncia</legend>
 			<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
 			<div ng-repeat="item in odontogramList" class="container no-padding">
-				<div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto ">
-    			<glosa-endo></glosa-endo> 
+				<div ng-repeat="glosa_endo in item | filter:noSanos">
+					<!-- <div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto "> -->
+    			<glosa-endo ng-show="enPresupuesto(glosa_endo)"></glosa-endo> 
     		</div>
     		<div class="row glosa-endo" ng-show="treatment.showEndodontic('general')">
 					<div class="col-md-3 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >

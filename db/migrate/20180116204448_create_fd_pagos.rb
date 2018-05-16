@@ -7,6 +7,8 @@ class CreateFdPagos < ActiveRecord::Migration
       t.string :comentario
       t.datetime :fecha_pago
       t.timestamps null: false
+      t.integer :numero
+      t.boolean :pagado, :default => 0
     end
   end
 end
