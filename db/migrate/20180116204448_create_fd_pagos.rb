@@ -3,7 +3,7 @@ class CreateFdPagos < ActiveRecord::Migration
     create_table :fd_pagos do |t|
     	t.references :presupuesto
     	t.references :responsable
-      t.integer :monto 
+      t.decimal :monto, :precision => 10, :scale => 2 
       t.string :comentario
       t.datetime :fecha_pago
       t.timestamps null: false

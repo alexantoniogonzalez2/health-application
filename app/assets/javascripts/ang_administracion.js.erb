@@ -1,21 +1,37 @@
 (function(){
   var app = angular.module('presupuesto', ['templates', 'ng-rails-csrf']);
 
-  app.controller('PresupuestoController', ['$http','$filter', function($http, $filter){
+  app.controller('PresupuestoController', ['$http','$filter', '$scope', function($http, $filter, $scope){
 
-    var pagos = this;
-    this.cargarPagos= function(presupuesto) { 
-
-      $http.get('/cargar_pagos', { params: { atencion_salud_id: atencion_salud_id, pres: presupuesto } }).success(function(data){
-        pagos = data;
+    $scope.presupuesto_actual = 0;
+    $scope.cuotas_admin = [];
+    $scope.cargarPagos = function(presupuesto) { 
+      $http.get('/cargar_pagos', { params: { pres: presupuesto } }).success(function(data){
+        $scope.cuotas_admin = data;
       });
-
+      $scope.presupuesto_actual = presupuesto;
+    };
+    $scope.agregarPago = function(cuota) { 
+      $http.post('/agregar_pago', { numero_pago: cuota, presupuesto: $scope.presupuesto_actual }).success(function(data){
+        cuota = $filter('filter')( $scope.cuotas_admin, function (d) { return d.numero == cuota; })[0];
+        cuota.pagado = true;
+      });
     };
 
-    
-    
+ 
   } ]);
-
+  app.directive('glosaPagoAdmin', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-pago-admin.html'
+    }; 
+  });
+  app.directive('editarPagoAdmin', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'editar-pago-admin.html'
+    }; 
+  });
 
 })();
 

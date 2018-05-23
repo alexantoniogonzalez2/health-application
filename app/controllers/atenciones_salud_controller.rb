@@ -1441,31 +1441,35 @@
 	  render :json => @presupuesto 
 	end
 
+	def loadCuotas
+		#validacion de seguridad pendiente
+		@presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+	  @cuotas = FdPagos.where('presupuesto_id = ?',@presupuesto.id)
+	  render :json => @cuotas
+	end
+
 	def savePresupuesto
 		#validacion de seguridad pendiente
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
-		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
-		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
-	  @persona = @agendamiento.persona
-	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
-	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
 
 	  @presupuesto.valor = params[:valor]
 	  @presupuesto.descuento = params[:descuento]
 	  @presupuesto.total = params[:total]
 	  @presupuesto.save!
-	  cuotas = @presupuesto.cuotas
+	  numero_cuotas = @presupuesto.numero_cuotas
 
-	  if @presupuesto.iguales
-	  	monto_cuota = (params[:total]/cuotas).round 
-	  	@cuotas = FdPagos.where('presupuesto_id = ?',  @presupuesto.id)
-	  	@cuotas.each do |cuota|
-	  		cuota.monto =  monto_cuota
-	  		cuota.save!
-	  	end
-	  else
+	  
+  	monto_cuota = params[:total]/numero_cuotas
+  	@cuotas = FdPagos.where('presupuesto_id = ?',  @presupuesto.id)
+
+	  if @cuotas
+	  	@cuotas.destroy_all
 	  end
+  	for i in 1..numero_cuotas
+ 			FdPagos.create! :monto => @presupuesto.total/numero_cuotas.to_f , :presupuesto => @presupuesto, :numero => i
+		end
+
 
 	  render :json => { :success => true } 
 	end
@@ -1473,29 +1477,51 @@
 	def saveCuotas
 		#validacion de seguridad pendiente
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
-		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
-		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
-	  @persona = @agendamiento.persona
-	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
-	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
 
 	  @presupuesto.iguales = params[:iguales]
-	  @presupuesto.cuotas = params[:cuotas]
+	  @presupuesto.numero_cuotas = params[:cuotas]
 	  @presupuesto.save!
 
 	  @cuotas = FdPagos.where('presupuesto_id = ?',  @presupuesto.id)
 
-	  if @cuotas
-	  	@cuotas.destroy_all
-	  end
-
-  	for i in 1..params[:cuotas]
- 			puts "Value of local variable is #{i}"
- 			FdPagos.create! :monto => (@presupuesto.total / params[:cuotas]).round , :presupuesto => @presupuesto, :numero => i
+	  if params[:cuotas] != 'null' 
+		  if @cuotas
+		  	@cuotas.destroy_all
+		  end
+	  	for i in 1..params[:cuotas]
+	 			FdPagos.create! :monto => @presupuesto.total/params[:cuotas].to_f , :presupuesto => @presupuesto, :numero => i
+			end
 		end
 
 	  render :json => { :success => true } 
+	end
+
+	def actualizarPago
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+
+	  @pago = FdPagos.where('numero = ? AND presupuesto_id = ?',params[:numero_pago],@presupuesto.id).first
+	  @pago.monto = params[:monto]
+	  @pago.save!
+
+	  render :json => { :success => true } 
+	end
+
+	def update_dental
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id]])
+
+		if params[:finalizar] == 'finalizar'
+			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
+			estado_actual = @agendamiento.estado_id
+			@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
+			@agendamiento.estado = @estadoAgendamiento
+			@agendamiento.fecha_final_real = DateTime.current if estado_actual != 10 #Si fue reabierta no se guarda esa hora
+			@agendamiento.save
+		end	
+
+		render :json => { :success => true } 
 	end
 
 	private

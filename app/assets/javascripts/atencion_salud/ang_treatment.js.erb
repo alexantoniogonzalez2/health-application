@@ -8,6 +8,8 @@
     $scope.endodonticPiezaDental = endodonticService.getPiezaDental();
     $scope.periodonticDiagnosis = periodonticService.getDiagnosis();
 
+    $scope.checkDistribution = false;
+
     $scope.selections = [];
     $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
       $scope.glosas = data;
@@ -17,13 +19,26 @@
       });
       
     });
-    console.log("inicial");
-    console.log($scope.selections);
-
     $scope.presupuesto = this;
     $http.get('/load_presupuesto', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
       $scope.presupuesto = data;
       $scope.presupuesto.descuento = parseFloat($scope.presupuesto.descuento);
+    });
+    $scope.cuotas = [];
+    $http.get('/load_cuotas', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+      $scope.cuotas = data;
+
+      var total = 0.0;
+      angular.forEach($scope.cuotas, function(value, key) {
+        total +=  parseFloat(value.monto);
+        value.monto = Math.round(value.monto);
+      });
+      $scope.total_cuotas = total;
+
+      if ($scope.total_cuotas == $scope.presupuesto.total)
+        $scope.checkDistribution = true;
+      else
+        $scope.checkDistribution = false;
     });
 
     $scope.$on('setDiagnosis', function (event, arg) {
@@ -34,9 +49,8 @@
           if ( $scope.noSanos(value))
             $scope.selections.push({ id: $scope.getTratamientoId(value.name), tipo_diagnostico_id: $scope.getTipoDiagnostico(value.name,'odontograma'), descripcion: $scope.getTratamiento(value.name), tr_id: $scope.getTratamientoId(value.name) }) ;   
         });
+        $scope.actualizarPresupuesto();
       });
-      console.log("diag");
-      console.log($scope.selections);
     });
 
     $scope.$on('saveUpdateE', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
@@ -50,9 +64,9 @@
           if ($scope.noSanos(value))
             $scope.selections.push({ id: $scope.getTratamientoId(value.name), tipo_diagnostico_id: $scope.getTipoDiagnostico(value.name,'odontograma'), descripcion: $scope.getTratamiento(value.name), tr_id: $scope.getTratamientoId(value.name) }) ;   
         });
+        $scope.actualizarPresupuesto();
       });
-      console.log("caracs");
-      console.log($scope.selections);
+      
     });
 
     $scope.noSanos = function(tooth) {
@@ -65,18 +79,6 @@
     $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
       $scope.glosa_tratamiento = data;
     });
-     
-    /*
-    $scope.glosa_tratamiento = [
-      {id: 12, name: 'Pulpitis reversible'},
-      {id: 23, name: 'Pulpitis irreversible aguda (sintomática)'},
-      {id: 25, name: 'Pulpitis reversible crónica (asintomática)'},
-      {id: 16, name: 'Pulpitis hiperclásica (polipo pulpar)'},
-      {id: 17, name: 'Reabsorción dentinaria interna'},
-      {id: 18, name: 'Calcificación pulpar'},
-    ];*/
-
-    //$scope.selected = { value: {id: "", name: ""} }; //Agregar busqueda bien hecha
 
     $scope.enPresupuesto = function(tooth) {
       var output = false;
@@ -243,7 +245,6 @@
       });
 
       $http.post('/update_treatment',{ tooth: pieza_dental, treatment: $scope.selections[idx].tr_id, at_salud_id: atencion_salud_id, glosa_id: glosa_id }).success(function(){ });
-
       $scope.actualizarPresupuesto();
 
     };
@@ -262,7 +263,6 @@
     };
     $scope.actualizarPresupuesto = function(){
 
-      // cambiar logica de filtro por ocultar
       if ($scope.presupuesto !== undefined)
         total = this.actualizarSubTotal()*(100-$scope.presupuesto.descuento)/100;
       else
@@ -272,13 +272,46 @@
       if (!isNaN(total))
         $http.post('/save_presupuesto',{ atencion_salud_id: atencion_salud_id, descuento: $scope.presupuesto.descuento, total: total, valor: $scope.presupuesto.valor }).success(function(){ });  
       
+      $scope.actualizarCuotas();
     };
-    this.actualizarCuotas = function(){
+    $scope.actualizarCuotas = function(){
+
+      if ($scope.presupuesto != null || $scope.presupuesto.numero_cuotas != null ){
+        $http.post('/save_cuotas',{ atencion_salud_id: atencion_salud_id, cuotas: $scope.presupuesto.numero_cuotas, iguales: $scope.presupuesto.iguales }).success(function(){ });  
+        $http.get('/load_cuotas', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+          $scope.cuotas = data;
+          var total = 0.0;
+          angular.forEach($scope.cuotas, function(value, key) {
+            total +=  parseFloat(value.monto);
+            value.monto = Math.round(value.monto);
+          });
+          $scope.total_cuotas = total;
+
+          console.log($scope.total_cuotas);
+          console.log($scope.presupuesto.total);
 
 
-      $http.post('/save_cuotas',{ atencion_salud_id: atencion_salud_id, cuotas: $scope.presupuesto.cuotas, iguales: $scope.presupuesto.iguales }).success(function(){ });  
-      
-      
+
+        });
+      }
+
+    };
+    $scope.actualizarPago = function(numero_pago){
+
+      $http.post('/actualizar_pago',{ atencion_salud_id: atencion_salud_id, numero_pago: numero_pago, monto: $scope.cuotas[numero_pago-1].monto }).success(function(){ }); 
+
+      var total = 0.0;
+      angular.forEach($scope.cuotas, function(value, key) {
+        total +=  parseFloat(value.monto);
+        value.monto = Math.round(value.monto);
+      });
+      $scope.total_cuotas = total; 
+
+      if ($scope.total_cuotas == $scope.presupuesto.total)
+        $scope.checkDistribution = true;
+      else
+        $scope.checkDistribution = false;
+  
     };
 
   }]);
@@ -286,6 +319,12 @@
     return {
       restrict: 'E',
       templateUrl: 'glosa-endo.html'
+    }; 
+  });
+  app.directive('glosaPago', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-pago.html'
     }; 
   });
   app.directive('glosaReintegrar', function(){ 

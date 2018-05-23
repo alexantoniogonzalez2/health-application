@@ -40,12 +40,12 @@
             <% if presupuesto.estado == "Anulado" %>
               <span>-</span>  
             <% else %>
-              <a id="pres-<%= presupuesto.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_presupuesto" onclick="cargarPagos(<%= presupuesto.id%>)">Ver</a> 
+              <a id="pres-<%= presupuesto.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_presupuesto" ng-click="cargarPagos(<%= presupuesto.id %>)">Ver</a> 
             <% end %>
           </td>
           <td>
             <% if presupuesto.estado != "Anulado" %>  
-              <button id="anular-<%= presupuesto.id%>" type="button" class="btn btn-xs btn-warning" onclick="anularPresupuesto(<%= presupuesto.id%>)">Agregar pago</button>     
+              <a id="editar-pago-<%= presupuesto.id %>" href='#' data-toggle="modal" data-target="#editar_pago" ng-click="cargarPagos(<%= presupuesto.id %>)">Agregar pago</a>     
             <% else %>
               <span>-</span>
             <% end %>
@@ -64,7 +64,55 @@
         </div>
         <div class="modal-body">
           <div>
-            
+            <div class="row glosa-endo">
+            <div class="col-md-2 no-padding">
+                <span class="strong"> Número </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Monto </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Estado </span>
+              </div>
+            </div>
+            <div ng-repeat="pago_admin in cuotas_admin" class="container">
+              <glosa-pago-admin></glosa-pago-admin>
+            </div>
+          </div>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+  <div class="modal fade" id="editar_pago" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header ajuste-modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4>Agregar pago</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="row glosa-endo">
+            <div class="col-md-2 no-padding">
+                <span class="strong"> Número </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Monto </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Estado </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Pagar </span>
+              </div>
+            </div>
+            <div ng-repeat="editar_pago in cuotas_admin" class="container">
+              <editar-pago-admin></editar-pago-admin>
+            </div>
           </div>   
         </div>
         <div class="modal-footer">

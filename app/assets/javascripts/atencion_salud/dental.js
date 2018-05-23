@@ -26,6 +26,25 @@ $(".content-tooltip-trat").mouseleave(function() {
   $( "#tooltip_tratamiento" ).hide(); 
 });
 
+function accionFinalizarAtencionDental(){
+  guardarAtencion("finalizar");
+}
+
+function accionGuardarAtencionDental(){
+  guardarAtencionDental("guardar");
+}
+
+function guardarAtencionDental(action){
+    
+  $.ajax({
+    type: 'POST',
+    url: '/guardar_atencion_dental',
+    data: { atencion_salud_id: atencion_salud_id, finalizar: action },
+    success: function(response) { window.location = '/' },
+    error: function(xhr, status, error) { alert('No se pudo guardar la atención dental.'); }
+  });
+
+}
 
 function isNumberIndice(evt) {
   evt = (evt) ? evt : window.event;

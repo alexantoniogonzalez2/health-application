@@ -1,0 +1,12 @@
+<div class="row glosa-endo">
+	<div class="col-md-2 no-padding">
+		<span> {{ pago_admin.numero }} </span>
+	</div>
+	<div class="col-md-3 ajus-pad-end">
+		<span> {{ pago_admin.monto | number : 0}} </span>
+	</div>
+	<div class="col-md-3 ajus-pad-end">
+		<span ng-show="pago_admin.pagado">Pagado </span>
+		<span ng-hide="pago_admin.pagado">No pagado </span>
+	</div>
+</div>

@@ -114,11 +114,24 @@ class AdministracionController < ApplicationController
 
 	def cargarPagos
 
-		# .where('pre_prestador_profesionales.prestador_id = ?',getIdPrestador('administrativo')
+		@pagos = FdPagos.where('presupuesto_id = ?', params[:pres])
 
-		@pagos = FdPagos.where('presupuesto_id = ?', params[:presupeusto])
+		render :json => @pagos
+	end
 
-		render :json => @presupuestos
+	def agregarPago
+
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+	  @presupuesto = FdPresupuestos.where('id = ?',params[:presupuesto]).first
+
+	  @pago = FdPagos.where('numero = ? AND presupuesto_id = ?',params[:numero_pago],@presupuesto.id).first
+	  @pago.pagado = true
+	  @pago.responsable = @usuario
+	  @pago.fecha_pago = DateTime.current
+	  @pago.save!
+
+	  render :json => { :success => true }
 	end
 
 

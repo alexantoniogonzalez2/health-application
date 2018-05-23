@@ -944,9 +944,8 @@ function guardarAntecedenteFamiliarCronica(id,cerrar){
 
 function accionFinalizarAtencion(){
   var diagnosticos = $('#diagnostico-div').children('a').length;
-  if (diagnosticos == 0){
-    //alert('Ingresa al menos un diagnóstico. Paciente sano: Z718.')
-  }
+  if (diagnosticos == 0)
+    alert('Ingresa al menos un diagnóstico. Paciente sano: Z718.')
   else
     guardarAtencion("finalizar");
 }

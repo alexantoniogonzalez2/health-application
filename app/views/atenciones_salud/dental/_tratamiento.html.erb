@@ -10,8 +10,6 @@
 				
 					<div ng-repeat="item in odontogramList" class="container">
 						<div ng-repeat="glosa_endo in item | filter:noSanos ">
-<!-- 													<div ng-repeat="glosa_endo in item | filter:noSanos | filter: noEnPresupuesto ">
- -->
 		    			<glosa-reintegrar ng-show="noEnPresupuesto(glosa_endo)"></glosa-reintegrar> 
 	    			</div>
 
@@ -51,7 +49,6 @@
 			<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
 			<div ng-repeat="item in odontogramList" class="container no-padding">
 				<div ng-repeat="glosa_endo in item | filter:noSanos">
-					<!-- <div ng-repeat="glosa_endo in item | filter:noSanos | filter:enPresupuesto "> -->
     			<glosa-endo ng-show="enPresupuesto(glosa_endo)"></glosa-endo> 
     		</div>
     		<div class="row glosa-endo" ng-show="treatment.showEndodontic('general')">
@@ -113,19 +110,24 @@
 		<div class="col-md-4">
 			<span class="strong right" contenteditable="true" ng-bind="presupuesto.valor | number:0" ></span><span class="strong right" >Subtotal: $ </span><br/><br/>
 			<p class="right">
-			<span class="strong">Descuento: </span><input min="0" type="number" max="99" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.descuento" onkeypress="return isNumber(event)" ng-change="treatment.actualizarPresupuesto();" /><span>%</span>
+			<span class="strong">Descuento: </span><input min="0" type="number" max="99" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.descuento" onkeypress="return isNumber(event)" ng-change="actualizarPresupuesto()" /><span>%</span>
 			</p><br/><br/>
 			<span class="strong right" contenteditable="true" ng-bind="presupuesto.total | number:0"></span><span class="strong right" >Total: $ </span>
 		</div>
 		<div class="col-md-1"></div>
 		<div class="col-md-3">
-			<span>Cuotas: </span><input min="1" type="number" max="12" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.cuotas" onkeypress="return isNumber(event)" ng-change="treatment.actualizarCuotas();" /><br/>
-			<label class="radio cuotas" for="dolor-0">
-	      <input type="radio" id="dolor-0" value="1" ng-model="presupuesto.iguales" class="cuotas" ng-change="treatment.actualizarCuotas();"> Iguales <span ng-show="presupuesto.iguales == 1">({{ presupuesto.cuotas}} cuotas de ${{ presupuesto.total/presupuesto.cuotas | number:0}})</span>
+		
+			<span>Cuotas: </span><input min="1" type="number" max="12" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.numero_cuotas" onkeypress="return isNumber(event)" ng-change="actualizarCuotas();" /><br/>
+			<div class="radio">
+			<label class="radio cuotas" for="cuotas">
+	      <input type="radio" id="cuotas" value="1" ng-model="presupuesto.iguales" class="cuotas" ng-change="actualizarCuotas();"> Iguales <span ng-show="presupuesto.iguales == 1">({{ presupuesto.numero_cuotas}} cuotas de ${{ presupuesto.total/presupuesto.numero_cuotas | number:0}})</span>
 	    </label> 
-	    <label class="radio cuotas" for="dolor-1">
-	      <input type="radio" id="dolor-1" value="0" ng-model="presupuesto.iguales" class="cuotas" ng-change="treatment.actualizarCuotas();"> Distribuir montos <a ng-hide="presupuesto.iguales == 1" href='#' data-toggle="modal" data-target="#ver_distribucion">Distribución</a> 
+	     </div>
+	     <div class="radio">
+	    <label class="radio cuotas" for="distribuir">
+	      <input type="radio" id="distribuir" value="0" ng-model="presupuesto.iguales" class="cuotas" ng-change="actualizarCuotas();"> Distribuir montos <a ng-hide="presupuesto.iguales == 1" href='#' data-toggle="modal" data-target="#ver_distribucion">Distribución</a> 
 	    </label><br/>
+	    </div>
 		</div>
 	</div>
 
@@ -137,9 +139,25 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4>Distribución de pagos</h4>
         </div>
         <div class="modal-body">
-          <div>
-            
-          </div>   
+        	<div class="row">
+						<div class="col-md-2 no-padding">
+							<span class="strong">Número</span>
+						</div>
+						<div class="col-md-3 ajus-pad-end">
+							<span class="strong">Monto</span>
+						</div>
+					</div>
+          <div ng-repeat="pago in cuotas" class="container">
+            <glosa-pago></glosa-pago>
+          </div>
+          <div class="row">
+						<div class="col-md-2 no-padding">
+						</div>
+						<div class="col-md-3 ajus-pad-end">
+							<span class="strong" ng-class="checkDistribution ? 'valido' : 'invalido'">Total cuotas: </span><span class="strong right" ng-class="checkDistribution ? 'valido' : 'invalido'" contenteditable="true" ng-bind="total_cuotas | number:0" ></span><br/><span class="invalido" ng-hide="checkDistribution">No coincide la distribución de los pagos con el total del presupuesto.</span><br/>
+							<span class="strong">Total presupuesto: </span><span class="strong right" contenteditable="true" ng-bind="presupuesto.total | number:0" ></span>
+						</div>
+					</div>   
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>

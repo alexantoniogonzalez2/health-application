@@ -119,6 +119,7 @@ AplicacionMedica::Application.routes.draw do
   get '/load_indice', to: 'atenciones_salud#loadIndice'
   get '/load_glosa_tratamiento', to: 'atenciones_salud#loadGlosaTratamiento'
   get '/load_presupuesto', to: 'atenciones_salud#loadPresupuesto'
+  get '/load_cuotas', to: 'atenciones_salud#loadCuotas'
   post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
   post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
   post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'
@@ -135,6 +136,8 @@ AplicacionMedica::Application.routes.draw do
   post '/update_treatment', to: 'atenciones_salud#updateTreatment'
   post '/save_presupuesto', to: 'atenciones_salud#savePresupuesto'
   post '/save_cuotas', to: 'atenciones_salud#saveCuotas'
+  post '/actualizar_pago', to: 'atenciones_salud#actualizarPago'
+  post '/guardar_atencion_dental', to: 'atenciones_salud#update_dental'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
@@ -175,6 +178,7 @@ AplicacionMedica::Application.routes.draw do
 
   #Administración dental
   get '/cargar_pagos', to: 'administracion#cargarPagos'
+  post '/agregar_pago', to: 'administracion#agregarPago'
 
 
 
