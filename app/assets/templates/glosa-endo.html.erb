@@ -4,18 +4,21 @@
 		<span class="strong"> {{glosa_endo.name}} </span>
 		<span>{{glosa_endo.descripcion}} </span>
 	</div>
-	<div class="col-md-3 ajus-pad-end">
+	<div class="col-md-2 ajus-pad-end">
 		<span>{{ treatment.getDiagnostico(glosa_endo.name,"odontograma") }} </span><tooth-panel-treatment ng-show="treatment.getDiagnostico(glosa_endo.name,'odontograma') == 'Caries' "></tooth-panel-treatment>
 	</div>
 	<div class="col-md-3 ajus-pad-end">
 		<treatment></treatment>
 	</div>
-	<div class="col-md-2 ajus-pad-end">
+	<div class="col-md-1 ajus-pad-end">
 		<span>{{ treatment.getValor(glosa_endo.name) | number:0 }} </span>
 	</div>
-	<!--<div class="col-md-1 ajus-pad-end">
-		<span>{{ treatment.getValor(glosa_endo.name) }} </span>
-	</div>-->
+	<div class="col-md-1 ajus-pad-end">
+		<span>Detalle </span>
+	</div>
+	<div class="col-md-1 ajus-pad-end">
+		<span>Realizado </span>
+	</div>
 	<div class="col-md-1 ajus-pad-end"> 
 		<a href="#" ng-click="treatment.delete(glosa_endo.name,'odontograma')">Eliminar</a>
 	</div>

@@ -138,6 +138,7 @@ AplicacionMedica::Application.routes.draw do
   post '/save_cuotas', to: 'atenciones_salud#saveCuotas'
   post '/actualizar_pago', to: 'atenciones_salud#actualizarPago'
   post '/guardar_atencion_dental', to: 'atenciones_salud#update_dental'
+  post '/imprimir_presupuesto', to: 'atenciones_salud#imprimirPresupuesto'
 
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'

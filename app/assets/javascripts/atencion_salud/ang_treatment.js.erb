@@ -50,6 +50,9 @@
             $scope.selections.push({ id: $scope.getTratamientoId(value.name), tipo_diagnostico_id: $scope.getTipoDiagnostico(value.name,'odontograma'), descripcion: $scope.getTratamiento(value.name), tr_id: $scope.getTratamientoId(value.name) }) ;   
         });
         $scope.actualizarPresupuesto();
+        $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+          $scope.glosa_tratamiento = data;
+        });
       });
     });
 
@@ -65,6 +68,10 @@
             $scope.selections.push({ id: $scope.getTratamientoId(value.name), tipo_diagnostico_id: $scope.getTipoDiagnostico(value.name,'odontograma'), descripcion: $scope.getTratamiento(value.name), tr_id: $scope.getTratamientoId(value.name) }) ;   
         });
         $scope.actualizarPresupuesto();
+        $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+          $scope.glosa_tratamiento = data;
+        });
+
       });
       
     });
@@ -170,16 +177,21 @@
       }
       return "-";
     };
-    this.showEndodontic = function(tipo){
+    this.showEndodontic = function(tipo_accion){
 
       var respuesta = false;
       var estado = false;
       var existe = false;
 
       if($scope.glosas !== undefined && $scope.endodonticPiezaDental[0] !== undefined ){
-        tooth = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == $scope.endodonticPiezaDental[0].name; })[0];
-        if (tooth.estado == "activo")
-          estado = true;
+        console.log($scope.glosas);
+        tooth = $filter('filter')( $scope.glosas, function (d) { return d.tipo == "endodoncia"; })[0];
+        if (tooth != undefined){
+          if (tooth.estado == "activo" && tipo_accion != "eliminada")
+            estado = true;
+          if ((tooth.estado == "eliminado") && tipo_accion == "eliminada")
+            estado = true;
+        }
       }
 
       if ($scope.endodonticPiezaDental[0] !== undefined && $scope.endodonticDiagnosis[0] !== undefined ){
@@ -191,14 +203,16 @@
   
       }
       if (estado == true && existe == true)
-        return true
+        respuesta = true;
 
-      return false;
+      return respuesta;
     };
     this.showPeriodontic = function(){
 
       return true;
     };
+
+    
     this.delete = function(pieza_dental,tipo){
       glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental, tipo: tipo } );
       angular.forEach(glosas, function(value, key) {
@@ -286,11 +300,6 @@
             value.monto = Math.round(value.monto);
           });
           $scope.total_cuotas = total;
-
-          console.log($scope.total_cuotas);
-          console.log($scope.presupuesto.total);
-
-
 
         });
       }

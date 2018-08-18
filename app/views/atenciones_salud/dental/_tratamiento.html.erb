@@ -13,8 +13,8 @@
 		    			<glosa-reintegrar ng-show="noEnPresupuesto(glosa_endo)"></glosa-reintegrar> 
 	    			</div>
 
-		    		<div class="row" ng-hide="treatment.showEndodontic('general')">
-							<div class="col-md-4 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
+		    		<div class="row" ng-show="treatment.showEndodontic('eliminada')">
+							<div class="col-md-3 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
 								<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
 								<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
 								<span>{{ endodonticPiezaDental[0].descripcion }} </span>
@@ -23,15 +23,16 @@
 							<div class="col-md-3 ajus-pad-end">
 								<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
 							</div>
-							<div class="col-md-2 ajus-pad-end">
+							<div class="col-md-3 ajus-pad-end">
 								<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
+								<span ng-hide="treatment.getTratamiento(endodonticPiezaDental[0].name) != null "> - </span>
 							</div>
-							<div class="col-md-1 ajus-pad-end">
+							<div class="col-md-2 ajus-pad-end">
 								<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
 							</div>
-							<div class="col-md-1 ajus-pad-end">
+<!-- 							<div class="col-md-1 ajus-pad-end">
 								<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
-							</div>
+							</div> -->
 							<div class="col-md-1 ajus-pad-end"> 
 								<a href="#" ng-click="treatment.reintegrar(endodonticPiezaDental[0].name,'endodoncia')">Reintegrar</a>
 							</div>
@@ -56,13 +57,14 @@
 						<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
 						<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
 						<span>{{ endodonticPiezaDental[0].descripcion }} </span>
-						<span ng-hide="endodonticPiezaDental[0].name != null "> - </span>
+						<span ng-hide="endodonticPiezaDental[0].name != null ">       - </span>
 					</div>
 					<div class="col-md-3 ajus-pad-end">
 						<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
 					</div>
 					<div class="col-md-3 ajus-pad-end">
 						<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
+						<span ng-hide="treatment.getTratamiento(endodonticPiezaDental[0].name) != null "> - </span>
 					</div>
 					<div class="col-md-2 ajus-pad-end">
 						<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
@@ -106,7 +108,7 @@
 	</div>
 
 	<div class="row total-treat">
-		<div class="col-md-4"> </div>
+		<div class="col-md-4"> <%= link_to 'Imprimir presupuesto', imprimir_presupuesto_path(:presupuesto_id => @presupuesto.id, :format => :pdf) , :method => :post %></div>
 		<div class="col-md-4">
 			<span class="strong right" contenteditable="true" ng-bind="presupuesto.valor | number:0" ></span><span class="strong right" >Subtotal: $ </span><br/><br/>
 			<p class="right">
@@ -154,7 +156,7 @@
 						<div class="col-md-2 no-padding">
 						</div>
 						<div class="col-md-3 ajus-pad-end">
-							<span class="strong" ng-class="checkDistribution ? 'valido' : 'invalido'">Total cuotas: </span><span class="strong right" ng-class="checkDistribution ? 'valido' : 'invalido'" contenteditable="true" ng-bind="total_cuotas | number:0" ></span><br/><span class="invalido" ng-hide="checkDistribution">No coincide la distribución de los pagos con el total del presupuesto.</span><br/>
+							<span class="strong" ng-class="checkDistribution ? 'valido' : 'invalido'">Total cuotas: </span><span class="strong right" ng-class="checkDistribution ? 'valido' : 'invalido'" contenteditable="true" ng-bind="total_cuotas | number:0" ></span><br/><!-- <span class="invalido" ng-hide="checkDistribution">No coincide la distribución de los pagos con el total del presupuesto.</span><br/> -->
 							<span class="strong">Total presupuesto: </span><span class="strong right" contenteditable="true" ng-bind="presupuesto.total | number:0" ></span>
 						</div>
 					</div>   
@@ -168,6 +170,3 @@
 
 
 </div>
-
-
-

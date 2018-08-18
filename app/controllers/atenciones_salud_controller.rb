@@ -1276,6 +1276,11 @@
 	  @profesional = @agendamiento.especialidad_prestador_profesional.profesional 
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
 
+	  @pres_ant = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id).first
+	  if @pres_ant
+	  	@presupuesto = @pres_ant
+	  end
+
 	  @glosas = FdGlosas.select("DISTINCT fd_glosas.id,ftp.nomenclatura,fd_glosas.total,fd_glosas.descuento,ftd.id as tipo_diag_id, ftd.nombre,ftd.tipo,ft.id as 'id_tr',ft.descripcion,fd_glosas.estado").
 	  									joins(:glosas_diagnosticos, :precio ,'INNER JOIN fd_diagnosticos AS fd ON fd_glosas_diagnosticos.diagnostico_id = fd.id','LEFT JOIN fd_piezas_dentales AS fpd ON fpd.id = fd.pieza_dental_id',
 	  												'LEFT JOIN fd_tipos_dientes AS ftp ON ftp.id = fpd.tipo_diente_id','INNER JOIN fd_tipos_diagnosticos AS ftd ON ftd.id = fd.tipo_diagnostico_id ',
@@ -1358,11 +1363,19 @@
 	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:at_salud_id]).first
 
-	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
-	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+  	if params[:tipo] != 'odontograma'
+			texto_pieza_dental = "is null"
+		else
+			@tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
+	  	@pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+			texto_pieza_dental = "= " + pieza_dental.id.to_s
+		end
+
+	  @presupuestos = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id)
+	  @id_presupuestos = @presupuestos.map { |pres| pres.id } 
 
 	 	@glosa = FdGlosas.joins('JOIN fd_glosas_diagnosticos as fgd ON fgd.glosa_id = fd_glosas.id JOIN fd_diagnosticos AS fd ON fd.id = fgd.diagnostico_id JOIN fd_tipos_diagnosticos as ftd ON ftd.id = fd.tipo_diagnostico_id')
-	  										.where('presupuesto_id = ? AND pieza_dental_id = ? AND tipo = ? ', @presupuesto.id, @pieza_dental.id,params[:tipo]).first
+	  										.where('presupuesto_id IN (?) AND pieza_dental_id ' + texto_pieza_dental + ' AND tipo = ? ', @id_presupuestos, params[:tipo]).first
 	  @glosa.estado = "eliminado"
 	  @glosa.save!
 
@@ -1380,11 +1393,19 @@
 	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador 
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:at_salud_id]).first
 
-	  @tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
-	  @pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+	  if params[:tipo] != 'odontograma'
+			texto_pieza_dental = "is null"
+		else
+			@tipo_diente = FdTiposDientes.where('nomenclatura = ?', params[:tooth]).first
+	  	@pieza_dental = FdPiezasDentales.where('persona_id = ? AND tipo_diente_id = ?', @persona.id, @tipo_diente.id).first
+			texto_pieza_dental = "= " + pieza_dental.id.to_s
+		end
+
+	  @presupuestos = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id)
+	  @id_presupuestos = @presupuestos.map { |pres| pres.id } 
 
 	 	@glosa = FdGlosas.joins('JOIN fd_glosas_diagnosticos as fgd ON fgd.glosa_id = fd_glosas.id JOIN fd_diagnosticos AS fd ON fd.id = fgd.diagnostico_id JOIN fd_tipos_diagnosticos as ftd ON ftd.id = fd.tipo_diagnostico_id')
-	  										.where('presupuesto_id = ? AND pieza_dental_id = ? AND tipo = ? ', @presupuesto.id, @pieza_dental.id, params[:tipo] ).first
+	  										.where('presupuesto_id IN (?) AND pieza_dental_id ' + texto_pieza_dental + ' AND tipo = ? ', @id_presupuestos, params[:tipo] ).first
 	  @glosa.estado = "activo"
 	  @glosa.save!
 
@@ -1402,9 +1423,13 @@
 	  @prestador = @agendamiento.especialidad_prestador_profesional.prestador
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
 
+	  @presupuestos = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id)
+
+	  @atenciones = @presupuestos.map { |pres| pres.atencion_salud.id } 
+
 	  @glosa_tratamiento = FdTratamientosTiposDiagnosticos.select('DISTINCT fd_tratamientos_tipos_diagnosticos.id, fd.tipo_diagnostico_id, fd_tratamientos.descripcion, fd_tratamientos.id as tr_id,valor').joins(:tratamiento,:tipo_diagnostico)
 	  											.joins("JOIN fd_diagnosticos as fd ON fd.tipo_diagnostico_id = fd_tratamientos_tipos_diagnosticos.tipo_diagnostico_id JOIN fd_precios as fp ON fp.tratamiento_id = fd_tratamientos.id ")
-	  											.where("atencion_salud_id = ? AND activo = 1 AND prestador_id = ? ", params[:atencion_salud_id], @prestador.id )
+	  											.where("atencion_salud_id IN (?) AND activo = 1 AND prestador_id = ? ", @atenciones, @prestador.id )
 
 		render :json => @glosa_tratamiento 
 		
@@ -1437,13 +1462,28 @@
 
 	def loadPresupuesto
 		#validacion de seguridad pendiente
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+	  @pres_ant = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id).first
+	  if @pres_ant
+	  	@presupuesto = @pres_ant
+	  end
 	  render :json => @presupuesto 
 	end
 
 	def loadCuotas
 		#validacion de seguridad pendiente
-		@presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+	  @pres_ant = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id).first
+	  if @pres_ant
+	  	@presupuesto = @pres_ant
+	  end
+
 	  @cuotas = FdPagos.where('presupuesto_id = ?',@presupuesto.id)
 	  render :json => @cuotas
 	end
@@ -1452,16 +1492,23 @@
 		#validacion de seguridad pendiente
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+	  @atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+
+	  @pres_ant = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id).first
+	  if @pres_ant
+	  	@presupuesto = @pres_ant
+	  end
 
 	  @presupuesto.valor = params[:valor]
 	  @presupuesto.descuento = params[:descuento]
 	  @presupuesto.total = params[:total]
 	  @presupuesto.save!
 	  numero_cuotas = @presupuesto.numero_cuotas
-
-	  
+  
   	monto_cuota = params[:total]/numero_cuotas
-  	@cuotas = FdPagos.where('presupuesto_id = ?',  @presupuesto.id)
+  	@cuotas = FdPagos.where('presupuesto_id = ? ',  @presupuesto.id)
 
 	  if @cuotas
 	  	@cuotas.destroy_all
@@ -1478,6 +1525,14 @@
 		#validacion de seguridad pendiente
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+	  @atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+
+	  @pres_ant = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id).first
+	  if @pres_ant
+	  	@presupuesto = @pres_ant
+	  end
 
 	  @presupuesto.iguales = params[:iguales]
 	  @presupuesto.numero_cuotas = params[:cuotas]
@@ -1501,6 +1556,14 @@
 		#validacion de seguridad pendiente
 		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
 	  @presupuesto = FdPresupuestos.where('atencion_salud_id = ?',params[:atencion_salud_id]).first
+	  @atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
+		@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)
+	  @persona = @agendamiento.persona
+
+	  @pres_ant = FdPresupuestos.joins(:atencion_salud => :agendamiento).where("ag_agendamientos.persona_id = ? AND fd_presupuestos.estado IN ('En proceso','Propuesto')", @persona.id).first
+	  if @pres_ant
+	  	@presupuesto = @pres_ant
+	  end
 
 	  @pago = FdPagos.where('numero = ? AND presupuesto_id = ?',params[:numero_pago],@presupuesto.id).first
 	  @pago.monto = params[:monto]
@@ -1510,7 +1573,7 @@
 	end
 
 	def update_dental
-		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id]])
+		@atencion_salud = FiAtencionesSalud.find(params[:atencion_salud_id])
 
 		if params[:finalizar] == 'finalizar'
 			@agendamiento = AgAgendamientos.find(@atencion_salud.agendamiento_id)	
@@ -1522,6 +1585,27 @@
 		end	
 
 		render :json => { :success => true } 
+	end
+
+	def imprimirPresupuesto
+
+		@presupuesto = FdPresupuestos.find(params[:presupuesto_id])
+		@atencion_salud = FiAtencionesSalud.find(@presupuesto.atencion_salud_id)
+		@cuotas = FdPagos.where('presupuesto_id = ?', @presupuesto.id)
+
+
+		nombre = l DateTime.current, format: :timestamp
+	  nombre.to_s << ' Presupuesto Dental ' << @atencion_salud.agendamiento.persona.showName('%n%p%m')
+
+		respond_to do |format|
+			format.pdf do
+          render :pdf => nombre,
+                 :template => "atenciones_salud/dental/presupuesto.pdf.erb", :locals => {:presupuesto => @presupuesto, :cuotas => @cuotas },
+                 :disposition => 'attachment',
+                 :encoding => "utf8"               
+ 					 end               
+		end
+		
 	end
 
 	private
