@@ -2,11 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$lightGreen: #DFF6DF;
-$blue: #428bca;
-$blueFooter: #B5DBFF;
-$lightBlue: #85D3F5;
-$mediumBlue: #D9EDF7;
+@import "colors";
+
 /* formulario de atención de salud */
 
 #submit {	float: right; }
@@ -298,7 +295,6 @@ select.float-right { float:right; }
 a.active-ant, a.active-ant:focus { background-color: $lightGreen; color: $blue;}
 div.margin-top { margin-top: 5px;}
 input.width_300 { width: 300px !important; }
-
 .modal { overflow-y: scroll !important; }
 .modal-open { overflow: scroll !important; }
-
+.done-true { text-decoration: line-through; color: grey; }

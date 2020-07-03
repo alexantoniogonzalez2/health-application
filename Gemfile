@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails' 
+gem 'rails','4.2.4'
 
 # Use SCSS for stylesheets
 gem 'bootstrap-sass'
@@ -48,16 +48,11 @@ gem 'mysql2' , '~> 0.3.18'
 
 #Devise
 gem 'devise'
-
-#Bootstrap
 gem "jquery-ui-rails"
 gem "jquery-validation-rails"
 gem 'rails3-jquery-autocomplete'
 gem "fullcalendar-rails"
 gem "datejs-rails"
-#gem "jquery-qtip2-rails"
-#gem 'qtip2-rails'
-#gem 'qtip2-jquery-rails'
 gem "select2-rails"
 gem "r18n-core"
 gem "highcharts-rails"
@@ -72,3 +67,7 @@ gem 'bootstrap3-datetimepicker-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'savon'
+gem 'angularjs-rails'
+gem 'angular-rails-templates'
+gem 'ng-rails-csrf'
+gem 'angular-ui-select-rails', '~> 0.12.1.1'

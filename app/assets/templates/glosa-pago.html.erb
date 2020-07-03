@@ -1,0 +1,8 @@
+<div class="row glosa-endo">
+	<div class="col-md-2 no-padding">
+		<span> {{ pago.numero }} </span>
+	</div>
+	<div class="col-md-3 ajus-pad-end">
+		<input min="1" type="number" max="9999999" class="form-control input-sm" ng-model="pago.monto" ng-change="actualizarPago(pago.numero);" />
+	</div>
+</div>

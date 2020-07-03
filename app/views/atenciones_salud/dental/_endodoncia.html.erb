@@ -1,0 +1,151 @@
+<div id="endodontic" ng-controller="GeneralEndodonticController as endodontic" class="container">
+	<div id="tooltip_endodoncia" class="tooltip_endodoncia oculto">
+	 	<div class="content">
+	    <div class="row">
+				<div ng-repeat="tooth in endodontic.tooths" class="col-16-tooltip col-md-1">
+	        <tooltip-endodoncia></tooltip-endodoncia>
+	      </div>  
+			</div>
+	  </div>
+	</div>
+	<div class="row padding-bottom" >
+		<label class="titulo">Pieza dental:</label>
+		<div class="content-tooltip" id="pieza_dental_{{ endo.name }}" >
+			<span class="glyphicon glyphicon-chevron-right glyphicon-1" aria-hidden="true" ng-mouseover="endodontic.showTooltipEnd($event,'tooltip_endodoncia')"></span>
+		</div>
+		<endodoncia-seleccion></endodoncia-seleccion>
+	</div>	
+	<div class="row">
+		<div class="col-md-8 borde-derecho">
+			<div class="container no-padding">
+				<div class="row">
+					<div class="col-md-5"> 
+					  <label>El dolor comenzó hace</label>:<br>
+						<label class="radio-inline" for="com_dolor-0">
+				      <input type="radio" id="com_dolor-0" value="1" ng-model="endo.comienzo_dolor"> Más de 2 días
+				    </label> 
+				    <label class="radio-inline" for="com_dolor-1">
+				      <input type="radio" id="com_dolor-1" value="2" ng-model="endo.comienzo_dolor"> Menos de 2 días
+				    </label>					 
+						<label class="label-end">El dolor es</label>:<br>
+						<label class="radio-inline" for="dolor-0">
+				      <input type="radio" id="dolor-0" value="1" ng-model="endo.dolor"> Continuo
+				    </label> 
+				    <label class="radio-inline" for="dolor-1">
+				      <input type="radio" id="dolor-1" value="2" ng-model="endo.dolor"> Intermitente
+				    </label><br>
+						<label class="label-end">Intensidad</label>:<br>
+						<label class="radio-inline" for="inten-0">
+				      <input type="radio" id="inten-0" value="1" ng-model="endo.intensidad"> Suave
+				    </label> 
+				    <label class="radio-inline" for="inten-1">
+				      <input type="radio" id="inten-1" value="2" ng-model="endo.intensidad"> Moderado
+				    </label>
+				    <label class="radio-inline" for="inten-2">
+				      <input type="radio" id="inten-2" value="3" ng-model="endo.intensidad"> Intenso
+				    </label>
+					</div>
+					<div class="col-md-7">
+						<label>Características</label>:
+						<div class="checkbox">
+					  	<label for="carac-0"><input type="checkbox" id="carac-0" ng-model="endo.es_pulsatil"> Pulsátil</label>
+						</div>
+						<div class="checkbox">
+					  	<label for="carac-1"><input type="checkbox" id="carac-1" ng-model="endo.cede_con_analgesicos"> Cede con analgésicos</label>
+						</div>
+						<div class="checkbox">
+					    <label for="carac-2"><input type="checkbox" id="carac-2" ng-model="endo.duele_al_acostarse"> Duele al acostarse o inclinarse</label>
+						</div>
+						<div class="checkbox">
+					    <label for="carac-3"><input type="checkbox" id="carac-3" ng-model="endo.es_posible_senalar"> Es posible señalar con un dedo el diente con dolor</label>
+						</div>
+						<label class="label-end">Generado por los siguientes estímulos</label>:<br>
+					  <label class="checkbox-inline" for="estim-0">
+				      <input type="checkbox" id="estim-0" ng-model="endo.se_genera_con_calor"> Calor
+				    </label>
+				    <label class="checkbox-inline" for="estim-1">
+				      <input type="checkbox" id="estim-1" ng-model="endo.se_genera_con_frio"> Frío
+				    </label>
+				    <label class="checkbox-inline" for="estim-2">
+				      <input type="checkbox" id="estim-2" ng-model="endo.se_genera_con_dulce"> Dulce
+				    </label>
+				    <label class="checkbox-inline" for="estim-3">
+				      <input type="checkbox" id="estim-3" ng-model="endo.se_genera_al_masticar"> Al masticar
+				    </label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label class="label-end">Información adicional</label>
+						<textarea id='inf-adi' class="input-mini form-control" rows='1' cols='40' ng-model="endo.informacion_adicional"></textarea>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<label>Examen extraoral</label>
+			<textarea id='exa-ext' class="form-control" rows='2' cols='20' ng-model="endo.examen_extraoral"></textarea>
+			<label>Examen intraoral</label>
+			<textarea id='exa-int' class="form-control" rows='2' cols='20' ng-model="endo.examen_intraoral"></textarea>
+			<label>Examen radiológico</label>
+			<textarea id='exa-rad' class="form-control" rows='2' cols='20' ng-model="endo.examen_radiologico"></textarea>
+		</div>
+	</div>
+	<hr>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-1 ajus-pad-end-2">
+				<label>Pieza dental</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Calor</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Eléctrico</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Percusión</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Palpación</label>
+			</div>
+			<div class="col-md-2 ajus-pad-end">
+				<label>Observación</label>
+			</div>
+		</div>
+	</div>
+  <div ng-repeat="diagnosis in endodontic.diagnosis" class="container">
+    <diagnosis-test></diagnosis-test> 
+  </div>
+  <a href="#" class="link-end" ng-click="endodontic.addTest()">Agregar información de otra pieza dental</a>
+	<hr>
+	<div class="row">
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-4">
+			<label>Diagnóstico</label><br>
+			<ui-select ng-model="selected.value"  class="select-diag-endo" theme="bootstrap">
+		    <ui-select-match allow-clear="true" placeholder="Selecciona un diagnóstico" >
+		       <span ng-bind="$select.selected.name"></span>
+		    </ui-select-match>
+		    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+		       <span ng-bind="item.name"></span>
+		    </ui-select-choices>
+			</ui-select>
+		</div>
+		<div class="col-md-4">
+			<label>Comentario</label>
+			<textarea id='com_endodoncia' class="form-control" rows='2' cols='20' ng-model="endo.comentario"></textarea>
+		</div>
+	</div>
+	<div id="tooltip_test" class="tooltip_test oculto">
+	 	<div class="content">
+	    <div class="row">
+				<div ng-repeat="tooth in endodontic.tooths" class="col-16-tooltip col-md-1">
+	        <tooltip-endodoncia></tooltip-endodoncia>
+	      </div>  
+			</div>
+	  </div>
+	</div>
+	<div id="test-aux"></div>
+</div>

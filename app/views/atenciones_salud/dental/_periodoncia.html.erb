@@ -1,0 +1,142 @@
+<div id="periodontic" ng-controller="PeriodonticController as periodontic" class="container no-padding">
+	<div class="row">
+		<div class="col-md-1 ajust-width">
+		</div>
+		<div class="col-md-1 col-3 borde-der-per">
+			<label>Índice gingival</label>
+		</div>
+		<div class="col-md-1 col-3">
+			<label>Índice higiene</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1 ajust-width">
+			<br>
+			<label>Vestibular</label><br>
+			<label>Mesial</label><br>
+			<label>Palatino</label><br>
+			<label>Distal</label><br>
+		</div>
+		<div class="col-md-11 col-11-per">
+		  <div ng-repeat="indice in indicegingival[1]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'gingival'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[2]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'gingival'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[3]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'gingival'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[1]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'higiene'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[2]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'higiene'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[3]" class="col-32 col-md-1">
+		    <indice-dental tipo="'higiene'" indice="indice"></indice-dental>
+		  </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1 ajust-width">
+			<label>Índice grupo</label>
+		</div>
+		<div class="col-32-5 col-md-1">
+			<indice-grupo grupo="1" indice="indicegingival" indicegrupo="indicegrupogingival"></indice-grupo>
+		</div>
+		<div class="col-32-6 col-md-1">
+			<indice-grupo grupo="2" indice="indicegingival" indicegrupo="indicegrupogingival"></indice-grupo>
+		</div>
+		<div class="col-32-5 col-md-1 borde-der-per-aj-in">
+			<indice-grupo grupo="3" indice="indicegingival" indicegrupo="indicegrupogingival"></indice-grupo>
+		</div>
+		<div class="col-32-5 col-md-1">
+			<indice-grupo grupo="1" indice="indicehigiene" indicegrupo="indicegrupohigiene"></indice-grupo>
+		</div>
+		<div class="col-32-6 col-md-1">
+			<indice-grupo grupo="2" indice="indicehigiene" indicegrupo="indicegrupohigiene"></indice-grupo>
+		</div>
+		<div class="col-32-5 col-md-1">
+			<indice-grupo grupo="3" indice="indicehigiene" indicegrupo="indicegrupohigiene"></indice-grupo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1 ajust-width">
+			<br>
+			<label>Vestibular</label><br>
+			<label>Mesial</label><br>
+			<label>Palatino</label><br>
+			<label>Distal</label><br>
+		</div>
+		<div class="col-md-11 col-11-per">
+			<div ng-repeat="indice in indicegingival[4]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'gingival'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[5]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'gingival'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicegingival[6]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'gingival'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[4]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'higiene'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[5]" class="col-32 col-md-1" ng-class="{ 'borde-der-per-aj': $last }">
+		    <indice-dental tipo="'higiene'" indice="indice"></indice-dental>
+		  </div>
+		  <div ng-repeat="indice in indicehigiene[6]" class="col-32 col-md-1">
+		    <indice-dental tipo="'higiene'" indice="indice"></indice-dental>
+		  </div>
+	  </div>
+	</div>
+	<div class="row">
+		<div class="col-md-1 ajust-width">
+			<label>Índice grupo</label>
+		</div>
+		<div class="col-32-5 col-md-1">
+			<indice-grupo grupo="4" indice="indicegingival" indicegrupo="indicegrupogingival"></indice-grupo>
+		</div>
+		<div class="col-32-6 col-md-1">
+			<indice-grupo grupo="5" indice="indicegingival" indicegrupo="indicegrupogingival"></indice-grupo>
+		</div>
+		<div class="col-32-5 col-md-1 borde-der-per-aj-in">
+			<indice-grupo grupo="6" indice="indicegingival" indicegrupo="indicegrupogingival"></indice-grupo>
+		</div>
+		<div class="col-32-5 col-md-1">
+			<indice-grupo grupo="4" indice="indicehigiene" indicegrupo="indicegrupohigiene"></indice-grupo>
+		</div>
+		<div class="col-32-6 col-md-1">
+			<indice-grupo grupo="5" indice="indicehigiene" indicegrupo="indicegrupohigiene"></indice-grupo>
+		</div>
+		<div class="col-32-5 col-md-1">
+			<indice-grupo grupo="6" indice="indicehigiene" indicegrupo="indicegrupohigiene"></indice-grupo>
+		</div>
+	</div>
+	<div class="row padding-top">
+		<div class="col-md-3">
+			<label class="ajust-label">Índice gingival: </label><br>
+			<label class="ajust-label">Índice higiene: </label>
+		</div>
+		<div class="col-md-1">
+			<input disabled class="form-control input-sm ind-general" value="{{ periodontic.getTotalIndice('gingival') }}"/><br/>
+			<input disabled class="form-control input-sm ind-general" value="{{ periodontic.getTotalIndice('higiene') }}"/>
+		</div>
+		<div class="col-md-4">
+			<label>Diagnóstico</label><br>
+			<ui-select ng-model="selected.value" theme="bootstrap" class="select-diag-endo">
+		    <ui-select-match allow-clear="true" placeholder="Selecciona un diagnóstico" >
+		       <span ng-bind="$select.selected.name"></span>
+		    </ui-select-match>
+		    <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+		       <span ng-bind="item.name"></span>
+		    </ui-select-choices>
+			</ui-select>
+		</div>
+		<div class="col-md-4">
+			<label>Comentario</label>
+			<textarea id='comentario' class="form-control" rows='2' cols='20' ng-model="periodoncia.comentario"></textarea>
+		</div>
+
+	</div>
+</div>

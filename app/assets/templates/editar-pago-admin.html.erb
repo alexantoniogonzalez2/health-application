@@ -1,0 +1,16 @@
+<div class="row glosa-endo">
+	<div class="col-md-2 no-padding">
+		<span> {{ editar_pago.numero }} </span>
+	</div>
+	<div class="col-md-3 ajus-pad-end">
+		<span> {{ editar_pago.monto | number : 0}} </span>
+	</div>
+	<div class="col-md-3 ajus-pad-end">
+		<span ng-show="editar_pago.pagado">Pagado </span>
+		<span ng-hide="editar_pago.pagado">No pagado </span>
+	</div>
+	<div class="col-md-3 ajus-pad-end"> 
+		<button ng-hide="editar_pago.pagado" type="button" class="btn btn-xs btn-warning" ng-click="agregarPago(editar_pago.numero)">Pagado</button>
+		<span ng-show="editar_pago.pagado"> - </span>
+	</div>
+</div>

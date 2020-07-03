@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vestibular: 1
+  mesial: 1
+  palatino: 1
+  distal: 1
+
+two:
+  vestibular: 1
+  mesial: 1
+  palatino: 1
+  distal: 1

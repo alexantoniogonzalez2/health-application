@@ -332,17 +332,6 @@ class AgendamientoController < ApplicationController
 		@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente en espera").first
 		@responsable = PerPersonas.where('user_id = ?',current_user.id).first
 
-		if @agendamiento.especialidad_prestador_profesional.especialidad.nombre == "Dental"
-			@estadoAgendamiento = AgAgendamientoEstados.where("nombre = ?","Paciente atendido").first
-			@atencion_salud = FiAtencionesSalud.new( :agendamiento_id => @agendamiento.id, :persona_id => @agendamiento.persona.id, :tipo_ficha_id => 3 )				
-	  	@atencion_salud.save(:validate => false)
-			@agendamiento.atencion_salud = @atencion_salud
-			@agendamiento.fecha_comienzo_real = @agendamiento.fecha_comienzo
-			@agendamiento.fecha_final_real = @agendamiento.fecha_final
-			@agendamiento.save
-		end
-
-
 		@agendamiento.transaction do
 			respuesta = "1"
 			@agendamiento.fecha_llegada_paciente = DateTime.current 
@@ -403,7 +392,7 @@ class AgendamientoController < ApplicationController
 		@agendamiento_log.fecha = DateTime.current
 		@agendamiento_log.save
 
-		render :text=> respuesta
+		render :text => respuesta
 	end
 		
 	def desbloquearHora

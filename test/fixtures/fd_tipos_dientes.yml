@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pieza_dental_id: 
+  tipo_diagnostico_id: 
+  zona: 
+  fecha: 2016-04-29
+  responsable_id: 
+  atencion_salud_id: 
+
+two:
+  pieza_dental_id: 
+  tipo_diagnostico_id: 
+  zona: 
+  fecha: 2016-04-29
+  responsable_id: 
+  atencion_salud_id: 

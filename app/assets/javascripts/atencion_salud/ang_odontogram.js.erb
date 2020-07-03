@@ -1,0 +1,72 @@
+(function(){
+  var app = angular.module('odontogram', ['templates', 'ng-rails-csrf']);
+  app.controller('OdontogramController', ['$http','$filter','$scope','$rootScope','odontogramService',function($http, $filter,$scope,$rootScope,odontogramService){
+    
+    var odontogram = this;
+    odontogram.tooths = [];
+    $http.get('/load_odontogram', { params: { atencion_salud_id: atencion_salud_id, tipo: 'persona' } }).success(function(data){
+      odontogram.tooths = data;
+      odontogramService.addOdontogram(data);
+    });
+
+    var diag = this;
+    diag = 1;
+
+    this.selectDiagnosis = function(setDiag) {
+      diag = setDiag;
+    };
+
+    this.setDiagnosis = function(tooth,tipo_cara){   
+      var diagnosticos = ['sano','caries','composite','sellante','amalgama','incrustacion','corona'];
+      $http.post('/save_dental_diagnosis',{ tipo_cara: tipo_cara, tooth: tooth.name, atencion_salud_id: atencion_salud_id, diagnostico: diag }).success(function(){        
+        tooth[tipo_cara] = diagnosticos[diag-1]; 
+        $rootScope.$broadcast('setDiagnosis', 'message');       
+      }); 
+    };
+
+    this.setCharacteristic = function(tipo_carac,event,tooth){
+      var id = angular.element(event.target).parent().parent().find("img").attr('id');
+      tooth = $filter('filter')(odontogram.tooths, function (d) {return d.name === id;})[0];
+      $http.post('/save_dental_characteristic',{ tipo_carac: tipo_carac, tooth: id, atencion_salud_id: atencion_salud_id }).success(function(){
+        tooth.caracteristica = tipo_carac;
+        $rootScope.$broadcast('setCharacteristic', 'message');       
+      });
+      $( "#tooltip_dental" ).hide();
+
+    };
+
+    this.isSelected = function(checkDiag){
+      return diag === checkDiag;
+    };
+
+    this.showTooltip = function(event) {      
+      angular.element(event.target).parent().append($( "#tooltip_dental" )); 
+      $( "#tooltip_dental" ).addClass('flex');
+      $( "#tooltip_dental" ).removeClass('hidden');
+      $( "#tooltip_dental" ).show(); 
+    };
+
+  } ]);
+
+  app.directive('toothName', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-name.html'
+    }; 
+  });
+
+  app.directive('toothPanel', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-panel.html'
+    }; 
+  });
+
+  app.directive('toothImage', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-image.html'
+    }; 
+  });
+
+})();

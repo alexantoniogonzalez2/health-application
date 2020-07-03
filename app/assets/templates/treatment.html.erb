@@ -1,0 +1,12 @@
+<div class="table-cell" id="{{ glosa_endo.name }}">
+	<ui-select ng-model="selections[$index]"  class="select-diag-treat" theme="select2" ng-change="treatment.updateTreatment($index, glosa_endo.name, getGlosaId(glosa_endo.name,'odontograma'), 'odontograma' )">
+    <ui-select-match placeholder="Selecciona un tratamiento" >
+    	<span ng-bind="$select.selected.descripcion"></span>
+     <!--<span >{{$select.selected.descripcion}} </span>-->
+     <!-- <span> {{ getTratamiento(glosa_endo.name) }} </span> -->
+    </ui-select-match>
+    <ui-select-choices repeat="item in (glosa_tratamiento | filter: {tipo_diagnostico_id: getTipoDiagnostico(glosa_endo.name,'odontograma') } | filter: $select.search) track by item.id">
+       <span ng-bind="item.descripcion"></span>
+    </ui-select-choices>
+	</ui-select>
+</div>

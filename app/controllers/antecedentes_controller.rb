@@ -30,7 +30,7 @@ class AntecedentesController < ApplicationController
 		@persona_medicamentos = FiPersonaMedicamentos.where('persona_id = ? ',@paciente.id) if @acceso
 		#Alergias
 		@persona_alergias_personales = FiPersonasAlergias.where('persona_id = ? ',@persona.id)
-		@alergias_personales = @persona_alergias_personales.map { |persona_alergias_personal| persona_alergias_personal.alergia.id unless persona_alergias_personal.alergia.comun  } 
+		@alergias_personales = @persona_alergias_personales.map { |persona_alergias_personal| persona_alergias_personal.alergia.id unless persona_alergias_personal.alergia.comun } 
 		@alergias = MedAlergias.where('comun is true or id IN (?)',@alergias_personales).order(nombre: :asc)
 		#Alcohol
 		@test_audit = FiHabitosAlcohol.where('persona_id = ?', @paciente.id)

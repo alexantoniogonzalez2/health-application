@@ -1,7 +1,7 @@
 <div class="container menu-inicial">
 	<div class="row clearfix">
 		<div class="col-md-2 column">
-			<ul id="nav-antecedentes" class="nav nav-pills nav-pills nav-stacked nav-antecedentes" role="tablist">
+			<ul id="nav-antecedentes" class="nav nav-pills nav-pills nav-stacked nav-index-prof" role="tablist">
 				<li class="active"><a href="#inicio" role="tab" data-toggle="tab">Inicio</a></li>				
 				<% if tieneRol('Confirmar agendamientos') or tieneRol('Recibir pacientes') or tieneRol('Bloquear horas') or tieneRol('Tomar horas') %>
 					<li><a href="#agenda" role="tab" data-toggle="tab">Ver agenda</a></li>
@@ -12,6 +12,7 @@
 			  <% if tieneRol('Generar estadísticas') %>
 			  	<li><a href="#gen_boletas" role="tab" data-toggle="tab">Generar boletas</a></li>
 			  	<li><a href="#ver_boletas" role="tab" data-toggle="tab">Ver boletas</a></li>
+			  	<li><a href="#ver_presupuestos" role="tab" data-toggle="tab">Ver presupuestos</a></li>
 			  <% end %>		  
 			</ul>
 		</div>
@@ -27,6 +28,7 @@
 			  <% if tieneRol('Generar estadísticas') %>
 			  	<div class="tab-pane" id="gen_boletas"><%= render :template => "administracion/generar_boletas" %></div>
 			  	<div class="tab-pane" id="ver_boletas"><%= render :template => "administracion/ver_boletas" %></div>
+			  	<div class="tab-pane" id="ver_presupuestos"><%= render :template => "administracion/ver_presupuestos" %></div>
 			  <% end %>					  
 			</div>
 		</div>

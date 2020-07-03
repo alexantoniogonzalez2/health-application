@@ -1,0 +1,172 @@
+<div id="treatment" ng-controller="TreatmentController as treatment" class="container no-padding">
+	<div class="row">
+
+		<h4>Presupuesto Nº {{ presupuesto.id }} </h4>
+
+		<div class="row content-tooltip-trat">
+			<div id="tooltip_tratamiento" class="tooltip_tratamiento oculto ">
+			 	<div class="content ">
+			 		<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
+				
+					<div ng-repeat="item in odontogramList" class="container">
+						<div ng-repeat="glosa_endo in item | filter:noSanos ">
+		    			<glosa-reintegrar ng-show="noEnPresupuesto(glosa_endo)"></glosa-reintegrar> 
+	    			</div>
+
+		    		<div class="row" ng-show="treatment.showEndodontic('eliminada')">
+							<div class="col-md-3 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
+								<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
+								<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
+								<span>{{ endodonticPiezaDental[0].descripcion }} </span>
+								<span ng-hide="endodonticPiezaDental[0].name != null "> - </span>
+							</div>
+							<div class="col-md-3 ajus-pad-end">
+								<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
+							</div>
+							<div class="col-md-3 ajus-pad-end">
+								<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
+								<span ng-hide="treatment.getTratamiento(endodonticPiezaDental[0].name) != null "> - </span>
+							</div>
+							<div class="col-md-2 ajus-pad-end">
+								<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+							</div>
+<!-- 							<div class="col-md-1 ajus-pad-end">
+								<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+							</div> -->
+							<div class="col-md-1 ajus-pad-end"> 
+								<a href="#" ng-click="treatment.reintegrar(endodonticPiezaDental[0].name,'endodoncia')">Reintegrar</a>
+							</div>
+						</div>
+
+	    		</div>
+			  </div>
+			</div>
+
+			<input class="btn btn-xs btn-warning right" type="submit" value="Agregar eliminadas" ng-show="treatment.hayEliminadas()" ng-mouseover="treatment.showEliminadas($event)">
+		</div>
+
+		<fieldset>
+			<legend>Endodoncia</legend>
+			<%= render :partial => "atenciones_salud/dental/head_endodoncia" %>
+			<div ng-repeat="item in odontogramList" class="container no-padding">
+				<div ng-repeat="glosa_endo in item | filter:noSanos">
+    			<glosa-endo ng-show="enPresupuesto(glosa_endo)"></glosa-endo> 
+    		</div>
+    		<div class="row glosa-endo" ng-show="treatment.showEndodontic('general')">
+					<div class="col-md-3 no-padding" id="end-{{endodonticPiezaDental[0].name}}" >
+						<img id="end-{{endodonticPiezaDental[0].name}}" ng-src="{{endodonticPiezaDental[0].image}}" class="end-test" ng-show="endodonticPiezaDental[0].name != null ">
+						<span class="strong"> {{ endodonticPiezaDental[0].name }} </span>
+						<span>{{ endodonticPiezaDental[0].descripcion }} </span>
+						<span ng-hide="endodonticPiezaDental[0].name != null ">       - </span>
+					</div>
+					<div class="col-md-3 ajus-pad-end">
+						<span> {{ treatment.getDiagnostico(endodonticPiezaDental[0].name, "endodoncia")}} </span>
+					</div>
+					<div class="col-md-3 ajus-pad-end">
+						<span> {{ treatment.getTratamiento(endodonticPiezaDental[0].name) }} </span>
+						<span ng-hide="treatment.getTratamiento(endodonticPiezaDental[0].name) != null "> - </span>
+					</div>
+					<div class="col-md-2 ajus-pad-end">
+						<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+					</div><!--
+					<div class="col-md-1 ajus-pad-end">
+						<span>{{ treatment.getValor(endodonticPiezaDental[0].name) }} </span>
+					</div>-->
+					<div class="col-md-1 ajus-pad-end"> 
+						<a href="#" ng-click="treatment.delete(endodonticPiezaDental[0].name,'endodoncia')">Eliminar</a>
+					</div>
+				</div>
+  		</div>
+
+		</fieldset>
+
+	</div>
+
+	<div class="row" ng-show="treatment.showPeriodontic()" >
+		<fieldset>
+			<legend>Periodoncia</legend>
+				<%= render :partial => "atenciones_salud/dental/head_periodoncia" %>
+				<div class="row glosa-endo">
+					<div class="col-md-4 ajus-pad-end">
+						<span> {{ treatment.getDiagnostico(periodonticDiagnosis[0]["value"].name, "periodoncia")}} </span>
+					</div>
+					<div class="col-md-4 ajus-pad-end">
+						<span> - </span>
+					</div>
+					<div class="col-md-3 ajus-pad-end">
+						<span> - </span>
+					</div><!--
+					<div class="col-md-2 ajus-pad-end">
+						<span> - </span>
+					</div>-->
+					<div class="col-md-1 ajus-pad-end"> 
+						<a href="#" ng-click="treatment.deletePeriodoncia()">Eliminar</a>
+					</div>
+				</div>
+
+		</fieldset>	
+	</div>
+
+	<div class="row total-treat">
+		<div class="col-md-4"> <%= link_to 'Imprimir presupuesto', imprimir_presupuesto_path(:presupuesto_id => @presupuesto.id, :format => :pdf) , :method => :post %></div>
+		<div class="col-md-4">
+			<span class="strong right" contenteditable="true" ng-bind="presupuesto.valor | number:0" ></span><span class="strong right" >Subtotal: $ </span><br/><br/>
+			<p class="right">
+			<span class="strong">Descuento: </span><input min="0" type="number" max="99" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.descuento" onkeypress="return isNumber(event)" ng-change="actualizarPresupuesto()" /><span>%</span>
+			</p><br/><br/>
+			<span class="strong right" contenteditable="true" ng-bind="presupuesto.total | number:0"></span><span class="strong right" >Total: $ </span>
+		</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-3">
+		
+			<span>Cuotas: </span><input min="1" type="number" max="12" class="form-control input-sm pres" maxlength="2" ng-model="presupuesto.numero_cuotas" onkeypress="return isNumber(event)" ng-change="actualizarCuotas();" /><br/>
+			<div class="radio">
+			<label class="radio cuotas" for="cuotas">
+	      <input type="radio" id="cuotas" value="1" ng-model="presupuesto.iguales" class="cuotas" ng-change="actualizarCuotas();"> Iguales <span ng-show="presupuesto.iguales == 1">({{ presupuesto.numero_cuotas}} cuotas de ${{ presupuesto.total/presupuesto.numero_cuotas | number:0}})</span>
+	    </label> 
+	     </div>
+	     <div class="radio">
+	    <label class="radio cuotas" for="distribuir">
+	      <input type="radio" id="distribuir" value="0" ng-model="presupuesto.iguales" class="cuotas" ng-change="actualizarCuotas();"> Distribuir montos <a ng-hide="presupuesto.iguales == 1" href='#' data-toggle="modal" data-target="#ver_distribucion">Distribución</a> 
+	    </label><br/>
+	    </div>
+		</div>
+	</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="ver_distribucion" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header ajuste-modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4>Distribución de pagos</h4>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+						<div class="col-md-2 no-padding">
+							<span class="strong">Número</span>
+						</div>
+						<div class="col-md-3 ajus-pad-end">
+							<span class="strong">Monto</span>
+						</div>
+					</div>
+          <div ng-repeat="pago in cuotas" class="container">
+            <glosa-pago></glosa-pago>
+          </div>
+          <div class="row">
+						<div class="col-md-2 no-padding">
+						</div>
+						<div class="col-md-3 ajus-pad-end">
+							<span class="strong" ng-class="checkDistribution ? 'valido' : 'invalido'">Total cuotas: </span><span class="strong right" ng-class="checkDistribution ? 'valido' : 'invalido'" contenteditable="true" ng-bind="total_cuotas | number:0" ></span><br/><!-- <span class="invalido" ng-hide="checkDistribution">No coincide la distribución de los pagos con el total del presupuesto.</span><br/> -->
+							<span class="strong">Total presupuesto: </span><span class="strong right" contenteditable="true" ng-bind="presupuesto.total | number:0" ></span>
+						</div>
+					</div>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

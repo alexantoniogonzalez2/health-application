@@ -1,0 +1,483 @@
+@import "colors";
+
+.ui-select-choices {
+	position: relative;
+	z-index: 1;
+}
+div.dental {
+	padding-right: 5px; 
+	padding-left: 5px;
+  div.tab-content {
+  	min-height: 370px;
+  }
+  div.row {
+  	div.col-md-2 {
+  		padding-right: 0px;
+  	}
+  }
+}
+
+.cara-dental { 
+	border: 1px solid black;
+	padding: 0px 1px;
+	position: relative;
+	font-size: 8px;
+	cursor: pointer;
+}
+
+.distal { 
+	top: 13px;
+	left: 2px;
+}
+
+.vestibular {  }
+
+.mesial { 
+	top: 13px;
+	right: 2px;
+}
+
+.palatina { 
+	left: 7px;
+	top: 6px;
+}
+
+.palatina-treat { 
+	left: 14px;
+	top: 6px;
+}
+
+.oclusal { 
+	bottom: 7px; 
+	right: 7px;
+}
+.oclusal-treat { 
+	bottom: 7px; 
+	//right: 7px;
+}
+
+.incisal { 
+	bottom: 7px;
+	right: 7px;
+	padding: 0px 3px; 
+} 
+.incisal-treat { 
+	bottom: 7px;
+	//right: 7px;
+	padding: 0px 3px; 
+}   
+
+.col-16 { 	
+  width: 40px;
+}
+
+.col-32 { 	
+  width: 30px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align:center;
+}
+
+.col-32-5 { 	
+  width: 150px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align:center;
+}
+
+.col-32-6 { 	
+  width: 187px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align:center;
+}
+
+.col-11 { 	
+  width: 140px;
+}
+
+.col-3 { 	
+  width: 487px;
+  text-align: center;
+}
+
+.col-11-per { 	
+  width: 980px;
+  margin-right: 0px; 
+  margin-left: 0px;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.col-16-tooltip { 	
+  width: 25px;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+div.odontograma {
+	div.content{
+		width: 650px;
+		float: left;
+		margin-right: 20px;
+		div.row { 
+			div.col-md-1 {
+				padding: 0px;
+				text-align: center;
+				label { 
+					margin-bottom: 0px;	
+					display: block;	
+					margin-top: 5px;		
+				}
+				img.img_dental {
+					padding-top: 10px;
+				}
+			}
+		}
+		div.car-den {
+			padding-bottom: 10px;
+		}
+	}
+}
+
+img.img_dental,img.tooltip_dental {
+  border: 2px solid white;
+}
+
+img.img_dental:hover, img.tooltip_dental:hover, img.end:hover, span.glyphicon:hover {
+	border-radius: 3px;
+  border: 2px solid $blueFooter;
+  cursor: pointer;
+}
+
+img.ausente, .ausente {
+	opacity: 0.3;
+}
+
+div.diag-dental {
+	display: table-row;
+	width: 150px;
+	button > span.glyphicon {
+		margin-left: 7px;
+	}
+}
+
+.diag_sano {
+	color: $black;
+}
+
+.diag_caries {
+	color: $caries;
+}
+
+.diag_composite {
+	color: $composite;
+}
+
+.diag_amalgama {
+	color: $amalgama;
+}
+
+.diag_sellante {
+	color: $sellante;
+}
+
+.diag_incrustacion {
+	color: $incrustacion;
+}
+
+.diag_corona {
+	color: $corona;
+}
+
+.sano {
+	background-color: none;
+}
+
+.caries {
+	background-color: $caries;
+}
+
+.composite {
+	background-color: $composite;
+}
+
+.amalgama {
+	background-color: $amalgama;
+}
+
+.sellante {
+	background-color: $sellante;
+}
+
+.incrustacion {
+	background-color: $incrustacion;
+}
+
+.corona {
+	background-color: $corona;
+}
+
+div.tooltip_dental {  
+  z-index: 3;
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  border: $blueFooter 2px;
+  border-style: solid;
+  padding: 10px;
+  left: 20px;
+  top: 60px;
+}
+
+div.flex {
+	display: flex;
+}
+
+div.extraccion {	   
+	content: url(dental/otros/extraccion.jpg);
+}
+
+div.implante {	   
+	content: url(dental/otros/implante.jpg);	
+}
+
+div.endodoncia {	   
+	content: url(dental/otros/endodoncia.jpg);	
+}
+
+.normal {	}
+
+div.carac {
+	position: absolute;
+	cursor: pointer;
+  top: 15px;
+  right: 5px;
+}
+
+label.titulo {
+	font-size: 18px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+label.label-end {
+	margin-top: 10px;
+}
+
+div.borde-derecho {
+	padding-left: 0px;
+	padding-right: 10px;
+	border-right: 1px solid #eee;
+}
+
+#endodontic {
+	hr {
+		margin-top: 25px;
+		margin-bottom: 10px;
+	}
+	.checkbox {
+    margin-bottom: 4px !important;
+	}
+	.btn-xs {
+		opacity: 0.5 !important;
+		margin-left: 0px;
+	}
+	.btn.active {
+		opacity: 1 !important;
+	}
+}
+
+img.end, img.end_sel {
+	height: 45px;
+}
+
+img.end-test {
+	margin-left: 5px;
+	height: 30px;
+	min-width: 13px;
+}
+
+div.tooltip_endodoncia, div.tooltip_test, div.tooltip_tratamiento {  
+  z-index: 3;
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  border: $blueFooter 2px;
+  border-style: solid;
+  padding: 8px !important;
+}
+
+div.tooltip_endodoncia {  
+	top: 202px;
+	left: 245px; 
+	width: 420px;
+}
+
+div.tooltip_test {  
+	width: 420px;
+}
+
+div.tooltip_tratamiento {  
+	width: 800px; 
+	right: 70px;
+  margin-top: 22px;
+  font-size: 10px;
+  div.content { width: 800px; }
+}
+
+span.glyphicon-1 {
+	padding: 10px 6px;
+	margin-left: 10px !important;
+	border-radius: 3px;
+  border: 1px solid $verylightGray;
+  cursor: pointer;
+}
+
+span.glyphicon-2 {
+	border-radius: 3px;
+  border: 1px solid $verylightGray;
+  cursor: pointer;
+  position: absolute;
+  padding: 3px 2px;
+  margin-left: 45px !important;
+  margin-top: 5px;
+}
+
+div.endodoncia-seleccion {
+	border-radius: 3px;
+  border: 1px dashed;
+	display: inline-block;
+	padding: 0px 5px;
+	padding-right: 10px;
+	width: 65px;
+	height: 47px;
+}
+
+div.content-tooltip {
+	display: inline-block;
+}
+
+div.ajus-pad-end {
+	padding: 3px 0px 0px 30px;
+}
+
+div.ajus-pad-end-2 {
+	padding: 3px 0px 0px 0px;
+}
+
+span.end {
+	position: absolute;
+  padding-top: 7px;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+a.link-end {
+	float: right;
+}
+
+.select-diag-endo {
+	min-width: 300px;
+}
+
+.select-diag-treat {
+	min-width: 200px;
+}
+
+.indice {
+  padding: 6px 2px 6px 2px;
+  margin-bottom: 3px;
+  height: 20px;
+  width: 28px;
+} 
+
+.borde-der-per-aj {
+	margin-right: 2px;
+	width: 31px;
+	border-right: 1px solid #ccc;
+}
+
+.borde-der-per {
+	border-right: 1px solid #ccc;
+}
+
+.margin-right-per {
+	margin-right: 15px;
+}
+
+.borde-der-per-aj-in {
+	padding-right: 10px;
+	border-right: 1px solid #ccc;
+}
+
+.ajuste-perio {
+	width: 98px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+#periodontic {
+	div.row {
+		div.ajust-width {
+			padding-right: 5px;
+			width: 100px;
+			padding-left: 10px;
+		}
+	}
+}
+
+.ind-general {
+  width: 50px;
+  display: inline;
+  margin-top: 10px;
+}
+
+.ajust-label{
+  margin-top: 15px;
+  margin-left: 40px;
+}
+
+.tabstyle {
+	border: 1px solid #ddd;
+	border-radius: 3px 3px 0 0;
+}
+
+.app-dental > section > div.panel {
+  padding: 10px 5px 10px 5px;
+  border-style: solid;
+  border: 1px solid #dddddd;
+  border-radius: 0px 4px 4px 4px;
+  min-height: 350px;
+}
+
+div.glosa-endo {
+	height: 43px;
+}
+
+div.total-treat {
+	margin-top: 20px;
+}
+
+input.pres {
+	padding: 2px 2px;
+  width: 35px;
+  height: 25px;
+	display: inline-block;
+}
+
+input.cuotas {
+	margin-left: 0px !important;
+}
+
+label.cuotas {
+	font-weight: normal;
+}
+
+span.valido {
+  color: green;
+}
+
+span.invalido {
+  color: red;
+}

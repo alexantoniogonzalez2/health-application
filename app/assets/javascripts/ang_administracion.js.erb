@@ -1,0 +1,56 @@
+(function(){
+  var app = angular.module('presupuesto', ['templates', 'ng-rails-csrf']);
+
+  app.controller('PresupuestoController', ['$http','$filter', '$scope', function($http, $filter, $scope){
+
+    $scope.presupuesto_actual = 0;
+    $scope.cuotas_admin = [];
+    $scope.cargarPagos = function(presupuesto) { 
+      $http.get('/cargar_pagos', { params: { pres: presupuesto } }).success(function(data){
+        $scope.cuotas_admin = data;
+      });
+      $scope.presupuesto_actual = presupuesto;
+    };
+    $scope.agregarPago = function(cuota) { 
+      $http.post('/agregar_pago', { numero_pago: cuota, presupuesto: $scope.presupuesto_actual }).success(function(data){
+        cuota = $filter('filter')( $scope.cuotas_admin, function (d) { return d.numero == cuota; })[0];
+        cuota.pagado = true;
+      });
+    };
+
+ 
+  } ]);
+  app.directive('glosaPagoAdmin', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-pago-admin.html'
+    }; 
+  });
+  app.directive('editarPagoAdmin', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'editar-pago-admin.html'
+    }; 
+  });
+
+})();
+
+if ( $.fn.dataTable.isDataTable( '#lista_presupuestos' ) ) { }
+else {
+  $('#lista_presupuestos').DataTable({
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],    
+    "columnDefs":[ { "targets": [ 0 ], "visible": false }],
+    "language": {
+      "lengthMenu": "Mostrar _MENU_ presupuestos por página",
+      "zeroRecords": "La búsqueda no arrojó resultados.",
+      "info": "_START_ a _END_ de _TOTAL_",
+      "infoEmpty": "No hay presupuestos que mostrar",
+      "infoFiltered": "(filtrados de _MAX_)",
+      "search": "Búsqueda",
+      "oPaginate": {
+        "sPrevious": "Página anterior",
+        "sNext": "Página siguiente"
+      }
+    }
+  });
+}

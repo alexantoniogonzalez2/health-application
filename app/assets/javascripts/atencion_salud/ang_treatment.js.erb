@@ -1,0 +1,358 @@
+(function(){
+  var app = angular.module('treatment', ['templates', 'ng-rails-csrf', 'ui.select']);
+  
+  app.controller('TreatmentController', ['$http','$filter','$scope','$timeout','odontogramService','endodonticService','periodonticService', function($http, $filter,$scope,$timeout,odontogramService,endodonticService,periodonticService) { 
+
+    $scope.odontogramList = odontogramService.getOdontogram();
+    $scope.endodonticDiagnosis = endodonticService.getDiagnosis();
+    $scope.endodonticPiezaDental = endodonticService.getPiezaDental();
+    $scope.periodonticDiagnosis = periodonticService.getDiagnosis();
+
+    $scope.checkDistribution = false;
+
+    $scope.selections = [];
+    $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+      $scope.glosas = data;
+      angular.forEach($scope.odontogramList[0], function(value, key) {
+        if ($scope.noSanos(value))
+          $scope.selections.push({ id: $scope.getTratamientoId(value.name), tipo_diagnostico_id: $scope.getTipoDiagnostico(value.name,'odontograma'), descripcion: $scope.getTratamiento(value.name), tr_id: $scope.getTratamientoId(value.name) }) ;   
+      });
+      
+    });
+    $scope.presupuesto = this;
+    $http.get('/load_presupuesto', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+      $scope.presupuesto = data;
+      $scope.presupuesto.descuento = parseFloat($scope.presupuesto.descuento);
+    });
+    $scope.cuotas = [];
+    $http.get('/load_cuotas', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+      $scope.cuotas = data;
+
+      var total = 0.0;
+      angular.forEach($scope.cuotas, function(value, key) {
+        total +=  parseFloat(value.monto);
+        value.monto = Math.round(value.monto);
+      });
+      $scope.total_cuotas = total;
+
+      if ($scope.total_cuotas == $scope.presupuesto.total)
+        $scope.checkDistribution = true;
+      else
+        $scope.checkDistribution = false;
+    });
+
+    $scope.$on('setDiagnosis', function (event, arg) {
+      $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+        $scope.glosas = data;
+        $scope.selections.length = 0;
+        angular.forEach($scope.odontogramList[0], function(value, key) {
+          if ( $scope.noSanos(value))
+            $scope.selections.push({ id: $scope.getTratamientoId(value.name), tipo_diagnostico_id: $scope.getTipoDiagnostico(value.name,'odontograma'), descripcion: $scope.getTratamiento(value.name), tr_id: $scope.getTratamientoId(value.name) }) ;   
+        });
+        $scope.actualizarPresupuesto();
+        $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+          $scope.glosa_tratamiento = data;
+        });
+      });
+    });
+
+    $scope.$on('saveUpdateE', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
+    $scope.$on('saveUpdateP', function (event, arg) { $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){ $scope.glosas = data; });});
+
+    $scope.$on('setCharacteristic', function (event, arg) {
+      $http.get('/load_treatment', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+        $scope.glosas = data;
+        $scope.selections.length = 0;
+        angular.forEach($scope.odontogramList[0], function(value, key) {
+          if ($scope.noSanos(value))
+            $scope.selections.push({ id: $scope.getTratamientoId(value.name), tipo_diagnostico_id: $scope.getTipoDiagnostico(value.name,'odontograma'), descripcion: $scope.getTratamiento(value.name), tr_id: $scope.getTratamientoId(value.name) }) ;   
+        });
+        $scope.actualizarPresupuesto();
+        $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+          $scope.glosa_tratamiento = data;
+        });
+
+      });
+      
+    });
+
+    $scope.noSanos = function(tooth) {
+      if (tooth.caracteristica == "ausente" || tooth.caracteristica == "extraccion" || tooth.diag_central == "caries" || tooth.diag_distal == "caries" || tooth.diag_mesial == "caries" || tooth.diag_palatina == "caries" || tooth.diag_vestibular == "caries"){
+        return true;
+      }
+      return false;
+    };
+
+    $http.get('/load_glosa_tratamiento', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+      $scope.glosa_tratamiento = data;
+    });
+
+    $scope.enPresupuesto = function(tooth) {
+      var output = false;
+      if($scope.glosas !== undefined  ){
+        tooth = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == tooth.name; })[0];
+        if(tooth !== undefined )
+          if (tooth.estado == "activo")
+            output = true;
+      }
+
+      return output;
+    };
+    $scope.noEnPresupuesto = function(tooth) {
+      if($scope.glosas !== undefined  ){
+        tooth = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == tooth.name; })[0];
+        if(tooth !== undefined )
+          if (tooth.estado == "activo")
+            return false;
+      }
+      return true;
+    };
+    this.getValor = function(pieza_dental){
+      if($scope.glosas !== undefined  ){
+        glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        if (glosa !== undefined )
+          return glosa.total;
+      }
+      return "-";
+    };
+    this.getDiagnostico = function(pieza_dental,tipo){
+      if($scope.glosas !== undefined  ){
+        if (tipo == "odontograma")
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        else if (tipo == "periodoncia"){
+          if (pieza_dental !== undefined )
+            return pieza_dental;
+          else
+            return "Sin diagnóstico";
+        }
+        else
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.tipo == "endodoncia"; })[0];
+
+        if (glosa !== undefined )
+          return glosa.nombre;
+      }
+      return "Sin diagnóstico";
+    };
+    $scope.getTipoDiagnostico = function(pieza_dental,tipo){
+      if($scope.glosas !== undefined ){
+        if (tipo == "odontograma")
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        else if (tipo == "periodoncia"){
+          if (pieza_dental !== undefined )
+            return pieza_dental;
+          else
+            return "Sin diagnóstico";
+        }
+        else
+          glosa = $filter('filter')( $scope.glosas, function (d) { return d.tipo == "endodoncia"; })[0];
+
+        if (glosa !== undefined ){
+          return glosa.tipo_diag_id;
+        }
+      }
+      return "Sin diagnóstico";
+    };
+    $scope.getGlosaId = function(pieza_dental,tipo){
+      if($scope.glosas !== undefined ){
+        glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        if (glosa !== undefined )
+          return glosa.id;
+      }
+      return "-";
+    };
+    $scope.getTratamiento = function(pieza_dental){
+      if($scope.glosas !== undefined ){
+        glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        if (glosa !== undefined )
+          return glosa.descripcion;
+      }
+      return "-";
+    };
+    $scope.getTratamientoId = function(pieza_dental){
+
+      if($scope.glosas !== undefined ){
+        glosa = $filter('filter')( $scope.glosas, function (d) { return d.nomenclatura == pieza_dental; })[0];
+        if (glosa !== undefined )
+          return glosa.id_tr;
+      }
+      return "-";
+    };
+    this.showEndodontic = function(tipo_accion){
+
+      var respuesta = false;
+      var estado = false;
+      var existe = false;
+
+      if($scope.glosas !== undefined && $scope.endodonticPiezaDental[0] !== undefined ){
+        console.log($scope.glosas);
+        tooth = $filter('filter')( $scope.glosas, function (d) { return d.tipo == "endodoncia"; })[0];
+        if (tooth != undefined){
+          if (tooth.estado == "activo" && tipo_accion != "eliminada")
+            estado = true;
+          if ((tooth.estado == "eliminado") && tipo_accion == "eliminada")
+            estado = true;
+        }
+      }
+
+      if ($scope.endodonticPiezaDental[0] !== undefined && $scope.endodonticDiagnosis[0] !== undefined ){
+        if ( $scope.endodonticPiezaDental[0].descripcion != null  )
+          existe = true;
+        if ( $scope.endodonticDiagnosis[0]["value"] !== undefined )
+          if ( $scope.endodonticPiezaDental[0].descripcion != null || $scope.endodonticDiagnosis[0]["value"].name != "" )
+            existe = true;
+  
+      }
+      if (estado == true && existe == true)
+        respuesta = true;
+
+      return respuesta;
+    };
+    this.showPeriodontic = function(){
+
+      return true;
+    };
+
+    
+    this.delete = function(pieza_dental,tipo){
+      glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental, tipo: tipo } );
+      angular.forEach(glosas, function(value, key) {
+        $http.post('/delete_glosa',{ tooth: pieza_dental, tipo: tipo, at_salud_id: atencion_salud_id }).success(function(){ });
+        value.estado = 'eliminado';
+      });
+
+      $scope.actualizarPresupuesto();
+      return true;
+    };
+    this.reintegrar = function(pieza_dental,tipo){
+      glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental, tipo: tipo } );
+      angular.forEach(glosas, function(value, key) {
+        $http.post('/reintegrar_glosa',{ tooth: pieza_dental, tipo: tipo, at_salud_id: atencion_salud_id }).success(function(){ });
+        value.estado = 'activo';
+        $( "#tooltip_tratamiento" ).hide();
+      });
+
+      $scope.actualizarPresupuesto();
+
+      return true;
+    };
+    this.hayEliminadas = function(){
+      glosas = $filter('filter')( $scope.glosas, { estado: 'eliminado' } );
+      if (glosas !== undefined)
+        if (glosas.length == 0 )
+          return false;
+      
+      return true;
+    };
+    this.showEliminadas = function(event){
+      $( "#tooltip_tratamiento" ).addClass('flex');
+      $( "#tooltip_tratamiento" ).removeClass('hidden');
+      $( "#tooltip_tratamiento" ).show();
+    };
+    this.updateTreatment = function(idx,pieza_dental,glosa_id,tipo){
+
+      tratamiento = $scope.selections[idx].tr_id;
+      $scope.selections[idx].id = tratamiento;
+      precio = $filter('filter')( $scope.glosa_tratamiento, function (d) { return d.tr_id == tratamiento; })[0];
+      t_glosas = $filter('filter')( $scope.glosas, { nomenclatura: pieza_dental, tipo: tipo } );
+      angular.forEach(t_glosas, function(value, key) {
+        value.total = precio.valor;
+      });
+
+      $http.post('/update_treatment',{ tooth: pieza_dental, treatment: $scope.selections[idx].tr_id, at_salud_id: atencion_salud_id, glosa_id: glosa_id }).success(function(){ });
+      $scope.actualizarPresupuesto();
+
+    };
+    $scope.actualizarSubTotal = function(){
+
+      var total = 0
+      glosas = $filter('filter')( $scope.glosas, { estado: "activo" } );
+      angular.forEach(glosas, function(value, key) {
+        total +=  value.total;
+      });
+
+      $scope.presupuesto.valor = total;  
+
+      return total;
+      
+    };
+    $scope.actualizarPresupuesto = function(){
+
+      if ($scope.presupuesto !== undefined)
+        total = this.actualizarSubTotal()*(100-$scope.presupuesto.descuento)/100;
+      else
+        total = this.actualizarSubTotal(); 
+
+      $scope.presupuesto.total = total; 
+      if (!isNaN(total))
+        $http.post('/save_presupuesto',{ atencion_salud_id: atencion_salud_id, descuento: $scope.presupuesto.descuento, total: total, valor: $scope.presupuesto.valor }).success(function(){ });  
+      
+      $scope.actualizarCuotas();
+    };
+    $scope.actualizarCuotas = function(){
+
+      if ($scope.presupuesto != null || $scope.presupuesto.numero_cuotas != null ){
+        $http.post('/save_cuotas',{ atencion_salud_id: atencion_salud_id, cuotas: $scope.presupuesto.numero_cuotas, iguales: $scope.presupuesto.iguales }).success(function(){ });  
+        $http.get('/load_cuotas', { params: { atencion_salud_id: atencion_salud_id } }).success(function(data){
+          $scope.cuotas = data;
+          var total = 0.0;
+          angular.forEach($scope.cuotas, function(value, key) {
+            total +=  parseFloat(value.monto);
+            value.monto = Math.round(value.monto);
+          });
+          $scope.total_cuotas = total;
+
+        });
+      }
+
+    };
+    $scope.actualizarPago = function(numero_pago){
+
+      $http.post('/actualizar_pago',{ atencion_salud_id: atencion_salud_id, numero_pago: numero_pago, monto: $scope.cuotas[numero_pago-1].monto }).success(function(){ }); 
+
+      var total = 0.0;
+      angular.forEach($scope.cuotas, function(value, key) {
+        total +=  parseFloat(value.monto);
+        value.monto = Math.round(value.monto);
+      });
+      $scope.total_cuotas = total; 
+
+      if ($scope.total_cuotas == $scope.presupuesto.total)
+        $scope.checkDistribution = true;
+      else
+        $scope.checkDistribution = false;
+  
+    };
+
+  }]);
+  app.directive('glosaEndo', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-endo.html'
+    }; 
+  });
+  app.directive('glosaPago', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-pago.html'
+    }; 
+  });
+  app.directive('glosaReintegrar', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'glosa-reintegrar.html'
+    }; 
+  });
+  app.directive('toothPanelTreatment', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'tooth-panel-treatment.html'
+    }; 
+  });
+  app.directive('treatment', function(){ 
+    return {
+      restrict: 'E',
+      templateUrl: 'treatment.html'
+    }; 
+  });
+
+})();

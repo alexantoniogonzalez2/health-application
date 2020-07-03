@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-1 no-padding ajus-end" id="{{diagnosis.id}}">
+		<img id="{{diagnosis.id}}" ng-src="{{diagnosis.image}}" class="end-test">
+		<span class="end"> {{diagnosis.name}} </span>
+		<span class="glyphicon glyphicon-chevron-left glyphicon-2" aria-hidden="true" ng-mouseover="endodontic.showTooltipEnd($event,'tooltip_test')"></span>
+	</div>
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.calor" tipo="'calor'" id="diagnosis.id" filter="tagFilter" general="general"></diagnosis-test-panel> 
+	</div>
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.electrico" tipo="'electrico'" id="diagnosis.id" filter="tagFilter" general="general"></diagnosis-test-panel> 
+	</div>
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.percusion" tipo="'percusion'" id="diagnosis.id" filter="tagFilter" general="general"></diagnosis-test-panel> 
+	</div>
+	<div class="col-md-2 ajus-pad-end">
+		<diagnosis-test-panel valor="diagnosis.palpacion" tipo="'palpacion'" id="diagnosis.id" filter="tagFilter" general="general"></diagnosis-test-panel> 
+	</div>
+	<div class="col-md-2 ajus-pad-end"> 
+		<textarea id='comentario-endodoncia' class="input-mini form-control" rows='1' ng-model="diagnosis.observacion" general="general"></textarea>	
+	</div>
+	<div class="col-md-1 ajus-pad-end"> 
+		<a href="#" ng-click="endodontic.deleteTest(diagnosis)">Eliminar</a>
+	</div>
+</div>
+
+<%= javascript_include_tag "atencion_salud/dental" %>

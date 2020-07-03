@@ -1,0 +1,129 @@
+<h4>Ver presupuestos</h4>
+<br>
+
+<% if @presupuestos.blank? %> 
+  <p>No hay presupuestos generados.</p>
+<% else %> 
+
+<div id="presupuesto" ng-app="presupuesto" ng-controller="PresupuestoController as presupuesto" class="container">
+
+  <h5>Lista de presupuestos</h5> 
+  <table id="lista_presupuestos" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+      	<th>Id</th>
+        <th>Fecha</th>
+        <th>Profesional</th>
+        <th>Especialidad</th>
+        <th>Paciente</th>
+        <th>RUT</th>
+        <th>Total</th>
+        <th>Pagado</th>
+        <th>Estado</th>
+        <th>Pagos</th>
+        <th>Editar</th>  
+      </tr>
+    </thead>
+    <tbody >
+      <% @presupuestos.each do |presupuesto| %>
+        <tr>
+          <td><%= presupuesto.id %></td>
+          <td><%= presupuesto.created_at.strftime("%Y-%m-%d") %></td>        
+          <td><%= presupuesto.atencion_salud.agendamiento.especialidad_prestador_profesional.profesional.showName('%n%p%m') %></td> 
+          <td><%= presupuesto.atencion_salud.agendamiento.especialidad_prestador_profesional.especialidad.nombre %></td>
+          <td><%= presupuesto.atencion_salud.agendamiento.persona.showName('%n%p%m') %></td> 
+          <td><%= presupuesto.atencion_salud.agendamiento.persona.showRut %></td> 
+          <td><%= number_to_currency(presupuesto.total, unit: "$ ", separator: '.') %></td>
+          <td><%= number_to_currency(presupuesto.pagado, unit: "$ ", separator: '.') %></td>
+          <td><%= presupuesto.estado %></td>
+          <td>
+            <% if presupuesto.estado == "Anulado" %>
+              <span>-</span>  
+            <% else %>
+              <a id="pres-<%= presupuesto.id %>" href='#' data-toggle="modal" data-target="#ver_atenciones_presupuesto" ng-click="cargarPagos(<%= presupuesto.id %>)">Ver</a> 
+            <% end %>
+          </td>
+          <td>
+            <% if presupuesto.estado != "Anulado" %>  
+              <a id="editar-pago-<%= presupuesto.id %>" href='#' data-toggle="modal" data-target="#editar_pago" ng-click="cargarPagos(<%= presupuesto.id %>)">Agregar pago</a>     
+            <% else %>
+              <span>-</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %> 
+    </tbody>    
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="ver_atenciones_presupuesto" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header ajuste-modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4>Esquema de pagos</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="row glosa-endo">
+            <div class="col-md-2 no-padding">
+                <span class="strong"> Número </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Monto </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Estado </span>
+              </div>
+            </div>
+            <div ng-repeat="pago_admin in cuotas_admin" class="container">
+              <glosa-pago-admin></glosa-pago-admin>
+            </div>
+          </div>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+  <div class="modal fade" id="editar_pago" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header ajuste-modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button><h4>Agregar pago</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="row glosa-endo">
+            <div class="col-md-2 no-padding">
+                <span class="strong"> Número </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Monto </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Estado </span>
+              </div>
+              <div class="col-md-3 ajus-pad-end">
+                <span class="strong"> Pagar </span>
+              </div>
+            </div>
+            <div ng-repeat="editar_pago in cuotas_admin" class="container">
+              <editar-pago-admin></editar-pago-admin>
+            </div>
+          </div>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar ventana</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<% end %>  
+
+<%= javascript_include_tag "ang_administracion" %>

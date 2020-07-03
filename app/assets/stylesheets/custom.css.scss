@@ -1,12 +1,4 @@
-/* colors */
-$blue: #428bca;
-$blueFooter: #B5DBFF;
-$lightBlue: #85D3F5;
-$mediumBlue: #D9EDF7;
-$lightGray: #444;
-$verylightGray: #ddd;
-$lightGreen: #DFF0D8;
-$white: white;
+@import "colors";
 
 html { overflow-y: scroll; }
 html, body.aplicacion { 
@@ -162,10 +154,11 @@ th.fc-widget-header { font-weight: normal !important; }
 .checkbox input[type="checkbox"],
 .checkbox-inline input[type="checkbox"] { position: relative !important; }
 
+
 fieldset {
   border: 1px dashed #c0c0c0 !important;
-  margin: 0px 0px 10px 0px !important;
-  padding: 5px 10px 2px 10px !important;
+  //margin: 0px 0px 10px 0px !important;
+  padding: 5px 5px 10px 5px !important;
   border-radius: 6px;
 }
 
@@ -202,6 +195,7 @@ input.ajuste-cen-der {
 div.ajuste-padding2 { padding-left: 0px; padding-right: 0px;}
 span.ajus-fl-left {float: left; }
 .no-padding { padding: 0px !important; }
+.no-margin { margin: 0px !important; }
 .help-block { color: #a94442; }
 .help-block-gray { color: #737373; display: block; margin-top: 5px; margin-bottom: 10px; }
 .fc-event { border: 1px solid $verylightGray;} 
@@ -293,3 +287,11 @@ div.ajuste-div-sexo { padding-top: 10px !important; margin-bottom: 5px !importan
 #iconos-leyenda { padding-top: 10px !important; padding-bottom: 10px !important; }
 td.padding-left { padding-left: 10px; }
 .padding-top-5 { padding-top: 5px; }
+
+.btn-group-vertical {
+  .btn {
+    text-align: left;
+  }
+}
+.strong { font-weight: bold; }
+.table-cell {display: table-cell; }

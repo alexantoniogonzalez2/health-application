@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  observacion: MyText
+  diagnostico: MyText
+  tratamiento: MyText
+
+two:
+  observacion: MyText
+  diagnostico: MyText
+  tratamiento: MyText

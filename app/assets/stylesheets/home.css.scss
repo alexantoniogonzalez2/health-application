@@ -2,11 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/* colors */
-$blue: #428bca;
-$blueFooter: #B5DBFF;
-$lightBlue: #85D3F5;
-$lightGray: #999;
+@import "colors";
 
 .logo { width: 40%; padding-top: 7px; }
 .logo-top { float: left; padding-top: 5px; }
@@ -45,7 +41,6 @@ div.intro-text, div.intro-text2, div.intro-text3, div.intro-text4 {
 		margin: auto;
 		div.checkbox { 
 			text-align: left;
-			/*margin-left: 180px;*/
 			width: 150px;
 			label { padding-left: 0px; }
 		}	
@@ -116,7 +111,7 @@ span.ajuste-sexo { float: left; margin-left: 80px; }
 div.ajuste-sexo {float: left; width: 100%; }
 span.ajuste-sexo2 { float: left; margin-left: 20px; }
 div.ajuste-sexo3 {float: left; width: 100%; margin-left: 40px;}
-.text-muted {letter-spacing: 1px; color: white; font-size: 18px;}
+//.text-muted {letter-spacing: 1px; color: white; font-size: 18px;}
 
 .fecha-nacimiento { width: 300px !important; float: right; margin-right: 40px; }
 input.datepicker, input.datepicker-disabled , .ui-datepicker { /*z-index: 3 !important;*/ }
@@ -143,10 +138,11 @@ a:focus,
 a:active,
 a.active { outline: 0; }
 
+/*
 a:hover,
 a:focus,
 a:active,
-a.active { color: $blue !important; }
+a.active { color: $blue !important; }*/
 
 .active-ajuste { background-color: rgba(255, 255, 255, 0.15); }
 h2.heading { letter-spacing: 2px !important; }
@@ -349,7 +345,7 @@ body.home {
   -o-background-size: cover;
 }
 
-section {
+section.index {
     padding: 100px 0;
     height: 900px;
 }
@@ -373,7 +369,7 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
-    section {
+    section.index {
         padding: 100px 0;
     }
 }

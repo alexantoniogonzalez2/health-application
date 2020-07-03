@@ -1,13 +1,7 @@
 // Place all the styles related to the agendamiento controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-$disponible: #5bc0de;
-$rojo_evento: #ee5f5b;
-$cancelada: #f0ad4e;
-$confirmada: #b92c28;
-$cancelada: #777;
-$atendido: #3a87ad;
+@import "colors";
 
 .container { width: 800px; margin: 0 auto; }
 

@@ -6706,7 +6706,7 @@ diagnosticos_list = [
 ['O419',1108,'9','Trastorno del liquido amniotico y de las membranas, no especificado',1,1,''],
 ['O42',1109,'NULL','Ruptura prematura de las membranas',0,0,''],
 ['O420',1109,'0','Ruptura prematura de las membranas, e inicio del trabajo de parto dentro de las 24 horas',1,1,''],
-['O421',1109,'1','Ruptura prematura de las membranas, e incio del trabajo de parto despues de las 24 horas',1,1,''],
+['O421',1109,'1','Ruptura prematura de las membranas, e inicio del trabajo de parto despues de las 24 horas',1,1,''],
 ['O422',1109,'2','Ruptura prematura de las membranas, trabajo de parto retrasado por la terapeutica',1,1,''],
 ['O429',1109,'9','Ruptura prematura de las membranas, sin otra especificacion',1,1,'Femenino'],
 ['O43',1110,'NULL','Trastornos placentarios',0,0,''],

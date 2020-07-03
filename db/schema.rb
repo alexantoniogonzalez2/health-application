@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151108234449) do
+ActiveRecord::Schema.define(version: 20180128211229) do
 
   create_table "ag_accion_masiva", force: :cascade do |t|
     t.string   "estado",                                limit: 255
@@ -54,6 +54,163 @@ ActiveRecord::Schema.define(version: 20151108234449) do
     t.integer  "accion_masiva_id",                      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "fd_diagnosticos", force: :cascade do |t|
+    t.integer  "pieza_dental_id",     limit: 4
+    t.integer  "tipo_diagnostico_id", limit: 4
+    t.string   "zona",                limit: 255
+    t.datetime "fecha"
+    t.integer  "responsable_id",      limit: 4
+    t.integer  "atencion_salud_id",   limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "fd_endodoncias", force: :cascade do |t|
+    t.integer  "atencion_salud_id",     limit: 4
+    t.integer  "pieza_dental_id",       limit: 4
+    t.integer  "comienzo_dolor",        limit: 4
+    t.integer  "dolor",                 limit: 4
+    t.integer  "intensidad",            limit: 4
+    t.boolean  "es_pulsatil"
+    t.boolean  "cede_con_analgesicos"
+    t.boolean  "duele_al_acostarse"
+    t.boolean  "es_posible_senalar"
+    t.boolean  "se_genera_con_calor"
+    t.boolean  "se_genera_con_frio"
+    t.boolean  "se_genera_con_dulce"
+    t.boolean  "se_genera_al_masticar"
+    t.text     "informacion_adicional", limit: 65535
+    t.text     "examen_extraoral",      limit: 65535
+    t.text     "examen_intraoral",      limit: 65535
+    t.text     "examen_radiologico",    limit: 65535
+    t.text     "comentario",            limit: 65535
+    t.integer  "diagnostico_id",        limit: 4
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  create_table "fd_glosas", force: :cascade do |t|
+    t.integer  "tratamiento_id", limit: 4
+    t.integer  "precio_id",      limit: 4
+    t.decimal  "descuento",                  precision: 10, scale: 2
+    t.integer  "total",          limit: 4
+    t.integer  "presupuesto_id", limit: 4
+    t.string   "estado",         limit: 255
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  create_table "fd_glosas_diagnosticos", force: :cascade do |t|
+    t.integer  "glosa_id",       limit: 4
+    t.integer  "diagnostico_id", limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "fd_pagos", force: :cascade do |t|
+    t.integer  "presupuesto_id", limit: 4
+    t.integer  "responsable_id", limit: 4
+    t.integer  "monto",          limit: 4
+    t.string   "comentario",     limit: 255
+    t.datetime "fecha_pago"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "fd_periodoncia_indices", force: :cascade do |t|
+    t.integer  "periodoncia_id",  limit: 4
+    t.integer  "pieza_dental_id", limit: 4
+    t.integer  "vestibular",      limit: 4
+    t.integer  "mesial",          limit: 4
+    t.integer  "palatino",        limit: 4
+    t.integer  "distal",          limit: 4
+    t.string   "indice",          limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "fd_periodoncias", force: :cascade do |t|
+    t.integer  "atencion_salud_id", limit: 4
+    t.text     "comentario",        limit: 65535
+    t.integer  "diagnostico_id",    limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "fd_piezas_dentales", force: :cascade do |t|
+    t.integer  "persona_id",     limit: 4
+    t.integer  "tipo_diente_id", limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "fd_precios", force: :cascade do |t|
+    t.integer  "tratamiento_id", limit: 4
+    t.integer  "valor",          limit: 4
+    t.datetime "fecha_inicio"
+    t.datetime "fecha_termino"
+    t.boolean  "activo"
+    t.string   "descripcion",    limit: 255
+    t.integer  "prestador_id",   limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "fd_presupuestos", force: :cascade do |t|
+    t.integer  "atencion_salud_id", limit: 4
+    t.string   "estado",            limit: 255
+    t.integer  "valor",             limit: 4
+    t.decimal  "descuento",                     precision: 10, scale: 2
+    t.integer  "total",             limit: 4
+    t.integer  "pagado",            limit: 4
+    t.integer  "pendiente",         limit: 4
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  create_table "fd_test_diagnostico", force: :cascade do |t|
+    t.integer  "endodoncia_id",   limit: 4
+    t.integer  "pieza_dental_id", limit: 4
+    t.integer  "calor",           limit: 4
+    t.integer  "electrico",       limit: 4
+    t.integer  "percusion",       limit: 4
+    t.integer  "palpacion",       limit: 4
+    t.text     "observacion",     limit: 65535
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  create_table "fd_tipos_diagnosticos", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.string   "tipo",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "fd_tipos_dientes", force: :cascade do |t|
+    t.string   "nomenclatura",   limit: 255
+    t.integer  "primer_digito",  limit: 4
+    t.integer  "segundo_digito", limit: 4
+    t.string   "descripcion",    limit: 255
+    t.string   "tipo_denticion", limit: 255
+    t.integer  "grupo",          limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "fd_tratamientos", force: :cascade do |t|
+    t.string   "descripcion", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "fd_tratamientos_tipos_diagnosticos", force: :cascade do |t|
+    t.integer  "tratamiento_id",      limit: 4
+    t.integer  "tipo_diagnostico_id", limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "fi_atenciones_salud", force: :cascade do |t|

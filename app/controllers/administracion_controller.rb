@@ -99,7 +99,7 @@ class AdministracionController < ApplicationController
 	end	
 
 	def anularBoleta
-		@atenciones = PreBoletasAtencionesPagadas.where('boleta_id = ?',params[:boleta])
+		@atenciones = PreBoletasAtencionesPagadas.where('boleta_id = ?',x)
 		@atenciones.each do |atencion|
 			atencion.destroy
 		end	
@@ -111,6 +111,28 @@ class AdministracionController < ApplicationController
 		end	
 
 	end	
+
+	def cargarPagos
+
+		@pagos = FdPagos.where('presupuesto_id = ?', params[:pres])
+
+		render :json => @pagos
+	end
+
+	def agregarPago
+
+		#validacion de seguridad pendiente
+		@usuario = PerPersonas.where('user_id = ?',current_user.id).first	
+	  @presupuesto = FdPresupuestos.where('id = ?',params[:presupuesto]).first
+
+	  @pago = FdPagos.where('numero = ? AND presupuesto_id = ?',params[:numero_pago],@presupuesto.id).first
+	  @pago.pagado = true
+	  @pago.responsable = @usuario
+	  @pago.fecha_pago = DateTime.current
+	  @pago.save!
+
+	  render :json => { :success => true }
+	end
 
 
 end
