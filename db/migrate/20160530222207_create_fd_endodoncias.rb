@@ -1,4 +1,4 @@
-class CreateFdEndodoncias < ActiveRecord::Migration
+class CreateFdEndodoncias < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_endodoncias do |t|
     	t.references :atencion_salud

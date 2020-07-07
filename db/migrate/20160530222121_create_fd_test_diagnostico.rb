@@ -1,4 +1,4 @@
-class CreateFdTestDiagnostico < ActiveRecord::Migration
+class CreateFdTestDiagnostico < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_test_diagnostico do |t|
       t.references :endodoncia

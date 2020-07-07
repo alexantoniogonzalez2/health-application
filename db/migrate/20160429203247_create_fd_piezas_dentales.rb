@@ -1,4 +1,4 @@
-class CreateFdPiezasDentales < ActiveRecord::Migration
+class CreateFdPiezasDentales < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_piezas_dentales do |t|
       t.references :persona

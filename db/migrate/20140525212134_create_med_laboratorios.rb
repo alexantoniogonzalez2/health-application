@@ -1,4 +1,4 @@
-class CreateMedLaboratorios < ActiveRecord::Migration
+class CreateMedLaboratorios < ActiveRecord::Migration[5.0]
   def change
     create_table :med_laboratorios do |t|
     	t.string :nombre

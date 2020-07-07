@@ -1853,6 +1853,6 @@ prestacion_list = [
 
 ActiveRecord::Base.transaction do
 	prestacion_list.each do |id, codigo_fonasa, subgrupo, nombre, descripcion|
-	  MedPrestaciones.create( id: id, codigo_fonasa: codigo_fonasa, subgrupo: MedPrestacionesSubgrupos.find(subgrupo), nombre: nombre, descripcion: descripcion)
+	  MedPrestaciones.create! id: id, codigo_fonasa: codigo_fonasa, subgrupo: MedPrestacionesSubgrupos.find(subgrupo), nombre: nombre, descripcion: descripcion
 	end
 end	

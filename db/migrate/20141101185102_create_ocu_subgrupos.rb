@@ -1,4 +1,4 @@
-class CreateOcuSubgrupos < ActiveRecord::Migration
+class CreateOcuSubgrupos < ActiveRecord::Migration[5.0]
   def change
     create_table :ocu_subgrupos do |t|
     	t.string :nombre

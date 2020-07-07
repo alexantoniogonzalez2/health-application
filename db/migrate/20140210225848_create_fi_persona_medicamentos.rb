@@ -1,4 +1,4 @@
-class CreateFiPersonaMedicamentos < ActiveRecord::Migration
+class CreateFiPersonaMedicamentos < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_persona_medicamentos do |t|
       t.datetime :fecha_inicio

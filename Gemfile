@@ -1,56 +1,67 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails','4.2.4'
-
+gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
+# Use postgresql as the database for Active Record
+gem 'pg', '>= 0.18', '< 2.0'
+# Use Puma as the app server
+gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
-gem 'bootstrap-sass'
-gem 'sass-rails'
-
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
-gem 'coffee-script-source', '1.8.0'
-
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails'
-
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks' 
-
+gem 'sass-rails', '>= 6'
+# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
+gem 'webpacker', '~> 4.0'
+# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder'
+gem 'jbuilder', '~> 2.7'
+# Use Redis adapter to run Action Cable in production
+# gem 'redis', '~> 4.0'
+# Use Active Model has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.4.2', require: false
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+group :development do
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+end
 
-# Use unicorn as the app server
-# gem 'unicorn'
+group :test do
+  # Adds support for Capybara system testing and selenium driver
+  gem 'capybara', '>= 2.15'
+  gem 'selenium-webdriver'
+  # Easy installation and use of web drivers to run system tests with browsers
+  gem 'webdrivers'
+end
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
-#MySQL
-gem 'mysql2' , '~> 0.3.18'
-
+gem 'coffee-rails'
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
+gem 'bootstrap-sass'
 #Devise
 gem 'devise'
 gem "jquery-ui-rails"
 gem "jquery-validation-rails"
-gem 'rails3-jquery-autocomplete'
+#gem 'rails3-jquery-autocomplete'
 gem "fullcalendar-rails"
 gem "datejs-rails"
 gem "select2-rails"
@@ -58,14 +69,13 @@ gem "r18n-core"
 gem "highcharts-rails"
 gem 'jquery-datatables-rails', github: "rweng/jquery-datatables-rails"
 gem "font-awesome-rails"
-gem 'wicked_pdf', '0.11.0'
+#gem 'wicked_pdf', '0.11.0'
 gem 'wkhtmltopdf-binary'
 gem 'bootstrap-validator-rails'
 gem 'label_better_rails'
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem "compass-rails", github: "Compass/compass-rails", branch: "master"
+#gem "compass-rails", github: "Compass/compass-rails", branch: "master"
 gem 'savon'
 gem 'angularjs-rails'
 gem 'angular-rails-templates'

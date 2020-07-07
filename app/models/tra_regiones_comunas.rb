@@ -1,7 +1,7 @@
 class TraRegionesComunas < ActiveRecord::Base
 
-	belongs_to :region, :class_name => 'TraRegion'
-	belongs_to :comuna, :class_name => 'TraComuna'
+	belongs_to :region, :class_name => 'TraRegiones'
+	belongs_to :comuna, :class_name => 'TraComunas'
 
 	private
   def app_params

@@ -1,4 +1,4 @@
-class CreateMedPrestacionesSubgrupos < ActiveRecord::Migration
+class CreateMedPrestacionesSubgrupos < ActiveRecord::Migration[5.0]
   def change
     create_table :med_prestaciones_subgrupos do |t|
     	t.string :nombre

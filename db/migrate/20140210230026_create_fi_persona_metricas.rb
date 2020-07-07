@@ -1,4 +1,4 @@
-class CreateFiPersonaMetricas < ActiveRecord::Migration
+class CreateFiPersonaMetricas < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_persona_metricas do |t|
       t.references :persona 	#persona_id

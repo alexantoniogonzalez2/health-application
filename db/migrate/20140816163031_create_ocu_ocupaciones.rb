@@ -1,4 +1,4 @@
-class CreateOcuOcupaciones < ActiveRecord::Migration
+class CreateOcuOcupaciones < ActiveRecord::Migration[5.0]
   def change
     create_table :ocu_ocupaciones do |t|
     	t.string :nombre

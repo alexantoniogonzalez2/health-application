@@ -1,4 +1,4 @@
-class CreateFdPagos < ActiveRecord::Migration
+class CreateFdPagos < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_pagos do |t|
     	t.references :presupuesto

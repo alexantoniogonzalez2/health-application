@@ -15194,6 +15194,6 @@ medicamentos_list = [
 
 ActiveRecord::Base.transaction do
 	medicamentos_list.each do |nombre, descripcion, codigo_isp, medicamento_tipo, laboratorio, es_nombre_farmaco|
-	  MedMedicamentos.create( nombre: nombre, descripcion: descripcion, codigo_isp: codigo_isp, medicamento_tipo: MedMedicamentosTipos.find(medicamento_tipo), laboratorio: MedLaboratorios.find(laboratorio), es_nombre_farmaco: es_nombre_farmaco)
+	  MedMedicamentos.create! nombre: nombre, descripcion: descripcion, codigo_isp: codigo_isp, medicamento_tipo: MedMedicamentosTipos.find(medicamento_tipo), laboratorio: MedLaboratorios.find(laboratorio), es_nombre_farmaco: es_nombre_farmaco
 	end
 end	

@@ -1,4 +1,4 @@
-class CreatePreAtencionesPagadas < ActiveRecord::Migration
+class CreatePreAtencionesPagadas < ActiveRecord::Migration[5.0]
   def change
     create_table :pre_atenciones_pagadas do |t|
     	t.references :agendamiento #agendamiento_id

@@ -1,7 +1,7 @@
-class CreateFiInterconsultas < ActiveRecord::Migration
+class CreateFiInterconsultas < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_interconsultas do |t|
-    	t.references :persona_diagnostico_atencion_salud #persona_diagnostico_atencion_salud_id
+    	t.references :persona_diagnostico_atencion_salud, index: { name: :persona_diagnostico_at_sal_index } #persona_diagnostico_atencion_salud_id
     	t.datetime :fecha_solicitud 
     	t.references :prestador_destino #prestador_destino_id
     	t.references :especialidad #especialidad_id

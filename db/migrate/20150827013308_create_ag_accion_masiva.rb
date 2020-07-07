@@ -1,4 +1,4 @@
-class CreateAgAccionMasiva < ActiveRecord::Migration
+class CreateAgAccionMasiva < ActiveRecord::Migration[5.0]
   def change
     create_table :ag_accion_masiva do |t|
     	t.string :estado

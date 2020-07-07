@@ -1,4 +1,4 @@
-class CreateFdPrecios < ActiveRecord::Migration
+class CreateFdPrecios < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_precios do |t|
     	t.references :tratamiento

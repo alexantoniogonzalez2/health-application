@@ -1,4 +1,4 @@
-class CreateFdTiposDientes < ActiveRecord::Migration
+class CreateFdTiposDientes < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_tipos_dientes do |t|
       t.string :nomenclatura

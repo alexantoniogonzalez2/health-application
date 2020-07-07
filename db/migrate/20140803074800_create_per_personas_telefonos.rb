@@ -1,4 +1,4 @@
-class CreatePerPersonasTelefonos < ActiveRecord::Migration
+class CreatePerPersonasTelefonos < ActiveRecord::Migration[5.0]
   def change
     create_table :per_personas_telefonos do |t|
     	t.references :persona #persona_id

@@ -279,6 +279,6 @@ laboratorios_list = [
 
 ActiveRecord::Base.transaction do
 	laboratorios_list.each do |nombre, descripcion |
-	  MedLaboratorios.create( nombre: nombre, descripcion: descripcion )
+	  MedLaboratorios.create! nombre: nombre, descripcion: descripcion
 	end
 end	

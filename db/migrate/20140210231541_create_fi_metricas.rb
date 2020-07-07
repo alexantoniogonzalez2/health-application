@@ -1,4 +1,4 @@
-class CreateFiMetricas < ActiveRecord::Migration
+class CreateFiMetricas < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_metricas do |t|
       t.string :nombre

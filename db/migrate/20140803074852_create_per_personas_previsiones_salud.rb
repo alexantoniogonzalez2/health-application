@@ -1,4 +1,4 @@
-class CreatePerPersonasPrevisionesSalud < ActiveRecord::Migration
+class CreatePerPersonasPrevisionesSalud < ActiveRecord::Migration[5.0]
   def change
     create_table :per_personas_previsiones_salud do |t|
     	t.references :persona #persona_id

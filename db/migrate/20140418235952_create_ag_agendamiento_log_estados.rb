@@ -1,4 +1,4 @@
-class CreateAgAgendamientoLogEstados < ActiveRecord::Migration
+class CreateAgAgendamientoLogEstados < ActiveRecord::Migration[5.0]
   def change
     create_table :ag_agendamiento_log_estados do |t|
     	t.references :responsable #responsable_id

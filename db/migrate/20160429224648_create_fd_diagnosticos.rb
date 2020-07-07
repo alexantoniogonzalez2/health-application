@@ -1,4 +1,4 @@
-class CreateFdDiagnosticos < ActiveRecord::Migration
+class CreateFdDiagnosticos < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_diagnosticos do |t|
     	t.references :pieza_dental

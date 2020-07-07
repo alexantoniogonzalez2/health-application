@@ -77,8 +77,8 @@
 	  					fpdas.en_tratamiento,
 	  					fpdas.primer_diagnostico")
 	  	.where('fi_persona_diagnosticos.persona_id = ? AND fpdas.atencion_salud_id != ? 
-	  					AND fpdas.es_cronica = 0 AND fpdas.es_antecedente = 0 AND ag_agendamientos.fecha_comienzo_real < ?
-	  					AND fpdas.es_ultima_actualizacion = 1', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
+	  					AND fpdas.es_cronica = false AND fpdas.es_antecedente = false AND ag_agendamientos.fecha_comienzo_real < ?
+	  					AND fpdas.es_ultima_actualizacion = true', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
 
 	  @ant_med_at = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)	  	
@@ -98,7 +98,7 @@
 	  					med_diagnosticos.codigo_cie10,
 	  					med_diagnosticos.nombre")
 	  	.where('persona_id = ? AND (fi_persona_diagnosticos_atenciones_salud.created_at < ? ) AND
-	  				  fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1', @atencion_salud.persona.id,@fecha_final_atencion,params[:id])	
+	  				  fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = true', @atencion_salud.persona.id,@fecha_final_atencion,params[:id])	
 
 	  @ant_med_us = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id	JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
 										.select('fi_persona_diagnosticos_atenciones_salud.id,
@@ -114,7 +114,7 @@
 														 fpd.persona_id,
 														 fpd.diagnostico_id,
 														 md.codigo_cie10')
-										.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.created_at < ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1 AND
+										.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.created_at < ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = true AND
 														fi_persona_diagnosticos_atenciones_salud.atencion_salud_id is null', @atencion_salud.persona.id,@fecha_final_atencion)
 										
 	  # Se debe mejorar las consultas para cargar examenes y procedimientos en base a grupos o subgrupos
@@ -299,8 +299,8 @@
 	  					fpdas.en_tratamiento,
 	  					fpdas.primer_diagnostico")
 	  	.where('fi_persona_diagnosticos.persona_id = ? AND fpdas.atencion_salud_id != ? 
-	  					AND fpdas.es_cronica = 0 AND fpdas.es_antecedente = 0 AND ag_agendamientos.fecha_comienzo_real < ?
-	  					AND fpdas.es_ultima_actualizacion = 1', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
+	  					AND fpdas.es_cronica = false AND fpdas.es_antecedente = false AND ag_agendamientos.fecha_comienzo_real < ?
+	  					AND fpdas.es_ultima_actualizacion = true', @atencion_salud.persona.id,params[:id],@fecha_comienzo_atencion)
 
 	  @ant_med_at = FiPersonaDiagnosticos
 	  	.joins(:persona_diagnosticos_atencion_salud)
@@ -320,7 +320,7 @@
 	  					fi_persona_diagnosticos_atenciones_salud.en_tratamiento,
 	  					fi_persona_diagnosticos_atenciones_salud.primer_diagnostico")
 	  	.where('persona_id = ? AND (fi_persona_diagnosticos_atenciones_salud.created_at < ? ) AND
-	  				  fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1', @atencion_salud.persona.id,@fecha_final_atencion,params[:id])	
+	  				  fi_persona_diagnosticos_atenciones_salud.atencion_salud_id = ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = true', @atencion_salud.persona.id,@fecha_final_atencion,params[:id])	
 
 	  @ant_med_us = FiPersonaDiagnosticosAtencionesSalud.joins('JOIN fi_persona_diagnosticos AS fpd ON fi_persona_diagnosticos_atenciones_salud.persona_diagnostico_id = fpd.id	JOIN med_diagnosticos AS md ON fpd.diagnostico_id = md.id')
 										.select('fi_persona_diagnosticos_atenciones_salud.id,
@@ -336,7 +336,7 @@
 														 fpd.persona_id,
 														 fpd.diagnostico_id,
 														 md.codigo_cie10')
-										.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.created_at < ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1 AND
+										.where('persona_id = ? AND fi_persona_diagnosticos_atenciones_salud.created_at < ? AND fi_persona_diagnosticos_atenciones_salud.es_antecedente = true AND
 														fi_persona_diagnosticos_atenciones_salud.atencion_salud_id is null', @atencion_salud.persona.id,@fecha_final_atencion)
 	  						
 	  @estados_diagnostico = MedDiagnosticoEstados.all
@@ -409,8 +409,10 @@
 		@edad_act_fis = "sin_info" if @edad_act_fis == "Sin información"
 
 		#Hábitos de alcohol
-		@ultimo_test = FiHabitosAlcohol.select('MAX(fecha_test_audit),audit_puntaje').where('persona_id = ?', @persona.id ).first
-		@class_alcohol = @ultimo_test.audit_puntaje.nil? ? '' : 'active-ant'
+		@ultimo_test = FiHabitosAlcohol.select('fecha_test_audit,audit_puntaje').where('persona_id = ?', @persona.id ).order('fecha_test_audit DESC').first
+		if @ultimo_test
+			@class_alcohol = @ultimo_test.audit_puntaje.nil? ? '' : 'active-ant'
+		end
 
 		#Hábitos de tabaco
 		@consumo = FiHabitosTabaco.where('persona_id = ?', @persona.id )

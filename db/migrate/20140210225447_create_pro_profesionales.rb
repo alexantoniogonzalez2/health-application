@@ -1,4 +1,4 @@
-class CreateProProfesionales < ActiveRecord::Migration
+class CreateProProfesionales < ActiveRecord::Migration[5.0]
   def change
     create_table :pro_profesionales do |t|
       t.boolean :validado				#validado

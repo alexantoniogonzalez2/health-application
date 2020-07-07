@@ -1,10 +1,10 @@
-class CreateFiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Migration
+class CreateFiPersonaDiagnosticosAtencionesSalud < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_persona_diagnosticos_atenciones_salud do |t|
       t.integer :prioridad
-      t.references :persona_diagnostico 	#persona_diagnostico_id
-      t.references :atencion_salud	#atencion_salud_id
-      t.references :estado_diagnostico 	#estado_diagnostico_id
+      t.references :persona_diagnostico, index: { name: :persona_diagnostico_index } #persona_diagnostico_id
+      t.references :atencion_salud, index: { name: :atencion_salud_index } #atencion_salud_id
+      t.references :estado_diagnostico, index: { name: :estado_diagnostico_index } #estado_diagnostico_id
       t.text :comentario
       t.datetime :fecha_inicio
       t.datetime :fecha_termino

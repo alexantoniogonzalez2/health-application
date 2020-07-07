@@ -61,6 +61,6 @@ tipos_medicamentos_list = [
 
 ActiveRecord::Base.transaction do
 	tipos_medicamentos_list.each do |nombre, unidad, medicamento_metatipo |
-	  MedMedicamentosTipos.create( nombre: nombre, unidad: unidad, medicamento_metatipo: MedMedicamentosMetatipos.find(medicamento_metatipo) )
+	  MedMedicamentosTipos.create! nombre: nombre, unidad: unidad, medicamento_metatipo: MedMedicamentosMetatipos.find(medicamento_metatipo)
 	end
 end	

@@ -374,14 +374,14 @@ eno_diagnostico_list2 = [
 	['43',4199,'2','Centinela','Semanal'],
 ]
 
-ActiveRecord::Base.transaction do
-	eno_diagnostico_list1.each do | eno, diagnostico, prioridad, tipo_vigilancia, frecuencia_notificacion|
-	  MedEnoDiagnostico.create( diagnostico: MedDiagnosticos.find(diagnostico) )
-	end
-end	
+#ActiveRecord::Base.transaction do
+#	eno_diagnostico_list1.each do | eno, diagnostico, prioridad, tipo_vigilancia, frecuencia_notificacion|
+#	  MedEnoDiagnostico.create! diagnostico: MedDiagnosticos.find(diagnostico)
+#	end
+#end	
 
 ActiveRecord::Base.transaction do
 	eno_diagnostico_list2.each do | eno, diagnostico, prioridad, tipo_vigilancia, frecuencia_notificacion|
-	  MedEnoDiagnostico.create( eno: MedEno.find(eno), diagnostico: MedDiagnosticos.find(diagnostico), prioridad: prioridad, tipo_vigilancia: tipo_vigilancia, frecuencia_notificacion: frecuencia_notificacion)
+	  MedEnoDiagnostico.create! eno: MedEno.find(eno), diagnostico: MedDiagnosticos.find(diagnostico), prioridad: prioridad, tipo_vigilancia: tipo_vigilancia, frecuencia_notificacion: frecuencia_notificacion
 	end
 end	

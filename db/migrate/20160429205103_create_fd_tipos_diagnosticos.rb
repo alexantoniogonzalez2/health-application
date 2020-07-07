@@ -1,4 +1,4 @@
-class CreateFdTiposDiagnosticos < ActiveRecord::Migration
+class CreateFdTiposDiagnosticos < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_tipos_diagnosticos do |t|
       t.string :nombre

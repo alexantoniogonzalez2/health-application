@@ -1,4 +1,4 @@
-AplicacionMedica::Application.routes.draw do
+Rails.application.routes.draw do
 
   devise_for :users,:controllers => { :registrations =>'registration', :passwords => "password"} 
   
@@ -108,38 +108,8 @@ AplicacionMedica::Application.routes.draw do
   post '/actualizar_diag_certificado', to: 'atenciones_salud#actualizarDiagCertificado'
   post '/actualizar_diag_prestacion', to: 'persona_prestacion#actualizarDiagPrestacion'
   post '/actualizar_diag_prestacion_int', to: 'persona_prestacion#actualizarDiagPrestacionInt'
-  
-  #Dental
-  get '/load_odontogram', to: 'atenciones_salud#loadOdontogram'
-  get '/load_diagnosis', to: 'atenciones_salud#loadDiagnosis'
-  get '/load_endodontic', to: 'atenciones_salud#loadEndodontic'
-  get '/load_indice', to: 'atenciones_salud#loadIndice'
-  get '/load_periodontic', to: 'atenciones_salud#loadPeriodontic'
-  get '/load_treatment', to: 'atenciones_salud#loadTratamiento'
-  get '/load_indice', to: 'atenciones_salud#loadIndice'
-  get '/load_glosa_tratamiento', to: 'atenciones_salud#loadGlosaTratamiento'
-  get '/load_presupuesto', to: 'atenciones_salud#loadPresupuesto'
-  get '/load_cuotas', to: 'atenciones_salud#loadCuotas'
-  post '/save_dental_characteristic', to: 'atenciones_salud#saveDentalCharacteristic'
-  post '/save_dental_diagnosis', to: 'atenciones_salud#saveDentalDiagnosis'
-  post '/agregar_info_endodoncia', to: 'atenciones_salud#agregarInfoEndodoncia'
-  post '/save_endodontic', to: 'atenciones_salud#saveEndodontic'
-  post '/save_diagnosis', to: 'atenciones_salud#saveDiagnosis'
-  post '/delete_test', to: 'atenciones_salud#deleteTest'
-  post '/add_test', to: 'atenciones_salud#addTest'
-  post '/select_tooth', to: 'atenciones_salud#selectTooth'
-  post '/set_test', to: 'atenciones_salud#setTest'
-  post '/save_indice', to: 'atenciones_salud#saveIndice'
-  post '/save_periodontic', to: 'atenciones_salud#savePeriodontic'
-  post '/delete_glosa', to: 'atenciones_salud#deleteGlosa'
-  post '/reintegrar_glosa', to: 'atenciones_salud#reintegrarGlosa'
-  post '/update_treatment', to: 'atenciones_salud#updateTreatment'
-  post '/save_presupuesto', to: 'atenciones_salud#savePresupuesto'
-  post '/save_cuotas', to: 'atenciones_salud#saveCuotas'
-  post '/actualizar_pago', to: 'atenciones_salud#actualizarPago'
-  post '/guardar_atencion_dental', to: 'atenciones_salud#update_dental'
   post '/imprimir_presupuesto', to: 'atenciones_salud#imprimirPresupuesto'
-
+  
   #Modulo agendamiento
   post '/agendamiento/agregarHora', to: 'agendamiento#new'
   get '/agendamiento/buscarHora', to: 'agendamiento#showFormBusqueda', :as => :agendaShowFormBusqueda
@@ -176,12 +146,6 @@ AplicacionMedica::Application.routes.draw do
   post '/filtrar_boletas', to: 'administracion#filtrarBoletas'
   post '/cargar_atenciones_boleta', to: 'administracion#cargarAtencionesBoleta'
   post '/anular_boleta', to: 'administracion#anularBoleta'
-
-  #Administración dental
-  get '/cargar_pagos', to: 'administracion#cargarPagos'
-  post '/agregar_pago', to: 'administracion#agregarPago'
-
-
 
 
   # The priority is based upon order of creation: first created -> highest priority.

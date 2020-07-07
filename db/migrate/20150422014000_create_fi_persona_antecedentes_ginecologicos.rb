@@ -1,4 +1,4 @@
-class CreateFiPersonaAntecedentesGinecologicos < ActiveRecord::Migration
+class CreateFiPersonaAntecedentesGinecologicos < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_persona_antecedentes_ginecologicos do |t|
     	t.references :persona #persona_id

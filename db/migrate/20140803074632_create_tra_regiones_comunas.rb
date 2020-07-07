@@ -1,4 +1,4 @@
-class CreateTraRegionesComunas < ActiveRecord::Migration
+class CreateTraRegionesComunas < ActiveRecord::Migration[5.0]
   def change
     create_table :tra_regiones_comunas do |t|
     	t.references :region #region_id

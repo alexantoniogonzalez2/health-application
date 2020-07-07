@@ -1,4 +1,4 @@
-﻿root = exports ? this 
+root = exports ? this 
 
 guardarActividad = (valor,pregunta) ->
   if typeof atencion_salud_id != 'undefined'
@@ -251,4 +251,3 @@ $('#act_fis_tie').keyup (e) ->
     return
   ), 2000)
   return
-

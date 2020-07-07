@@ -1,4 +1,4 @@
-class CreateFdGlosas < ActiveRecord::Migration
+class CreateFdGlosas < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_glosas do |t|
     	t.references :tratamiento

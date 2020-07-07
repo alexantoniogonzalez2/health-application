@@ -1,4 +1,4 @@
-class CreatePerParentescos < ActiveRecord::Migration
+class CreatePerParentescos < ActiveRecord::Migration[5.0]
   def change
     create_table :per_parentescos do |t|
       t.references :hijo		#hijo_id	

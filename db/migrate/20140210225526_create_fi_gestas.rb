@@ -1,4 +1,4 @@
-class CreateFiGestas < ActiveRecord::Migration
+class CreateFiGestas < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_gestas do |t|
       t.datetime :fecha_inicio		#fecha_inicio

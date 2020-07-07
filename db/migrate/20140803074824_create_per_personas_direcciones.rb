@@ -1,4 +1,4 @@
-class CreatePerPersonasDirecciones < ActiveRecord::Migration
+class CreatePerPersonasDirecciones < ActiveRecord::Migration[5.0]
   def change
     create_table :per_personas_direcciones do |t|
     	t.references :persona #persona_id

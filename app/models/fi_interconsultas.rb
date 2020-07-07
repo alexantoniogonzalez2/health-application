@@ -1,6 +1,6 @@
 class FiInterconsultas < ActiveRecord::Base
 
-	belongs_to :prestador_destino, :class_name => 'PrePrestadores'
+  belongs_to :prestador_destino, :class_name => 'PrePrestadores'
 	belongs_to :persona_diagnostico_atencion_salud, :class_name => 'FiPersonaDiagnosticosAtencionesSalud'
   belongs_to :especialidad, :class_name => 'ProEspecialidades' 
   belongs_to :persona_conocimiento, :class_name => 'PerPersonas'

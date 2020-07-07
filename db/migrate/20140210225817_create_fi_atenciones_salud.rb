@@ -1,4 +1,4 @@
-class CreateFiAtencionesSalud < ActiveRecord::Migration
+class CreateFiAtencionesSalud < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_atenciones_salud do |t|
       t.text :motivo_consulta

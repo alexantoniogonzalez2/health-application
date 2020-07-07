@@ -1,4 +1,4 @@
-class CreatePreReglaPagos < ActiveRecord::Migration
+class CreatePreReglaPagos < ActiveRecord::Migration[5.0]
   def change
     create_table :pre_regla_pagos do |t|
     	t.string :tipo

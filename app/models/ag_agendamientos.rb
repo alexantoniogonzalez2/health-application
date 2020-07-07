@@ -1,12 +1,12 @@
 class AgAgendamientos < ActiveRecord::Base
 
   belongs_to :especialidad_prestador_profesional, :class_name => 'PrePrestadorProfesionales'
-	belongs_to :persona, :class_name => 'PerPersonas'
-  belongs_to :quien_pide_hora, :class_name => 'PerPersonas'
+	belongs_to :persona, :class_name => 'PerPersonas', optional: true
+  belongs_to :quien_pide_hora, :class_name => 'PerPersonas', optional: true
 	belongs_to :estado, :class_name => 'AgAgendamientoEstados'
-  belongs_to :persona_diagnostico_control, :class_name => 'FiPersonaDiagnosticos'
-  belongs_to :capitulo_cie10_control, :class_name => 'MedDiagnosticosCapitulos'
-  belongs_to :accion_masiva, :class_name => 'AgAccionMasiva'
+  belongs_to :persona_diagnostico_control, :class_name => 'FiPersonaDiagnosticos', optional: true
+  belongs_to :capitulo_cie10_control, :class_name => 'MedDiagnosticosCapitulos', optional: true
+  belongs_to :accion_masiva, :class_name => 'AgAccionMasiva', optional: true
   has_one :atencion_salud, :class_name => 'FiAtencionesSalud', :foreign_key => 'agendamiento_id'
   has_many :agendamiento_log_estados, :class_name => 'AgAgendamientoLogEstados', :foreign_key => 'agendamiento_id'
   has_many :acciones_masivas, :class_name => 'AgAccionMasiva', :foreign_key => 'agendamiento_id'

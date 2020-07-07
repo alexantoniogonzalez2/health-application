@@ -1,4 +1,4 @@
-class CreateFdPeriodonciaIndices < ActiveRecord::Migration
+class CreateFdPeriodonciaIndices < ActiveRecord::Migration[5.0]
   def change
     create_table :fd_periodoncia_indices do |t|
     	t.references :periodoncia

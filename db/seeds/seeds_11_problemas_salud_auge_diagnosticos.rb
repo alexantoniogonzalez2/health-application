@@ -2305,6 +2305,6 @@ problemas_salud_auge_diagnostico_list = [
 
 ActiveRecord::Base.transaction do
 	problemas_salud_auge_diagnostico_list.each do | problema_salud_auge, diagnostico, prioridad|
-	  MedProblemasSaludAugeDiagnosticos.create( problema_salud_auge: MedProblemasSaludAuge.find(problema_salud_auge), diagnostico: MedDiagnosticos.find(diagnostico), prioridad: prioridad)
+	  MedProblemasSaludAugeDiagnosticos.create! problema_salud_auge: MedProblemasSaludAuge.find(problema_salud_auge), diagnostico: MedDiagnosticos.find(diagnostico), prioridad: prioridad
 	end
 end	

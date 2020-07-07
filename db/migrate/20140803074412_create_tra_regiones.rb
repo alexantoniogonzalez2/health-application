@@ -1,4 +1,4 @@
-class CreateTraRegiones < ActiveRecord::Migration
+class CreateTraRegiones < ActiveRecord::Migration[5.0]
   def change
     create_table :tra_regiones do |t|
     	t.string :nombre

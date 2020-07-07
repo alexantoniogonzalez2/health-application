@@ -1,4 +1,4 @@
-class CreateFiCertificados < ActiveRecord::Migration
+class CreateFiCertificados < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_certificados do |t|
       t.string :tipo_reposo

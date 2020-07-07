@@ -1,4 +1,4 @@
-class CreatePerPersonas < ActiveRecord::Migration
+class CreatePerPersonas < ActiveRecord::Migration[5.0]
   def change
     create_table :per_personas do |t|    	
     	t.references :user #user_id	

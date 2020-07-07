@@ -1,36 +1,36 @@
 puts 'Ciudades-comunas'
-TraRegiones.create! :nombre => "Región Metropolitana"
-TraCiudades.create! :nombre => "Santiago"
-TraComunas.create! :nombre => "San Miguel"
-TraComunas.create! :nombre => "San Joaquín"
-TraRegionesComunas.create! :region_id => 1, :comuna_id => 1
-TraRegionesComunas.create! :region_id => 1, :comuna_id => 2
+TraR1 = TraRegiones.create! :nombre => "Región Metropolitana"
+TraCi1 = TraCiudades.create! :nombre => "Santiago"
+TraCo1 = TraComunas.create! :nombre => "San Miguel"
+TraCo2 = TraComunas.create! :nombre => "San Joaquín"
+TraRegionesComunas.create! :region => TraR1, :comuna => TraCo1
+TraRegionesComunas.create! :region => TraR1, :comuna => TraCo2
 
 puts 'Prestaciones para atención'
 MPG = MedPrestacionesGrupos.create! :nombre => 'Grupo atenciones de salud', :descripcion => ''
-MPS = MedPrestacionesSubgrupos.create! :grupo => MPG, :nombre => 'Subgrupo atenciones de salud', :descripcion => ''
-MP1 = MedPrestaciones.create! :codigo_fonasa => '00001', :subgrupo => MPS, :nombre => 'Atención de Salud: Medicina General'
-MP2 = MedPrestaciones.create! :codigo_fonasa => '00002', :subgrupo => MPS, :nombre => 'Atención de Salud: Pediatría'
-MP3 = MedPrestaciones.create! :codigo_fonasa => '00003', :subgrupo => MPS, :nombre => 'Atención de Salud: Cardiología'
-MP4 = MedPrestaciones.create! :codigo_fonasa => '00004', :subgrupo => MPS, :nombre => 'Atención de Salud: Broncopulmonar" '
-MP5 = MedPrestaciones.create! :codigo_fonasa => '00005', :subgrupo => MPS, :nombre => 'Atención de Salud: Dermatología'
-MP6 = MedPrestaciones.create! :codigo_fonasa => '00006', :subgrupo => MPS, :nombre => 'Atención de Salud: Endocrinología'
-MP7 = MedPrestaciones.create! :codigo_fonasa => '00007', :subgrupo => MPS, :nombre => 'Atención de Salud: Fonoaudiología'
-MP8 = MedPrestaciones.create! :codigo_fonasa => '00008', :subgrupo => MPS, :nombre => 'Atención de Salud: Gastroenterología'
-MP9 = MedPrestaciones.create! :codigo_fonasa => '00009', :subgrupo => MPS, :nombre => 'Atención de Salud: Geriatría'
-MP10 = MedPrestaciones.create! :codigo_fonasa => '00010', :subgrupo => MPS, :nombre => 'Atención de Salud: Ginecología'
-MP11 = MedPrestaciones.create! :codigo_fonasa => '00011', :subgrupo => MPS, :nombre => 'Atención de Salud: Nefrología'
-MP12 = MedPrestaciones.create! :codigo_fonasa => '00012', :subgrupo => MPS, :nombre => 'Atención de Salud: Neurología'
-MP13 = MedPrestaciones.create! :codigo_fonasa => '00013', :subgrupo => MPS, :nombre => 'Atención de Salud: Nutrición'
-MP14 = MedPrestaciones.create! :codigo_fonasa => '00014', :subgrupo => MPS, :nombre => 'Atención de Salud: Odontología'
-MP15 = MedPrestaciones.create! :codigo_fonasa => '00015', :subgrupo => MPS, :nombre => 'Atención de Salud: Oftalmología'
-MP16 = MedPrestaciones.create! :codigo_fonasa => '00016', :subgrupo => MPS, :nombre => 'Atención de Salud: Oncología'
-MP17 = MedPrestaciones.create! :codigo_fonasa => '00017', :subgrupo => MPS, :nombre => 'Atención de Salud: Otorrinolaringología'
-MP18 = MedPrestaciones.create! :codigo_fonasa => '00018', :subgrupo => MPS, :nombre => 'Atención de Salud: Psicología'
-MP19 = MedPrestaciones.create! :codigo_fonasa => '00019', :subgrupo => MPS, :nombre => 'Atención de Salud: Psiquiatría'
-MP20 = MedPrestaciones.create! :codigo_fonasa => '00020', :subgrupo => MPS, :nombre => 'Atención de Salud: Reumatología'
-MP21 = MedPrestaciones.create! :codigo_fonasa => '00021', :subgrupo => MPS, :nombre => 'Atención de Salud: Traumatología'
-MP22 = MedPrestaciones.create! :codigo_fonasa => '00022', :subgrupo => MPS, :nombre => 'Atención de Salud: Urología'
+MPS = MedPrestacionesSubgrupos.create! :id => 251, :grupo => MPG, :nombre => 'Subgrupo atenciones de salud', :descripcion => ''
+MP1 = MedPrestaciones.create! :id => 1850, :codigo_fonasa => '00001', :subgrupo => MPS, :nombre => 'Atención de Salud: Medicina General'
+MP2 = MedPrestaciones.create! :id => 1851, :codigo_fonasa => '00002', :subgrupo => MPS, :nombre => 'Atención de Salud: Pediatría'
+MP3 = MedPrestaciones.create! :id => 1852, :codigo_fonasa => '00003', :subgrupo => MPS, :nombre => 'Atención de Salud: Cardiología'
+MP4 = MedPrestaciones.create! :id => 1853, :codigo_fonasa => '00004', :subgrupo => MPS, :nombre => 'Atención de Salud: Broncopulmonar" '
+MP5 = MedPrestaciones.create! :id => 1854, :codigo_fonasa => '00005', :subgrupo => MPS, :nombre => 'Atención de Salud: Dermatología'
+MP6 = MedPrestaciones.create! :id => 1855, :codigo_fonasa => '00006', :subgrupo => MPS, :nombre => 'Atención de Salud: Endocrinología'
+MP7 = MedPrestaciones.create! :id => 1856, :codigo_fonasa => '00007', :subgrupo => MPS, :nombre => 'Atención de Salud: Fonoaudiología'
+MP8 = MedPrestaciones.create! :id => 1857, :codigo_fonasa => '00008', :subgrupo => MPS, :nombre => 'Atención de Salud: Gastroenterología'
+MP9 = MedPrestaciones.create! :id => 1858, :codigo_fonasa => '00009', :subgrupo => MPS, :nombre => 'Atención de Salud: Geriatría'
+MP10 = MedPrestaciones.create! :id => 1859, :codigo_fonasa => '00010', :subgrupo => MPS, :nombre => 'Atención de Salud: Ginecología'
+MP11 = MedPrestaciones.create! :id => 1860, :codigo_fonasa => '00011', :subgrupo => MPS, :nombre => 'Atención de Salud: Nefrología'
+MP12 = MedPrestaciones.create! :id => 1861, :codigo_fonasa => '00012', :subgrupo => MPS, :nombre => 'Atención de Salud: Neurología'
+MP13 = MedPrestaciones.create! :id => 1862, :codigo_fonasa => '00013', :subgrupo => MPS, :nombre => 'Atención de Salud: Nutrición'
+MP14 = MedPrestaciones.create! :id => 1863, :codigo_fonasa => '00014', :subgrupo => MPS, :nombre => 'Atención de Salud: Odontología'
+MP15 = MedPrestaciones.create! :id => 1864, :codigo_fonasa => '00015', :subgrupo => MPS, :nombre => 'Atención de Salud: Oftalmología'
+MP16 = MedPrestaciones.create! :id => 1865, :codigo_fonasa => '00016', :subgrupo => MPS, :nombre => 'Atención de Salud: Oncología'
+MP17 = MedPrestaciones.create! :id => 1866, :codigo_fonasa => '00017', :subgrupo => MPS, :nombre => 'Atención de Salud: Otorrinolaringología'
+MP18 = MedPrestaciones.create! :id => 1867, :codigo_fonasa => '00018', :subgrupo => MPS, :nombre => 'Atención de Salud: Psicología'
+MP19 = MedPrestaciones.create! :id => 1868, :codigo_fonasa => '00019', :subgrupo => MPS, :nombre => 'Atención de Salud: Psiquiatría'
+MP20 = MedPrestaciones.create! :id => 1869, :codigo_fonasa => '00020', :subgrupo => MPS, :nombre => 'Atención de Salud: Reumatología'
+MP21 = MedPrestaciones.create! :id => 1870, :codigo_fonasa => '00021', :subgrupo => MPS, :nombre => 'Atención de Salud: Traumatología'
+MP22 = MedPrestaciones.create! :id => 1871, :codigo_fonasa => '00022', :subgrupo => MPS, :nombre => 'Atención de Salud: Urología'
 
 puts 'Especialidad 1'
 E1 = ProEspecialidades.create! :nombre => "Medicina General", :prestacion => MP1
@@ -147,12 +147,12 @@ FiCalendarioVacunas.create! :edad => '8° básico', :agno => 2014, :vacuna_id =>
 FiCalendarioVacunas.create! :edad => 'Adulto de 65 años', :agno => 2014, :vacuna_id => 9
 
 puts 'Componente'
-MedComponentes.create! :id => 1, :nombre => 'Componente 1'
-MedComponentes.create! :id => 2, :nombre => 'Componente 2'
+#MedComponentes.create! :id => 1, :nombre => 'Componente 1'
+#MedComponentes.create! :id => 2, :nombre => 'Componente 2'
 
 puts 'Medicamentos Componente'
-MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
-MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
+#MedMedicamentosComponentes.create! :id => 1, :medicamento_id => 1, :componente_id => 1, :relacion => 500
+#MedMedicamentosComponentes.create! :id => 2, :medicamento_id => 1, :componente_id => 2, :relacion => 60
 
 puts 'Alergias'
 MedAlergias.create! :nombre => 'Polvo', :comun => 1

@@ -1,4 +1,4 @@
-class CreateFiPersonaPrestaciones < ActiveRecord::Migration
+class CreateFiPersonaPrestaciones < ActiveRecord::Migration[5.0]
   def change
     create_table :fi_persona_prestaciones do |t|    	
       t.references :persona 	#persona_id

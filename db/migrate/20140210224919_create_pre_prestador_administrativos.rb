@@ -1,4 +1,4 @@
-class CreatePrePrestadorAdministrativos < ActiveRecord::Migration
+class CreatePrePrestadorAdministrativos < ActiveRecord::Migration[5.0]
   def change
     create_table :pre_prestador_administrativos do |t|
       t.references :prestador 						#prestador_id

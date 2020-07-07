@@ -1,7 +1,7 @@
 class FdEndodoncias < ActiveRecord::Base
 	belongs_to :atencion_salud, :class_name => 'FiAtencionesSalud'
-	belongs_to :pieza_dental, :class_name => 'FdPiezasDentales'
-	belongs_to :diagnostico, :class_name => 'FdDiagnosticos'
+	belongs_to :pieza_dental, :class_name => 'FdPiezasDentales', optional: true
+	belongs_to :diagnostico, :class_name => 'FdDiagnosticos', optional: true
 	has_many :test_diagnostico, :class_name => 'FdTestDiagnostico', :foreign_key => 'endodoncia_id'
 
 	def getDiagnosis

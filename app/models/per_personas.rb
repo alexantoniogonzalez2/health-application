@@ -311,7 +311,7 @@ class PerPersonas < ActiveRecord::Base
             fi_persona_diagnosticos_atenciones_salud.es_cronica,
             fi_persona_diagnosticos_atenciones_salud.es_antecedente,              
             fi_persona_diagnosticos_atenciones_salud.atencion_salud_id")
-    .where('persona_id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1)', familiar[0]) 
+    .where('persona_id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = true)', familiar[0]) 
       @enfermedades.each do |enfermedad|
         @enfermedades_cronicas << { 'datos' => enfermedad , 'parentesco' => familiar[1] }          
       end  

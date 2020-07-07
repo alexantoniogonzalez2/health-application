@@ -1,4 +1,4 @@
-class CreateTraDirecciones < ActiveRecord::Migration
+class CreateTraDirecciones < ActiveRecord::Migration[5.0]
   def change
     create_table :tra_direcciones do |t|
     	t.string :calle 

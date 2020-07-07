@@ -1,4 +1,4 @@
-class CreateMedEnoDiagnostico < ActiveRecord::Migration
+class CreateMedEnoDiagnostico < ActiveRecord::Migration[5.0]
   def change
     create_table :med_eno_diagnostico do |t|
     	t.references :eno #eno_id

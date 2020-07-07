@@ -1,4 +1,4 @@
-class CreateFiPersonaActividadFisica < ActiveRecord::Migration
+class CreateFiPersonaActividadFisica < ActiveRecord::Migration[5.0]
 
   def change
     create_table :fi_persona_actividad_fisica do |t|

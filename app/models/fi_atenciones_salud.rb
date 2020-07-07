@@ -3,7 +3,7 @@ class FiAtencionesSalud < ActiveRecord::Base
   self.table_name = "fi_atenciones_salud"
   
 	belongs_to :persona, :class_name => 'PerPersonas'
-	belongs_to :ficha_tipo, :class_name => 'FiFichaTipos'
+	belongs_to :ficha_tipo, :class_name => 'FiFichaTipos', optional: true
 	belongs_to :agendamiento, :class_name => 'AgAgendamientos'
 	has_many :persona_examenes, :class_name => 'FiPersonaExamenes', :foreign_key => 'atencion_salud_id'
 	has_many :persona_medicamentos, :class_name => 'FiPersonaMedicamentos', :foreign_key => 'atencion_salud_id' 

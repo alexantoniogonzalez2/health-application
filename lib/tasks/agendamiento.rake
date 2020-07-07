@@ -74,9 +74,9 @@ namespace :agendamiento do
 						@agendamiento.save
 						@persona = @agendamiento.persona
 						@atencion_salud = FiAtencionesSalud.new(:agendamiento_id => @agendamiento.id,:persona_id => @persona.id, :tipo_ficha_id => 1)				
-					  @atencion_salud.save(:validate => false)										
+					  @atencion_salud.save!									
 					else
-						@agendamiento.save
+						@agendamiento.save!
 					end	
 					
 					@agendamiento_log = AgAgendamientoLogEstados.new
@@ -84,7 +84,7 @@ namespace :agendamiento do
 					@agendamiento_log.agendamiento_estado = @estadoAgendamiento
 					@agendamiento_log.agendamiento = @agendamiento
 					@agendamiento_log.fecha = DateTime.current
-					@agendamiento_log.save
+					@agendamiento_log.save!
 					fecha_comienzo = tmp_f
 
 					#Simulación de prestación I-Med

@@ -1,4 +1,4 @@
-class CreateProEspecialidades < ActiveRecord::Migration
+class CreateProEspecialidades < ActiveRecord::Migration[5.0]
   def change
     create_table :pro_especialidades do |t|
       t.string :nombre

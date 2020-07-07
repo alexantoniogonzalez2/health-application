@@ -1,4 +1,4 @@
-class CreateTraCiudades < ActiveRecord::Migration
+class CreateTraCiudades < ActiveRecord::Migration[5.0]
   def change
     create_table :tra_ciudades do |t|
     	t.string :nombre

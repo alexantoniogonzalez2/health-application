@@ -254,6 +254,6 @@ subgrupo_prestacion_list = [
 
 ActiveRecord::Base.transaction do
 	subgrupo_prestacion_list.each do |id, grupo, nombre, descripcion|
-	  MedPrestacionesSubgrupos.create( id: id, grupo: MedPrestacionesGrupos.find(grupo), nombre: nombre, descripcion: descripcion)
+	  MedPrestacionesSubgrupos.create! id: id, grupo: MedPrestacionesGrupos.find(grupo), nombre: nombre, descripcion: descripcion
 	end
 end

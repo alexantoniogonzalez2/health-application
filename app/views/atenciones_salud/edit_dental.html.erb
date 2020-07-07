@@ -5,7 +5,15 @@
   var id=<%= @id %>
 </script>
 
-<% if @agendamiento.estado.nombre == "Paciente siendo atendido" %> 
+<%= javascript_include_tag "atencion_salud/ang_endodontic" %>
+<%= javascript_include_tag "atencion_salud/ang_odontogram" %>
+<%= javascript_include_tag "atencion_salud/ang_periodontic" %>
+
+
+<%= javascript_include_tag "atencion_salud/ang_treatment" %>
+<%= javascript_include_tag "atencion_salud/ang_dental" %>
+<% if @agendamiento.estado.nombre == "Paciente siendo atendido" %>
+
 
 <input type="hidden" id="persona_id" value=<%= @agendamiento.persona.id  %> >
 
@@ -25,6 +33,7 @@
         <div class="col-md-2"><label>Sexo</label>: <%= @agendamiento.persona.showSexo %></div>
       </div>    
       <div class="row">
+
 
         <div ng-app="dental" class="app-dental">
 
@@ -229,6 +238,8 @@
 <%= render :partial => "home/log_actualizaciones", :locals => {:actualizaciones => @actualizaciones} %>
 
 <div id="qtip-growl-container"></div>
+<%= javascript_pack_tag 'application' %>
+
 
 <%= javascript_include_tag "atencion_salud/atencion_salud" %>
 <%= javascript_include_tag "atencion_salud/medicamento" %>

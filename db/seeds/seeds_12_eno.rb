@@ -47,6 +47,6 @@ eno_list = [
 
 ActiveRecord::Base.transaction do
 	eno_list.each do |id, nombre|
-	  MedEno.create( id: id, nombre: nombre )
+	  MedEno.create! id: id, nombre: nombre
 	end
 end	

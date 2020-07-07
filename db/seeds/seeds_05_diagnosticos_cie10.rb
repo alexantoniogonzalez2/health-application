@@ -14317,6 +14317,6 @@ diagnosticos_list = [
 
 ActiveRecord::Base.transaction do
 	diagnosticos_list.each do |codigo_cie10, grupo, numero, nombre, frecuente, nodo_terminal, genero|
-	  MedDiagnosticos.create( codigo_cie10: codigo_cie10, grupo: MedDiagnosticosGrupos.find(grupo), numero: numero, nombre: nombre, frecuente: frecuente, nodo_terminal: nodo_terminal, genero: genero)
+	  MedDiagnosticos.create! codigo_cie10: codigo_cie10, grupo: MedDiagnosticosGrupos.find(grupo), numero: numero, nombre: nombre, frecuente: frecuente, nodo_terminal: nodo_terminal, genero: genero
 	end
 end

@@ -1,4 +1,4 @@
-class CreateOcuGrandesGrupos < ActiveRecord::Migration
+class CreateOcuGrandesGrupos < ActiveRecord::Migration[5.0]
   def change
     create_table :ocu_grandes_grupos do |t|
     	t.string :nombre

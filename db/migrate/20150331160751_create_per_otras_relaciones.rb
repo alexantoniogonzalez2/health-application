@@ -1,4 +1,4 @@
-class CreatePerOtrasRelaciones < ActiveRecord::Migration
+class CreatePerOtrasRelaciones < ActiveRecord::Migration[5.0]
   def change
     create_table :per_otras_relaciones do |t|
     	t.references :persona	#persona_id	

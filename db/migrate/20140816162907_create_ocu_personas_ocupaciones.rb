@@ -1,4 +1,4 @@
-class CreateOcuPersonasOcupaciones < ActiveRecord::Migration
+class CreateOcuPersonasOcupaciones < ActiveRecord::Migration[5.0]
   def change
     create_table :ocu_personas_ocupaciones do |t|
     	t.datetime :fecha_inicio

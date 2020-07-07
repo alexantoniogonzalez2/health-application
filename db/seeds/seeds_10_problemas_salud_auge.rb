@@ -85,6 +85,6 @@ problemas_salud_auge_list = [
 
 ActiveRecord::Base.transaction do
 	problemas_salud_auge_list.each do |nombre, edad_desde, edad_hasta, fecha_inicio_auge|
-	  MedProblemasSaludAuge.create( nombre: nombre, edad_desde: edad_desde, edad_hasta: edad_hasta, fecha_inicio_auge: fecha_inicio_auge )
+	  MedProblemasSaludAuge.create! nombre: nombre, edad_desde: edad_desde, edad_hasta: edad_hasta, fecha_inicio_auge: fecha_inicio_auge
 	end
 end	

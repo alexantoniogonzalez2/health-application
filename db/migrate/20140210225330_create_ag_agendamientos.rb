@@ -1,4 +1,4 @@
-class CreateAgAgendamientos < ActiveRecord::Migration
+class CreateAgAgendamientos < ActiveRecord::Migration[5.0]
   def change
     create_table :ag_agendamientos do |t|
       t.references :persona             #persona_id

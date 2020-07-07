@@ -1,4 +1,4 @@
-class CreatePrePrestadores < ActiveRecord::Migration
+class CreatePrePrestadores < ActiveRecord::Migration[5.0]
   def change
     create_table :pre_prestadores do |t|
       t.integer :rut

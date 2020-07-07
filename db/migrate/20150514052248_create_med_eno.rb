@@ -1,4 +1,4 @@
-class CreateMedEno < ActiveRecord::Migration
+class CreateMedEno < ActiveRecord::Migration[5.0]
   def change
     create_table :med_eno do |t|
     	t.string :nombre

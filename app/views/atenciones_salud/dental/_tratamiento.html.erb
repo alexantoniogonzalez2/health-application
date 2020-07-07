@@ -108,7 +108,7 @@
 	</div>
 
 	<div class="row total-treat">
-		<div class="col-md-4"> <%= link_to 'Imprimir presupuesto', imprimir_presupuesto_path(:presupuesto_id => @presupuesto.id, :format => :pdf) , :method => :post %></div>
+		<div class="col-md-4"> <%= link_to 'Imprimir presupuesto', imprimir_presupuesto_url(:presupuesto_id => @presupuesto.id, :format => :pdf) , :method => :post %></div>
 		<div class="col-md-4">
 			<span class="strong right" contenteditable="true" ng-bind="presupuesto.valor | number:0" ></span><span class="strong right" >Subtotal: $ </span><br/><br/>
 			<p class="right">

@@ -56,7 +56,7 @@ FdTiposDientes.create! :id => 52, :nomenclatura => '35', :primer_digito => 7, :s
 
 #Tipos diagnosticos
 FdTiposDiagnosticos.create! :id => 1, :nombre => 'Sano', :tipo => 'odontograma'
-FdTiposDiagnosticos.create! :id => 2, :nombre => 'Caries', :tipo => 'odontograma'
+FDTP2 = FdTiposDiagnosticos.create! :id => 2, :nombre => 'Caries', :tipo => 'odontograma'
 FdTiposDiagnosticos.create! :id => 3, :nombre => 'Composite', :tipo => 'odontograma'
 FdTiposDiagnosticos.create! :id => 4, :nombre => 'Sellante', :tipo => 'odontograma'
 FdTiposDiagnosticos.create! :id => 5, :nombre => 'Amalgama', :tipo => 'odontograma'
@@ -65,7 +65,7 @@ FdTiposDiagnosticos.create! :id => 7, :nombre => 'Corona', :tipo => 'odontograma
 FdTiposDiagnosticos.create! :id => 8, :nombre => 'Pieza normal', :tipo => 'odontograma'
 FdTiposDiagnosticos.create! :id => 9, :nombre => 'Pieza ausente', :tipo => 'odontograma'
 FdTiposDiagnosticos.create! :id => 10, :nombre => 'Endodoncia', :tipo => 'odontograma'
-FdTiposDiagnosticos.create! :id => 11, :nombre => 'Indica extracción', :tipo => 'odontograma'
+FDTP11 = FdTiposDiagnosticos.create! :id => 11, :nombre => 'Indica extracción', :tipo => 'odontograma'
 FdTiposDiagnosticos.create! :id => 12, :nombre => 'Pieza con implante', :tipo => 'odontograma'
 FdTiposDiagnosticos.create! :id => 13, :nombre => 'Pulpitis reversible', :tipo => 'endodoncia'
 FdTiposDiagnosticos.create! :id => 14, :nombre => 'Pulpitis irreversible aguda (sintomática)', :tipo => 'endodoncia'
@@ -84,15 +84,12 @@ FdTiposDiagnosticos.create! :id => 26, :nombre => 'Enfermedad del periodonto, no
 
 
 #Tratamientos
-FdTratamientos.create! :id => 1, :descripcion => 'Sin tratamiento'
-FdTratamientos.create! :id => 2, :descripcion => 'Limpieza'
-FdTratamientos.create! :id => 3, :descripcion => 'Extracción'
+FDT1 = FdTratamientos.create! :id => 1, :descripcion => 'Sin tratamiento'
+FDT2 = FdTratamientos.create! :id => 2, :descripcion => 'Limpieza'
+FDT3 = FdTratamientos.create! :id => 3, :descripcion => 'Extracción'
 
-FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 2, :tipo_diagnostico_id => 2
-FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 3, :tipo_diagnostico_id => 2
-FdTratamientosTiposDiagnosticos.create! :tratamiento_id => 3, :tipo_diagnostico_id => 11
+FdTratamientosTiposDiagnosticos.create! :tratamiento => FDT2, :tipo_diagnostico => FDTP2
+FdTratamientosTiposDiagnosticos.create! :tratamiento => FDT3, :tipo_diagnostico => FDTP2
+FdTratamientosTiposDiagnosticos.create! :tratamiento => FDT3, :tipo_diagnostico => FDTP11
 
-FdPrecios.create! :valor => 0, :fecha_inicio => '2017-01-01', :activo => true, :descripcion => 'Sin precio asignado'
-
-
-
+#FdPrecios.create! :valor => 0, :fecha_inicio => '2017-01-01', :activo => true, :descripcion => 'Sin precio asignado'

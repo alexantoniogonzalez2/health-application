@@ -422,7 +422,7 @@ class AntecedentesController < ApplicationController
 		else
 			@persona_ant = PerPersonas.find(params[:persona_ant])		
 			persona_diagnostico_antecedente = FiPersonaDiagnosticos.joins(:persona_diagnosticos_atencion_salud)
-																														 .where('fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1 AND diagnostico_id = ? AND persona_id = ?',params[:diag],@persona_ant.id).first
+																														 .where('fi_persona_diagnosticos_atenciones_salud.es_antecedente = true AND diagnostico_id = ? AND persona_id = ?',params[:diag],@persona_ant.id).first
 
 			habia_antecedente = false
 			if persona_diagnostico_antecedente
@@ -465,7 +465,7 @@ class AntecedentesController < ApplicationController
 		            fi_persona_diagnosticos_atenciones_salud.es_cronica,
 		            fi_persona_diagnosticos_atenciones_salud.es_antecedente,              
 		            fi_persona_diagnosticos_atenciones_salud.atencion_salud_id")
-		    .where('fi_persona_diagnosticos_atenciones_salud.id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = 1)', @persona_diagnostico_atencion.id).first 
+		    .where('fi_persona_diagnosticos_atenciones_salud.id = ? AND (fi_persona_diagnosticos_atenciones_salud.es_cronica = 1 OR fi_persona_diagnosticos_atenciones_salud.es_antecedente = true)', @persona_diagnostico_atencion.id).first 
 		    @enfermedad = { 'datos' => datos , 'parentesco' =>  params[:parentesco] } 
 		end     
 
