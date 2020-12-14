@@ -1,29 +1,18 @@
-# README #
+## MedRacer
+A complete web application for small health and dental centers with the most important operation processes. 
+![](medracer.png)
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Context
+This side project was an enterpreneurship. Currently discontinued. I learned many lessons from this project, in addition to the experience working with Ruby on Rails and AngularJS.
 
-### What is this repository for? ###
+## Main characteristics
+- Appointment process
+- Clinical history
+- Payment
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+## Technology Stack
+- Ruby On Rails.
+- AngularJS.
+- JQuery and Bootstrap.
+- MySQL database.
+- Hosted in Amazon Web Services.
